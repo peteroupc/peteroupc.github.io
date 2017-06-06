@@ -6,16 +6,16 @@
 
 <h2>PeterO.BinaryIO</h2>
 
-<pre><code>public sealed class BinaryIO
-</code></pre>
+<pre>public sealed class BinaryIO
+</pre>
 
 <p>Reads and writes data types in little endian or big endian.</p>
 
 <h3>BinaryIO Constructor</h3>
 
-<pre><code>public BinaryIO(
+<pre>public BinaryIO(
     System.IO.Stream stream);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the<a href="PeterO.BinaryIO.html">PeterO.BinaryIO</a> class. Initializes a new BinaryIO instance.</p>
 
@@ -35,8 +35,8 @@ is null.</li>
 
 <h3>CanRead</h3>
 
-<pre><code>public bool CanRead { get; }
-</code></pre>
+<pre>public bool CanRead { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream can be read.</p>
 
@@ -46,8 +46,8 @@ is null.</li>
 
 <h3>CanSeek</h3>
 
-<pre><code>public bool CanSeek { get; }
-</code></pre>
+<pre>public bool CanSeek { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream supports seeking.</p>
 
@@ -57,8 +57,8 @@ is null.</li>
 
 <h3>CanWrite</h3>
 
-<pre><code>public bool CanWrite { get; }
-</code></pre>
+<pre>public bool CanWrite { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream supports writing.</p>
 
@@ -68,8 +68,8 @@ is null.</li>
 
 <h3>Length</h3>
 
-<pre><code>public long Length { get; }
-</code></pre>
+<pre>public long Length { get; }
+</pre>
 
 <p>Gets the length of the underlying stream.</p>
 
@@ -79,8 +79,8 @@ is null.</li>
 
 <h3>Position</h3>
 
-<pre><code>public long Position { get; set;}
-</code></pre>
+<pre>public long Position { get; set;}
+</pre>
 
 <p>Gets or sets the position of the underlying stream.</p>
 
@@ -90,11 +90,11 @@ is null.</li>
 
 <h3>Read</h3>
 
-<pre><code>public int Read(
+<pre>public int Read(
     byte[] data,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -131,8 +131,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedInt32BE</h3>
 
-<pre><code>public int Read7BitEncodedInt32BE();
-</code></pre>
+<pre>public int Read7BitEncodedInt32BE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -142,8 +142,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedInt32LE</h3>
 
-<pre><code>public int Read7BitEncodedInt32LE();
-</code></pre>
+<pre>public int Read7BitEncodedInt32LE();
+</pre>
 
 <p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
@@ -155,8 +155,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedInt64BE</h3>
 
-<pre><code>public long Read7BitEncodedInt64BE();
-</code></pre>
+<pre>public long Read7BitEncodedInt64BE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -166,8 +166,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedInt64LE</h3>
 
-<pre><code>public long Read7BitEncodedInt64LE();
-</code></pre>
+<pre>public long Read7BitEncodedInt64LE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -177,8 +177,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedUInt32BE</h3>
 
-<pre><code>public int Read7BitEncodedUInt32BE();
-</code></pre>
+<pre>public int Read7BitEncodedUInt32BE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -188,8 +188,8 @@ is less than  <i>length</i>
 
 <h3>Read7BitEncodedUInt32LE</h3>
 
-<pre><code>public int Read7BitEncodedUInt32LE();
-</code></pre>
+<pre>public int Read7BitEncodedUInt32LE();
+</pre>
 
 <p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
@@ -201,8 +201,8 @@ is less than  <i>length</i>
 
 <h3>ReadByte</h3>
 
-<pre><code>public byte ReadByte();
-</code></pre>
+<pre>public byte ReadByte();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -212,9 +212,9 @@ is less than  <i>length</i>
 
 <h3>ReadBytes</h3>
 
-<pre><code>public byte[] ReadBytes(
+<pre>public byte[] ReadBytes(
     int size);
-</code></pre>
+</pre>
 
 <p>Reads data from a stream into a byte array.</p>
 
@@ -230,8 +230,8 @@ is less than  <i>length</i>
 
 <h3>ReadDoubleBE</h3>
 
-<pre><code>public double ReadDoubleBE();
-</code></pre>
+<pre>public double ReadDoubleBE();
+</pre>
 
 <p>Reads a 64-bit floating-point number in big-endian byte order.</p>
 
@@ -241,8 +241,8 @@ is less than  <i>length</i>
 
 <h3>ReadDoubleLE</h3>
 
-<pre><code>public double ReadDoubleLE();
-</code></pre>
+<pre>public double ReadDoubleLE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -252,8 +252,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt16BE</h3>
 
-<pre><code>public short ReadInt16BE();
-</code></pre>
+<pre>public short ReadInt16BE();
+</pre>
 
 <p>Reads a 16-bit signed integer in big-endian byte order (2 bytes).</p>
 
@@ -263,8 +263,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt16LE</h3>
 
-<pre><code>public short ReadInt16LE();
-</code></pre>
+<pre>public short ReadInt16LE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -274,8 +274,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt32BE</h3>
 
-<pre><code>public int ReadInt32BE();
-</code></pre>
+<pre>public int ReadInt32BE();
+</pre>
 
 <p>Reads a 32-bit signed integer in big-endian byte order (4 bytes).</p>
 
@@ -285,8 +285,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt32LE</h3>
 
-<pre><code>public int ReadInt32LE();
-</code></pre>
+<pre>public int ReadInt32LE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -296,8 +296,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt64BE</h3>
 
-<pre><code>public long ReadInt64BE();
-</code></pre>
+<pre>public long ReadInt64BE();
+</pre>
 
 <p>Reads a 64-bit signed integer in big-endian byte order (8 bytes).</p>
 
@@ -307,8 +307,8 @@ is less than  <i>length</i>
 
 <h3>ReadInt64LE</h3>
 
-<pre><code>public long ReadInt64LE();
-</code></pre>
+<pre>public long ReadInt64LE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -318,8 +318,8 @@ is less than  <i>length</i>
 
 <h3>ReadSingleBE</h3>
 
-<pre><code>public float ReadSingleBE();
-</code></pre>
+<pre>public float ReadSingleBE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -329,8 +329,8 @@ is less than  <i>length</i>
 
 <h3>ReadSingleLE</h3>
 
-<pre><code>public float ReadSingleLE();
-</code></pre>
+<pre>public float ReadSingleLE();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -340,9 +340,9 @@ is less than  <i>length</i>
 
 <h3>Write</h3>
 
-<pre><code>public void Write(
+<pre>public void Write(
     byte value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -354,9 +354,9 @@ is less than  <i>length</i>
 
 <h3>Write</h3>
 
-<pre><code>public void Write(
+<pre>public void Write(
     byte[] data);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -376,11 +376,11 @@ is null.</li>
 
 <h3>Write</h3>
 
-<pre><code>public void Write(
+<pre>public void Write(
     byte[] data,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -413,9 +413,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedInt32BE</h3>
 
-<pre><code>public int Write7BitEncodedInt32BE(
+<pre>public int Write7BitEncodedInt32BE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -431,9 +431,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedInt32LE</h3>
 
-<pre><code>public int Write7BitEncodedInt32LE(
+<pre>public int Write7BitEncodedInt32LE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -449,9 +449,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedInt64BE</h3>
 
-<pre><code>public int Write7BitEncodedInt64BE(
+<pre>public int Write7BitEncodedInt64BE(
     long value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -467,9 +467,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedInt64LE</h3>
 
-<pre><code>public int Write7BitEncodedInt64LE(
+<pre>public int Write7BitEncodedInt64LE(
     long value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -485,9 +485,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedUInt32BE</h3>
 
-<pre><code>public int Write7BitEncodedUInt32BE(
+<pre>public int Write7BitEncodedUInt32BE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -503,9 +503,9 @@ is less than  <i>length</i>
 
 <h3>Write7BitEncodedUInt32LE</h3>
 
-<pre><code>public int Write7BitEncodedUInt32LE(
+<pre>public int Write7BitEncodedUInt32LE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -521,9 +521,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     byte value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -535,9 +535,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     double value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -549,9 +549,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     float value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -563,9 +563,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -577,9 +577,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     long value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -591,9 +591,9 @@ is less than  <i>length</i>
 
 <h3>WriteBE</h3>
 
-<pre><code>public void WriteBE(
+<pre>public void WriteBE(
     short value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -605,9 +605,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     byte value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -619,9 +619,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     double value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -633,9 +633,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     float value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -647,9 +647,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     int value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -661,9 +661,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     long value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -675,9 +675,9 @@ is less than  <i>length</i>
 
 <h3>WriteLE</h3>
 
-<pre><code>public void WriteLE(
+<pre>public void WriteLE(
     short value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 

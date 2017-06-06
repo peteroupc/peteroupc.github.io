@@ -6,8 +6,8 @@
 
 <h2>PeterO.Mail.Message</h2>
 
-<pre><code>public sealed class Message
-</code></pre>
+<pre>public sealed class Message
+</pre>
 
 <p>Represents an email message, and contains methods and properties for accessing and modifying email message data. This class implements the Internet Message Format (RFC 5322) and Multipurpose Internet Mail Extensions (MIME; RFC 2045-2047, RFC 2049).</p>
 
@@ -39,9 +39,9 @@
 
 <h3>Message Constructor</h3>
 
-<pre><code>public Message(
+<pre>public Message(
     byte[] bytes);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
 
@@ -61,9 +61,9 @@ is null.</li>
 
 <h3>Message Constructor</h3>
 
-<pre><code>public Message(
+<pre>public Message(
     System.IO.Stream stream);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
 
@@ -83,8 +83,8 @@ is null.</li>
 
 <h3>BccAddresses</h3>
 
-<pre><code>public System.Collections.Generic.IList BccAddresses { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList BccAddresses { get; }
+</pre>
 
 <p>Gets a list of addresses found in the BCC header field or fields.</p>
 
@@ -94,8 +94,8 @@ is null.</li>
 
 <h3>BodyString</h3>
 
-<pre><code>public string BodyString { get; }
-</code></pre>
+<pre>public string BodyString { get; }
+</pre>
 
 <p>Gets the body of this message as a text string.</p>
 
@@ -112,8 +112,8 @@ This message has no character encoding declared on it (which is usually the case
 
 <h3>CCAddresses</h3>
 
-<pre><code>public System.Collections.Generic.IList CCAddresses { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList CCAddresses { get; }
+</pre>
 
 <p>Gets a list of addresses found in the CC header field or fields.</p>
 
@@ -123,8 +123,8 @@ This message has no character encoding declared on it (which is usually the case
 
 <h3>ContentDisposition</h3>
 
-<pre><code>public PeterO.Mail.ContentDisposition ContentDisposition { get; set;}
-</code></pre>
+<pre>public PeterO.Mail.ContentDisposition ContentDisposition { get; set;}
+</pre>
 
 <p>Gets or sets this message&#39;s content disposition. The content disposition specifies how a user agent should handle or otherwise display this message. Can be set to null.</p>
 
@@ -134,8 +134,8 @@ This message has no character encoding declared on it (which is usually the case
 
 <h3>ContentType</h3>
 
-<pre><code>public PeterO.Mail.MediaType ContentType { get; set;}
-</code></pre>
+<pre>public PeterO.Mail.MediaType ContentType { get; set;}
+</pre>
 
 <p>Gets or sets this message&#39;s media type.</p>
 
@@ -152,8 +152,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>FileName</h3>
 
-<pre><code>public string FileName { get; }
-</code></pre>
+<pre>public string FileName { get; }
+</pre>
 
 <p>Gets a filename suggested by this message for saving the message&#39;s body to a file. For more information on the algorithm, see ContentDisposition.MakeFilename.</p>
 
@@ -163,8 +163,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>FromAddresses</h3>
 
-<pre><code>public System.Collections.Generic.IList FromAddresses { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList FromAddresses { get; }
+</pre>
 
 <p>Gets a list of addresses found in the From header field or fields.</p>
 
@@ -174,8 +174,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>HeaderFields</h3>
 
-<pre><code>public System.Collections.Generic.IList HeaderFields { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList HeaderFields { get; }
+</pre>
 
 <p>Gets a snapshot of the header fields of this message, in the order in which they appear in the message. For each item in the list, the key is the header field&#39;s name (where any basic upper-case letters [U+0041 to U+005A] are converted to lower case) and the value is the header field&#39;s value.</p>
 
@@ -185,8 +185,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>Parts</h3>
 
-<pre><code>public System.Collections.Generic.IList Parts { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList Parts { get; }
+</pre>
 
 <p>Gets a list of all the parts of this message. This list is editable. This will only be used if the message is a multipart message.</p>
 
@@ -196,8 +196,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>Subject</h3>
 
-<pre><code>public string Subject { get; set;}
-</code></pre>
+<pre>public string Subject { get; set;}
+</pre>
 
 <p>Gets or sets this message&#39;s subject.</p>
 
@@ -207,8 +207,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>ToAddresses</h3>
 
-<pre><code>public System.Collections.Generic.IList ToAddresses { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList ToAddresses { get; }
+</pre>
 
 <p>Gets a list of addresses found in the To header field or fields.</p>
 
@@ -218,10 +218,10 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <h3>AddHeader</h3>
 
-<pre><code>public PeterO.Mail.Message AddHeader(
+<pre>public PeterO.Mail.Message AddHeader(
     string name,
     string value);
-</code></pre>
+</pre>
 
 <p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -249,9 +249,9 @@ The header field name is too long or contains an invalid character, or the heade
 
 <h3>AddHeader</h3>
 
-<pre><code>public PeterO.Mail.Message AddHeader(
+<pre>public PeterO.Mail.Message AddHeader(
     System.Collections.Generic.KeyValuePair header);
-</code></pre>
+</pre>
 
 <p>Adds a header field to the end of the message&#39;s header.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -277,8 +277,8 @@ The header field name is too long or contains an invalid character, or the heade
 
 <h3>Generate</h3>
 
-<pre><code>public string Generate();
-</code></pre>
+<pre>public string Generate();
+</pre>
 
 <p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
@@ -301,8 +301,8 @@ The message can&#39;t be generated.</li>
 
 <h3>GetBody</h3>
 
-<pre><code>public byte[] GetBody();
-</code></pre>
+<pre>public byte[] GetBody();
+</pre>
 
 <p>Gets the byte array for this message&#39;s body. This method doesn&#39;t make a copy of that byte array.</p>
 
@@ -312,8 +312,8 @@ The message can&#39;t be generated.</li>
 
 <h3>GetBodyMessage</h3>
 
-<pre><code>public PeterO.Mail.Message GetBodyMessage();
-</code></pre>
+<pre>public PeterO.Mail.Message GetBodyMessage();
+</pre>
 
 <p>Returns the mail message contained in this message&#39;s body.</p>
 
@@ -323,8 +323,8 @@ The message can&#39;t be generated.</li>
 
 <h3>GetDate</h3>
 
-<pre><code>public int[] GetDate();
-</code></pre>
+<pre>public int[] GetDate();
+</pre>
 
 <p>Gets the date and time extracted from this message&#39;s Date header field (as though GetHeader(&quot;date&quot;) were called). Each element of the array (starting from 0) is as follows:</p>
 
@@ -345,9 +345,9 @@ The message can&#39;t be generated.</li>
 
 <h3>GetHeader</h3>
 
-<pre><code>public string GetHeader(
+<pre>public string GetHeader(
     string name);
-</code></pre>
+</pre>
 
 <p>Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
@@ -370,9 +370,9 @@ Name is null.</li>
 
 <h3>GetHeader</h3>
 
-<pre><code>public System.Collections.Generic.KeyValuePair GetHeader(
+<pre>public System.Collections.Generic.KeyValuePair GetHeader(
     int index);
-</code></pre>
+</pre>
 
 <p>Gets the name and value of a header field by index.</p>
 
@@ -396,9 +396,9 @@ is 0 or at least as high as the number of header fields.</li>
 
 <h3>GetHeaderArray</h3>
 
-<pre><code>public string[] GetHeaderArray(
+<pre>public string[] GetHeaderArray(
     string name);
-</code></pre>
+</pre>
 
 <p>Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p>
 
@@ -421,9 +421,9 @@ Name is null.</li>
 
 <h3>RemoveHeader</h3>
 
-<pre><code>public PeterO.Mail.Message RemoveHeader(
+<pre>public PeterO.Mail.Message RemoveHeader(
     int index);
-</code></pre>
+</pre>
 
 <p>Removes a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -447,9 +447,9 @@ is 0 or at least as high as the number of header fields.</li>
 
 <h3>RemoveHeader</h3>
 
-<pre><code>public PeterO.Mail.Message RemoveHeader(
+<pre>public PeterO.Mail.Message RemoveHeader(
     string name);
-</code></pre>
+</pre>
 
 <p>Removes all instances of the given header field from this message. If this is a multipart message, the header field is not removed from its body part headers. A basic case-insensitive comparison is used. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -473,9 +473,9 @@ is null.</li>
 
 <h3>SetBody</h3>
 
-<pre><code>public PeterO.Mail.Message SetBody(
+<pre>public PeterO.Mail.Message SetBody(
     byte[] bytes);
-</code></pre>
+</pre>
 
 <p>Sets the body of this message to the given byte array. This method doesn&#39;t make a copy of that byte array.</p>
 
@@ -499,8 +499,8 @@ is null.</li>
 
 <h3>SetCurrentDate</h3>
 
-<pre><code>public PeterO.Mail.Message SetCurrentDate();
-</code></pre>
+<pre>public PeterO.Mail.Message SetCurrentDate();
+</pre>
 
 <p>Sets this message&#39;s Date header field to the current time as its value.This method can be used when the message is considered complete and ready to be generated, for example, using the &quot;Generate()&quot; method.</p>
 
@@ -510,9 +510,9 @@ is null.</li>
 
 <h3>SetDate</h3>
 
-<pre><code>public PeterO.Mail.Message SetDate(
+<pre>public PeterO.Mail.Message SetDate(
     int[] dateTime);
-</code></pre>
+</pre>
 
 <p>Sets this message&#39;s Date header field to the given date and time.</p>
 
@@ -549,11 +549,11 @@ is null.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public PeterO.Mail.Message SetHeader(
+<pre>public PeterO.Mail.Message SetHeader(
     int index,
     string name,
     string value);
-</code></pre>
+</pre>
 
 <p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -583,10 +583,10 @@ is null.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public PeterO.Mail.Message SetHeader(
+<pre>public PeterO.Mail.Message SetHeader(
     int index,
     string value);
-</code></pre>
+</pre>
 
 <p>Sets the value of a header field by index without changing its name.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -614,10 +614,10 @@ is null.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public PeterO.Mail.Message SetHeader(
+<pre>public PeterO.Mail.Message SetHeader(
     int index,
     System.Collections.Generic.KeyValuePair header);
-</code></pre>
+</pre>
 
 <p>Sets the name and value of a header field by index.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -645,10 +645,10 @@ is null.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public PeterO.Mail.Message SetHeader(
+<pre>public PeterO.Mail.Message SetHeader(
     string name,
     string value);
-</code></pre>
+</pre>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the same name exists, its value is replaced. If the header field&#39;s name occurs more than once, only the first instance of the header field is replaced.Updates the ContentType and ContentDisposition properties if those header fields have been modified by this method.</p>
 
@@ -676,9 +676,9 @@ is null.</p></li>
 
 <h3>SetHtmlBody</h3>
 
-<pre><code>public PeterO.Mail.Message SetHtmlBody(
+<pre>public PeterO.Mail.Message SetHtmlBody(
     string str);
-</code></pre>
+</pre>
 
 <p>Sets the body of this message to the specified string in HTML format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
@@ -702,10 +702,10 @@ is null.</li>
 
 <h3>SetTextAndHtml</h3>
 
-<pre><code>public PeterO.Mail.Message SetTextAndHtml(
+<pre>public PeterO.Mail.Message SetTextAndHtml(
     string text,
     string html);
-</code></pre>
+</pre>
 
 <p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
@@ -731,9 +731,9 @@ is null.</li>
 
 <h3>SetTextBody</h3>
 
-<pre><code>public PeterO.Mail.Message SetTextBody(
+<pre>public PeterO.Mail.Message SetTextBody(
     string str);
-</code></pre>
+</pre>
 
 <p>Sets the body of this message to the specified plain text string. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters. This method changes this message&#39;s media type to plain text.</p>
 

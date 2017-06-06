@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.util.DataUtilities</h1>
 
-<pre><code>public final class DataUtilities extends Object
-</code></pre>
+<pre>public final class DataUtilities extends Object
+</pre>
 
 <p>Contains methods useful for reading and writing strings. It is designed to
  have no dependencies other than the basic runtime class library.
@@ -111,8 +111,8 @@ Writes a string in UTF-8 encoding to a data stream.</li>
 
 <h3>GetUtf8String</h3>
 
-<pre><code>public static String GetUtf8String(byte[] bytes, boolean replace)
-</code></pre>
+<pre>public static String GetUtf8String(byte[] bytes, boolean replace)
+</pre>
 
 <p>Generates a text string from a UTF-8 byte array.</p>
 
@@ -140,8 +140,8 @@ seen.</p></li>
 
 <h3>GetUtf8String</h3>
 
-<pre><code>public static String GetUtf8String(byte[] bytes, int offset, int bytesCount, boolean replace)
-</code></pre>
+<pre>public static String GetUtf8String(byte[] bytes, int offset, int bytesCount, boolean replace)
+</pre>
 
 <p>Generates a text string from a portion of a UTF-8 byte array.</p>
 
@@ -175,8 +175,8 @@ greater than the length of &quot;data&quot; .</p></li>
 
 <h3>GetUtf8Bytes</h3>
 
-<pre><code>public static byte[] GetUtf8Bytes(String str, boolean replace)
-</code></pre>
+<pre>public static byte[] GetUtf8Bytes(String str, boolean replace)
+</pre>
 
 <p>Encodes a string in UTF-8 as a byte array.</p>
 
@@ -206,8 +206,8 @@ occurred.</p></li>
 
 <h3>GetUtf8Bytes</h3>
 
-<pre><code>public static byte[] GetUtf8Bytes(String str, boolean replace, boolean lenientLineBreaks)
-</code></pre>
+<pre>public static byte[] GetUtf8Bytes(String str, boolean replace, boolean lenientLineBreaks)
+</pre>
 
 <p>Encodes a string in UTF-8 as a byte array.</p>
 
@@ -239,8 +239,8 @@ occurred.</p></li>
 
 <h3>GetUtf8Length</h3>
 
-<pre><code>public static long GetUtf8Length(String str, boolean replace)
-</code></pre>
+<pre>public static long GetUtf8Length(String str, boolean replace)
+</pre>
 
 <p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
 
@@ -267,8 +267,8 @@ UTF-8 bytes (the UTF-8 length of the replacement character U + FFFD).</p></li>
 
 <h3>CodePointBefore</h3>
 
-<pre><code>public static int CodePointBefore(String str, int index)
-</code></pre>
+<pre>public static int CodePointBefore(String str, int index)
+</pre>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
@@ -296,8 +296,8 @@ is an unpaired surrogate code point.</li>
 
 <h3>CodePointBefore</h3>
 
-<pre><code>public static int CodePointBefore(String str, int index, int surrogateBehavior)
-</code></pre>
+<pre>public static int CodePointBefore(String str, int index, int surrogateBehavior)
+</pre>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
@@ -329,8 +329,8 @@ previous character is an unpaired surrogate code point.</li>
 
 <h3>CodePointAt</h3>
 
-<pre><code>public static int CodePointAt(String str, int index)
-</code></pre>
+<pre>public static int CodePointAt(String str, int index)
+</pre>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
@@ -357,8 +357,8 @@ unpaired surrogate code point.</li>
 
 <h3>CodePointAt</h3>
 
-<pre><code>public static int CodePointAt(String str, int index, int surrogateBehavior)
-</code></pre>
+<pre>public static int CodePointAt(String str, int index, int surrogateBehavior)
+</pre>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
@@ -389,8 +389,8 @@ character is an unpaired surrogate code point.</li>
 
 <h3>ToLowerCaseAscii</h3>
 
-<pre><code>public static String ToLowerCaseAscii(String str)
-</code></pre>
+<pre>public static String ToLowerCaseAscii(String str)
+</pre>
 
 <p>Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
  converted to lower-case. Other characters remain unchanged.</p>
@@ -409,8 +409,8 @@ character is an unpaired surrogate code point.</li>
 
 <h3>CodePointCompare</h3>
 
-<pre><code>public static int CodePointCompare(String strA, String strB)
-</code></pre>
+<pre>public static int CodePointCompare(String strA, String strB)
+</pre>
 
 <p>Compares two strings in Unicode code point order. Unpaired surrogate code
  points are treated as individual code points.</p>
@@ -435,8 +435,8 @@ or a starts with b and is longer than b.</li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace) throws IOException
-</code></pre>
+<pre>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace) throws IOException
+</pre>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
@@ -472,8 +472,8 @@ is false.</li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace, boolean lenientLineBreaks) throws IOException
-</code></pre>
+<pre>public static int WriteUtf8(String str, int offset, int length, OutputStream stream, boolean replace, boolean lenientLineBreaks) throws IOException
+</pre>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
@@ -511,8 +511,8 @@ is false.</li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(String str, OutputStream stream, boolean replace) throws IOException
-</code></pre>
+<pre>public static int WriteUtf8(String str, OutputStream stream, boolean replace) throws IOException
+</pre>
 
 <p>Writes a string in UTF-8 encoding to a data stream.</p>
 
@@ -543,8 +543,8 @@ unpaired surrogate code point and <code>replace</code> is false.</li>
 
 <h3>ReadUtf8FromBytes</h3>
 
-<pre><code>public static int ReadUtf8FromBytes(byte[] data, int offset, int bytesCount, StringBuilder builder, boolean replace)
-</code></pre>
+<pre>public static int ReadUtf8FromBytes(byte[] data, int offset, int bytesCount, StringBuilder builder, boolean replace)
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a byte array.</p>
 
@@ -580,8 +580,8 @@ greater than the length of <code>data</code>.</p></li>
 
 <h3>ReadUtf8ToString</h3>
 
-<pre><code>public static String ReadUtf8ToString(InputStream stream) throws IOException
-</code></pre>
+<pre>public static String ReadUtf8ToString(InputStream stream) throws IOException
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that
  string. Replaces invalid encoding with the replacement character
@@ -608,8 +608,8 @@ greater than the length of <code>data</code>.</p></li>
 
 <h3>ReadUtf8ToString</h3>
 
-<pre><code>public static String ReadUtf8ToString(InputStream stream, int bytesCount, boolean replace) throws IOException
-</code></pre>
+<pre>public static String ReadUtf8ToString(InputStream stream, int bytesCount, boolean replace) throws IOException
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
 
@@ -640,8 +640,8 @@ valid UTF-8 and <code>replace</code> is false.</p></li>
 
 <h3>ReadUtf8</h3>
 
-<pre><code>public static int ReadUtf8(InputStream stream, int bytesCount, StringBuilder builder, boolean replace) throws IOException
-</code></pre>
+<pre>public static int ReadUtf8(InputStream stream, int bytesCount, StringBuilder builder, boolean replace) throws IOException
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream.</p>
 

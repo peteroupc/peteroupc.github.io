@@ -20,7 +20,7 @@ Note that the pseudocode doesn't cover all error handling that may be necessary 
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Notes and Definitions](#Notes_and_Definitions)<br>[Core Random Generation Method](#Core_Random_Generation_Method)<br>[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)<br>&nbsp;&nbsp;[Random Integers Within a Range](#Random_Integers_Within_a_Range)<br>&nbsp;&nbsp;[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)<br>&nbsp;&nbsp;[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)<br>[Boolean Conditions](#Boolean_Conditions)<br>[Shuffling](#Shuffling)<br>[Choosing an Item from a List](#Choosing_an_Item_from_a_List)<br>[Creating a Random Character String](#Creating_a_Random_Character_String)<br>[Choosing Several Unique Items](#Choosing_Several_Unique_Items)<br>[Weighted Choice](#Weighted_Choice)<br>&nbsp;&nbsp;[Discrete Weighted Choice](#Discrete_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>&nbsp;&nbsp;[Continuous Weighted Choice](#Continuous_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>[Normal Distribution](#Normal_Distribution)<br>[Binomial Distribution](#Binomial_Distribution)<br>[Negative Binomial Distribution](#Negative_Binomial_Distribution)<br>[Hypergeometric Distribution](#Hypergeometric_Distribution)<br>[Poisson Distribution](#Poisson_Distribution)<br>[Gamma Distribution](#Gamma_Distribution)<br>[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Notes and Definitions](#Notes_and_Definitions)<br>[Core Random Generation Method](#Core_Random_Generation_Method)<br>[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)<br>&nbsp;&nbsp;[Random Integers Within a Range](#Random_Integers_Within_a_Range)<br>&nbsp;&nbsp;[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)<br>&nbsp;&nbsp;[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)<br>[Boolean Conditions](#Boolean_Conditions)<br>[Shuffling](#Shuffling)<br>[Choosing an Item from a List](#Choosing_an_Item_from_a_List)<br>[Creating a Random Character String](#Creating_a_Random_Character_String)<br>[Choosing Several Unique Items](#Choosing_Several_Unique_Items)<br>[Weighted Choice](#Weighted_Choice)<br>&nbsp;&nbsp;[Discrete Weighted Choice](#Discrete_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>&nbsp;&nbsp;[Continuous Weighted Choice](#Continuous_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>[Normal Distribution](#Normal_Distribution)<br>[Binomial Distribution](#Binomial_Distribution)<br>&nbsp;&nbsp;[Examples](#Examples)<br>[Negative Binomial Distribution](#Negative_Binomial_Distribution)<br>&nbsp;&nbsp;[Examples](#Examples)<br>[Hypergeometric Distribution](#Hypergeometric_Distribution)<br>[Poisson Distribution](#Poisson_Distribution)<br>[Gamma Distribution](#Gamma_Distribution)<br>[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
 
 <a id=Notes_and_Definitions></a>
 ## Notes and Definitions
@@ -199,13 +199,13 @@ The following pseudocode takes two lists, `list` and `weights`, and returns one 
         // Choose the object according to the given value
         i = 0
         lastItem = size(list) - 1
-	runningValue = 0
+  runningValue = 0
         while i < size(list)
-	    if weights[i] > 0
-		value = value - weights[i]
-		 if value <= 0: return list[i]
+      if weights[i] > 0
+    value = value - weights[i]
+     if value <= 0: return list[i]
                  lastItem = i
-	    end
+      end
             i = i + 1
         end
         // Last resort (might happen because rounding
@@ -225,41 +225,41 @@ The continuous weighted choice method is used to choose a random number that fol
 
 The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.
 
-In many cases, the numbers and densities are not known in advance, but rather sampled (usually at regular points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies, for each number, the relative occurrence of that number and/or numbers near it in the distribution.  A list of common probability density functions is outside the scope of this page.
+In many cases, the numbers and densities are not known in advance, but rather sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies, for each number, the relative occurrence of that number and/or numbers near it in the distribution.  A list of common probability density functions is outside the scope of this page.
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
-	if size(list) == 1: return list[0]
+  if size(list) == 1: return list[0]
         // Get the sum of all areas between weights
         sum = 0
-	areas = NewList()
+  areas = NewList()
         i = 0
         while i < size(list) - 1
-	  weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+    weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
           AddItem(areas, weightArea)
-	  sum += weightArea
+    sum += weightArea
            i = i + 1
         end
         // Choose a random number
         value = RNDU() * sum
          // Or `value = ((RNDINT(X + 1)) / X) * sum`
-	 // if endpoint is to be included;
+   // if endpoint is to be included;
          // see "Uniform Numbers Within a Range", above.
-	 // Interpolate a number according to the given value
+   // Interpolate a number according to the given value
         i=0
-	// Get the number corresponding to the random number
-	runningValue = 0
+  // Get the number corresponding to the random number
+  runningValue = 0
         while i < size(list) - 1
-  	    weightArea = areas[i]
-	    if weightArea > 0
-		newValue = runningValue + weightArea
-	        if value <= newValue
-   		    interp = (value - runningValue) / (newValue - runningValue)
-	   	    retValue = list[i] + (list[i + 1] - list[i]) * interp
-	  	    return retValue
-	         end
-	         runningValue = newValue
-	    end
+        weightArea = areas[i]
+      if weightArea > 0
+    newValue = runningValue + weightArea
+          if value <= newValue
+           interp = (value - runningValue) / (newValue - runningValue)
+           retValue = list[i] + (list[i + 1] - list[i]) * interp
+          return retValue
+           end
+           runningValue = newValue
+      end
             i = i + 1
         end
         // Last resort (might happen because rounding
@@ -318,13 +318,15 @@ expresses the number of successes that have happened after a given number of tri
         return count
     END METHOD
 
+<a id=Examples></a>
+### Examples
+
+- If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
+
 <a id=Negative_Binomial_Distribution></a>
 ## Negative Binomial Distribution
 
-The following method generates a random integer that follows a negative binomial distribution.  This number
-expresses the number of failures that have happened after seeing a given number of successes
-(expressed as `successes` below), where the probability of a success is `p` (ranging from 0, never, to
-1, always). (A `p` of 0.5 means an equal chance of success or failure.)y
+The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success is `p` (ranging from 0, never, to 1, always). (A `p` of 0.5 means an equal chance of success or failure.)
 
     METHOD NegativeBinomial(successes, p)
         if successes < 0: return error
@@ -350,6 +352,11 @@ expresses the number of failures that have happened after seeing a given number 
             end
         end
     END METHOD
+
+<a id=Examples></a>
+### Examples
+
+- If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
 <a id=Hypergeometric_Distribution></a>
 ## Hypergeometric Distribution

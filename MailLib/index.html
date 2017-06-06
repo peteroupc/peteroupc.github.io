@@ -33,12 +33,12 @@ NuGet Package Manager Console.</p>
 as an <a href="https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.upokecenter%22%20AND%20a%3A%22maillib%22">artifact</a> in the Central Repository. To add this library to a Maven
 project, add the following to the <code>dependencies</code> section in your <code>pom.xml</code> file:</p>
 
-<pre><code>&lt;dependency&gt;
+<pre>&lt;dependency&gt;
   &lt;groupId&gt;com.upokecenter&lt;/groupId&gt;
   &lt;artifactId&gt;maillib&lt;/artifactId&gt;
   &lt;version&gt;0.10.0&lt;/version&gt;
 &lt;/dependency&gt;
-</code></pre>
+</pre>
 
 <p>In other Java-based environments, the library can be referred to by its
 group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and version, as given above.</p>
@@ -51,7 +51,7 @@ group ID (<code>com.upokecenter</code>), artifact ID (<code>maillib</code>), and
 
 <p>An example of reading an email message from a file:</p>
 
-<pre><code>// Create a file stream from the email message file
+<pre>// Create a file stream from the email message file
 using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMode.Read)){
   // Read the email message
   var message = new Message(file);
@@ -66,7 +66,7 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
   // Output the message&#39;s text
   Console.WriteLine(message.BodyString);
 }
-</code></pre>
+</pre>
 
 <h2>Release Notes</h2>
 

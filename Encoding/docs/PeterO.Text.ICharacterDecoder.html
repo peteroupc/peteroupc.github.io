@@ -6,16 +6,16 @@
 
 <h2>PeterO.Text.ICharacterDecoder</h2>
 
-<pre><code>public interface ICharacterDecoder
-</code></pre>
+<pre>public interface ICharacterDecoder
+</pre>
 
 <p>Defines a method that can be implemented by classes that convert a stream of bytes to Unicode code points.</p>
 
 <h3>ReadChar</h3>
 
-<pre><code>int ReadChar(
+<pre>int ReadChar(
     PeterO.IByteReader input);
-</code></pre>
+</pre>
 
 <p>Reads bytes from an input transform until a Unicode code point is decoded or until the end of the stream is reached.If this method returns -2, indicating an error, the caller of this method can take one of a variety of actions to handle the error. For example, it can output one or more replacement code points instead (such as the Replacement Character 0xfffd), or it can throw an exception. In some cases, where the error won&#39;t cause data loss or a security problem, the caller can also ignore the decoder error.</p>
 

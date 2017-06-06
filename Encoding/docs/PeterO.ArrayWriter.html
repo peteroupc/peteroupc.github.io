@@ -6,18 +6,18 @@
 
 <h2>PeterO.ArrayWriter</h2>
 
-<pre><code>public sealed class ArrayWriter :
+<pre>public sealed class ArrayWriter :
     PeterO.IByteWriter,
     PeterO.IWriter
-</code></pre>
+</pre>
 
 <p>An array of bytes that grows as needed.</p>
 
 <h3>ArrayWriter Constructor</h3>
 
-<pre><code>public ArrayWriter(
+<pre>public ArrayWriter(
     int initialSize);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.ArrayWriter.html">PeterO.ArrayWriter</a> class with the given initial buffer size.</p>
 
@@ -29,22 +29,22 @@
 
 <h3>ArrayWriter Constructor</h3>
 
-<pre><code>public ArrayWriter();
-</code></pre>
+<pre>public ArrayWriter();
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.ArrayWriter.html">PeterO.ArrayWriter</a> class with a default buffer size.</p>
 
 <h3>Clear</h3>
 
-<pre><code>public void Clear();
-</code></pre>
+<pre>public void Clear();
+</pre>
 
 <p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
 
 <h3>ToArray</h3>
 
-<pre><code>public byte[] ToArray();
-</code></pre>
+<pre>public byte[] ToArray();
+</pre>
 
 <p>Generates an array of all bytes written so far to it.</p>
 
@@ -54,11 +54,11 @@
 
 <h3>Write</h3>
 
-<pre><code>public sealed void Write(
+<pre>public sealed void Write(
     byte[] src,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p>Writes a series of bytes to the array.</p>
 
@@ -91,9 +91,9 @@ is less than  <i>length</i>
 
 <h3>WriteByte</h3>
 
-<pre><code>public sealed void WriteByte(
+<pre>public sealed void WriteByte(
     int byteValue);
-</code></pre>
+</pre>
 
 <p>Writes an 8-bit byte to the array.</p>
 

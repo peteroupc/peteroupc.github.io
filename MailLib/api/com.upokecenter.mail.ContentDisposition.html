@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.mail.ContentDisposition</h1>
 
-<pre><code>public class ContentDisposition extends Object
-</code></pre>
+<pre>public class ContentDisposition extends Object
+</pre>
 
 <p>Specifies how a message body should be displayed or handled by a mail user
  agent. This type is immutable; its contents can&#39;t be changed after
@@ -59,15 +59,15 @@ Converts this object to a text string.</li>
 
 <h3>Attachment</h3>
 
-<pre><code>public static final ContentDisposition Attachment
-</code></pre>
+<pre>public static final ContentDisposition Attachment
+</pre>
 
 <p>The content disposition value &quot;attachment&quot;.</p>
 
 <h3>Inline</h3>
 
-<pre><code>public static final ContentDisposition Inline
-</code></pre>
+<pre>public static final ContentDisposition Inline
+</pre>
 
 <p>The content disposition value &quot;inline&quot;.</p>
 
@@ -75,8 +75,8 @@ Converts this object to a text string.</li>
 
 <h3>getDispositionType</h3>
 
-<pre><code>public final String getDispositionType()
-</code></pre>
+<pre>public final String getDispositionType()
+</pre>
 
 <p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
  &quot;attachment&quot;.</p>
@@ -90,8 +90,8 @@ or &quot;attachment&quot;.</li>
 
 <h3>equals</h3>
 
-<pre><code>public boolean equals(Object obj)
-</code></pre>
+<pre>public boolean equals(Object obj)
+</pre>
 
 <p>Determines whether this object and another object are equal.</p>
 
@@ -115,8 +115,8 @@ or &quot;attachment&quot;.</li>
 
 <h3>hashCode</h3>
 
-<pre><code>public int hashCode()
-</code></pre>
+<pre>public int hashCode()
+</pre>
 
 <p>Returns the hash code for this instance.</p>
 
@@ -134,8 +134,8 @@ or &quot;attachment&quot;.</li>
 
 <h3>isInline</h3>
 
-<pre><code>public final boolean isInline()
-</code></pre>
+<pre>public final boolean isInline()
+</pre>
 
 <p>Gets a value indicating whether the disposition type is inline.</p>
 
@@ -147,8 +147,8 @@ or &quot;attachment&quot;.</li>
 
 <h3>isAttachment</h3>
 
-<pre><code>public final boolean isAttachment()
-</code></pre>
+<pre>public final boolean isAttachment()
+</pre>
 
 <p>Gets a value indicating whether the disposition type is attachment.</p>
 
@@ -161,8 +161,8 @@ or &quot;attachment&quot;.</li>
 
 <h3>getParameters</h3>
 
-<pre><code>public final Map&lt;String,String&gt; getParameters()
-</code></pre>
+<pre>public final Map&lt;String,String&gt; getParameters()
+</pre>
 
 <p>Gets a list of parameter names associated with this object and their values.</p>
 
@@ -178,8 +178,8 @@ appear in any particular order; this is at least the case in version
 
 <h3>toString</h3>
 
-<pre><code>public String toString()
-</code></pre>
+<pre>public String toString()
+</pre>
 
 <p>Converts this object to a text string.</p>
 
@@ -197,8 +197,8 @@ appear in any particular order; this is at least the case in version
 
 <h3>MakeFilename</h3>
 
-<pre><code>public static String MakeFilename(String str)
-</code></pre>
+<pre>public static String MakeFilename(String str)
+</pre>
 
 <p>Converts a file name from the Content-Disposition header to a suitable name
  for saving data to a file. <p>Examples:</p>
@@ -238,8 +238,8 @@ string will be in normalization form C. Returns an empty string if
 
 <h3>GetParameter</h3>
 
-<pre><code>public String GetParameter(String name)
-</code></pre>
+<pre>public String GetParameter(String name)
+</pre>
 
 <p>Gets a parameter from this disposition object.</p>
 
@@ -268,8 +268,8 @@ Can&#39;t be null.</li>
 
 <h3>Parse</h3>
 
-<pre><code>public static ContentDisposition Parse(String dispoValue)
-</code></pre>
+<pre>public static ContentDisposition Parse(String dispoValue)
+</pre>
 
 <p>Parses a content disposition string and returns a content disposition
  object.</p>
@@ -296,8 +296,8 @@ null.</li>
 
 <h3>Parse</h3>
 
-<pre><code>public static ContentDisposition Parse(String dispositionValue, ContentDisposition defaultValue)
-</code></pre>
+<pre>public static ContentDisposition Parse(String dispositionValue, ContentDisposition defaultValue)
+</pre>
 
 <p>Creates a new content disposition object from the value of a
  Content-Disposition header field.</p>

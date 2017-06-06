@@ -6,10 +6,10 @@
 
 <h2>PeterO.ExtendedDecimal</h2>
 
-<pre><code>public sealed class ExtendedDecimal :
+<pre>public sealed class ExtendedDecimal :
     System.IComparable,
     System.IEquatable
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
@@ -64,64 +64,64 @@
 
 <h3>NaN</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal NaN;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal NaN;
+</pre>
 
 <p>A not-a-number value.</p>
 
 <h3>NegativeInfinity</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal NegativeInfinity;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal NegativeInfinity;
+</pre>
 
 <p>Negative infinity, less than any other number.</p>
 
 <h3>NegativeZero</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal NegativeZero;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal NegativeZero;
+</pre>
 
 <p>Represents the number negative zero.</p>
 
 <h3>One</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal One;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal One;
+</pre>
 
 <p>Represents the number 1.</p>
 
 <h3>PositiveInfinity</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal PositiveInfinity;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal PositiveInfinity;
+</pre>
 
 <p>Positive infinity, greater than any other number.</p>
 
 <h3>SignalingNaN</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal SignalingNaN;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal SignalingNaN;
+</pre>
 
 <p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision decimal.</p>
 
 <h3>Ten</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal Ten;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal Ten;
+</pre>
 
 <p>Represents the number 10.</p>
 
 <h3>Zero</h3>
 
-<pre><code>public static readonly PeterO.ExtendedDecimal Zero;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedDecimal Zero;
+</pre>
 
 <p>Represents the number 0.</p>
 
 <h3>Exponent</h3>
 
-<pre><code>public PeterO.BigInteger Exponent { get; }
-</code></pre>
+<pre>public PeterO.BigInteger Exponent { get; }
+</pre>
 
 <p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
 
@@ -131,8 +131,8 @@
 
 <h3>IsNegative</h3>
 
-<pre><code>public bool IsNegative { get; }
-</code></pre>
+<pre>public bool IsNegative { get; }
+</pre>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -144,8 +144,8 @@
 
 <h3>Mantissa</h3>
 
-<pre><code>public PeterO.BigInteger Mantissa { get; }
-</code></pre>
+<pre>public PeterO.BigInteger Mantissa { get; }
+</pre>
 
 <p>Gets this object&#39;s un-scaled value.</p>
 
@@ -155,8 +155,8 @@
 
 <h3>Sign</h3>
 
-<pre><code>public int Sign { get; }
-</code></pre>
+<pre>public int Sign { get; }
+</pre>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -168,8 +168,8 @@
 
 <h3>UnsignedMantissa</h3>
 
-<pre><code>public PeterO.BigInteger UnsignedMantissa { get; }
-</code></pre>
+<pre>public PeterO.BigInteger UnsignedMantissa { get; }
+</pre>
 
 <p>Gets the absolute value of this object&#39;s un-scaled value.</p>
 
@@ -179,9 +179,9 @@
 
 <h3>CompareTo</h3>
 
-<pre><code>public sealed int CompareTo(
+<pre>public sealed int CompareTo(
     PeterO.ExtendedDecimal other);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -197,10 +197,10 @@
 
 <h3>Create</h3>
 
-<pre><code>public static PeterO.ExtendedDecimal Create(
+<pre>public static PeterO.ExtendedDecimal Create(
     PeterO.BigInteger mantissa,
     PeterO.BigInteger exponent);
-</code></pre>
+</pre>
 
 <p>Creates a number with the value exponent*10^mantissa.</p>
 
@@ -226,9 +226,9 @@ is null.</li>
 
 <h3>Equals</h3>
 
-<pre><code>public override bool Equals(
+<pre>public override bool Equals(
     object obj);
-</code></pre>
+</pre>
 
 <p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is an arbitrary-precision decimal number.</p>
 
@@ -244,9 +244,9 @@ is null.</li>
 
 <h3>Equals</h3>
 
-<pre><code>public sealed bool Equals(
+<pre>public sealed bool Equals(
     PeterO.ExtendedDecimal other);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -264,9 +264,9 @@ is null.</li>
 
 <h3>FromString</h3>
 
-<pre><code>public static PeterO.ExtendedDecimal FromString(
+<pre>public static PeterO.ExtendedDecimal FromString(
     string str);
-</code></pre>
+</pre>
 
 <p>Creates a decimal number from a text string that represents a number. See  <code>FromString(String, int, int,
             EContext)</code>  for more information.</p>
@@ -294,8 +294,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>GetHashCode</h3>
 
-<pre><code>public override int GetHashCode();
-</code></pre>
+<pre>public override int GetHashCode();
+</pre>
 
 <p>Calculates this object&#39;s hash code. No application or process IDs are used in the hash code calculation.</p>
 
@@ -305,8 +305,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>IsInfinity</h3>
 
-<pre><code>public bool IsInfinity();
-</code></pre>
+<pre>public bool IsInfinity();
+</pre>
 
 <p>Gets a value indicating whether this object is positive or negative infinity.</p>
 
@@ -316,8 +316,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>IsNaN</h3>
 
-<pre><code>public bool IsNaN();
-</code></pre>
+<pre>public bool IsNaN();
+</pre>
 
 <p>Gets a value indicating whether this object is not a number (NaN).</p>
 
@@ -327,8 +327,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>IsQuietNaN</h3>
 
-<pre><code>public bool IsQuietNaN();
-</code></pre>
+<pre>public bool IsQuietNaN();
+</pre>
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -340,8 +340,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>ToDouble</h3>
 
-<pre><code>public double ToDouble();
-</code></pre>
+<pre>public double ToDouble();
+</pre>
 
 <p>Converts this value to a 64-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 64-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
@@ -351,8 +351,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>ToSingle</h3>
 
-<pre><code>public float ToSingle();
-</code></pre>
+<pre>public float ToSingle();
+</pre>
 
 <p>Converts this value to a 32-bit floating-point number. The half-even rounding mode is used.If this value is a NaN, sets the high bit of the 32-bit floating point number&#39;s mantissa for a quiet NaN, and clears it for a signaling NaN. Then the next highest bit of the mantissa is cleared for a quiet NaN, and set for a signaling NaN. Then the other bits of the mantissa are set to the lowest bits of this object&#39;s unsigned mantissa.</p>
 
@@ -362,8 +362,8 @@ is not a correctly formatted number string.</p></li>
 
 <h3>ToString</h3>
 
-<pre><code>public override string ToString();
-</code></pre>
+<pre>public override string ToString();
+</pre>
 
 <p>Converts this value to a string. Returns a value compatible with this class&#39;s FromString method.</p>
 

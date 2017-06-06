@@ -6,16 +6,16 @@
 
 <h2>PeterO.Mail.DispositionBuilder</h2>
 
-<pre><code>public class DispositionBuilder
-</code></pre>
+<pre>public class DispositionBuilder
+</pre>
 
 <p>Description of DispositionBuilder.</p>
 
 <h3>DispositionBuilder Constructor</h3>
 
-<pre><code>public DispositionBuilder(
+<pre>public DispositionBuilder(
     PeterO.Mail.ContentDisposition mt);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
 
@@ -35,9 +35,9 @@ is null.</li>
 
 <h3>DispositionBuilder Constructor</h3>
 
-<pre><code>public DispositionBuilder(
+<pre>public DispositionBuilder(
     string type);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
 
@@ -57,15 +57,15 @@ is null.</li>
 
 <h3>DispositionBuilder Constructor</h3>
 
-<pre><code>public DispositionBuilder();
-</code></pre>
+<pre>public DispositionBuilder();
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class.</p>
 
 <h3>DispositionType</h3>
 
-<pre><code>public string DispositionType { get; set;}
-</code></pre>
+<pre>public string DispositionType { get; set;}
+</pre>
 
 <p>Gets or sets this value&#39;s disposition type, such value, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
 
@@ -75,8 +75,8 @@ is null.</li>
 
 <h3>IsMultipart</h3>
 
-<pre><code>public bool IsMultipart { get; }
-</code></pre>
+<pre>public bool IsMultipart { get; }
+</pre>
 
 <p><b>Deprecated.</b> Irrelevant for content dispositions; will be removed in the future.</p>
 
@@ -88,8 +88,8 @@ is null.</li>
 
 <h3>IsText</h3>
 
-<pre><code>public bool IsText { get; }
-</code></pre>
+<pre>public bool IsText { get; }
+</pre>
 
 <p><b>Deprecated.</b> Irrelevant for content dispositions; will be removed in the future.</p>
 
@@ -101,9 +101,9 @@ is null.</li>
 
 <h3>RemoveParameter</h3>
 
-<pre><code>public PeterO.Mail.DispositionBuilder RemoveParameter(
+<pre>public PeterO.Mail.DispositionBuilder RemoveParameter(
     string name);
-</code></pre>
+</pre>
 
 <p>Removes a parameter from this content disposition. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
 
@@ -127,9 +127,9 @@ is null.</li>
 
 <h3>SetDispositionType</h3>
 
-<pre><code>public PeterO.Mail.DispositionBuilder SetDispositionType(
+<pre>public PeterO.Mail.DispositionBuilder SetDispositionType(
     string str);
-</code></pre>
+</pre>
 
 <p>Sets the disposition type, such as &quot;inline&quot;.</p>
 
@@ -153,10 +153,10 @@ is null.</li>
 
 <h3>SetParameter</h3>
 
-<pre><code>public PeterO.Mail.DispositionBuilder SetParameter(
+<pre>public PeterO.Mail.DispositionBuilder SetParameter(
     string name,
     string value);
-</code></pre>
+</pre>
 
 <p>Sets a parameter of this content disposition.</p>
 
@@ -185,8 +185,8 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 
 <h3>ToDisposition</h3>
 
-<pre><code>public PeterO.Mail.ContentDisposition ToDisposition();
-</code></pre>
+<pre>public PeterO.Mail.ContentDisposition ToDisposition();
+</pre>
 
 <p>Converts this object to an immutable ContentDisposition object.</p>
 
@@ -196,8 +196,8 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 
 <h3>ToString</h3>
 
-<pre><code>public override string ToString();
-</code></pre>
+<pre>public override string ToString();
+</pre>
 
 <p>Converts this object to a text string.</p>
 

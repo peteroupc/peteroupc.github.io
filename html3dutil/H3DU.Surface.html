@@ -52,7 +52,7 @@ derive the normal calculation, first look at the vector function:</p>
 
 <p>The result is the gradient, which will be normal to the surface.</p>
 
-<pre><code>var surface=new H3DU.Surface({&quot;evaluate&quot;:function(u,v) {
+<pre>var surface=new H3DU.Surface({&quot;evaluate&quot;:function(u,v) {
 &quot;use strict&quot;;
 return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 },
@@ -63,7 +63,7 @@ Math.cos(u)*-Math.sin(v)*Math.sin(u),
 Math.sin(u)*-Math.sin(v)*Math.sin(u),
 0];
 }})
-</code></pre>
+</pre>
 
 <h3>Methods</h3>
 

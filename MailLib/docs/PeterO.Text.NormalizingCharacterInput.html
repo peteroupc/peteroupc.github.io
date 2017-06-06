@@ -6,9 +6,9 @@
 
 <h2>PeterO.Text.NormalizingCharacterInput</h2>
 
-<pre><code>public sealed class NormalizingCharacterInput :
+<pre>public sealed class NormalizingCharacterInput :
     PeterO.Text.ICharacterInput
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Renamed to NormalizerInput.</p>
 
@@ -41,9 +41,9 @@
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     PeterO.Text.ICharacterInput input);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
@@ -55,10 +55,10 @@
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     PeterO.Text.ICharacterInput stream,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
@@ -79,9 +79,9 @@ is null.</li>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     string str);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
 
@@ -93,12 +93,12 @@ is null.</li>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     string str,
     int index,
     int length,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class. Uses a portion of a string as the input.</p>
 
@@ -116,10 +116,10 @@ begins.</p></li>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     string str,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
 
@@ -132,9 +132,9 @@ begins.</p></li>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     System.Collections.Generic.IList characterList);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
@@ -148,10 +148,10 @@ begins.</p></li>
 
 <h3>NormalizingCharacterInput Constructor</h3>
 
-<pre><code>public NormalizingCharacterInput(
+<pre>public NormalizingCharacterInput(
     System.Collections.Generic.IList characterList,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
@@ -174,10 +174,10 @@ is null.</li>
 
 <h3>GetChars</h3>
 
-<pre><code>public static System.Collections.Generic.IList GetChars(
+<pre>public static System.Collections.Generic.IList GetChars(
     PeterO.Text.ICharacterInput input,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the input and call ReadChar to get the normalized string&#39;s code points.</p>
 
@@ -204,10 +204,10 @@ is null.</li>
 
 <h3>GetChars</h3>
 
-<pre><code>public static System.Collections.Generic.IList GetChars(
+<pre>public static System.Collections.Generic.IList GetChars(
     string str,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Instead of this method, create a NormalizerInput on the string and call ReadChar to get the normalized string&#39;s code points.</p>
 
@@ -234,10 +234,10 @@ is null.</li>
 
 <h3>IsNormalized</h3>
 
-<pre><code>public static bool IsNormalized(
+<pre>public static bool IsNormalized(
     int[] charArray,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Either convert the array to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
@@ -263,10 +263,10 @@ The parameter &quot;charList&quot; is null.</li>
 
 <h3>IsNormalized</h3>
 
-<pre><code>public static bool IsNormalized(
+<pre>public static bool IsNormalized(
     PeterO.Text.ICharacterInput chars,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Determines whether the text provided by a character input is normalized.</p>
 
@@ -291,10 +291,10 @@ is null.</li>
 
 <h3>IsNormalized</h3>
 
-<pre><code>public static bool IsNormalized(
+<pre>public static bool IsNormalized(
     string str,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Determines whether the given string is in the given Unicode normalization form.</p>
 
@@ -319,10 +319,10 @@ is null.</li>
 
 <h3>IsNormalized</h3>
 
-<pre><code>public static bool IsNormalized(
+<pre>public static bool IsNormalized(
     System.Collections.Generic.IList charList,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
 
@@ -349,10 +349,10 @@ is null.</li>
 
 <h3>Normalize</h3>
 
-<pre><code>public static string Normalize(
+<pre>public static string Normalize(
     string str,
     PeterO.Text.Normalization form);
-</code></pre>
+</pre>
 
 <p>Converts a string to the given Unicode normalization form.</p>
 
@@ -381,11 +381,11 @@ is null.</p></li>
 
 <h3>Read</h3>
 
-<pre><code>public sealed int Read(
+<pre>public sealed int Read(
     int[] chars,
     int index,
     int length);
-</code></pre>
+</pre>
 
 <p>Reads a sequence of Unicode code points from a data source.</p>
 
@@ -422,8 +422,8 @@ is less than  <i>length</i>
 
 <h3>ReadChar</h3>
 
-<pre><code>public sealed int ReadChar();
-</code></pre>
+<pre>public sealed int ReadChar();
+</pre>
 
 <p>Reads a Unicode character from a data source.</p>
 

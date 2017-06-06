@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.mail.NamedAddress</h1>
 
-<pre><code>public class NamedAddress extends Object
-</code></pre>
+<pre>public class NamedAddress extends Object
+</pre>
 
 <p>Represents an email address and a name for that address. Can represent a
  group of email addresses instead.</p>
@@ -79,8 +79,8 @@ part and domain.</li>
 
 <h3>NamedAddress</h3>
 
-<pre><code>public NamedAddress(String address)
-</code></pre>
+<pre>public NamedAddress(String address)
+</pre>
 
 <p>Initializes a new instance of the <code>NamedAddress</code>
  class. Examples: <ul> <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John
@@ -118,8 +118,8 @@ maximum length is 75 characters. See the third example.</p>.</li>
 
 <h3>NamedAddress</h3>
 
-<pre><code>public NamedAddress(String displayName, String address)
-</code></pre>
+<pre>public NamedAddress(String displayName, String address)
+</pre>
 
 <p>Initializes a new instance of the <code>NamedAddress</code>
  class using the given display name and email address.</p>
@@ -142,8 +142,8 @@ syntax.</p></li>
 
 <h3>NamedAddress</h3>
 
-<pre><code>public NamedAddress(String displayName, Address address)
-</code></pre>
+<pre>public NamedAddress(String displayName, Address address)
+</pre>
 
 <p>Initializes a new instance of the <code>NamedAddress</code>
  class using the given display name and email address.</p>
@@ -164,8 +164,8 @@ empty. Encoded words under RFC 2047 will not be decoded.</p></li>
 
 <h3>NamedAddress</h3>
 
-<pre><code>public NamedAddress(String displayName, String localPart, String domain)
-</code></pre>
+<pre>public NamedAddress(String displayName, String localPart, String domain)
+</pre>
 
 <p>Initializes a new instance of the <code>NamedAddress</code>
  class using the given name and an email address made up of its local
@@ -189,13 +189,13 @@ empty.</p></li>
 
 <h3>NamedAddress</h3>
 
-<pre><code>public NamedAddress(String groupName, List&lt;NamedAddress&gt; mailboxes)
-</code></pre>
+<pre>public NamedAddress(String groupName, List&lt;NamedAddress&gt; mailboxes)
+</pre>
 
 <h3>getName</h3>
 
-<pre><code>public final String getName()
-</code></pre>
+<pre>public final String getName()
+</pre>
 
 <p>Gets the display name for this email address, or the email address&#39;s value
  if the display name is null. Returns an empty string if the address
@@ -209,8 +209,8 @@ empty.</p></li>
 
 <h3>getDisplayName</h3>
 
-<pre><code>public final String getDisplayName()
-</code></pre>
+<pre>public final String getDisplayName()
+</pre>
 
 <p>Gets the display name for this email address. Returns null if the display
  name is absent.</p>
@@ -223,8 +223,8 @@ empty.</p></li>
 
 <h3>getAddress</h3>
 
-<pre><code>public final Address getAddress()
-</code></pre>
+<pre>public final Address getAddress()
+</pre>
 
 <p>Gets the email address associated with this object.</p>
 
@@ -237,8 +237,8 @@ this object represents a group of addresses instead.</li>
 
 <h3>isGroup</h3>
 
-<pre><code>public final boolean isGroup()
-</code></pre>
+<pre>public final boolean isGroup()
+</pre>
 
 <p>Gets a value indicating whether this represents a group of addresses rather
  than a single address.</p>
@@ -252,8 +252,8 @@ this object represents a group of addresses instead.</li>
 
 <h3>toString</h3>
 
-<pre><code>public String toString()
-</code></pre>
+<pre>public String toString()
+</pre>
 
 <p>Converts this object to a text string.</p>
 
@@ -271,8 +271,8 @@ this object represents a group of addresses instead.</li>
 
 <h3>getGroupAddresses</h3>
 
-<pre><code>public final List&lt;NamedAddress&gt; getGroupAddresses()
-</code></pre>
+<pre>public final List&lt;NamedAddress&gt; getGroupAddresses()
+</pre>
 
 <p>Gets a read-only list of addresses that make up the group, if this object
  represents a group, or an empty list otherwise.</p>

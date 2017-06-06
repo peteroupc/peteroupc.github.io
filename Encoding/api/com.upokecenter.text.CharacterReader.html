@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.text.CharacterReader</h1>
 
-<pre><code>public final class CharacterReader extends Object implements ICharacterInput
-</code></pre>
+<pre>public final class CharacterReader extends Object implements ICharacterInput
+</pre>
 
 <p>A general-purpose character input for reading text from byte streams and
  text strings. When reading byte streams, this class supports the
@@ -126,8 +126,8 @@ Initializes a new instance of the CharacterReader class.</li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(String str)
-</code></pre>
+<pre>public CharacterReader(String str)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string; if the string begins with a byte-order mark (U + FEFF), it
@@ -149,8 +149,8 @@ Initializes a new instance of the CharacterReader class.</li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(String str, boolean skipByteOrderMark)
-</code></pre>
+<pre>public CharacterReader(String str, boolean skipByteOrderMark)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
@@ -172,8 +172,8 @@ mark (U + FEFF), will skip that code point as it reads the string.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(String str, boolean skipByteOrderMark, boolean errorThrow)
-</code></pre>
+<pre>public CharacterReader(String str, boolean skipByteOrderMark, boolean errorThrow)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class using a Unicode 16-bit
  string.</p>
@@ -198,8 +198,8 @@ the stream is read.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(String str, int offset, int length)
-</code></pre>
+<pre>public CharacterReader(String str, int offset, int length)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
@@ -214,8 +214,8 @@ the stream is read.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(String str, int offset, int length, boolean skipByteOrderMark, boolean errorThrow)
-</code></pre>
+<pre>public CharacterReader(String str, int offset, int length, boolean skipByteOrderMark, boolean errorThrow)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
@@ -242,8 +242,8 @@ the stream is read.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(InputStream stream)
-</code></pre>
+<pre>public CharacterReader(InputStream stream)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will read the stream as
  UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
@@ -264,8 +264,8 @@ the stream is read.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(InputStream stream, int mode, boolean errorThrow)
-</code></pre>
+<pre>public CharacterReader(InputStream stream, int mode, boolean errorThrow)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the byte-order
  mark (U + FEFF) if it appears first in the stream.</p>
@@ -298,8 +298,8 @@ the stream is read.</p></li>
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(InputStream stream, int mode)
-</code></pre>
+<pre>public CharacterReader(InputStream stream, int mode)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class; will skip the byte-order
  mark (U + FEFF) if it appears first in the stream and replace invalid
@@ -329,8 +329,8 @@ UTF-8.</li> <li>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8.
 
 <h3>CharacterReader</h3>
 
-<pre><code>public CharacterReader(InputStream stream, int mode, boolean errorThrow, boolean dontSkipUtf8Bom)
-</code></pre>
+<pre>public CharacterReader(InputStream stream, int mode, boolean errorThrow, boolean dontSkipUtf8Bom)
+</pre>
 
 <p>Initializes a new instance of the <code>CharacterReader</code> class.</p>
 
@@ -365,8 +365,8 @@ start of the stream.</p></li>
 
 <h3>Read</h3>
 
-<pre><code>public int Read(int[] chars, int index, int length)
-</code></pre>
+<pre>public int Read(int[] chars, int index, int length)
+</pre>
 
 <p>Reads a series of code points from a Unicode stream or a string.</p>
 
@@ -404,8 +404,8 @@ less than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</co
 
 <h3>ReadChar</h3>
 
-<pre><code>public int ReadChar()
-</code></pre>
+<pre>public int ReadChar()
+</pre>
 
 <p>Reads the next character from a Unicode stream or a string.</p>
 

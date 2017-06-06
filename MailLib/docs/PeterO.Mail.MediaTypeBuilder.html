@@ -6,16 +6,16 @@
 
 <h2>PeterO.Mail.MediaTypeBuilder</h2>
 
-<pre><code>public sealed class MediaTypeBuilder
-</code></pre>
+<pre>public sealed class MediaTypeBuilder
+</pre>
 
 <p>A mutable media type object.</p>
 
 <h3>MediaTypeBuilder Constructor</h3>
 
-<pre><code>public MediaTypeBuilder(
+<pre>public MediaTypeBuilder(
     PeterO.Mail.MediaType mt);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class using the data from another media type.</p>
 
@@ -35,10 +35,10 @@ is null.</li>
 
 <h3>MediaTypeBuilder Constructor</h3>
 
-<pre><code>public MediaTypeBuilder(
+<pre>public MediaTypeBuilder(
     string type,
     string subtype);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
 
@@ -51,15 +51,15 @@ is null.</li>
 
 <h3>MediaTypeBuilder Constructor</h3>
 
-<pre><code>public MediaTypeBuilder();
-</code></pre>
+<pre>public MediaTypeBuilder();
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class, using the type &quot;application/octet-stream&quot;.</p>
 
 <h3>IsMultipart</h3>
 
-<pre><code>public bool IsMultipart { get; }
-</code></pre>
+<pre>public bool IsMultipart { get; }
+</pre>
 
 <p>Gets a value indicating whether this is a multipart media type.</p>
 
@@ -69,8 +69,8 @@ is null.</li>
 
 <h3>IsText</h3>
 
-<pre><code>public bool IsText { get; }
-</code></pre>
+<pre>public bool IsText { get; }
+</pre>
 
 <p>Gets a value indicating whether this is a text media type.</p>
 
@@ -80,8 +80,8 @@ is null.</li>
 
 <h3>SubType</h3>
 
-<pre><code>public string SubType { get; set;}
-</code></pre>
+<pre>public string SubType { get; set;}
+</pre>
 
 <p>Gets or sets this value&#39;s subtype.</p>
 
@@ -91,8 +91,8 @@ is null.</li>
 
 <h3>TopLevelType</h3>
 
-<pre><code>public string TopLevelType { get; set;}
-</code></pre>
+<pre>public string TopLevelType { get; set;}
+</pre>
 
 <p>Gets or sets this value&#39;s top-level type.</p>
 
@@ -102,9 +102,9 @@ is null.</li>
 
 <h3>RemoveParameter</h3>
 
-<pre><code>public PeterO.Mail.MediaTypeBuilder RemoveParameter(
+<pre>public PeterO.Mail.MediaTypeBuilder RemoveParameter(
     string name);
-</code></pre>
+</pre>
 
 <p>Removes a parameter from this builder object. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
 
@@ -128,10 +128,10 @@ is null.</li>
 
 <h3>SetParameter</h3>
 
-<pre><code>public PeterO.Mail.MediaTypeBuilder SetParameter(
+<pre>public PeterO.Mail.MediaTypeBuilder SetParameter(
     string name,
     string value);
-</code></pre>
+</pre>
 
 <p>Sets a parameter&#39;s name and value for this media type.</p>
 
@@ -160,9 +160,9 @@ is empty or syntactically invalid.</p></li>
 
 <h3>SetSubType</h3>
 
-<pre><code>public PeterO.Mail.MediaTypeBuilder SetSubType(
+<pre>public PeterO.Mail.MediaTypeBuilder SetSubType(
     string str);
-</code></pre>
+</pre>
 
 <p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
 
@@ -189,9 +189,9 @@ is empty or syntactically invalid.</p></li>
 
 <h3>SetTopLevelType</h3>
 
-<pre><code>public PeterO.Mail.MediaTypeBuilder SetTopLevelType(
+<pre>public PeterO.Mail.MediaTypeBuilder SetTopLevelType(
     string str);
-</code></pre>
+</pre>
 
 <p>Sets this media type&#39;s top-level type.</p>
 
@@ -218,8 +218,8 @@ is syntactically invalid for a top-level type.</p></li>
 
 <h3>ToMediaType</h3>
 
-<pre><code>public PeterO.Mail.MediaType ToMediaType();
-</code></pre>
+<pre>public PeterO.Mail.MediaType ToMediaType();
+</pre>
 
 <p>Converts this builder to an immutable media type object.</p>
 
@@ -229,8 +229,8 @@ is syntactically invalid for a top-level type.</p></li>
 
 <h3>ToString</h3>
 
-<pre><code>public override string ToString();
-</code></pre>
+<pre>public override string ToString();
+</pre>
 
 <p>Converts this object to a text string.</p>
 

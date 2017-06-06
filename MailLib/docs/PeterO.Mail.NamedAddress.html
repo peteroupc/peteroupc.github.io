@@ -6,16 +6,16 @@
 
 <h2>PeterO.Mail.NamedAddress</h2>
 
-<pre><code>public class NamedAddress
-</code></pre>
+<pre>public class NamedAddress
+</pre>
 
 <p>Represents an email address and a name for that address. Can represent a group of email addresses instead.</p>
 
 <h3>NamedAddress Constructor</h3>
 
-<pre><code>public NamedAddress(
+<pre>public NamedAddress(
     string address);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class. Examples:</p>
 
@@ -49,10 +49,10 @@ The named address has an invalid syntax.</p></li>
 
 <h3>NamedAddress Constructor</h3>
 
-<pre><code>public NamedAddress(
+<pre>public NamedAddress(
     string displayName,
     PeterO.Mail.Address address);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
 
@@ -73,10 +73,10 @@ is null.</li>
 
 <h3>NamedAddress Constructor</h3>
 
-<pre><code>public NamedAddress(
+<pre>public NamedAddress(
     string displayName,
     string address);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given display name and email address.</p>
 
@@ -99,11 +99,11 @@ The display name or address has an invalid syntax.</p></li>
 
 <h3>NamedAddress Constructor</h3>
 
-<pre><code>public NamedAddress(
+<pre>public NamedAddress(
     string displayName,
     string localPart,
     string domain);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class using the given name and an email address made up of its local part and domain.</p>
 
@@ -126,10 +126,10 @@ is null.</li>
 
 <h3>NamedAddress Constructor</h3>
 
-<pre><code>public NamedAddress(
+<pre>public NamedAddress(
     string groupName,
     System.Collections.Generic.IList mailboxes);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.NamedAddress.html">PeterO.Mail.NamedAddress</a> class. Takes a group name and several named email addresses as parameters, and forms a group with them.</p>
 
@@ -154,8 +154,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>Address</h3>
 
-<pre><code>public PeterO.Mail.Address Address { get; }
-</code></pre>
+<pre>public PeterO.Mail.Address Address { get; }
+</pre>
 
 <p>Gets the email address associated with this object.</p>
 
@@ -165,8 +165,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>DisplayName</h3>
 
-<pre><code>public string DisplayName { get; }
-</code></pre>
+<pre>public string DisplayName { get; }
+</pre>
 
 <p>Gets the display name for this email address. Returns null if the display name is absent.</p>
 
@@ -176,8 +176,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>GroupAddresses</h3>
 
-<pre><code>public System.Collections.Generic.IList GroupAddresses { get; }
-</code></pre>
+<pre>public System.Collections.Generic.IList GroupAddresses { get; }
+</pre>
 
 <p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
@@ -187,8 +187,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>IsGroup</h3>
 
-<pre><code>public bool IsGroup { get; }
-</code></pre>
+<pre>public bool IsGroup { get; }
+</pre>
 
 <p>Gets a value indicating whether this represents a group of addresses rather than a single address.</p>
 
@@ -198,8 +198,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>Name</h3>
 
-<pre><code>public string Name { get; }
-</code></pre>
+<pre>public string Name { get; }
+</pre>
 
 <p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.</p>
 
@@ -209,8 +209,8 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <h3>ToString</h3>
 
-<pre><code>public override string ToString();
-</code></pre>
+<pre>public override string ToString();
+</pre>
 
 <p>Converts this object to a text string.</p>
 

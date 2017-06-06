@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.mail.Message</h1>
 
-<pre><code>public final class Message extends Object
-</code></pre>
+<pre>public final class Message extends Object
+</pre>
 
 <p>Represents an email message, and contains methods and properties for
  accessing and modifying email message data. This class implements the
@@ -217,8 +217,8 @@ Sets this message's Date header field to the current time as its value.
 
 <h3>getBccAddresses</h3>
 
-<pre><code>public final List&lt;NamedAddress&gt; getBccAddresses()
-</code></pre>
+<pre>public final List&lt;NamedAddress&gt; getBccAddresses()
+</pre>
 
 <p>Gets a list of addresses found in the BCC header field or fields.</p>
 
@@ -230,8 +230,8 @@ Sets this message's Date header field to the current time as its value.
 
 <h3>getBodyString</h3>
 
-<pre><code>public final String getBodyString()
-</code></pre>
+<pre>public final String getBodyString()
+</pre>
 
 <p>Gets the body of this message as a text string.</p>
 
@@ -251,8 +251,8 @@ the character encoding is not supported.</li>
 
 <h3>getCCAddresses</h3>
 
-<pre><code>public final List&lt;NamedAddress&gt; getCCAddresses()
-</code></pre>
+<pre>public final List&lt;NamedAddress&gt; getCCAddresses()
+</pre>
 
 <p>Gets a list of addresses found in the CC header field or fields.</p>
 
@@ -264,8 +264,8 @@ the character encoding is not supported.</li>
 
 <h3>getContentDisposition</h3>
 
-<pre><code>public final ContentDisposition getContentDisposition()
-</code></pre>
+<pre>public final ContentDisposition getContentDisposition()
+</pre>
 
 <p>Gets this message&#39;s content disposition. The content disposition specifies
  how a user agent should handle or otherwise display this message. Can
@@ -279,13 +279,13 @@ the character encoding is not supported.</li>
 
 <h3>setContentDisposition</h3>
 
-<pre><code>public final void setContentDisposition(ContentDisposition value)
-</code></pre>
+<pre>public final void setContentDisposition(ContentDisposition value)
+</pre>
 
 <h3>getContentType</h3>
 
-<pre><code>public final MediaType getContentType()
-</code></pre>
+<pre>public final MediaType getContentType()
+</pre>
 
 <p>Gets this message&#39;s media type.</p>
 
@@ -304,13 +304,13 @@ null.</li>
 
 <h3>setContentType</h3>
 
-<pre><code>public final void setContentType(MediaType value)
-</code></pre>
+<pre>public final void setContentType(MediaType value)
+</pre>
 
 <h3>getFileName</h3>
 
-<pre><code>public final String getFileName()
-</code></pre>
+<pre>public final String getFileName()
+</pre>
 
 <p>Gets a filename suggested by this message for saving the message&#39;s body to a
  file. For more information on the algorithm, see
@@ -325,8 +325,8 @@ filename suggested by the content type or content disposition.</li>
 
 <h3>getFromAddresses</h3>
 
-<pre><code>public final List&lt;NamedAddress&gt; getFromAddresses()
-</code></pre>
+<pre>public final List&lt;NamedAddress&gt; getFromAddresses()
+</pre>
 
 <p>Gets a list of addresses found in the From header field or fields.</p>
 
@@ -338,8 +338,8 @@ filename suggested by the content type or content disposition.</li>
 
 <h3>getHeaderFields</h3>
 
-<pre><code>public final List&lt;Map.Entry&lt;String,String&gt;&gt; getHeaderFields()
-</code></pre>
+<pre>public final List&lt;Map.Entry&lt;String,String&gt;&gt; getHeaderFields()
+</pre>
 
 <p>Gets a snapshot of the header fields of this message, in the order in which
  they appear in the message. For each item in the list, the key is the
@@ -355,8 +355,8 @@ filename suggested by the content type or content disposition.</li>
 
 <h3>getParts</h3>
 
-<pre><code>public final List&lt;Message&gt; getParts()
-</code></pre>
+<pre>public final List&lt;Message&gt; getParts()
+</pre>
 
 <p>Gets a list of all the parts of this message. This list is editable. This
  will only be used if the message is a multipart message.</p>
@@ -370,8 +370,8 @@ will only be used if the message is a multipart message.</li>
 
 <h3>getSubject</h3>
 
-<pre><code>public final String getSubject()
-</code></pre>
+<pre>public final String getSubject()
+</pre>
 
 <p>Gets this message&#39;s subject.</p>
 
@@ -383,13 +383,13 @@ will only be used if the message is a multipart message.</li>
 
 <h3>setSubject</h3>
 
-<pre><code>public final void setSubject(String value)
-</code></pre>
+<pre>public final void setSubject(String value)
+</pre>
 
 <h3>getToAddresses</h3>
 
-<pre><code>public final List&lt;NamedAddress&gt; getToAddresses()
-</code></pre>
+<pre>public final List&lt;NamedAddress&gt; getToAddresses()
+</pre>
 
 <p>Gets a list of addresses found in the To header field or fields.</p>
 
@@ -401,8 +401,8 @@ will only be used if the message is a multipart message.</li>
 
 <h3>AddHeader</h3>
 
-<pre><code>public Message AddHeader(Map.Entry&lt;String,String&gt; header)
-</code></pre>
+<pre>public Message AddHeader(Map.Entry&lt;String,String&gt; header)
+</pre>
 
 <p>Adds a header field to the end of the message&#39;s header. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
@@ -434,8 +434,8 @@ syntactically invalid.</p></li>
 
 <h3>AddHeader</h3>
 
-<pre><code>public Message AddHeader(String name, String value)
-</code></pre>
+<pre>public Message AddHeader(String name, String value)
+</pre>
 
 <p>Adds a header field to the end of the message&#39;s header. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
@@ -465,8 +465,8 @@ syntactically invalid.</p></li>
 
 <h3>Generate</h3>
 
-<pre><code>public String Generate()
-</code></pre>
+<pre>public String Generate()
+</pre>
 
 <p>Generates this message&#39;s data in text form. <p>The generated message will
  have only Basic Latin code points (U + 0000 to U + 007F), and the
@@ -506,8 +506,8 @@ syntactically invalid.</p></li>
 
 <h3>GetBody</h3>
 
-<pre><code>public byte[] GetBody()
-</code></pre>
+<pre>public byte[] GetBody()
+</pre>
 
 <p>Gets the byte array for this message&#39;s body. This method doesn&#39;t make a copy
  of that byte array.</p>
@@ -520,8 +520,8 @@ syntactically invalid.</p></li>
 
 <h3>GetDate</h3>
 
-<pre><code>public int[] GetDate()
-</code></pre>
+<pre>public int[] GetDate()
+</pre>
 
 <p>Gets the date and time extracted from this message&#39;s Date header field (as
  though GetHeader(&quot;date&quot;) were called). Each element of the array
@@ -550,8 +550,8 @@ integer.</li>
 
 <h3>SetDate</h3>
 
-<pre><code>public Message SetDate(int[] dateTime)
-</code></pre>
+<pre>public Message SetDate(int[] dateTime)
+</pre>
 
 <p>Sets this message&#39;s Date header field to the given date and time.</p>
 
@@ -592,8 +592,8 @@ year less than 0.</p></li>
 
 <h3>GetBodyMessage</h3>
 
-<pre><code>public Message GetBodyMessage()
-</code></pre>
+<pre>public Message GetBodyMessage()
+</pre>
 
 <p>Returns the mail message contained in this message&#39;s body.</p>
 
@@ -606,8 +606,8 @@ year less than 0.</p></li>
 
 <h3>GetHeader</h3>
 
-<pre><code>public Map.Entry&lt;String,String&gt; GetHeader(int index)
-</code></pre>
+<pre>public Map.Entry&lt;String,String&gt; GetHeader(int index)
+</pre>
 
 <p>Gets the name and value of a header field by index.</p>
 
@@ -633,8 +633,8 @@ least as high as the number of header fields.</li>
 
 <h3>GetHeader</h3>
 
-<pre><code>public String GetHeader(String name)
-</code></pre>
+<pre>public String GetHeader(String name)
+</pre>
 
 <p>Gets the first instance of the header field with the specified name, using a
  basic case-insensitive comparison. (Two strings are equal in such a
@@ -662,8 +662,8 @@ is none.</li>
 
 <h3>GetHeaderArray</h3>
 
-<pre><code>public String[] GetHeaderArray(String name)
-</code></pre>
+<pre>public String[] GetHeaderArray(String name)
+</pre>
 
 <p>Gets an array with the values of all header fields with the specified name,
  using a basic case-insensitive comparison. (Two strings are equal in
@@ -693,8 +693,8 @@ empty if no header field has that name.</li>
 
 <h3>RemoveHeader</h3>
 
-<pre><code>public Message RemoveHeader(int index)
-</code></pre>
+<pre>public Message RemoveHeader(int index)
+</pre>
 
 <p>Removes a header field by index. <p>Updates the ContentType and
  ContentDisposition properties if those header fields have been
@@ -721,8 +721,8 @@ least as high as the number of header fields.</li>
 
 <h3>RemoveHeader</h3>
 
-<pre><code>public Message RemoveHeader(String name)
-</code></pre>
+<pre>public Message RemoveHeader(String name)
+</pre>
 
 <p>Removes all instances of the given header field from this message. If this
  is a multipart message, the header field is not removed from its body
@@ -753,8 +753,8 @@ least as high as the number of header fields.</li>
 
 <h3>SetBody</h3>
 
-<pre><code>public Message SetBody(byte[] bytes)
-</code></pre>
+<pre>public Message SetBody(byte[] bytes)
+</pre>
 
 <p>Sets the body of this message to the given byte array. This method doesn&#39;t
  make a copy of that byte array.</p>
@@ -779,8 +779,8 @@ least as high as the number of header fields.</li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public Message SetHeader(int index, Map.Entry&lt;String,String&gt; header)
-</code></pre>
+<pre>public Message SetHeader(int index, Map.Entry&lt;String,String&gt; header)
+</pre>
 
 <p>Sets the name and value of a header field by index. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
@@ -814,8 +814,8 @@ null.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public Message SetHeader(int index, String name, String value)
-</code></pre>
+<pre>public Message SetHeader(int index, String name, String value)
+</pre>
 
 <p>Sets the name and value of a header field by index. <p>Updates the
  ContentType and ContentDisposition properties if those header fields
@@ -847,8 +847,8 @@ field&#39;s value is syntactically invalid.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public Message SetHeader(int index, String value)
-</code></pre>
+<pre>public Message SetHeader(int index, String value)
+</pre>
 
 <p>Sets the value of a header field by index without changing its name.
  <p>Updates the ContentType and ContentDisposition properties if those
@@ -879,8 +879,8 @@ field&#39;s value is syntactically invalid.</p></li>
 
 <h3>SetHeader</h3>
 
-<pre><code>public Message SetHeader(String name, String value)
-</code></pre>
+<pre>public Message SetHeader(String name, String value)
+</pre>
 
 <p>Sets the value of this message&#39;s header field. If a header field with the
  same name exists, its value is replaced. If the header field&#39;s name
@@ -913,8 +913,8 @@ syntactically invalid.</p></li>
 
 <h3>SetHtmlBody</h3>
 
-<pre><code>public Message SetHtmlBody(String str)
-</code></pre>
+<pre>public Message SetHtmlBody(String str)
+</pre>
 
 <p>Sets the body of this message to the specified string in HTML format. The
  character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
@@ -942,8 +942,8 @@ syntactically invalid.</p></li>
 
 <h3>SetTextAndHtml</h3>
 
-<pre><code>public Message SetTextAndHtml(String text, String html)
-</code></pre>
+<pre>public Message SetTextAndHtml(String text, String html)
+</pre>
 
 <p>Sets the body of this message to a multipart body with plain text and HTML
  versions of the same message. The character sequences CR (carriage
@@ -972,8 +972,8 @@ syntactically invalid.</p></li>
 
 <h3>SetTextBody</h3>
 
-<pre><code>public Message SetTextBody(String str)
-</code></pre>
+<pre>public Message SetTextBody(String str)
+</pre>
 
 <p>Sets the body of this message to the specified plain text string. The
  character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line

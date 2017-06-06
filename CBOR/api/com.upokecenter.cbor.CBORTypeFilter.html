@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.cbor.CBORTypeFilter</h1>
 
-<pre><code>public final class CBORTypeFilter extends Object
-</code></pre>
+<pre>public final class CBORTypeFilter extends Object
+</pre>
 
 <p>Specifies what kinds of CBOR objects a tag can be. This class is used when a
  CBOR object is being read from a data stream. This class can&#39;t be
@@ -95,43 +95,43 @@ Copies this filter and includes unsigned integers in the new filter.</li>
 
 <h3>Any</h3>
 
-<pre><code>public static final CBORTypeFilter Any
-</code></pre>
+<pre>public static final CBORTypeFilter Any
+</pre>
 
 <p>A filter that allows any CBOR object.</p>
 
 <h3>ByteString</h3>
 
-<pre><code>public static final CBORTypeFilter ByteString
-</code></pre>
+<pre>public static final CBORTypeFilter ByteString
+</pre>
 
 <p>A filter that allows byte strings.</p>
 
 <h3>NegativeInteger</h3>
 
-<pre><code>public static final CBORTypeFilter NegativeInteger
-</code></pre>
+<pre>public static final CBORTypeFilter NegativeInteger
+</pre>
 
 <p>A filter that allows negative integers.</p>
 
 <h3>None</h3>
 
-<pre><code>public static final CBORTypeFilter None
-</code></pre>
+<pre>public static final CBORTypeFilter None
+</pre>
 
 <p>A filter that allows no CBOR types.</p>
 
 <h3>TextString</h3>
 
-<pre><code>public static final CBORTypeFilter TextString
-</code></pre>
+<pre>public static final CBORTypeFilter TextString
+</pre>
 
 <p>A filter that allows text strings.</p>
 
 <h3>UnsignedInteger</h3>
 
-<pre><code>public static final CBORTypeFilter UnsignedInteger
-</code></pre>
+<pre>public static final CBORTypeFilter UnsignedInteger
+</pre>
 
 <p>A filter that allows unsigned integers.</p>
 
@@ -139,8 +139,8 @@ Copies this filter and includes unsigned integers in the new filter.</li>
 
 <h3>ArrayIndexAllowed</h3>
 
-<pre><code>public boolean ArrayIndexAllowed(int index)
-</code></pre>
+<pre>public boolean ArrayIndexAllowed(int index)
+</pre>
 
 <p>Determines whether this type filter allows CBOR arrays and the given array
  index is allowed under this type filter.</p>
@@ -160,8 +160,8 @@ array index is allowed under this type filter; otherwise, <code>false</code>.</l
 
 <h3>ArrayLengthMatches</h3>
 
-<pre><code>public boolean ArrayLengthMatches(int length)
-</code></pre>
+<pre>public boolean ArrayLengthMatches(int length)
+</pre>
 
 <p>Returns whether an array&#39;s length is allowed under this filter.</p>
 
@@ -180,8 +180,8 @@ is allowed under this filter; otherwise, <code>false</code>.</li>
 
 <h3>ArrayLengthMatches</h3>
 
-<pre><code>public boolean ArrayLengthMatches(long length)
-</code></pre>
+<pre>public boolean ArrayLengthMatches(long length)
+</pre>
 
 <p>Returns whether an array&#39;s length is allowed under a filter.</p>
 
@@ -200,8 +200,8 @@ is allowed under a filter; otherwise, <code>false</code> .</li>
 
 <h3>ArrayLengthMatches</h3>
 
-<pre><code>public boolean ArrayLengthMatches(com.upokecenter.numbers.EInteger bigLength)
-</code></pre>
+<pre>public boolean ArrayLengthMatches(com.upokecenter.numbers.EInteger bigLength)
+</pre>
 
 <p>Returns whether an array&#39;s length is allowed under a filter.</p>
 
@@ -227,8 +227,8 @@ null.</li>
 
 <h3>GetSubFilter</h3>
 
-<pre><code>public CBORTypeFilter GetSubFilter(int index)
-</code></pre>
+<pre>public CBORTypeFilter GetSubFilter(int index)
+</pre>
 
 <p>Gets the type filter for this array filter by its index.</p>
 
@@ -248,8 +248,8 @@ index otherwise.</li>
 
 <h3>GetSubFilter</h3>
 
-<pre><code>public CBORTypeFilter GetSubFilter(long index)
-</code></pre>
+<pre>public CBORTypeFilter GetSubFilter(long index)
+</pre>
 
 <p>Gets the type filter for this array filter by its index.</p>
 
@@ -269,8 +269,8 @@ index otherwise.</li>
 
 <h3>MajorTypeMatches</h3>
 
-<pre><code>public boolean MajorTypeMatches(int type)
-</code></pre>
+<pre>public boolean MajorTypeMatches(int type)
+</pre>
 
 <p>Returns whether the given CBOR major type matches a major type allowed by
  this filter.</p>
@@ -290,8 +290,8 @@ allowed by this filter; otherwise, <code>false</code>.</li>
 
 <h3>NonFPSimpleValueAllowed</h3>
 
-<pre><code>public boolean NonFPSimpleValueAllowed()
-</code></pre>
+<pre>public boolean NonFPSimpleValueAllowed()
+</pre>
 
 <p>Returns whether this filter allows simple values that are not floating-point
  numbers.</p>
@@ -305,8 +305,8 @@ floating-point numbers; otherwise, <code>false</code>.</li>
 
 <h3>TagAllowed</h3>
 
-<pre><code>public boolean TagAllowed(int tag)
-</code></pre>
+<pre>public boolean TagAllowed(int tag)
+</pre>
 
 <p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
 
@@ -325,8 +325,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>TagAllowed</h3>
 
-<pre><code>public boolean TagAllowed(long longTag)
-</code></pre>
+<pre>public boolean TagAllowed(long longTag)
+</pre>
 
 <p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
 
@@ -345,8 +345,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>TagAllowed</h3>
 
-<pre><code>public boolean TagAllowed(com.upokecenter.numbers.EInteger bigTag)
-</code></pre>
+<pre>public boolean TagAllowed(com.upokecenter.numbers.EInteger bigTag)
+</pre>
 
 <p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
 
@@ -371,8 +371,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>WithArrayAnyLength</h3>
 
-<pre><code>public CBORTypeFilter WithArrayAnyLength()
-</code></pre>
+<pre>public CBORTypeFilter WithArrayAnyLength()
+</pre>
 
 <p>Copies this filter and includes arrays of any length in the new filter.</p>
 
@@ -384,8 +384,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>WithArrayExactLength</h3>
 
-<pre><code>public CBORTypeFilter WithArrayExactLength(int arrayLength, CBORTypeFilter... elements)
-</code></pre>
+<pre>public CBORTypeFilter WithArrayExactLength(int arrayLength, CBORTypeFilter... elements)
+</pre>
 
 <p>Copies this filter and includes CBOR arrays with an exact length to the new
  filter.</p>
@@ -416,8 +416,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithArrayMinLength</h3>
 
-<pre><code>public CBORTypeFilter WithArrayMinLength(int arrayLength, CBORTypeFilter... elements)
-</code></pre>
+<pre>public CBORTypeFilter WithArrayMinLength(int arrayLength, CBORTypeFilter... elements)
+</pre>
 
 <p>Copies this filter and includes CBOR arrays with at least a given length to
  the new filter.</p>
@@ -448,8 +448,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithByteString</h3>
 
-<pre><code>public CBORTypeFilter WithByteString()
-</code></pre>
+<pre>public CBORTypeFilter WithByteString()
+</pre>
 
 <p>Copies this filter and includes byte strings in the new filter.</p>
 
@@ -461,8 +461,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithFloatingPoint</h3>
 
-<pre><code>public CBORTypeFilter WithFloatingPoint()
-</code></pre>
+<pre>public CBORTypeFilter WithFloatingPoint()
+</pre>
 
 <p>Copies this filter and includes floating-point numbers in the new filter.</p>
 
@@ -474,8 +474,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithMap</h3>
 
-<pre><code>public CBORTypeFilter WithMap()
-</code></pre>
+<pre>public CBORTypeFilter WithMap()
+</pre>
 
 <p>Copies this filter and includes maps in the new filter.</p>
 
@@ -487,8 +487,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithNegativeInteger</h3>
 
-<pre><code>public CBORTypeFilter WithNegativeInteger()
-</code></pre>
+<pre>public CBORTypeFilter WithNegativeInteger()
+</pre>
 
 <p>Copies this filter and includes negative integers in the new filter.</p>
 
@@ -500,8 +500,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithTags</h3>
 
-<pre><code>public CBORTypeFilter WithTags(int... tags)
-</code></pre>
+<pre>public CBORTypeFilter WithTags(int... tags)
+</pre>
 
 <p>Copies this filter and includes a set of valid CBOR tags in the new filter.</p>
 
@@ -519,8 +519,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithTextString</h3>
 
-<pre><code>public CBORTypeFilter WithTextString()
-</code></pre>
+<pre>public CBORTypeFilter WithTextString()
+</pre>
 
 <p>Copies this filter and includes text strings in the new filter.</p>
 
@@ -532,8 +532,8 @@ than specified in arrayLength.</p></li>
 
 <h3>WithUnsignedInteger</h3>
 
-<pre><code>public CBORTypeFilter WithUnsignedInteger()
-</code></pre>
+<pre>public CBORTypeFilter WithUnsignedInteger()
+</pre>
 
 <p>Copies this filter and includes unsigned integers in the new filter.</p>
 

@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.text.Encodings</h1>
 
-<pre><code>public final class Encodings extends Object
-</code></pre>
+<pre>public final class Encodings extends Object
+</pre>
 
 <p>Contains methods for converting text from one character encoding to another.
  This class also contains convenience methods for converting strings
@@ -221,8 +221,8 @@ Converts a portion of a text string to a character input.</li>
 
 <h3>UTF8</h3>
 
-<pre><code>public static final ICharacterEncoding UTF8
-</code></pre>
+<pre>public static final ICharacterEncoding UTF8
+</pre>
 
 <p>Character encoding object for the UTF-8 character encoding, which represents
  each code point in the universal character set using 1 to 4 bytes.</p>
@@ -231,8 +231,8 @@ Converts a portion of a text string to a character input.</li>
 
 <h3>DecodeToString</h3>
 
-<pre><code>public static String DecodeToString(ICharacterEncoding encoding, IByteReader input)
-</code></pre>
+<pre>public static String DecodeToString(ICharacterEncoding encoding, IByteReader input)
+</pre>
 
 <p>Reads bytes from a data source and converts the bytes from a given encoding
  to a text string. <p>In the .NET implementation, this method is
@@ -266,8 +266,8 @@ character (U + FFFD).</p></li>
 
 <h3>DecodeToString</h3>
 
-<pre><code>public static String DecodeToString(ICharacterEncoding enc, InputStream input)
-</code></pre>
+<pre>public static String DecodeToString(ICharacterEncoding enc, InputStream input)
+</pre>
 
 <p>Not documented yet. <p>In the .NET implementation, this method is
  implemented as an extension method to any object implementing
@@ -298,8 +298,8 @@ encoder and a decoder).</p></li>
 
 <h3>DecodeToString</h3>
 
-<pre><code>public static String DecodeToString(ICharacterEncoding enc, byte[] bytes)
-</code></pre>
+<pre>public static String DecodeToString(ICharacterEncoding enc, byte[] bytes)
+</pre>
 
 <p>Reads a byte array from a data source and converts the bytes from a given
  encoding to a text string. Errors in decoding are handled by
@@ -333,8 +333,8 @@ encoder and a decoder).</p></li>
 
 <h3>DecodeToString</h3>
 
-<pre><code>public static String DecodeToString(ICharacterEncoding enc, byte[] bytes, int offset, int length)
-</code></pre>
+<pre>public static String DecodeToString(ICharacterEncoding enc, byte[] bytes, int offset, int length)
+</pre>
 
 <p>Reads a portion of a byte array from a data source and converts the bytes
  from a given encoding to a text string. Errors in decoding are
@@ -374,8 +374,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>EncodeToBytes</h3>
 
-<pre><code>public static byte[] EncodeToBytes(ICharacterInput input, ICharacterEncoding encoding)
-</code></pre>
+<pre>public static byte[] EncodeToBytes(ICharacterInput input, ICharacterEncoding encoding)
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -408,8 +408,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>EncodeToBytes</h3>
 
-<pre><code>public static byte[] EncodeToBytes(ICharacterInput input, ICharacterEncoder encoder)
-</code></pre>
+<pre>public static byte[] EncodeToBytes(ICharacterInput input, ICharacterEncoder encoder)
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using a given character encoding. When writing to the
@@ -442,8 +442,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>EncodeToBytes</h3>
 
-<pre><code>public static byte[] EncodeToBytes(String str, ICharacterEncoding enc)
-</code></pre>
+<pre>public static byte[] EncodeToBytes(String str, ICharacterEncoding enc)
+</pre>
 
 <p>Reads Unicode characters from a text string and writes them to a byte array
  encoded in a given character encoding. When reading the string, any
@@ -478,8 +478,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoding encoding, IWriter writer)
-</code></pre>
+<pre>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoding encoding, IWriter writer)
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -507,8 +507,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoder encoder, IWriter writer)
-</code></pre>
+<pre>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoder encoder, IWriter writer)
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded in a given character encoding. When writing to the byte
@@ -536,8 +536,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(String str, ICharacterEncoding enc, IWriter writer)
-</code></pre>
+<pre>public static void EncodeToWriter(String str, ICharacterEncoding enc, IWriter writer)
+</pre>
 
 <p>Converts a text string to bytes and writes the bytes to an output byte
  writer. When reading the string, any unpaired surrogate characters
@@ -567,8 +567,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoding encoding, OutputStream output) throws IOException
-</code></pre>
+<pre>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoding encoding, OutputStream output) throws IOException
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded using the given character encoder. When writing to the
@@ -597,8 +597,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoder encoder, OutputStream output) throws IOException
-</code></pre>
+<pre>public static void EncodeToWriter(ICharacterInput input, ICharacterEncoder encoder, OutputStream output) throws IOException
+</pre>
 
 <p>Reads Unicode characters from a character input and writes them to a byte
  array encoded in a given character encoding. When writing to the byte
@@ -627,8 +627,8 @@ encoder and a decoder).</p></li>
 
 <h3>EncodeToWriter</h3>
 
-<pre><code>public static void EncodeToWriter(String str, ICharacterEncoding enc, OutputStream output) throws IOException
-</code></pre>
+<pre>public static void EncodeToWriter(String str, ICharacterEncoding enc, OutputStream output) throws IOException
+</pre>
 
 <p>Converts a text string to bytes and writes the bytes to an output data
  stream. When reading the string, any unpaired surrogate characters
@@ -659,8 +659,8 @@ encoder and a decoder).</p></li>
 
 <h3>GetDecoderInput</h3>
 
-<pre><code>public static ICharacterInput GetDecoderInput(ICharacterEncoding encoding, IByteReader stream)
-</code></pre>
+<pre>public static ICharacterInput GetDecoderInput(ICharacterEncoding encoding, IByteReader stream)
+</pre>
 
 <p>Converts a character encoding into a character input stream, given a
  streamable source of bytes. The input stream doesn&#39;t check the first
@@ -690,8 +690,8 @@ returning a replacement character in its place.</p></li>
 
 <h3>GetDecoderInput</h3>
 
-<pre><code>public static ICharacterInput GetDecoderInput(ICharacterEncoding encoding, InputStream input)
-</code></pre>
+<pre>public static ICharacterInput GetDecoderInput(ICharacterEncoding encoding, InputStream input)
+</pre>
 
 <p>Not documented yet. <p>In the .NET implementation, this method is
  implemented as an extension method to any object implementing
@@ -718,8 +718,8 @@ returning a replacement character in its place.</p></li>
 
 <h3>GetDecoderInputSkipBom</h3>
 
-<pre><code>public static ICharacterInput GetDecoderInputSkipBom(ICharacterEncoding encoding, IByteReader stream)
-</code></pre>
+<pre>public static ICharacterInput GetDecoderInputSkipBom(ICharacterEncoding encoding, IByteReader stream)
+</pre>
 
 <p>Converts a character encoding into a character input stream, given a
  streamable source of bytes. But if the input stream starts with a
@@ -752,8 +752,8 @@ returning a replacement character in its place.</p></li>
 
 <h3>GetDecoderInputSkipBom</h3>
 
-<pre><code>public static ICharacterInput GetDecoderInputSkipBom(ICharacterEncoding encoding, InputStream input)
-</code></pre>
+<pre>public static ICharacterInput GetDecoderInputSkipBom(ICharacterEncoding encoding, InputStream input)
+</pre>
 
 <p>Converts a character encoding into a character input stream, given a
  readable data stream. But if the input stream starts with a UTF-8 or
@@ -786,8 +786,8 @@ returning a replacement character in its place.</p></li>
 
 <h3>GetEncoding</h3>
 
-<pre><code>public static ICharacterEncoding GetEncoding(String name)
-</code></pre>
+<pre>public static ICharacterEncoding GetEncoding(String name)
+</pre>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -807,8 +807,8 @@ encoder and a decoder).</li>
 
 <h3>GetEncoding</h3>
 
-<pre><code>public static ICharacterEncoding GetEncoding(String name, boolean forEmail)
-</code></pre>
+<pre>public static ICharacterEncoding GetEncoding(String name, boolean forEmail)
+</pre>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -832,8 +832,8 @@ it names an unrecognized or unsupported encoding.</li>
 
 <h3>GetEncoding</h3>
 
-<pre><code>public static ICharacterEncoding GetEncoding(String name, boolean forEmail, boolean allowReplacement)
-</code></pre>
+<pre>public static ICharacterEncoding GetEncoding(String name, boolean forEmail, boolean allowReplacement)
+</pre>
 
 <p>Returns a character encoding from the given name.</p>
 
@@ -859,8 +859,8 @@ it names an unrecognized or unsupported encoding.</li>
 
 <h3>InputToString</h3>
 
-<pre><code>public static String InputToString(ICharacterInput reader)
-</code></pre>
+<pre>public static String InputToString(ICharacterInput reader)
+</pre>
 
 <p>Reads Unicode characters from a character input and converts them to a text
  string. <p>In the .NET implementation, this method is implemented as
@@ -885,8 +885,8 @@ string.</li>
 
 <h3>ResolveAlias</h3>
 
-<pre><code>public static String ResolveAlias(String name)
-</code></pre>
+<pre>public static String ResolveAlias(String name)
+</pre>
 
 <p>Resolves a character encoding&#39;s name to a standard form. This involves
  changing aliases of a character encoding to a standardized name.
@@ -943,8 +943,8 @@ unsupported.</li>
 
 <h3>ResolveAliasForEmail</h3>
 
-<pre><code>public static String ResolveAliasForEmail(String name)
-</code></pre>
+<pre>public static String ResolveAliasForEmail(String name)
+</pre>
 
 <p>Resolves a character encoding&#39;s name to a canonical form, using rules more
  suitable for email.</p>
@@ -978,8 +978,8 @@ unsupported.</li>
 
 <h3>StringToBytes</h3>
 
-<pre><code>public static byte[] StringToBytes(ICharacterEncoding encoding, String str)
-</code></pre>
+<pre>public static byte[] StringToBytes(ICharacterEncoding encoding, String str)
+</pre>
 
 <p>Converts a text string to a byte array encoded in a given character
  encoding. When reading the string, any unpaired surrogate characters
@@ -1015,8 +1015,8 @@ encoding.</li>
 
 <h3>StringToBytes</h3>
 
-<pre><code>public static byte[] StringToBytes(ICharacterEncoder encoder, String str)
-</code></pre>
+<pre>public static byte[] StringToBytes(ICharacterEncoder encoder, String str)
+</pre>
 
 <p>Converts a text string to a byte array using the given character encoder.
  When reading the string, any unpaired surrogate characters are
@@ -1050,8 +1050,8 @@ encoding.</li>
 
 <h3>StringToInput</h3>
 
-<pre><code>public static ICharacterInput StringToInput(String str)
-</code></pre>
+<pre>public static ICharacterInput StringToInput(String str)
+</pre>
 
 <p>Converts a text string to a character input. The resulting input can then be
  used to encode the text to bytes, or to read the string code point by
@@ -1083,8 +1083,8 @@ encoding.</li>
 
 <h3>StringToInput</h3>
 
-<pre><code>public static ICharacterInput StringToInput(String str, int offset, int length)
-</code></pre>
+<pre>public static ICharacterInput StringToInput(String str, int offset, int length)
+</pre>
 
 <p>Converts a portion of a text string to a character input. The resulting
  input can then be used to encode the text to bytes, or to read the

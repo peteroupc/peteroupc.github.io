@@ -110,15 +110,15 @@ Here&#39;s how.</p>
 <ol>
 <li><p>Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
 
-<pre><code>var vertices = [x1, y1, z1, x2, y2, z2, ... ];
-</code></pre>
+<pre>var vertices = [x1, y1, z1, x2, y2, z2, ... ];
+</pre>
 
 <p>If you also specify <a href="#Normals">normals</a>, colors, or <a href="#Texture_Coordinates">texture coordinates</a> for each vertex, you must add
 them after each vertex position in this order: normals first, colors second, and texture
 coordinates last. If you don&#39;t specify normals, colors, and/or texture coordinates per
 vertex, you can omit them. The following are examples of this:</p>
 
-<pre><code>// An array of vertices each with a set of normals
+<pre>// An array of vertices each with a set of normals
 var vertices = [
  x1, y1, z1, nx1, ny1, nz1,
  x2, y2, z2, nx2, ny2, nz2,
@@ -131,12 +131,12 @@ var vertices = [
  x2, y2, z2, cr2, cg2, cb2, u2, v2,
  ...
 ];
-</code></pre></li>
+</pre></li>
 <li><p>Create a second array of numbers giving the indices to vertices defined in the
 previous step:</p>
 
-<pre><code>var indices = [0, 1, 2, 1, 2, 3, ... ];
-</code></pre>
+<pre>var indices = [0, 1, 2, 1, 2, 3, ... ];
+</pre>
 
 <p>Each index refers to the (n+1)th vertex, no matter how many array elements each vertex
 consists of (a vertex with just coordinates will use 3 array elements).</p>
@@ -146,9 +146,9 @@ and if you are defining a set of line segments, there should be 2 indices for ea
 line segment.</p></li>
 <li><p>Call the mesh constructor with the vertex and index arrays.</p>
 
-<pre><code>var bits = H3DU.Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
+<pre>var bits = H3DU.Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
 var mesh = new H3DU.Mesh(vertices, indices, bits);
-</code></pre>
+</pre>
 
 <p>Note that you must include a set of bits indicating what kind of data the vertex
 array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; parameter.) The bits are:</p>
@@ -163,13 +163,13 @@ array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; 
 
 <p>The bits may be combined as in the following example:</p>
 
-<pre><code>var bits = H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT;
-</code></pre>
+<pre>var bits = H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT;
+</pre>
 
 <p>Alternatively, you can call the <code>H3DU.Mesh</code> constructor with no arguments:</p>
 
-<pre><code>var mesh = new H3DU.Mesh();
-</code></pre>
+<pre>var mesh = new H3DU.Mesh();
+</pre>
 
 <p>Doing so will create a mesh with no vertices.</p></li>
 </ul></li>
@@ -186,8 +186,8 @@ you can specify the mesh&#39;s shape by calling methods that give each vertex&#3
 <li><p>Call the <code>mode()</code> method and choose a primitive mode, such as <code>H3DU.Mesh.TRIANGLES</code>
 or <code>H3DU.Mesh.QUAD_STRIP</code>:</p>
 
-<pre><code>mesh.mode(H3DU.Mesh.TRIANGLES);
-</code></pre>
+<pre>mesh.mode(H3DU.Mesh.TRIANGLES);
+</pre>
 
 <p>The mesh will build up the shape from the vertices you give it depending on the mesh&#39;s
 primitive mode. For example, <code>QUAD_STRIP</code> defines a strip of connecting quadrilaterals,
@@ -216,18 +216,18 @@ quad is made up of the last 2 vertices of the previous quad and
 next vertex&#39;s parameters. You don&#39;t need to do this for each vertex if multiple
 consecutive vertices will share the same normal, color, or texture coordinates.</p>
 
-<pre><code>mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
+<pre>mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
 mesh.color3(0.1,0.6,1); // Set the red, green, and blue of the color.
 mesh.color3(&quot;red&quot;); // Set a CSS color.
 mesh.color3(&quot;#123FE8&quot;); // Set an HTML color.
 mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
-</code></pre></li>
+</pre></li>
 <li><p>Call the <code>vertex3()</code> method to add a new vertex and set its position. The vertex will
 have the last normal, color, and texture coordinates defined on the mesh, if any
 were given:</p>
 
-<pre><code>mesh.vertex3(x, y, z);
-</code></pre></li>
+<pre>mesh.vertex3(x, y, z);
+</pre></li>
 </ol>
 
 <p>You can also call the <code>mode()</code> method any time to change the primitive mode, even to
@@ -258,8 +258,8 @@ and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
 <p>Call the MeshBuffer class to create a mesh buffer, whether it&#39;s created
 using the <code>H3DU.Mesh</code> constructor or by building it vertex by vertex:</p>
 
-<pre><code>var meshBuffer = new MeshBuffer(mesh);
-</code></pre>
+<pre>var meshBuffer = new MeshBuffer(mesh);
+</pre>
 
 <p><a id=Transforming_the_Mesh></a></p>
 
@@ -271,10 +271,10 @@ all the vertices in the mesh buffer with a <a href="tutorial-glmath.html">4x4 ma
 this method to adjust some of the mesh bufferes to make them look better on the screen.
 Example:</p>
 
-<pre><code>var matrix = H3DU.Math.mat4scaled(2,2,2);
+<pre>var matrix = H3DU.Math.mat4scaled(2,2,2);
 // Use the transform to double the mesh buffer&#39;s size
 meshBuffer.transform(matrix);
-</code></pre>
+</pre>
 
 <p><a id=Normals></a></p>
 
@@ -338,11 +338,11 @@ must be ordered counterclockwise for the shape to be shaded from the outside.</p
 
 <p>Example:</p>
 
-<pre><code>// Use flat shading, and shape is shaded from the outside
+<pre>// Use flat shading, and shape is shaded from the outside
 meshBuffer.recalcNormals(true, false);
 // Both parameters can be omitted, setting both to false
 meshBuffer.recalcNormals();
-</code></pre>
+</pre>
 
 <p><a id=Binding_Shapes></a></p>
 
@@ -358,19 +358,19 @@ To attach a mesh to a 3D scene:</p>
 <ol>
 <li><p>Create a <code>Shape</code> object by passing the mesh buffer to the <code>H3DU.Shape</code> constructor:</p>
 
-<pre><code>var shape = new H3DU.Shape(meshBuffer);
-</code></pre></li>
+<pre>var shape = new H3DU.Shape(meshBuffer);
+</pre></li>
 <li><p>You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
 
 <p>Examples for setting appearance:</p>
 
-<pre><code>shape.setColor(&quot;red&quot;); // set the color to a CSS color
+<pre>shape.setColor(&quot;red&quot;); // set the color to a CSS color
 shape.setColor(&quot;#338845&quot;); // set the color to an HTML color
 shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
 // set material parameters (NOTE: if the mesh defines its own colors they
 // will override diffuse reflection given below)
 shape.setMaterial(new H3DU.Material({
-</code></pre>
+</pre>
 
 <p>&quot;ambient&quot;:&quot;blue&quot;,
  &quot;diffuse&quot;:&quot;blue&quot;,
@@ -390,7 +390,7 @@ shape.setMaterial(new H3DU.Material({
 
 <p>Examples for setting position and transformation:</p>
 
-<pre><code>// move the shape 2 units along X axis, 4 units along Y axis,
+<pre>// move the shape 2 units along X axis, 4 units along Y axis,
 // and 5 units along Z axis
 shape.setPosition(2,4,5);
 // same, but passing an array
@@ -404,7 +404,7 @@ shape.setQuaternion(H3DU.Math.quatFromAxisAngle(20,0,1,0));
 shape.setScale(2,2,2);
 // same, but passing an array
 shape.setScale([2,2,2]);
-</code></pre>
+</pre>
 
 <p>Note that <code>setPosition</code>, <code>setQuaternion</code>, and <code>setScale</code> don&#39;t change
 the vertices of the underlying mesh the shape uses, but rather set up
@@ -416,8 +416,8 @@ a transformation matrix that has the effect of scaling, then rotating,
 then translating (shifting) the shape in 3D space.</p></li>
 <li><p>Add the shape to a 3D batch (<a href="H3DU.Batch3D.html">`H3DU.Batch3D</a>):</p>
 
-<pre><code>batch3d.addShape(shape);
-</code></pre>
+<pre>batch3d.addShape(shape);
+</pre>
 
 <p>Now, the next time <code>scene3d.render(batch)</code> is called, the <a href="H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> will render the
 given shape to the scene through the 3D batch.</p></li>

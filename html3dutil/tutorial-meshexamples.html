@@ -20,7 +20,7 @@
 
 <p>This method creates a thin line-like 3D object.</p>
 
-<pre><code>// point1, point2 - end points of the line
+<pre>// point1, point2 - end points of the line
 // thickness - thickness of the line in units, default 1
 function create3DLine(point1,point2,thickness){
   if(thickness==null)thickness=1
@@ -35,7 +35,7 @@ function create3DLine(point1,point2,thickness){
   matrix[14]=midPoint[2]
   return line.transform(matrix);
 }
-</code></pre>
+</pre>
 
 <p><a id=Floor></a></p>
 
@@ -45,7 +45,7 @@ function create3DLine(point1,point2,thickness){
 
 <p><img src="floor.png" alt="Image of a floor"></p>
 
-<pre><code>// xStart, yStart - X and Y coordinates of the start of the floor
+<pre>// xStart, yStart - X and Y coordinates of the start of the floor
 // width, height - Width and height of the floor
 // tileSize - Size of each floor tile
 // z - Z coordinate where the floor will be placed (optional,
@@ -75,7 +75,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
  }
  return new H3DU.MeshBuffer(mesh)
 }
-</code></pre>
+</pre>
 
 <p><a id=Striped_Disk></a></p>
 
@@ -85,7 +85,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 
 <p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
 
-<pre><code>// inner, outer - inner and outer radius of the disk
+<pre>// inner, outer - inner and outer radius of the disk
 // color1, color2 - colors of each stripe; for example:
 //   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
 // sections - number of stripes
@@ -104,7 +104,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
  }
  return ret;
 }
-</code></pre>
+</pre>
 
 <p><a id=Washer></a></p>
 
@@ -114,7 +114,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 
 <p><img src="mesh3.png" alt="Image of a washer"></p>
 
-<pre><code>function createWasher(inner,outer,height,slices){
+<pre>function createWasher(inner,outer,height,slices){
   var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
   var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
   var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
@@ -124,13 +124,13 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
   // merge the base and the top
   return innerCylinder.merge(outerCylinder).merge(base).merge(top);
 }
-</code></pre>
+</pre>
 
 <p><a id=Miscellaneous></a></p>
 
 <h2>Miscellaneous</h2>
 
-<pre><code>// Demonstrates making a mesh plane from triangles
+<pre>// Demonstrates making a mesh plane from triangles
 function createPathDisk(path, z, flatness){
  if(z==null)z=0
  var tris=path.getTriangles(flatness);
@@ -158,7 +158,7 @@ function wireBox(box, color){
     H3DU.Material.fromBasic(color))
  return setBoxSizeAndBounds(shape,box)
 }
-</code></pre>
+</pre>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><p><a href="/">Back to start site.</a></p>

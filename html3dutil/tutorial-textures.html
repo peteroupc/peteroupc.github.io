@@ -33,7 +33,7 @@ waiting for the texture to finish loading.</p>
 
 <p>In the sample code below, the variable <code>textureURL</code> is the URL of the texture to load.</p>
 
-<pre><code>  var loader=new H3DU.TextureLoader();
+<pre>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexture(textureURL, scene).then(function(tex){
     // texture is loaded, the Texture object is in the &quot;tex&quot; parameter
     // Now create a sphere
@@ -43,7 +43,7 @@ waiting for the texture to finish loading.</p>
   }, function(error){
     // an error occurred
   });
-</code></pre>
+</pre>
 
 <p><a id=Loading_multiple_textures></a></p>
 
@@ -54,7 +54,7 @@ is much more convenient than <code>loadAndMapTexture</code> and also loads textu
 
 <p>In the sample code below, The variables <code>textureURL1</code> and <code>textureURL2</code> are URL textures.</p>
 
-<pre><code>  var loader=new H3DU.TextureLoader();
+<pre>  var loader=new H3DU.TextureLoader();
   loader.loadAndMapTexturesAll([
    textureURL1,
    textureURL2
@@ -76,7 +76,7 @@ is much more convenient than <code>loadAndMapTexture</code> and also loads textu
      // We have some succeeding textures
    }
   });
-</code></pre>
+</pre>
 
 <p><a id=Demos></a></p>
 

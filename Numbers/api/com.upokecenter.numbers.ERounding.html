@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.numbers.ERounding</h1>
 
-<pre><code>public enum ERounding extends Enum&lt;ERounding&gt;
-</code></pre>
+<pre>public enum ERounding extends Enum&lt;ERounding&gt;
+</pre>
 
 <p>Specifies the mode to use when &#x22;shortening&#x22; numbers that otherwise
  can&#x27;t fit a given number of digits, so that the shortened number
@@ -66,98 +66,98 @@ the order they are declared.</li>
 
 <h3>None</h3>
 
-<pre><code>public static final ERounding None
-</code></pre>
+<pre>public static final ERounding None
+</pre>
 
 <h3>Up</h3>
 
-<pre><code>public static final ERounding Up
-</code></pre>
+<pre>public static final ERounding Up
+</pre>
 
 <h3>Down</h3>
 
-<pre><code>public static final ERounding Down
-</code></pre>
+<pre>public static final ERounding Down
+</pre>
 
 <h3>HalfUp</h3>
 
-<pre><code>public static final ERounding HalfUp
-</code></pre>
+<pre>public static final ERounding HalfUp
+</pre>
 
 <h3>HalfDown</h3>
 
-<pre><code>public static final ERounding HalfDown
-</code></pre>
+<pre>public static final ERounding HalfDown
+</pre>
 
 <h3>HalfEven</h3>
 
-<pre><code>public static final ERounding HalfEven
-</code></pre>
+<pre>public static final ERounding HalfEven
+</pre>
 
 <h3>Ceiling</h3>
 
-<pre><code>public static final ERounding Ceiling
-</code></pre>
+<pre>public static final ERounding Ceiling
+</pre>
 
 <h3>Floor</h3>
 
-<pre><code>public static final ERounding Floor
-</code></pre>
+<pre>public static final ERounding Floor
+</pre>
 
 <h3>Odd</h3>
 
-<pre><code>public static final ERounding Odd
-</code></pre>
+<pre>public static final ERounding Odd
+</pre>
 
 <h3>ZeroFiveUp</h3>
 
-<pre><code>public static final ERounding ZeroFiveUp
-</code></pre>
+<pre>public static final ERounding ZeroFiveUp
+</pre>
 
 <h3>OddOrZeroFiveUp</h3>
 
-<pre><code>public static final ERounding OddOrZeroFiveUp
-</code></pre>
+<pre>public static final ERounding OddOrZeroFiveUp
+</pre>
 
 <h3>values</h3>
 
-<pre><code>public static ERounding[] values()
-</code></pre>
+<pre>public static ERounding[] values()
+</pre>
 
 <h3>valueOf</h3>
 
-<pre><code>public static ERounding valueOf(String name)
-</code></pre>
+<pre>public static ERounding valueOf(String name)
+</pre>
 
 <h2>Enum Constant Details</h2>
 
 <h3>None</h3>
 
-<pre><code>public static final ERounding None
-</code></pre>
+<pre>public static final ERounding None
+</pre>
 
 <p>Indicates that rounding will not be used. If rounding is required, the
  rounding operation will report an error.</p>
 
 <h3>Up</h3>
 
-<pre><code>public static final ERounding Up
-</code></pre>
+<pre>public static final ERounding Up
+</pre>
 
 <p>If there is a fractional part, the number is rounded to the closest
  representable number away from zero.</p>
 
 <h3>Down</h3>
 
-<pre><code>public static final ERounding Down
-</code></pre>
+<pre>public static final ERounding Down
+</pre>
 
 <p>The fractional part is discarded (the number is truncated).</p>
 
 <h3>HalfUp</h3>
 
-<pre><code>public static final ERounding HalfUp
-</code></pre>
+<pre>public static final ERounding HalfUp
+</pre>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number away from zero.
@@ -165,16 +165,16 @@ the order they are declared.</li>
 
 <h3>HalfDown</h3>
 
-<pre><code>public static final ERounding HalfDown
-</code></pre>
+<pre>public static final ERounding HalfDown
+</pre>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, it is
  discarded.</p>
 
 <h3>HalfEven</h3>
 
-<pre><code>public static final ERounding HalfEven
-</code></pre>
+<pre>public static final ERounding HalfEven
+</pre>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number that is even.
@@ -182,32 +182,32 @@ the order they are declared.</li>
 
 <h3>Ceiling</h3>
 
-<pre><code>public static final ERounding Ceiling
-</code></pre>
+<pre>public static final ERounding Ceiling
+</pre>
 
 <p>If there is a fractional part, the number is rounded to the highest
  representable number that&#x27;s closest to it.</p>
 
 <h3>Floor</h3>
 
-<pre><code>public static final ERounding Floor
-</code></pre>
+<pre>public static final ERounding Floor
+</pre>
 
 <p>If there is a fractional part, the number is rounded to the lowest
  representable number that&#x27;s closest to it.</p>
 
 <h3>Odd</h3>
 
-<pre><code>public static final ERounding Odd
-</code></pre>
+<pre>public static final ERounding Odd
+</pre>
 
 <p>If there is a fractional part and the whole number part is even, the number
  is rounded to the closest representable odd number away from zero.</p>
 
 <h3>ZeroFiveUp</h3>
 
-<pre><code>public static final ERounding ZeroFiveUp
-</code></pre>
+<pre>public static final ERounding ZeroFiveUp
+</pre>
 
 <p>If there is a fractional part and if the last digit before rounding is 0 or
  half the radix, the number is rounded to the closest representable
@@ -216,8 +216,8 @@ the order they are declared.</li>
 
 <h3>OddOrZeroFiveUp</h3>
 
-<pre><code>public static final ERounding OddOrZeroFiveUp
-</code></pre>
+<pre>public static final ERounding OddOrZeroFiveUp
+</pre>
 
 <p>For binary floating point numbers, this is the same as Odd. For other bases
  (including decimal numbers), this is the same as ZeroFiveUp. This

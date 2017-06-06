@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.cbor.CBOREncodeOptions</h1>
 
-<pre><code>public final class CBOREncodeOptions extends Object
-</code></pre>
+<pre>public final class CBOREncodeOptions extends Object
+</pre>
 
 <p>Specifies options for encoding and decoding CBOR objects.</p>
 
@@ -38,23 +38,23 @@ Combines the flags of this options object with another options object.</li>
 
 <h3>None</h3>
 
-<pre><code>public static final CBOREncodeOptions None
-</code></pre>
+<pre>public static final CBOREncodeOptions None
+</pre>
 
 <p>No special options for encoding/decoding. Value: 0.</p>
 
 <h3>NoIndefLengthStrings</h3>
 
-<pre><code>public static final CBOREncodeOptions NoIndefLengthStrings
-</code></pre>
+<pre>public static final CBOREncodeOptions NoIndefLengthStrings
+</pre>
 
 <p>Always encode strings with a definite-length encoding. Used only when
  encoding CBOR objects. Value: 1.</p>
 
 <h3>NoDuplicateKeys</h3>
 
-<pre><code>public static final CBOREncodeOptions NoDuplicateKeys
-</code></pre>
+<pre>public static final CBOREncodeOptions NoDuplicateKeys
+</pre>
 
 <p>Disallow duplicate keys when reading CBOR objects from a data stream. Used
  only when decoding CBOR objects. Value: 2.</p>
@@ -63,8 +63,8 @@ Combines the flags of this options object with another options object.</li>
 
 <h3>getValue</h3>
 
-<pre><code>public final int getValue()
-</code></pre>
+<pre>public final int getValue()
+</pre>
 
 <p>Gets this options object&#39;s value.</p>
 
@@ -76,8 +76,8 @@ Combines the flags of this options object with another options object.</li>
 
 <h3>Or</h3>
 
-<pre><code>public CBOREncodeOptions Or(CBOREncodeOptions o)
-</code></pre>
+<pre>public CBOREncodeOptions Or(CBOREncodeOptions o)
+</pre>
 
 <p>Combines the flags of this options object with another options object.</p>
 
@@ -95,8 +95,8 @@ Combines the flags of this options object with another options object.</li>
 
 <h3>And</h3>
 
-<pre><code>public CBOREncodeOptions And(CBOREncodeOptions o)
-</code></pre>
+<pre>public CBOREncodeOptions And(CBOREncodeOptions o)
+</pre>
 
 <p>Returns an options object whose flags are shared by this and another options
  object.</p>

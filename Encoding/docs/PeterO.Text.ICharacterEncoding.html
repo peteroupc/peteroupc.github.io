@@ -6,15 +6,15 @@
 
 <h2>PeterO.Text.ICharacterEncoding</h2>
 
-<pre><code>public interface ICharacterEncoding
-</code></pre>
+<pre>public interface ICharacterEncoding
+</pre>
 
 <p>Defines methods that can be implemented by classes that convert to and from bytes and character code points.</p>
 
 <h3>GetDecoder</h3>
 
-<pre><code>PeterO.Text.ICharacterDecoder GetDecoder();
-</code></pre>
+<pre>PeterO.Text.ICharacterDecoder GetDecoder();
+</pre>
 
 <p>Creates a decoder for this character encoding with initial state. If the decoder is stateless, multiple calls of this method can return the same decoder.</p>
 
@@ -24,8 +24,8 @@
 
 <h3>GetEncoder</h3>
 
-<pre><code>PeterO.Text.ICharacterEncoder GetEncoder();
-</code></pre>
+<pre>PeterO.Text.ICharacterEncoder GetEncoder();
+</pre>
 
 <p>Creates an encoder for this character encoding with initial state. If the encoder is stateless, multiple calls of this method can return the same encoder.</p>
 

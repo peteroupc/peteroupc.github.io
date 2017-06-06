@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.numbers.EDecimal</h1>
 
-<pre><code>public final class EDecimal extends Object implements Comparable&lt;EDecimal&gt;
-</code></pre>
+<pre>public final class EDecimal extends Object implements Comparable&lt;EDecimal&gt;
+</pre>
 
 <p>Represents an arbitrary-precision decimal floating-point number. (The &quot;E&quot;
  stands for &quot;extended&quot;, meaning that instances of this class can be
@@ -691,43 +691,43 @@ Returns the unit in the last place.</li>
 
 <h3>NaN</h3>
 
-<pre><code>public static final EDecimal NaN
-</code></pre>
+<pre>public static final EDecimal NaN
+</pre>
 
 <p>A not-a-number value.</p>
 
 <h3>NegativeInfinity</h3>
 
-<pre><code>public static final EDecimal NegativeInfinity
-</code></pre>
+<pre>public static final EDecimal NegativeInfinity
+</pre>
 
 <p>Negative infinity, less than any other number.</p>
 
 <h3>NegativeZero</h3>
 
-<pre><code>public static final EDecimal NegativeZero
-</code></pre>
+<pre>public static final EDecimal NegativeZero
+</pre>
 
 <p>Represents the number negative zero.</p>
 
 <h3>One</h3>
 
-<pre><code>public static final EDecimal One
-</code></pre>
+<pre>public static final EDecimal One
+</pre>
 
 <p>Represents the number 1.</p>
 
 <h3>PositiveInfinity</h3>
 
-<pre><code>public static final EDecimal PositiveInfinity
-</code></pre>
+<pre>public static final EDecimal PositiveInfinity
+</pre>
 
 <p>Positive infinity, greater than any other number.</p>
 
 <h3>SignalingNaN</h3>
 
-<pre><code>public static final EDecimal SignalingNaN
-</code></pre>
+<pre>public static final EDecimal SignalingNaN
+</pre>
 
 <p>A not-a-number value that signals an invalid operation flag when it&#x27;s
  passed as an argument to any arithmetic operation in
@@ -735,15 +735,15 @@ Returns the unit in the last place.</li>
 
 <h3>Ten</h3>
 
-<pre><code>public static final EDecimal Ten
-</code></pre>
+<pre>public static final EDecimal Ten
+</pre>
 
 <p>Represents the number 10.</p>
 
 <h3>Zero</h3>
 
-<pre><code>public static final EDecimal Zero
-</code></pre>
+<pre>public static final EDecimal Zero
+</pre>
 
 <p>Represents the number 0.</p>
 
@@ -751,8 +751,8 @@ Returns the unit in the last place.</li>
 
 <h3>getExponent</h3>
 
-<pre><code>public final EInteger getExponent()
-</code></pre>
+<pre>public final EInteger getExponent()
+</pre>
 
 <p>Gets this object&#x27;s exponent. This object&#x27;s value will be an
  integer if the exponent is positive or zero.</p>
@@ -766,8 +766,8 @@ the exponent is positive or zero.</li>
 
 <h3>isFinite</h3>
 
-<pre><code>public final boolean isFinite()
-</code></pre>
+<pre>public final boolean isFinite()
+</pre>
 
 <p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
 
@@ -780,8 +780,8 @@ the exponent is positive or zero.</li>
 
 <h3>isNegative</h3>
 
-<pre><code>public final boolean isNegative()
-</code></pre>
+<pre>public final boolean isNegative()
+</pre>
 
 <p>Gets a value indicating whether this object is negative, including negative
  zero.</p>
@@ -795,8 +795,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>isZero</h3>
 
-<pre><code>public final boolean isZero()
-</code></pre>
+<pre>public final boolean isZero()
+</pre>
 
 <p>Gets a value indicating whether this object&#x27;s value equals 0.</p>
 
@@ -808,8 +808,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>getMantissa</h3>
 
-<pre><code>public final EInteger getMantissa()
-</code></pre>
+<pre>public final EInteger getMantissa()
+</pre>
 
 <p>Gets this object&#x27;s unscaled value.</p>
 
@@ -822,8 +822,8 @@ value is negative (including a negative NaN).</li>
 
 <h3>signum</h3>
 
-<pre><code>public final int signum()
-</code></pre>
+<pre>public final int signum()
+</pre>
 
 <p>Gets this value&#x27;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
@@ -835,8 +835,8 @@ value is negative (including a negative NaN).</li>
 
 <h3>getUnsignedMantissa</h3>
 
-<pre><code>public final EInteger getUnsignedMantissa()
-</code></pre>
+<pre>public final EInteger getUnsignedMantissa()
+</pre>
 
 <p>Gets the absolute value of this object&#x27;s unscaled value.</p>
 
@@ -848,8 +848,8 @@ value is negative (including a negative NaN).</li>
 
 <h3>Create</h3>
 
-<pre><code>public static EDecimal Create(int mantissaSmall, int exponentSmall)
-</code></pre>
+<pre>public static EDecimal Create(int mantissaSmall, int exponentSmall)
+</pre>
 
 <p>Creates a number with the value <code>exponent*10^mantissa</code></p>
 
@@ -870,8 +870,8 @@ yet.</p></li>
 
 <h3>Create</h3>
 
-<pre><code>public static EDecimal Create(EInteger mantissa, EInteger exponent)
-</code></pre>
+<pre>public static EDecimal Create(EInteger mantissa, EInteger exponent)
+</pre>
 
 <p>Creates a number with the value <code>exponent*10^mantissa</code></p>
 
@@ -897,8 +897,8 @@ yet.</p></li>
 
 <h3>CreateNaN</h3>
 
-<pre><code>public static EDecimal CreateNaN(EInteger diag)
-</code></pre>
+<pre>public static EDecimal CreateNaN(EInteger diag)
+</pre>
 
 <p>Creates a not-a-number arbitrary-precision decimal number.</p>
 
@@ -924,8 +924,8 @@ is less than 0.</li>
 
 <h3>CreateNaN</h3>
 
-<pre><code>public static EDecimal CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx)
-</code></pre>
+<pre>public static EDecimal CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx)
+</pre>
 
 <p>Creates a not-a-number arbitrary-precision decimal number.</p>
 
@@ -960,8 +960,8 @@ is less than 0.</li>
 
 <h3>FromDouble</h3>
 
-<pre><code>public static EDecimal FromDouble(double dbl)
-</code></pre>
+<pre>public static EDecimal FromDouble(double dbl)
+</pre>
 
 <p>Creates a decimal number from a 64-bit binary floating-point number. This
  method computes the exact value of the floating point number, not an
@@ -991,8 +991,8 @@ is less than 0.</li>
 
 <h3>FromEInteger</h3>
 
-<pre><code>public static EDecimal FromEInteger(EInteger bigint)
-</code></pre>
+<pre>public static EDecimal FromEInteger(EInteger bigint)
+</pre>
 
 <p>Converts an arbitrary-precision integer to an arbitrary precision decimal.</p>
 
@@ -1010,8 +1010,8 @@ is less than 0.</li>
 
 <h3>FromExtendedFloat</h3>
 
-<pre><code>@Deprecated public static EDecimal FromExtendedFloat(EFloat ef)
-</code></pre>
+<pre>@Deprecated public static EDecimal FromExtendedFloat(EFloat ef)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to FromEFloat.</p>
 
@@ -1029,8 +1029,8 @@ is less than 0.</li>
 
 <h3>FromEFloat</h3>
 
-<pre><code>public static EDecimal FromEFloat(EFloat bigfloat)
-</code></pre>
+<pre>public static EDecimal FromEFloat(EFloat bigfloat)
+</pre>
 
 <p>Creates a decimal number from an arbitrary-precision binary floating-point
  number.</p>
@@ -1055,8 +1055,8 @@ is less than 0.</li>
 
 <h3>FromInt32</h3>
 
-<pre><code>public static EDecimal FromInt32(int valueSmaller)
-</code></pre>
+<pre>public static EDecimal FromInt32(int valueSmaller)
+</pre>
 
 <p>Creates a decimal number from a 32-bit signed integer.</p>
 
@@ -1074,8 +1074,8 @@ is less than 0.</li>
 
 <h3>FromInt64</h3>
 
-<pre><code>public static EDecimal FromInt64(long valueSmall)
-</code></pre>
+<pre>public static EDecimal FromInt64(long valueSmall)
+</pre>
 
 <p>Creates a decimal number from a 64-bit signed integer.</p>
 
@@ -1093,8 +1093,8 @@ is less than 0.</li>
 
 <h3>FromSingle</h3>
 
-<pre><code>public static EDecimal FromSingle(float flt)
-</code></pre>
+<pre>public static EDecimal FromSingle(float flt)
+</pre>
 
 <p>Creates a decimal number from a 32-bit binary floating-point number. This
  method computes the exact value of the floating point number, not an
@@ -1124,8 +1124,8 @@ is less than 0.</li>
 
 <h3>FromString</h3>
 
-<pre><code>public static EDecimal FromString(String str)
-</code></pre>
+<pre>public static EDecimal FromString(String str)
+</pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
  <code>FromString(String, int, int, EContext)</code> for more information.</p>
@@ -1153,8 +1153,8 @@ formatted number string.</p></li>
 
 <h3>FromString</h3>
 
-<pre><code>public static EDecimal FromString(String str, EContext ctx)
-</code></pre>
+<pre>public static EDecimal FromString(String str, EContext ctx)
+</pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
  <code>FromString(String, int, int, EContext)</code> for more information.</p>
@@ -1187,8 +1187,8 @@ formatted number string.</p></li>
 
 <h3>FromString</h3>
 
-<pre><code>public static EDecimal FromString(String str, int offset, int length)
-</code></pre>
+<pre>public static EDecimal FromString(String str, int offset, int length)
+</pre>
 
 <p>Creates a decimal number from a text string that represents a number. See
  <code>FromString(String, int, int, EContext)</code> for more information.</p>
@@ -1218,8 +1218,8 @@ formatted number string.</p></li>
 
 <h3>FromString</h3>
 
-<pre><code>public static EDecimal FromString(String str, int offset, int length, EContext ctx)
-</code></pre>
+<pre>public static EDecimal FromString(String str, int offset, int length, EContext ctx)
+</pre>
 
 <p>Creates a decimal number from a text string that represents a number.</p>
 
@@ -1269,8 +1269,8 @@ formatted number string.</p></li>
 
 <h3>Max</h3>
 
-<pre><code>public static EDecimal Max(EDecimal first, EDecimal second, EContext ctx)
-</code></pre>
+<pre>public static EDecimal Max(EDecimal first, EDecimal second, EContext ctx)
+</pre>
 
 <p>Gets the greater value between two decimal numbers.</p>
 
@@ -1294,8 +1294,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Max</h3>
 
-<pre><code>public static EDecimal Max(EDecimal first, EDecimal second)
-</code></pre>
+<pre>public static EDecimal Max(EDecimal first, EDecimal second)
+</pre>
 
 <p>Gets the greater value between two decimal numbers.</p>
 
@@ -1314,8 +1314,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MaxMagnitude</h3>
 
-<pre><code>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second, EContext ctx)
-</code></pre>
+<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second, EContext ctx)
+</pre>
 
 <p>Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.</p>
@@ -1340,8 +1340,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MaxMagnitude</h3>
 
-<pre><code>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second)
-</code></pre>
+<pre>public static EDecimal MaxMagnitude(EDecimal first, EDecimal second)
+</pre>
 
 <p>Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.</p>
@@ -1361,8 +1361,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Min</h3>
 
-<pre><code>public static EDecimal Min(EDecimal first, EDecimal second, EContext ctx)
-</code></pre>
+<pre>public static EDecimal Min(EDecimal first, EDecimal second, EContext ctx)
+</pre>
 
 <p>Gets the lesser value between two decimal numbers.</p>
 
@@ -1386,8 +1386,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Min</h3>
 
-<pre><code>public static EDecimal Min(EDecimal first, EDecimal second)
-</code></pre>
+<pre>public static EDecimal Min(EDecimal first, EDecimal second)
+</pre>
 
 <p>Gets the lesser value between two decimal numbers.</p>
 
@@ -1406,8 +1406,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MinMagnitude</h3>
 
-<pre><code>public static EDecimal MinMagnitude(EDecimal first, EDecimal second, EContext ctx)
-</code></pre>
+<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second, EContext ctx)
+</pre>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.</p>
@@ -1432,8 +1432,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MinMagnitude</h3>
 
-<pre><code>public static EDecimal MinMagnitude(EDecimal first, EDecimal second)
-</code></pre>
+<pre>public static EDecimal MinMagnitude(EDecimal first, EDecimal second)
+</pre>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.</p>
@@ -1453,8 +1453,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>PI</h3>
 
-<pre><code>public static EDecimal PI(EContext ctx)
-</code></pre>
+<pre>public static EDecimal PI(EContext ctx)
+</pre>
 
 <p>Finds the constant &#x3c0;, the circumference of a circle divided by its
  diameter.</p>
@@ -1480,8 +1480,8 @@ or the precision is unlimited (the context&#39;s Precision property is
 
 <h3>Abs</h3>
 
-<pre><code>public EDecimal Abs()
-</code></pre>
+<pre>public EDecimal Abs()
+</pre>
 
 <p>Finds the absolute value of this object (if it&#x27;s negative, it becomes
  positive).</p>
@@ -1495,8 +1495,8 @@ value is signaling NaN.</li>
 
 <h3>CopySign</h3>
 
-<pre><code>public EDecimal CopySign(EDecimal other)
-</code></pre>
+<pre>public EDecimal CopySign(EDecimal other)
+</pre>
 
 <p>Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.</p>
@@ -1521,8 +1521,8 @@ value is signaling NaN.</li>
 
 <h3>Abs</h3>
 
-<pre><code>public EDecimal Abs(EContext context)
-</code></pre>
+<pre>public EDecimal Abs(EContext context)
+</pre>
 
 <p>Finds the absolute value of this object (if it&#x27;s negative, it becomes
  positive).</p>
@@ -1546,8 +1546,8 @@ quiet NaN if this value is signaling NaN.</li>
 
 <h3>Add</h3>
 
-<pre><code>public EDecimal Add(EDecimal otherValue)
-</code></pre>
+<pre>public EDecimal Add(EDecimal otherValue)
+</pre>
 
 <p>Adds this object and another decimal number and returns the result.</p>
 
@@ -1565,8 +1565,8 @@ quiet NaN if this value is signaling NaN.</li>
 
 <h3>Add</h3>
 
-<pre><code>public EDecimal Add(EDecimal otherValue, EContext ctx)
-</code></pre>
+<pre>public EDecimal Add(EDecimal otherValue, EContext ctx)
+</pre>
 
 <p>Finds the sum of this object and another object. The result&#x27;s exponent
  is set to the lower of the exponents of the two operands.</p>
@@ -1590,8 +1590,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <h3>compareTo</h3>
 
-<pre><code>public int compareTo(EDecimal other)
-</code></pre>
+<pre>public int compareTo(EDecimal other)
+</pre>
 
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
@@ -1625,8 +1625,8 @@ or if <code>other</code> is null, or 0 if both values are equal.</li>
 
 <h3>CompareToBinary</h3>
 
-<pre><code>public int CompareToBinary(EFloat other)
-</code></pre>
+<pre>public int CompareToBinary(EFloat other)
+</pre>
 
 <p>Compares an arbitrary-precision binary float with this instance.</p>
 
@@ -1648,8 +1648,8 @@ null.</li>
 
 <h3>CompareToSignal</h3>
 
-<pre><code>public EDecimal CompareToSignal(EDecimal other, EContext ctx)
-</code></pre>
+<pre>public EDecimal CompareToSignal(EDecimal other, EContext ctx)
+</pre>
 
 <p>Compares the mathematical values of this object and another object, treating
  quiet NaN as signaling. <p>In this method, negative zero and positive
@@ -1677,8 +1677,8 @@ other value, or 1 if this object is greater.</li>
 
 <h3>CompareToTotalMagnitude</h3>
 
-<pre><code>public int CompareToTotalMagnitude(EDecimal other)
-</code></pre>
+<pre>public int CompareToTotalMagnitude(EDecimal other)
+</pre>
 
 <p>Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In this
@@ -1706,8 +1706,8 @@ object is less than the other value, or 1 if this object is greater.</li>
 
 <h3>CompareToTotal</h3>
 
-<pre><code>public int CompareToTotal(EDecimal other, EContext ctx)
-</code></pre>
+<pre>public int CompareToTotal(EDecimal other, EContext ctx)
+</pre>
 
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
@@ -1741,8 +1741,8 @@ Does not signal flags if either value is signaling NaN.</li>
 
 <h3>CompareToTotal</h3>
 
-<pre><code>public int CompareToTotal(EDecimal other)
-</code></pre>
+<pre>public int CompareToTotal(EDecimal other)
+</pre>
 
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
@@ -1771,8 +1771,8 @@ object is less than the other value, or 1 if this object is greater.</li>
 
 <h3>CompareToWithContext</h3>
 
-<pre><code>public EDecimal CompareToWithContext(EDecimal other, EContext ctx)
-</code></pre>
+<pre>public EDecimal CompareToWithContext(EDecimal other, EContext ctx)
+</pre>
 
 <p>Compares the mathematical values of this object and another object. <p>In
  this method, negative zero and positive zero are considered
@@ -1800,8 +1800,8 @@ other value, or 1 if this object is greater.</li>
 
 <h3>Divide</h3>
 
-<pre><code>public EDecimal Divide(EDecimal divisor)
-</code></pre>
+<pre>public EDecimal Divide(EDecimal divisor)
+</pre>
 
 <p>Divides this object by another decimal number and returns the result. When
  possible, the result will be exact.</p>
@@ -1823,8 +1823,8 @@ exact because it would have a nonterminating decimal expansion.</li>
 
 <h3>Divide</h3>
 
-<pre><code>public EDecimal Divide(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal Divide(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Divides this arbitrary-precision decimal number by another
  arbitrary-precision decimal number. The preferred exponent for the
@@ -1856,8 +1856,8 @@ not exact.</li>
 
 <h3>DivideAndRemainderNaturalScale</h3>
 
-<pre><code>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor)
-</code></pre>
+<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to DivRemNaturalScale.</p>
 
@@ -1876,8 +1876,8 @@ order.</li>
 
 <h3>DivideAndRemainderNaturalScale</h3>
 
-<pre><code>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>@Deprecated public EDecimal[] DivideAndRemainderNaturalScale(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to DivRemNaturalScale.</p>
 
@@ -1906,8 +1906,8 @@ order.</li>
 
 <h3>DivRemNaturalScale</h3>
 
-<pre><code>public EDecimal[] DivRemNaturalScale(EDecimal divisor)
-</code></pre>
+<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor)
+</pre>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.</p>
@@ -1927,8 +1927,8 @@ order.</li>
 
 <h3>DivRemNaturalScale</h3>
 
-<pre><code>public EDecimal[] DivRemNaturalScale(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal[] DivRemNaturalScale(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
  and the formula in RemainderNaturalScale.</p>
@@ -1958,8 +1958,8 @@ order.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, EContext ctx)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, EContext ctx)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent to the result.</p>
@@ -1999,8 +1999,8 @@ result is not exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, EContext ctx)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, EContext ctx)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent (expressed as a 32-bit signed integer) to the result, using
@@ -2041,8 +2041,8 @@ result is not exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, ERounding rounding)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall, ERounding rounding)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent to the result.</p>
@@ -2073,8 +2073,8 @@ exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, ERounding rounding)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt, ERounding rounding)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent (expressed as a 32-bit signed integer) to the result, using
@@ -2106,8 +2106,8 @@ exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent, EContext ctx)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent, EContext ctx)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent to the result.</p>
@@ -2146,8 +2146,8 @@ result is not exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger exponent)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent to the result, using the half-even rounding mode.</p>
@@ -2173,8 +2173,8 @@ the dividend are 0.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, long desiredExponentSmall)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent (expressed as a 64-bit signed integer) to the result, using
@@ -2202,8 +2202,8 @@ the dividend are 0.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, int desiredExponentInt)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent (expressed as a 32-bit signed integer) to the result, using
@@ -2231,8 +2231,8 @@ the dividend are 0.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre><code>public EDecimal DivideToExponent(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
-</code></pre>
+<pre>public EDecimal DivideToExponent(EDecimal divisor, EInteger desiredExponent, ERounding rounding)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and gives a particular
  exponent to the result.</p>
@@ -2262,8 +2262,8 @@ not exact.</li>
 
 <h3>DivideToIntegerNaturalScale</h3>
 
-<pre><code>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor)
-</code></pre>
+<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor)
+</pre>
 
 <p>Divides two arbitrary-precision decimal numbers, and returns the integer
  part of the result, rounded down, with the preferred exponent set to
@@ -2286,8 +2286,8 @@ dividend is nonzero. Signals FlagInvalid and returns not-a-number
 
 <h3>DivideToIntegerNaturalScale</h3>
 
-<pre><code>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal DivideToIntegerNaturalScale(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Divides this object by another object, and returns the integer part of the
  result (which is initially rounded down), with the preferred exponent
@@ -2320,8 +2320,8 @@ the rounding mode is ERounding.None and the result is not exact.</li>
 
 <h3>DivideToIntegerZeroScale</h3>
 
-<pre><code>public EDecimal DivideToIntegerZeroScale(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal DivideToIntegerZeroScale(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Divides this object by another object, and returns the integer part of the
  result, with the exponent set to 0.</p>
@@ -2350,8 +2350,8 @@ if the result doesn&#39;t fit the given precision.</li>
 
 <h3>DivideToSameExponent</h3>
 
-<pre><code>public EDecimal DivideToSameExponent(EDecimal divisor, ERounding rounding)
-</code></pre>
+<pre>public EDecimal DivideToSameExponent(EDecimal divisor, ERounding rounding)
+</pre>
 
 <p>Divides this object by another decimal number and returns a result with the
  same exponent as this object (the dividend).</p>
@@ -2377,8 +2377,8 @@ exact.</li>
 
 <h3>equals</h3>
 
-<pre><code>public boolean equals(EDecimal other)
-</code></pre>
+<pre>public boolean equals(EDecimal other)
+</pre>
 
 <p>Determines whether this object&#x27;s mantissa (significand), exponent, and
  properties are equal to those of another object. Not-a-number values
@@ -2399,8 +2399,8 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 
 <h3>equals</h3>
 
-<pre><code>public boolean equals(Object obj)
-</code></pre>
+<pre>public boolean equals(Object obj)
+</pre>
 
 <p>Determines whether this object&#x27;s mantissa (significand), exponent, and
  properties are equal to those of another object and that other object
@@ -2427,8 +2427,8 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 
 <h3>Exp</h3>
 
-<pre><code>public EDecimal Exp(EContext ctx)
-</code></pre>
+<pre>public EDecimal Exp(EContext ctx)
+</pre>
 
 <p>Finds e (the base of natural logarithms) raised to the power of this
  object&#x27;s value.</p>
@@ -2457,8 +2457,8 @@ or the precision is unlimited (the context&#39;s Precision property is
 
 <h3>hashCode</h3>
 
-<pre><code>public int hashCode()
-</code></pre>
+<pre>public int hashCode()
+</pre>
 
 <p>Calculates this object&#x27;s hash code. No application or process IDs are
  used in the hash code calculation.</p>
@@ -2477,8 +2477,8 @@ or the precision is unlimited (the context&#39;s Precision property is
 
 <h3>IsInfinity</h3>
 
-<pre><code>public boolean IsInfinity()
-</code></pre>
+<pre>public boolean IsInfinity()
+</pre>
 
 <p>Gets a value indicating whether this object is positive or negative
  infinity.</p>
@@ -2492,8 +2492,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>IsNaN</h3>
 
-<pre><code>public boolean IsNaN()
-</code></pre>
+<pre>public boolean IsNaN()
+</pre>
 
 <p>Gets a value indicating whether this object is not a number (NaN).</p>
 
@@ -2505,8 +2505,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>IsNegativeInfinity</h3>
 
-<pre><code>public boolean IsNegativeInfinity()
-</code></pre>
+<pre>public boolean IsNegativeInfinity()
+</pre>
 
 <p>Returns whether this object is negative infinity.</p>
 
@@ -2518,8 +2518,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>IsPositiveInfinity</h3>
 
-<pre><code>public boolean IsPositiveInfinity()
-</code></pre>
+<pre>public boolean IsPositiveInfinity()
+</pre>
 
 <p>Returns whether this object is positive infinity.</p>
 
@@ -2531,8 +2531,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>IsQuietNaN</h3>
 
-<pre><code>public boolean IsQuietNaN()
-</code></pre>
+<pre>public boolean IsQuietNaN()
+</pre>
 
 <p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
 
@@ -2545,8 +2545,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>IsSignalingNaN</h3>
 
-<pre><code>public boolean IsSignalingNaN()
-</code></pre>
+<pre>public boolean IsSignalingNaN()
+</pre>
 
 <p>Gets a value indicating whether this object is a signaling not-a-number
  value.</p>
@@ -2560,8 +2560,8 @@ otherwise, <code>false</code>.</li>
 
 <h3>Log</h3>
 
-<pre><code>public EDecimal Log(EContext ctx)
-</code></pre>
+<pre>public EDecimal Log(EContext ctx)
+</pre>
 
 <p>Finds the natural logarithm of this object, that is, the power (exponent)
  that e (the base of natural logarithms) must be raised to in order to
@@ -2594,8 +2594,8 @@ infinity if this object&#39;s value is 0.</li>
 
 <h3>Log10</h3>
 
-<pre><code>public EDecimal Log10(EContext ctx)
-</code></pre>
+<pre>public EDecimal Log10(EContext ctx)
+</pre>
 
 <p>Finds the base-10 logarithm of this object, that is, the power (exponent)
  that the number 10 must be raised to in order to equal this
@@ -2625,8 +2625,8 @@ or the precision is unlimited (the context&#39;s Precision property is
 
 <h3>MovePointLeft</h3>
 
-<pre><code>public EDecimal MovePointLeft(int places)
-</code></pre>
+<pre>public EDecimal MovePointLeft(int places)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the left.</p>
@@ -2648,8 +2648,8 @@ more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre><code>public EDecimal MovePointLeft(int places, EContext ctx)
-</code></pre>
+<pre>public EDecimal MovePointLeft(int places, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the left.</p>
@@ -2676,8 +2676,8 @@ more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre><code>public EDecimal MovePointLeft(EInteger bigPlaces)
-</code></pre>
+<pre>public EDecimal MovePointLeft(EInteger bigPlaces)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the left.</p>
@@ -2699,8 +2699,8 @@ to more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre><code>public EDecimal MovePointLeft(EInteger bigPlaces, EContext ctx)
-</code></pre>
+<pre>public EDecimal MovePointLeft(EInteger bigPlaces, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the left.</p>
@@ -2727,8 +2727,8 @@ to more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre><code>public EDecimal MovePointRight(int places)
-</code></pre>
+<pre>public EDecimal MovePointRight(int places)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the right.</p>
@@ -2750,8 +2750,8 @@ more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre><code>public EDecimal MovePointRight(int places, EContext ctx)
-</code></pre>
+<pre>public EDecimal MovePointRight(int places, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the right.</p>
@@ -2778,8 +2778,8 @@ more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre><code>public EDecimal MovePointRight(EInteger bigPlaces)
-</code></pre>
+<pre>public EDecimal MovePointRight(EInteger bigPlaces)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the right.</p>
@@ -2801,8 +2801,8 @@ to more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre><code>public EDecimal MovePointRight(EInteger bigPlaces, EContext ctx)
-</code></pre>
+<pre>public EDecimal MovePointRight(EInteger bigPlaces, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with the decimal point moved to
  the right.</p>
@@ -2829,8 +2829,8 @@ to more than 0.</li>
 
 <h3>Multiply</h3>
 
-<pre><code>public EDecimal Multiply(EDecimal otherValue)
-</code></pre>
+<pre>public EDecimal Multiply(EDecimal otherValue)
+</pre>
 
 <p>Multiplies two decimal numbers. The resulting exponent will be the sum of
  the exponents of the two decimal numbers.</p>
@@ -2849,8 +2849,8 @@ to more than 0.</li>
 
 <h3>Multiply</h3>
 
-<pre><code>public EDecimal Multiply(EDecimal op, EContext ctx)
-</code></pre>
+<pre>public EDecimal Multiply(EDecimal op, EContext ctx)
+</pre>
 
 <p>Multiplies two decimal numbers. The resulting scale will be the sum of the
  scales of the two decimal numbers. The result&#x27;s sign is positive
@@ -2876,8 +2876,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MultiplyAndAdd</h3>
 
-<pre><code>public EDecimal MultiplyAndAdd(EDecimal multiplicand, EDecimal augend)
-</code></pre>
+<pre>public EDecimal MultiplyAndAdd(EDecimal multiplicand, EDecimal augend)
+</pre>
 
 <p>Multiplies by one decimal number, and then adds another decimal number.</p>
 
@@ -2896,8 +2896,8 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MultiplyAndAdd</h3>
 
-<pre><code>public EDecimal MultiplyAndAdd(EDecimal op, EDecimal augend, EContext ctx)
-</code></pre>
+<pre>public EDecimal MultiplyAndAdd(EDecimal op, EDecimal augend, EContext ctx)
+</pre>
 
 <p>Multiplies by one value, and then adds another value.</p>
 
@@ -2924,8 +2924,8 @@ multiplying and adding.</p></li>
 
 <h3>MultiplyAndSubtract</h3>
 
-<pre><code>public EDecimal MultiplyAndSubtract(EDecimal op, EDecimal subtrahend, EContext ctx)
-</code></pre>
+<pre>public EDecimal MultiplyAndSubtract(EDecimal op, EDecimal subtrahend, EContext ctx)
+</pre>
 
 <p>Multiplies by one value, and then subtracts another value.</p>
 
@@ -2958,8 +2958,8 @@ multiplying and subtracting.</p></li>
 
 <h3>Negate</h3>
 
-<pre><code>public EDecimal Negate()
-</code></pre>
+<pre>public EDecimal Negate()
+</pre>
 
 <p>Gets an object with the same value as this one, but with the sign reversed.</p>
 
@@ -2973,8 +2973,8 @@ signaling NaN.</li>
 
 <h3>Negate</h3>
 
-<pre><code>public EDecimal Negate(EContext context)
-</code></pre>
+<pre>public EDecimal Negate(EContext context)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but with the
  sign reversed.</p>
@@ -2999,8 +2999,8 @@ NaN if this value is signaling NaN.</li>
 
 <h3>NextMinus</h3>
 
-<pre><code>public EDecimal NextMinus(EContext ctx)
-</code></pre>
+<pre>public EDecimal NextMinus(EContext ctx)
+</pre>
 
 <p>Finds the largest value that&#x27;s smaller than the given value.</p>
 
@@ -3025,8 +3025,8 @@ exponent range.</li>
 
 <h3>NextPlus</h3>
 
-<pre><code>public EDecimal NextPlus(EContext ctx)
-</code></pre>
+<pre>public EDecimal NextPlus(EContext ctx)
+</pre>
 
 <p>Finds the smallest value that&#x27;s greater than the given value.</p>
 
@@ -3051,8 +3051,8 @@ an unlimited exponent range.</li>
 
 <h3>NextToward</h3>
 
-<pre><code>public EDecimal NextToward(EDecimal otherValue, EContext ctx)
-</code></pre>
+<pre>public EDecimal NextToward(EDecimal otherValue, EContext ctx)
+</pre>
 
 <p>Finds the next value that is closer to the other object&#x27;s value than
  this object&#x27;s value. Returns a copy of this value with the same
@@ -3081,8 +3081,8 @@ an unlimited exponent range.</li>
 
 <h3>Plus</h3>
 
-<pre><code>public EDecimal Plus(EContext ctx)
-</code></pre>
+<pre>public EDecimal Plus(EContext ctx)
+</pre>
 
 <p>Rounds this object&#x27;s value to a given precision, using the given
  rounding mode and range of exponent, and also converts negative zero
@@ -3106,8 +3106,8 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>Pow</h3>
 
-<pre><code>public EDecimal Pow(EDecimal exponent, EContext ctx)
-</code></pre>
+<pre>public EDecimal Pow(EDecimal exponent, EContext ctx)
+</pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
 
@@ -3135,8 +3135,8 @@ property is 0), and the exponent has a fractional part.</li>
 
 <h3>Pow</h3>
 
-<pre><code>public EDecimal Pow(int exponentSmall, EContext ctx)
-</code></pre>
+<pre>public EDecimal Pow(int exponentSmall, EContext ctx)
+</pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
 
@@ -3160,8 +3160,8 @@ object and exponent are both 0.</li>
 
 <h3>Pow</h3>
 
-<pre><code>public EDecimal Pow(int exponentSmall)
-</code></pre>
+<pre>public EDecimal Pow(int exponentSmall)
+</pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
 
@@ -3180,8 +3180,8 @@ exponent are both 0.</li>
 
 <h3>Precision</h3>
 
-<pre><code>public EInteger Precision()
-</code></pre>
+<pre>public EInteger Precision()
+</pre>
 
 <p>Finds the number of digits in this number&#39;s mantissa (significand). Returns
  1 if this value is 0, and 0 if this value is infinity or not-a-number
@@ -3195,8 +3195,8 @@ exponent are both 0.</li>
 
 <h3>Quantize</h3>
 
-<pre><code>public EDecimal Quantize(EInteger desiredExponent, EContext ctx)
-</code></pre>
+<pre>public EDecimal Quantize(EInteger desiredExponent, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value but a new exponent. <p>Note
  that this is not always the same as rounding to a given number of
@@ -3245,8 +3245,8 @@ exponent is outside that range.</li>
 
 <h3>Quantize</h3>
 
-<pre><code>public EDecimal Quantize(int desiredExponentInt, ERounding rounding)
-</code></pre>
+<pre>public EDecimal Quantize(int desiredExponentInt, ERounding rounding)
+</pre>
 
 <p>Returns a decimal number with the same value as this one but a new exponent.
  <p><b>Remark:</b> This method can be used to implement fixed-point
@@ -3279,8 +3279,8 @@ not exact.</li>
 
 <h3>Quantize</h3>
 
-<pre><code>public EDecimal Quantize(int desiredExponentInt, EContext ctx)
-</code></pre>
+<pre>public EDecimal Quantize(int desiredExponentInt, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value but a new exponent. <p>Note
  that this is not always the same as rounding to a given number of
@@ -3329,8 +3329,8 @@ exponent is outside that range.</li>
 
 <h3>Quantize</h3>
 
-<pre><code>public EDecimal Quantize(EDecimal otherValue, EContext ctx)
-</code></pre>
+<pre>public EDecimal Quantize(EDecimal otherValue, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but with the
  same exponent as another decimal number. <p>Note that this is not
@@ -3374,8 +3374,8 @@ exponent is outside that range.</li>
 
 <h3>Reduce</h3>
 
-<pre><code>public EDecimal Reduce(EContext ctx)
-</code></pre>
+<pre>public EDecimal Reduce(EContext ctx)
+</pre>
 
 <p>Removes trailing zeros from this object&#x27;s mantissa (significand). For
  example, 1.00 becomes 1. <p>If this object&#39;s value is 0, changes the
@@ -3401,8 +3401,8 @@ there may still be some trailing zeros in the mantissa (significand).</li>
 
 <h3>Remainder</h3>
 
-<pre><code>public EDecimal Remainder(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal Remainder(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Finds the remainder that results when dividing two arbitrary-precision
  decimal numbers. The remainder is the value that remains when the
@@ -3434,8 +3434,8 @@ the given precision.</li>
 
 <h3>RemainderNaturalScale</h3>
 
-<pre><code>public EDecimal RemainderNaturalScale(EDecimal divisor)
-</code></pre>
+<pre>public EDecimal RemainderNaturalScale(EDecimal divisor)
+</pre>
 
 <p>Calculates the remainder of a number by the formula <code>&quot;this&quot; - ((&quot;this&quot; /
  &quot;divisor&quot;) * &quot;divisor&quot;)</code></p>
@@ -3454,8 +3454,8 @@ the given precision.</li>
 
 <h3>RemainderNaturalScale</h3>
 
-<pre><code>public EDecimal RemainderNaturalScale(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal RemainderNaturalScale(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
  &quot;divisor&quot;) * &quot;divisor&quot;).</p>
@@ -3484,8 +3484,8 @@ division, is needed.</p></li>
 
 <h3>RemainderNear</h3>
 
-<pre><code>public EDecimal RemainderNear(EDecimal divisor, EContext ctx)
-</code></pre>
+<pre>public EDecimal RemainderNear(EDecimal divisor, EContext ctx)
+</pre>
 
 <p>Finds the distance to the closest multiple of the given divisor, based on
  the result of dividing this object&#x27;s value by another
@@ -3527,8 +3527,8 @@ given precision.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(EInteger exponent, EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToExponent(EInteger exponent, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary.</p>
@@ -3563,8 +3563,8 @@ arithmetic context.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(EInteger exponent)
-</code></pre>
+<pre>public EDecimal RoundToExponent(EInteger exponent)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary, using the HalfEven rounding mode.</p>
@@ -3589,8 +3589,8 @@ given exponent.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(EInteger exponent, ERounding rounding)
-</code></pre>
+<pre>public EDecimal RoundToExponent(EInteger exponent, ERounding rounding)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary, using the given rounding mode.</p>
@@ -3616,8 +3616,8 @@ given exponent.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(int exponentSmall)
-</code></pre>
+<pre>public EDecimal RoundToExponent(int exponentSmall)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary, using the HalfEven rounding mode.</p>
@@ -3642,8 +3642,8 @@ given exponent.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(int exponentSmall, EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToExponent(int exponentSmall, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary.</p>
@@ -3678,8 +3678,8 @@ arithmetic context.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre><code>public EDecimal RoundToExponent(int exponentSmall, ERounding rounding)
-</code></pre>
+<pre>public EDecimal RoundToExponent(int exponentSmall, ERounding rounding)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to a
  new exponent if necessary.</p>
@@ -3706,8 +3706,8 @@ places.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre><code>public EDecimal RoundToExponentExact(EInteger exponent, EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToExponentExact(EInteger exponent, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
  the given exponent, and signals an inexact flag if the result would
@@ -3743,8 +3743,8 @@ the valid range of the arithmetic context.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre><code>public EDecimal RoundToExponentExact(int exponentSmall, EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToExponentExact(int exponentSmall, EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
  an integer, and signals an inexact flag if the result would be
@@ -3780,8 +3780,8 @@ the valid range of the arithmetic context.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre><code>public EDecimal RoundToExponentExact(int exponentSmall, ERounding rounding)
-</code></pre>
+<pre>public EDecimal RoundToExponentExact(int exponentSmall, ERounding rounding)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
  an integer, and signals an inexact flag if the result would be
@@ -3808,8 +3808,8 @@ the given exponent.</li>
 
 <h3>RoundToIntegerExact</h3>
 
-<pre><code>public EDecimal RoundToIntegerExact(EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToIntegerExact(EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
  an integer, and signals an inexact flag if the result would be
@@ -3839,8 +3839,8 @@ context.</li>
 
 <h3>RoundToIntegerNoRoundedFlag</h3>
 
-<pre><code>public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToIntegerNoRoundedFlag(EContext ctx)
+</pre>
 
 <p>Returns a decimal number with the same value as this object but rounded to
  an integer, without adding the <code>FlagInexact</code> or
@@ -3871,8 +3871,8 @@ outside of the valid range of the arithmetic context.</li>
 
 <h3>RoundToIntegralExact</h3>
 
-<pre><code>@Deprecated public EDecimal RoundToIntegralExact(EContext ctx)
-</code></pre>
+<pre>@Deprecated public EDecimal RoundToIntegralExact(EContext ctx)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to RoundToIntegerExact.</p>
 
@@ -3900,8 +3900,8 @@ context.</li>
 
 <h3>RoundToIntegralNoRoundedFlag</h3>
 
-<pre><code>@Deprecated public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx)
-</code></pre>
+<pre>@Deprecated public EDecimal RoundToIntegralNoRoundedFlag(EContext ctx)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to RoundToIntegerNoRoundedFlag.</p>
 
@@ -3930,8 +3930,8 @@ outside of the valid range of the arithmetic context.</li>
 
 <h3>RoundToPrecision</h3>
 
-<pre><code>public EDecimal RoundToPrecision(EContext ctx)
-</code></pre>
+<pre>public EDecimal RoundToPrecision(EContext ctx)
+</pre>
 
 <p>Rounds this object&#x27;s value to a given precision, using the given
  rounding mode and range of exponent.</p>
@@ -3956,8 +3956,8 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>ScaleByPowerOfTen</h3>
 
-<pre><code>public EDecimal ScaleByPowerOfTen(int places)
-</code></pre>
+<pre>public EDecimal ScaleByPowerOfTen(int places)
+</pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
@@ -3975,8 +3975,8 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>ScaleByPowerOfTen</h3>
 
-<pre><code>public EDecimal ScaleByPowerOfTen(int places, EContext ctx)
-</code></pre>
+<pre>public EDecimal ScaleByPowerOfTen(int places, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
@@ -3999,8 +3999,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <h3>ScaleByPowerOfTen</h3>
 
-<pre><code>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces)
-</code></pre>
+<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces)
+</pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
 
@@ -4018,8 +4018,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <h3>ScaleByPowerOfTen</h3>
 
-<pre><code>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces, EContext ctx)
-</code></pre>
+<pre>public EDecimal ScaleByPowerOfTen(EInteger bigPlaces, EContext ctx)
+</pre>
 
 <p>Returns a number similar to this number but with its scale adjusted.</p>
 
@@ -4042,8 +4042,8 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <h3>Sqrt</h3>
 
-<pre><code>public EDecimal Sqrt(EContext ctx)
-</code></pre>
+<pre>public EDecimal Sqrt(EContext ctx)
+</pre>
 
 <p>Finds the square root of this object&#x27;s value.</p>
 
@@ -4071,8 +4071,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>SquareRoot</h3>
 
-<pre><code>@Deprecated public EDecimal SquareRoot(EContext ctx)
-</code></pre>
+<pre>@Deprecated public EDecimal SquareRoot(EContext ctx)
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to Sqrt.</p>
 
@@ -4100,8 +4100,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>Subtract</h3>
 
-<pre><code>public EDecimal Subtract(EDecimal otherValue)
-</code></pre>
+<pre>public EDecimal Subtract(EDecimal otherValue)
+</pre>
 
 <p>Subtracts an arbitrary-precision decimal number from this instance and
  returns the result.</p>
@@ -4120,8 +4120,8 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>Subtract</h3>
 
-<pre><code>public EDecimal Subtract(EDecimal otherValue, EContext ctx)
-</code></pre>
+<pre>public EDecimal Subtract(EDecimal otherValue, EContext ctx)
+</pre>
 
 <p>Subtracts an arbitrary-precision decimal number from this instance.</p>
 
@@ -4151,8 +4151,8 @@ null.</li>
 
 <h3>ToDouble</h3>
 
-<pre><code>public double ToDouble()
-</code></pre>
+<pre>public double ToDouble()
+</pre>
 
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
@@ -4175,8 +4175,8 @@ exceeds the range of a 64-bit floating point number.</li>
 
 <h3>ToEInteger</h3>
 
-<pre><code>public EInteger ToEInteger()
-</code></pre>
+<pre>public EInteger ToEInteger()
+</pre>
 
 <p>Converts this value to an arbitrary-precision integer. Any fractional part
  in this value will be discarded when converting to an
@@ -4197,8 +4197,8 @@ not-a-number (NaN).</li>
 
 <h3>ToEIntegerExact</h3>
 
-<pre><code>@Deprecated public EInteger ToEIntegerExact()
-</code></pre>
+<pre>@Deprecated public EInteger ToEIntegerExact()
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to ToEIntegerIfExact.</p>
 
@@ -4218,8 +4218,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToEIntegerIfExact</h3>
 
-<pre><code>public EInteger ToEIntegerIfExact()
-</code></pre>
+<pre>public EInteger ToEIntegerIfExact()
+</pre>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the
  fractional part of the value would be lost.</p>
@@ -4240,8 +4240,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToEngineeringString</h3>
 
-<pre><code>public String ToEngineeringString()
-</code></pre>
+<pre>public String ToEngineeringString()
+</pre>
 
 <p>Same as toString(), except that when an exponent is used it will be a
  multiple of 3.</p>
@@ -4254,8 +4254,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToExtendedFloat</h3>
 
-<pre><code>@Deprecated public EFloat ToExtendedFloat()
-</code></pre>
+<pre>@Deprecated public EFloat ToExtendedFloat()
+</pre>
 
 <p>Deprecated.&nbsp;Renamed to ToEFloat.</p>
 
@@ -4267,8 +4267,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToEFloat</h3>
 
-<pre><code>public EFloat ToEFloat()
-</code></pre>
+<pre>public EFloat ToEFloat()
+</pre>
 
 <p>Creates a binary floating-point number from this object&#x27;s value. Note
  that if the binary floating-point number contains a negative
@@ -4284,8 +4284,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToPlainString</h3>
 
-<pre><code>public String ToPlainString()
-</code></pre>
+<pre>public String ToPlainString()
+</pre>
 
 <p>Converts this value to a string, but without using exponential notation.</p>
 
@@ -4297,8 +4297,8 @@ not-a-number (NaN).</p></li>
 
 <h3>ToSingle</h3>
 
-<pre><code>public float ToSingle()
-</code></pre>
+<pre>public float ToSingle()
+</pre>
 
 <p>Converts this value to its closest equivalent as a 32-bit floating-point
  number. The half-even rounding mode is used. <p>If this value is a
@@ -4321,8 +4321,8 @@ exceeds the range of a 32-bit floating point number.</li>
 
 <h3>toString</h3>
 
-<pre><code>public String toString()
-</code></pre>
+<pre>public String toString()
+</pre>
 
 <p>Converts this value to a string. Returns a value compatible with this
  class&#39;s FromString method.</p>
@@ -4344,8 +4344,8 @@ decimal point.</li>
 
 <h3>Ulp</h3>
 
-<pre><code>public EDecimal Ulp()
-</code></pre>
+<pre>public EDecimal Ulp()
+</pre>
 
 <p>Returns the unit in the last place. The mantissa (significand) will be 1 and
  the exponent will be this number&#39;s exponent. Returns 1 with an
@@ -4359,8 +4359,8 @@ decimal point.</li>
 
 <h3>ToEFloat</h3>
 
-<pre><code>public EFloat ToEFloat(EContext ec)
-</code></pre>
+<pre>public EFloat ToEFloat(EContext ec)
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -4378,8 +4378,8 @@ decimal point.</li>
 
 <h3>ToByteChecked</h3>
 
-<pre><code>public byte ToByteChecked()
-</code></pre>
+<pre>public byte ToByteChecked()
+</pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after truncating to an integer.</p>
@@ -4399,8 +4399,8 @@ the truncated integer is less than 0 or greater than 255.</li>
 
 <h3>ToByteUnchecked</h3>
 
-<pre><code>public byte ToByteUnchecked()
-</code></pre>
+<pre>public byte ToByteUnchecked()
+</pre>
 
 <p>Truncates this number&#39;s value to an integer and returns the
  least-significant bits of its two&#39;s-complement form as a byte (from 0
@@ -4415,8 +4415,8 @@ value is infinity or not-a-number.</li>
 
 <h3>ToByteIfExact</h3>
 
-<pre><code>public byte ToByteIfExact()
-</code></pre>
+<pre>public byte ToByteIfExact()
+</pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) without rounding to a different numerical value.</p>
@@ -4436,8 +4436,8 @@ an exact integer, or is less than 0 or greater than 255.</li>
 
 <h3>FromByte</h3>
 
-<pre><code>public static EDecimal FromByte(byte inputByte)
-</code></pre>
+<pre>public static EDecimal FromByte(byte inputByte)
+</pre>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</p>
 
@@ -4455,8 +4455,8 @@ an exact integer, or is less than 0 or greater than 255.</li>
 
 <h3>ToInt16Checked</h3>
 
-<pre><code>public short ToInt16Checked()
-</code></pre>
+<pre>public short ToInt16Checked()
+</pre>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after truncating to an integer.</p>
@@ -4476,8 +4476,8 @@ the truncated integer is less than -32768 or greater than 32767.</li>
 
 <h3>ToInt16Unchecked</h3>
 
-<pre><code>public short ToInt16Unchecked()
-</code></pre>
+<pre>public short ToInt16Unchecked()
+</pre>
 
 <p>Truncates this number&#39;s value to an integer and returns the
  least-significant bits of its two&#39;s-complement form as a 16-bit
@@ -4492,8 +4492,8 @@ value is infinity or not-a-number.</li>
 
 <h3>ToInt16IfExact</h3>
 
-<pre><code>public short ToInt16IfExact()
-</code></pre>
+<pre>public short ToInt16IfExact()
+</pre>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer without rounding to a different numerical
@@ -4514,8 +4514,8 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 
 <h3>FromInt16</h3>
 
-<pre><code>public static EDecimal FromInt16(short inputInt16)
-</code></pre>
+<pre>public static EDecimal FromInt16(short inputInt16)
+</pre>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision decimal number.</p>
 
@@ -4533,8 +4533,8 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 
 <h3>ToInt32Checked</h3>
 
-<pre><code>public int ToInt32Checked()
-</code></pre>
+<pre>public int ToInt32Checked()
+</pre>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer after truncating to an integer.</p>
@@ -4555,8 +4555,8 @@ the truncated integer is less than -2147483648 or greater than
 
 <h3>ToInt32Unchecked</h3>
 
-<pre><code>public int ToInt32Unchecked()
-</code></pre>
+<pre>public int ToInt32Unchecked()
+</pre>
 
 <p>Truncates this number&#39;s value to an integer and returns the
  least-significant bits of its two&#39;s-complement form as a 32-bit
@@ -4571,8 +4571,8 @@ value is infinity or not-a-number.</li>
 
 <h3>ToInt32IfExact</h3>
 
-<pre><code>public int ToInt32IfExact()
-</code></pre>
+<pre>public int ToInt32IfExact()
+</pre>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer without rounding to a different numerical
@@ -4594,8 +4594,8 @@ an exact integer, or is less than -2147483648 or greater than
 
 <h3>ToInt64Checked</h3>
 
-<pre><code>public long ToInt64Checked()
-</code></pre>
+<pre>public long ToInt64Checked()
+</pre>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer after truncating to an integer.</p>
@@ -4616,8 +4616,8 @@ than 9223372036854775807.</li>
 
 <h3>ToInt64Unchecked</h3>
 
-<pre><code>public long ToInt64Unchecked()
-</code></pre>
+<pre>public long ToInt64Unchecked()
+</pre>
 
 <p>Truncates this number&#39;s value to an integer and returns the
  least-significant bits of its two&#39;s-complement form as a 64-bit
@@ -4632,8 +4632,8 @@ value is infinity or not-a-number.</li>
 
 <h3>ToInt64IfExact</h3>
 
-<pre><code>public long ToInt64IfExact()
-</code></pre>
+<pre>public long ToInt64IfExact()
+</pre>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer without rounding to a different numerical

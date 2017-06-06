@@ -708,8 +708,8 @@ indicate how far the interpolation has reached.</p>
 
 <p>To use this method, you must include the script &quot;extras/interp.js&quot;. Example:</p>
 
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/interp.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/interp.js&quot;&gt;&lt;/script&gt;
+</pre>
 
 <h4>Parameters</h4>
 
@@ -1027,19 +1027,19 @@ reverse the sign of the 1st, 3rd, 5th, 7th, 9th, 11th,
 up vector of (0, 1, 0) except if the view direction is parallel to that
 vector or nearly so.</p>
 
-<pre><code>var upVector=[0,1,0]; // Y axis
+<pre>var upVector=[0,1,0]; // Y axis
 var viewdir=HMath.vec3sub(lookingAt, viewerPos);
 var par=HMath.vec3length(HMath.vec3cross(viewdir,upVector));
 if(par&lt;0.00001)upVector=[0,0,1]; // view is almost parallel, so use Z axis
 var matrix=HMath.mat4lookat(viewerPos,lookingAt,upVector);
-</code></pre>
+</pre>
 
 <p>The following example creates an
 isometric projection for a right-handed coordinate system. The Y
 axis will point up, the Z axis toward the bottom left, and the X axis toward
 the bottom right.</p>
 
-<pre><code>// Assumes an orthographic projection matrix is used. Example:
+<pre>// Assumes an orthographic projection matrix is used. Example:
 // var projectionMatrix=H3DU.Math.mat4ortho(-10,10,-10,10,-50,50);
 // Camera will be at (1,1,1) -- actually (sqrt(1/3),sqrt(1/3),sqrt(1/3)) --
 // and point toward [0,0,0]
@@ -1047,17 +1047,17 @@ var lookPoint=[0,0,0];
 var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
 cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
 var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
-</code></pre>
+</pre>
 
 <p>The following example is like the previous
 example, but with the Z axis pointing up.</p>
 
-<pre><code>var lookPoint=[0,0,0];
+<pre>var lookPoint=[0,0,0];
 var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
 cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
 // Positive Z axis is the up vector
 var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.mat4multiply'></a></p>
 
@@ -2094,8 +2094,8 @@ in the global coordinate frame.</p>
 
 <p>This method is equivalent to the following (see also <a href="H3DU.Math.html#H3DU.Math.quatMultiply">H3DU.Math.quatMultiply</a>):</p>
 
-<pre><code>return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
-</code></pre>
+<pre>return quatMultiply(quat,quatFromAxisAngle(angle,v,vy,vz));
+</pre>
 
 <h4>Parameters</h4>
 
@@ -2468,11 +2468,11 @@ sum of the products of their components (for example, <b>a</b>&#39;s X times
 <p>The following shows a fast way to compare
 a vector&#39;s length using the dot product.</p>
 
-<pre><code>// Check if the vector&#39;s length squared is less than 20 units squared
+<pre>// Check if the vector&#39;s length squared is less than 20 units squared
 if(H3DU.Math.vec2dot(vector, vector)&lt;20*20) {
 // The vector&#39;s length is shorter than 20 units
 }
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec2length'></a></p>
 
@@ -2618,7 +2618,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 <p>The following example changes the
 length of a line segment.</p>
 
-<pre><code>var startPt=[x1,y1]; // Line segment&#39;s start
+<pre>var startPt=[x1,y1]; // Line segment&#39;s start
 var endPt=[x2,y2]; // Line segment&#39;s end
 // Find difference between endPt and startPt
 var delta=H3DU.Math.vec2sub(endPt,startPt);
@@ -2628,7 +2628,7 @@ var deltaNorm=H3DU.Math.vec2normalize(delta);
 H3DU.Math.vec2scaleInPlace(deltaNorm,10);
 // Find the new endpoint
 endPt=H3DU.Math.vec2add(startPt,deltaNorm);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec2normalizeInPlace'></a></p>
 
@@ -2998,7 +2998,7 @@ follows:<br>
 <p>The following example uses the cross product to
 calculate a triangle&#39;s normal vector and its area.</p>
 
-<pre><code>var a=triangle[0];
+<pre>var a=triangle[0];
 var b=triangle[1];
 var c=triangle[2];
 // Find vector from C to A
@@ -3009,18 +3009,18 @@ var db=H3DU.Math.vec3sub(b,c);
 var normal=H3DU.Math.vec3cross(da,db);
 // Find the triangle&#39;s area
 var area=H3DU.Math.vec3length(normal)*0.5;
-</code></pre>
+</pre>
 
 <p>The following example finds the cosine and sine of
 the angle between two unit vectors and the orthogonal unit vector of both.</p>
 
-<pre><code>var cr=H3DU.Math.vec3cross(unitA,unitB);
+<pre>var cr=H3DU.Math.vec3cross(unitA,unitB);
 // Cosine of the angle. Will be positive or negative depending on
 // the shortest angle between the vectors.
 var cosine=H3DU.Math.vec3dot(unitA,unitB);
 // Sine of the angle. Note that the sine will always be 0 or greater because
 // the shortest angle betw0] ? cr : H3DU.Math.vec3scale(cr,1.0/sine);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec3dist'></a></p>
 
@@ -3098,11 +3098,11 @@ same cross product. (Thus, the dot product is <i>commutative</i>.)
 <p>The following shows a fast way to compare
 a vector&#39;s length using the dot product.</p>
 
-<pre><code>// Check if the vector&#39;s length squared is less than 20 units squared
+<pre>// Check if the vector&#39;s length squared is less than 20 units squared
 if(H3DU.Math.vec3dot(vector, vector)&lt;20*20) {
 // The vector&#39;s length is shorter than 20 units
 }
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec3fromWindowPoint'></a></p>
 
@@ -3184,26 +3184,26 @@ interpolation of two vectors that uses the cube of &quot;factor&quot; rather tha
 &quot;factor&quot;. Rather than at a constant speed, the vectors are interpolated
 slowly then very fast.</p>
 
-<pre><code>factor = factor*factor*factor; // cube the interpolation factor
+<pre>factor = factor*factor*factor; // cube the interpolation factor
 var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
-</code></pre>
+</pre>
 
 <p>The following code does an inverted cubic
 interpolation. This time, vectors are interpolated fast then very slowly.</p>
 
-<pre><code>factor = 1 - factor; // Invert the factor
+<pre>factor = 1 - factor; // Invert the factor
 factor = factor*factor*factor; // cube the interpolation factor
 factor = 1 - factor; // Invert the result
 var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
-</code></pre>
+</pre>
 
 <p>The following code does the nonlinear
  interpolation called &quot;smoothstep&quot;. It slows down at the beginning
 and end, and speeds up in the middle.</p>
 
-<pre><code>factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
+<pre>factor = (3.0-2.0*factor)*factor*factor; // smoothstep interpolation
 var newVector = H3DU.Math.vec3lerp(vector1, vector2, factor);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec3mul'></a></p>
 
@@ -3343,7 +3343,7 @@ Note that due to rounding error, the vector&#39;s length might not be exactly eq
 <p>The following example changes the
 length of a line segment.</p>
 
-<pre><code>var startPt=[x1,y1,z1]; // Line segment&#39;s start
+<pre>var startPt=[x1,y1,z1]; // Line segment&#39;s start
 var endPt=[x2,y2,z2]; // Line segment&#39;s end
 // Find difference between endPt and startPt
 var delta=H3DU.Math.vec3sub(endPt,startPt);
@@ -3353,7 +3353,7 @@ var deltaNorm=H3DU.Math.vec3normalize(delta);
 H3DU.Math.vec3scaleInPlace(deltaNorm,10);
 // Find the new endpoint
 endPt=H3DU.Math.vec3add(startPt,deltaNorm);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Math.vec3normalizeInPlace'></a></p>
 

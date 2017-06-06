@@ -6,10 +6,10 @@
 
 <h2>PeterO.ExtendedRational</h2>
 
-<pre><code>public sealed class ExtendedRational :
+<pre>public sealed class ExtendedRational :
     System.IComparable,
     System.IEquatable
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
@@ -19,10 +19,10 @@
 
 <h3>ExtendedRational Constructor</h3>
 
-<pre><code>public ExtendedRational(
+<pre>public ExtendedRational(
     PeterO.BigInteger numerator,
     PeterO.BigInteger denominator);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.ExtendedRational.html">PeterO.ExtendedRational</a> class.</p>
 
@@ -44,64 +44,64 @@ is null.</li>
 
 <h3>NaN</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational NaN;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational NaN;
+</pre>
 
 <p>A not-a-number value.</p>
 
 <h3>NegativeInfinity</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational NegativeInfinity;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational NegativeInfinity;
+</pre>
 
 <p>Negative infinity, less than any other number.</p>
 
 <h3>NegativeZero</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational NegativeZero;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational NegativeZero;
+</pre>
 
 <p>A rational number for negative zero.</p>
 
 <h3>One</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational One;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational One;
+</pre>
 
 <p>The rational number one.</p>
 
 <h3>PositiveInfinity</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational PositiveInfinity;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational PositiveInfinity;
+</pre>
 
 <p>Positive infinity, greater than any other number.</p>
 
 <h3>SignalingNaN</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational SignalingNaN;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational SignalingNaN;
+</pre>
 
 <p>A signaling not-a-number value.</p>
 
 <h3>Ten</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational Ten;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational Ten;
+</pre>
 
 <p>The rational number ten.</p>
 
 <h3>Zero</h3>
 
-<pre><code>public static readonly PeterO.ExtendedRational Zero;
-</code></pre>
+<pre>public static readonly PeterO.ExtendedRational Zero;
+</pre>
 
 <p>A rational number for zero.</p>
 
 <h3>Denominator</h3>
 
-<pre><code>public PeterO.BigInteger Denominator { get; }
-</code></pre>
+<pre>public PeterO.BigInteger Denominator { get; }
+</pre>
 
 <p>Gets this object&#39;s denominator.</p>
 
@@ -111,8 +111,8 @@ is null.</li>
 
 <h3>IsFinite</h3>
 
-<pre><code>public bool IsFinite { get; }
-</code></pre>
+<pre>public bool IsFinite { get; }
+</pre>
 
 <p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -124,8 +124,8 @@ is null.</li>
 
 <h3>IsNegative</h3>
 
-<pre><code>public bool IsNegative { get; }
-</code></pre>
+<pre>public bool IsNegative { get; }
+</pre>
 
 <p>Gets a value indicating whether this object&#39;s value is negative (including negative zero).</p>
 
@@ -135,8 +135,8 @@ is null.</li>
 
 <h3>IsZero</h3>
 
-<pre><code>public bool IsZero { get; }
-</code></pre>
+<pre>public bool IsZero { get; }
+</pre>
 
 <p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -148,8 +148,8 @@ is null.</li>
 
 <h3>Numerator</h3>
 
-<pre><code>public PeterO.BigInteger Numerator { get; }
-</code></pre>
+<pre>public PeterO.BigInteger Numerator { get; }
+</pre>
 
 <p>Gets this object&#39;s numerator.</p>
 
@@ -159,8 +159,8 @@ is null.</li>
 
 <h3>Sign</h3>
 
-<pre><code>public int Sign { get; }
-</code></pre>
+<pre>public int Sign { get; }
+</pre>
 
 <p><b>Deprecated.</b> Use ERational from PeterO.Numbers/com.upokecenter.numbers.</p>
 
@@ -172,8 +172,8 @@ is null.</li>
 
 <h3>UnsignedNumerator</h3>
 
-<pre><code>public PeterO.BigInteger UnsignedNumerator { get; }
-</code></pre>
+<pre>public PeterO.BigInteger UnsignedNumerator { get; }
+</pre>
 
 <p>Gets this object&#39;s numerator with the sign removed.</p>
 
@@ -183,9 +183,9 @@ is null.</li>
 
 <h3>CompareTo</h3>
 
-<pre><code>public sealed int CompareTo(
+<pre>public sealed int CompareTo(
     PeterO.ExtendedRational other);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -201,10 +201,10 @@ is null.</li>
 
 <h3>Create</h3>
 
-<pre><code>public static PeterO.ExtendedRational Create(
+<pre>public static PeterO.ExtendedRational Create(
     int numeratorSmall,
     int denominatorSmall);
-</code></pre>
+</pre>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -221,10 +221,10 @@ is null.</li>
 
 <h3>Create</h3>
 
-<pre><code>public static PeterO.ExtendedRational Create(
+<pre>public static PeterO.ExtendedRational Create(
     PeterO.BigInteger numerator,
     PeterO.BigInteger denominator);
-</code></pre>
+</pre>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -250,9 +250,9 @@ is null.</li>
 
 <h3>Equals</h3>
 
-<pre><code>public override bool Equals(
+<pre>public override bool Equals(
     object obj);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -268,9 +268,9 @@ is null.</li>
 
 <h3>Equals</h3>
 
-<pre><code>public sealed bool Equals(
+<pre>public sealed bool Equals(
     PeterO.ExtendedRational other);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -286,8 +286,8 @@ is null.</li>
 
 <h3>GetHashCode</h3>
 
-<pre><code>public override int GetHashCode();
-</code></pre>
+<pre>public override int GetHashCode();
+</pre>
 
 <p>Calculates the hash code for this object. No application or process IDs are used in the hash code calculation.</p>
 
@@ -297,8 +297,8 @@ is null.</li>
 
 <h3>ToString</h3>
 
-<pre><code>public override string ToString();
-</code></pre>
+<pre>public override string ToString();
+</pre>
 
 <p>Converts this object to a text string.</p>
 

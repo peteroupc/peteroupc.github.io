@@ -6,20 +6,20 @@
 
 <h2>PeterO.PartialStream</h2>
 
-<pre><code>public sealed class PartialStream :
+<pre>public sealed class PartialStream :
     System.IO.Stream,
     System.IDisposable
-</code></pre>
+</pre>
 
 <p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
 <h3>PartialStream Constructor</h3>
 
-<pre><code>public PartialStream(
+<pre>public PartialStream(
     System.IO.Stream stream,
     long start,
     long length);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
@@ -33,12 +33,12 @@
 
 <h3>PartialStream Constructor</h3>
 
-<pre><code>public PartialStream(
+<pre>public PartialStream(
     System.IO.Stream stream,
     long start,
     long length,
     bool closeOnDispose);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
@@ -65,8 +65,8 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>CanRead</h3>
 
-<pre><code>public override bool CanRead { get; }
-</code></pre>
+<pre>public override bool CanRead { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream supports reading.</p>
 
@@ -76,8 +76,8 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>CanSeek</h3>
 
-<pre><code>public override bool CanSeek { get; }
-</code></pre>
+<pre>public override bool CanSeek { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream supports seeking.</p>
 
@@ -87,8 +87,8 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>CanWrite</h3>
 
-<pre><code>public override bool CanWrite { get; }
-</code></pre>
+<pre>public override bool CanWrite { get; }
+</pre>
 
 <p>Gets a value indicating whether the underlying stream supports writing.</p>
 
@@ -98,8 +98,8 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>Length</h3>
 
-<pre><code>public override long Length { get; }
-</code></pre>
+<pre>public override long Length { get; }
+</pre>
 
 <p>Gets the partial stream&#39;s length in bytes.</p>
 
@@ -109,8 +109,8 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>Position</h3>
 
-<pre><code>public override long Position { get; set;}
-</code></pre>
+<pre>public override long Position { get; set;}
+</pre>
 
 <p>Gets the partial stream&#39;s current byte position.</p>
 
@@ -120,9 +120,9 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>Dispose</h3>
 
-<pre><code>protected override void Dispose(
+<pre>protected override void Dispose(
     bool disposing);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -134,18 +134,18 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <h3>Flush</h3>
 
-<pre><code>public override void Flush();
-</code></pre>
+<pre>public override void Flush();
+</pre>
 
 <p>Not documented yet.</p>
 
 <h3>Read</h3>
 
-<pre><code>public override int Read(
+<pre>public override int Read(
     byte[] buffer,
     int offset,
     int count);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -182,10 +182,10 @@ is less than  <i>count</i>
 
 <h3>Seek</h3>
 
-<pre><code>public override long Seek(
+<pre>public override long Seek(
     long offset,
     System.IO.SeekOrigin origin);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -202,9 +202,9 @@ is less than  <i>count</i>
 
 <h3>SetLength</h3>
 
-<pre><code>public override void SetLength(
+<pre>public override void SetLength(
     long value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -216,11 +216,11 @@ is less than  <i>count</i>
 
 <h3>Write</h3>
 
-<pre><code>public override void Write(
+<pre>public override void Write(
     byte[] buffer,
     int offset,
     int count);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 

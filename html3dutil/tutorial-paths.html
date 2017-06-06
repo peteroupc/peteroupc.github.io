@@ -38,9 +38,9 @@ as well as closed figures made from several path segments.</p>
 the HTML 3D Library download.  To use this class, you must include the script &quot;extras/path.js&quot;,
 as in this example.</p>
 
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+</pre>
 
 <p><a id=Creating_Paths></a></p>
 
@@ -57,12 +57,12 @@ its segments.</p>
 SVG path string consists of one or more path commands that start with a single letter.
 The following are examples of SVG path strings:</p>
 
-<pre><code>M50,50L100,100,100,150,150,200
+<pre>M50,50L100,100,100,150,150,200
 
 M50,20C230,245,233,44,22,44
 
 M50,50H80V60H50V70H50
-</code></pre>
+</pre>
 
 <p>The &quot;M&quot; command moves the current position, the &quot;L&quot;, &quot;H&quot;, and &quot;V&quot; commands create
 lines, the &quot;Q&quot;, &quot;C&quot;, &quot;S&quot;, and &quot;T&quot; commands create B&eacute;zier curves, the &quot;A&quot; command
@@ -73,8 +73,8 @@ lower-cased, X and Y coordinates are relative to the current position.</p>
 That method is also how you create a 2D path from an SVG path string, as in this
 example:</p>
 
-<pre><code>var path = H3DU.GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)
-</code></pre>
+<pre>var path = H3DU.GraphicsPath.fromString(&quot;M50,20C230,245,233,44,22,44&quot;)
+</pre>
 
 <p><a id=Building_Paths></a></p>
 

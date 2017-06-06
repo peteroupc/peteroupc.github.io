@@ -66,7 +66,7 @@ byte[] bytes = cbor.EncodeToBytes();
 // The following converts the map to JSON
 string json = cbor.ToJSONString();
 Console.WriteLine(json);
-</code></pre>
+</pre>
 
 <p>Reading data from a file (C#).  Note that all the examples for
 reading and writing to files assume that the platform supports
@@ -79,7 +79,7 @@ file I/O; the portable class library doesn&#39;t make that assumption.</p>
  // 2.  The decoding will succeed only if the entire array,
  // not just the start of the array, consists of a CBOR object.
  var cbor = CBORObject.DecodeFromBytes(File.ReadAllBytes(&quot;object.cbor&quot;));
-</code></pre>
+</pre>
 
 <p>Another example of reading data from a file:</p>
 
@@ -99,7 +99,7 @@ file I/O; the portable class library doesn&#39;t make that assumption.</p>
       // The end of the stream was reached.
     }
  }
-</code></pre>
+</pre>
 
 <p>If a byte array contains multiple CBOR objects, the byte array should
 be wrapped in a MemoryStream and the stream used to read the objects,
@@ -113,7 +113,7 @@ Here is an example.</p>
     var cbor = CBORObject.Read(stream);
     // The rest of the example follows the one given above.
  }
-</code></pre>
+</pre>
 
 <p>Writing CBOR data to a file (C#):</p>
 
@@ -122,7 +122,7 @@ Here is an example.</p>
 using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
    cbor.WriteTo(stream);
 }
-</code></pre>
+</pre>
 
 <p>Writing multiple objects to a file, including arbitrary objects:</p>
 
@@ -136,7 +136,7 @@ using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
    CBORObject.Write(CBORObject.Undefined, stream);
    CBORObject.NewArray().Add(42).WriteTo(stream);
 }
-</code></pre>
+</pre>
 
 <p>Reading JSON from a file:</p>
 
@@ -146,7 +146,7 @@ using (var stream = new FileStream(&quot;object.cbor&quot;, FileMode.Create)) {
     // as a CBOR object
     var cbor = CBORObject.ReadJSON(stream);
  }
-</code></pre>
+</pre>
 
 <p>Writing a CBOR object as JSON:</p>
 
@@ -182,7 +182,7 @@ using (var stream = new FileStream(&quot;object5.json&quot;, FileMode.Create)) {
 using (var stream = new FileStream(&quot;object6.json&quot;, FileMode.Create)) {
    CBORObject.WriteJSON(42, stream);
 }
-</code></pre>
+</pre>
 
 <p>NOTE: All code samples in this section are released to the Public Domain,
 as explained in <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a>.</p>

@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.mail.MediaType</h1>
 
-<pre><code>public final class MediaType extends Object
-</code></pre>
+<pre>public final class MediaType extends Object
+</pre>
 
 <p>Specifies what kind of data a message body is.</p> <p>A media type
  consists of a top-level type (the general category of the data), a
@@ -80,16 +80,16 @@ Converts this object to a text string.</li>
 
 <h3>TextPlainAscii</h3>
 
-<pre><code>public static final MediaType TextPlainAscii
-</code></pre>
+<pre>public static final MediaType TextPlainAscii
+</pre>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
  &quot;US-ASCII&quot;, used for plain text data.</p>
 
 <h3>TextPlainUtf8</h3>
 
-<pre><code>public static final MediaType TextPlainUtf8
-</code></pre>
+<pre>public static final MediaType TextPlainUtf8
+</pre>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
  used for plain text data that may contain characters outside the
@@ -97,15 +97,15 @@ Converts this object to a text string.</li>
 
 <h3>MessageRfc822</h3>
 
-<pre><code>public static final MediaType MessageRfc822
-</code></pre>
+<pre>public static final MediaType MessageRfc822
+</pre>
 
 <p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
 
 <h3>ApplicationOctetStream</h3>
 
-<pre><code>public static final MediaType ApplicationOctetStream
-</code></pre>
+<pre>public static final MediaType ApplicationOctetStream
+</pre>
 
 <p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
  binary data.</p>
@@ -114,8 +114,8 @@ Converts this object to a text string.</li>
 
 <h3>getTopLevelType</h3>
 
-<pre><code>public final String getTopLevelType()
-</code></pre>
+<pre>public final String getTopLevelType()
+</pre>
 
 <p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
  &quot;audio&quot;).</p>
@@ -129,8 +129,8 @@ Converts this object to a text string.</li>
 
 <h3>equals</h3>
 
-<pre><code>public boolean equals(Object obj)
-</code></pre>
+<pre>public boolean equals(Object obj)
+</pre>
 
 <p>Determines whether this object and another object are equal.</p>
 
@@ -155,8 +155,8 @@ Converts this object to a text string.</li>
 
 <h3>hashCode</h3>
 
-<pre><code>public int hashCode()
-</code></pre>
+<pre>public int hashCode()
+</pre>
 
 <p>Returns the hash code for this instance.</p>
 
@@ -174,8 +174,8 @@ Converts this object to a text string.</li>
 
 <h3>getSubType</h3>
 
-<pre><code>public final String getSubType()
-</code></pre>
+<pre>public final String getSubType()
+</pre>
 
 <p>Gets this media type&#39;s subtype.</p>
 
@@ -187,8 +187,8 @@ Converts this object to a text string.</li>
 
 <h3>isText</h3>
 
-<pre><code>public final boolean isText()
-</code></pre>
+<pre>public final boolean isText()
+</pre>
 
 <p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
 
@@ -200,8 +200,8 @@ Converts this object to a text string.</li>
 
 <h3>isMultipart</h3>
 
-<pre><code>public final boolean isMultipart()
-</code></pre>
+<pre>public final boolean isMultipart()
+</pre>
 
 <p>Gets a value indicating whether this is a multipart media type.</p>
 
@@ -213,8 +213,8 @@ Converts this object to a text string.</li>
 
 <h3>getParameters</h3>
 
-<pre><code>public final Map&lt;String,String&gt; getParameters()
-</code></pre>
+<pre>public final Map&lt;String,String&gt; getParameters()
+</pre>
 
 <p>Gets a list of the parameters contained in this media type object.</p>
 
@@ -229,8 +229,8 @@ particular order; this is at least the case in version 0.10.0.</li>
 
 <h3>toString</h3>
 
-<pre><code>public String toString()
-</code></pre>
+<pre>public String toString()
+</pre>
 
 <p>Converts this object to a text string.</p>
 
@@ -248,8 +248,8 @@ particular order; this is at least the case in version 0.10.0.</li>
 
 <h3>GetCharset</h3>
 
-<pre><code>public String GetCharset()
-</code></pre>
+<pre>public String GetCharset()
+</pre>
 
 <p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
  to represent text in the data that uses this media type.</p>
@@ -268,8 +268,8 @@ parameter is absent. Returns an empty string in all other cases.</li>
 
 <h3>GetParameter</h3>
 
-<pre><code>public String GetParameter(String name)
-</code></pre>
+<pre>public String GetParameter(String name)
+</pre>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
  &quot;format&quot;.</p>
@@ -298,8 +298,8 @@ doesn&#39;t exist.</li>
 
 <h3>getTypeAndSubType</h3>
 
-<pre><code>public final String getTypeAndSubType()
-</code></pre>
+<pre>public final String getTypeAndSubType()
+</pre>
 
 <p>Gets the top level type and subtype of this media type, separated by a
  slash; for example, &quot;text/plain&quot;.</p>
@@ -313,8 +313,8 @@ slash; for example, &quot;text/plain&quot;.</li>
 
 <h3>Parse</h3>
 
-<pre><code>public static MediaType Parse(String mediaTypeValue)
-</code></pre>
+<pre>public static MediaType Parse(String mediaTypeValue)
+</pre>
 
 <p>Parses a media type string and returns a media type object. This method
  checks the syntactic validity of the string, but not whether it has
@@ -337,8 +337,8 @@ empty or syntactically invalid.</li>
 
 <h3>Parse</h3>
 
-<pre><code>public static MediaType Parse(String str, MediaType defaultValue)
-</code></pre>
+<pre>public static MediaType Parse(String str, MediaType defaultValue)
+</pre>
 
 <p>Parses a media type string and returns a media type object, or the default
  value if the string is invalid. This method checks the syntactic

@@ -6,16 +6,16 @@
 
 <h2>PeterO.Cbor.CBORDataUtilities</h2>
 
-<pre><code>public static class CBORDataUtilities
-</code></pre>
+<pre>public static class CBORDataUtilities
+</pre>
 
 <p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
 
 <h3>ParseJSONNumber</h3>
 
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
     string str);
-</code></pre>
+</pre>
 
 <p>Parses a number whose format follows the JSON specification. See #ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
 
@@ -31,11 +31,11 @@
 
 <h3>ParseJSONNumber</h3>
 
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
     string str,
     bool integersOnly,
     bool positiveOnly);
-</code></pre>
+</pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 7159). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
 
@@ -53,12 +53,12 @@
 
 <h3>ParseJSONNumber</h3>
 
-<pre><code>public static PeterO.Cbor.CBORObject ParseJSONNumber(
+<pre>public static PeterO.Cbor.CBORObject ParseJSONNumber(
     string str,
     bool integersOnly,
     bool positiveOnly,
     bool preserveNegativeZero);
-</code></pre>
+</pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 7159). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
 

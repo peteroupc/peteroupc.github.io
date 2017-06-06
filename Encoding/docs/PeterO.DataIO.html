@@ -6,16 +6,16 @@
 
 <h2>PeterO.DataIO</h2>
 
-<pre><code>public static class DataIO
-</code></pre>
+<pre>public static class DataIO
+</pre>
 
 <p>Convenience class that contains static methods for wrapping byte arrays and streams into byte readers and byte writers.</p>
 
 <h3>ToByteReader</h3>
 
-<pre><code>public static PeterO.IByteReader ToByteReader(
+<pre>public static PeterO.IByteReader ToByteReader(
     this byte[] bytes);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
@@ -34,11 +34,11 @@ is not documented yet.</li>
 
 <h3>ToByteReader</h3>
 
-<pre><code>public static PeterO.IByteReader ToByteReader(
+<pre>public static PeterO.IByteReader ToByteReader(
     this byte[] bytes,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
@@ -78,9 +78,9 @@ is null.</p></li>
 
 <h3>ToByteReader</h3>
 
-<pre><code>public static PeterO.IByteReader ToByteReader(
+<pre>public static PeterO.IByteReader ToByteReader(
     this System.IO.Stream input);
-</code></pre>
+</pre>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
@@ -99,9 +99,9 @@ is not documented yet.</li>
 
 <h3>ToReader</h3>
 
-<pre><code>public static PeterO.IReader ToReader(
+<pre>public static PeterO.IReader ToReader(
     this byte[] bytes);
-</code></pre>
+</pre>
 
 <p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -125,11 +125,11 @@ is null.</li>
 
 <h3>ToReader</h3>
 
-<pre><code>public static PeterO.IReader ToReader(
+<pre>public static PeterO.IReader ToReader(
     this byte[] bytes,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p>Wraps a portion of a byte array into a byte reader object.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -163,9 +163,9 @@ is less than  <i>length</i>
 
 <h3>ToReader</h3>
 
-<pre><code>public static PeterO.IReader ToReader(
+<pre>public static PeterO.IReader ToReader(
     this System.IO.Stream input);
-</code></pre>
+</pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by the input stream, the reader object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -189,9 +189,9 @@ is null.</li>
 
 <h3>ToWriter</h3>
 
-<pre><code>public static PeterO.IWriter ToWriter(
+<pre>public static PeterO.IWriter ToWriter(
     this PeterO.IByteWriter output);
-</code></pre>
+</pre>
 
 <p>Wraps a byte writer (one that only implements a ReadByte method) to a writer (one that also implements a three-parameter Read method.)In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -215,9 +215,9 @@ is null.</li>
 
 <h3>ToWriter</h3>
 
-<pre><code>public static PeterO.IWriter ToWriter(
+<pre>public static PeterO.IWriter ToWriter(
     this System.IO.Stream output);
-</code></pre>
+</pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by the input stream, the writer object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 

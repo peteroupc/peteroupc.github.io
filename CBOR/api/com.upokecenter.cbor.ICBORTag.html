@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.cbor.ICBORTag</h1>
 
-<pre><code>public interface ICBORTag
-</code></pre>
+<pre>public interface ICBORTag
+</pre>
 
 <p>Implemented by classes that validate CBOR objects belonging to a specific
  tag.</p>
@@ -26,8 +26,8 @@ Generates a CBOR object based on the data of another object.</li>
 
 <h3>GetTypeFilter</h3>
 
-<pre><code>CBORTypeFilter GetTypeFilter()
-</code></pre>
+<pre>CBORTypeFilter GetTypeFilter()
+</pre>
 
 <p>Gets a type filter specifying what kinds of CBOR objects are supported by
  this tag.</p>
@@ -40,8 +40,8 @@ Generates a CBOR object based on the data of another object.</li>
 
 <h3>ValidateObject</h3>
 
-<pre><code>CBORObject ValidateObject(CBORObject obj)
-</code></pre>
+<pre>CBORObject ValidateObject(CBORObject obj)
+</pre>
 
 <p>Generates a CBOR object based on the data of another object. If the data is
  not valid, should throw a CBORException.</p>

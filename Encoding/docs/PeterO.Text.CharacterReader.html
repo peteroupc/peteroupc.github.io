@@ -6,17 +6,17 @@
 
 <h2>PeterO.Text.CharacterReader</h2>
 
-<pre><code>public sealed class CharacterReader :
+<pre>public sealed class CharacterReader :
     PeterO.Text.ICharacterInput
-</code></pre>
+</pre>
 
 <p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.</p>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     string str);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; if the string begins with a byte-order mark (U+FEFF), it won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
@@ -36,10 +36,10 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     string str,
     bool skipByteOrderMark);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
@@ -60,11 +60,11 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     string str,
     bool skipByteOrderMark,
     bool errorThrow);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string.</p>
 
@@ -86,11 +86,11 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     string str,
     int offset,
     int length);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
@@ -107,13 +107,13 @@ begins.</p></li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     string str,
     int offset,
     int length,
     bool skipByteOrderMark,
     bool errorThrow);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
@@ -140,9 +140,9 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     System.IO.Stream stream);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
@@ -162,10 +162,10 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     System.IO.Stream stream,
     int mode);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
@@ -193,11 +193,11 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     System.IO.Stream stream,
     int mode,
     bool errorThrow);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream.</p>
 
@@ -229,12 +229,12 @@ is null.</li>
 
 <h3>CharacterReader Constructor</h3>
 
-<pre><code>public CharacterReader(
+<pre>public CharacterReader(
     System.IO.Stream stream,
     int mode,
     bool errorThrow,
     bool dontSkipUtf8Bom);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
@@ -267,11 +267,11 @@ is null.</li>
 
 <h3>Read</h3>
 
-<pre><code>public sealed int Read(
+<pre>public sealed int Read(
     int[] chars,
     int index,
     int length);
-</code></pre>
+</pre>
 
 <p>Reads a series of code points from a Unicode stream or a string.</p>
 
@@ -309,8 +309,8 @@ is less than  <i>length</i>
 
 <h3>ReadChar</h3>
 
-<pre><code>public sealed int ReadChar();
-</code></pre>
+<pre>public sealed int ReadChar();
+</pre>
 
 <p>Reads the next character from a Unicode stream or a string.</p>
 

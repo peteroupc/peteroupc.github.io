@@ -56,7 +56,7 @@ filter as part of the program&#39;s fragment shader. Since shader programs must 
 
 <p>The following is an example of a graphics filter.</p>
 
-<pre><code>return H3DU.ShaderInfo.makeEffect([
+<pre>return H3DU.ShaderInfo.makeEffect([
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 // Read the current color from the sampler texture
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
@@ -68,7 +68,7 @@ filter as part of the program&#39;s fragment shader. Since shader programs must 
 // Return the gray color (using the color&#39;s original alpha)
 &quot; return vec4(gray,gray,gray,color.a);&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
-</code></pre>
+</pre>
 
 <p>Each graphics filter must have a GLSL function called <code>textureEffect()</code>, like in the example above.</p>
 
@@ -107,8 +107,8 @@ later by the application or re-drawn to the screen (or the screen buffer). In th
 each frame buffer consists of a texture of a given size and a <em>renderbuffer</em> of the same
 size to use as the depth buffer.</p>
 
-<pre><code>var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
-</code></pre>
+<pre>var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
+</pre>
 
 <p>Note that we set the frame buffer&#39;s size to the current width and height of the scene.</p>
 
@@ -116,7 +116,7 @@ size to use as the depth buffer.</p>
 passes: the first renders to a frame buffer, and the second renders the frame buffer&#39;s contents
 back to the screen.</p>
 
-<pre><code>var renders = [
+<pre>var renders = [
   // The first batch renders the main batch&#39;s geometry to
   // the frame buffer info we just created.
   new H3DU.RenderPass(batch,{&quot;frameBuffer&quot;:fbo}),
@@ -124,20 +124,20 @@ back to the screen.</p>
   // back to the screen.
   new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene,fbo))
 ];
-</code></pre>
+</pre>
 
 <p>And finally, pass the array of rendering passes to the <code>render</code> method each time
 the scene needs to be rendered.</p>
 
-<pre><code>// Then, each time the scene needs to be rendered, call
+<pre>// Then, each time the scene needs to be rendered, call
 // this method
 scene.render(renders);
-</code></pre>
+</pre>
 
 <p>When the <code>render()</code> method is called each frame using the rendering
 passes mentioned above, the following happens.</p>
 
-<pre><code>* The 3D library renders the first pass.
+<pre>* The 3D library renders the first pass.
     * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
         uses the usual shaders for drawing the 3D scene.
     * The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
@@ -150,7 +150,7 @@ passes mentioned above, the following happens.</p>
       Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
       The graphics filter can either use the current pixel&#39;s color or change it for each pixel.
       As a result, a &quot;filtered&quot; version of the current frame will be drawn.
-</code></pre>
+</pre>
 
 <p><a id=Sample_Code></a></p>
 
@@ -158,7 +158,7 @@ passes mentioned above, the following happens.</p>
 
 <p>Here is sample code for using a graphics filter.</p>
 
-<pre><code>var currentFilter = /* create a graphics filter here */;
+<pre>var currentFilter = /* create a graphics filter here */;
 // create a frame buffer info object
 var fbo=new H3DU.FrameBufferInfo(scene.getWidth(),scene.getHeight());
 // create a batch containing the 3D objects
@@ -174,7 +174,7 @@ var renders=[
 // Then, each time the scene needs to be rendered, call
 // this method
 scene.render(renders);
-</code></pre>
+</pre>
 
 <p><a id=Examples></a></p>
 
@@ -210,7 +210,7 @@ like a film negative.</p>
 <p>This filter is implemented in the method <code>H3DU.ShaderInfo.getInvertEffect()</code>, shown below, but in the
 demo this is currently implemented using the color matrix filter instead.</p>
 
-<pre><code>H3DU.ShaderInfo.getInvertEffect=function(){
+<pre>H3DU.ShaderInfo.getInvertEffect=function(){
 return H3DU.ShaderInfo.makeEffect(context,
 [
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
@@ -218,7 +218,7 @@ return H3DU.ShaderInfo.makeEffect(context,
 &quot; vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
 }
-</code></pre>
+</pre>
 
 <p><a id=Red_Tint></a></p>
 
@@ -230,14 +230,14 @@ return H3DU.ShaderInfo.makeEffect(context,
 color matrix filter, described later.  The former implementation of the filter
 appears below.</p>
 
-<pre><code>function makeRedTint(){
+<pre>function makeRedTint(){
 return H3DU.ShaderInfo.makeEffect(context,[
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
 &quot; return vec4(color.r+0.3,color.g,color.b,color.a);&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
 }
-</code></pre>
+</pre>
 
 <p><a id=Mirror_Filter></a></p>
 
@@ -249,14 +249,14 @@ return H3DU.ShaderInfo.makeEffect(context,[
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
 the current X coordinate).</p>
 
-<pre><code>function makeMirror(){
+<pre>function makeMirror(){
 return H3DU.ShaderInfo.makeEffect(context,[
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
 &quot; vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));&quot;,
 &quot; return color;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
 }
-</code></pre>
+</pre>
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
 
@@ -275,10 +275,10 @@ a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution 
 
 <p>An example of a convolution kernel:</p>
 
-<pre><code>[ 0, 1/8, 0,
+<pre>[ 0, 1/8, 0,
   1/8, 1/2, 1/8,
   0, 1/8, 0 ]
-</code></pre>
+</pre>
 
 <p>This filter means that the destination pixel will have 1/2 of the original pixel&#39;s color, and 1/8 of the
 colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
@@ -298,13 +298,13 @@ color to get a new color.</p>
 <p>This example of a color matrix implements a <em>grayscale</em> filter, which converts the image to
 black and white and shades of gray.</p>
 
-<pre><code>[
+<pre>[
   1/3,1/3,1/3,0,
   1/3,1/3,1/3,0,
   1/3,1/3,1/3,0,
    0,0,0,1
 ]
-</code></pre>
+</pre>
 
 <p>This filter is implemented in the function <code>makeColorMatrix</code> in the demo.</p>
 
@@ -318,7 +318,7 @@ black and white and shades of gray.</p>
 This filter takes a uniform variable named <code>coarseness</code>, which indicates how many normal pixels
 each &quot;pixelated&quot; pixel takes up.</p>
 
-<pre><code>function makePixelate(){
+<pre>function makePixelate(){
 return H3DU.ShaderInfo.makeEffect([
 &quot;uniform float coarseness;&quot;, // coarseness in pixels; 1 means normal
 &quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
@@ -330,7 +330,7 @@ return H3DU.ShaderInfo.makeEffect([
 &quot; vec4 c=texture2D(sampler,vec2(uv0,uv1));&quot;,
 &quot; return c;&quot;,
 &quot;}&quot;].join(&quot;\n&quot;));
-</code></pre>
+</pre>
 
 <p>}</p>
 

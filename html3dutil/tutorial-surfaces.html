@@ -80,7 +80,7 @@ function presented here is included in the demos that come with the HTML 3D Libr
 
 <p>The comments explain how <code>makeMesh</code> works in detail.</p>
 
-<pre><code>function makeMesh(func,resolutionU, resolutionV){
+<pre>function makeMesh(func,resolutionU, resolutionV){
    &quot;use strict&quot;;
    if(typeof resolutionV === &quot;undefined&quot; || resolutionV === null)resolutionV = resolutionU;
    if(typeof resolutionU === &quot;undefined&quot; || resolutionU === null)resolutionU = 50;
@@ -107,7 +107,7 @@ function presented here is included in the demos that come with the HTML 3D Libr
       .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
       .toMeshBuffer();
 }
-</code></pre>
+</pre>
 
 <p>In the HTML 3D Library, surface evaluator objects define a method, <code>evaluate</code>,
 which returns a 3D point given a U parameter and a V parameter. (By default, U and
@@ -115,7 +115,7 @@ V each range from 0 through 1.)</p>
 
 <p>The following code is a very simple surface evaluator object.</p>
 
-<pre><code>var evaluator = {
+<pre>var evaluator = {
   &quot;evaluate&quot;:function(u, v){
     // Take the U parameter as the X coordinate,
     // the V parameter as the Y coordinate, and 0 as
@@ -123,7 +123,7 @@ V each range from 0 through 1.)</p>
     return [u, v, 0];
   }
 }
-</code></pre>
+</pre>
 
 <p>That evaluator simply generates a square at the top-right quadrant:</p>
 
@@ -131,7 +131,7 @@ V each range from 0 through 1.)</p>
 
 <p>And the following evaluator generates a circle:</p>
 
-<pre><code>var evaluator = {
+<pre>var evaluator = {
   &quot;evaluate&quot;:function(u, v){
      // Return circle coordinates.
      return [u*Math.cos(v),u*Math.sin(v),0];
@@ -139,14 +139,14 @@ V each range from 0 through 1.)</p>
   // Declare the usual range of the coordinates
   &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
 }
-</code></pre>
+</pre>
 
 <p><img src="surfaces3.png" alt="The parametric surface."></p>
 
 <p>Now here&#39;s the interesting part: This evaluator returns not a circle,
 but a <em>cone</em>, whose length runs along the negative Z axis:</p>
 
-<pre><code>var evaluator = {
+<pre>var evaluator = {
   &quot;evaluate&quot;:function(u, v){
      // Return cone coordinates, using the u
      // parameter as the Z axis.
@@ -155,7 +155,7 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
   // Declare the usual range of the coordinates
   &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
 }
-</code></pre>
+</pre>
 
 <p>The following shape was rotated to show the Z axis; the rotation isn&#39;t perfect.</p>
 
@@ -164,12 +164,12 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
 <p>Note that all three examples above use a value named <code>evaluator</code>. To generate
 a mesh with an evaluator and add it to the 3D scene, you then need to do:</p>
 
-<pre><code>// Assumes that a Scene3D object named _scene_ was previously defined.
+<pre>// Assumes that a Scene3D object named _scene_ was previously defined.
 // Create a 3D shape using the makeMesh method given earlier on this page
 var shape = new H3DU.Shape(makeMesh(evaluator));
 // Add the shape to the 3D scene
 scene.addShape(shape);
-</code></pre>
+</pre>
 
 <p>The generated 3D mesh from a parametric surface is just like any
 other mesh, and the same functions and methods you use for other meshes
@@ -192,7 +192,7 @@ Z of how many units to shift the surface. Note that this class includes its
 own <code>evaluate</code> method, allowing itself to be passed to the <code>H3DU.SurfaceBuilder</code> class&#39;s method
 or the makeMesh method above.</p>
 
-<pre><code>function SurfaceShifter(evaluator, x, y, z) {
+<pre>function SurfaceShifter(evaluator, x, y, z) {
  // Shift the surface by X units.
  this.x = x;
  // Shift the surface by Y units.
@@ -215,13 +215,13 @@ or the makeMesh method above.</p>
   return this.evaluator.endPoints()
  }
 }
-</code></pre>
+</pre>
 
 <p>And here&#39;s an example of its use. We&#39;ll take the circle surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).</p>
 
-<pre><code>// This is the circle surface from before
+<pre>// This is the circle surface from before
 var evaluator = {
   &quot;evaluate&quot;:function(u, v){
      // Extend the range of v
@@ -234,7 +234,7 @@ var evaluator = {
 // Create a shifter that results in the circle being moved 3 units
 // up and 3 units to the right
 evaluator = new SurfaceShifter(evaluator, 3, 3, 0);
-</code></pre>
+</pre>
 
 <p><a id=Parametric_Curves></a></p>
 
@@ -274,7 +274,7 @@ a parametric curve.</p>
 curve. It assumes that <code>evaluator</code> is a parametric curve object, just like
 the circle example above.</p>
 
-<pre><code>  // Create a curve evaluator
+<pre>  // Create a curve evaluator
   var ev=new H3DU.CurveBuilder()
   .position(evaluator)
    // Evaluate the curve, using 99 lines (100 points). Alternatively,
@@ -282,7 +282,7 @@ the circle example above.</p>
   .evalCurve(H3DU.Mesh.LINES,100);
   // Create a mesh describing the curve
   var mesh=ev.toMeshBuffer()
-</code></pre>
+</pre>
 
 <p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
 

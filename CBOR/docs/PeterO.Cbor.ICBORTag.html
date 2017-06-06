@@ -6,15 +6,15 @@
 
 <h2>PeterO.Cbor.ICBORTag</h2>
 
-<pre><code>public interface ICBORTag
-</code></pre>
+<pre>public interface ICBORTag
+</pre>
 
 <p>Implemented by classes that validate CBOR objects belonging to a specific tag.</p>
 
 <h3>GetTypeFilter</h3>
 
-<pre><code>PeterO.Cbor.CBORTypeFilter GetTypeFilter();
-</code></pre>
+<pre>PeterO.Cbor.CBORTypeFilter GetTypeFilter();
+</pre>
 
 <p>Gets a type filter specifying what kinds of CBOR objects are supported by this tag.</p>
 
@@ -24,9 +24,9 @@
 
 <h3>ValidateObject</h3>
 
-<pre><code>PeterO.Cbor.CBORObject ValidateObject(
+<pre>PeterO.Cbor.CBORObject ValidateObject(
     PeterO.Cbor.CBORObject obj);
-</code></pre>
+</pre>
 
 <p>Generates a CBOR object based on the data of another object. If the data is not valid, should throw a CBORException.</p>
 

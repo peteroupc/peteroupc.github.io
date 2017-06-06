@@ -191,14 +191,14 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <h4>Example</h4>
 
-<pre><code>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
+<pre>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
 transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
 // Combine an object&#39;s rotation with identity
 transform.multQuaternion(H3DU.Math.quatIdentity());
 // Combine an object&#39;s rotation with 30 degree pitch multiplied
 // by 40 degree roll
 transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Transform_multRotation'></a></p>
 
@@ -328,14 +328,14 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <h4>Example</h4>
 
-<pre><code>// Set an object&#39;s rotation to 30 degrees about the X axis
+<pre>// Set an object&#39;s rotation to 30 degrees about the X axis
 transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
 // Set an object&#39;s rotation to identity (the object isn&#39;t transformed)
 transform.setQuaternion(H3DU.Math.quatIdentity());
 // Set an object&#39;s rotation to 30 degree pitch multiplied
 // by 40 degree roll
 transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
-</code></pre>
+</pre>
 
 <p><a name='H3DU.Transform_setRotation'></a></p>
 

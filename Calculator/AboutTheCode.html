@@ -37,13 +37,13 @@ and other useful operations on these kinds of numbers.</p>
 being displayed and which operation is currently being carried out.  The following lists some
 of the methods of <code>CalculatorState</code>:</p>
 
-<pre><code>    public CalculatorState(int maxDigits);
+<pre>    public CalculatorState(int maxDigits);
     public string Text { get; }
     public bool DotButton();
     public bool PlusMinusButton();
     public bool EqualsButton();
     public bool DigitButton();
-</code></pre>
+</pre>
 
 <p>The <code>CalculatorState</code> constructor initializes a calculator state with a digit precision of <code>maxDigits</code>. This
 means that up to that many digits will be shown on the display.  The calculator program sets this to
@@ -83,13 +83,13 @@ object to a CBOR file.</p>
 
 <p>The <code>ProgramConfig</code> class is used to store user settings.  It has these methods:</p>
 
-<pre><code>public ProgramConfig(string configName);
+<pre>public ProgramConfig(string configName);
 public ProgramConfig SetObject(string name, object obj);
 public string GetString(string name);
 public int GetInt32OrDefault(string name, int defaultValue);
 public double GetDoubleOrDefault(string name, double defaultValue);
 public double GetDouble(string name);
-</code></pre>
+</pre>
 
 <p>In case the program is installed in what can be a read-only location, such as the Program
 Files folder, the calculator stores user settings in per-user application storage.  This is
@@ -106,7 +106,7 @@ file doesn&#39;t exist (which is usually the case when the program is first run)
 invalid data.  The calculator creates a <code>ProgramConfig</code> constructor on load of the form
 (see <em>MainForm.cs</em>):</p>
 
-<pre><code>private void MainForm_Load(object sender, EventArgs e) {
+<pre>private void MainForm_Load(object sender, EventArgs e) {
   // Initialize config here, rather than in the constructor;
   // the system may automatically move the window in between
   this.config = this.InitializeConfig();
@@ -115,7 +115,7 @@ invalid data.  The calculator creates a <code>ProgramConfig</code> constructor o
 private ProgramConfig InitializeConfig() {
   return new ProgramConfig(&quot;config&quot;).FormPosFromConfig(this);
 }
-</code></pre>
+</pre>
 
 <p>On the first run, the <code>ProgramConfig</code> is generated and populated with default values
 for the window&#39;s current position as it&#39;s loaded for the first time (due to the
@@ -124,7 +124,7 @@ for the window&#39;s current position as it&#39;s loaded for the first time (due
 <p>As the program is closing, it retrieves the window&#39;s current position and saves
 the user data to per-user storage:</p>
 
-<pre><code>private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+<pre>private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
   this.SaveConfig();
 }
 
@@ -133,7 +133,7 @@ private void SaveConfig() {
     this.config.FormPosToConfig(this).Save();
   }
 }
-</code></pre>
+</pre>
 
 <p>As a result, the last used window position and size are restored if the user runs
 the program again.</p>

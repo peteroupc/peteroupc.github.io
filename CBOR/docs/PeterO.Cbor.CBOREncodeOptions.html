@@ -6,36 +6,36 @@
 
 <h2>PeterO.Cbor.CBOREncodeOptions</h2>
 
-<pre><code>public sealed class CBOREncodeOptions
-</code></pre>
+<pre>public sealed class CBOREncodeOptions
+</pre>
 
 <p>Specifies options for encoding and decoding CBOR objects.</p>
 
 <h3>NoDuplicateKeys</h3>
 
-<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;
-</code></pre>
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;
+</pre>
 
 <p>Disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects. Value: 2.</p>
 
 <h3>NoIndefLengthStrings</h3>
 
-<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
-</code></pre>
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
+</pre>
 
 <p>Always encode strings with a definite-length encoding. Used only when encoding CBOR objects. Value: 1.</p>
 
 <h3>None</h3>
 
-<pre><code>public static readonly PeterO.Cbor.CBOREncodeOptions None;
-</code></pre>
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions None;
+</pre>
 
 <p>No special options for encoding/decoding. Value: 0.</p>
 
 <h3>Value</h3>
 
-<pre><code>public int Value { get; }
-</code></pre>
+<pre>public int Value { get; }
+</pre>
 
 <p>Gets this options object&#39;s value.</p>
 
@@ -45,9 +45,9 @@
 
 <h3>And</h3>
 
-<pre><code>public PeterO.Cbor.CBOREncodeOptions And(
+<pre>public PeterO.Cbor.CBOREncodeOptions And(
     PeterO.Cbor.CBOREncodeOptions o);
-</code></pre>
+</pre>
 
 <p>Returns an options object whose flags are shared by this and another options object.</p>
 
@@ -63,9 +63,9 @@
 
 <h3>Or</h3>
 
-<pre><code>public PeterO.Cbor.CBOREncodeOptions Or(
+<pre>public PeterO.Cbor.CBOREncodeOptions Or(
     PeterO.Cbor.CBOREncodeOptions o);
-</code></pre>
+</pre>
 
 <p>Combines the flags of this options object with another options object.</p>
 

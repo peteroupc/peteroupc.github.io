@@ -6,14 +6,14 @@
 
 <h2>PeterO.DisposableList<T></h2>
 
-<pre><code>public sealed class DisposableList&lt;T&gt; :
+<pre>public sealed class DisposableList&lt;T&gt; :
     System.Collections.Generic.IList&lt;T&gt;,
     System.Collections.Generic.ICollection&lt;T&gt;,
     System.Collections.Generic.IEnumerable&lt;T&gt;,
     System.Collections.IEnumerable,
     System.IDisposable
     where T : System.IDisposableT
-</code></pre>
+</pre>
 
 <p>Holds a list of disposable objects, which can all be disposed at once when this object is disposed.</p>
 
@@ -25,15 +25,15 @@
 
 <h3>DisposableList Constructor</h3>
 
-<pre><code>public DisposableList();
-</code></pre>
+<pre>public DisposableList();
+</pre>
 
 <p>Initializes a new instance of the class.</p>
 
 <h3>Count</h3>
 
-<pre><code>public sealed int Count { get; }
-</code></pre>
+<pre>public sealed int Count { get; }
+</pre>
 
 <p>Gets a value not documented yet.</p>
 
@@ -43,8 +43,8 @@
 
 <h3>IsReadOnly</h3>
 
-<pre><code>public sealed bool IsReadOnly { get; }
-</code></pre>
+<pre>public sealed bool IsReadOnly { get; }
+</pre>
 
 <p>Gets a value indicating whether this list is read only.</p>
 
@@ -54,9 +54,9 @@
 
 <h3>Add</h3>
 
-<pre><code>public sealed void Add(
+<pre>public sealed void Add(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -68,16 +68,16 @@
 
 <h3>Clear</h3>
 
-<pre><code>public sealed void Clear();
-</code></pre>
+<pre>public sealed void Clear();
+</pre>
 
 <p>Not documented yet.</p>
 
 <h3>Contains</h3>
 
-<pre><code>public sealed bool Contains(
+<pre>public sealed bool Contains(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -93,15 +93,15 @@
 
 <h3>Dispose</h3>
 
-<pre><code>public sealed void Dispose();
-</code></pre>
+<pre>public sealed void Dispose();
+</pre>
 
 <p>Not documented yet.</p>
 
 <h3>GetEnumerator</h3>
 
-<pre><code>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
-</code></pre>
+<pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -111,9 +111,9 @@
 
 <h3>IndexOf</h3>
 
-<pre><code>public sealed int IndexOf(
+<pre>public sealed int IndexOf(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -129,10 +129,10 @@
 
 <h3>Insert</h3>
 
-<pre><code>public sealed void Insert(
+<pre>public sealed void Insert(
     int index,
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -145,9 +145,9 @@
 
 <h3>Remove</h3>
 
-<pre><code>public sealed bool Remove(
+<pre>public sealed bool Remove(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -163,9 +163,9 @@
 
 <h3>RemoveAt</h3>
 
-<pre><code>public sealed void RemoveAt(
+<pre>public sealed void RemoveAt(
     int index);
-</code></pre>
+</pre>
 
 <p>Removes an item at a given index from the list.</p>
 

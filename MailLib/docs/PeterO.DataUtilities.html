@@ -6,8 +6,8 @@
 
 <h2>PeterO.DataUtilities</h2>
 
-<pre><code>public static class DataUtilities
-</code></pre>
+<pre>public static class DataUtilities
+</pre>
 
 <p>Contains methods useful for reading and writing strings. It is designed to have no dependencies other than the basic runtime class library.Many of these methods work with text encoded in UTF-8, an encoding form of the Unicode Standard which uses one byte to encode the most basic characters and two to four bytes to encode other characters. For example, the  <code>GetUtf8</code>  method converts a text string to an array of bytes in UTF-8.</p>
 
@@ -15,10 +15,10 @@
 
 <h3>CodePointAt</h3>
 
-<pre><code>public static int CodePointAt(
+<pre>public static int CodePointAt(
     string str,
     int index);
-</code></pre>
+</pre>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
@@ -44,11 +44,11 @@ is null.</li>
 
 <h3>CodePointAt</h3>
 
-<pre><code>public static int CodePointAt(
+<pre>public static int CodePointAt(
     string str,
     int index,
     int surrogateBehavior);
-</code></pre>
+</pre>
 
 <p>Gets the Unicode code point at the given index of the string.</p>
 
@@ -76,10 +76,10 @@ is null.</li>
 
 <h3>CodePointBefore</h3>
 
-<pre><code>public static int CodePointBefore(
+<pre>public static int CodePointBefore(
     string str,
     int index);
-</code></pre>
+</pre>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
@@ -105,11 +105,11 @@ is null.</li>
 
 <h3>CodePointBefore</h3>
 
-<pre><code>public static int CodePointBefore(
+<pre>public static int CodePointBefore(
     string str,
     int index,
     int surrogateBehavior);
-</code></pre>
+</pre>
 
 <p>Gets the Unicode code point just before the given index of the string.</p>
 
@@ -137,10 +137,10 @@ is null.</li>
 
 <h3>CodePointCompare</h3>
 
-<pre><code>public static int CodePointCompare(
+<pre>public static int CodePointCompare(
     string strA,
     string strB);
-</code></pre>
+</pre>
 
 <p>Compares two strings in Unicode code point order. Unpaired surrogate code points are treated as individual code points.</p>
 
@@ -157,10 +157,10 @@ is null.</li>
 
 <h3>GetUtf8Bytes</h3>
 
-<pre><code>public static byte[] GetUtf8Bytes(
+<pre>public static byte[] GetUtf8Bytes(
     string str,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Encodes a string in UTF-8 as a byte array.</p>
 
@@ -188,11 +188,11 @@ is false, or an internal error occurred.</p></li>
 
 <h3>GetUtf8Bytes</h3>
 
-<pre><code>public static byte[] GetUtf8Bytes(
+<pre>public static byte[] GetUtf8Bytes(
     string str,
     bool replace,
     bool lenientLineBreaks);
-</code></pre>
+</pre>
 
 <p>Encodes a string in UTF-8 as a byte array.</p>
 
@@ -221,10 +221,10 @@ is false, or an internal error occurred.</p></li>
 
 <h3>GetUtf8Length</h3>
 
-<pre><code>public static long GetUtf8Length(
+<pre>public static long GetUtf8Length(
     string str,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Calculates the number of bytes needed to encode a string in UTF-8.</p>
 
@@ -250,10 +250,10 @@ is null.</li>
 
 <h3>GetUtf8String</h3>
 
-<pre><code>public static string GetUtf8String(
+<pre>public static string GetUtf8String(
     byte[] bytes,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Generates a text string from a UTF-8 byte array.</p>
 
@@ -281,12 +281,12 @@ is false.</p></li>
 
 <h3>GetUtf8String</h3>
 
-<pre><code>public static string GetUtf8String(
+<pre>public static string GetUtf8String(
     byte[] bytes,
     int offset,
     int bytesCount,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Generates a text string from a portion of a UTF-8 byte array.</p>
 
@@ -320,12 +320,12 @@ is less than 0, or offset plus bytesCount is greater than the length of &quot;da
 
 <h3>ReadUtf8</h3>
 
-<pre><code>public static int ReadUtf8(
+<pre>public static int ReadUtf8(
     System.IO.Stream stream,
     int bytesCount,
     System.Text.StringBuilder builder,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream.</p>
 
@@ -357,13 +357,13 @@ is null.</p></li>
 
 <h3>ReadUtf8FromBytes</h3>
 
-<pre><code>public static int ReadUtf8FromBytes(
+<pre>public static int ReadUtf8FromBytes(
     byte[] data,
     int offset,
     int bytesCount,
     System.Text.StringBuilder builder,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a byte array.</p>
 
@@ -398,9 +398,9 @@ is less than 0, or offset plus bytesCount is greater than the length of  <i>data
 
 <h3>ReadUtf8ToString</h3>
 
-<pre><code>public static string ReadUtf8ToString(
+<pre>public static string ReadUtf8ToString(
     System.IO.Stream stream);
-</code></pre>
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that string. Replaces invalid encoding with the replacement character (U+FFFD).</p>
 
@@ -426,11 +426,11 @@ is null.</p></li>
 
 <h3>ReadUtf8ToString</h3>
 
-<pre><code>public static string ReadUtf8ToString(
+<pre>public static string ReadUtf8ToString(
     System.IO.Stream stream,
     int bytesCount,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream and returns that string.</p>
 
@@ -459,9 +459,9 @@ is null.</p></li>
 
 <h3>ToLowerCaseAscii</h3>
 
-<pre><code>public static string ToLowerCaseAscii(
+<pre>public static string ToLowerCaseAscii(
     string str);
-</code></pre>
+</pre>
 
 <p>Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower-case. Other characters remain unchanged.</p>
 
@@ -478,13 +478,13 @@ is null.</p></li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(
+<pre>public static int WriteUtf8(
     string str,
     int offset,
     int length,
     System.IO.Stream stream,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
@@ -522,14 +522,14 @@ An I/O error occurred.</p></li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(
+<pre>public static int WriteUtf8(
     string str,
     int offset,
     int length,
     System.IO.Stream stream,
     bool replace,
     bool lenientLineBreaks);
-</code></pre>
+</pre>
 
 <p>Writes a portion of a string in UTF-8 encoding to a data stream.</p>
 
@@ -568,11 +568,11 @@ An I/O error occurred.</p></li>
 
 <h3>WriteUtf8</h3>
 
-<pre><code>public static int WriteUtf8(
+<pre>public static int WriteUtf8(
     string str,
     System.IO.Stream stream,
     bool replace);
-</code></pre>
+</pre>
 
 <p>Writes a string in UTF-8 encoding to a data stream.</p>
 

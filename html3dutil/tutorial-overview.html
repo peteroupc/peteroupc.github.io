@@ -40,22 +40,22 @@
 <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the HTML 3D library</strong></a>.</li>
 <li><p>Extract the file <i>&quot;h3du_min.js&quot;</i>, and write the following code in every HTML page where you will use the library.</p>
 
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
-</code></pre></li>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
+</pre></li>
 <li><p>Include an HTML 3D canvas somewhere on the Web page, since drawing 3D objects requires a 3D canvas. You may set its <code>width</code> and <code>height</code>. You should also give it an ID so you can refer to it more easily in your JavaScript code, as shown in this example.</p>
 
-<pre><code>&lt;canvas width=&quot;640&quot; height=&quot;480&quot; id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
-</code></pre></li>
+<pre>&lt;canvas width=&quot;640&quot; height=&quot;480&quot; id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+</pre></li>
 <li><p>To use the HTML 3D library in JavaScript, either add the JavaScript code to the bottom of the page or use an event listener, as in this example:</p>
 
-<pre><code>&lt;script&gt;
+<pre>&lt;script&gt;
 window.addEventListener(&quot;load&quot;,function(){
   var scene=new Scene3D(document.getElementById(&quot;canvas&quot;));
   // We have the 3D scene, use it. (See the example code
   // at the bottom of this article for a more complete example.)
 })
 &lt;/script&gt;
-</code></pre></li>
+</pre></li>
 </ol>
 
 <p><a id=List_of_Classes></a></p>
@@ -110,12 +110,12 @@ position, and light sources to illuminate the 3D scene.</p>
 need to pass it to <code>new Scene3D()</code>. Once you do so, <code>H3DU.Scene3D</code> will use that canvas to draw
 3D objects. Here is an example. You will also need to create a <code>H3DU.Batch3D</code> to hold 3D objects.</p>
 
-<pre><code>// Find the HTML canvas with the ID &quot;canvas&quot;.
+<pre>// Find the HTML canvas with the ID &quot;canvas&quot;.
 var canvas=document.getElementById(&quot;canvas&quot;)
 // Create a 3D scene using that canvas.
 var scene=new H3DU.Scene3D(canvas);
 var batch=new H3DU.Batch3D();
-</code></pre>
+</pre>
 
 <p><a id=The_Camera></a></p>
 
@@ -124,7 +124,7 @@ var batch=new H3DU.Batch3D();
 <p>The <code>H3DU.Batch3D</code> class has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;. If we
 use the concept of a &quot;camera&quot;, the projection is like setting the camera&#39;s focus and lens, and the view transform is like setting its position and orientation. <code>H3DU.Batch3D</code> has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are <code>perspectiveAspect()</code> and <code>setLookAt()</code>, which are shown in the example below.</p>
 
-<pre><code>// Set the perspective view. Camera has a 45-degree field of view
+<pre>// Set the perspective view. Camera has a 45-degree field of view
 // and will see objects from 0.1 to 100 units away.
 batch.perspectiveAspect(45,0.1,100);
 // Move the camera back 40 units.
@@ -132,7 +132,7 @@ batch.setLookAt([0,0,40]);
 // Move the camera back 30 units instead, and turn it so it
 // points at (0, 2, 0), that is, up 2 units.
 batch.setLookAt([0,0,30], [0,2,0]);
-</code></pre>
+</pre>
 
 <p>For more information, see <em><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms">The &quot;Camera&quot; and Geometric Transforms</a></em>.</p>
 
@@ -142,10 +142,10 @@ batch.setLookAt([0,0,30], [0,2,0]);
 
 <p>Every 3D scene is made up of &quot;meshes&quot;, or the triangles, lines, and points that make up a geometric three-dimensional object. Meshes can be simple, such as a cube, or very complex, such as a town model complete with houses. You create a mesh using the <code>H3DU.Mesh</code> class, or create a built-in geometric shape using a method in the <code>H3DU.Meshes</code> class. The example below shows how you can create a box mesh:</p>
 
-<pre><code>// Create a box mesh 10 units in width, 20 units
+<pre>// Create a box mesh 10 units in width, 20 units
 // in height, and 25 units in depth
 var mesh=H3DU.Meshes.createBox(10,20,25);
-</code></pre>
+</pre>
 
 <p>Here are some other built-in mesh methods. This page doesn&#39;t explain all the
 features or parameters in the <code>Meshes</code> class; for that, see the
@@ -175,7 +175,7 @@ degrees and sweeping <code>sweep</code> degrees.</li>
 <p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
 Use the <code>H3DU.Shape</code> constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D object batch.</p>
 
-<pre><code>// Create a shape based on the mesh
+<pre>// Create a shape based on the mesh
 var shape=new H3DU.Shape(mesh);
 // Make it red (you can also use the HTML color string
 // &quot;#FF0000&quot; instead)
@@ -184,7 +184,7 @@ shape.setColor(&quot;red&quot;);
 shape.setPosition(1,0,0);
 // Add the shape to the scene
 batch.addShape(shape);
-</code></pre>
+</pre>
 
 <p>The appearance of a 3D shape is known in the 3D graphics world as a &quot;material&quot;. It includes textures (images), colors, and light reflection parameters. The <a href="http://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>Material</code></a> class holds data on some of these parameters, and is part of the definition of a shape. The <a href="http://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html"><code>PbrMaterial</code></a> class does the same, but uses physically-based shading algorithms.</p>
 
@@ -212,13 +212,13 @@ See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">col
 
 <p>An important part of a 3D application is the render loop. The render loop is a block of code that is called many times a second (or many &quot;frames&quot; a second) to redraw the 3D scene. Each frame, the state of the application is updated, and the 3D scene is re-rendered to account for that state. To render a scene, use the <code>H3DU.Scene3D.render()</code> method, passing a batch of shapes to render. Render loops are created using the <code>H3DU.renderLoop()</code> method. Here is an example of a render loop.</p>
 
-<pre><code>// Set up the render loop
+<pre>// Set up the render loop
 H3DU.renderLoop(function(time){
  // This will be called once each frame.
  // Here, we render the scene
  scene.render(batch);
 });
-</code></pre>
+</pre>
 
 <p>The render loop method takes a parameter (here &quot;time&quot;), containing the number of milliseconds since the page was started.&nbsp; This can be used to implement frame-rate independent animations.</p>
 
@@ -228,7 +228,7 @@ H3DU.renderLoop(function(time){
 
 <p>The following is a minimal skeleton you can use for writing HTML apps using this library.</p>
 
-<pre><code>&lt;head&gt;
+<pre>&lt;head&gt;
 &lt;meta charset=utf-8&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;user-scalable=no,initial-scale=1,maximum-scale=1&quot;&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
@@ -239,7 +239,7 @@ H3DU.renderLoop(function(time){
 // Your script goes here
 &lt;/script&gt;
 &lt;/body&gt;
-</code></pre>
+</pre>
 
 <p><a id=Demos></a></p>
 
@@ -440,7 +440,7 @@ content.</li>
 
 <p>The following is a simple example of an HTML page that uses the HTML 3D library. It sets up the 3D scene, generates a 3D box, colors it red, and rotates it each frame as time passes. Look at the comments; they explain better what each part of the code is doing. Also note the <code>&lt;canvas&gt;</code> element it uses on the page.</p>
 
-<pre><code>&lt;head&gt;
+<pre>&lt;head&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
@@ -479,7 +479,7 @@ sub.getLights().setBasic();
 //--&gt;
 &lt;/script&gt;
 &lt;/body&gt;
-</code></pre>
+</pre>
 
 <p><a id=History></a></p>
 

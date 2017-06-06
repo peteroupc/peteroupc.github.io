@@ -22,8 +22,8 @@ library.</p>
 class is not included in the &quot;h3du_min.js&quot; file which makes up
 the HTML 3D Library. Example:</p>
 
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
-</code></pre>
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
+</pre>
 
 <h4>Parameters</h4>
 
@@ -98,29 +98,29 @@ bases of these surfaces won&#39;t be generated).</p>
 <p>The following creates an evaluator for a cone
 which starts at the origin and runs 10 units along the Z axis.</p>
 
-<pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
+<pre>var surf=H3DU.SurfaceOfRevolution.fromFunction(
 function(x) {
 &quot;use strict&quot;; return x/2; }, // use a constantly increasing function
 0, 10);
-</code></pre>
+</pre>
 
 <p>This is an evaluator for the same cone, but
 shifted 3 units back.</p>
 
-<pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
+<pre>var surf=H3DU.SurfaceOfRevolution.fromFunction(
 function(x) {
 &quot;use strict&quot;; x+=3; return x/2; },
 -3,7);
-</code></pre>
+</pre>
 
 <p>The following creates an evaluator for a cylinder
 which runs from 5 to 10 units, and with a radius of 2 units.</p>
 
-<pre><code>var surf=H3DU.SurfaceOfRevolution.fromFunction(
+<pre>var surf=H3DU.SurfaceOfRevolution.fromFunction(
 function(x) {
 &quot;use strict&quot;; return 2; }, // use a constant radius
 5, 10);
-</code></pre>
+</pre>
 
 <p><a name='H3DU.SurfaceOfRevolution.torus'></a></p>
 

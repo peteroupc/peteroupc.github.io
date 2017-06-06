@@ -6,8 +6,8 @@
 
 <h1>com.upokecenter.util.DataIO</h1>
 
-<pre><code>public final class DataIO extends Object
-</code></pre>
+<pre>public final class DataIO extends Object
+</pre>
 
 <p>Convenience class that contains static methods for wrapping byte arrays and
  streams into byte readers and byte writers.</p>
@@ -48,8 +48,8 @@ Wraps an output stream into a writer object.</li>
 
 <h3>ToReader</h3>
 
-<pre><code>public static IReader ToReader(byte[] bytes)
-</code></pre>
+<pre>public static IReader ToReader(byte[] bytes)
+</pre>
 
 <p>Wraps a byte array into a byte reader. The reader will start at the
  beginning of the byte array. <p>In the .NET implementation, this
@@ -79,8 +79,8 @@ Wraps an output stream into a writer object.</li>
 
 <h3>ToReader</h3>
 
-<pre><code>public static IReader ToReader(byte[] bytes, int offset, int length)
-</code></pre>
+<pre>public static IReader ToReader(byte[] bytes, int offset, int length)
+</pre>
 
 <p>Wraps a portion of a byte array into a byte reader object. <p>In the .NET
  implementation, this method is implemented as an extension method to
@@ -116,8 +116,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToReader</h3>
 
-<pre><code>public static IReader ToReader(InputStream input)
-</code></pre>
+<pre>public static IReader ToReader(InputStream input)
+</pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
  the input stream, the reader object throws InvalidOperationException
@@ -147,8 +147,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre><code>@Deprecated public static IByteReader ToByteReader(byte[] bytes, int offset, int length)
-</code></pre>
+<pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes, int offset, int length)
+</pre>
 
 <p>Deprecated.&nbsp;Use ToReader instead.</p>
 
@@ -178,8 +178,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre><code>@Deprecated public static IByteReader ToByteReader(InputStream input)
-</code></pre>
+<pre>@Deprecated public static IByteReader ToByteReader(InputStream input)
+</pre>
 
 <p>Deprecated.&nbsp;Use ToReader instead.</p>
 
@@ -197,8 +197,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre><code>@Deprecated public static IByteReader ToByteReader(byte[] bytes)
-</code></pre>
+<pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes)
+</pre>
 
 <p>Deprecated.&nbsp;Use ToReader instead.</p>
 
@@ -216,8 +216,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToWriter</h3>
 
-<pre><code>public static IWriter ToWriter(OutputStream output)
-</code></pre>
+<pre>public static IWriter ToWriter(OutputStream output)
+</pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by
  the input stream, the writer object throws InvalidOperationException
@@ -247,8 +247,8 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToWriter</h3>
 
-<pre><code>public static IWriter ToWriter(IByteWriter output)
-</code></pre>
+<pre>public static IWriter ToWriter(IByteWriter output)
+</pre>
 
 <p>Wraps a byte writer (one that only implements a ReadByte method) to a writer
  (one that also implements a three-parameter Read method.) <p>In the

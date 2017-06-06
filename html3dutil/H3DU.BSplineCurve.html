@@ -97,7 +97,7 @@ given <code>t</code> value.</p>
 <p>The following JavaScript code shows an example of a basis matrix -- the
 cubic B&eacute;zier basis matrix.<br></p>
 
-<pre><code>var bezierBasisMatrix = [
+<pre>var bezierBasisMatrix = [
 // For the purposes of the H3DU.Math matrix functions,
 // the polynomials are arranged &quot;column-wise&quot;, like this:
 // P1, P2, P3, P4
@@ -105,7 +105,7 @@ cubic B&eacute;zier basis matrix.<br></p>
 3,-6,3,0,
 -3,3,0,0,
 1,0,0,0]
-</code></pre>
+</pre>
 
 <p>For code that converts a curve from one kind to
 another, see the example.</p>
@@ -124,7 +124,7 @@ another, see the example.</p>
 curve from one kind to another. The converted curve will generally
 have the same path as the original curve.</p>
 
-<pre><code>// &quot;srcBasis&quot; is a 4x4 basis matrix for the source curve type;
+<pre>// &quot;srcBasis&quot; is a 4x4 basis matrix for the source curve type;
 // the control points will initially be of this type of curve.
 // var srcBasis = [ .... ]; // To be supplied or filled in.
 // &quot;dstBasis&quot; is a 4x4 basis matrix for the destination curve type.
@@ -158,7 +158,7 @@ newControlPoints,
 // Alternatively, the curve could be generated with the
 // fromBezierCurve method:
 // var curve=BSplineCurve.fromBezierCurve(newControlPoints);
-</code></pre>
+</pre>
 
 <h3>Members</h3>
 
@@ -427,12 +427,12 @@ length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the co
 
 <h4>Example</h4>
 
-<pre><code>// Generate 11 points forming the curve.
+<pre>// Generate 11 points forming the curve.
 var points=[];
 for(var i=0;i&lt;=10;i++) {
 points.push(curve.evaluate(i/10.0));
 }
-</code></pre>
+</pre>
 
 <p><a name='H3DU.BSplineCurve_fitRange'></a></p>
 
@@ -477,7 +477,7 @@ Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
 <p>The following function generates a polygon curve using linear B&eacute;zier
 curves.</p>
 
-<pre><code>function polygonCurve(points) {
+<pre>function polygonCurve(points) {
 var curves=[]
 for(var i=0;i &lt; points.length;i++) {
 var cp=points[i]
@@ -486,7 +486,7 @@ curves.push(H3DU.BSplineCurve.fromBezierCurve([cp,np]))
 }
 return new H3DU.PiecewiseCurve(curves)
 }
-</code></pre>
+</pre>
 
 <p><a name='H3DU.BSplineCurve_getControlPoints'></a></p>
 

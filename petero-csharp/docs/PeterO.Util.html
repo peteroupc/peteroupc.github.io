@@ -6,24 +6,24 @@
 
 <h2>PeterO.Util</h2>
 
-<pre><code>public static class Util
-</code></pre>
+<pre>public static class Util
+</pre>
 
 <p>Not documented yet.</p>
 
 <h3>NullDisposable</h3>
 
-<pre><code>public static readonly System.IDisposable NullDisposable;
-</code></pre>
+<pre>public static readonly System.IDisposable NullDisposable;
+</pre>
 
 <p>An IDisposable object that does nothing when disposed.</p>
 
 <h3>AddIfMissing</h3>
 
-<pre><code>public static void AddIfMissing&lt;T&gt;(
+<pre>public static void AddIfMissing&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; dict,
     T value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>dict.AddIfMissing&lt;T&gt;(value)</code> . If the object&#39;s class already has a AddIfMissing<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -45,11 +45,11 @@ is null.</li>
 
 <h3>AddIfMissing</h3>
 
-<pre><code>public static void AddIfMissing&lt;TKey, TValue&gt;(
+<pre>public static void AddIfMissing&lt;TKey, TValue&gt;(
     this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt; dict,
     TKey key,
     TValue value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows:  <code>dict.AddIfMissing&lt;TKey, TValue&gt;(key,
             value)</code> . If the object&#39;s class already has a AddIfMissing<TKey, TValue> method with the same parameters, that method takes precedence over this extension method.</p>
@@ -73,11 +73,11 @@ is null.</li>
 
 <h3>AddOverwrite</h3>
 
-<pre><code>public static void AddOverwrite&lt;TKey, TValue&gt;(
+<pre>public static void AddOverwrite&lt;TKey, TValue&gt;(
     this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt; dict,
     TKey key,
     TValue value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows:  <code>dict.AddOverwrite&lt;TKey, TValue&gt;(key,
             value)</code> . If the object&#39;s class already has a AddOverwrite<TKey, TValue> method with the same parameters, that method takes precedence over this extension method.</p>
@@ -101,9 +101,9 @@ is null.</li>
 
 <h3>AllSame</h3>
 
-<pre><code>public static bool AllSame&lt;T&gt;(
+<pre>public static bool AllSame&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; col);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>col.AllSame&lt;T&gt;()</code> . If the object&#39;s class already has a AllSame<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -128,10 +128,10 @@ is null.</li>
 
 <h3>AllSame</h3>
 
-<pre><code>public static bool AllSame&lt;TContainer, TItem&gt;(
+<pre>public static bool AllSame&lt;TContainer, TItem&gt;(
     this System.Collections.Generic.IEnumerable&lt;TContainer&gt; containers,
     System.Func&lt;TContainer, TItem&gt; func);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.AllSame&lt;TContainer,
             TItem&gt;(func)</code> . If the object&#39;s class already has a AllSame<TContainer, TItem> method with the same parameters, that method takes precedence over this extension method.</p>
@@ -160,9 +160,9 @@ is null.</li>
 
 <h3>ArrayToString</h3>
 
-<pre><code>public static string ArrayToString&lt;T&gt;(
+<pre>public static string ArrayToString&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; array);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>array.ArrayToString&lt;T&gt;()</code> . If the object&#39;s class already has a ArrayToString<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -179,11 +179,11 @@ is null.</li>
 
 <h3>CopyStream</h3>
 
-<pre><code>public static void CopyStream(
+<pre>public static void CopyStream(
     this System.IO.Stream input,
     int length,
     System.IO.Stream output);
-</code></pre>
+</pre>
 
 <p>Copies a certain number of bytes from one stream to another.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.CopyStream(length, output)</code> . If the object&#39;s class already has a CopyStream method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -206,10 +206,10 @@ is null.</li>
 
 <h3>CopyStream</h3>
 
-<pre><code>public static void CopyStream(
+<pre>public static void CopyStream(
     this System.IO.Stream input,
     System.IO.Stream output);
-</code></pre>
+</pre>
 
 <p>Copies all bytes from one stream to another.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.CopyStream(output)</code> . If the object&#39;s class already has a CopyStream method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -231,10 +231,10 @@ is null.</li>
 
 <h3>CopyStructure</h3>
 
-<pre><code>public static T CopyStructure&lt;T&gt;(
+<pre>public static T CopyStructure&lt;T&gt;(
     this T structure)
     where T : new(), PeterO.IStructureT;
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing T and can be called as follows:  <code>structure.CopyStructure&lt;T&gt;()</code> . If the object&#39;s class already has a CopyStructure<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -259,9 +259,9 @@ is null.</li>
 
 <h3>EachWithIndex</h3>
 
-<pre><code>public static System.Collections.Generic.IEnumerable&lt;PeterO.Pair&lt;T, int&gt;&gt; EachWithIndex&lt;T&gt;(
+<pre>public static System.Collections.Generic.IEnumerable&lt;PeterO.Pair&lt;T, int&gt;&gt; EachWithIndex&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; arr);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -280,10 +280,10 @@ is null.</li>
 
 <h3>GetSegment</h3>
 
-<pre><code>public static PeterO.ListSegment&lt;T&gt; GetSegment&lt;T&gt;(
+<pre>public static PeterO.ListSegment&lt;T&gt; GetSegment&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int start);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.GetSegment&lt;T&gt;(start)</code> . If the object&#39;s class already has a GetSegment<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -309,11 +309,11 @@ is null.</li>
 
 <h3>GetSegment</h3>
 
-<pre><code>public static PeterO.ListSegment&lt;T&gt; GetSegment&lt;T&gt;(
+<pre>public static PeterO.ListSegment&lt;T&gt; GetSegment&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int start,
     int count);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.GetSegment&lt;T&gt;(start, count)</code> . If the object&#39;s class already has a GetSegment<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -340,9 +340,9 @@ is null.</li>
 
 <h3>HasUnique</h3>
 
-<pre><code>public static bool HasUnique&lt;T&gt;(
+<pre>public static bool HasUnique&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; col);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>col.HasUnique&lt;T&gt;()</code> . If the object&#39;s class already has a HasUnique<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -367,10 +367,10 @@ is null.</li>
 
 <h3>HasUnique</h3>
 
-<pre><code>public static bool HasUnique&lt;TContainer, TItem&gt;(
+<pre>public static bool HasUnique&lt;TContainer, TItem&gt;(
     this System.Collections.Generic.IEnumerable&lt;TContainer&gt; containers,
     System.Func&lt;TContainer, TItem&gt; func);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.HasUnique&lt;TContainer,
             TItem&gt;(func)</code> . If the object&#39;s class already has a HasUnique<TContainer, TItem> method with the same parameters, that method takes precedence over this extension method.</p>
@@ -399,10 +399,10 @@ is null.</li>
 
 <h3>Implode</h3>
 
-<pre><code>public static string Implode&lt;T&gt;(
+<pre>public static string Implode&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; col,
     string separator);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>col.Implode&lt;T&gt;(separator)</code> . If the object&#39;s class already has a Implode<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -429,10 +429,10 @@ is null.</li>
 
 <h3>IndexOf</h3>
 
-<pre><code>public static int IndexOf&lt;T&gt;(
+<pre>public static int IndexOf&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     System.Predicate&lt;T&gt; match);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.IndexOf&lt;T&gt;(match)</code> . If the object&#39;s class already has a IndexOf<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -459,10 +459,10 @@ is null.</li>
 
 <h3>IndexOf</h3>
 
-<pre><code>public static int IndexOf&lt;T&gt;(
+<pre>public static int IndexOf&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     T obj);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.IndexOf&lt;T&gt;(obj)</code> . If the object&#39;s class already has a IndexOf<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -488,10 +488,10 @@ is null.</li>
 
 <h3>MakePair</h3>
 
-<pre><code>public static PeterO.Pair&lt;TFirst, TSecond&gt; MakePair&lt;TFirst, TSecond&gt;(
+<pre>public static PeterO.Pair&lt;TFirst, TSecond&gt; MakePair&lt;TFirst, TSecond&gt;(
     TFirst f,
     TSecond s);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -510,10 +510,10 @@ is null.</li>
 
 <h3>MaxOrDefault</h3>
 
-<pre><code>public static T MaxOrDefault&lt;T&gt;(
+<pre>public static T MaxOrDefault&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; coll)
     where T : System.IComparable&lt;T&gt;T;
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>coll.MaxOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a MaxOrDefault<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -538,10 +538,10 @@ is null.</li>
 
 <h3>MinOrDefault</h3>
 
-<pre><code>public static T MinOrDefault&lt;T&gt;(
+<pre>public static T MinOrDefault&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; coll)
     where T : System.IComparable&lt;T&gt;T;
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>coll.MinOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a MinOrDefault<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -566,10 +566,10 @@ is null.</li>
 
 <h3>RemoveAll</h3>
 
-<pre><code>public static int RemoveAll&lt;T&gt;(
+<pre>public static int RemoveAll&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     System.Predicate&lt;T&gt; match);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.RemoveAll&lt;T&gt;(match)</code> . If the object&#39;s class already has a RemoveAll<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -596,11 +596,11 @@ is null.</li>
 
 <h3>SetIfMissing</h3>
 
-<pre><code>public static T SetIfMissing&lt;T&gt;(
+<pre>public static T SetIfMissing&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int index,
     System.Func&lt;T&gt; valuefunc);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.SetIfMissing&lt;T&gt;(index, valuefunc)</code> . If the object&#39;s class already has a SetIfMissing<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -627,11 +627,11 @@ is null.</li>
 
 <h3>SetIfMissing</h3>
 
-<pre><code>public static T SetIfMissing&lt;T&gt;(
+<pre>public static T SetIfMissing&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int index,
     T value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.SetIfMissing&lt;T&gt;(index, value)</code> . If the object&#39;s class already has a SetIfMissing<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -658,11 +658,11 @@ is null.</li>
 
 <h3>SetNewIfMissing</h3>
 
-<pre><code>public static T SetNewIfMissing&lt;T&gt;(
+<pre>public static T SetNewIfMissing&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int index)
     where T : new()T;
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.SetNewIfMissing&lt;T&gt;(index)</code> . If the object&#39;s class already has a SetNewIfMissing<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -688,11 +688,11 @@ is null.</li>
 
 <h3>SetValue</h3>
 
-<pre><code>public static void SetValue&lt;T&gt;(
+<pre>public static void SetValue&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int index,
     T value);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.SetValue&lt;T&gt;(index, value)</code> . If the object&#39;s class already has a SetValue<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -715,9 +715,9 @@ is null.</li>
 
 <h3>StructureSize</h3>
 
-<pre><code>public static int StructureSize(
+<pre>public static int StructureSize(
     this PeterO.IStructure s);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IStructure and can be called as follows:  <code>s.StructureSize()</code> . If the object&#39;s class already has a StructureSize method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -741,10 +741,10 @@ is null.</li>
 
 <h3>Sum</h3>
 
-<pre><code>public static int Sum&lt;T&gt;(
+<pre>public static int Sum&lt;T&gt;(
     this System.Collections.Generic.IEnumerable&lt;T&gt; containers,
     System.Func&lt;T, int&gt; func);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.Sum&lt;T&gt;(func)</code> . If the object&#39;s class already has a Sum<T> method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -762,10 +762,10 @@ is null.</li>
 
 <h3>Transform</h3>
 
-<pre><code>public static System.Collections.Generic.IEnumerable&lt;TOutput&gt; Transform&lt;TInput, TOutput&gt;(
+<pre>public static System.Collections.Generic.IEnumerable&lt;TOutput&gt; Transform&lt;TInput, TOutput&gt;(
     this System.Collections.Generic.IEnumerable&lt;TInput&gt; containers,
     System.Func&lt;TInput, TOutput&gt; func);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.Transform&lt;TInput,
             TOutput&gt;(func)</code> . If the object&#39;s class already has a Transform<TInput, TOutput> method with the same parameters, that method takes precedence over this extension method.</p>
@@ -784,10 +784,10 @@ is null.</li>
 
 <h3>UpToExcluding</h3>
 
-<pre><code>public static System.Collections.Generic.IEnumerable UpToExcluding(
+<pre>public static System.Collections.Generic.IEnumerable UpToExcluding(
     this int minValue,
     int maxValue);
-</code></pre>
+</pre>
 
 <p>Creates an iterator of integers starting at a minimum value and ending at one less than the maximum.In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows:  <code>minValue.UpToExcluding(maxValue)</code> . If the object&#39;s class already has a UpToExcluding method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -811,10 +811,10 @@ The parameter <em>minValue</em> is greater than <em>maxValue</em>.</li>
 
 <h3>UpToIncluding</h3>
 
-<pre><code>public static System.Collections.Generic.IEnumerable UpToIncluding(
+<pre>public static System.Collections.Generic.IEnumerable UpToIncluding(
     this int minValue,
     int maxValue);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows:  <code>minValue.UpToIncluding(maxValue)</code> . If the object&#39;s class already has a UpToIncluding method with the same parameters, that method takes precedence over this extension method.</p>
 
@@ -831,10 +831,10 @@ The parameter <em>minValue</em> is greater than <em>maxValue</em>.</li>
 
 <h3>ValueOrDefault</h3>
 
-<pre><code>public static T ValueOrDefault&lt;T&gt;(
+<pre>public static T ValueOrDefault&lt;T&gt;(
     this System.Collections.Generic.IList&lt;T&gt; list,
     int index);
-</code></pre>
+</pre>
 
 <p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows:  <code>list.ValueOrDefault&lt;T&gt;(index)</code> . If the object&#39;s class already has a ValueOrDefault<T> method with the same parameters, that method takes precedence over this extension method.</p>
 

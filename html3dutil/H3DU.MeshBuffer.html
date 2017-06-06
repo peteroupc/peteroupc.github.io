@@ -91,7 +91,7 @@ vertex per primitive, a line two vertices and a triangle three.
 The attributes, if present, will be stored in the &quot;position&quot;,
 &quot;normal&quot;, &quot;uv&quot;, and &quot;color&quot; properties of each vertex.</p>
 
-<pre><code>function getPrimitives(mesh) {
+<pre>function getPrimitives(mesh) {
 var p=mesh.getAttribute(&quot;POSITION&quot;)
 var n=mesh.getAttribute(&quot;NORMAL&quot;)
 var t=mesh.getAttribute(&quot;TEXCOORD_0&quot;)
@@ -115,7 +115,7 @@ ret.push(prim)
 }
 return ret
 }
-</code></pre>
+</pre>
 
 <p><a name='H3DU.MeshBuffer_getBounds'></a></p>
 
@@ -184,8 +184,8 @@ and the other mesh&#39;s indices copied or adapted.</p>
 
 <h4>Example</h4>
 
-<pre><code>var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
-</code></pre>
+<pre>var copiedMesh = new H3DU.MeshBuffer().merge(meshToCopy);
+</pre>
 
 <p><a name='H3DU.MeshBuffer_normalizeNormals'></a></p>
 
@@ -272,10 +272,10 @@ cylinders and two-dimensional planar shapes.
 Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.</p>
 
-<pre><code>var twoSidedMesh = originalMesh.merge(
+<pre>var twoSidedMesh = originalMesh.merge(
 new H3DU.MeshBuffer().merge(originalMesh).reverseWinding().reverseNormals()
 );
-</code></pre>
+</pre>
 
 <p><a name='H3DU.MeshBuffer_reverseWinding'></a></p>
 
@@ -299,10 +299,10 @@ cylinders and two-dimensional planar shapes.
 Due to the z-fighting effect, drawing this kind of mesh is
 recommended only if face culling is enabled.</p>
 
-<pre><code>var frontBackMesh = originalMesh.merge(
+<pre>var frontBackMesh = originalMesh.merge(
 new H3DU.MeshBuffer().merge(originalMesh).reverseWinding()
 );
-</code></pre>
+</pre>
 
 <p><a name='H3DU.MeshBuffer_setAttribute'></a></p>
 

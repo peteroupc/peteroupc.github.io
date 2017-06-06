@@ -6,12 +6,12 @@
 
 <h2>PeterO.ListSegment<T></h2>
 
-<pre><code>public sealed class ListSegment&lt;T&gt; :
+<pre>public sealed class ListSegment&lt;T&gt; :
     System.Collections.Generic.IList&lt;T&gt;,
     System.Collections.Generic.ICollection&lt;T&gt;,
     System.Collections.Generic.IEnumerable&lt;T&gt;,
     System.Collections.IEnumerable
-</code></pre>
+</pre>
 
 <p>Specifies a segment of a list defined by an offset and length. This class cannot be inherited.</p>
 
@@ -23,11 +23,11 @@
 
 <h3>ListSegment Constructor</h3>
 
-<pre><code>public ListSegment(
+<pre>public ListSegment(
     System.Collections.Generic.IList&lt;T&gt; list,
     int start,
     int count);
-</code></pre>
+</pre>
 
 <p>Initializes a new instance of the class.</p>
 
@@ -49,8 +49,8 @@ is null.</li>
 
 <h3>Count</h3>
 
-<pre><code>public sealed int Count { get; }
-</code></pre>
+<pre>public sealed int Count { get; }
+</pre>
 
 <p>Gets a value not documented yet.</p>
 
@@ -60,8 +60,8 @@ is null.</li>
 
 <h3>IsReadOnly</h3>
 
-<pre><code>public sealed bool IsReadOnly { get; }
-</code></pre>
+<pre>public sealed bool IsReadOnly { get; }
+</pre>
 
 <p>Gets a value indicating whether this list segment is read only.</p>
 
@@ -73,8 +73,8 @@ is null.</li>
 
 <h3>StartIndex</h3>
 
-<pre><code>public int StartIndex { get; }
-</code></pre>
+<pre>public int StartIndex { get; }
+</pre>
 
 <p>Gets the starting index within the underlying list for this list segment.</p>
 
@@ -84,9 +84,9 @@ is null.</li>
 
 <h3>Add</h3>
 
-<pre><code>public sealed void Add(
+<pre>public sealed void Add(
     T item);
-</code></pre>
+</pre>
 
 <p>This method is not supported.</p>
 
@@ -106,8 +106,8 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>Clear</h3>
 
-<pre><code>public sealed void Clear();
-</code></pre>
+<pre>public sealed void Clear();
+</pre>
 
 <p>This method is not supported.</p>
 
@@ -120,9 +120,9 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>Contains</h3>
 
-<pre><code>public sealed bool Contains(
+<pre>public sealed bool Contains(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -138,8 +138,8 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>GetEnumerator</h3>
 
-<pre><code>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
-</code></pre>
+<pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -149,9 +149,9 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>IndexOf</h3>
 
-<pre><code>public sealed int IndexOf(
+<pre>public sealed int IndexOf(
     T item);
-</code></pre>
+</pre>
 
 <p>Not documented yet.</p>
 
@@ -167,10 +167,10 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>Insert</h3>
 
-<pre><code>public sealed void Insert(
+<pre>public sealed void Insert(
     int index,
     T item);
-</code></pre>
+</pre>
 
 <p>This method is not supported.</p>
 
@@ -190,9 +190,9 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>Remove</h3>
 
-<pre><code>public sealed bool Remove(
+<pre>public sealed bool Remove(
     T item);
-</code></pre>
+</pre>
 
 <p>This method is not supported.</p>
 
@@ -215,9 +215,9 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <h3>RemoveAt</h3>
 
-<pre><code>public sealed void RemoveAt(
+<pre>public sealed void RemoveAt(
     int index);
-</code></pre>
+</pre>
 
 <p>This method is not supported.</p>
 
