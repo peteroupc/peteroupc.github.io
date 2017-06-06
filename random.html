@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 4, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 5, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -14,7 +14,7 @@
 
 <h2>Introduction</h2>
 
-<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely <em>unpredictable random generators</em> and <em>statistically random generators</em>. This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface.</p>
+<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely <em>statistically random generators</em> and <em>unpredictable-random generators</em>.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for security purposes (such as <code>java.security.SecureRandom</code>).  This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface, and make recommendations on their use and properties.</p>
 
 <p>In addition, other applications require numbers that &quot;seem&quot; random but are based on an initial state, or &quot;seed&quot;.  This page will discuss when seeds should be used by applications.</p>
 
@@ -24,7 +24,7 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Definitions">Definitions</a><br><a href="#Unpredictable_RNGs">Unpredictable RNGs</a><br><a href="#Statistical_RNGs">Statistical RNGs</a><br><a href="#Seedable_Random_Generators">Seedable Random Generators</a><br><a href="#Using_Random_Number_Generators">Using Random Number Generators</a><br>&nbsp;&nbsp;<a href="#Random_Number_Extraction">Random Number Extraction</a><br>&nbsp;&nbsp;<a href="#Shuffling">Shuffling</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Definitions">Definitions</a><br><a href="#Unpredictable_random_Generators">Unpredictable-random Generators</a><br><a href="#Statistically_Random_Generators">Statistically Random Generators</a><br><a href="#Seedable_Random_Generators">Seedable Random Generators</a><br><a href="#Using_Random_Number_Generators">Using Random Number Generators</a><br>&nbsp;&nbsp;<a href="#Random_Number_Extraction">Random Number Extraction</a><br>&nbsp;&nbsp;<a href="#Shuffling">Shuffling</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
 
 <p><a id=Definitions></a></p>
 
@@ -33,17 +33,17 @@
 <p>The following definitions are helpful in better understanding this document.</p>
 
 <ul>
-<li><strong>Pseudorandom number generator (PRNG).</strong> A number generator that outputs seemingly random numbers using an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)</li>
+<li><strong>Pseudorandom number generator (PRNG).</strong> A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>Seed length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
 <li><strong>Period.</strong> The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
-<p><a id=Unpredictable_RNGs></a></p>
+<p><a id=Unpredictable_random_Generators></a></p>
 
-<h2>Unpredictable RNGs</h2>
+<h2>Unpredictable-random Generators</h2>
 
-<p>Unpredictable random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) are indispensable in computer security and information security contexts, such as--</p>
+<p>Unpredictable-random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) are indispensable in computer security and information security contexts, such as--</p>
 
 <ul>
 <li> generating keying material, such as encryption keys,</li>
@@ -73,7 +73,7 @@
 <p>The implementation must be automatically initialized (&quot;seeded&quot;) automatically, with a &quot;seed&quot; described as follows. The seed--</p>
 
 <ul>
-<li>must consist of unpredictable data (as defined above), no part of which may be the PRNG&#39;s own output (the unpredictable data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
+<li>must consist of unpredictable data (as defined above), which ultimately derives from a nondeterministic source, no part of which may be the PRNG&#39;s own output, and which may be mixed with other arbitrary data as long as the result is no less unpredictable, and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
@@ -88,16 +88,16 @@
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.</p>
 
-<p><a id=Statistical_RNGs></a></p>
+<p><a id=Statistically_Random_Generators></a></p>
 
-<h2>Statistical RNGs</h2>
+<h2>Statistically Random Generators</h2>
 
 <p>Statistically random generators are used by simulations and many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--</p>
 
 <ul>
 <li> computer security and information security are not involved,</li>
 <li> 20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and</li>
-<li> the application generates random numbers so frequently that it would slow down undesirably if an unpredictable RNG were used instead.</li>
+<li> the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.</li>
 </ul>
 
 <p>The goal of this kind of generator is for each possible outcome to be equally likely.</p>
@@ -154,7 +154,7 @@
 <ul>
 <li>is hard-coded,</li>
 <li>was entered by the user,</li>
-<li>was generated using a statistical or unpredictable RNG (as defined above), or</li>
+<li>was generated using a statistical or unpredictable-random implementation (as defined above), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
 <li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
@@ -175,7 +175,7 @@ computer or information security. For such purposes, the random number generator
 <h2>Using Random Number Generators</h2>
 
 <p>The following topics deal with the practical use of RNGs in applications.  Unless stated otherwise,
-they apply regardless of the kind of RNG used (such as unpredictable, statistical, or seedable).</p>
+they apply regardless of the kind of random implementation used (such as unpredictable, statistical, or seedable).</p>
 
 <p><a id=Random_Number_Extraction></a></p>
 
@@ -199,7 +199,7 @@ for further discussion.)</li>
 
 <p>A detailed discussion of other methods to generate random numbers or integers that
 follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
-distribution, or that fall within a given range, is outside the scope of this page, however.;  I have written about this in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
+distribution, or that fall within a given range, is outside the scope of this page, however;  I have written about this in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
 
 <p>In my opinion, new programming languages should include methods corresponding to the two
 given above in their standard libraries -- one set for unpredictable-random generators, and another
@@ -220,19 +220,19 @@ set for statistical RNGs.</p>
 
 <h2>Conclusion</h2>
 
-<p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the &quot;Unpredictable RNGs&quot; and &quot;Statistical RNGs&quot; sections will meet the needs of those applications.</p>
+<p>In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the &quot;unpredictable-random implementations&quot; and &quot;Statistical RNGs&quot; sections will meet the needs of those applications.</p>
 
 <p>What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today--</p>
 
 <ul>
 <li>don&#39;t specify virtually any requirements on RNGs (such as C&#39;s <code>rand</code> function),</li>
-<li>specify a relatively weak RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
+<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
 <li>implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
 <li>seed RNGs with a timestamp by default (such as the <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx">.NET Framework implementation of <code>System.Random</code></a>), and/or</li>
 <li>leave the default seeding unspecified (such as C&#39;s <code>rand</code> function).</li>
 </ul>
 
-<p>In addition, this document recommends using unpredictable RNGs in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable and statistical RNGs in new programming languages.</p>
+<p>In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.</p>
 
 <p>Feel free to send comments. They may help improve this page.</p>
 

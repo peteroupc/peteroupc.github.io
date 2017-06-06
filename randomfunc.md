@@ -1,5 +1,11 @@
 # Random Number Generation Methods
 
+Peter Occil
+
+Begun June 4, 2017, Last Updated June 5, 2017
+
+Discusses many ways applications can extract random numbers from RNGs and includes pseudocode for most of them.
+
 <a id=Introduction></a>
 ## Introduction
 
@@ -7,14 +13,14 @@ This page discusses many ways applications can extract random numbers
 from random number generators (RNGs) and includes pseudocode for most
 of them.
 
-RNGs include those that seek to generate "unpredictable" random numbers (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html).
+RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature.
 
 Note that the pseudocode doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.
 
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Notes and Definitions](#Notes_and_Definitions)<br>[Core Random Generation Method](#Core_Random_Generation_Method)<br>[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)<br>&nbsp;&nbsp;[Random Integers Within a Range](#Random_Integers_Within_a_Range)<br>&nbsp;&nbsp;[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)<br>&nbsp;&nbsp;[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)<br>[Boolean Conditions](#Boolean_Conditions)<br>[Shuffling](#Shuffling)<br>[Choosing an Item from a List](#Choosing_an_Item_from_a_List)<br>[Creating a Random Character String](#Creating_a_Random_Character_String)<br>[Choosing Several Unique Items](#Choosing_Several_Unique_Items)<br>[Discrete Weighted Choice](#Discrete_Weighted_Choice)<br>[Triangular Distribution](#Triangular_Distribution)<br>[Normal Distribution](#Normal_Distribution)<br>[Binomial Distribution](#Binomial_Distribution)<br>[Negative Binomial Distribution](#Negative_Binomial_Distribution)<br>[Hypergeometric Distribution](#Hypergeometric_Distribution)<br>[Poisson Distribution](#Poisson_Distribution)<br>[Gamma Distribution](#Gamma_Distribution)<br>[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Notes and Definitions](#Notes_and_Definitions)<br>[Core Random Generation Method](#Core_Random_Generation_Method)<br>[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)<br>&nbsp;&nbsp;[Random Integers Within a Range](#Random_Integers_Within_a_Range)<br>&nbsp;&nbsp;[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)<br>&nbsp;&nbsp;[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)<br>[Boolean Conditions](#Boolean_Conditions)<br>[Shuffling](#Shuffling)<br>[Choosing an Item from a List](#Choosing_an_Item_from_a_List)<br>[Creating a Random Character String](#Creating_a_Random_Character_String)<br>[Choosing Several Unique Items](#Choosing_Several_Unique_Items)<br>[Weighted Choice](#Weighted_Choice)<br>&nbsp;&nbsp;[Discrete Weighted Choice](#Discrete_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>&nbsp;&nbsp;[Continuous Weighted Choice](#Continuous_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>[Normal Distribution](#Normal_Distribution)<br>[Binomial Distribution](#Binomial_Distribution)<br>[Negative Binomial Distribution](#Negative_Binomial_Distribution)<br>[Hypergeometric Distribution](#Hypergeometric_Distribution)<br>[Poisson Distribution](#Poisson_Distribution)<br>[Gamma Distribution](#Gamma_Distribution)<br>[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
 
 <a id=Notes_and_Definitions></a>
 ## Notes and Definitions
@@ -26,6 +32,7 @@ In this document:
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
+* `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
@@ -66,8 +73,7 @@ The following idioms generate a random number in an interval bounded at 0 and 1.
 - Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X) + 1) / X`
 
 In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers (Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers (Java `float`), X will be 2<sup>24</sup>.  (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
-for further discussion.)  Note that--
-- `RNDU()` corresponds to `Math.random()` in Java and JavaScript, and
+for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
 
 <a id=Uniform_Numbers_Within_a_Range></a>
 ### Uniform Numbers Within a Range
@@ -92,7 +98,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ## Shuffling
 
-The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.
+The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        if size(list) >= 2
@@ -118,7 +124,7 @@ The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shu
        end
     END METHOD
 
-An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate "unpredictable" numbers suffer less from this problem.
+An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.
 
 <a id=Choosing_an_Item_from_a_List></a>
 ## Choosing an Item from a List
@@ -137,7 +143,7 @@ The first step is to generate a list of the letters and digits (and/or other cha
 
 as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the string.)
 
-The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string (which is programming-language-dependent), where the random characters will be held.  It also takes the number of characters as a parameter named `size`.
+The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
 
       METHOD RandomString(characterList, stringSize)
            i = 0
@@ -152,7 +158,7 @@ The second step is to build a new string whose characters are chosen from that c
             return newString
       END METHOD
 
-_**Note:** Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated.  Random number generators alone should not be relied on to deliver unique results._
+_**Note:** Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results._
 
 <a id=Choosing_Several_Unique_Items></a>
 ## Choosing Several Unique Items
@@ -163,24 +169,29 @@ If `n` is relatively small (for example, if there are 1000 available items, or t
 
 If `k` unique integers of 32 bits or greater are to be chosen (so that `n` is 2<sup>32</sup> or is a greater power of 2), or if `n` is otherwise relatively large, create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until `k` items (or indices) were added to the hash table this way.  Performance considerations involving hash tables are outside the scope of this document.
 
+<a id=Weighted_Choice></a>
+## Weighted Choice
+
+Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.
+
 <a id=Discrete_Weighted_Choice></a>
-## Discrete Weighted Choice
+### Discrete Weighted Choice
 
-Some applications need to choose random items such that some items are more likely to be chosen than others.
+The discrete weighted choice method is used to choose a random item from among a set of them with different probabilities of being chosen.
 
-The following pseudocode takes two lists, `list` and `weights`, and returns one item from the list `list`.  Items with greater weights (which are given at the corresponding indices in the list `weights`) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)
+The following pseudocode takes two lists, `list` and `weights`, and returns one item from the list `list`.  Items with greater weights (which are given at the corresponding indices in the list `weights`) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater. Both lists should be the same size.
 
-    METHOD WeightedChoice(list, weights)
+    METHOD DiscreteWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
         sum = 0
         // Get the sum of all weights
         i = 0
-        while i < size(weights)
+        while i < size(list)
             sum = sum + weights[i]
             i = i + 1
         end
         // Choose a random integer/number from 0 to less than
-        // the number of weights.
+        // the sum of weights.
         value = RNDINT(sum)
         // NOTE: If the weights can be fractional numbers,
         // use this instead:
@@ -188,51 +199,94 @@ The following pseudocode takes two lists, `list` and `weights`, and returns one 
         // Choose the object according to the given value
         i = 0
         lastItem = size(list) - 1
-        while i < size(weights)
-            value = value - weights[i]
-            if value <= 0: return list[i]
-            if weights[i] > 0: lastItem = i
+	runningValue = 0
+        while i < size(list)
+	    if weights[i] > 0
+		value = value - weights[i]
+		 if value <= 0: return list[i]
+                 lastItem = i
+	    end
             i = i + 1
         end
-        // Last resort (shouldn't happen unless rounding
+        // Last resort (might happen because rounding
         // error happened somehow)
         return list[lastItem]
     END METHOD
 
-<a id=Triangular_Distribution></a>
-## Triangular Distribution
+<a id=Example></a>
+#### Example
 
-The following method generates a random number that follows a triangular distribution, a distribution that starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
+Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", "oranges" is more likely to be chosen than "apples" with the `DiscreteWeightedChoice` method.
 
-    METHOD Triangular(startpt, midpt, endpt)
-         if startpt==midpt or midpt==endpt or startpt>midpt or
-             midpt>endpt or startpt>endpt: return error
-         ca = (midpt - startpt)
-         pdf = ca * ca / (endpt - startpt) * ca
-         rndvar = RNDU()
-         // Or `rndvar = (RNDINT(X + 1)) / X` if endpoint is to be included;
-         // see "Uniform Numbers Within a Range", above
-         if rndvar<pdf
-             # Left hand side
-             return startpt+ca*(pdf-rndvar)/pdf
-         else
-              # Right hand side
-             return midpt+(endpt-midpt)*(rndvar-pdf)/(1.0-pdf)
-         end
-    end
+<a id=Continuous_Weighted_Choice></a>
+### Continuous Weighted Choice
+
+The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution.
+
+The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.
+
+In many cases, the numbers and densities are not known in advance, but rather sampled (usually at regular points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies, for each number, the relative occurrence of that number and/or numbers near it in the distribution.  A list of common probability density functions is outside the scope of this page.
+
+    METHOD ContinuousWeightedChoice(list, weights)
+        if size(list) <= 0 or size(weights) < size(list): return error
+	if size(list) == 1: return list[0]
+        // Get the sum of all areas between weights
+        sum = 0
+	areas = NewList()
+        i = 0
+        while i < size(list) - 1
+	  weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+          AddItem(areas, weightArea)
+	  sum += weightArea
+           i = i + 1
+        end
+        // Choose a random number
+        value = RNDU() * sum
+         // Or `value = ((RNDINT(X + 1)) / X) * sum`
+	 // if endpoint is to be included;
+         // see "Uniform Numbers Within a Range", above.
+	 // Interpolate a number according to the given value
+        i=0
+	// Get the number corresponding to the random number
+	runningValue = 0
+        while i < size(list) - 1
+  	    weightArea = areas[i]
+	    if weightArea > 0
+		newValue = runningValue + weightArea
+	        if value <= newValue
+   		    interp = (value - runningValue) / (newValue - runningValue)
+	   	    retValue = list[i] + (list[i + 1] - list[i]) * interp
+	  	    return retValue
+	         end
+	         runningValue = newValue
+	    end
+            i = i + 1
+        end
+        // Last resort (might happen because rounding
+        // error happened somehow)
+        return list[size(list) - 1]
+    END METHOD
+
+<a id=Example></a>
+#### Example
+
+Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
 <a id=Normal_Distribution></a>
 ## Normal Distribution
 
-The following method generates two [normally-distributed](https://wikipedia.org/wiki/Normal_distribution)
+The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
 random numbers with mean `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.),
-using the so-called [Box-Muller transformation](https://wikipedia.org/wiki/Box-Muller transformation).
+using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation).
 
     METHOD Normal2(mu, sigma)
-      s = sqrt(-2 * ln(RNDNZU())) * sigma
-      t = 2 * pi * RNDU()
-      // Return two normally-distributed numbers
-      return [mu + s * sin(t), mu + s * cos(t)]
+      // Choose a Rayleigh-distributed radius (multiplied by sigma)
+      radius = sqrt(-2 * ln(RNDNZU())) * sigma
+      // Choose a random angle
+      angle = 2 * pi * RNDU()
+      // Return two normally-distributed numbers.  This will
+      // be the X and Y coordinates of a point on a circle.
+      return [mu + radius * cos(angle), mu + radius * sin(angle)]
     END METHOD
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
@@ -242,12 +296,12 @@ Since `Normal2` returns two numbers instead of one, but many applications requir
 
 The following method generates a random integer that follows a binomial distribution.  This number
 expresses the number of successes that have happened after a given number of trials
-(expressed as `successes` below), where the probability of a success is `p` (ranging from 0, never, to
-1, always).
+(expressed as `trials` below), where the probability of a success is `p` (ranging from 0, never, to
+1, always). (A `p` of 0.5 means an equal chance of success or failure.)
 
     METHOD Binomial(trials, p)
-        if successes < 0: return error
-        if successes == 0: return 0
+        if trials < 0: return error
+        if trials == 0: return 0
         // Always succeeds
         if p >= 1.0: return trials
         // Always fails
@@ -270,7 +324,7 @@ expresses the number of successes that have happened after a given number of tri
 The following method generates a random integer that follows a negative binomial distribution.  This number
 expresses the number of failures that have happened after seeing a given number of successes
 (expressed as `successes` below), where the probability of a success is `p` (ranging from 0, never, to
-1, always).
+1, always). (A `p` of 0.5 means an equal chance of success or failure.)y
 
     METHOD NegativeBinomial(successes, p)
         if successes < 0: return error
@@ -388,7 +442,7 @@ The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scal
  the two parameters of the beta distribution.
 - **Beta binomial distribution**: `Binomial(trials, x / (x + GammaDist(b)))`, where `x` is `GammaDist(a)`, `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
-- **Cauchy distribution**: `scale * tan(pi * (RNDU()-0.5)) + mu`, where `mu` and `scale`
+- **Cauchy distribution**: `scale * tan(pi * (RNDNZU()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.
@@ -400,9 +454,11 @@ are the two parameters of the Cauchy distribution.
 - **Laplace (double exponential) distribution**: `(ln(RNDNZU())-ln(RNDNZU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
+- **Rayleigh distribution**: `sqrt(-ln(RNDNZU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.
-- **Weibull distribution**: `b * pow(-ln(RNDNZU()),1/a)`, where `a` and `b` are greater than 0.
+- **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
+- **Weibull distribution**: `b * pow(-ln(RNDNZU()),1/a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 
 <a id=Conclusion></a>
 ## Conclusion

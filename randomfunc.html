@@ -4,6 +4,12 @@
 <div class="mainarea" id="top">
 <h1>Random Number Generation Methods</h1>
 
+<p>Peter Occil</p>
+
+<p>Begun June 4, 2017, Last Updated June 5, 2017</p>
+
+<p>Discusses many ways applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
+
 <p><a id=Introduction></a></p>
 
 <h2>Introduction</h2>
@@ -12,7 +18,7 @@
 from random number generators (RNGs) and includes pseudocode for most
 of them.</p>
 
-<p>RNGs include those that seek to generate &quot;unpredictable&quot; random numbers (also called &quot;cryptographically strong&quot; RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
+<p>RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called &quot;cryptographically strong&quot; RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
 
 <p>Note that the pseudocode doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.</p>
 
@@ -20,7 +26,7 @@ of them.</p>
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Notes_and_Definitions">Notes and Definitions</a><br><a href="#Core_Random_Generation_Method">Core Random Generation Method</a><br><a href="#Random_Numbers_Within_a_Range">Random Numbers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Integers_Within_a_Range">Random Integers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Numbers_in_a_0_1_Bounded_Interval">Random Numbers in a 0-1 Bounded Interval</a><br>&nbsp;&nbsp;<a href="#Uniform_Numbers_Within_a_Range">Uniform Numbers Within a Range</a><br><a href="#Boolean_Conditions">Boolean Conditions</a><br><a href="#Shuffling">Shuffling</a><br><a href="#Choosing_an_Item_from_a_List">Choosing an Item from a List</a><br><a href="#Creating_a_Random_Character_String">Creating a Random Character String</a><br><a href="#Choosing_Several_Unique_Items">Choosing Several Unique Items</a><br><a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a><br><a href="#Triangular_Distribution">Triangular Distribution</a><br><a href="#Normal_Distribution">Normal Distribution</a><br><a href="#Binomial_Distribution">Binomial Distribution</a><br><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a><br><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a><br><a href="#Poisson_Distribution">Poisson Distribution</a><br><a href="#Gamma_Distribution">Gamma Distribution</a><br><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Notes_and_Definitions">Notes and Definitions</a><br><a href="#Core_Random_Generation_Method">Core Random Generation Method</a><br><a href="#Random_Numbers_Within_a_Range">Random Numbers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Integers_Within_a_Range">Random Integers Within a Range</a><br>&nbsp;&nbsp;<a href="#Random_Numbers_in_a_0_1_Bounded_Interval">Random Numbers in a 0-1 Bounded Interval</a><br>&nbsp;&nbsp;<a href="#Uniform_Numbers_Within_a_Range">Uniform Numbers Within a Range</a><br><a href="#Boolean_Conditions">Boolean Conditions</a><br><a href="#Shuffling">Shuffling</a><br><a href="#Choosing_an_Item_from_a_List">Choosing an Item from a List</a><br><a href="#Creating_a_Random_Character_String">Creating a Random Character String</a><br><a href="#Choosing_Several_Unique_Items">Choosing Several Unique Items</a><br><a href="#Weighted_Choice">Weighted Choice</a><br>&nbsp;&nbsp;<a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Example">Example</a><br>&nbsp;&nbsp;<a href="#Continuous_Weighted_Choice">Continuous Weighted Choice</a><br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#Example">Example</a><br><a href="#Normal_Distribution">Normal Distribution</a><br><a href="#Binomial_Distribution">Binomial Distribution</a><br><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a><br><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a><br><a href="#Poisson_Distribution">Poisson Distribution</a><br><a href="#Gamma_Distribution">Gamma Distribution</a><br><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
 
 <p><a id=Notes_and_Definitions></a></p>
 
@@ -34,6 +40,7 @@ of them.</p>
 <li><code>pi</code> is the constant &pi;, the ratio of a circle&#39;s circumference to its diameter.</li>
 <li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, in radians.</li>
 <li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
+<li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
 <li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
 <li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
 <li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
@@ -83,11 +90,7 @@ of them.</p>
 </ul>
 
 <p>In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers (Java <code>double</code>), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers (Java <code>float</code>), X will be 2<sup>24</sup>.  (See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
-for further discussion.)  Note that--</p>
-
-<ul>
-<li><code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript, and</li>
-</ul>
+for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p>
 
 <p><a id=Uniform_Numbers_Within_a_Range></a></p>
 
@@ -122,7 +125,7 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h2>Shuffling</h2>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre><code>METHOD Shuffle(list)
    if size(list) &gt;= 2
@@ -149,7 +152,7 @@ the following idioms in an <code>if</code> condition:</p>
 END METHOD
 </code></pre>
 
-<p>An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate &quot;unpredictable&quot; numbers suffer less from this problem.</p>
+<p>An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.</p>
 
 <p><a id=Choosing_an_Item_from_a_List></a></p>
 
@@ -173,7 +176,7 @@ END METHOD
 
 <p>as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the string.)</p>
 
-<p>The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string (which is programming-language-dependent), where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.</p>
+<p>The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)</p>
 
 <pre><code>  METHOD RandomString(characterList, stringSize)
        i = 0
@@ -189,7 +192,7 @@ END METHOD
   END METHOD
 </code></pre>
 
-<p><em><strong>Note:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated.  Random number generators alone should not be relied on to deliver unique results.</em></p>
+<p><em><strong>Note:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.</em></p>
 
 <p><a id=Choosing_Several_Unique_Items></a></p>
 
@@ -201,25 +204,31 @@ END METHOD
 
 <p>If <code>k</code> unique integers of 32 bits or greater are to be chosen (so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2), or if <code>n</code> is otherwise relatively large, create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until <code>k</code> items (or indices) were added to the hash table this way.  Performance considerations involving hash tables are outside the scope of this document.</p>
 
+<p><a id=Weighted_Choice></a></p>
+
+<h2>Weighted Choice</h2>
+
+<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.</p>
+
 <p><a id=Discrete_Weighted_Choice></a></p>
 
-<h2>Discrete Weighted Choice</h2>
+<h3>Discrete Weighted Choice</h3>
 
-<p>Some applications need to choose random items such that some items are more likely to be chosen than others.</p>
+<p>The discrete weighted choice method is used to choose a random item from among a set of them with different probabilities of being chosen.</p>
 
-<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns one item from the list <code>list</code>.  Items with greater weights (which are given at the corresponding indices in the list <code>weights</code>) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)</p>
+<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns one item from the list <code>list</code>.  Items with greater weights (which are given at the corresponding indices in the list <code>weights</code>) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater. Both lists should be the same size.</p>
 
-<pre><code>METHOD WeightedChoice(list, weights)
+<pre><code>METHOD DiscreteWeightedChoice(list, weights)
     if size(list) &lt;= 0 or size(weights) &lt; size(list): return error
     sum = 0
     // Get the sum of all weights
     i = 0
-    while i &lt; size(weights)
+    while i &lt; size(list)
         sum = sum + weights[i]
         i = i + 1
     end
     // Choose a random integer/number from 0 to less than
-    // the number of weights.
+    // the sum of weights.
     value = RNDINT(sum)
     // NOTE: If the weights can be fractional numbers,
     // use this instead:
@@ -227,55 +236,100 @@ END METHOD
     // Choose the object according to the given value
     i = 0
     lastItem = size(list) - 1
-    while i &lt; size(weights)
-        value = value - weights[i]
-        if value &lt;= 0: return list[i]
-        if weights[i] &gt; 0: lastItem = i
+runningValue = 0
+    while i &lt; size(list)
+    if weights[i] &gt; 0
+    value = value - weights[i]
+     if value &lt;= 0: return list[i]
+             lastItem = i
+    end
         i = i + 1
     end
-    // Last resort (shouldn&#39;t happen unless rounding
+    // Last resort (might happen because rounding
     // error happened somehow)
     return list[lastItem]
 END METHOD
 </code></pre>
 
-<p><a id=Triangular_Distribution></a></p>
+<p><a id=Example></a></p>
 
-<h2>Triangular Distribution</h2>
+<h4>Example</h4>
 
-<p>The following method generates a random number that follows a triangular distribution, a distribution that starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</p>
+<p>Assume <code>list</code> is the following: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, &quot;oranges&quot; is more likely to be chosen than &quot;apples&quot; with the <code>DiscreteWeightedChoice</code> method.</p>
 
-<pre><code>METHOD Triangular(startpt, midpt, endpt)
-     if startpt==midpt or midpt==endpt or startpt&gt;midpt or
-         midpt&gt;endpt or startpt&gt;endpt: return error
-     ca = (midpt - startpt)
-     pdf = ca * ca / (endpt - startpt) * ca
-     rndvar = RNDU()
-     // Or `rndvar = (RNDINT(X + 1)) / X` if endpoint is to be included;
-     // see &quot;Uniform Numbers Within a Range&quot;, above
-     if rndvar&lt;pdf
-         # Left hand side
-         return startpt+ca*(pdf-rndvar)/pdf
-     else
-          # Right hand side
-         return midpt+(endpt-midpt)*(rndvar-pdf)/(1.0-pdf)
-     end
-end
+<p><a id=Continuous_Weighted_Choice></a></p>
+
+<h3>Continuous Weighted Choice</h3>
+
+<p>The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution.</p>
+
+<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns a random number that follows the distribution.  <code>list</code> is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and <code>weights</code> is a list of <em>probability densities</em> for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.</p>
+
+<p>In many cases, the numbers and densities are not known in advance, but rather sampled (usually at regular points) from a so-called <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a>, a function that specifies, for each number, the relative occurrence of that number and/or numbers near it in the distribution.  A list of common probability density functions is outside the scope of this page.</p>
+
+<pre><code>METHOD ContinuousWeightedChoice(list, weights)
+    if size(list) &lt;= 0 or size(weights) &lt; size(list): return error
+if size(list) == 1: return list[0]
+    // Get the sum of all areas between weights
+    sum = 0
+areas = NewList()
+    i = 0
+    while i &lt; size(list) - 1
+  weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+      AddItem(areas, weightArea)
+  sum += weightArea
+       i = i + 1
+    end
+    // Choose a random number
+    value = RNDU() * sum
+     // Or `value = ((RNDINT(X + 1)) / X) * sum`
+ // if endpoint is to be included;
+     // see &quot;Uniform Numbers Within a Range&quot;, above.
+ // Interpolate a number according to the given value
+    i=0
+// Get the number corresponding to the random number
+runningValue = 0
+    while i &lt; size(list) - 1
+    weightArea = areas[i]
+    if weightArea &gt; 0
+    newValue = runningValue + weightArea
+        if value &lt;= newValue
+        interp = (value - runningValue) / (newValue - runningValue)
+        retValue = list[i] + (list[i + 1] - list[i]) * interp
+        return retValue
+         end
+         runningValue = newValue
+    end
+        i = i + 1
+    end
+    // Last resort (might happen because rounding
+    // error happened somehow)
+    return list[size(list) - 1]
+END METHOD
 </code></pre>
+
+<p><a id=Example></a></p>
+
+<h4>Example</h4>
+
+<p>Assume <code>list</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
 
 <p><a id=Normal_Distribution></a></p>
 
 <h2>Normal Distribution</h2>
 
-<p>The following method generates two <a href="https://wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
+<p>The following method generates two <a href="https://en.wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
 random numbers with mean <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;). (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.),
-using the so-called <a href="https://wikipedia.org/wiki/Box-Muller%20transformation">Box-Muller transformation</a>.</p>
+using the so-called <a href="https://en.wikipedia.org/wiki/Box-Muller%20transformation">Box-Muller transformation</a>.</p>
 
 <pre><code>METHOD Normal2(mu, sigma)
-  s = sqrt(-2 * ln(RNDNZU())) * sigma
-  t = 2 * pi * RNDU()
-  // Return two normally-distributed numbers
-  return [mu + s * sin(t), mu + s * cos(t)]
+  // Choose a Rayleigh-distributed radius (multiplied by sigma)
+  radius = sqrt(-2 * ln(RNDNZU())) * sigma
+  // Choose a random angle
+  angle = 2 * pi * RNDU()
+  // Return two normally-distributed numbers.  This will
+  // be the X and Y coordinates of a point on a circle.
+  return [mu + radius * cos(angle), mu + radius * sin(angle)]
 END METHOD
 </code></pre>
 
@@ -287,12 +341,12 @@ END METHOD
 
 <p>The following method generates a random integer that follows a binomial distribution.  This number
 expresses the number of successes that have happened after a given number of trials
-(expressed as <code>successes</code> below), where the probability of a success is <code>p</code> (ranging from 0, never, to
-1, always).</p>
+(expressed as <code>trials</code> below), where the probability of a success is <code>p</code> (ranging from 0, never, to
+1, always). (A <code>p</code> of 0.5 means an equal chance of success or failure.)</p>
 
 <pre><code>METHOD Binomial(trials, p)
-    if successes &lt; 0: return error
-    if successes == 0: return 0
+    if trials &lt; 0: return error
+    if trials == 0: return 0
     // Always succeeds
     if p &gt;= 1.0: return trials
     // Always fails
@@ -317,7 +371,7 @@ END METHOD
 <p>The following method generates a random integer that follows a negative binomial distribution.  This number
 expresses the number of failures that have happened after seeing a given number of successes
 (expressed as <code>successes</code> below), where the probability of a success is <code>p</code> (ranging from 0, never, to
-1, always).</p>
+1, always). (A <code>p</code> of 0.5 means an equal chance of success or failure.)y</p>
 
 <pre><code>METHOD NegativeBinomial(successes, p)
     if successes &lt; 0: return error
@@ -444,7 +498,7 @@ end
 the two parameters of the beta distribution.</li>
 <li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, x / (x + GammaDist(b)))</code>, where <code>x</code> is <code>GammaDist(a)</code>, <code>a</code> and <code>b</code> are
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
-<li><strong>Cauchy distribution</strong>: <code>scale * tan(pi * (RNDU()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
+<li><strong>Cauchy distribution</strong>: <code>scale * tan(pi * (RNDNZU()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
 are the two parameters of the Cauchy distribution.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
 freedom.</li>
@@ -456,9 +510,11 @@ same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(RNDNZU())-ln(RNDNZU()))*beta+mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
+<li><strong>Rayleigh distribution</strong>: <code>sqrt(-ln(RNDNZU())*2*a*a)</code>, where <code>a</code> is the scale and is greater than 0.</li>
 <li><strong>Snedecor&#39;s <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom.</li>
-<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDNZU()),1/a)</code>, where <code>a</code> and <code>b</code> are greater than 0.</li>
+<li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
+<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDNZU()),1/a)</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>a</code> and <code>b</code> are greater than 0.</li>
 </ul>
 
 <p><a id=Conclusion></a></p>
