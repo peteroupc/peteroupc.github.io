@@ -18,7 +18,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-random Generators](#Unpredictable_random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-Random Generators](#Unpredictable_Random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
 
 <a id=Definitions></a>
 ## Definitions
@@ -30,7 +30,7 @@ The following definitions are helpful in better understanding this document.
 - **Seed length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _seed length_.
 
-<a id=Unpredictable_random_Generators></a>
+<a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
 
 Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) are indispensable in computer security and information security contexts, such as--
