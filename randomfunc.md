@@ -1,8 +1,8 @@
 # Random Number Generation Methods
 
-Peter Occil
+[Peter Occil](mailto:poccil14@gmail.com)
 
-Begun June 4, 2017, Last Updated June 5, 2017
+Begun on June 4, 2017; last updated on June 7, 2017.
 
 Discusses many ways applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -15,8 +15,6 @@ of them.
 
 RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature.
 
-Note that the pseudocode doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.
-
 <a id=Contents></a>
 ## Contents
 
@@ -28,7 +26,8 @@ Note that the pseudocode doesn't cover all error handling that may be necessary 
 In this document:
 
 * Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.
-* Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1
+* Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
+* The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
@@ -36,6 +35,7 @@ In this document:
 * `sqrt(a)` is the square root of `a`.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
+* `GetNextLine(file)` is a method that gets the next line from a file, or returns `nothing` if the end of the file was reached.
 * `NewList()` creates a new empty list.
 * `AddItem(list, item)` adds the item `item` to the list `list`.
 * `size(list)` returns the size of the list `list`.
@@ -101,6 +101,10 @@ the following idioms in an `if` condition:
 The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
+       // NOTE: Check size of the list early to prevent
+       // `i` from being less than 0 if the list's size is 0 and
+       // `i` is implemented using an unsigned type available
+       // in certain programming languages.
        if size(list) >= 2
           // Set i to the last item's index
           i = size(list) - 1
@@ -124,24 +128,40 @@ The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shu
        end
     END METHOD
 
-An important consideration with respect to shuffling is the kind of RNG used.  This is because a deterministic RNG can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.
+An important consideration with respect to shuffling is the kind of RNG used.  Notably, a deterministic RNG can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.
 
 <a id=Choosing_an_Item_from_a_List></a>
-## Choosing an Item from a List
+## Choosing a Random Item from a List
 
-To choose an item from a list, use the idiom `list[RNDINT(size(list))]`.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on.
+To choose a random item from a list--
+
+- whose size is known in advance, use the idiom `list[RNDINT(size(list))]`.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on.
+- whose size is not known in advance, use a method like the following.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
+
+        METHOD RandomItemFromFile(file)
+           i = 1
+           lastItem = nothing
+           loop
+              // Get the next line from the file
+              item = GetNextLine(file)
+              // The end of the file was reached, break
+              if item == nothing: break
+              if RNDINT(i) == 0: lastItem = item
+              i = i + 1
+           end
+        end
 
 <a id=Creating_a_Random_Character_String></a>
 ## Creating a Random Character String
 
 A commonly asked question involves how to generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits).
 
-The first step is to generate a list of the letters and digits (and/or other characters) the string can have.  Often, those characters will be--
+The first step is to generate a list of the letters, digits, and/or other characters the string can have.  Often, those characters will be--
 * the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
 * the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
 * the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
 
-as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the string.)
+as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.)
 
 The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
 
@@ -150,7 +170,7 @@ The second step is to build a new string whose characters are chosen from that c
            newString = NewList()
            while i < stringSize
                // Choose a character from the list
-               randomChar = characterList[RNDINT(characterList)]
+               randomChar = characterList[RNDINT(size(characterList))]
                // Add the character to the string
                AddItem(newString, randomChar)
                i = i + 1
@@ -163,11 +183,48 @@ _**Note:** Often applications need to generate a string of characters that's not
 <a id=Choosing_Several_Unique_Items></a>
 ## Choosing Several Unique Items
 
-Often, the need arises to choose `k` unique items or values from among `n` available items or values.
+Often, the need arises to choose `k` unique items or values from among `n` available items or values.  The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether `n` is known and how big it is:
 
-If `n` is relatively small (for example, if there are 1000 available items, or there is a range of numbers from 0 to 1000 to choose from), then store the items in a list, [shuffle](#Shuffling) that list, and choose the first `k` items from that list.
+- **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 
-If `k` unique integers of 32 bits or greater are to be chosen (so that `n` is 2<sup>32</sup> or is a greater power of 2), or if `n` is otherwise relatively large, create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until `k` items (or indices) were added to the hash table this way.  Performance considerations involving hash tables are outside the scope of this document.
+        METHOD RandomKItemsFromFile(file, k)
+           list = NewList()
+           j = 0
+           endOfFile = false
+           while j < k
+              // Get the next line from the file
+              item = GetNextLine(file)
+              // The end of the file was reached, break
+              if item == nothing
+                 endOfFile = true
+                 break
+              end
+              AddItem(list, item)
+              j = j + 1
+           end
+           i = 1 + k
+           while endOfFile == false
+              // Get the next line from the file
+              item = GetNextLine(file)
+              // The end of the file was reached, break
+              if item == nothing: break
+              j = RNDINT(i)
+              if j < k: list[j] = item
+              i = i + 1
+           end
+           // We shuffle at the end in case k or fewer
+           // lines were in the file, since in that
+           // case the items would appear in the same
+           // order as they appeared in the file
+           // if the list weren't shuffled.  This line
+           // can be removed, however, if the items
+           // in the returned list need not appear
+           // in random order.
+           Shuffle(list)
+           return list
+        end
+- **If `n` is relatively small (for example, if there are 1000 available items, or there is a range of numbers from 0 to 1000 to choose from):** Store all the items in a list, [shuffle](#Shuffling) that list, and choose the first `k` items from that list.
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until `k` items (or indices) were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see [Discrete Weighted Choice](#Discrete_Weighted_Choice), below).
 
 <a id=Weighted_Choice></a>
 ## Weighted Choice
@@ -199,14 +256,15 @@ The following pseudocode takes two lists, `list` and `weights`, and returns one 
         // Choose the object according to the given value
         i = 0
         lastItem = size(list) - 1
-  runningValue = 0
+        runningValue = 0
         while i < size(list)
-      if weights[i] > 0
-    value = value - weights[i]
-     if value <= 0: return list[i]
-                 lastItem = i
-      end
-            i = i + 1
+           if weights[i] > 0
+              newValue = runningValue + weights[i]
+              if value < newValue: return list[i]
+              runningValue = newValue
+              lastItem = i
+           end
+           i = i + 1
         end
         // Last resort (might happen because rounding
         // error happened somehow)
@@ -225,42 +283,39 @@ The continuous weighted choice method is used to choose a random number that fol
 
 The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.
 
-In many cases, the numbers and densities are not known in advance, but rather sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies, for each number, the relative occurrence of that number and/or numbers near it in the distribution.  A list of common probability density functions is outside the scope of this page.
+In many cases, the probability densities are not known in advance, but rather sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies the _probability density_ for each number (the probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits).  A list of common probability density functions is outside the scope of this page.
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
-  if size(list) == 1: return list[0]
+        if size(list) == 1: return list[0]
         // Get the sum of all areas between weights
         sum = 0
-  areas = NewList()
+        areas = NewList()
         i = 0
         while i < size(list) - 1
-    weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
           AddItem(areas, weightArea)
-    sum += weightArea
+          sum += weightArea
            i = i + 1
         end
         // Choose a random number
         value = RNDU() * sum
-         // Or `value = ((RNDINT(X + 1)) / X) * sum`
-   // if endpoint is to be included;
-         // see "Uniform Numbers Within a Range", above.
-   // Interpolate a number according to the given value
-        i=0
-  // Get the number corresponding to the random number
-  runningValue = 0
+         // Interpolate a number according to the given value
+         i=0
+         // Get the number corresponding to the random number
+         runningValue = 0
         while i < size(list) - 1
         weightArea = areas[i]
-      if weightArea > 0
-    newValue = runningValue + weightArea
+         if weightArea > 0
+          newValue = runningValue + weightArea
           if value <= newValue
            interp = (value - runningValue) / (newValue - runningValue)
            retValue = list[i] + (list[i + 1] - list[i]) * interp
-          return retValue
-           end
-           runningValue = newValue
-      end
-            i = i + 1
+           return retValue
+          end
+          runningValue = newValue
+         end
+         i = i + 1
         end
         // Last resort (might happen because rounding
         // error happened somehow)
@@ -276,8 +331,7 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 ## Normal Distribution
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.),
-using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation).
+random numbers with mean `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation), as further explained in the pseudocode's comments.
 
     METHOD Normal2(mu, sigma)
       // Choose a Rayleigh-distributed radius (multiplied by sigma)
@@ -295,9 +349,11 @@ Since `Normal2` returns two numbers instead of one, but many applications requir
 ## Binomial Distribution
 
 The following method generates a random integer that follows a binomial distribution.  This number
-expresses the number of successes that have happened after a given number of trials
-(expressed as `trials` below), where the probability of a success is `p` (ranging from 0, never, to
-1, always). (A `p` of 0.5 means an equal chance of success or failure.)
+expresses the number of successes that have happened after a given number of independently performed trials
+(expressed as `trials` below), where the probability of a success in each trial is `p` (which ranges from 0, never, to
+1, always, and which can be 0.5, meaning an equal chance of success or failure).
+
+**Example:** If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
 
     METHOD Binomial(trials, p)
         if trials < 0: return error
@@ -318,15 +374,13 @@ expresses the number of successes that have happened after a given number of tri
         return count
     END METHOD
 
-<a id=Examples></a>
-### Examples
-
-- If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
-
 <a id=Negative_Binomial_Distribution></a>
 ## Negative Binomial Distribution
 
-The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success is `p` (ranging from 0, never, to 1, always). (A `p` of 0.5 means an equal chance of success or failure.)
+The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (which ranges from 0, never, to
+1, always, and which can be 0.5, meaning an equal chance of success or failure).
+
+**Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
     METHOD NegativeBinomial(successes, p)
         if successes < 0: return error
@@ -353,20 +407,20 @@ The following method generates a random integer that follows a negative binomial
         end
     END METHOD
 
-<a id=Examples></a>
-### Examples
-
-- If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
-
 <a id=Hypergeometric_Distribution></a>
 ## Hypergeometric Distribution
 
 The following method generates a random integer that follows a hypergeometric distribution.
 When a given number of items are drawn at random without replacement from a set of items
-labeled either `1` or `0`,  the random integer expresses the number of items drawn
+each labeled either `1` or `0`,  the random integer expresses the number of items drawn
 this way that are labeled `1`.  In the method below, `trials` is the number of items
 drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is
 the number of items labeled `1` or `0` in that set.
+
+**Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
+cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number
+of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
+12, and `count` is 52.
 
     METHOD Hypergeometric(trials, ones, count)
         if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
@@ -391,9 +445,7 @@ the number of items labeled `1` or `0` in that set.
 <a id=Poisson_Distribution></a>
 ## Poisson Distribution
 
-The following method generates a random integer that follows a Poisson distribution.
-The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also
-be a fractional number.  The method given here is based on Knuth's method from 1969.
+The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a fractional number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer).  The method given here is based on Knuth's method from 1969.
 
     METHOD Poisson(mean)
         if mean < 0: return error
@@ -413,13 +465,13 @@ be a fractional number.  The method given here is based on Knuth's method from 1
 ## Gamma Distribution
 
 The following method generates a random number that follows a gamma distribution.
-The method given here is based on Marsaglia and Tsang's method from 2000.
+The gamma distribution models expected lifetimes. The method given here is based on Marsaglia and Tsang's method from 2000.
 
-    METHOD GammaDist(a)
-        if a <= -1: return error
-        d = a
+    METHOD GammaDist(meanLifetime)
+        if meanLifetime <= -1: return error
+        d = meanLifetime
         v = 0
-        if a < 1: d = d + 1
+        if meanLifetime < 1: d = d + 1
         d = d - (1/3) // NOTE: 1/3 must be a fractional number
         c = 1 / sqrt(9 * d)
         loop
@@ -436,11 +488,11 @@ The method given here is based on Marsaglia and Tsang's method from 2000.
             if u < 1 - (0.0331 * x2 * x2): break
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
         end
-        if a < 1: return d * v * exp(ln(RNDNZU()) / a)
+        if meanLifetime < 1: return d * v * exp(ln(RNDNZU()) / meanLifetime)
         return d * v
     end
 
-The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is simply `GammaDist(a) * b`.
+The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is simply `GammaDist(a) * b`.  `b` can be used to convert the gamma-distributed random number to a more meaningful scale.
 
 <a id=Other_Non_Uniform_Distributions></a>
 ## Other Non-Uniform Distributions
@@ -453,7 +505,7 @@ The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scal
 are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.
-- **Exponential distribution**: `-ln(RNDNZU()) / lambda`, where `lambda` is the inverse scale.
+- **Exponential distribution**: `-ln(RNDNZU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event will occur in a given span of time (such as in a given day or year).  `1/lambda` is the scale, which is usually the average waiting time between two independent events of the same kind.
 - **Geometric distribution**: `NegativeBinomial(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
@@ -461,6 +513,7 @@ are the two parameters of the Cauchy distribution.
 - **Laplace (double exponential) distribution**: `(ln(RNDNZU())-ln(RNDNZU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
+- **Pascal distribution:** `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
 - **Rayleigh distribution**: `sqrt(-ln(RNDNZU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.
@@ -474,6 +527,8 @@ This page discussed many ways applications can extract random numbers
 from random number generators.
 
 Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on this page are welcome.
+
+I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.
 
 <a id=License></a>
 ## License
