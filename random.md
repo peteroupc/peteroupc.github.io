@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 8, 2017.
+Begun on Mar. 5, 2016; last updated on June 9, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -130,11 +130,11 @@ An application should only use seeding if--
 
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** An application can use seeds to generate publicly verifiable random numbers (that is, random numbers that are publicly disclosed together with all the information required to verify their generation), using a process described, for example, in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).
-* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   An application need not follow the seeding recommendations when generating noise, and the RNG used to generate the noise need only be as strong as required to achieve the desired effect, but only if--
-     - the RNG is used solely to generate noise, or the RNG meets the requirements of a statistical-random or unpredictable-random implementation, and
-     - the use of the noise has no impact on application functionality and does not implicate computer or information security.
- 
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation. An application can use seeds to generate verifiable random numbers using a process described, for example, in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee), or in [Lenstra and Wesolowski 2015].
+* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   If the following conditions are met, an application need not follow the seeding recommendations when generating noise and the RNG used to generate the noise need only be as strong as required to achieve the desired effect:
+     - The RNG is used solely to generate noise, or the RNG meets the requirements of a statistical-random or unpredictable-random implementation.
+     - The use of the noise has no impact on application functionality and does not implicate computer or information security.
+
     (A detailed description of noise algorithms, such as white, pink, or other colored noise, Perlin noise, or fractal Brownian motion, is outside the scope of this page.)
 
 <a id=Using_Random_Number_Generators></a>

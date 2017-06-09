@@ -548,7 +548,7 @@ The gamma distribution models expected lifetimes. The method given here is based
         if ln(u) &lt; (0.5 * x2) + (d * (1 - v + ln(v))): break
     end
     if meanLifetime &lt; 1
-    return d * v * exp(ln(RNDNZU()) / meanLifetime)
+  return d * v * exp(ln(RNDNZU()) / meanLifetime)
     end
     return d * v
 end
