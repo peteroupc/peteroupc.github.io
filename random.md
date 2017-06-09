@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 7, 2017.
+Begun on Mar. 5, 2016; last updated on June 8, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -18,7 +18,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-Random Generators](#Unpredictable_Random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-random Generators](#Unpredictable_random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
 
 <a id=Definitions></a>
 ## Definitions
@@ -30,7 +30,7 @@ The following definitions are helpful in better understanding this document.
 - **Seed length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _seed length_.
 
-<a id=Unpredictable_Random_Generators></a>
+<a id=Unpredictable_random_Generators></a>
 ## Unpredictable-Random Generators
 
 Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) are indispensable in computer security and information security contexts, such as--
@@ -128,8 +128,14 @@ An application should only use seeding if--
     -   by distributing the results or the random numbers to networked users as they are generated, and
 4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality.)
 
-On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on application functionality and do not implicate
-computer or information security. For such purposes, the random number generator need only be as strong as required to achieve the desired visual variations.
+Seeds also come into play in other situations, such as:
+
+* **Verifiable randomness.** An application can use seeds to generate publicly verifiable random numbers (that is, random numbers that are publicly disclosed together with all the information required to verify their generation), using a process described, for example, in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).
+* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   An application need not follow the seeding recommendations when generating noise, and the RNG used to generate the noise need only be as strong as required to achieve the desired effect, but only if--
+     - the RNG is used solely to generate noise, or the RNG meets the requirements of a statistical-random or unpredictable-random implementation, and
+     - the use of the noise has no impact on application functionality and does not implicate computer or information security.
+ 
+    (A detailed description of noise algorithms, such as white, pink, or other colored noise, Perlin noise, or fractal Brownian motion, is outside the scope of this page.)
 
 <a id=Using_Random_Number_Generators></a>
 ## Using Random Number Generators
@@ -168,7 +174,7 @@ set for statistical RNGs.
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
-1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in [another document](https://peteroupc.github.io/random.html).
+1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation. (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
 
 <a id=Conclusion></a>

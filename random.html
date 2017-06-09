@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 7, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 8, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -24,7 +24,7 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Definitions">Definitions</a><br><a href="#Unpredictable_Random_Generators">Unpredictable-Random Generators</a><br><a href="#Statistically_Random_Generators">Statistically Random Generators</a><br><a href="#Seedable_Random_Generators">Seedable Random Generators</a><br><a href="#Using_Random_Number_Generators">Using Random Number Generators</a><br>&nbsp;&nbsp;<a href="#Random_Number_Extraction">Random Number Extraction</a><br>&nbsp;&nbsp;<a href="#Shuffling">Shuffling</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
+<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Definitions">Definitions</a><br><a href="#Unpredictable_random_Generators">Unpredictable-random Generators</a><br><a href="#Statistically_Random_Generators">Statistically Random Generators</a><br><a href="#Seedable_Random_Generators">Seedable Random Generators</a><br><a href="#Using_Random_Number_Generators">Using Random Number Generators</a><br>&nbsp;&nbsp;<a href="#Random_Number_Extraction">Random Number Extraction</a><br>&nbsp;&nbsp;<a href="#Shuffling">Shuffling</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
 
 <p><a id=Definitions></a></p>
 
@@ -39,7 +39,7 @@
 <li><strong>Period.</strong> The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
-<p><a id=Unpredictable_Random_Generators></a></p>
+<p><a id=Unpredictable_random_Generators></a></p>
 
 <h2>Unpredictable-Random Generators</h2>
 
@@ -168,8 +168,12 @@
 <li>the PRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality.)</li>
 </ol>
 
-<p>On the other hand, an application need not use seeding if the randomness is only used for slight and inconspicuous visual variations, provided the visual variations have no impact on application functionality and do not implicate
-computer or information security. For such purposes, the random number generator need only be as strong as required to achieve the desired visual variations.</p>
+<p>Seeds also come into play in other situations, such as:</p>
+
+<ul>
+<li><strong>Verifiable randomness.</strong> An application can use seeds to generate publicly verifiable random numbers (that is, random numbers that are publicly disclosed together with all the information required to verify their generation), using a process described, for example, in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).</li>
+<li><strong>Noise.</strong> Randomly generated numbers can serve as <em>noise</em>, that is, a slight and inconspicuous variation in images and sound.   Provided the use of the noise has no impact on application functionality and does not implicate computer or information security, the application need not follow the seeding recommendations when generating noise and the RNG used to generate the noise need only be as strong as required to achieve the desired effect. (A detailed description of noise algorithms, such as white, pink, or other colored noise, or Perlin noise, is outside the scope of this article.)</li>
+</ul>
 
 <p><a id=Using_Random_Number_Generators></a></p>
 
@@ -214,7 +218,7 @@ set for statistical RNGs.</p>
 <p>There are special considerations in play when applications use RNGs to shuffle a list of items.</p>
 
 <ol>
-<li><strong>Shuffling method.</strong> The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in <a href="https://peteroupc.github.io/random.html">another document</a>.</li>
+<li><strong>Shuffling method.</strong> The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</li>
 <li><strong>Generating all permutations.</strong> A pseudorandom number generator (PRNG) can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em>. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation. (See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</li>
 </ol>
 
