@@ -35,8 +35,6 @@ its work.</li>
 <li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
 <li><a href="#H3DU.is3DContext">is3DContext</a><br>Returns whether the given object is a 3D rendering context.</li>
 <li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.</li>
-<li><a href="#H3DU.loadGltfFromUrl">loadGltfFromUrl</a><br>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.</li>
 <li><a href="#H3DU.loadStlFromUrl">loadStlFromUrl</a><br>Loads a .STL file asynchronously.</li>
 <li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.</li>
@@ -238,46 +236,6 @@ the parameter&#39;s &quot;data&quot; property will be:<ul>
 <li>For response type &quot;json&quot;, the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.loadGltfFromUrl'></a></p>
-
-<h3>(static) H3DU.loadGltfFromUrl(url)</h3>
-
-<p>Loads a 3D scene stored in glTF format, together with the buffers and
-shaders it uses.</p>
-
-<p>This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this class, you must include the script &quot;extras/gltf.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/gltf.js&quot;&gt;&lt;/script&gt;
-</pre>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: string)<br>URL of the glTF file to load.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise; when it resolves, the result will
-be an object that implements the following methods:<ul>
-<li><code>getShape()</code> - Gets an <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a> object described
-by the glTF data.
-<li><code>getImageURIs()</code> - Gets an array of URI (uniform resource identifier)
-strings for the texture images described by the glTF data. Each URI will be relative
-to the &quot;url&quot; parameter of the loadGltfFromFile method.
-<li><code>update(time)</code> - A single-parameter method that should be called
-if the glTF data describes an animation; this method updates the state of the
-3D batch in accordance with that animation. The single parameter, <code>time</code>
-(type Number), is a time stamp in milliseconds.
-</ul>If an error occurs in loading the glTF data or any of the buffers and shaders
-it uses, the promise will be rejected. (Type: <a href="Promise.html">Promise</a>.&lt;Object&gt;)</p>
 
 <p><a name='H3DU.loadStlFromUrl'></a></p>
 

@@ -13,12 +13,12 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 
 In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when seeds should be used by applications.
 
-Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and the two methods for higher-level randomness methods.
+Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and two higher-level randomness methods.
 
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-random Generators](#Unpredictable_random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-Random Generators](#Unpredictable_Random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>&nbsp;&nbsp;[Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)<br>&nbsp;&nbsp;[Seeding Recommendations](#Seeding_Recommendations)<br>&nbsp;&nbsp;[Other Situations](#Other_Situations)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
 
 <a id=Definitions></a>
 ## Definitions
@@ -30,7 +30,7 @@ The following definitions are helpful in better understanding this document.
 - **Seed length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _seed length_.
 
-<a id=Unpredictable_random_Generators></a>
+<a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
 
 Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) are indispensable in computer security and information security contexts, such as--
@@ -109,11 +109,19 @@ Generates random bits using a statistical-random implementation.
 
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
-Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). Moreover, which PRNG to use for such purpose depends on the application. But here are some recommendations:
+Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords).
+
+<a id=Seedable_PRNG_Recommendations></a>
+### Seedable PRNG Recommendations
+
+Which PRNG to use for generating reproducible results depends on the application. But here are some recommendations:
 
 -  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
 -  The PRNG's _seed length_ should be 64 bits or greater.
 -  Any seed passed to the PRNG should be at least the same size as the PRNG's _seed length_.
+
+<a id=Seeding_Recommendations></a>
+### Seeding Recommendations
 
 An application should only use seeding if--
 
@@ -128,14 +136,19 @@ An application should only use seeding if--
     -   by distributing the results or the random numbers to networked users as they are generated, and
 4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality.)
 
+<a id=Other_Situations></a>
+### Other Situations
+
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation. An application can use seeds to generate verifiable random numbers using a process described, for example, in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee), or in [Lenstra and Wesolowski 2015].
-* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   If the following conditions are met, an application need not follow the seeding recommendations when generating noise and the RNG used to generate the noise need only be as strong as required to achieve the desired effect:
-     - The RNG is used solely to generate noise, or the RNG meets the requirements of a statistical-random or unpredictable-random implementation.
-     - The use of the noise has no impact on application functionality and does not implicate computer or information security.
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated. An application can use seeds to generate verifiable random numbers using a process described, for example, in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee), or in [Lenstra and Wesolowski 2015].
+* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
+     - must be an unpredictable-random implementation, if computer or information security are involved; otherwise,
+     - must follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations), if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation; otherwise,
+     - must be a statistical-random or unpredictable-random implementation, if the RNG is not used solely to generate noise; otherwise,
+     - need only be as strong as required to achieve the desired effect.
 
-    (A detailed description of noise algorithms, such as white, pink, or other colored noise, Perlin noise, or fractal Brownian motion, is outside the scope of this page.)
+    (A detailed description of noise algorithms, such as white, pink, or other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise), or fractal Brownian motion, is outside the scope of this page.)
 
 <a id=Using_Random_Number_Generators></a>
 ## Using Random Number Generators
