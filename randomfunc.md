@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 7, 2017.
+Begun on June 4, 2017; last updated on June 10, 2017.
 
 Discusses many ways applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -34,6 +34,7 @@ RNGs include those that seek to generate random numbers that are cost-prohibitiv
 - Weighted_Choice[Weighted Choice](#Weighted_Choice)
     - Discrete_Weighted_Choice[Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - Example[Example](#Example)
+        - Weighted_Choice_Without_Replacement[Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
     - Continuous_Weighted_Choice[Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - Example[Example](#Example)
 - Normal_Distribution[Normal Distribution](#Normal_Distribution)
@@ -187,7 +188,10 @@ The first step is to generate a list of the letters, digits, and/or other charac
 * the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
 * the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
 
-as found in the Basic Latin block of the Unicode Standard. (Note that if the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.)
+as found in the Basic Latin block of the Unicode Standard. Note that:
+
+- If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
+- Instead of individual characters, the list can consist of strings of characters.  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
 
 The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
 
@@ -262,7 +266,7 @@ Some applications need to choose random items or numbers such that some of them 
 
 The discrete weighted choice method is used to choose a random item from among a set of them with different probabilities of being chosen.
 
-The following pseudocode takes two lists, `list` and `weights`, and returns one item from the list `list`.  Items with greater weights (which are given at the corresponding indices in the list `weights`) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater. Both lists should be the same size.
+The following pseudocode takes two lists, `list` and `weights`, and returns the index of one item from the list `list`.  Items with greater weights (which are given at the corresponding indices in the list `weights`) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater. Both lists should be the same size.
 
     METHOD DiscreteWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
@@ -286,7 +290,7 @@ The following pseudocode takes two lists, `list` and `weights`, and returns one 
         while i < size(list)
            if weights[i] > 0
               newValue = runningValue + weights[i]
-              if value < newValue: return list[i]
+              if value < newValue: return i
               runningValue = newValue
               lastItem = i
            end
@@ -294,13 +298,49 @@ The following pseudocode takes two lists, `list` and `weights`, and returns one 
         end
         // Last resort (might happen because rounding
         // error happened somehow)
-        return list[lastItem]
+        return lastItem
     END METHOD
 
 <a id=Example></a>
 #### Example
 
-Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", "oranges" is more likely to be chosen than "apples" with the `DiscreteWeightedChoice` method.
+Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
+
+    index = DiscreteWeightedChoice(list, weights)
+    // Get the actual item
+    item = list[index]
+
+<a id=Weighted_Choice_Without_Replacement></a>
+#### Weighted Choice Without Replacement
+
+In the example above, the weights sum to 21.  However, each weight does not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+
+To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), simply call `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  This technique will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
+
+    // Get the sum of weights
+    // (NOTE: This assumes that `weights` is
+    // a list that can be modified.  If the original weights
+    // are needed for something else, a copy of that
+    // list should be made, but the copying process
+    // is not shown here.)
+    totalWeight = 0
+    i = 0
+    while i < size(list)
+        totalWeight = totalWeight + weights[i]
+        i = i + 1
+    end
+    // Choose as many items as the sum of weights
+    i = 0
+    items = NewList()
+    while i < totalWeight
+        index = DiscreteWeightedChoice(list, weights)
+  // Decrease weight by 1 to implement selection
+  // without replacement.
+  weights[index] = weights[index] - 1
+        AddItem(items, list[index])
+    end
+
+Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [shuffle](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
