@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 9, 2017.
+Begun on Mar. 5, 2016; last updated on June 10, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -18,7 +18,20 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Definitions](#Definitions)<br>[Unpredictable-Random Generators](#Unpredictable_Random_Generators)<br>[Statistically Random Generators](#Statistically_Random_Generators)<br>[Seedable Random Generators](#Seedable_Random_Generators)<br>&nbsp;&nbsp;[Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)<br>&nbsp;&nbsp;[Seeding Recommendations](#Seeding_Recommendations)<br>&nbsp;&nbsp;[Other Situations](#Other_Situations)<br>[Using Random Number Generators](#Using_Random_Number_Generators)<br>&nbsp;&nbsp;[Random Number Extraction](#Random_Number_Extraction)<br>&nbsp;&nbsp;[Shuffling](#Shuffling)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+- Introduction[Introduction](#Introduction)
+- Contents[Contents](#Contents)
+- Definitions[Definitions](#Definitions)
+- Unpredictable_Random_Generators[Unpredictable-Random Generators](#Unpredictable_Random_Generators)
+- Statistically_Random_Generators[Statistically Random Generators](#Statistically_Random_Generators)
+- Seedable_Random_Generators[Seedable Random Generators](#Seedable_Random_Generators)
+    - Seedable_PRNG_Recommendations[Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
+    - Seeding_Recommendations[Seeding Recommendations](#Seeding_Recommendations)
+    - Other_Situations[Other Situations](#Other_Situations)
+- Using_Random_Number_Generators[Using Random Number Generators](#Using_Random_Number_Generators)
+    - Random_Number_Extraction[Random Number Extraction](#Random_Number_Extraction)
+    - Shuffling[Shuffling](#Shuffling)
+- Conclusion[Conclusion](#Conclusion)
+- License[License](#License)
 
 <a id=Definitions></a>
 ## Definitions
@@ -43,7 +56,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 
 They are also useful in other contexts, such as--
 
--  shuffling a digital deck of cards, for reasons described later, and
+-  shuffling a digital deck of cards, for reasons described in ["Shuffling"](#Shuffling), later, and
 -  cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
 The goal of this kind of generator is to keep the random numbers from being guessed easily.
@@ -56,12 +69,12 @@ Generates random bits using an unpredictable-random implementation.
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
 
     The implementation must be automatically initialized ("seeded") with a "seed" described as follows. The seed--
-    - must consist of unpredictable data (as defined above), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
+    - must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
     - must be at least the same size as the PRNG's _seed length_.
 
     The PRNG's _seed length_ must be at least 128 bits and should be at least 256 bits.
 
-    The implementation should be reseeded from time to time (using a newly generated seed as described above) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
+    The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
@@ -95,7 +108,7 @@ Generates random bits using a statistical-random implementation.
 
     The PRNG's _seed length_ must be at least 64 bits and should be at least 128 bits.
 
-    The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the PRNG's _seed length_ is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
+    The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG's _seed length_ is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
@@ -128,7 +141,7 @@ An application should only use seeding if--
 1. the initial state (the seed) which the "random" result will be generated from--
     - is hard-coded,
     - was entered by the user,
-    - was generated using a statistical or unpredictable-random implementation (as defined above), or
+    - was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application needs to generate the same "random" result multiple times,
 3.  it would be impractical to store or distribute that "random" result without relying on seeding, such as--
@@ -141,9 +154,11 @@ An application should only use seeding if--
 
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated. One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated.
+
+    One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 * **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
-     - must be an unpredictable-random implementation, if computer or information security are involved; otherwise,
+     - must be an unpredictable-random implementation, if computer or information security is involved; otherwise,
      - must follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations), if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation; otherwise,
      - must be a statistical-random or unpredictable-random implementation, if the RNG is not used solely to generate noise; otherwise,
      - need only be as strong as required to achieve the desired effect.
@@ -178,8 +193,8 @@ A detailed discussion of other methods to generate random numbers or integers th
 follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
 distribution, or that fall within a given range, is outside the scope of this page, however;  I have written about this in [another document](https://peteroupc.github.io/randomfunc.html).
 
-In my opinion, new programming languages should include methods corresponding to the two
-given above in their standard libraries -- one set for unpredictable-random generators, and another
+In my opinion, new programming languages should include, in their standard libraries, methods corresponding to the two
+given earlier -- one set for unpredictable-random generators, and another
 set for statistical RNGs.
 
 <a id=Shuffling></a>

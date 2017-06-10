@@ -18,7 +18,33 @@ RNGs include those that seek to generate random numbers that are cost-prohibitiv
 <a id=Contents></a>
 ## Contents
 
-[Introduction](#Introduction)<br>[Contents](#Contents)<br>[Notes and Definitions](#Notes_and_Definitions)<br>[Core Random Generation Method](#Core_Random_Generation_Method)<br>[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)<br>&nbsp;&nbsp;[Random Integers Within a Range](#Random_Integers_Within_a_Range)<br>&nbsp;&nbsp;[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)<br>&nbsp;&nbsp;[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)<br>[Boolean Conditions](#Boolean_Conditions)<br>[Shuffling](#Shuffling)<br>[Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)<br>[Creating a Random Character String](#Creating_a_Random_Character_String)<br>[Choosing Several Unique Items](#Choosing_Several_Unique_Items)<br>[Weighted Choice](#Weighted_Choice)<br>&nbsp;&nbsp;[Discrete Weighted Choice](#Discrete_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>&nbsp;&nbsp;[Continuous Weighted Choice](#Continuous_Weighted_Choice)<br>&nbsp;&nbsp;&nbsp;&nbsp;[Example](#Example)<br>[Normal Distribution](#Normal_Distribution)<br>[Binomial Distribution](#Binomial_Distribution)<br>[Negative Binomial Distribution](#Negative_Binomial_Distribution)<br>[Hypergeometric Distribution](#Hypergeometric_Distribution)<br>[Poisson Distribution](#Poisson_Distribution)<br>[Gamma Distribution](#Gamma_Distribution)<br>[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)<br>[Conclusion](#Conclusion)<br>[License](#License)<br>
+- Introduction[Introduction](#Introduction)
+- Contents[Contents](#Contents)
+- Notes_and_Definitions[Notes and Definitions](#Notes_and_Definitions)
+- Core_Random_Generation_Method[Core Random Generation Method](#Core_Random_Generation_Method)
+- Random_Numbers_Within_a_Range[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)
+    - Random_Integers_Within_a_Range[Random Integers Within a Range](#Random_Integers_Within_a_Range)
+    - Random_Numbers_in_a_0_1_Bounded_Interval[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
+    - Uniform_Numbers_Within_a_Range[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)
+- Boolean_Conditions[Boolean Conditions](#Boolean_Conditions)
+- Shuffling[Shuffling](#Shuffling)
+- Choosing_a_Random_Item_from_a_List[Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)
+- Creating_a_Random_Character_String[Creating a Random Character String](#Creating_a_Random_Character_String)
+- Choosing_Several_Unique_Items[Choosing Several Unique Items](#Choosing_Several_Unique_Items)
+- Weighted_Choice[Weighted Choice](#Weighted_Choice)
+    - Discrete_Weighted_Choice[Discrete Weighted Choice](#Discrete_Weighted_Choice)
+        - Example[Example](#Example)
+    - Continuous_Weighted_Choice[Continuous Weighted Choice](#Continuous_Weighted_Choice)
+        - Example[Example](#Example)
+- Normal_Distribution[Normal Distribution](#Normal_Distribution)
+- Binomial_Distribution[Binomial Distribution](#Binomial_Distribution)
+- Negative_Binomial_Distribution[Negative Binomial Distribution](#Negative_Binomial_Distribution)
+- Hypergeometric_Distribution[Hypergeometric Distribution](#Hypergeometric_Distribution)
+- Poisson_Distribution[Poisson Distribution](#Poisson_Distribution)
+- Gamma_Distribution[Gamma Distribution](#Gamma_Distribution)
+- Other_Non_Uniform_Distributions[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
+- Conclusion[Conclusion](#Conclusion)
+- License[License](#License)
 
 <a id=Notes_and_Definitions></a>
 ## Notes and Definitions

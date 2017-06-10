@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 9, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 10, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -24,7 +24,28 @@
 
 <h2>Contents</h2>
 
-<p><a href="#Introduction">Introduction</a><br><a href="#Contents">Contents</a><br><a href="#Definitions">Definitions</a><br><a href="#Unpredictable_Random_Generators">Unpredictable-Random Generators</a><br><a href="#Statistically_Random_Generators">Statistically Random Generators</a><br><a href="#Seedable_Random_Generators">Seedable Random Generators</a><br>&nbsp;&nbsp;<a href="#Seedable_PRNG_Recommendations">Seedable PRNG Recommendations</a><br>&nbsp;&nbsp;<a href="#Seeding_Recommendations">Seeding Recommendations</a><br>&nbsp;&nbsp;<a href="#Other_Situations">Other Situations</a><br><a href="#Using_Random_Number_Generators">Using Random Number Generators</a><br>&nbsp;&nbsp;<a href="#Random_Number_Extraction">Random Number Extraction</a><br>&nbsp;&nbsp;<a href="#Shuffling">Shuffling</a><br><a href="#Conclusion">Conclusion</a><br><a href="#License">License</a><br></p>
+<ul>
+<li>Introduction<a href="#Introduction">Introduction</a></li>
+<li>Contents<a href="#Contents">Contents</a></li>
+<li>Definitions<a href="#Definitions">Definitions</a></li>
+<li>Unpredictable_Random_Generators<a href="#Unpredictable_Random_Generators">Unpredictable-Random Generators</a></li>
+<li>Statistically_Random_Generators<a href="#Statistically_Random_Generators">Statistically Random Generators</a></li>
+<li>Seedable_Random_Generators<a href="#Seedable_Random_Generators">Seedable Random Generators</a>
+
+<ul>
+<li>Seedable_PRNG_Recommendations<a href="#Seedable_PRNG_Recommendations">Seedable PRNG Recommendations</a></li>
+<li>Seeding_Recommendations<a href="#Seeding_Recommendations">Seeding Recommendations</a></li>
+<li>Other_Situations<a href="#Other_Situations">Other Situations</a></li>
+</ul></li>
+<li>Using_Random_Number_Generators<a href="#Using_Random_Number_Generators">Using Random Number Generators</a>
+
+<ul>
+<li>Random_Number_Extraction<a href="#Random_Number_Extraction">Random Number Extraction</a></li>
+<li>Shuffling<a href="#Shuffling">Shuffling</a></li>
+</ul></li>
+<li>Conclusion<a href="#Conclusion">Conclusion</a></li>
+<li>License<a href="#License">License</a></li>
+</ul>
 
 <p><a id=Definitions></a></p>
 
@@ -56,7 +77,7 @@
 <p>They are also useful in other contexts, such as--</p>
 
 <ul>
-<li> shuffling a digital deck of cards, for reasons described later, and</li>
+<li> shuffling a digital deck of cards, for reasons described in <a href="#Shuffling">&quot;Shuffling&quot;</a>, later, and</li>
 <li> cases where the application generates random numbers so infrequently that the RNG&#39;s speed is not a concern.</li>
 </ul>
 
@@ -74,13 +95,13 @@
 <p>The implementation must be automatically initialized (&quot;seeded&quot;) with a &quot;seed&quot; described as follows. The seed--</p>
 
 <ul>
-<li>must consist of unpredictable data (as defined above), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
+<li>must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>seed length</em>.</li>
 </ul>
 
 <p>The PRNG&#39;s <em>seed length</em> must be at least 128 bits and should be at least 256 bits.</p>
 
-<p>The implementation should be reseeded from time to time (using a newly generated seed as described above) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.</p></li>
+<p>The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
@@ -123,7 +144,7 @@
 
 <p>The PRNG&#39;s <em>seed length</em> must be at least 64 bits and should be at least 128 bits.</p>
 
-<p>The implementation may reseed itself from time to time (using a newly generated seed as described above). It should do so if the PRNG&#39;s <em>seed length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
+<p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG&#39;s <em>seed length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
@@ -165,7 +186,7 @@
 <ul>
 <li>is hard-coded,</li>
 <li>was entered by the user,</li>
-<li>was generated using a statistical or unpredictable-random implementation (as defined above), or</li>
+<li>was generated using a statistical or unpredictable-random implementation (as defined earlier), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
 <li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
@@ -185,11 +206,13 @@
 <p>Seeds also come into play in other situations, such as:</p>
 
 <ul>
-<li><strong>Verifiable randomness.</strong> <em>Verifiable random numbers</em> are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated. One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).</li>
+<li><p><strong>Verifiable randomness.</strong> <em>Verifiable random numbers</em> are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated.</p>
+
+<p>One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).</p></li>
 <li><p><strong>Noise.</strong> Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.   The RNG used to generate the noise--</p>
 
 <ul>
-<li>must be an unpredictable-random implementation, if computer or information security are involved; otherwise,</li>
+<li>must be an unpredictable-random implementation, if computer or information security is involved; otherwise,</li>
 <li>must follow the <a href="#Seedable_PRNG_Recommendations">seedable PRNG recommendations</a>, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation; otherwise,</li>
 <li>must be a statistical-random or unpredictable-random implementation, if the RNG is not used solely to generate noise; otherwise,</li>
 <li>need only be as strong as required to achieve the desired effect.</li>
@@ -230,8 +253,8 @@ for further discussion.)</li>
 follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
 distribution, or that fall within a given range, is outside the scope of this page, however;  I have written about this in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
 
-<p>In my opinion, new programming languages should include methods corresponding to the two
-given above in their standard libraries -- one set for unpredictable-random generators, and another
+<p>In my opinion, new programming languages should include, in their standard libraries, methods corresponding to the two
+given earlier -- one set for unpredictable-random generators, and another
 set for statistical RNGs.</p>
 
 <p><a id=Shuffling></a></p>
@@ -272,7 +295,10 @@ set for statistical RNGs.</p>
 <h2>License</h2>
 
 <p>This page is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a>.</p>
-</div><nav id="navigation"><p><a href="/">Back to start site.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue</a></ul>
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
