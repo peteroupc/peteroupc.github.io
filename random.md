@@ -76,7 +76,7 @@ Generates random bits using an unpredictable-random implementation.
     The PRNG's _seed length_ must be at least 128 bits and should be at least 256 bits.
 
     The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
--  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
+-  **Speed:** The implementation should select procedures that are reasonably fast for most applications. In this sense, the implementation may favor nondeterministic procedures over deterministic procedures wherever doing so keeps the implementation reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
 -  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).
