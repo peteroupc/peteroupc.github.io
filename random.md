@@ -18,20 +18,20 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 <a id=Contents></a>
 ## Contents
 
-- Introduction[Introduction](#Introduction)
-- Contents[Contents](#Contents)
-- Definitions[Definitions](#Definitions)
-- Unpredictable_Random_Generators[Unpredictable-Random Generators](#Unpredictable_Random_Generators)
-- Statistically_Random_Generators[Statistically Random Generators](#Statistically_Random_Generators)
-- Seedable_Random_Generators[Seedable Random Generators](#Seedable_Random_Generators)
-    - Seedable_PRNG_Recommendations[Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
-    - Seeding_Recommendations[Seeding Recommendations](#Seeding_Recommendations)
-    - Other_Situations[Other Situations](#Other_Situations)
-- Using_Random_Number_Generators[Using Random Number Generators](#Using_Random_Number_Generators)
-    - Random_Number_Extraction[Random Number Extraction](#Random_Number_Extraction)
-    - Shuffling[Shuffling](#Shuffling)
-- Conclusion[Conclusion](#Conclusion)
-- License[License](#License)
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Definitions](#Definitions)
+- [Unpredictable-Random Generators](#Unpredictable_Random_Generators)
+- [Statistically Random Generators](#Statistically_Random_Generators)
+- [Seedable Random Generators](#Seedable_Random_Generators)
+    - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
+    - [Seeding Recommendations](#Seeding_Recommendations)
+    - [Other Situations](#Other_Situations)
+- [Using Random Number Generators](#Using_Random_Number_Generators)
+    - [Random Number Extraction](#Random_Number_Extraction)
+    - [Shuffling](#Shuffling)
+- [Conclusion](#Conclusion)
+- [License](#License)
 
 <a id=Definitions></a>
 ## Definitions
@@ -176,7 +176,7 @@ random implementation).
 ### Random Number Extraction
 
 Two methods given below can serve as building blocks for writing code that makes practical use
-of randomness. Both methods assume the RNG produces uniformly random numbers, like the RNGs
+of randomness. Both methods assume the underlying RNG produces uniformly random numbers, like the RNGs
 described in this page.
 
 1. The first method is to generate a random integer from 0 inclusive to N exclusive (here

@@ -18,34 +18,34 @@ RNGs include those that seek to generate random numbers that are cost-prohibitiv
 <a id=Contents></a>
 ## Contents
 
-- Introduction[Introduction](#Introduction)
-- Contents[Contents](#Contents)
-- Notes_and_Definitions[Notes and Definitions](#Notes_and_Definitions)
-- Core_Random_Generation_Method[Core Random Generation Method](#Core_Random_Generation_Method)
-- Random_Numbers_Within_a_Range[Random Numbers Within a Range](#Random_Numbers_Within_a_Range)
-    - Random_Integers_Within_a_Range[Random Integers Within a Range](#Random_Integers_Within_a_Range)
-    - Random_Numbers_in_a_0_1_Bounded_Interval[Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
-    - Uniform_Numbers_Within_a_Range[Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)
-- Boolean_Conditions[Boolean Conditions](#Boolean_Conditions)
-- Shuffling[Shuffling](#Shuffling)
-- Choosing_a_Random_Item_from_a_List[Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)
-- Creating_a_Random_Character_String[Creating a Random Character String](#Creating_a_Random_Character_String)
-- Choosing_Several_Unique_Items[Choosing Several Unique Items](#Choosing_Several_Unique_Items)
-- Weighted_Choice[Weighted Choice](#Weighted_Choice)
-    - Discrete_Weighted_Choice[Discrete Weighted Choice](#Discrete_Weighted_Choice)
-        - Example[Example](#Example)
-        - Weighted_Choice_Without_Replacement[Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
-    - Continuous_Weighted_Choice[Continuous Weighted Choice](#Continuous_Weighted_Choice)
-        - Example[Example](#Example)
-- Normal_Distribution[Normal Distribution](#Normal_Distribution)
-- Binomial_Distribution[Binomial Distribution](#Binomial_Distribution)
-- Negative_Binomial_Distribution[Negative Binomial Distribution](#Negative_Binomial_Distribution)
-- Hypergeometric_Distribution[Hypergeometric Distribution](#Hypergeometric_Distribution)
-- Poisson_Distribution[Poisson Distribution](#Poisson_Distribution)
-- Gamma_Distribution[Gamma Distribution](#Gamma_Distribution)
-- Other_Non_Uniform_Distributions[Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
-- Conclusion[Conclusion](#Conclusion)
-- License[License](#License)
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Notes and Definitions](#Notes_and_Definitions)
+- [Core Random Generation Method](#Core_Random_Generation_Method)
+- [Random Numbers Within a Range](#Random_Numbers_Within_a_Range)
+    - [Random Integers Within a Range](#Random_Integers_Within_a_Range)
+    - [Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
+    - [Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)
+- [Boolean Conditions](#Boolean_Conditions)
+- [Shuffling](#Shuffling)
+- [Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)
+- [Creating a Random Character String](#Creating_a_Random_Character_String)
+- [Choosing Several Unique Items](#Choosing_Several_Unique_Items)
+- [Weighted Choice](#Weighted_Choice)
+    - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
+        - [Example](#Example)
+        - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
+    - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
+        - [Example](#Example)
+- [Normal Distribution](#Normal_Distribution)
+- [Binomial Distribution](#Binomial_Distribution)
+- [Negative Binomial Distribution](#Negative_Binomial_Distribution)
+- [Hypergeometric Distribution](#Hypergeometric_Distribution)
+- [Poisson Distribution](#Poisson_Distribution)
+- [Gamma Distribution](#Gamma_Distribution)
+- [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
+- [Conclusion](#Conclusion)
+- [License](#License)
 
 <a id=Notes_and_Definitions></a>
 ## Notes and Definitions
@@ -71,7 +71,7 @@ In this document:
 <a id=Core_Random_Generation_Method></a>
 ## Core Random Generation Method
 
-The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the generator produces uniformly random numbers.
+The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random numbers.
 
 `RNDINT(N)` can be implemented as follows: Use the RNG to generate as many random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer. If that nonnegative integer is N or greater, repeat this process.
 
@@ -313,15 +313,15 @@ Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, an
 <a id=Weighted_Choice_Without_Replacement></a>
 #### Weighted Choice Without Replacement
 
-In the example above, the weights sum to 21.  However, each weight does not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+In the example above, the weights sum to 21.  However, each weight does not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
-To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), simply call `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  This technique will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
+To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), simply call `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, when items are selected repeatedly, each weight behaves like the number of "copies" of each item. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
 
     // Get the sum of weights
     // (NOTE: This assumes that `weights` is
     // a list that can be modified.  If the original weights
     // are needed for something else, a copy of that
-    // list should be made, but the copying process
+    // list should be made first, but the copying process
     // is not shown here.)
     totalWeight = 0
     i = 0
@@ -338,6 +338,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
   // without replacement.
   weights[index] = weights[index] - 1
         AddItem(items, list[index])
+        i = i + 1
     end
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [shuffle](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
