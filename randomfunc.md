@@ -2,9 +2,9 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 10, 2017.
+Begun on June 4, 2017; last updated on June 11, 2017.
 
-Discusses many ways applications can extract random numbers from RNGs and includes pseudocode for most of them.
+Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
 <a id=Introduction></a>
 ## Introduction
@@ -334,9 +334,9 @@ To implement weighted choice _without replacement_ (which can be thought of as d
     items = NewList()
     while i < totalWeight
         index = DiscreteWeightedChoice(list, weights)
-  // Decrease weight by 1 to implement selection
-  // without replacement.
-  weights[index] = weights[index] - 1
+        // Decrease weight by 1 to implement selection
+        // without replacement.
+        weights[index] = weights[index] - 1
         AddItem(items, list[index])
         i = i + 1
     end

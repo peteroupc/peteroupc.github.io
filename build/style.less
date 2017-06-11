@@ -295,8 +295,6 @@ aside, div {
 //  Site-specific styles
 //////////////////////////////////////////////////////////////////////
 nav {
-    float: left;
-    width: 25%;
     border-right: none;
     border-top: none;
     border-bottom: none;
@@ -334,7 +332,13 @@ img {
     padding: 0px;
   }
  }
-
+@media screen {
+nav {
+    left:75%;
+    width: 25%;
+    position:fixed;
+}
+}
 @media screen and (max-width:785px){
 .header {
  display:block;
@@ -347,11 +351,13 @@ img {
 }
 nav {
     float: none;
+    left:0%;
     width: 100%;
     border: none;
     margin-top: 0px;
     box-sizing: border-box;
     padding-left: 1em;
     padding-right: 1em;
+    position:relative;
 }
 }

@@ -2,14 +2,14 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 10, 2017.
+Begun on Mar. 5, 2016; last updated on June 11, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
 <a id=Introduction></a>
 ## Introduction
 
-As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely _statistically random generators_ and _unpredictable-random generators_.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`).  This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface, and make recommendations on their use and properties.
+As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely _statistical-random generators_ and _unpredictable-random generators_.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`).  This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface, and make recommendations on their use and properties.
 
 In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when seeds should be used by applications.
 
@@ -22,7 +22,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 - [Contents](#Contents)
 - [Definitions](#Definitions)
 - [Unpredictable-Random Generators](#Unpredictable_Random_Generators)
-- [Statistically Random Generators](#Statistically_Random_Generators)
+- [Statistical-Random Generators](#Statistical_Random_Generators)
 - [Seedable Random Generators](#Seedable_Random_Generators)
     - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
     - [Seeding Recommendations](#Seeding_Recommendations)
@@ -31,6 +31,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
     - [Random Number Extraction](#Random_Number_Extraction)
     - [Shuffling](#Shuffling)
 - [Conclusion](#Conclusion)
+    - [Request for Comments](#Request_for_Comments)
 - [License](#License)
 
 <a id=Definitions></a>
@@ -78,14 +79,14 @@ Generates random bits using an unpredictable-random implementation.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
--  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` function on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).
+-  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).
 
-"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.
+"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
-<a id=Statistically_Random_Generators></a>
-## Statistically Random Generators
+<a id=Statistical_Random_Generators></a>
+## Statistical-Random Generators
 
-Statistically random generators are used by simulations and many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--
+Statistical-random generators are used by simulations and many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--
 
 -  computer security and information security are not involved,
 -  20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and
@@ -109,13 +110,13 @@ Generates random bits using a statistical-random implementation.
     The PRNG's _seed length_ must be at least 64 bits and should be at least 128 bits.
 
     The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG's _seed length_ is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
--  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the function remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
+-  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
 -  **Examples:** The "`xorshift128+`" and `Lehmer128` random number generators.
 -  **Non-Examples:**  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a _seed length_ of less than 64 bits.
 
-"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the function succeeds, and nonzero otherwise.
+"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
 <a id=Seedable_Random_Generators></a>
 ## Seedable Random Generators
@@ -154,7 +155,7 @@ An application should only use seeding if--
 
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until after the announcement is made that those numbers will be generated.
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until some time after the announcement is made that those numbers will be generated.
 
     One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 * **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
@@ -211,17 +212,29 @@ There are special considerations in play when applications use RNGs to shuffle a
 In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the "unpredictable-random implementations" and "Statistical RNGs" sections will meet the needs of those applications.
 
 What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today--
-- don't specify virtually any requirements on RNGs (such as C's `rand` function),
+- specify few and weak requirements on RNGs (such as C's `rand`),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [.NET Framework implementation of `System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx)), and/or
-- leave the default seeding fixed or unspecified (such as C's `rand` function).
+- leave the default seeding fixed or unspecified (such as C's `rand`).
 
 In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.
 
+I acknowledge the commenters to the CodeProject version of this page, including Cryptonite.
+
+<a id=Request_for_Comments></a>
+### Request for Comments
+
 Feel free to send comments. They may help improve this page.
 
-I acknowledge the commenters to the CodeProject version of this page, including Cryptonite.
+Comments on any aspect of the document are welcome, but answers to the following would be particularly appreciated.
+
+-  Have I characterized the randomness needs of applications properly?
+-  Did I cover the vast majority of applications that require randomness?
+-  Are there certain kinds of applications that require a different kind of RNG (unpredictable-random, statistical-random, seedable, etc.) than I recommended?
+- In a typical computer a consumer would have today:
+    - How many random numbers per second would an unpredictable-random implementation generate? A statistical-random implementation?
+    - How many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?
 
 <a id=License></a>
 ## License
