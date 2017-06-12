@@ -39,10 +39,10 @@ RNGs include those that seek to generate random numbers that are cost-prohibitiv
         - [Example](#Example)
 - [Normal Distribution](#Normal_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
-- [Negative Binomial Distribution](#Negative_Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
 - [Poisson Distribution](#Poisson_Distribution)
 - [Gamma Distribution](#Gamma_Distribution)
+- [Negative Binomial Distribution](#Negative_Binomial_Distribution)
 - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
 - [Conclusion](#Conclusion)
 - [License](#License)
@@ -348,7 +348,7 @@ Alternatively, if all the weights are integers 0 or greater and their sum is rel
 
 The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution.
 
-The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.
+The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the second item in `list`, assuming the numbers in `list` are arranged in ascending order.
 
 In many cases, the probability densities are not known in advance, but rather sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies the _probability density_ for each number (the probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits).  A list of common probability density functions is outside the scope of this page.
 
@@ -441,39 +441,6 @@ expresses the number of successes that have happened after a given number of ind
         return count
     END METHOD
 
-<a id=Negative_Binomial_Distribution></a>
-## Negative Binomial Distribution
-
-The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (which ranges from 0, never, to
-1, always, and which can be 0.5, meaning an equal chance of success or failure).  Note that the negative binomial distribution shown here allows `successes` to be an integer only.
-
-**Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
-
-    METHOD NegativeBinomial(successes, p)
-        if successes < 0: return error
-        if successes == 0: return 0
-        // Always succeeds
-        if p >= 1.0: return 0
-        // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomial is implemented to return
-        // an integer)
-        if p <= 0.0: return infinity
-        count = 0
-        total = 0
-        loop
-              if RNDU() < p
-                // Success
-                total = total + 1
-                if total >= successes
-                        return count
-                end
-            else
-                // Failure
-                count = count + 1
-            end
-        end
-    END METHOD
-
 <a id=Hypergeometric_Distribution></a>
 ## Hypergeometric Distribution
 
@@ -535,16 +502,18 @@ The following method generates a random number that follows a gamma distribution
 The gamma distribution models expected lifetimes. The method given here is based on Marsaglia and Tsang's method from 2000.
 
     METHOD GammaDist(meanLifetime)
-        if meanLifetime <= -1: return error
+        // Must be greater than 0
+        if meanLifetime <= 0: return error
         d = meanLifetime
         v = 0
         if meanLifetime < 1: d = d + 1
         d = d - (1/3) // NOTE: 1/3 must be a fractional number
         c = 1 / sqrt(9 * d)
         loop
+            x = 0
             loop
                x = Normal(0, 1)
-               v = c*x + 1;
+               v = c * x + 1;
                v = v * v * v
                if v > 0: break
             end
@@ -556,12 +525,64 @@ The gamma distribution models expected lifetimes. The method given here is based
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
         end
         if meanLifetime < 1
-      return d * v * exp(ln(RNDNZU()) / meanLifetime)
+           return d * v * exp(ln(RNDNZU()) / meanLifetime)
         end
         return d * v
     end
 
 The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is simply `GammaDist(a) * b`.  `b` can be used to convert the gamma-distributed random number to a more meaningful scale.
+
+<a id=Negative_Binomial_Distribution></a>
+## Negative Binomial Distribution
+
+The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (which can be greater than 0, never, and equal to or less than 1, always, and which can be 0.5, meaning an equal chance of success or failure).
+
+**Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
+
+The following implementation of the negative binomial distribution allows `successes` to be an integer or a non-integer.
+
+    METHOD NegativeBinomial(successes, p)
+        // Must be 0 or greater
+        if successes < 0: return error
+        if successes == 0: return 0
+        // Always succeeds
+        if p >= 1.0: return 0
+        // Always fails (NOTE: infinity can be the maximum possible
+        // integer value if NegativeBinomial is implemented to return
+        // an integer)
+        if p <= 0.0: return infinity
+        // NOTE: `successes` must be greater than 0,
+        // but can be a non-integer
+        return Poisson(GammaDist(successes) * (1 - p) / p)
+    END METHOD
+
+The following implementation of the negative binomial distribution allows `successes` to be an integer only.
+
+    METHOD NegativeBinomialInt(successes, p)
+        // Must be 0 or greater
+        if successes < 0: return error
+        if successes == 0: return 0
+        // Always succeeds
+        if p >= 1.0: return 0
+        // Always fails (NOTE: infinity can be the maximum possible
+        // integer value if NegativeBinomialInt is implemented to return
+        // an integer)
+        if p <= 0.0: return infinity
+        count = 0
+        total = 0
+        loop
+            if RNDU() < p
+                // Success
+                total = total + 1
+                if total >= successes
+                        return count
+                end
+            else
+                // Failure
+                count = count + 1
+            end
+        end
+    END METHOD
 
 <a id=Other_Non_Uniform_Distributions></a>
 ## Other Non-Uniform Distributions
@@ -575,14 +596,14 @@ are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.
 - **Exponential distribution**: `-ln(RNDNZU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event will occur in a given span of time (such as in a given day or year).  `1/lambda` is the scale, which is usually the average waiting time between two independent events of the same kind.
-- **Geometric distribution**: `NegativeBinomial(1, p)`, where `p` has the same meaning
+- **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the two-parameter gamma distribution.
 - **Laplace (double exponential) distribution**: `(ln(RNDNZU())-ln(RNDNZU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
-- **Pascal distribution:** `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
+- **Pascal distribution:** `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
 - **Rayleigh distribution**: `sqrt(-ln(RNDNZU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.

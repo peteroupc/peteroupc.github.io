@@ -76,12 +76,14 @@ Generates random bits using an unpredictable-random implementation.
     The PRNG's _seed length_ must be at least 128 bits and should be at least 256 bits.
 
     The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
--  **Speed:** The implementation should select procedures that are reasonably fast for most applications. In this sense, the implementation may favor nondeterministic procedures over deterministic procedures wherever doing so keeps the implementation reasonably fast for most applications.
+-  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
 -  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).
 
 "bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
+
+Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
@@ -113,7 +115,7 @@ Generates random bits using a statistical-random implementation.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
--  **Examples:** The "`xorshift128+`" and `Lehmer128` random number generators.
+-  **Examples:** The `xorshift128+` and `Lehmer128` random number generators.
 -  **Non-Examples:**  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a _seed length_ of less than 64 bits.
 
 "bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.

@@ -106,13 +106,15 @@
 <p>The PRNG&#39;s <em>seed length</em> must be at least 128 bits and should be at least 256 bits.</p>
 
 <p>The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.</p></li>
-<li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications. In this sense, the implementation may favor nondeterministic procedures over deterministic procedures wherever doing so keeps the implementation reasonably fast for most applications.</li>
+<li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
 <li> <strong>Examples:</strong> The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.</p>
+
+<p>Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.</p>
 
 <p><a id=Statistical_Random_Generators></a></p>
 
