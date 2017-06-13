@@ -9,7 +9,9 @@ to see this site's source code.
 
 Open-source articles on programming subjects.
 
-* [The Two Kinds of Random-number Generators Most Applications Need](./random.html).
+* [Random Number Generator Recommendations for Applications](./random.html)
+* [Random Number Generation Methods](./randomfunc.html)
+* [Generating Verifiable Random Numbers](./randomverif.html)
 
 ### HTML/JavaScript
 

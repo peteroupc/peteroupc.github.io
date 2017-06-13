@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 12, 2017.
+Begun on Mar. 5, 2016; last updated on June 13, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -53,7 +53,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 -  generating random passwords or session identifiers,
 -  generating "salts" to vary cryptographic hashes of the same password,
 -  use in secure communication protocols, and
--  use in multiplayer networked games where predicting future random numbers would give a player an unfair advantage.
+-  use in networked games where predicting future random numbers would give a player an unfair advantage.
 
 They are also useful in other contexts, such as--
 
@@ -179,7 +179,7 @@ random implementation).
 ### Random Number Extraction
 
 Two methods given below can serve as building blocks for writing code that makes practical use
-of randomness. Both methods assume the underlying RNG produces uniformly random numbers, like the RNGs
+of randomness. Both methods assume the underlying RNG produces uniformly random bits, like the RNGs
 described in this page.
 
 1. The first method is to generate a random integer from 0 inclusive to N exclusive (here

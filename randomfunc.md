@@ -13,7 +13,11 @@ This page discusses many ways applications can extract random numbers
 from random number generators (RNGs) and includes pseudocode for most
 of them.
 
-RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness.  In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature.
+As used in this document--
+- RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness, and
+- RNGs include not only those that use a deterministic algorithm, but also those that primarily rely on one or more nondeterministic sources for random number generation.
+
+In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature.
 
 <a id=Contents></a>
 ## Contents
