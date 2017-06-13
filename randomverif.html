@@ -1,56 +1,26 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>peteroupc.github.io</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Generating Verifiable Random Numbers</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>peteroupc.github.io</h1>
+<h1>Generating Verifiable Random Numbers</h1>
 
-<p>Welcome to peteroupc.github.io. This page contains more information
-on several of my programming projects on GitHub.  View <a href="https://github.com/peteroupc/peteroupc.github.io">this site&#39;s repository</a>
-to see this site&#39;s source code.</p>
+<p>Peter Occil</p>
 
-<h3>Articles</h3>
+<p>Started Jun. 13, 2017; last modified Jun. 13, 2017</p>
 
-<p>Open-source articles on programming subjects.</p>
+<h2>Introduction</h2>
 
-<ul>
-<li><a href="./random.html">Random Number Generator Recommendations for Applications</a></li>
-<li><a href="./randomfunc.html">Random Number Generation Methods</a></li>
-<li><a href="./randomverif.html">Generating Verifiable Random Numbers</a></li>
-</ul>
+<p>This short note presents another way to generate verifiable random numbers besides <a href="http://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a>.  Verifiable random numbers are defined in my <a href="/random.html">randomness recommendations page</a> as &quot;random numbers that are disclosed along with all the information required to verify their generation.&quot;</p>
 
-<h3>HTML/JavaScript</h3>
+<h2>Unicorn</h2>
+
+<p><a href="https://eprint.iacr.org/2015/366.pdf">Lenstra and Wesolowski</a> (2015) describe a technique called &quot;unicorn&quot; to generate verifiably random numbers using publicly disclosed information.  In essence:</p>
 
 <ul>
-<li><a href="./html3dutil">html3dutil</a>: A public domain JavaScript library for easing the development of HTML 3D applications.</li>
-<li><a href="./html-gears">html-gears</a>: An HTML5 3D implementation of the public domain sample, gears.c</li>
-<li><a href="./canvasback">canvasback</a>: Displays an HTML canvas-based background that draws boxes in about the same color as the background color</li>
-<li><a href="./colorpicker">colorpicker</a>: A color picker in JavaScript. Supports adapters for integrating other popular color pickers, and can use native color selection controls. In the public domain.</li>
-<li><a href="./IdnaJS">IdnaJS</a>: A JavaScript implementation of IDNA 2008 and Unicode normalization</li>
-<li><a href="./BigNumber">BigNumber</a>: An arbitrary-precision arithmetic library for JavaScript</li>
+<li>An announcement is made inviting the public to make contributions to a random number within a specified window of time.</li>
+<li>After the window of time expires, the contributions are publicly disclosed; the random number will normally be derived solely from those contributions. The number is then generated using an unparallelizable hash function that deliberately takes time to run. (Optionally, additional data not yet disclosed in detail is also used to derive the random number, provided that data will be disclosed afterwards.  See p. 10 of the paper for further details on this step.)</li>
+<li>After the random number is generated, it is publicly disclosed together with all information required to verify that number&#39;s generation.</li>
 </ul>
-
-<h3>C-sharp</h3>
-
-<ul>
-<li><a href="./Fuzzer">Fuzzer</a>: This is a program that generates slightly altered versions
-of data files, for testing algorithms that parse file formats.</li>
-<li><a href="./colorvalidator">colorvalidator</a>: This is a library for parsing and generating HTML and CSS colors.</li>
-<li><a href="./petero-csharp">petero-csharp</a>: Library containing utility methods and classes.</li>
-<li><a href="./CBOR">CBOR</a>: A C# implementation of Concise Binary Object Representation (RFC 7049).</li>
-<li><a href="./Enriched">Enriched</a>: C# program that converts text/enriched files to HTML</li>
-<li><a href="./MailLib">MailLib</a>: A portable library in C# and Java for parsing Internet mail messages</li>
-<li><a href="./Encoding">Encoding</a>: A portable library in C# and Java for character encodings</li>
-<li><a href="./TurtleParser">TurtleParser</a>: A portable library in C# and Java for parsing the Turtle RDF format</li>
-<li><a href="./Calculator">Calculator</a>: A calculator for .NET, intended to demonstrate
-two features of the <a href="./CBOR">CBOR library</a>: its arbitrary-precision arithmetic capabilities, and its data serialization possibilities.</li>
-</ul>
-
-<h2>About</h2>
-
-<p>Written by <a href="https://github.com/peteroupc/">Peter O.</a></p>
-
-<p>If you like any of these projects, you should donate to Peter O.
-at: <a href="http://peteroupc.github.io/">http://peteroupc.github.io/</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
