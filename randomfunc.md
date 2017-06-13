@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 11, 2017.
+Begun on June 4, 2017; last updated on June 13, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -56,7 +56,7 @@ In this document:
 * Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
 * The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
-* `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, in radians.
+* `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`.
@@ -71,7 +71,7 @@ In this document:
 <a id=Core_Random_Generation_Method></a>
 ## Core Random Generation Method
 
-The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random numbers.
+The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random bits.
 
 `RNDINT(N)` can be implemented as follows: Use the RNG to generate as many random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer. If that nonnegative integer is N or greater, repeat this process.
 
@@ -95,7 +95,7 @@ The following methods aid in generating random numbers within a range.
 The following idioms generate a random number in an interval bounded at 0 and 1.
 
 - `RNDU()`, a random number 0 or greater, but less than 1 (interval `[0, 1)`): `RNDINT(X) / X`
-- `RNDNZU()`, a random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X-1) + 1) / X`
+- Random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X-1) + 1) / X`
 - Random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X + 1)) / X`
 - Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X) + 1) / X`
 
@@ -313,7 +313,7 @@ Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, an
 <a id=Weighted_Choice_Without_Replacement></a>
 #### Weighted Choice Without Replacement
 
-In the example above, the weights sum to 21.  However, each weight does not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+In the example above, the weights sum to 21.  However, the weights do not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
 To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), simply call `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, when items are selected repeatedly, each weight behaves like the number of "copies" of each item. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
 
@@ -350,7 +350,7 @@ The continuous weighted choice method is used to choose a random number that fol
 
 The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the second item in `list`, assuming the numbers in `list` are arranged in ascending order.
 
-In many cases, the probability densities are not known in advance, but rather sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies the _probability density_ for each number (the probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits).  A list of common probability density functions is outside the scope of this page.
+In many cases, the probability densities are sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies the _probability density_ for each number (the probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits).  A list of common probability density functions is outside the scope of this page.
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
@@ -397,12 +397,16 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 <a id=Normal_Distribution></a>
 ## Normal Distribution
 
+The normal distribution can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
+
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation), as further explained in the pseudocode's comments.
+random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
+probability that a normally-distributed random number will be one standard deviation from the mean is about 68.3%;
+within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
 
     METHOD Normal2(mu, sigma)
       // Choose a Rayleigh-distributed radius (multiplied by sigma)
-      radius = sqrt(-2 * ln(RNDNZU())) * sigma
+      radius = sqrt(-2 * ln(1.0 - RNDU())) * sigma
       // Choose a random angle
       angle = 2 * pi * RNDU()
       // Return two normally-distributed numbers.  This will
@@ -479,7 +483,7 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
 <a id=Poisson_Distribution></a>
 ## Poisson Distribution
 
-The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a fractional number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer).  The method given here is based on Knuth's method from 1969.
+The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a non-integer number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer).  The method given here is based on Knuth's method from 1969.
 
     METHOD Poisson(mean)
         if mean < 0: return error
@@ -517,15 +521,13 @@ The gamma distribution models expected lifetimes. The method given here is based
                v = v * v * v
                if v > 0: break
             end
-            // Avoid possibility of u being 0 because
-            // of ln function below
-            u = RNDNZU()
+            u = 1.0 - RNDU()
             x2 = x * x
             if u < 1 - (0.0331 * x2 * x2): break
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
         end
         if meanLifetime < 1
-           return d * v * exp(ln(RNDNZU()) / meanLifetime)
+           return d * v * exp(ln(1.0 - RNDU()) / meanLifetime)
         end
         return d * v
     end
@@ -591,24 +593,24 @@ The following implementation of the negative binomial distribution allows `succe
  the two parameters of the beta distribution.
 - **Beta binomial distribution**: `Binomial(trials, x / (x + GammaDist(b)))`, where `x` is `GammaDist(a)`, `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
-- **Cauchy distribution**: `scale * tan(pi * (RNDNZU()-0.5)) + mu`, where `mu` and `scale`
+- **Cauchy distribution**: `scale * tan(pi * (RNDU()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.
-- **Exponential distribution**: `-ln(RNDNZU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event will occur in a given span of time (such as in a given day or year).  `1/lambda` is the scale, which is usually the average waiting time between two independent events of the same kind.
+- **Exponential distribution**: `-ln(1.0 - RNDU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1/lambda` is the scale, which is usually the average waiting time between two independent events of the same kind.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the two-parameter gamma distribution.
-- **Laplace (double exponential) distribution**: `(ln(RNDNZU())-ln(RNDNZU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
+- **Laplace (double exponential) distribution**: `(ln(1.0 - RNDU())-ln(1.0 - RNDU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
 - **Pascal distribution:** `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
-- **Rayleigh distribution**: `sqrt(-ln(RNDNZU())*2*a*a)`, where `a` is the scale and is greater than 0.
+- **Rayleigh distribution**: `sqrt(-ln(1.0 - RNDU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
-- **Weibull distribution**: `b * pow(-ln(RNDNZU()),1/a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
+- **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1/a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 
 <a id=Conclusion></a>
 ## Conclusion
