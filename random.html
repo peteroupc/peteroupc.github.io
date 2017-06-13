@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 11, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 12, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -96,7 +96,7 @@
 <li> <strong>Quality:</strong> An unpredictable-random implementation generates uniformly random bits that are unpredictable. &quot;Unpredictable&quot; means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</li>
 <li><p><strong>Seeding and Reseeding:</strong> The following applies only to implementations that use PRNGs.</p>
 
-<p>The implementation must be automatically initialized (&quot;seeded&quot;) with a &quot;seed&quot; described as follows. The seed--</p>
+<p>The implementation must be automatically initialized (&quot;seeded&quot;) with an <em>unpredictable seed</em> described as follows. The seed--</p>
 
 <ul>
 <li>must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
@@ -109,7 +109,7 @@
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
-<li> <strong>Examples:</strong> The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).</li>
+<li> <strong>Examples:</strong> The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec&#39;s hardware volatile entropy gathering and expansion technique).</li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.</p>
@@ -136,7 +136,7 @@
 <p>Generates random bits using a statistical-random implementation.</p>
 
 <ul>
-<li> <strong>Quality:</strong> A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no <a href="http://xoroshiro.di.unimi.it/#quality">systematic failures</a> in <code>TestU01</code>&#39;s <code>BigCrush</code> test battery [L&#39;Ecuyer and Simard 2007] meets these requirements.)</li>
+<li> <strong>Quality:</strong> A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests and must not show systematic failures in widely used statistical randomness test batteries. (Systematic failures in <code>TestU01</code>&#39;s <code>BigCrush</code> test battery [L&#39;Ecuyer and Simard 2007] are as defined in the <a href="http://xoroshiro.di.unimi.it/#quality"><code>xoroshiro+</code> quality page</a>.)</li>
 <li><p><strong>Seeding and Reseeding:</strong> The following applies only to implementations that use PRNGs.</p>
 
 <p>The implementation must be automatically initialized (&quot;seeded&quot;) with a seed described as follows. The seed--</p>
@@ -154,7 +154,7 @@
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
-<li> <strong>Examples:</strong> The &quot;<code>xorshift128+</code>&quot; and <code>Lehmer128</code> random number generators.</li>
+<li> <strong>Examples:</strong> The <code>xorshift128+</code> and <code>Lehmer128</code> random number generators.</li>
 <li> <strong>Non-Examples:</strong>  Mersenne Twister <a href="http://xoroshiro.di.unimi.it/#quality">systematically fails</a> one of the <code>BigCrush</code> tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code>) has a <em>seed length</em> of less than 64 bits.</li>
 </ul>
 
@@ -212,7 +212,7 @@
 <p>Seeds also come into play in other situations, such as:</p>
 
 <ul>
-<li><p><strong>Verifiable randomness.</strong> <em>Verifiable random numbers</em> are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until some time after the announcement is made that those numbers will be generated.</p>
+<li><p><strong>Verifiable randomness.</strong> <em>Verifiable random numbers</em> are random numbers that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers&#39; generation is disclosed in the announcement that those numbers will be generated.</p>
 
 <p>One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).</p></li>
 <li><p><strong>Noise.</strong> Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.   The RNG used to generate the noise--</p>

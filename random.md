@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 11, 2017.
+Begun on Mar. 5, 2016; last updated on June 12, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -69,7 +69,7 @@ Generates random bits using an unpredictable-random implementation.
 -  **Quality:** An unpredictable-random implementation generates uniformly random bits that are unpredictable. "Unpredictable" means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
 
-    The implementation must be automatically initialized ("seeded") with a "seed" described as follows. The seed--
+    The implementation must be automatically initialized ("seeded") with an _unpredictable seed_ described as follows. The seed--
     - must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
     - must be at least the same size as the PRNG's _seed length_.
 
@@ -79,7 +79,7 @@ Generates random bits using an unpredictable-random implementation.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
 -  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
--  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access and keystroke timings).
+-  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
 
 "bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
@@ -100,7 +100,7 @@ The goal of this kind of generator is for each possible outcome to be equally li
 
 Generates random bits using a statistical-random implementation.
 
--  **Quality:** A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be almost certain to pass simple statistical randomness tests and many complex ones. (For example, any RNG algorithm that shows no [systematic failures](http://xoroshiro.di.unimi.it/#quality) in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] meets these requirements.)
+-  **Quality:** A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests and must not show systematic failures in widely used statistical randomness test batteries. (Systematic failures in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] are as defined in the [`xoroshiro+` quality page](http://xoroshiro.di.unimi.it/#quality).)
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
 
     The implementation must be automatically initialized ("seeded") with a seed described as follows. The seed--
@@ -157,7 +157,7 @@ An application should only use seeding if--
 
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are generated solely from information that is and/or will be publicly available and that are disclosed along with all the information required to verify their generation.  Usually, at least some of the information used to derive such numbers is not known by anyone until some time after the announcement is made that those numbers will be generated.
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
 
     One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 * **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
