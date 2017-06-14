@@ -30,6 +30,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 - [Using Random Number Generators](#Using_Random_Number_Generators)
     - [Random Number Extraction](#Random_Number_Extraction)
     - [Shuffling](#Shuffling)
+- [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
 - [License](#License)
@@ -71,12 +72,10 @@ The goal of this kind of generator is to keep the random numbers from being gues
     The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Examples:** Examples include the following:
-    - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; thus, it can block for seconds at a time if not enough randomness ("entropy") is available.
-    - The `/dev/urandom` device on many Unix-based operating systems, which often rely on both a PRNG and the same nondeterministic sources used in `/dev/random`.
+    - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, it can block for seconds at a time if not enough randomness ("entropy") is available.
+    - The `/dev/urandom` device on many Unix-based operating systems, which often rely on both a PRNG and the same nondeterministic sources used by `/dev/random`.
     - The `CryptGenRandom` method on Windows.
     - Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
-
-"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
 Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are available in hardware and/or are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.
 
@@ -106,8 +105,6 @@ The goal of this kind of generator is for each possible outcome to be equally li
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  **Examples:** The `xorshift128+` and `Lehmer128` random number generators.
 -  **Non-Examples:**  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a _state length_ of less than 64 bits.
-
-"bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
 <a id=Seedable_Random_Generators></a>
 ## Seedable Random Generators
@@ -184,27 +181,6 @@ A detailed discussion of other methods to generate random numbers or integers th
 follow a given distribution, such as a normal, geometric, binomial, or discrete weighted
 distribution, or that fall within a given range, is outside the scope of this page, however;  I have written about this in [another document](https://peteroupc.github.io/randomfunc.html).
 
-## Advice for New Programming Language APIs
-
-A programming language API could implement unpredictable-random and statistical-random RNGs
-by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
-set to 0 or 1.  For instance, a C API for unpredictible-random generators could look like:
-`int random_fast(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is 
-the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. 
-
-Any programming language API that implements such RNGs by filling a byte buffer must run in amortized
-linear time on the number of bytes the API will fill.
-
-Wherever possible, existing libraries or techniques that already meet the requirements should be used.
-For example, an unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random`
-devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only
-use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.
-
-Whenever convenient--
-- a programming language API should be safe for concurrent use by multiple threads, and
-- a new programming language's standard library should include methods corresponding to the two
-given in the section ["Random Number Extraction"](#Random_Number_Extraction) -- one set for unpredictable-random generators, and another set for statistical RNGs. 
-
 <a id=Shuffling></a>
 ### Shuffling
 
@@ -214,7 +190,26 @@ There are special considerations in play when applications use RNGs to shuffle a
 2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit state length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised--
     - to use an unpredictable-random implementation, or
     - if speed is a concern and security is not, to use a PRNG meeting the quality requirements of a statistical-random implementation and having a period at least as high as the number of permutations of the list to be shuffled, and to give that PRNG an _unpredictable seed_.
+
     (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+
+<a id=Advice_for_New_Programming_Language_APIs></a>
+## Advice for New Programming Language APIs
+
+Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example, an unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects
+or in certain circumstances.
+
+If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
+set to 0 or 1.  For instance, a C API for unpredictible-random generators could look like the following:
+`int random_fast(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is
+the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
+Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time
+on the number of bytes the API will fill.
+
+Whenever convenient--
+- a programming language API should be safe for concurrent use by multiple threads, and
+- a new programming language's standard library should include methods corresponding to the two
+given in the section ["Random Number Extraction"](#Random_Number_Extraction) -- one set for unpredictable-random generators, and another set for statistical RNGs.
 
 <a id=Conclusion></a>
 ## Conclusion
