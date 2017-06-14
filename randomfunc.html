@@ -63,7 +63,7 @@ of them.</p>
 <li><a href="#Example">Example</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#Normal_Distribution">Normal Distribution</a></li>
+<li><a href="#Normal_Gaussian_Distribution">Normal (Gaussian) Distribution</a></li>
 <li><a href="#Binomial_Distribution">Binomial Distribution</a></li>
 <li><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a></li>
 <li><a href="#Poisson_Distribution">Poisson Distribution</a></li>
@@ -468,11 +468,11 @@ END METHOD
 
 <p>Assume <code>list</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
 
-<p><a id=Normal_Distribution></a></p>
+<p><a id=Normal_Gaussian_Distribution></a></p>
 
-<h2>Normal Distribution</h2>
+<h2>Normal (Gaussian) Distribution</h2>
 
-<p>The normal distribution can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
+<p>The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
 <p>The following method generates two <a href="https://en.wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
 random numbers with mean (average) <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;). (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.), using the so-called <a href="https://en.wikipedia.org/wiki/Box-Muller%20transformation">Box-Muller transformation</a>, as further explained in the pseudocode&#39;s comments.  The standard deviation <code>sigma</code> affects how wide the normal distribution&#39;s &quot;bell curve&quot; appears; the
@@ -491,6 +491,8 @@ END METHOD
 </pre>
 
 <p>Since <code>Normal2</code> returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name <code>Normal</code> will be used in this document to represent a method that returns only one normally-distributed random number rather than two.</p>
+
+<p>Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it&#39;s extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower or higher than certain thresholds and generate new normally-distributed numbers.  But then the resulting distribution will no longer be a normal distribution.</p>
 
 <p><a id=Binomial_Distribution></a></p>
 
@@ -631,47 +633,45 @@ end
 <pre>METHOD NegativeBinomial(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
+// No failures if no successes or if always succeeds
+    if successes == 0 or p &gt;= 1.0: return 0
+    // Always fails (NOTE: infinity can be the maximum possible
+    // integer value if NegativeBinomial is implemented to return
+    // an integer)
+    if p &lt;= 0.0: return infinity
+    // NOTE: `successes` must be greater than 0,
+    // but can be a non-integer
+    return Poisson(GammaDist(successes) * (1 - p) / p)
+END METHOD
 </pre>
-
-<p>// No failures if no successes or if always succeeds
-        if successes == 0 or p &gt;= 1.0: return 0
-        // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomial is implemented to return
-        // an integer)
-        if p &lt;= 0.0: return infinity
-        // NOTE: <code>successes</code> must be greater than 0,
-        // but can be a non-integer
-        return Poisson(GammaDist(successes) * (1 - p) / p)
-    END METHOD</p>
 
 <p>The following implementation of the negative binomial distribution allows <code>successes</code> to be an integer only.</p>
 
 <pre>METHOD NegativeBinomialInt(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
-</pre>
-
-<p>// No failures if no successes or if always succeeds
-        if successes == 0 or p &gt;= 1.0: return 0
-        // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomialInt is implemented to return
-        // an integer)
-        if p &lt;= 0.0: return infinity
-        count = 0
-        total = 0
-        loop
-            if RNDU() &lt; p
-                // Success
-                total = total + 1
-                if total &gt;= successes
-                        return count
-                end
-            else
-                // Failure
-                count = count + 1
+// No failures if no successes or if always succeeds
+    if successes == 0 or p &gt;= 1.0: return 0
+    // Always fails (NOTE: infinity can be the maximum possible
+    // integer value if NegativeBinomialInt is implemented to return
+    // an integer)
+    if p &lt;= 0.0: return infinity
+    count = 0
+    total = 0
+    loop
+        if RNDU() &lt; p
+            // Success
+            total = total + 1
+            if total &gt;= successes
+                    return count
             end
+        else
+            // Failure
+            count = count + 1
         end
-    END METHOD</p>
+    end
+END METHOD
+</pre>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 

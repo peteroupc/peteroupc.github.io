@@ -108,7 +108,7 @@
 </ul></li>
 </ul>
 
-<p>Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are available in hardware and/or are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.</p>
+<p>Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.</p>
 
 <p><a id=Statistical_Random_Generators></a></p>
 
@@ -138,7 +138,7 @@
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
-<p>The PRNG&#39;s <em>state length</em> must be at least 64 bits and should be at least 128 bits.</p>
+<p>The PRNG&#39;s <em>state length</em> must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.</p>
 
 <p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG&#39;s <em>state length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
@@ -170,7 +170,7 @@
 
 <h3>Seeding Recommendations</h3>
 
-<p>An application should use a PRNG with a seed it specifies (rather than another kind of RNG) only if--</p>
+<p>An application should use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if--</p>
 
 <ol>
 <li>the initial state (the seed) which the &quot;random&quot; result will be generated from--
@@ -256,7 +256,13 @@ distribution, or that fall within a given range, is outside the scope of this pa
 
 <ul>
 <li>to use an unpredictable-random implementation, or</li>
-<li>if speed is a concern and security is not, to use a PRNG meeting the quality requirements of a statistical-random implementation and having a period at least as high as the number of permutations of the list to be shuffled, and to give that PRNG an <em>unpredictable seed</em>.</li>
+<li>if speed is a concern and security is not, to use a PRNG--
+
+<ul>
+<li>that meets the quality requirements of a statistical-random implementation,</li>
+<li>that has a period at least as high as the number of permutations of the list to be shuffled, and</li>
+<li>that was initialized automatically with an <em>unpredictable seed</em> before use.</li>
+</ul></li>
 </ul>
 
 <p>(See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</p></li>
