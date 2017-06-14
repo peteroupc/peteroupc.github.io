@@ -20,11 +20,11 @@
 
 <p><a href="https://eprint.iacr.org/2015/366.pdf">Lenstra and Wesolowski</a> (2015) describe a technique called &quot;unicorn&quot; to generate verifiable random numbers using publicly disclosed information.  In essence:</p>
 
-<ul>
+<ol>
 <li>An announcement is made inviting the public to make public contributions to a random number within a specified window of time.</li>
 <li>After the window of time expires, a list of the contributions is publicly disclosed; the random number will normally be derived solely from those contributions. The number is then generated using an unparallelizable hash function that deliberately takes time to run when generating that number, but runs much faster when verifying it (p. 4). (Optionally, additional data not yet disclosed in detail is also used to derive the random number, provided that data will be disclosed afterwards.  See p. 10 of the paper for further details on this step.)</li>
 <li>After the random number is generated, it is publicly disclosed together with all information required to verify that number&#39;s generation.</li>
-</ul>
+</ol>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
