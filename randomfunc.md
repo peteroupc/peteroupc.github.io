@@ -41,7 +41,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example)
-- [Normal Distribution](#Normal_Distribution)
+- [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
 - [Poisson Distribution](#Poisson_Distribution)
@@ -398,10 +398,10 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Normal_Distribution></a>
-## Normal Distribution
+<a id=Normal_Gaussian_Distribution></a>
+## Normal (Gaussian) Distribution
 
-The normal distribution can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
+The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
 random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
@@ -419,6 +419,8 @@ within two standard deviations (2 times `sigma`), about 95.4%, and within three 
     END METHOD
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
+
+Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower or higher than certain thresholds and generate new normally-distributed numbers.  But then the resulting distribution will no longer be a normal distribution.
 
 <a id=Binomial_Distribution></a>
 ## Binomial Distribution
@@ -550,7 +552,7 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomial(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-  // No failures if no successes or if always succeeds
+	// No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomial is implemented to return
@@ -566,7 +568,7 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomialInt(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-  // No failures if no successes or if always succeeds
+	// No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomialInt is implemented to return
