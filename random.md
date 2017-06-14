@@ -42,7 +42,7 @@ The following definitions are helpful in better understanding this document.
 
 - **Pseudorandom number generator (PRNG).** A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
-- **state length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
+- **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
 
 <a id=Unpredictable_Random_Generators></a>
@@ -73,7 +73,7 @@ The goal of this kind of generator is to keep the random numbers from being gues
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Examples:** Examples include the following:
     - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, it can block for seconds at a time if not enough randomness ("entropy") is available.
-    - The `/dev/urandom` device on many Unix-based operating systems, which often rely on both a PRNG and the same nondeterministic sources used by `/dev/random`.
+    - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
     - The `CryptGenRandom` method on Windows.
     - Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
 
@@ -203,13 +203,13 @@ Wherever possible, existing libraries or techniques that already meet the requir
 
 If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
 set to 0 or 1.  For instance, a C API for unpredictable-random generators could look like the following:
-`int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is
+`int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is
 the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time
-on the number of bytes the API will fill.
+on the number of random bytes the API will generate.
 
 Whenever convenient--
-- a programming language API should be safe for concurrent use by multiple threads, and
+- an unpredictable-random and statistical-random implementation should be safe for concurrent use by multiple threads, and
 - a new programming language's standard library should include methods corresponding to the two
 given in the section ["Random Number Extraction"](#Random_Number_Extraction) -- one set for unpredictable-random generators, and another set for statistical RNGs.
 
