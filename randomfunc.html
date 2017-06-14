@@ -316,7 +316,7 @@ end
    return list
 end
 </pre></li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 1000 available items, or there is a range of numbers from 0 to 1000 to choose from):</strong> Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, and choose the first <code>k</code> items from that list.</li>
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, and choose the first <code>k</code> items from that list.</li>
 <li><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until <code>k</code> items (or indices) were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>, below).</li>
 </ul>
 
@@ -444,9 +444,9 @@ end
      // Get the number corresponding to the random number
      runningValue = 0
     while i &lt; size(list) - 1
-    weightArea = areas[i]
-     if weightArea &gt; 0
-      newValue = runningValue + weightArea
+    area = areas[i]
+     if area &gt; 0
+      newValue = runningValue + area
       if value &lt;= newValue
        interp = (value - runningValue) / (newValue - runningValue)
        retValue = list[i] + (list[i + 1] - list[i]) * interp
@@ -616,7 +616,7 @@ The gamma distribution models expected lifetimes. The method given here is based
 end
 </pre>
 
-<p>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.  <code>b</code> can be used to convert the gamma-distributed random number to a more meaningful scale.</p>
+<p>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</p>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
@@ -631,9 +631,8 @@ end
 <pre>METHOD NegativeBinomial(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
-    if successes == 0: return 0
-    // Always succeeds
-    if p &gt;= 1.0: return 0
+// No failures if no successes or if always succeeds
+    if successes == 0 or p &gt;= 1.0: return 0
     // Always fails (NOTE: infinity can be the maximum possible
     // integer value if NegativeBinomial is implemented to return
     // an integer)
@@ -649,9 +648,8 @@ END METHOD
 <pre>METHOD NegativeBinomialInt(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
-    if successes == 0: return 0
-    // Always succeeds
-    if p &gt;= 1.0: return 0
+// No failures if no successes or if always succeeds
+    if successes == 0 or p &gt;= 1.0: return 0
     // Always fails (NOTE: infinity can be the maximum possible
     // integer value if NegativeBinomialInt is implemented to return
     // an integer)
@@ -686,7 +684,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 are the two parameters of the Cauchy distribution.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
 freedom.</li>
-<li><strong>Exponential distribution</strong>: <code>-ln(1.0 - RNDU()) / lambda</code>, where <code>lambda</code> is the inverse scale. The <code>lambda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1/lambda</code> is the scale, which is usually the average waiting time between two independent events of the same kind.</li>
+<li><strong>Exponential distribution</strong>: <code>-ln(1.0 - RNDU()) / lambda</code>, where <code>lambda</code> is the inverse scale. The <code>lambda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1/lambda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Geometric distribution</strong>: <code>NegativeBinomialInt(1, p)</code>, where <code>p</code> has the same meaning
 as in the negative binomial distribution.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the

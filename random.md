@@ -9,7 +9,7 @@ Most apps that use random numbers care about either unpredictability or speed/hi
 <a id=Introduction></a>
 ## Introduction
 
-As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely _statistical-random generators_ and _unpredictable-random generators_.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`).  This page will discuss these two kinds of RNG in the nature of a sketch of a C programming interface, and make recommendations on their use and properties.
+As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely _statistical-random generators_ and _unpredictable-random generators_.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`).  This page will discuss these two kinds of RNG, and make recommendations on their use and properties.
 
 In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when seeds should be used by applications.
 
@@ -55,21 +55,14 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 -  use in secure communication protocols, and
 -  use in networked games where predicting future random numbers would give a player an unfair advantage.
 
-They are also useful in other contexts, such as--
-
--  shuffling a digital deck of cards, for reasons described in ["Shuffling"](#Shuffling), later, and
--  cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
+They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
 The goal of this kind of generator is to keep the random numbers from being guessed easily.
-
-    int random(uint8_t[] bytes, size_t size);
-
-Generates random bits using an unpredictable-random implementation.
 
 -  **Quality:** An unpredictable-random implementation generates uniformly random bits that are unpredictable. "Unpredictable" means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
 
-    The implementation must be automatically initialized ("seeded") with an _unpredictable seed_ described as follows. The seed--
+    The implementation must be automatically initialized ("seeded") with an _unpredictable seed_, defined as follows. The seed--
     - must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and
     - must be at least the same size as the PRNG's _seed length_.
 
@@ -78,12 +71,15 @@ Generates random bits using an unpredictable-random implementation.
     The implementation should be reseeded from time to time (using a newly generated seed as described earlier) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so  before it generates more than 2<sup>32</sup> bits without reseeding.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
--  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
--  **Examples:** The "`/dev/urandom`" device on many Unix-based operating systems; `CryptGenRandom` method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
+-  **Examples:** Examples include the following:
+    - The "`/dev/urandom`" device on many Unix-based operating systems, which often rely on a PRNG.
+    - The "`/dev/random`" device on many Unix-based operating systems, which generally uses only nondeterministic sources; thus, it can block for seconds at a time if not enough randomness ("entropy") is available.
+    - The `CryptGenRandom` method on Windows.
+    - Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
 
 "bytes" is a pointer to a byte array, "size" is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.
 
-Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.
+Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are available in hardware and/or are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
@@ -95,10 +91,6 @@ Statistical-random generators are used by simulations and many games to bring an
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
 
 The goal of this kind of generator is for each possible outcome to be equally likely.
-
-    int random_fast(uint8_t[] bytes, size_t size);
-
-Generates random bits using a statistical-random implementation.
 
 -  **Quality:** A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests and must not show systematic failures in widely used statistical randomness test batteries. (Systematic failures in `TestU01`'s `BigCrush` test battery [L'Ecuyer and Simard 2007] are as defined in the [`xoroshiro+` quality page](http://xoroshiro.di.unimi.it/#quality).)
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
@@ -114,7 +106,6 @@ Generates random bits using a statistical-random implementation.
     The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG's _seed length_ is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 -  **Speed:** The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.
 -  **Time Complexity:** The implementation must run in amortized linear time on the size of the output array.
--  **Thread Safety:** The implementation should be safe for concurrent use by multiple threads.
 -  **Examples:** The `xorshift128+` and `Lehmer128` random number generators.
 -  **Non-Examples:**  Mersenne Twister [systematically fails](http://xoroshiro.di.unimi.it/#quality) one of the `BigCrush` tests.  Any linear congruential generator with modulus 2<sup>63</sup> or less (such as `java.util.Random`) has a _seed length_ of less than 64 bits.
 
@@ -125,7 +116,7 @@ Generates random bits using a statistical-random implementation.
 
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
-Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords).
+Applications that need to specify their own seeds usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -139,7 +130,7 @@ Which PRNG to use for generating reproducible results depends on the application
 <a id=Seeding_Recommendations></a>
 ### Seeding Recommendations
 
-An application should only use seeding if--
+An application should use a PRNG with a seed it specifies (rather than another kind of RNG) only if--
 
 1. the initial state (the seed) which the "random" result will be generated from--
     - is hard-coded,
@@ -147,7 +138,7 @@ An application should only use seeding if--
     - was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application needs to generate the same "random" result multiple times,
-3.  it would be impractical to store or distribute that "random" result without relying on seeding, such as--
+3.  the application finds it impractical to store or distribute that "random" result without having to a use a PRNG with an application-specified seed, such as--
     -   by saving the result to a file, or
     -   by distributing the results or the random numbers to networked users as they are generated, and
 4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality.)
@@ -179,8 +170,7 @@ random implementation).
 ### Random Number Extraction
 
 Two methods given below can serve as building blocks for writing code that makes practical use
-of randomness. Both methods assume the underlying RNG produces uniformly random bits, like the RNGs
-described in this page.
+of randomness. Both methods assume the underlying RNG produces uniformly random bits.
 
 1. The first method is to generate a random integer from 0 inclusive to N exclusive (here
 called `RNDINT(N)`), where N is an integer greater than 0. To do so, use the RNG to generate as many
@@ -200,13 +190,32 @@ In my opinion, new programming languages should include, in their standard libra
 given earlier -- one set for unpredictable-random generators, and another
 set for statistical RNGs.
 
+## Advice for New Programming Language APIs
+
+A programming language API could implement unpredictable-random and statistical-random RNGs
+by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
+set to 0 or 1.  For instance, a C API for unpredictible-random generators could look like:
+`int random_fast(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is 
+the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. 
+
+Wherever possible, existing libraries or techniques that already meet the requirements should be used.
+For example, an unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random`
+devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only
+use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.
+
+Whenever convenient, a programming language API should be safe for concurrent use by multiple threads.
+
+
 <a id=Shuffling></a>
 ### Shuffling
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
 1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
-2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised to use an unpredictable-random implementation. (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit seed length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised--
+    - to use an unpredictable-random implementation, or
+    - if speed is a concern and security is not, to use a PRNG meeting the quality requirements of a statistical-random implementation and having a period at least as high as the number of permutations of the list to be shuffled, and to give that PRNG an _unpredictable seed_.
+    (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
 
 <a id=Conclusion></a>
 ## Conclusion

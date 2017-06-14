@@ -96,7 +96,7 @@
 <li> <strong>Quality:</strong> An unpredictable-random implementation generates uniformly random bits that are unpredictable. &quot;Unpredictable&quot; means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</li>
 <li><p><strong>Seeding and Reseeding:</strong> The following applies only to implementations that use PRNGs.</p>
 
-<p>The implementation must be automatically initialized (&quot;seeded&quot;) with an <em>unpredictable seed</em> described as follows. The seed--</p>
+<p>The implementation must be automatically initialized (&quot;seeded&quot;) with a &quot;seed&quot; described as follows. The seed--</p>
 
 <ul>
 <li>must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
@@ -109,12 +109,19 @@
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications.</li>
 <li> <strong>Time Complexity:</strong> The implementation must run in amortized linear time on the size of the output array.</li>
 <li> <strong>Thread Safety:</strong> The implementation should be safe for concurrent use by multiple threads.</li>
-<li> <strong>Examples:</strong> The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems; <code>CryptGenRandom</code> method on Windows; cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec&#39;s hardware volatile entropy gathering and expansion technique).</li>
+<li> <strong>Examples:</strong> Examples include the following:
+
+<ul>
+<li>The &quot;<code>/dev/urandom</code>&quot; device on many Unix-based operating systems, which often rely on a PRNG.</li>
+<li>The &quot;<code>/dev/random</code>&quot; device on many Unix-based operating systems, which generally uses only nondeterministic sources; thus, it can block for seconds at a time if not enough randomness (&quot;entropy&quot;) is available.</li>
+<li>The <code>CryptGenRandom</code> method on Windows.</li>
+<li>Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec&#39;s hardware volatile entropy gathering and expansion technique).</li>
+</ul></li>
 </ul>
 
 <p>&quot;bytes&quot; is a pointer to a byte array, &quot;size&quot; is the number of random bytes to generate. Each bit in each byte will be randomly set to 0 or 1. Returns 0 if the method succeeds, and nonzero otherwise.</p>
 
-<p>Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.</p>
+<p>Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are available in hardware and/or are reasonably fast for most applications (for instance, by producing many random numbers per second) are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.</p>
 
 <p><a id=Statistical_Random_Generators></a></p>
 
@@ -166,7 +173,7 @@
 
 <p>In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or &quot;seed&quot;. One notable example is a &quot;code&quot;, or password, for generating a particular game level in some role-playing games.</p>
 
-<p>Applications that require seeding usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords).</p>
+<p>Applications that need to specify their own seeds usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). (Note that in the definitions for <a href="#Unpredictable_Random_Generators">unpredictable-random</a> and <a href="#Statistical_Random_Generators">statistical-random</a> generators given earlier, the PRNGs involved are automatically seeded before use.)</p>
 
 <p><a id=Seedable_PRNG_Recommendations></a></p>
 
@@ -184,7 +191,7 @@
 
 <h3>Seeding Recommendations</h3>
 
-<p>An application should only use seeding if--</p>
+<p>An application should use a PRNG with a seed it specifies (rather than another kind of RNG) only if--</p>
 
 <ol>
 <li>the initial state (the seed) which the &quot;random&quot; result will be generated from--
@@ -196,7 +203,7 @@
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
 <li>the application needs to generate the same &quot;random&quot; result multiple times,</li>
-<li> it would be impractical to store or distribute that &quot;random&quot; result without relying on seeding, such as--
+<li> the application finds it impractical to store or distribute that &quot;random&quot; result without having to a use a PRNG with an application-specified seed, such as--
 
 <ul>
 <li>  by saving the result to a file, or</li>
@@ -240,8 +247,7 @@ random implementation).</p>
 <h3>Random Number Extraction</h3>
 
 <p>Two methods given below can serve as building blocks for writing code that makes practical use
-of randomness. Both methods assume the underlying RNG produces uniformly random bits, like the RNGs
-described in this page.</p>
+of randomness. Both methods assume the underlying RNG produces uniformly random bits.</p>
 
 <ol>
 <li>The first method is to generate a random integer from 0 inclusive to N exclusive (here
