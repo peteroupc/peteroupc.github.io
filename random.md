@@ -84,9 +84,10 @@ Note that an unpredictable-random implementation ultimately relies on one or mor
 
 Statistical-random generators are used in simulations, in numerical integration, and in many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--
 
--  computer security and information security are not involved,
--  20 or fewer items are being shuffled (in cases where the RNG is used for shuffling), and
+-  computer security and information security are not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
+
+If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see ["Shuffling"](#Shuffling)).
 
 The goal of this kind of generator is for each possible outcome to be equally likely.
 
@@ -196,12 +197,13 @@ There are special considerations in play when applications use RNGs to shuffle a
 <a id=Advice_for_New_Programming_Language_APIs></a>
 ## Advice for New Programming Language APIs
 
-Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example, an unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects
-or in certain circumstances.
+Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example:
+- An unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.
+- A statistically-random implementation can use a PRNG algorithm that is already known to pass the `BigCrush` test battery without systematic failures (and has a state length 64 bits or greater), or an existing library that implements that algorithm. Examples of such algorithms are found in the [`xoroshiro+` quality page](http://xoroshiro.di.unimi.it/#quality).
 
 If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
-set to 0 or 1.  For instance, a C API for unpredictible-random generators could look like the following:
-`int random_fast(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is
+set to 0 or 1.  For instance, a C API for unpredictable-random generators could look like the following:
+`int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, "size" is
 the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time
 on the number of bytes the API will fill.
