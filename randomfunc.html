@@ -633,45 +633,47 @@ end
 <pre>METHOD NegativeBinomial(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
-// No failures if no successes or if always succeeds
-    if successes == 0 or p &gt;= 1.0: return 0
-    // Always fails (NOTE: infinity can be the maximum possible
-    // integer value if NegativeBinomial is implemented to return
-    // an integer)
-    if p &lt;= 0.0: return infinity
-    // NOTE: `successes` must be greater than 0,
-    // but can be a non-integer
-    return Poisson(GammaDist(successes) * (1 - p) / p)
-END METHOD
 </pre>
+
+<p>// No failures if no successes or if always succeeds
+        if successes == 0 or p &gt;= 1.0: return 0
+        // Always fails (NOTE: infinity can be the maximum possible
+        // integer value if NegativeBinomial is implemented to return
+        // an integer)
+        if p &lt;= 0.0: return infinity
+        // NOTE: <code>successes</code> must be greater than 0,
+        // but can be a non-integer
+        return Poisson(GammaDist(successes) * (1 - p) / p)
+    END METHOD</p>
 
 <p>The following implementation of the negative binomial distribution allows <code>successes</code> to be an integer only.</p>
 
 <pre>METHOD NegativeBinomialInt(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
-// No failures if no successes or if always succeeds
-    if successes == 0 or p &gt;= 1.0: return 0
-    // Always fails (NOTE: infinity can be the maximum possible
-    // integer value if NegativeBinomialInt is implemented to return
-    // an integer)
-    if p &lt;= 0.0: return infinity
-    count = 0
-    total = 0
-    loop
-        if RNDU() &lt; p
-            // Success
-            total = total + 1
-            if total &gt;= successes
-                    return count
-            end
-        else
-            // Failure
-            count = count + 1
-        end
-    end
-END METHOD
 </pre>
+
+<p>// No failures if no successes or if always succeeds
+        if successes == 0 or p &gt;= 1.0: return 0
+        // Always fails (NOTE: infinity can be the maximum possible
+        // integer value if NegativeBinomialInt is implemented to return
+        // an integer)
+        if p &lt;= 0.0: return infinity
+        count = 0
+        total = 0
+        loop
+            if RNDU() &lt; p
+                // Success
+                total = total + 1
+                if total &gt;= successes
+                        return count
+                end
+            else
+                // Failure
+                count = count + 1
+            end
+        end
+    END METHOD</p>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 

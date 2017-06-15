@@ -552,7 +552,7 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomial(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-	// No failures if no successes or if always succeeds
+  // No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomial is implemented to return
@@ -568,7 +568,7 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomialInt(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-	// No failures if no successes or if always succeeds
+  // No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomialInt is implemented to return
