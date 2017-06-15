@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 15, 2017.
+Begun on June 4, 2017; last updated on June 16, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -103,7 +103,7 @@ The following idioms generate a random number in an interval bounded at 0 and 1.
 - Random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X + 1)) / X`
 - Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X) + 1) / X`
 
-In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers (Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers (Java `float`), X will be 2<sup>24</sup>.  (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
+In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 754 floating-point numbers (Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 754 floating-point numbers (Java `float`), X will be 2<sup>24</sup>.  (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
 
 <a id=Uniform_Numbers_Within_a_Range></a>
@@ -552,14 +552,12 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomial(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-  // No failures if no successes or if always succeeds
+        // No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomial is implemented to return
         // an integer)
         if p <= 0.0: return infinity
-        // NOTE: `successes` must be greater than 0,
-        // but can be a non-integer
         return Poisson(GammaDist(successes) * (1 - p) / p)
     END METHOD
 
@@ -568,7 +566,7 @@ The following implementation of the negative binomial distribution allows `succe
     METHOD NegativeBinomialInt(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
-  // No failures if no successes or if always succeeds
+        // No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
         // integer value if NegativeBinomialInt is implemented to return
