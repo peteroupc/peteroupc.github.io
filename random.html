@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 13, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on June 15, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -102,7 +102,7 @@
 <li> <strong>Examples:</strong> Examples include the following:
 
 <ul>
-<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time if not enough randomness (&quot;entropy&quot;) is available.</li>
+<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>CryptGenRandom</code> method on Windows.</li>
 <li>Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec&#39;s hardware volatile entropy gathering and expansion technique).</li>
@@ -189,7 +189,7 @@
 <li>  by saving the result to a file, or</li>
 <li>  by distributing the results or the random numbers to networked users as they are generated, and</li>
 </ul></li>
-<li>the PRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality.)</li>
+<li>the PRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain <em>stable</em> as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality. A random number generation method is <em>stable</em> if it guarantees that the method will return the same sequence of numbers given the same seed, and only if it preserves behavioral and binary compatibility in this respect across versions.  For example, <code>java.util.Random</code> is stable, while the C <code>rand</code> method is not.)</li>
 </ol>
 
 <p><a id=Other_Situations></a></p>
@@ -235,19 +235,19 @@ of that library, or imply a preference of that library over others. The list is 
 <tr>
 <td>C/C++</td>
 <td>(3)</td>
-<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><code>xoroshiro128plus.c</code></a> (8-byte seed other than all zeros); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><code>xorshift128plus.c</code></a> (8-byte seed other than all zeros)</td>
+<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><code>xoroshiro128plus.c</code></a> (16-octet seed other than all zeros); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><code>xorshift128plus.c</code></a> (128-bit seed other than all zeros)</td>
 <td></td>
 </tr>
 <tr>
 <td>Python</td>
 <td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
-<td><a href="https://github.com/ihaque/xorshift">ihaque/xorshift</a> library (8-byte seed other than all zeros; default seed uses <code>os.urandom()</code>)</td>
-<td><code>random.getrandbits()</code> (1); <code>random.seed()</code> (2496-byte seed) (1)</td>
+<td><a href="https://github.com/ihaque/xorshift">ihaque/xorshift</a> library (128-bit seed other than all zeros; default seed uses <code>os.urandom()</code>)</td>
+<td><code>random.getrandbits()</code> (1); <code>random.seed()</code> (19,936-octet seed) (1)</td>
 </tr>
 <tr>
 <td>Java</td>
 <td><code>java.security.SecureRandom</code></td>
-<td></td>
+<td><a href="https://github.com/grunka/xorshift">grunka/xorshift</a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>)</td>
 <td><code>java.util.Random</code> class (4)</td>
 </tr>
 <tr>
@@ -260,7 +260,7 @@ of that library, or imply a preference of that library over others. The list is 
 <td>Ruby</td>
 <td>(3); <code>SecureRandom</code> class (<code>require &#39;securerandom&#39;</code>)</td>
 <td></td>
-<td><code>rand()</code> (floating-point) (1); <code>rand(N)</code> (integer) (1)</td>
+<td><code>rand()</code> (floating-point) (1) (5); <code>rand(N)</code> (integer) (1) (5); <code>srand()</code> (default seed uses entropy)</td>
 </tr>
 </tbody></table>
 
@@ -268,11 +268,13 @@ of that library, or imply a preference of that library over others. The list is 
 meet the statistical-random requirements, strictly speaking, but due to
 its long period, may be adequate for many applications.</p>
 
-<p>(2) <code>Math.random()</code> is implemented using <code>xorshift128+</code> in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by <code>Math.random</code> is not standardized, though.</p>
+<p>(2) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is not standardized, though.</p>
 
 <p>(3) Read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems (see <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a>).</p>
 
 <p>(4) Uses a 48-bit seed, so doesn&#39;t meet the statistical-random requirements.</p>
+
+<p>(5) In my opinion, Ruby&#39;s <code>rand</code> method (and especially its <code>Random#rand</code> method) presents a beautiful and simple API for random number generation.</p>
 
 <p><a id=Advice_for_New_Programming_Language_APIs></a></p>
 

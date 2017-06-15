@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on June 13, 2017.</p>
+<p>Begun on June 4, 2017; last updated on June 15, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -317,7 +317,7 @@ end
 end
 </pre></li>
 <li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, and choose the first <code>k</code> items from that list.</li>
-<li><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until <code>k</code> items (or indices) were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>, below).</li>
+<li><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a hash table storing the items already generated.  When a new index to an item is chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>, below).</li>
 </ul>
 
 <p><a id=Weighted_Choice></a></p>

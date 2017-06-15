@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 13, 2017.
+Begun on Mar. 5, 2016; last updated on June 15, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -27,10 +27,11 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
     - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
     - [Seeding Recommendations](#Seeding_Recommendations)
     - [Other Situations](#Other_Situations)
+- [Programming Language APIs](#Programming_Language_APIs)
+- [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Using Random Number Generators](#Using_Random_Number_Generators)
     - [Random Number Extraction](#Random_Number_Extraction)
     - [Shuffling](#Shuffling)
-- [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
 - [License](#License)
@@ -137,7 +138,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 3.  the application finds it impractical to store or distribute that "random" result without having to a use a PRNG with an application-specified seed, such as--
     -   by saving the result to a file, or
     -   by distributing the results or the random numbers to networked users as they are generated, and
-4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain stable as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality.)
+4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain _stable_ as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality. A random number generation method is _stable_ if it guarantees that the method will return the same sequence of numbers given the same seed, and only if it preserves behavioral and binary compatibility in this respect across versions.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
 
 <a id=Other_Situations></a>
 ### Other Situations
@@ -155,31 +156,34 @@ Seeds also come into play in other situations, such as:
 
     (A detailed description of noise algorithms, such as white, pink, or other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise), or fractal Brownian motion, is outside the scope of this page.)
 
+<a id=Programming_Language_APIs></a>
 ## Programming Language APIs
 
 The following table lists techniques, methods, and functions that implement
-unpredictable-random and statistical-random RNGs for popular programming languages. For both kinds of generators it's encouraged to use a single application-wide instance of the RNG implementation. Methods and libraries mentioned in the "Statistical-random" column need to be initialized with a full-length seed before use.  
+unpredictable-random and statistical-random RNGs for popular programming languages. For both kinds of generators it's encouraged to use a single application-wide instance of the RNG implementation. Methods and libraries mentioned in the "Statistical-random" column need to be initialized with a full-length seed before use.
 
 The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.
 
 | Language   | Unpredictable-random   | Statistical-random | Other |
  --------|-----------------------------------------------|------|------|
-| C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (8-byte seed other than all zeros); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (8-byte seed other than all zeros) |
-| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (8-byte seed other than all zeros; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (2496-byte seed) (1) |
-| Java | `java.security.SecureRandom`|  | `java.util.Random` class (4) |
+| C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (16-octet seed other than all zeros); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit seed other than all zeros) |
+| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit seed other than all zeros; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (19,936-octet seed) (1) |
+| Java | `java.security.SecureRandom`|  [grunka/xorshift](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | `java.util.Random` class (4) |
 | JavaScript | | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (2) |
-| Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `rand()` (floating-point) (1); `rand(N)` (integer) (1) |
+| Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `rand()` (floating-point) (1) (5); `rand(N)` (integer) (1) (5); `srand()` (default seed uses entropy) |
 
 (1) Default general RNG implements the Mersenne Twister, which doesn't
 meet the statistical-random requirements, strictly speaking, but due to
 its long period, may be adequate for many applications.
 
-(2) `Math.random()` is implemented using `xorshift128+` in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by `Math.random` is not standardized, though.
+(2) JavaScript's `Math.random` is implemented using `xorshift128+` in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is not standardized, though.
 
 (3) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
 
 (4) Uses a 48-bit seed, so doesn't meet the statistical-random requirements.
+
+(5) In my opinion, Ruby's `rand` method (and especially its `Random#rand` method) presents a beautiful and simple API for random number generation.
 
 <a id=Advice_for_New_Programming_Language_APIs></a>
 ## Advice for New Programming Language APIs
@@ -199,7 +203,6 @@ Whenever convenient--
 - an unpredictable-random and statistical-random implementation should be safe for concurrent use by multiple threads, and
 - a new programming language's standard library should include methods corresponding to the two
 given in the section ["Random Number Extraction"](#Random_Number_Extraction) -- one set for unpredictable-random generators, and another set for statistical RNGs.
-
 
 <a id=Using_Random_Number_Generators></a>
 ## Using Random Number Generators
@@ -242,7 +245,6 @@ There are special considerations in play when applications use RNGs to shuffle a
         - that was initialized automatically with an _unpredictable seed_ before use.
 
     (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
-
 
 <a id=Conclusion></a>
 ## Conclusion
