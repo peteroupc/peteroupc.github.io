@@ -37,13 +37,14 @@
 <li><a href="#Seeding_Recommendations">Seeding Recommendations</a></li>
 <li><a href="#Other_Situations">Other Situations</a></li>
 </ul></li>
+<li><a href="#Programming_Language_APIs">Programming Language APIs</a></li>
+<li><a href="#Advice_for_New_Programming_Language_APIs">Advice for New Programming Language APIs</a></li>
 <li><a href="#Using_Random_Number_Generators">Using Random Number Generators</a>
 
 <ul>
 <li><a href="#Random_Number_Extraction">Random Number Extraction</a></li>
 <li><a href="#Shuffling">Shuffling</a></li>
 </ul></li>
-<li><a href="#Advice_for_New_Programming_Language_APIs">Advice for New Programming Language APIs</a></li>
 <li><a href="#Conclusion">Conclusion</a>
 
 <ul>
@@ -101,7 +102,7 @@
 <li> <strong>Examples:</strong> Examples include the following:
 
 <ul>
-<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, it can block for seconds at a time if not enough randomness (&quot;entropy&quot;) is available.</li>
+<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>CryptGenRandom</code> method on Windows.</li>
 <li>Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec&#39;s hardware volatile entropy gathering and expansion technique).</li>
@@ -213,6 +214,92 @@
 <p>(A detailed description of noise algorithms, such as white, pink, or other <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a>, <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>, or fractal Brownian motion, is outside the scope of this page.)</p></li>
 </ul>
 
+<p><a id=Programming_Language_APIs></a></p>
+
+<h2>Programming Language APIs</h2>
+
+<p>The following table lists techniques, methods, and functions that implement
+unpredictable-random and statistical-random RNGs for popular programming languages. For both kinds of generators it&#39;s encouraged to use a single application-wide instance of the RNG implementation. Methods and libraries mentioned in the &quot;Statistical-random&quot; column need to be initialized with a full-length seed before use.</p>
+
+<p>The mention of a third-party library in this section does not imply sponsorship or endorsement
+of that library, or imply a preference of that library over others. The list is not comprehensive.</p>
+
+<table><thead>
+<tr>
+<th>Language</th>
+<th>Unpredictable-random</th>
+<th>Statistical-random</th>
+<th>Other</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>C/C++</td>
+<td>(3)</td>
+<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><code>xoroshiro128plus.c</code></a> (8-byte seed other than all zeros); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><code>xorshift128plus.c</code></a> (8-byte seed other than all zeros)</td>
+<td></td>
+</tr>
+<tr>
+<td>Python</td>
+<td><code>secrets.SystemRandom</code> (since Python 3.6); <code>os.urandom()</code></td>
+<td><a href="https://github.com/ihaque/xorshift">ihaque/xorshift</a> library (8-byte seed other than all zeros; default seed uses <code>os.urandom()</code>)</td>
+<td><code>random.getrandbits()</code> (1); <code>random.seed()</code> (2496-byte seed) (1)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td><code>java.security.SecureRandom</code></td>
+<td></td>
+<td><code>java.util.Random</code> class (4)</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td></td>
+<td><a href="https://github.com/AndreasMadsen/xorshift"><code>xorshift</code></a> library</td>
+<td><code>Math.random()</code> (floating-point) (2)</td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td>(3); <code>SecureRandom</code> class (<code>require &#39;securerandom&#39;</code>)</td>
+<td></td>
+<td><code>rand()</code> (floating-point) (1); <code>rand(N)</code> (integer) (1)</td>
+</tr>
+</tbody></table>
+
+<p>(1) Default general RNG implements the Mersenne Twister, which doesn&#39;t
+meet the statistical-random requirements, strictly speaking, but due to
+its long period, may be adequate for many applications.</p>
+
+<p>(2) <code>Math.random()</code> is implemented using <code>xorshift128+</code> in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by <code>Math.random</code> is not standardized, though.</p>
+
+<p>(3) Read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems (see <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a>).</p>
+
+<p>(4) Uses a 48-bit seed, so doesn&#39;t meet the statistical-random requirements.</p>
+
+<p><a id=Advice_for_New_Programming_Language_APIs></a></p>
+
+<h2>Advice for New Programming Language APIs</h2>
+
+<p>Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example:</p>
+
+<ul>
+<li>An unpredictable-random implementation can read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.</li>
+<li>A statistically-random implementation can use a PRNG algorithm that is already known to show no systematic failures in the <code>BigCrush</code> test battery (and has a state length 64 bits or greater), or an existing library that implements that algorithm. Examples of such algorithms are found in the <a href="http://xoroshiro.di.unimi.it/#quality"><code>xoroshiro+</code> quality page</a>.</li>
+</ul>
+
+<p>If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
+set to 0 or 1.  For instance, a C language API for unpredictable-random generators could look like the following:
+<code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is
+the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
+Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time
+on the number of random bytes the API will generate.</p>
+
+<p>Whenever convenient--</p>
+
+<ul>
+<li>an unpredictable-random and statistical-random implementation should be safe for concurrent use by multiple threads, and</li>
+<li>a new programming language&#39;s standard library should include methods corresponding to the two
+given in the section <a href="#Random_Number_Extraction">&quot;Random Number Extraction&quot;</a> -- one set for unpredictable-random generators, and another set for statistical RNGs.</li>
+</ul>
+
 <p><a id=Using_Random_Number_Generators></a></p>
 
 <h2>Using Random Number Generators</h2>
@@ -234,7 +321,7 @@ called <code>RNDINT(N)</code>), where N is an integer greater than 0. To do so, 
 random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer.
 If that nonnegative integer is N or greater, repeat this process.</li>
 <li>The second method is to generate a random number from 0 inclusive to 1 exclusive. This can be
-implemented by calling <code>RNDINT(X)</code> and dividing by X, where X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers
+implemented by calling <code>RNDINT(X)</code> and dividing by X without rounding the result to an integer, where X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 854 floating-point numbers
 (Java <code>double</code>), X will be 2<sup>53</sup>.  For 32-bit IEEE 854 floating-point numbers
 (Java <code>float</code>), X will be 2<sup>24</sup>. (See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
 for further discussion.)</li>
@@ -256,7 +343,7 @@ distribution, or that fall within a given range, is outside the scope of this pa
 
 <ul>
 <li>to use an unpredictable-random implementation, or</li>
-<li>if speed is a concern and security is not, to use a PRNG--
+<li>if speed is a concern and computer and information security is not, to use a PRNG--
 
 <ul>
 <li>that meets the quality requirements of a statistical-random implementation,</li>
@@ -267,32 +354,6 @@ distribution, or that fall within a given range, is outside the scope of this pa
 
 <p>(See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</p></li>
 </ol>
-
-<p><a id=Advice_for_New_Programming_Language_APIs></a></p>
-
-<h2>Advice for New Programming Language APIs</h2>
-
-<p>Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example:</p>
-
-<ul>
-<li>An unpredictable-random implementation can read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.</li>
-<li>A statistically-random implementation can use a PRNG algorithm that is already known to pass the <code>BigCrush</code> test battery without systematic failures (and has a state length 64 bits or greater), or an existing library that implements that algorithm. Examples of such algorithms are found in the <a href="http://xoroshiro.di.unimi.it/#quality"><code>xoroshiro+</code> quality page</a>.</li>
-</ul>
-
-<p>If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
-set to 0 or 1.  For instance, a C API for unpredictable-random generators could look like the following:
-<code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is
-the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
-Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time
-on the number of random bytes the API will generate.</p>
-
-<p>Whenever convenient--</p>
-
-<ul>
-<li>an unpredictable-random and statistical-random implementation should be safe for concurrent use by multiple threads, and</li>
-<li>a new programming language&#39;s standard library should include methods corresponding to the two
-given in the section <a href="#Random_Number_Extraction">&quot;Random Number Extraction&quot;</a> -- one set for unpredictable-random generators, and another set for statistical RNGs.</li>
-</ul>
 
 <p><a id=Conclusion></a></p>
 
