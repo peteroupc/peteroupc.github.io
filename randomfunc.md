@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 13, 2017.
+Begun on June 4, 2017; last updated on June 15, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -258,7 +258,7 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
            return list
         end
 - **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Store all the items in a list, [shuffle](#Shuffling) that list, and choose the first `k` items from that list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the items already generated.  When a new item (or index to an item) is chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new item (or index).  Repeat this process until `k` items (or indices) were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see [Discrete Weighted Choice](#Discrete_Weighted_Choice), below).
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the items already generated.  When a new index to an item is chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see [Discrete Weighted Choice](#Discrete_Weighted_Choice), below).
 
 <a id=Weighted_Choice></a>
 ## Weighted Choice
