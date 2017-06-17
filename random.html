@@ -50,7 +50,6 @@
 <ul>
 <li><a href="#Request_for_Comments">Request for Comments</a></li>
 </ul></li>
-<li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
 </ul>
 
@@ -65,6 +64,7 @@
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
 <li><strong>Period.</strong> The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
+<li><strong>Systematic failure</strong>.  A failure exhibited by a PRNG, in a statistical randomness test, that always or almost always occurs regardless of choice of seed. This term is more precisely defined in S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf">An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</a>&quot;, as published in the <code>xoroshiro128+</code> website.</li>
 </ul>
 
 <p><a id=Unpredictable_Random_Generators></a></p>
@@ -93,7 +93,7 @@
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with an <em>unpredictable seed</em>, defined as follows. The seed--</p>
 
 <ul>
-<li>must consist of unpredictable data (as defined earlier), which ultimately derives from a nondeterministic source or sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
+<li>must consist of unpredictable data (as defined earlier), which ultimately derives from one or more nondeterministic sources and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less unpredictable), and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
@@ -129,7 +129,7 @@
 <p>The goal of this kind of generator is for each possible outcome to be equally likely.</p>
 
 <ul>
-<li> <strong>Quality:</strong> A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests and must not show systematic failures in widely used statistical randomness test batteries. (A &quot;systematic&quot; failure is defined in S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf">An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</a>&quot;, as published in the <code>xoroshiro128+</code> website. An RNG meeting this quality requirement need not be <em>equidistributed</em>, as defined in that paper.)</li>
+<li> <strong>Quality:</strong> A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests. The RNG need not be equidistributed.</li>
 <li><p><strong>Seeding and Reseeding:</strong> The following applies only to implementations that use PRNGs.</p>
 
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with a seed described as follows. The seed--</p>
@@ -141,9 +141,9 @@
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
-<p>The PRNG&#39;s <em>state length</em> must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications. PRNGs based on multiple-recursive or lagged-Fibonacci generators, without more, are less preferred over alternatives.</p>
+<p>The PRNG&#39;s <em>state length</em> must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.</p>
 
-<p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG&#39;s <em>state length</em> is less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
+<p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG has a <em>state length</em> less than 238 bits or is based solely on a multiple-recursive or lagged-Fibonacci generator without more.  If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p></li>
 <li> <strong>Speed:</strong> The implementation should select procedures that are reasonably fast for most applications. The implementation may instead use an unpredictable-random implementation as long as the method remains at least as fast, in the average case, as the statistical-random implementation it would otherwise use.</li>
 <li> <strong>Examples:</strong> Examples include the following:
 
@@ -151,11 +151,12 @@
 <li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>xorshift128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>Lehmer128</code> (state length 128 bits).</li>
+<li>C++&#39;s <a href="www.cplusplus.com/reference/random/ranlux48/"><code>ranlux48</code> engine</a> (state length 577 bits; nonzero seed).</li>
 </ul></li>
 <li> <strong>Non-Examples:</strong>  Non-examples include the following:
 
 <ul>
-<li>Mersenne Twister <a href="http://xoroshiro.di.unimi.it/#quality">systematically fails</a> one of the <code>BigCrush</code> tests of <code>TestU01</code> [L&#39;Ecuyer and Simard 2007].</li>
+<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality">systematic failure</a> in one of the <code>BigCrush</code> tests of <code>TestU01</code> [L&#39;Ecuyer and Simard 2007].</li>
 <li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">linear congruential generator</a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>minstd_rand</code> and <code>minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.</li>
 </ul></li>
 </ul>
@@ -202,7 +203,7 @@
 <li>  by saving the result to a file, or</li>
 <li>  by distributing the results or the random numbers to networked users as they are generated, and</li>
 </ul></li>
-<li>the PRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain <em>stable</em> as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality. A random number generation method is <em>stable</em> if it guarantees that the method will return the same sequence of numbers given the same seed, and only if it preserves behavioral and binary compatibility in this respect within and across application versions and computing environments.  For example, <code>java.util.Random</code> is stable, while the C <code>rand</code> method is not.)</li>
+<li>the PRNG algorithm and any procedure using that algorithm to generate that &quot;random&quot; result will remain <em>stable</em> as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application&#39;s functionality. A random number generation method is <em>stable</em> if it uses a PRNG, outputs the same random sequence given the same seed, and has no implementation-dependent behavior.  For example, <code>java.util.Random</code> is stable, while the C <code>rand</code> method is not.)</li>
 </ol>
 
 <p><a id=Other_Situations></a></p>
@@ -415,12 +416,6 @@ distribution, or that fall within a given range, is outside the scope of this pa
 <li>How many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?</li>
 </ul></li>
 </ul>
-
-<p><a id=Notes></a></p>
-
-<h2>Notes</h2>
-
-<p><sup><a href="#note1">1</a></sup> Subtract-with-carry RNG with a state length of 576 bits.  Defined in <a href="http://luscher.web.cern.ch/luscher/ranlux/notes.pdf">Martin L&uuml;scher&#39;s notes</a>, except the C++ standard library implementation takes the first 23 of every 223 random numbers (rather than the first 24).</p>
 
 <p><a id=License></a></p>
 
