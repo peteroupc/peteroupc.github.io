@@ -2,18 +2,34 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 17, 2017.
+Begun on Mar. 5, 2016; last updated on June 18, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
 <a id=Introduction></a>
-## Introduction
+## Introduction and Summary
 
-As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely _statistical-random generators_ and _unpredictable-random generators_.  I make this distinction because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`).  This page will discuss these two kinds of RNG, and make recommendations on their use and properties.
+As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely--
+- _statistical-random generators_, which seek to generate numbers that follow a uniform random distribution, and 
+- _unpredictable-random generators_, which seek to generate numbers that are cost-prohibitive to predict.
 
-In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when seeds should be used by applications.
+This page will discuss these two kinds of RNG, and make recommendations on their use and properties.
+
+In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when applications should specify their own seeds.
+
+Then, this page will explain what programming language APIs implement statistical-random and unpredictable-random generators and give advice on implementing them in programming languages.
 
 Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and two higher-level randomness methods.
+
+### Summary
+
+The following table summarizes the kinds of RNGs covered in this document.
+
+| Kind of RNG   | When to Use This RNG  | Examples |
+ --------|--------|------|
+| [Unpredictable-Random](#Unpredictable_Random_Generators)   | In computer/information security cases, or when speed is not a concern.  | `/dev/urandom`, `CryptGenRandom` |
+| [Statistical-Random](#Statistical_Random_Generators)   | When computer/information security is not a concern, but speed is.  See also ["Shuffling"](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
+| [Seeded PRNG](#Seeded_Random_Generators)   | When generating reproducible results in a way not practical otherwise.   | Statistical-random quality PRNG with custom seed |
 
 <a id=Contents></a>
 ## Contents
@@ -44,13 +60,13 @@ The following definitions are helpful in better understanding this document.
 - **Pseudorandom number generator (PRNG).** A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
-- **Period.** The number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
+- **Period.** The maximum number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
 - **Systematic failure**.  A failure exhibited by a PRNG, in a statistical randomness test, that always or almost always occurs regardless of choice of seed. This term is more precisely defined in S. Vigna, "[An experimental exploration of Marsaglia's `xorshift` generators, scrambled](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.
 
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
 
-Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) are indispensable in computer security and information security contexts, such as--
+Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in computer security and information security contexts, such as--
 
 -  generating keying material, such as encryption keys,
 -  generating random passwords or session identifiers,
@@ -60,8 +76,6 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 -  use in networked games where predicting future random numbers would give a player an unfair advantage.
 
 They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
-
-The goal of this kind of generator is to keep the random numbers from being guessed easily.
 
 -  **Quality:** An unpredictable-random implementation generates uniformly random bits that are unpredictable. "Unpredictable" means that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
@@ -80,21 +94,19 @@ The goal of this kind of generator is to keep the random numbers from being gues
     - The `CryptGenRandom` method on Windows.
     - Cryptographic hash functions that take unpredictable signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
 
-Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and should be reseeded from time to time to help ensure unpredictability.
+Note that an unpredictable-random implementation ultimately relies on one or more nondeterministic sources for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding to help ensure unpredictability.
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
 
-Statistical-random generators are used in simulations, in numerical integration, and in many games to bring an element of chance and variation to the application. This kind of generator is generally suitable only if--
+Statistical-random generators are used in simulations, in numerical integration, and in many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
 
 -  computer security and information security are not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
 
 If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see ["Shuffling"](#Shuffling)).
 
-The goal of this kind of generator is for each possible outcome to be equally likely.
-
--  **Quality:** A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass known statistical randomness tests. The RNG need not be equidistributed.
+-  **Quality:** A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass all the tests used in `TestU01`'s `Crush`, `SmallCrush`, and `BigCrush` test batteries [L'Ecuyer and Simard 2007]\*, and should be highly likely to pass other statistical randomness tests. The RNG need not be equidistributed.
 -  **Seeding and Reseeding:** The following applies only to implementations that use PRNGs.
 
     Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed--
@@ -111,17 +123,19 @@ The goal of this kind of generator is for each possible outcome to be equally li
     - `xoroshiro128+` (state length 128 bits; nonzero seed).
     - `xorshift128+` (state length 128 bits; nonzero seed).
     - `Lehmer128` (state length 128 bits).
-    - C++'s [`ranlux48` engine](www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
+    - C++'s [`ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 -  **Non-Examples:**  Non-examples include the following:
-    - Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests of `TestU01` [L'Ecuyer and Simard 2007].
+    - Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests.
     - Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `minstd_rand` and `minstd_rand0` engines) has a _state length_ of less than 64 bits.
 
+\* Mentioning specific test batteries here is in the interest of precision and makes it clearer whether a particular PRNG meets the quality requirements.
+
 <a id=Seedable_Random_Generators></a>
-## Seedable Random Generators
+## Seeded Random Generators
 
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
-Applications that need to specify their own seeds usually care about reproducible results. Such applications often need to keep not only the PRNG algorithm stable, but also any algorithm that uses that algorithm (such as a game level generator), especially if it publishes seeds (for example, game level passwords). (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
+Applications that need to specify their own seeds usually care about reproducible results. (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -143,10 +157,10 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application needs to generate the same "random" result multiple times,
-3.  the application finds it impractical to store or distribute that "random" result without having to a use a PRNG with an application-specified seed, such as--
+3.  the application finds it impractical to store or distribute that "random" result without having to use a PRNG with an application-specified seed, such as--
     -   by saving the result to a file, or
     -   by distributing the results or the random numbers to networked users as they are generated, and
-4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain _stable_ as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality. A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no implementation-dependent behavior.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
+4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain _stable_ as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality. A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
 
 <a id=Other_Situations></a>
 ### Other Situations
@@ -175,30 +189,30 @@ of that library, or imply a preference of that library over others. The list is 
 
 | Language   | Unpredictable-random   | Statistical-random | Other |
  --------|-----------------------------------------------|------|------|
-| C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit seed other than all zeros); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit seed other than all zeros) |
-| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit seed other than all zeros; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (19,936-bit seed) (1) |
+| C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed) |
+| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (19,936-bit seed) (1) |
 | Java | `java.security.SecureRandom`|  [grunka/xorshift](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | `java.util.Random` class (4) |
 | JavaScript | | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (2) |
-| Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `rand()` (floating-point) (1) (5); `rand(N)` (integer) (1) (5); `srand()` (default seed uses entropy) |
+| Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (1) (5); `Random#rand(N)` (integer) (1) (5); `Random.new(seed)` (default seed uses entropy) |
 
 (1) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
-meet the statistical-random requirements, strictly speaking, but due to
-its long period, may be adequate for many applications.
+meet the statistical-random requirements, strictly speaking, but may be adequate for many applications due to
+its long period.
 
-(2) JavaScript's `Math.random` is implemented using `xorshift128+` in latest V8, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
+(2) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
 (3) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
 
 (4) Uses a 48-bit seed, so doesn't meet the statistical-random requirements.
 
-(5) In my opinion, Ruby's `rand` method (and especially its `Random#rand` method) presents a beautiful and simple API for random number generation.
+(5) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.
 
 <a id=Advice_for_New_Programming_Language_APIs></a>
 ## Advice for New Programming Language APIs
 
 Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example:
 - An unpredictable-random implementation can read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.
-- A statistically-random implementation can use a PRNG algorithm that is already known to show no systematic failures in the `BigCrush` test battery (and has a state length 64 bits or greater), or an existing library that implements that algorithm. Examples of such algorithms are found in the [`xoroshiro+` quality page](http://xoroshiro.di.unimi.it/#quality).
+- A statistical-random implementation can use a PRNG algorithm mentioned as an example in the [statistical-random generator](#Statistical_Random_Generators) section.
 
 If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly
 set to 0 or 1.  For instance, a C language API for unpredictable-random generators could look like the following:
@@ -254,10 +268,9 @@ There are special considerations in play when applications use RNGs to shuffle a
 
     (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
 
-<a id=Conclusion></a>
-## Conclusion
+## Motivation
 
-In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the "unpredictable-random implementations" and "Statistical RNGs" sections will meet the needs of those applications.
+In this document, I made the distinction between _statistical-random_ and _unpredictable-random_ generators because that is how programming languages often present random number generators -- they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for security purposes (such as `java.security.SecureRandom`). 
 
 What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today--
 - specify few and weak requirements on RNGs (such as C's `rand`),
@@ -265,6 +278,11 @@ What has motivated me to write a more rigorous definition of random number gener
 - implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [.NET Framework implementation of `System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx)), and/or
 - leave the default seeding fixed or unspecified (such as C's `rand`).
+
+<a id=Conclusion></a>
+## Conclusion
+
+In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the "unpredictable-random implementations" and "Statistical RNGs" sections will meet the needs of those applications.
 
 In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.
 
@@ -282,7 +300,7 @@ Comments on any aspect of the document are welcome, but answers to the following
 -  Have I characterized the randomness needs of applications properly?
 -  Did I cover the vast majority of applications that require randomness?
 -  Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for unpredictable-random or statistical-random RNGs?
--  Are there certain kinds of applications that require a different kind of RNG (unpredictable-random, statistical-random, seedable, etc.) than I recommended?
+-  Are there certain kinds of applications that require a different kind of RNG (unpredictable-random, statistical-random, seeded, etc.) than I recommended?
 - In a typical computer a consumer would have today:
     - How many random numbers per second would an unpredictable-random implementation generate? A statistical-random implementation?
     - How many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?
