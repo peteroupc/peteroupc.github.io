@@ -40,7 +40,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Example](#Example)
         - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
-        - [Example](#Example)
+        - [Example](#Example_2)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
@@ -393,7 +393,7 @@ In many cases, the probability densities are sampled (usually at regularly space
         return list[size(list) - 1]
     END METHOD
 
-<a id=Example></a>
+<a id=Example_2></a>
 #### Example
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
