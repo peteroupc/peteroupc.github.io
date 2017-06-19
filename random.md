@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 18, 2017.
+Begun on Mar. 5, 2016; last updated on June 19, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -48,8 +48,8 @@ The following table summarizes the kinds of RNGs covered in this document.
     - [Seeding and Reseeding](#Seeding_and_Reseeding_2)
     - [Examples and Non-Examples](#Examples_and_Non_Examples)
 - [Seeded Random Generators](#Seeded_Random_Generators)
-    - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
     - [Seeding Recommendations](#Seeding_Recommendations)
+    - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
     - [Other Situations](#Other_Situations)
 - [Programming Language APIs](#Programming_Language_APIs)
 - [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
@@ -59,6 +59,7 @@ The following table summarizes the kinds of RNGs covered in this document.
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
+- [Notes](#Notes)
 - [License](#License)
 
 <a id=Definitions></a>
@@ -70,7 +71,6 @@ The following definitions are helpful in better understanding this document.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The maximum number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
-- **Systematic failure**.  A failure exhibited by a PRNG, in a statistical-randomness test, that always or almost always occurs regardless of choice of seed. This term is more precisely defined in S. Vigna, "[An experimental exploration of Marsaglia's `xorshift` generators, scrambled](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.
 
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
@@ -86,7 +86,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 
 They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
-An unpredictable-random implementation ultimately relies on one or more _nondeterministic sources_ (sources that don't always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing many random numbers per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding to help ensure unpredictability (as explained later).
+An unpredictable-random implementation ultimately relies on one or more _nondeterministic sources_ (sources that don't always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding to help ensure unpredictability (as explained later).
 
 <a id=Quality></a>
 ### Quality
@@ -109,7 +109,7 @@ The RNG should be reseeded from time to time (using a newly generated _unpredict
 <a id=Examples></a>
 ### Examples
 
-Examples include the following:
+Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `CryptGenRandom` method on Windows.
@@ -125,12 +125,12 @@ Statistical-random generators are used in simulations, in numerical integration,
 
 If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see ["Shuffling"](#Shuffling)).
 
-A statistical-random implementation is usually implemented with a PRNG, but can also be implemented in a similar way as an unpredictable-random implementation, provided it remains reasonably fast.
+A statistical-random implementation is usually implemented with a PRNG, but can also be implemented in a similar way as an unpredictable-random implementation provided it remains reasonably fast.
 
 <a id=Quality_2></a>
 ### Quality
 
-A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass all the tests used in `TestU01`'s `Crush`, `SmallCrush`, and `BigCrush` test batteries [L'Ecuyer and Simard 2007], and should be highly likely to pass other statistical-randomness tests. The RNG need not be equidistributed. (Mentioning specific test batteries here is in the interest of precision and makes it clearer whether a particular PRNG meets these quality requirements.)
+A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass all the tests used in `TestU01`'s `Crush`, `SmallCrush`, and `BigCrush` test batteries [L'Ecuyer and Simard 2007], and should be highly likely to pass other known statistical randomness tests. The RNG need not be equidistributed. (Mentioning specific test batteries here is in the interest of precision and makes it clearer whether a particular RNG meets these quality requirements.)
 
 <a id=Seeding_and_Reseeding_2></a>
 ### Seeding and Reseeding
@@ -142,15 +142,11 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed--
 - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
 - must not be a fixed value or a user-entered value,
-- should not be trivially predictable in any of its bits, as far as practical, and
+- should not be trivially predictable in any of its bits, as far as practical,
+- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser precision)<sup>(1)</sup>, and
 - must be at least the same size as the PRNG's _state length_.
 
-The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG--
-- has a _state length_ less than 238 bits,
-- is based solely on a lagged-Fibonacci generator, or
-- is based solely on a multiple-recursive generator with power-of-two modulus.
-
-If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
+The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
@@ -159,11 +155,11 @@ Examples of statistically-random generators include the following:
 - `xoroshiro128+` (state length 128 bits; nonzero seed).
 - `xorshift128+` (state length 128 bits; nonzero seed).
 - `Lehmer128` (state length 128 bits).
-- `JKISS` on top of page 3 of [Jones 2010] (state length 128 bits; seed with four 32-bit nonzero pieces).
+- `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
 - C++'s [`ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 
 Non-examples include the following:
-- Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests.
+- Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests. (See also S. Vigna, "[An experimental exploration of Marsaglia's `xorshift` generators, scrambled](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.)
 - Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `minstd_rand` and `minstd_rand0` engines) has a _state length_ of less than 64 bits.
 
 <a id=Seeded_Random_Generators></a>
@@ -172,15 +168,6 @@ Non-examples include the following:
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
 
 Applications that need to specify their own seeds usually care about reproducible results. (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
-
-<a id=Seedable_PRNG_Recommendations></a>
-### Seedable PRNG Recommendations
-
-Which PRNG to use for generating reproducible results depends on the application. But here are some recommendations:
-
--  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
--  The PRNG's _state length_ should be 64 bits or greater.
--  Any seed passed to the PRNG should be at least the same size as the PRNG's _state length_.
 
 <a id=Seeding_Recommendations></a>
 ### Seeding Recommendations
@@ -195,15 +182,27 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 2. the application needs to generate the same "random" result multiple times,
 3.  the application finds it impractical to store or distribute that "random" result without having to use a PRNG with an application-specified seed, such as--
     -   by saving the result to a file, or
-    -   by distributing the results or the random numbers to networked users as they are generated, and
-4. the PRNG algorithm and any procedure using that algorithm to generate that "random" result will remain _stable_ as long as the relevant feature is still in use by the application. (Not using seeding allows either to be changed or improved without affecting the application's functionality. A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
+    -   by distributing the results or the random numbers to networked users as they are generated,
+4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
+5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
+
+(A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
+
+<a id=Seedable_PRNG_Recommendations></a>
+### Seedable PRNG Recommendations
+
+Which PRNG to use for generating reproducible results depends on the application. But here are some recommendations:
+
+-  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
+-  The PRNG's _state length_ should be 64 bits or greater.
+-  Any seed passed to the PRNG should be at least the same size as the PRNG's _state length_.
 
 <a id=Other_Situations></a>
 ### Other Situations
 
 Seeds also come into play in other situations, such as:
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+* **Verifiable randomness.** _Verifiable random numbers_ are random numbers (such as randomly generated seeds) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
 
     One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 * **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
@@ -232,8 +231,7 @@ of that library, or imply a preference of that library over others. The list is 
 | Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (1) (5); `Random#rand(N)` (integer) (1) (5); `Random.new(seed)` (default seed uses entropy) |
 
 (1) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
-meet the statistical-random requirements, strictly speaking, but may be adequate for many applications due to
-its long period.
+meet the statistical-random requirements, strictly speaking, but may be adequate for many applications due to its extremely long period.
 
 (2) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
@@ -336,6 +334,11 @@ Comments on any aspect of the document are welcome, but answers to the following
 - In a typical computer a consumer would have today:
     - How many random numbers per second would an unpredictable-random implementation generate? A statistical-random implementation?
     - How many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?
+
+<a id=Notes></a>
+## Notes
+
+<sup>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
 
 <a id=License></a>
 ## License
