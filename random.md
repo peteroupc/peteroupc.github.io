@@ -145,7 +145,12 @@ Before an instance of the RNG generates a random number, it must have been initi
 - should not be trivially predictable in any of its bits, as far as practical, and
 - must be at least the same size as the PRNG's _state length_.
 
-The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG has a _state length_ less than 238 bits or is based solely on a multiple-recursive or lagged-Fibonacci generator without more.  If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
+The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG--
+- has a _state length_ less than 238 bits,
+- is based solely on a lagged-Fibonacci generator, or
+- is based solely on a multiple-recursive generator with power-of-two modulus.
+
+If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
@@ -154,6 +159,7 @@ Examples of statistically-random generators include the following:
 - `xoroshiro128+` (state length 128 bits; nonzero seed).
 - `xorshift128+` (state length 128 bits; nonzero seed).
 - `Lehmer128` (state length 128 bits).
+- `JKISS` on top of page 3 of [Jones 2010] (state length 128 bits; seed with four 32-bit nonzero pieces).
 - C++'s [`ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 
 Non-examples include the following:
@@ -231,7 +237,7 @@ its long period.
 
 (2) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
-(3) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems, or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
+(3) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems (both devices can generally be read from in the same way as disk files), or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
 
 (4) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical-random requirements.
 
