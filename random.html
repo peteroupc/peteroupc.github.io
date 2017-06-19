@@ -216,7 +216,15 @@
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
-<p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG has a <em>state length</em> less than 238 bits or is based solely on a multiple-recursive or lagged-Fibonacci generator without more.  If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p>
+<p>The implementation may reseed itself from time to time (using a newly generated seed as described earlier). It should do so if the PRNG--</p>
+
+<ul>
+<li>has a <em>state length</em> less than 238 bits,</li>
+<li>is based solely on a lagged-Fibonacci generator, or</li>
+<li>is based solely on a multiple-recursive generator with power-of-two modulus.</li>
+</ul>
+
+<p>If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p>
 
 <p><a id=Examples_and_Non_Examples></a></p>
 
@@ -228,6 +236,7 @@
 <li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>xorshift128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>Lehmer128</code> (state length 128 bits).</li>
+<li><code>JKISS</code> on top of page 3 of <a href="state%20length%20128%20bits;%20seed%20with%20four%2032-bit%20nonzero%20pieces">Jones 2010</a>.</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><code>ranlux48</code> engine</a> (state length 577 bits; nonzero seed).</li>
 </ul>
 
@@ -361,7 +370,7 @@ its long period.</p>
 
 <p>(2) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</p>
 
-<p>(3) Read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems (see <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a>).</p>
+<p>(3) Read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems (both devices can generally be read from in the same way as disk files), or call the <code>CryptGenRandom</code> API in Windows-based systems (see <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a>).</p>
 
 <p>(4) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical-random requirements.</p>
 
