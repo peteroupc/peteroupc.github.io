@@ -50,6 +50,7 @@ The following table summarizes the kinds of RNGs covered in this document.
 - [Seeded Random Generators](#Seeded_Random_Generators)
     - [Seeding Recommendations](#Seeding_Recommendations)
     - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
+    - [Examples](#Examples_2)
     - [Other Situations](#Other_Situations)
 - [Programming Language APIs](#Programming_Language_APIs)
 - [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
@@ -165,9 +166,7 @@ Non-examples include the following:
 <a id=Seeded_Random_Generators></a>
 ## Seeded Random Generators
 
-In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". One notable example is a "code", or password, for generating a particular game level in some role-playing games.
-
-Applications that need to specify their own seeds usually care about reproducible results. (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
+In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or "seed". Such applications usually care about reproducible results. (Note that in the definitions for [unpredictable-random](#Unpredictable_Random_Generators) and [statistical-random](#Statistical_Random_Generators) generators given earlier, the PRNGs involved are automatically seeded before use.)
 
 <a id=Seeding_Recommendations></a>
 ### Seeding Recommendations
@@ -177,10 +176,10 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 1. the initial state (the seed) which the "random" result will be generated from--
     - is hard-coded,
     - was entered by the user,
-    - was generated using a statistical or unpredictable-random implementation (as defined earlier), or
+    - is known to the application and was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application needs to generate the same "random" result multiple times,
-3.  the application finds it impractical to store or distribute that "random" result without having to use a PRNG with an application-specified seed, such as--
+3. the application finds it impractical to store or distribute that "random" result (rather than a seed) without having to use a PRNG with an application-specified seed, such as--
     -   by saving the result to a file, or
     -   by distributing the results or the random numbers to networked users as they are generated,
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
@@ -196,6 +195,21 @@ Which PRNG to use for generating reproducible results depends on the application
 -  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
 -  The PRNG's _state length_ should be 64 bits or greater.
 -  Any seed passed to the PRNG should be at least the same size as the PRNG's _state length_.
+
+<a id=Examples_2></a>
+### Examples
+
+Many kinds of games generate game levels or game states using apparently-random principles, such as--
+
+- procedural terrain for a role-playing game,
+- [shuffling](#Shuffling) a digital deck of cards for a solitaire game, or
+- a game board with pieces that normally vary their positions every session.
+
+In general, such a game should use a PRNG with a custom seed for such purposes _only_ if it generates a "code" or "password" based on that seed (such as a barcode or a string or letters and digits) and makes that "code" or "password" accessible to the player, to allow the player to start the level or state repeatedly (because of [seeding recommendation](#Seeding_Recommendations) #2).
+
+The following are other examples of when using a custom seed is appropriate:
+
+- Unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets point 5).
 
 <a id=Other_Situations></a>
 ### Other Situations
@@ -217,9 +231,11 @@ Seeds also come into play in other situations, such as:
 ## Programming Language APIs
 
 The following table lists techniques, methods, and functions that implement
-unpredictable-random and statistical-random RNGs for popular programming languages. For both kinds of generators it's encouraged to use a single application-wide instance of the RNG implementation. Methods and libraries mentioned in the "Statistical-random" column need to be initialized with a full-length seed before use.
+unpredictable-random and statistical-random RNGs for popular programming languages. Note the following:
 
-The mention of a third-party library in this section does not imply sponsorship or endorsement
+- For both kinds of generators it's encouraged to create a single instance of the RNG on application startup and use that instance throughout the application (if the application is multithreaded, the instance ought to be thread-safe).
+- Methods and libraries mentioned in the "Statistical-random" column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the "Unpredictable-random" column).
+- The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.
 
 | Language   | Unpredictable-random   | Statistical-random | Other |
@@ -338,7 +354,7 @@ Comments on any aspect of the document are welcome, but answers to the following
 <a id=Notes></a>
 ## Notes
 
-<sup>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
+<sup>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
 
 <a id=License></a>
 ## License
