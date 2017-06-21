@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 19, 2017.
+Begun on Mar. 5, 2016; last updated on June 21, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -51,7 +51,10 @@ The following table summarizes the kinds of RNGs covered in this document.
     - [Seeding Recommendations](#Seeding_Recommendations)
     - [Seedable PRNG Recommendations](#Seedable_PRNG_Recommendations)
     - [Examples](#Examples_2)
-    - [Other Situations](#Other_Situations)
+        - [Games](#Games)
+        - [Unit Testing](#Unit_Testing)
+        - [Verifiable Random Numbers](#Verifiable_Random_Numbers)
+        - [Noise](#Noise)
 - [Programming Language APIs](#Programming_Language_APIs)
 - [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Using Random Number Generators](#Using_Random_Number_Generators)
@@ -119,7 +122,7 @@ Examples of unpredictable-random implementations include the following:
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
 
-Statistical-random generators are used in simulations, in numerical integration, and in many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
+Statistical-random generators are used, for example, in simulations, numerical integration, many games, to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
 
 -  computer security and information security are not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
@@ -178,9 +181,10 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - was entered by the user,
     - is known to the application and was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
-2. the application needs to generate the same "random" result multiple times,
-3. the application finds it impractical to store or distribute that "random" result (rather than a seed) without having to use a PRNG with an application-specified seed, such as--
-    -   by saving the result to a file, or
+2. the application might need to generate the same "random" result multiple times,
+3. the application finds it impractical to store or distribute the numbers or results generated with the seed (rather than the seed itself) without having to use a PRNG with an application-specified seed, such as--
+    -   by saving the result to a file,
+    -   by storing the random numbers for the feature generating the result to "replay" later, or
     -   by distributing the results or the random numbers to networked users as they are generated,
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
@@ -199,33 +203,45 @@ Which PRNG to use for generating reproducible results depends on the application
 <a id=Examples_2></a>
 ### Examples
 
+Custom seeds can come into play in the following situations, among others.
+
+<a id=Games></a>
+#### Games
+
 Many kinds of games generate game levels or game states using apparently-random principles, such as--
 
-- procedural terrain for a role-playing game,
+- procedural maps for a role-playing game,
 - [shuffling](#Shuffling) a digital deck of cards for a solitaire game, or
-- a game board with pieces that normally vary their positions every session.
+- a game board or puzzle board that normally varies every session,
 
-In general, such a game should use a PRNG with a custom seed for such purposes _only_ if it generates a "code" or "password" based on that seed (such as a barcode or a string or letters and digits) and makes that "code" or "password" accessible to the player, to allow the player to start the level or state repeatedly (because of [seeding recommendation](#Seeding_Recommendations) #2).
+where the game might need to generate the same result of that kind multiple times.
 
-The following are other examples of when using a custom seed is appropriate:
+In general, such a game should use a PRNG with a custom seed for such purposes only if--
 
-- Unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets point 5).
+1. generating the random result uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the result or the numbers for later use (see recommendations 2 and 3), or
+2. the game generates a "code" or "password" based on that seed (such as a barcode or a string of letters and digits) and makes that "code" or "password" accessible to the player, to allow the player to start the level or state repeatedly (see recommendation 2).
 
-<a id=Other_Situations></a>
-### Other Situations
+Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
-Seeds also come into play in other situations, such as:
+<a id=Unit_Testing></a>
+#### Unit Testing
 
-* **Verifiable randomness.** _Verifiable random numbers_ are random numbers (such as randomly generated seeds) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 5).
 
-    One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
-* **Noise.** Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.   The RNG used to generate the noise--
-     - must be an unpredictable-random implementation, if computer or information security is involved; otherwise,
-     - must follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations), if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation; otherwise,
-     - must be a statistical-random or unpredictable-random implementation, if the RNG is not used solely to generate noise; otherwise,
-     - need only be as strong as required to achieve the desired effect.
+<a id=Verifiable_Random_Numbers></a>
+#### Verifiable Random Numbers
 
-    (A detailed description of noise algorithms, such as white, pink, or other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise), or fractal Brownian motion, is outside the scope of this page.)
+_Verifiable random numbers_ are random numbers (such as randomly generated seeds) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+
+One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
+
+<a id=Noise></a>
+#### Noise
+
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  There are two kinds of noise generation methods:
+
+1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.
+2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and fractal Brownian motion, output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, the noise function need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
