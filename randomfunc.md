@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 20, 2017.
+Begun on June 4, 2017; last updated on June 21, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -39,6 +39,8 @@ In general, though, recommendations on which RNGs are suitable for which applica
     - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - [Example](#Example)
         - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
+        - [Choosing Multiple Items](#Choosing_Multiple_Items)
+        - [Piecewise Constant Distribution](#Piecewise_Constant_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
@@ -99,7 +101,7 @@ The following methods aid in generating random numbers within a range.
 The following idioms generate a random number in an interval bounded at 0 and 1.
 
 - `RNDU()`, a random number 0 or greater, but less than 1 (interval `[0, 1)`): `RNDINT(X) / X`
-- Random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X-1) + 1) / X`
+- `RNDNZU()`, a random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X - 1) + 1) / X`
 - Random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X + 1)) / X`
 - Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X) + 1) / X`
 
@@ -258,7 +260,7 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
            return list
         end
 - **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Store all the items in a list, [shuffle](#Shuffling) that list, and choose the first `k` items from that list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see [Discrete Weighted Choice](#Discrete_Weighted_Choice), below).
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).
 
 <a id=Weighted_Choice></a>
 ## Weighted Choice
@@ -270,14 +272,13 @@ Some applications need to choose random items or numbers such that some of them 
 
 The discrete weighted choice method is used to choose a random item from among a set of them with different probabilities of being chosen.
 
-The following pseudocode takes two lists, `list` and `weights`, and returns the index of one item from the list `list`.  Items with greater weights (which are given at the corresponding indices in the list `weights`) are more likely to be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater. Both lists should be the same size.
+The following pseudocode takes a single list `weights`, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.
 
-    METHOD DiscreteWeightedChoice(list, weights)
-        if size(list) <= 0 or size(weights) < size(list): return error
+    METHOD DiscreteWeightedChoice(weights)
         sum = 0
         // Get the sum of all weights
         i = 0
-        while i < size(list)
+        while i < size(weights)
             sum = sum + weights[i]
             i = i + 1
         end
@@ -289,9 +290,9 @@ The following pseudocode takes two lists, `list` and `weights`, and returns the 
         // value = RNDU() * sum
         // Choose the object according to the given value
         i = 0
-        lastItem = size(list) - 1
+        lastItem = size(weights) - 1
         runningValue = 0
-        while i < size(list)
+        while i < size(weights)
            if weights[i] > 0
               newValue = runningValue + weights[i]
               if value < newValue: return i
@@ -308,28 +309,30 @@ The following pseudocode takes two lists, `list` and `weights`, and returns the 
 <a id=Example></a>
 #### Example
 
-Assume `list` is the following: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
+Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
 
-    index = DiscreteWeightedChoice(list, weights)
+    index = DiscreteWeightedChoice(weights)
     // Get the actual item
     item = list[index]
 
 <a id=Weighted_Choice_Without_Replacement></a>
 #### Weighted Choice Without Replacement
 
-In the example above, the weights sum to 21.  However, the weights do not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding item will be chosen rather than the other items.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+In the example above, the weights sum to 21.  However, the weights do not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each call to `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is called with the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
 To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), simply call `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, when items are selected repeatedly, each weight behaves like the number of "copies" of each item. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
 
     // Get the sum of weights
-    // (NOTE: This assumes that `weights` is
+    // (NOTE: This code assumes that `weights` is
     // a list that can be modified.  If the original weights
     // are needed for something else, a copy of that
     // list should be made first, but the copying process
-    // is not shown here.)
+    // is not shown here.  This code also assumes that `list`,
+    // a list of items, was already declared earlier and
+    // has at least as many items as `weights`.)
     totalWeight = 0
     i = 0
-    while i < size(list)
+    while i < size(weights)
         totalWeight = totalWeight + weights[i]
         i = i + 1
     end
@@ -337,7 +340,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
     i = 0
     items = NewList()
     while i < totalWeight
-        index = DiscreteWeightedChoice(list, weights)
+        index = DiscreteWeightedChoice(weights)
         // Decrease weight by 1 to implement selection
         // without replacement.
         weights[index] = weights[index] - 1
@@ -347,14 +350,52 @@ To implement weighted choice _without replacement_ (which can be thought of as d
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [shuffle](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
+<a id=Choosing_Multiple_Items></a>
+#### Choosing Multiple Items
+
+The discrete weighted choice method can also be used for choosing multiple items from a list, whether or not the items have the same probability of being chosen.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.
+
+    // (NOTE: This code assumes that `weights` is
+    // a list that can be modified.  If the original weights
+    // are needed for something else, a copy of that
+    // list should be made first, but the copying process
+    // is not shown here.  This code also assumes that `list`,
+    // a list of items, was already declared earlier and
+    // has at least as many items as `weights`.)
+    chosenItems = NewList()
+    i = 0
+    // Choose k items from the list
+    while i < k or i < size(weights)
+        index = DiscreteWeightedChoice(weights)
+        // Set the weight for the chosen index to 0
+        // so it won't be chosen again
+        weights[index] = 0
+        // Add the item at the chosen index
+        AddItem(chosenItems, list[index])
+    end
+    // `chosenItems` now contains the items chosen
+
+<a id=Piecewise_Constant_Distribution></a>
+#### Piecewise Constant Distribution
+
+The discrete weighted choice method can also be used to implement a _piecewise constant distribution_, as in the following example. Assume we have the following list: `[0, 5, 10, 11, 15]`, and `weights` is the following: `[3, 15, 1, 2]`.  Note that the weight list has one fewer item than the number list.  The weight for "0 to 5" (0 or greater, less than 5) is 3, and the weight for "5 to 10" is 15.  Since "5 to 10" has a higher weight than "0 to 5", this distribution will choose a number from 5 to 10 more often than a number from 0 to 5.  The following pseudocode implements the piecewise constant distribution.
+
+    // Choose a random index
+    index = DiscreteWeightedChoice(weights)
+    // Choose a random number in the chosen interval on the list
+    number = list[index] + (list[index + 1] - list[index]) * RNDU()
+
+The code above implements the distribution _with replacement_.  Implementing the distribution _without replacement_ is similar to implementing discrete weighted choice without replacement; the only change is
+to replace `AddItem(items, list[index])` with `AddItem(items, list[index] + (list[index + 1] - list[index]) * RNDU())` in the pseudocode.
+
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
 
-The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution.
+The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution (here, a _piecewise linear distribution_).
 
-The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists).  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the second item in `list`, assuming the numbers in `list` are arranged in ascending order.
+The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists). (A number's _probability density_ is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the second item in `list`, assuming the numbers in `list` are arranged in ascending order.
 
-In many cases, the probability densities are sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies the _probability density_ for each number (the probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits).  A list of common probability density functions is outside the scope of this page.
+In many cases, the probability densities are sampled (usually at regularly spaced points) from a so-called [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), a function that specifies each number's probability density.  A list of common probability density functions is outside the scope of this page.
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
@@ -404,7 +445,7 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
+random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_ transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
 probability that a normally-distributed random number will be one standard deviation from the mean is about 68.3%;
 within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
 
@@ -517,8 +558,8 @@ The gamma distribution models expected lifetimes. The method given here is based
         d = meanLifetime
         v = 0
         if meanLifetime < 1: d = d + 1
-        d = d - (1/3) // NOTE: 1/3 must be a fractional number
-        c = 1 / sqrt(9 * d)
+        d = d - (1.0 /3) // NOTE: 1.0 /3 must be a fractional number
+        c = 1.0 / sqrt(9 * d)
         loop
             x = 0
             loop
@@ -547,7 +588,7 @@ The following method generates a random integer that follows a negative binomial
 
 **Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
-The following implementation of the negative binomial distribution allows `successes` to be an integer or a non-integer.
+The following implementation of the negative binomial distribution allows `successes` to be an integer or a non-integer (and implements a distribution also known as the _P&oacute;lya distribution_).
 
     METHOD NegativeBinomial(successes, p)
         // Must be 0 or greater
@@ -599,7 +640,8 @@ The following implementation of the negative binomial distribution allows `succe
 are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.
-- **Exponential distribution**: `-ln(1.0 - RNDU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1/lambda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Exponential distribution**: `-ln(1.0 - RNDU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1.0 /lambda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Extreme value distribution**: `-ln(-ln(RNDNZU())) * b + a`, where `b` is the scale and `a` is the location of the distribution's curve peak.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
@@ -609,10 +651,10 @@ are the two parameters of the Cauchy distribution.
  have the same meaning as in the normal distribution.
 - **Pascal distribution:** `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
 - **Rayleigh distribution**: `sqrt(-ln(1.0 - RNDU())*2*a*a)`, where `a` is the scale and is greater than 0.
-- **Snedecor's _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
+- **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
-- **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1/a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
+- **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 
 <a id=Conclusion></a>
 ## Conclusion
