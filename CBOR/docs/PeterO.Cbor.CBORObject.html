@@ -406,7 +406,8 @@ has an unsupported type.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: A CBOR object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is a CBOR object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -434,7 +435,8 @@ is not supported.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: A CBOR object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is a CBOR object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -461,7 +463,8 @@ This object is not an array.</li>
 
 <ul>
 <li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
-<li><p><i>converter</i>: An ICBORConverter object.</p></li>
+<li><p><i>converter</i>: The parameter  <i>converter</i>
+is an ICBORConverter object.</p></li>
 <li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
 </ul>
 
@@ -486,8 +489,10 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another CBOR object.</p></li>
-<li><p><i>second</i>: A CBORObject object. (3).</p></li>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -516,7 +521,8 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>handler</i>: An ICBORTag object.</p></li>
+<li><p><i>handler</i>: The parameter  <i>handler</i>
+is an ICBORTag object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -544,7 +550,8 @@ is less than 0 or greater than (2^64-1).</p></li>
 
 <ul>
 <li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>handler</i>: An ICBORTag object.</p></li>
+<li><p><i>handler</i>: The parameter  <i>handler</i>
+is an ICBORTag object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -1155,7 +1162,8 @@ is null.</p></li>
 
 <ul>
 <li><p><i>data</i>: A byte array.</p></li>
-<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1185,8 +1193,10 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: A CBORObject object.</p></li>
-<li><p><i>second</i>: Another CBOR object.</p></li>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBORObject object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1241,7 +1251,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1307,7 +1318,8 @@ The string is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
-<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1353,7 +1365,8 @@ The string is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A Byte object.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a byte (from 0 to 255).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1389,7 +1402,8 @@ The string is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A char object.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a char object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1415,7 +1429,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A 64-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a 64-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1433,7 +1448,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A 32-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1451,7 +1467,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1487,7 +1504,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A 64-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a 64-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1527,7 +1545,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1565,7 +1584,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A CBOR object.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a CBOR object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1697,7 +1717,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: An 8-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is an 8-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1715,7 +1736,8 @@ is a surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A 16-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a 16-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1758,7 +1780,8 @@ The string contains an unpaired surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: A Decimal object.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is a Decimal object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1890,7 +1913,8 @@ The string contains an unpaired surrogate code point.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>o</i>: An arbitrary object.</p></li>
+<li><p><i>o</i>: The parameter  <i>o</i>
+is an arbitrary object.</p></li>
 <li><p><i>tag</i>: A 64-bit unsigned integer.</p></li>
 </ul>
 
@@ -2012,7 +2036,8 @@ is less than 0 or  <i>valueObValue</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>simpleValue</i>: A 32-bit signed integer.</li>
+<li><i>simpleValue</i>: The parameter  <i>simpleValue</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2250,8 +2275,10 @@ is not a valid index into this array.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: A CBORObject object.</p></li>
-<li><p><i>second</i>: Another CBOR object.</p></li>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBORObject object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2317,8 +2344,10 @@ This object&#39;s type is not a number type.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: A CBORObject object.</p></li>
-<li><p><i>b</i>: Another CBORObject object.</p></li>
+<li><p><i>a</i>: The parameter  <i>a</i>
+is a CBORObject object.</p></li>
+<li><p><i>b</i>: The parameter  <i>b</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2337,8 +2366,10 @@ This object&#39;s type is not a number type.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: A CBORObject object.</p></li>
-<li><p><i>b</i>: Another CBORObject object.</p></li>
+<li><p><i>a</i>: The parameter  <i>a</i>
+is a CBORObject object.</p></li>
+<li><p><i>b</i>: The parameter  <i>b</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2357,8 +2388,10 @@ This object&#39;s type is not a number type.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: A CBORObject object.</p></li>
-<li><p><i>b</i>: Another CBORObject object.</p></li>
+<li><p><i>a</i>: The parameter  <i>a</i>
+is a CBORObject object.</p></li>
+<li><p><i>b</i>: The parameter  <i>b</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2377,8 +2410,10 @@ This object&#39;s type is not a number type.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: A CBORObject object.</p></li>
-<li><p><i>b</i>: Another CBORObject object.</p></li>
+<li><p><i>a</i>: The parameter  <i>a</i>
+is a CBORObject object.</p></li>
+<li><p><i>b</i>: The parameter  <i>b</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2397,8 +2432,10 @@ This object&#39;s type is not a number type.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>a</i>: A CBORObject object.</p></li>
-<li><p><i>b</i>: Another CBORObject object.</p></li>
+<li><p><i>a</i>: The parameter  <i>a</i>
+is a CBORObject object.</p></li>
+<li><p><i>b</i>: The parameter  <i>b</i>
+is a CBORObject object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2446,7 +2483,8 @@ There was an error in reading or parsing the data.</p></li>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream.</p></li>
-<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2506,7 +2544,8 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
-<li><p><i>options</i>: A CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2537,8 +2576,10 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: A CBORObject object.</p></li>
-<li><p><i>second</i>: Another CBOR object.</p></li>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBORObject object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2616,8 +2657,10 @@ has an unsupported type.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: A CBORObject object.</p></li>
-<li><p><i>second</i>: Another CBOR object.</p></li>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBORObject object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2920,7 +2963,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>objValue</i>: An arbitrary object.</p></li>
+<li><p><i>objValue</i>: The parameter  <i>objValue</i>
+is an arbitrary object.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
@@ -3204,7 +3248,8 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>value</i>: An 8-bit signed integer.</p></li>
+<li><p><i>value</i>: The parameter  <i>value</i>
+is an 8-bit signed integer.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
@@ -3356,7 +3401,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: An arbitrary object.</p></li>
+<li><p><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</p></li>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 </ul>
 

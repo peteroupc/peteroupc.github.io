@@ -122,7 +122,7 @@ Examples of unpredictable-random implementations include the following:
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
 
-Statistical-random generators are used, for example, in simulations, numerical integration, many games, to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
+Statistical-random generators are used, for example, in simulations, numerical integration, many games, and many other applications, to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
 
 -  computer security and information security are not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
@@ -147,7 +147,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
 - must not be a fixed value or a user-entered value,
 - should not be trivially predictable in any of its bits, as far as practical,
-- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser precision)<sup>(1)</sup>, and
+- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>(1)</sup>, and
 - must be at least the same size as the PRNG's _state length_.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
@@ -182,10 +182,12 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - is known to the application and was generated using a statistical or unpredictable-random implementation (as defined earlier), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application might need to generate the same "random" result multiple times,
-3. the application finds it impractical to store or distribute the numbers or results generated with the seed (rather than the seed itself) without having to use a PRNG with an application-specified seed, such as--
-    -   by saving the result to a file,
-    -   by storing the random numbers for the feature generating the result to "replay" later, or
-    -   by distributing the results or the random numbers to networked users as they are generated,
+3. the application either--
+    - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
+    - finds it impractical to store or distribute the "random" results or the random numbers (rather than the seed) for later use, such as--
+        - by saving the result to a file,
+        - by storing the random numbers for the feature generating the result to "replay" later, or
+        - by distributing the results or the random numbers to networked users as they are generated,
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
@@ -219,7 +221,7 @@ where the game might need to generate the same result of that kind multiple time
 In general, such a game should use a PRNG with a custom seed for such purposes only if--
 
 1. generating the random result uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the result or the numbers for later use (see recommendations 2 and 3), or
-2. the game generates a "code" or "password" based on that seed (such as a barcode or a string of letters and digits) and makes that "code" or "password" accessible to the player, to allow the player to start the level or state repeatedly (see recommendation 2).
+2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to start the level or state repeatedly (see recommendations 2 and 3).
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 

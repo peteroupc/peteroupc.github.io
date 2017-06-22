@@ -62,7 +62,7 @@ In this document:
 * Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
 * The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
-* `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, in radians.
+* `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`.
@@ -445,7 +445,7 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_ transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
+random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_ transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
 probability that a normally-distributed random number will be one standard deviation from the mean is about 68.3%;
 within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
 
@@ -461,7 +461,7 @@ within two standard deviations (2 times `sigma`), about 95.4%, and within three 
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
 
-Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower or higher than certain thresholds and generate new normally-distributed numbers.  But then the resulting distribution will no longer be a normal distribution.
+Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower or higher than certain thresholds and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution will no longer be a normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any numerical distribution, not just a normal distribution.)
 
 <a id=Binomial_Distribution></a>
 ## Binomial Distribution
@@ -636,23 +636,34 @@ The following implementation of the negative binomial distribution allows `succe
  the two parameters of the beta distribution.
 - **Beta binomial distribution**: `Binomial(trials, x / (x + GammaDist(b)))`, where `x` is `GammaDist(a)`, `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
+- **Beta negative binomial distribution**: `NegativeBinomial(successes, x / (x + GammaDist(b)))`, where `x` is `GammaDist(a)`, `a` and `b` are
+ the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
 - **Cauchy distribution**: `scale * tan(pi * (RNDU()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
+  freedom.  This expresses a sum-of-squares of `df` random variables in the standard normal distribution.
+- **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
   freedom.
 - **Exponential distribution**: `-ln(1.0 - RNDU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1.0 /lambda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Extreme value distribution**: `-ln(-ln(RNDNZU())) * b + a`, where `b` is the scale and `a` is the location of the distribution's curve peak.
+This expresses a distribution of maximum values.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
+- **Half-normal distribution**: `abs(Normal(0, 1/(sqrt(2/pi)*theta)))`, where `theta` is a parameter of the half-normal distribution.
+- **Inverse chi-squared distribution**: `1/(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
+  freedom.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the two-parameter gamma distribution.
-- **Laplace (double exponential) distribution**: `(ln(1.0 - RNDU())-ln(1.0 - RNDU()))*beta+mu`, where `beta` is the scale and `mu` is the mean.
+- **Laplace (double exponential) distribution**: `(ln(1.0 - RNDU()) - ln(1.0 - RNDU())) * beta + mu`, where `beta` is the scale and `mu` is the mean.
+- **L&eacute;vy; distribution**: `sigma * 0.5 / GammaDist(0.5) + mu`, where `mu` is the location and `sigma` is the dispersion.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
+- **Pareto distribution:** `pow(RNDU(), -1.0 / alpha) * k`, where `alpha`  is the shape and `k` is the minimum.
 - **Pascal distribution:** `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
 - **Rayleigh distribution**: `sqrt(-ln(1.0 - RNDU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
-- **Student's _t_-distribution**: `Normal(0, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom.
+- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom,
+and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 
