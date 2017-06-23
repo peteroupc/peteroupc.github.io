@@ -663,7 +663,12 @@ The gamma distribution models expected lifetimes. The method given here is based
 end
 </pre>
 
-<p>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</p>
+<p>Extended versions of the gamma distribution.</p>
+
+<ul>
+<li>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</li>
+<li>The three-parameter gamma distribution (<code>GammaDist3(a, b, c)</code>), where <code>c</code> is another shape parameter, is <code>pow(GammaDist(a), 1.0 / c) * b</code>.</li>
+</ul>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
@@ -733,22 +738,28 @@ are the two parameters of the Cauchy distribution.</li>
 freedom.  This expresses a sum-of-squares of <code>df</code> random variables in the standard normal distribution.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of
 freedom.</li>
-<li><strong>Exponential distribution</strong>: <code>-ln(1.0 - RNDU()) / lambda</code>, where <code>lambda</code> is the inverse scale. The <code>lambda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1.0 /lambda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
-<li><strong>Extreme value distribution</strong>: <code>-ln(-ln(RNDNZU())) * b + a</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak.
+<li><strong>Erlang distribution</strong>: <code>GammaDist(shape) / rate</code>, where <code>shape</code> and <code>rate</code> are the two parameters of the Erlang distribution.</li>
+<li><strong>Exponential distribution</strong>: <code>-ln(1.0 - RNDU()) / lambda</code>, where <code>lambda</code> is the inverse scale. The <code>lambda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1.0 / lambda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
+<li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDNZU())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak.
 This expresses a distribution of maximum values.</li>
 <li><strong>Geometric distribution</strong>: <code>NegativeBinomialInt(1, p)</code>, where <code>p</code> has the same meaning
 as in the negative binomial distribution.</li>
-<li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, 1/(sqrt(2/pi)*theta)))</code>, where <code>theta</code> is a parameter of the half-normal distribution.</li>
-<li><strong>Inverse chi-squared distribution</strong>: <code>1/(GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of
-freedom.</li>
+<li><strong>Gumbel distribution</strong>: <code>a + ln(-ln(RNDNZU())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak.
+This expresses a distribution of minimum values.</li>
+<li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, sqrt(pi * 0.5) / invscale)))</code>, where <code>invscale</code> is a parameter of the half-normal distribution.</li>
+<li><strong>Inverse chi-squared distribution</strong>: <code>df * scale / (GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>scale</code> is the scale, usually <code>1.0 / df</code>.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(1.0 - RNDU()) - ln(1.0 - RNDU())) * beta + mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
-<li><strong>L&eacute;vy; distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
+<li><strong>L&eacute;vy distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
-<li><strong>Pareto distribution:</strong> <code>pow(RNDU(), -1.0 / alpha) * k</code>, where <code>alpha</code>  is the shape and <code>k</code> is the minimum.</li>
-<li><strong>Pascal distribution:</strong> <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
+<li><strong>Logistic distribution</strong>: <code>(ln(x) - ln(1.0 - x)) * scale + mean</code>, where <code>x</code> is <code>RNDNZU()</code> and <code>mean</code> and <code>scale</code> are the two parameters of the logistic distribution.</li>
+<li><strong>Maxwell distribution</strong>: <code>scale * sqrt(GammaDist(1.5) * 2)</code>, where <code>scale</code> is the scale.</li>
+<li><strong>Noncentral chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares.</li>
+<li><strong>Noncentral <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to <code>sms</code>.</li>
+<li><strong>Pareto distribution</strong>: <code>pow(RNDU(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
+<li><strong>Pascal distribution</strong>: <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
 <li><strong>Rayleigh distribution</strong>: <code>sqrt(-ln(1.0 - RNDU())*2*a*a)</code>, where <code>a</code> is the scale and is greater than 0.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom,
