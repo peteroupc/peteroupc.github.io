@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 21, 2017.
+Begun on June 4, 2017; last updated on June 23, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -66,6 +66,8 @@ In this document:
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`.
+* `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
+* `true` and `false` are the two Boolean values.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
 * `GetNextLine(file)` is a method that gets the next line from a file, or returns `nothing` if the end of the file was reached.
@@ -391,7 +393,7 @@ to replace `AddItem(items, list[index])` with `AddItem(items, list[index] + (lis
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
 
-The continuous weighted choice method is used to choose a random number that follows a continuous numerical distribution (here, a _piecewise linear distribution_).
+The continuous weighted choice method is used to choose a random number that follows a continuous statistical distribution (here, a _piecewise linear distribution_).
 
 The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists). (A number's _probability density_ is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the second item in `list`, assuming the numbers in `list` are arranged in ascending order.
 
@@ -445,8 +447,9 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;). (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_ transformation), as further explained in the pseudocode's comments.  The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
-probability that a normally-distributed random number will be one standard deviation from the mean is about 68.3%;
+random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_ transformation), as further explained in the pseudocode's comments.  (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.)
+The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
+probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%;
 within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
 
     METHOD Normal2(mu, sigma)
@@ -461,7 +464,7 @@ within two standard deviations (2 times `sigma`), about 95.4%, and within three 
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
 
-Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower or higher than certain thresholds and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution will no longer be a normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any numerical distribution, not just a normal distribution.)
+Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower than a minimum threshold and/or higher than a maximum threshold and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution would no longer be a normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any statistical distribution, not just a normal distribution.)
 
 <a id=Binomial_Distribution></a>
 ## Binomial Distribution
@@ -579,7 +582,7 @@ The gamma distribution models expected lifetimes. The method given here is based
         return d * v
     end
 
-Extended versions of the gamma distribution.
+Extended versions of the gamma distribution:
 
 - The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is simply `GammaDist(a) * b`.  Here, `a` can be seen as the mean lifetime in unspecified units of time, and `b` indicates the size of each unit of time.
 - The three-parameter gamma distribution (`GammaDist3(a, b, c)`), where `c` is another shape parameter, is `pow(GammaDist(a), 1.0 / c) * b`.
@@ -667,14 +670,14 @@ This expresses a distribution of minimum values.
 - **Maxwell distribution**: `scale * sqrt(GammaDist(1.5) * 2)`, where `scale` is the scale.
 - **Noncentral chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares.
 - **Noncentral _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to `sms`.
-- **Pareto distribution**: `pow(RNDU(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
+- **Pareto distribution**: `pow(RNDNZU(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Pascal distribution**: `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
 - **Rayleigh distribution**: `sqrt(-ln(1.0 - RNDU())*2*a*a)`, where `a` is the scale and is greater than 0.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
-- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom,
-and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
+- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
+- **Zeta distribution**: Generate `floor(pow(RNDU(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU() * n / (pow(2, r) - 1.0)`, where `n` is the number generated this way and `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_.
 
 <a id=Conclusion></a>
 ## Conclusion
