@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 21, 2017.
+Begun on Mar. 5, 2016; last updated on June 25, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -90,7 +90,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 
 They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
-An unpredictable-random implementation ultimately relies on one or more _nondeterministic sources_ (sources that don't always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding to help ensure unpredictability (as explained later).
+An unpredictable-random implementation ultimately relies on one or more _nondeterministic sources_ (sources that don't always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding as explained later.
 
 <a id=Quality></a>
 ### Quality
@@ -108,7 +108,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data which meets the quality requirement described earlier, which ultimately derives from one or more nondeterministic sources, and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and
 - must be at least the same size as the PRNG's _state length_.
 
-The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unpredictability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so before it generates more than 2<sup>32</sup> bits without reseeding.
+The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so before it generates more than 2<sup>32</sup> bits without reseeding.
 
 <a id=Examples></a>
 ### Examples
@@ -117,12 +117,12 @@ Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `CryptGenRandom` method on Windows.
-- Cryptographic hash functions that take very hard-to-predict signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's hardware volatile entropy gathering and expansion technique).
+- Cryptographic hash functions that take very hard-to-predict signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's technique called hardware volatile entropy gathering and expansion).
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
 
-Statistical-random generators are used, for example, in simulations, numerical integration, many games, and many other applications, to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
+Statistical-random generators are used, for example, in simulations, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if--
 
 -  computer security and information security are not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if an unpredictable-random implementation were used instead.
@@ -191,7 +191,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-(A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, `java.util.Random` is stable, while the C `rand` method is not.)
+(A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable, while the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) and .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) are not.)
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -233,7 +233,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as randomly generated seeds) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
 
 One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
@@ -243,7 +243,7 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  There are two kinds of noise generation methods:
 
 1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.
-2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and fractal Brownian motion, output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, the noise function need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
+2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and fractal Brownian motion, output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
@@ -261,7 +261,7 @@ of that library, or imply a preference of that library over others. The list is 
 | C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed) |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (19,936-bit seed) (1) |
 | Java (4) | `java.security.SecureRandom`|  [grunka/xorshift](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
-| JavaScript | | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (2) |
+| JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (2) |
 | Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (1) (5); `Random#rand(N)` (integer) (1) (5); `Random.new(seed)` (default seed uses entropy) |
 
 (1) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
@@ -321,7 +321,7 @@ distribution, or that fall within a given range, is outside the scope of this pa
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
-1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong; I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit state length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised--
     - to use an unpredictable-random implementation, or
     - if speed is a concern and computer and information security is not, to use a PRNG--

@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 23, 2017.
+Begun on June 4, 2017; last updated on June 26, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -17,7 +17,7 @@ As used in this document--
 - RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness, and
 - RNGs include not only those that use a deterministic algorithm, but also those that primarily rely on one or more nondeterministic sources for random number generation.
 
-In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature.
+In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature (for instance, whether the RNG is initialized automatically or with an application-specified "seed", or whether the RNG relies on nondeterministic sources or not).
 
 <a id=Contents></a>
 ## Contents
@@ -43,6 +43,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Piecewise Constant Distribution](#Piecewise_Constant_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
+- [Quasirandomness](#Quasirandomness)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
@@ -133,7 +134,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ## Shuffling
 
-The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to get wrong.  The following pseudocode is designed to shuffle a list's contents.
+The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -441,6 +442,18 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
+<a id=Quasirandomness></a>
+## Quasirandomness
+
+Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement quasirandomness, as this technique is called, an application can do one of the following:
+
+- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "hit" and three labeled "miss") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and so on.
+- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "hit" and "miss", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start.
+
+However, quasirandom techniques are not recommended--
+- whenever computer or information security is involved, or
+- in cases (particularly in multiplayer networked games) where predicting random numbers would result in an unfair advantage for a player or user.
+
 <a id=Normal_Gaussian_Distribution></a>
 ## Normal (Gaussian) Distribution
 
@@ -533,7 +546,7 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
 <a id=Poisson_Distribution></a>
 ## Poisson Distribution
 
-The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a non-integer number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer).  The method given here is based on Knuth's method from 1969.
+The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a non-integer number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer), and the return value of the method gives a random number of such events during a randomly chosen one of such spans.  The method given here is based on Knuth's method from 1969.
 
     METHOD Poisson(mean)
         if mean < 0: return error
@@ -651,21 +664,23 @@ are the two parameters of the Cauchy distribution.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
   freedom.
 - **Erlang distribution**: `GammaDist(shape) / rate`, where `shape` and `rate` are the two parameters of the Erlang distribution.
-- **Exponential distribution**: `-ln(1.0 - RNDU()) / lambda`, where `lambda` is the inverse scale. The `lambda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1.0 / lambda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
-- **Extreme value distribution**: `a - ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak.
+- **Exponential distribution**: `-ln(1.0 - RNDU()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Extreme value distribution**: `a - ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.
-- **Gumbel distribution**: `a + ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak.
+- **Gumbel distribution**: `a + ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of minimum values.
 - **Half-normal distribution**: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
 - **Inverse chi-squared distribution**: `df * scale / (GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of freedom and `scale` is the scale, usually `1.0 / df`.
 - **Inverse gamma distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the two-parameter gamma distribution.
+- **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in [Devroye 1986](http://luc.devroye.org/rnbookindex.html).
 - **Laplace (double exponential) distribution**: `(ln(1.0 - RNDU()) - ln(1.0 - RNDU())) * beta + mu`, where `beta` is the scale and `mu` is the mean.
 - **L&eacute;vy distribution**: `sigma * 0.5 / GammaDist(0.5) + mu`, where `mu` is the location and `sigma` is the dispersion.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
+- **Logarithmic series distribution**: `floor(1.0+ln(1.0 - RNDU()) / ln(1.0 - pow(1.0-param,1.0 - RNDU())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
 - **Logistic distribution**: `(ln(x) - ln(1.0 - x)) * scale + mean`, where `x` is `RNDNZU()` and `mean` and `scale` are the two parameters of the logistic distribution.
 - **Maxwell distribution**: `scale * sqrt(GammaDist(1.5) * 2)`, where `scale` is the scale.
 - **Noncentral chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares.
@@ -677,7 +692,7 @@ This expresses a distribution of minimum values.
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
-- **Zeta distribution**: Generate `floor(pow(RNDU(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU() * n / (pow(2, r) - 1.0)`, where `n` is the number generated this way and `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_.
+- **Zeta distribution**: Generate `n = floor(pow(RNDU(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_.
 
 <a id=Conclusion></a>
 ## Conclusion
