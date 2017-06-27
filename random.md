@@ -210,18 +210,18 @@ Custom seeds can come into play in the following situations, among others.
 <a id=Games></a>
 #### Games
 
-Many kinds of games generate game levels or game states using apparently-random principles, such as--
+Many kinds of games generate game content using apparently-random principles, such as--
 
-- procedural maps for a role-playing game,
+- procedurally generated maps for a role-playing game,
 - [shuffling](#Shuffling) a digital deck of cards for a solitaire game, or
 - a game board or puzzle board that normally varies every session,
 
-where the game might need to generate the same result of that kind multiple times.
+where the game might need to generate the same content of that kind multiple times.
 
 In general, such a game should use a PRNG with a custom seed for such purposes only if--
 
-1. generating the random result uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the result or the numbers for later use (see recommendations 2 and 3), or
-2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to start the level or state repeatedly (see recommendations 2 and 3).
+1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or
+2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to generate the level or state repeatedly (see recommendations 2 and 3).
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
@@ -242,7 +242,7 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  There are two kinds of noise generation methods:
 
-1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.
+1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.<sup>(2)</sup>
 2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and fractal Brownian motion, output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
 
 <a id=Programming_Language_APIs></a>
@@ -259,21 +259,21 @@ of that library, or imply a preference of that library over others. The list is 
 | Language   | Unpredictable-random   | Statistical-random | Other |
  --------|-----------------------------------------------|------|------|
 | C/C++  | (3) | [`xoroshiro128plus.c`](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [`xorshift128plus.c`](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed) |
-| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (1); `random.seed()` (19,936-bit seed) (1) |
-| Java (4) | `java.security.SecureRandom`|  [grunka/xorshift](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
-| JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (2) |
-| Ruby | (3); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (1) (5); `Random#rand(N)` (integer) (1) (5); `Random.new(seed)` (default seed uses entropy) |
+| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [ihaque/xorshift](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
+| Java (D) | `java.security.SecureRandom`|  [grunka/xorshift](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
+| JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [`xorshift`](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (floating-point) (B) |
+| Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses entropy) |
 
-(1) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
+(A) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
 meet the statistical-random requirements, strictly speaking, but may be adequate for many applications due to its extremely long period.
 
-(2) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
+(B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
-(3) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems (both devices can generally be read from in the same way as disk files), or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
+(C) Read from the `/dev/urandom` and/or `/dev/random` devices in Unix-based systems (both devices can generally be read from in the same way as disk files), or call the `CryptGenRandom` API in Windows-based systems (see ["Advice for New Programming Language APIs"](#Advice_for_New_Programming_Language_APIs)).
 
-(4) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical-random requirements.
+(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical-random requirements.
 
-(5) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.
+(E) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.
 
 <a id=Advice_for_New_Programming_Language_APIs></a>
 ## Advice for New Programming Language APIs
@@ -373,6 +373,8 @@ Comments on any aspect of the document are welcome, but answers to the following
 ## Notes
 
 <sup>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
+
+<sup>(2)</sup> This is because usual implementations of colored noise don't sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.
 
 <a id=License></a>
 ## License
