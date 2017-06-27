@@ -43,7 +43,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Piecewise Constant Distribution](#Piecewise_Constant_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
-- [Quasirandomness](#Quasirandomness)
+- [Quasi-randomness](#Quasi_randomness)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
@@ -177,7 +177,7 @@ To choose a random item from a list--
         METHOD RandomItemFromFile(file)
            i = 1
            lastItem = nothing
-           loop
+           while true
               // Get the next line from the file
               item = GetNextLine(file)
               // The end of the file was reached, break
@@ -442,15 +442,15 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Quasirandomness></a>
-## Quasirandomness
+<a id=Quasi_randomness></a>
+## Quasi-randomness
 
-Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement quasirandomness, as this technique is called, an application can do one of the following:
+Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement quasi-randomness, as this technique is called, an application can do one of the following:
 
-- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "hit" and three labeled "miss") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and so on.
-- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "hit" and "miss", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start.
+- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.
+- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
 
-However, quasirandom techniques are not recommended--
+However, quasi-random techniques are not recommended--
 - whenever computer or information security is involved, or
 - in cases (particularly in multiplayer networked games) where predicting random numbers would result in an unfair advantage for a player or user.
 
@@ -477,7 +477,7 @@ within two standard deviations (2 times `sigma`), about 95.4%, and within three 
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
 
-Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower than a minimum threshold and/or higher than a maximum threshold and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution would no longer be a normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any statistical distribution, not just a normal distribution.)
+Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower than a minimum threshold and/or higher than a maximum threshold and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution would no longer be a real normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any statistical distribution, not just a normal distribution.)
 
 <a id=Binomial_Distribution></a>
 ## Binomial Distribution
@@ -528,7 +528,7 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
                 return error
         end
         if ones == 0: return 0
-        successes = 0
+  successes = 0
         i = 0
         currentCount = count
         currentOnes = ones
@@ -546,14 +546,16 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
 <a id=Poisson_Distribution></a>
 ## Poisson Distribution
 
-The following method generates a random integer that follows a Poisson distribution. The integer is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can also be a non-integer number. Usually, the `mean` is the average number of independent events of a certain kind per fixed span of time or space (for example, per day, hour, or square kilometer), and the return value of the method gives a random number of such events during a randomly chosen one of such spans.  The method given here is based on Knuth's method from 1969.
+The following method generates a random integer that follows a Poisson distribution. In the method below, the `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method's return value gives a random number of such events during one such unit.
+
+The random integer from the method below is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can be an integer or a non-integer. The method given here is based on Knuth's method from 1969.
 
     METHOD Poisson(mean)
         if mean < 0: return error
         pn = exp(-mean)
         p = 1.0
         count = 0
-        loop
+        while true
             count = count + 1
             p = p * RNDU()
             if p <= pn
@@ -576,9 +578,9 @@ The gamma distribution models expected lifetimes. The method given here is based
         if meanLifetime < 1: d = d + 1
         d = d - (1.0 /3) // NOTE: 1.0 /3 must be a fractional number
         c = 1.0 / sqrt(9 * d)
-        loop
+        while true
             x = 0
-            loop
+            while true
                x = Normal(0, 1)
                v = c * x + 1;
                v = v * v * v
@@ -634,7 +636,7 @@ The following implementation of the negative binomial distribution allows `succe
         if p <= 0.0: return infinity
         count = 0
         total = 0
-        loop
+        while true
             if RNDU() < p
                 // Success
                 total = total + 1
