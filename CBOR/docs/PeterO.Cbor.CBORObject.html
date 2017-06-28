@@ -1673,6 +1673,42 @@ is a CBOR object.</li>
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
+    PeterO.Numbers.EDecimal otherValue);
+</pre>
+
+<p>Generates a CBOR object from a decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
+<h3>FromObject</h3>
+
+<pre>public static PeterO.Cbor.CBORObject FromObject(
+    PeterO.Numbers.EFloat bigValue);
+</pre>
+
+<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
+<h3>FromObject</h3>
+
+<pre>public static PeterO.Cbor.CBORObject FromObject(
     PeterO.Numbers.EInteger bigintValue);
 </pre>
 
