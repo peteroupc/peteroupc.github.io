@@ -241,6 +241,11 @@ Generates a CBOR object from an array of CBOR objects.</li>
 Generates a CBOR string object from a Unicode character.</li>
 <li><code>static CBORObject FromObject(double value)</code><br>
 Generates a CBOR object from a 64-bit floating-point number.</li>
+<li><code>static CBORObject FromObject(com.upokecenter.numbers.EDecimal otherValue)</code><br>
+Generates a CBOR object from a decimal number.</li>
+<li><code>static CBORObject FromObject(com.upokecenter.numbers.EFloat bigValue)</code><br>
+Generates a CBOR object from an arbitrary-precision binary floating-point
+number.</li>
 <li><code>static CBORObject FromObject(com.upokecenter.numbers.EInteger bigintValue)</code><br>
 Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code>static CBORObject FromObject(com.upokecenter.numbers.ERational bigValue)</code><br>
@@ -917,7 +922,7 @@ opposed to CBORObject.Null).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>key</code> - Another CBOR object.</li>
+<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -989,7 +994,8 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <ul>
 <li><p><code>type</code> - A Type object specifying the type that the converter converts to
 CBOR objects.</p></li>
-<li><p><code>converter</code> - An ICBORConverter object.</p></li>
+<li><p><code>converter</code> - The parameter <code>converter</code> is an ICBORConverter
+object.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1008,8 +1014,8 @@ CBOR objects.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - Another CBOR object.</p></li>
-<li><p><code>second</code> - A CBORObject object. (3).</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBORObject object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1036,7 +1042,7 @@ opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p><code>bigintTag</code> - An arbitrary-precision integer.</p></li>
-<li><p><code>handler</code> - An ICBORTag object.</p></li>
+<li><p><code>handler</code> - The parameter <code>handler</code> is an ICBORTag object.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1059,7 +1065,7 @@ than 0 or greater than (2^64-1).</p></li>
 
 <ul>
 <li><p><code>bigintTag</code> - An arbitrary-precision integer.</p></li>
-<li><p><code>handler</code> - An ICBORTag object.</p></li>
+<li><p><code>handler</code> - The parameter <code>handler</code> is an ICBORTag object.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1111,7 +1117,7 @@ parameter <code>data</code> is empty.</p></li>
 
 <ul>
 <li><p><code>data</code> - A byte array.</p></li>
-<li><p><code>options</code> - A CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1140,8 +1146,8 @@ parameter <code>data</code> is empty.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - A CBORObject object.</p></li>
-<li><p><code>second</code> - Another CBOR object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1195,7 +1201,7 @@ byte-order mark (U + FEFF).</li>
 <li><p><code>str</code> - A string in JSON format. The entire string must contain a single
 JSON object and not multiple objects. The string may not begin with a
 byte-order mark (U + FEFF).</p></li>
-<li><p><code>options</code> - A CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1221,7 +1227,7 @@ byte-order mark (U + FEFF).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A 64-bit signed integer.</li>
+<li><code>value</code> - The parameter <code>value</code> is a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1240,7 +1246,7 @@ byte-order mark (U + FEFF).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A CBOR object.</li>
+<li><code>value</code> - The parameter <code>value</code> is a CBOR object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1308,6 +1314,26 @@ byte-order mark (U + FEFF).</p></li>
 
 <h3>FromObject</h3>
 
+<pre>public static CBORObject FromObject(com.upokecenter.numbers.EFloat bigValue)
+</pre>
+
+<p>Generates a CBOR object from an arbitrary-precision binary floating-point
+ number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
 <pre>@Deprecated public static CBORObject FromObject(ExtendedRational bigValue)
 </pre>
 
@@ -1336,6 +1362,25 @@ byte-order mark (U + FEFF).</p></li>
 
 <ul>
 <li><code>bigValue</code> - A rational number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre>public static CBORObject FromObject(com.upokecenter.numbers.EDecimal otherValue)
+</pre>
+
+<p>Generates a CBOR object from a decimal number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1400,7 +1445,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A 32-bit signed integer.</li>
+<li><code>value</code> - The parameter <code>value</code> is a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1419,7 +1464,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A 16-bit signed integer.</li>
+<li><code>value</code> - The parameter <code>value</code> is a 16-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1438,7 +1483,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A char object.</li>
+<li><code>value</code> - The parameter <code>value</code> is a char object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1483,7 +1528,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A Byte object.</li>
+<li><code>value</code> - The parameter <code>value</code> is a byte (from 0 to 255).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1502,7 +1547,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A 32-bit floating-point number.</li>
+<li><code>value</code> - The parameter <code>value</code> is a 32-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1521,7 +1566,7 @@ code point.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>value</code> - A 64-bit floating-point number.</li>
+<li><code>value</code> - The parameter <code>value</code> is a 64-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1733,7 +1778,7 @@ to a CBOR object and copied to a new map, or CBORObject.Null if
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - An arbitrary object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1864,7 +1909,8 @@ a CBOR object and given the tag <code>smallTag</code>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>simpleValue</code> - A 32-bit signed integer.</li>
+<li><code>simpleValue</code> - The parameter <code>simpleValue</code> is a 32-bit signed
+integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1890,8 +1936,8 @@ than 0, greater than 255, or from 24 through 31.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - A CBORObject object.</p></li>
-<li><p><code>second</code> - Another CBOR object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1975,7 +2021,7 @@ parsing the data.</p></li>
 
 <ul>
 <li><p><code>stream</code> - A readable data stream.</p></li>
-<li><p><code>options</code> - A CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2049,7 +2095,7 @@ encoding or is not in JSON format.</p></li>
 <li><p><code>stream</code> - A readable data stream. The sequence of bytes read from the
 data stream must contain a single JSON object and not multiple
 objects.</p></li>
-<li><p><code>options</code> - A CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2078,8 +2124,8 @@ encoding or is not in JSON format.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - A CBORObject object.</p></li>
-<li><p><code>second</code> - Another CBOR object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2098,8 +2144,8 @@ encoding or is not in JSON format.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - A CBORObject object.</p></li>
-<li><p><code>second</code> - Another CBOR object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2549,7 +2595,7 @@ code point.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>objValue</code> - An arbitrary object.</p></li>
+<li><p><code>objValue</code> - The parameter <code>objValue</code> is an arbitrary object.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 </ul>
 
@@ -2601,7 +2647,7 @@ code point.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>obj</code> - An arbitrary object.</p></li>
+<li><p><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</p></li>
 <li><p><code>outputStream</code> - A writable data stream.</p></li>
 </ul>
 
@@ -2677,7 +2723,7 @@ this map.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - A CBOR object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is a CBOR object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2702,7 +2748,7 @@ this map.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - A CBOR object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is a CBOR object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3340,7 +3386,7 @@ if the given key is not found or this object is not a map.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - An arbitrary object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 26, 2017.
+Begun on June 4, 2017; last updated on June 29, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -13,7 +13,7 @@ This page discusses many ways applications can extract random numbers
 from random number generators (RNGs) and includes pseudocode for most
 of them.
 
-As used in this document--
+As used in this document&mdash;
 - RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness, and
 - RNGs include not only those that use a deterministic algorithm, but also those that primarily rely on one or more nondeterministic sources for random number generation.
 
@@ -26,6 +26,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
 - [Contents](#Contents)
 - [Notes and Definitions](#Notes_and_Definitions)
 - [Core Random Generation Method](#Core_Random_Generation_Method)
+    - [Implementation](#Implementation)
 - [Random Numbers Within a Range](#Random_Numbers_Within_a_Range)
     - [Random Integers Within a Range](#Random_Integers_Within_a_Range)
     - [Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
@@ -80,11 +81,130 @@ In this document:
 <a id=Core_Random_Generation_Method></a>
 ## Core Random Generation Method
 
-The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random bits.
-
-`RNDINT(N)` can be implemented as follows: Use the RNG to generate as many random bits as used to represent N-minus-1, then convert those bits to a nonnegative integer. If that nonnegative integer is N or greater, repeat this process.
+The core method for generating random numbers using an RNG is called **`RNDINT(N)`** in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random numbers.
 
 This core method can serve as the basis for all other methods described below that extract random numbers from RNGs.
+
+<a id=Implementation></a>
+### Implementation
+
+The implementation of `RNDINT(N)` depends heavily on what kind of values the underlying RNG returns.
+Some uniform RNGs output random bits, random bytes, or random values of a given number of bits; others output random fixed- or floating-point numbers; and yet others have a modulus other than a power-of-2 (for example, 1,000,000) and output nonnegative integers less than that modulus.  (In this section, the term _modulus_ means an integer that is 1 higher than the highest integer that the RNG can output.)
+
+In the pseudocode given in this section:
+* `RNG()` is a random number returned by the underlying random number generator.
+* `mod(a, b)` is the remainder when `a` is divided by `b`.
+* The `<<` operator is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
+* The `&` operator is a bitwise AND operator between two integers.  It is the same as `mod(a, b + 1)`, where `a` is the
+left-hand side and `b` is the right-hand side.
+
+If the RNG outputs **integers 0 or greater and less than a power-of-two modulus**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(N)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
+
+- If the RNG outputs random 32-bit integers, `MODULUS` is 2<sup>32</sup> and `MODBITS` is 32.
+- If the RNG outputs random 8-bit bytes, `MODULUS` is 256 and `MODBITS` is 8.
+
+Note that all the variables in this method are nonnegative (unsigned) integers.
+
+    METHOD RNDINT(N)
+       // N can't be greater than 0
+        if N <= 0: return error
+        if N == 1: return 0
+        // N equals modulus
+        if N == MODULUS: return RNG()
+        // Special cases
+        if N == 2: return RNG() & 1
+        if N == 256 and MODULUS >= 256: return RNG() & 255
+        if N == 65536 and MODULUS >= 65536: return RNG() & 65535
+       // NOTE: If the programming language implements
+       // division with two integers by truncating to an
+       // integer, the division can be used as is without
+       // calling a "floor" function.
+       if N > MODULUS:
+            // Calculate the bit count of N
+            bitCount = 0
+            tempnumber = N
+            while tempnumber > 0
+                   tempnumber = floor(tempnumber / 2)
+                   bitCount = bitCount + 1
+            end
+            while true
+                   // Build a number with `bitCount` bits
+                    bits = 0
+                    tempnumber = 0
+                    while bits < bitCount
+                         wordBits = MODBITS
+                         rngNumber = RNG()
+                         if bitCount - bits < MODBITS
+                              wordBits = bitCount - bits
+                              // Truncate number to 'wordBits' bits
+                              rngNumber = rngNumber & (
+                                   (1 << wordBits) - 1)
+                         end
+                         tempnumber = tempnumber << wordBits
+			 // NOTE: In programming languages that
+			 // support the OR operator between two
+			 // integers, that operator can replace the
+			 // plus operator below.
+                         tempnumber = tempnumber + rngNumber
+                         bits = bits + wordBits
+                    end
+                    // Accept the number if allowed
+                    if tempnumber < N: return tempnumber
+             end
+       else
+              maxexc = floor((MODULUS - 1) / N) * N
+              while true
+                        ret = RNG()
+                        if ret < N: return ret
+                        if ret < maxexc: return mod(ret, N)
+              end
+       end
+    END METHOD
+
+Note that this implementation of `RNDINT(N)` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  It would be outside the scope of this document to describe how a more sophisticated implementation may save those bits for later reuse.
+
+If the RNG outputs **integers 0 or greater and less than a non-power-of-two modulus**, then `RNDINT(N)` can be implemented as follows.  In the pseudocode below, `MODULUS` is the RNG's modulus.   Note that all the variables in this method are nonnegative (unsigned) integers.
+
+    METHOD RNDINT(N)
+      // N can't be greater than 0
+      if N <= 0: return error
+      if N == 1: return 0
+      // N equals modulus
+      if N == MODULUS: return RNG()
+      if N > MODULUS:
+	cx = floor(N / MODULUS)
+	if N - (MODULUS * cx) != 0: cx = cx + 1
+        while true
+           // Use recursion
+           tempnumber = RNG() + MODULUS * RNDINT(cx)
+           // Accept the number if allowed
+           if tempnumber < N: return tempnumber
+        end
+      else
+        // NOTE: If the programming language implements
+        // division with two integers by truncating to an
+        // integer, the division can be used as is without
+        // calling a "floor" function.
+        maxexc = floor((MODULUS - 1) / N) * N
+        while true
+            ret = RNG()
+            if ret < N: return ret
+            if ret < maxexc: return mod(ret, N)
+        end
+      end
+    END METHOD
+
+If the RNG outputs **fixed-point numbers 0 or greater and less than a positive integer**, that is, numbers with a fixed number of fractional parts, then find `A` and `B`, where `A` is the greatest integer that is less than the highest number the RNG can output, and `B` is the number of fractional parts the fixed-point number format can have, and use one of the two methods given above depending on whether `A * B` is a power of two (`A * B` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * B)` instead.
+
+If the RNG outputs **floating-point numbers 0 or greater and less than 1**, then find `s`, where `s` is the number of possible values the floating-point format's _significand_ can have (the _significand_ is a floating-point number's significant digits; for example, in the floating-point number 865 &times; 2<sup>10</sup>, 865 is the significand), and use one of the two methods given above depending on whether `s` is a power of two (`s` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * s)` instead.  For example:
+
+-  If the numbers are 64-bit IEEE 754 binary floating-point numbers (e.g., Java `double`), then `s` is 2<sup>53</sup>.
+-  If the numbers are 32-bit IEEE 754 binary floating-point numbers (e.g., Java `float`), then `s` is 2<sup>24</sup>.
+-  Arbitrary-precision floating-point numbers (e.g., Java `BigDecimal`) can have a significand of arbitrary size.  In that case, `s` should be set to the number of different values that are possible by calling the underlying RNG.
+
+----------------
+
+The underlying uniform RNG can be other than already described in this section; however, a detailed `RNDINT(N)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Please comment if you know of a uniform RNG that is in wide use and is other than already described in this section.
 
 <a id=Random_Numbers_Within_a_Range></a>
 ## Random Numbers Within a Range
@@ -108,7 +228,7 @@ The following idioms generate a random number in an interval bounded at 0 and 1.
 - Random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X + 1)) / X`
 - Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X) + 1) / X`
 
-In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 754 floating-point numbers (Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 754 floating-point numbers (Java `float`), X will be 2<sup>24</sup>.  (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
+In the method definitions given above, X is an integer which is the number of fractional parts between 0 and 1.  For 64-bit IEEE 754 binary floating-point numbers (Java `double`), X will be 2<sup>53</sup>.  For 32-bit IEEE 754 binary floating-point numbers (Java `float`), X will be 2<sup>24</sup>.  (See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
 
 <a id=Uniform_Numbers_Within_a_Range></a>
@@ -169,7 +289,7 @@ An important consideration with respect to shuffling is the kind of RNG used.  N
 <a id=Choosing_a_Random_Item_from_a_List></a>
 ## Choosing a Random Item from a List
 
-To choose a random item from a list--
+To choose a random item from a list&mdash;
 
 - whose size is known in advance, use the idiom `list[RNDINT(size(list))]`.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on.
 - whose size is not known in advance, use a method like the following.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
@@ -192,7 +312,7 @@ To choose a random item from a list--
 
 A commonly asked question involves how to generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits).
 
-The first step is to generate a list of the letters, digits, and/or other characters the string can have.  Often, those characters will be--
+The first step is to generate a list of the letters, digits, and/or other characters the string can have.  Often, those characters will be&mdash;
 * the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
 * the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
 * the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
@@ -450,7 +570,7 @@ Some applications (particularly some games) may find it important to control whi
 - Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.
 - Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
 
-However, quasi-random techniques are not recommended--
+However, quasi-random techniques are not recommended&mdash;
 - whenever computer or information security is involved, or
 - in cases (particularly in multiplayer networked games) where predicting random numbers would result in an unfair advantage for a player or user.
 
@@ -498,13 +618,23 @@ expresses the number of successes that have happened after a given number of ind
         if p <= 0.0: return 0
         i = 0
         count = 0
-        while i < trials
-            if RNDU() < p
-                // Success
-                count = count + 1
+        if p == 0.5
+            while i < trials
+                if RNDINT(2) == 0
+                    // Success
+                    count = count + 1
+                end
+                i = i + 1
             end
-            i = i + 1
-        end
+        else	
+            while i < trials
+                if RNDU() < p
+                    // Success
+                    count = count + 1
+                end
+                i = i + 1
+            end
+        end	
         return count
     END METHOD
 
@@ -528,7 +658,7 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
                 return error
         end
         if ones == 0: return 0
-  successes = 0
+       successes = 0
         i = 0
         currentCount = count
         currentOnes = ones
@@ -576,7 +706,7 @@ The gamma distribution models expected lifetimes. The method given here is based
         d = meanLifetime
         v = 0
         if meanLifetime < 1: d = d + 1
-        d = d - (1.0 /3) // NOTE: 1.0 /3 must be a fractional number
+        d = d - (1.0 / 3) // NOTE: 1.0 / 3 must be a fractional number
         c = 1.0 / sqrt(9 * d)
         while true
             x = 0
@@ -694,7 +824,7 @@ This expresses a distribution of minimum values.
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(1.0 - RNDU()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
-- **Zeta distribution**: Generate `n = floor(pow(RNDU(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_.
+- **Zeta distribution**: Generate `n = floor(pow(RNDNZU(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_.
 
 <a id=Conclusion></a>
 ## Conclusion
