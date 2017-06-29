@@ -103,7 +103,7 @@ If an unpredictable-random implementation uses a PRNG, the following requirement
 The PRNG's _state length_ must be at least 128 bits and should be at least 256 bits.
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with an _unpredictable seed_, defined as follows. The seed&mdash;
-- must consist of data which meets the quality requirement described earlier, which ultimately derives from one or more nondeterministic sources, and no part of which may be the PRNG's own output (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and
+- must consist of data which meets the quality requirement described earlier, which does not contain, in whole or in part, the PRNG's own output, and which ultimately derives from one or more nondeterministic sources (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and
 - must be at least the same size as the PRNG's _state length_.
 
 The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so before it generates more than 2<sup>32</sup> bits without reseeding.

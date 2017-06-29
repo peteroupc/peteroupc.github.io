@@ -161,7 +161,7 @@
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with an <em>unpredictable seed</em>, defined as follows. The seed&mdash;</p>
 
 <ul>
-<li>must consist of data which meets the quality requirement described earlier, which ultimately derives from one or more nondeterministic sources, and no part of which may be the PRNG&#39;s own output (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and</li>
+<li>must consist of data which meets the quality requirement described earlier, which does not contain, in whole or in part, the PRNG&#39;s own output, and which ultimately derives from one or more nondeterministic sources (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 

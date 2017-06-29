@@ -96,6 +96,7 @@ of them.</p>
 <li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
 <li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
 <li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
+<li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>nothing</code> indicates the absence of a value.  It corresponds to <code>null</code> in Java, C#, and JavaScript, <code>nil</code> in Ruby, and <code>None</code> in Python.</li>
 <li><code>true</code> and <code>false</code> are the two Boolean values.</li>
 <li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
@@ -111,7 +112,7 @@ of them.</p>
 
 <h2>Core Random Generation Method</h2>
 
-<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(N)</code></strong> in this document. It generates a random integer from 0 inclusive to N exclusive, where N is an integer greater than 0, and it assumes the underlying RNG produces uniformly random numbers.</p>
+<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(N)</code></strong> in this document. It generates a random integer 0 or greater and less than the positive integer <code>N</code>, and it assumes the underlying RNG produces uniformly random numbers.</p>
 
 <p>This core method can serve as the basis for all other methods described below that extract random numbers from RNGs.</p>
 
@@ -141,7 +142,7 @@ Some uniform RNGs output random bits, random bytes, or random values of a given 
 <p>Note that all the variables in this method are nonnegative (unsigned) integers.</p>
 
 <pre>METHOD RNDINT(N)
-   // N can&#39;t be greater than 0
+   // N must be greater than 0
     if N &lt;= 0: return error
     if N == 1: return 0
     // N equals modulus
@@ -202,14 +203,14 @@ END METHOD
 <p>If the RNG outputs <strong>integers 0 or greater and less than a non-power-of-two modulus</strong>, then <code>RNDINT(N)</code> can be implemented as follows.  In the pseudocode below, <code>MODULUS</code> is the RNG&#39;s modulus.   Note that all the variables in this method are nonnegative (unsigned) integers.</p>
 
 <pre>METHOD RNDINT(N)
-  // N can&#39;t be greater than 0
+  // N must be greater than 0
   if N &lt;= 0: return error
   if N == 1: return 0
   // N equals modulus
   if N == MODULUS: return RNG()
   if N &gt; MODULUS:
 cx = floor(N / MODULUS)
-if N - (MODULUS * cx) != 0: cx = cx + 1
+if N - (MODULUS * cx) &gt; 0: cx = cx + 1
     while true
        // Use recursion
        tempnumber = RNG() + MODULUS * RNDINT(cx)
@@ -583,7 +584,7 @@ end
 
 <h4>Piecewise Constant Distribution</h4>
 
-<p>The discrete weighted choice method can also be used to implement a <em>piecewise constant distribution</em>, as in the following example. Assume we have the following list: <code>[0, 5, 10, 11, 15]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  Note that the weight list has one fewer item than the number list.  The weight for &quot;0 to 5&quot; (0 or greater, less than 5) is 3, and the weight for &quot;5 to 10&quot; is 15.  Since &quot;5 to 10&quot; has a higher weight than &quot;0 to 5&quot;, this distribution will choose a number from 5 to 10 more often than a number from 0 to 5.  The following pseudocode implements the piecewise constant distribution.</p>
+<p>The discrete weighted choice method can also be used to implement a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_constant_distribution"><em>piecewise constant distribution</em></a>, as in the following example. Assume we have the following list: <code>[0, 5, 10, 11, 15]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  Note that the weight list has one fewer item than the number list.  The weight for &quot;0 to 5&quot; (0 or greater, less than 5) is 3, and the weight for &quot;5 to 10&quot; is 15.  Since &quot;5 to 10&quot; has a higher weight than &quot;0 to 5&quot;, this distribution will choose a number from 5 to 10 more often than a number from 0 to 5.  The following pseudocode implements the piecewise constant distribution.</p>
 
 <pre>// Choose a random index
 index = DiscreteWeightedChoice(weights)
@@ -598,7 +599,7 @@ to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, li
 
 <h3>Continuous Weighted Choice</h3>
 
-<p>The continuous weighted choice method is used to choose a random number that follows a continuous statistical distribution (here, a <em>piecewise linear distribution</em>).</p>
+<p>The continuous weighted choice method is used to choose a random number that follows a continuous statistical distribution (here, a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><em>piecewise linear distribution</em></a>).</p>
 
 <p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns a random number that follows the distribution.  <code>list</code> is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and <code>weights</code> is a list of <em>probability densities</em> for the given numbers (where each number and its density have the same index in both lists). (A number&#39;s <em>probability density</em> is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in <code>list</code> can be returned exactly, but not the second item in <code>list</code>, assuming the numbers in <code>list</code> are arranged in ascending order.</p>
 
@@ -933,7 +934,7 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
 <li><strong>Weibull distribution</strong>: <code>b * pow(-ln(1.0 - RNDU()),1.0 / a)</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>a</code> and <code>b</code> are greater than 0.</li>
-<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDNZU(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>.</li>
+<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDNZU(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
 <p><a id=Conclusion></a></p>
