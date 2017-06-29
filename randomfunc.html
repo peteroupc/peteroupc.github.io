@@ -128,7 +128,7 @@ Some uniform RNGs output random bits, random bytes, or random values of a given 
 <li><code>RNG()</code> is a random number returned by the underlying random number generator.</li>
 <li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>.</li>
 <li>The <code>&lt;&lt;</code> operator is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
-<li>The <code>&amp;</code> operator is a bitwise AND operator between two integers. Although the AND operator is not always equivalent to <code>mod(a, b + 1)</code>, where <code>a</code> is the left-hand side and <code>b</code> is the right-hand side, all uses of the AND operator in the pseudocode effectively have that meaning.</li>
+<li>The <code>&amp;</code> operator is a bitwise AND operator between two integers. Although the <code>&amp;</code> operator is not always equivalent to <code>mod(a, b + 1)</code>, where <code>a</code> is the left-hand side and <code>b</code> is the right-hand side, all uses of the <code>&amp;</code> operator in the pseudocode effectively have that meaning.</li>
 </ul>
 
 <p>If the RNG outputs <strong>integers 0 or greater and less than a power-of-two modulus</strong>, such as random bits, random bytes, or random values of a given number of bits, then <code>RNDINT(N)</code> can be implemented as follows. In the pseudocode below, <code>MODULUS</code> is the RNG&#39;s modulus, and <code>MODBITS</code> is the number of bits, minus 1, used to represent the modulus.  For example:</p>

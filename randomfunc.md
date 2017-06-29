@@ -95,7 +95,7 @@ In the pseudocode given in this section:
 * `RNG()` is a random number returned by the underlying random number generator.
 * `mod(a, b)` is the remainder when `a` is divided by `b`.
 * The `<<` operator is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
-* The `&` operator is a bitwise AND operator between two integers. Although the AND operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the AND operator in the pseudocode effectively have that meaning.
+* The `&` operator is a bitwise AND operator between two integers. Although the `&` operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the `&` operator in the pseudocode effectively have that meaning.
 
 If the RNG outputs **integers 0 or greater and less than a power-of-two modulus**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(N)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
 
@@ -171,8 +171,8 @@ If the RNG outputs **integers 0 or greater and less than a non-power-of-two modu
       // N equals modulus
       if N == MODULUS: return RNG()
       if N > MODULUS:
-	cx = floor(N / MODULUS)
-	if N - (MODULUS * cx) != 0: cx = cx + 1
+  cx = floor(N / MODULUS)
+  if N - (MODULUS * cx) != 0: cx = cx + 1
         while true
            // Use recursion
            tempnumber = RNG() + MODULUS * RNDINT(cx)
