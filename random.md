@@ -27,7 +27,7 @@ Finally, this page will discuss issues on the practical use of RNGs in applicati
 The following table summarizes the kinds of RNGs covered in this document.
 
 | Kind of RNG   | When to Use This RNG  | Examples |
- &mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;|
+ --------|--------|------|
 | [Unpredictable-Random](#Unpredictable_Random_Generators)   | In computer/information security cases, or when speed is not a concern.  | `/dev/urandom`, `CryptGenRandom` |
 | [Statistical-Random](#Statistical_Random_Generators)   | When computer/information security is not a concern, but speed is.  See also ["Shuffling"](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
 | [Seeded PRNG](#Seeded_Random_Generators)   | When generating reproducible results in a way not practical otherwise.   | Statistical-random quality PRNG with custom seed |

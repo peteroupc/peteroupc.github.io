@@ -44,7 +44,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Piecewise Constant Distribution](#Piecewise_Constant_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
-- [Quasi-randomness](#Quasi_randomness)
+- [Quasi-Randomness](#Quasi_Randomness)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
@@ -95,8 +95,7 @@ In the pseudocode given in this section:
 * `RNG()` is a random number returned by the underlying random number generator.
 * `mod(a, b)` is the remainder when `a` is divided by `b`.
 * The `<<` operator is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
-* The `&` operator is a bitwise AND operator between two integers.  It is the same as `mod(a, b + 1)`, where `a` is the
-left-hand side and `b` is the right-hand side.
+* The `&` operator is a bitwise AND operator between two integers. Although the AND operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the AND operator in the pseudocode effectively have that meaning.
 
 If the RNG outputs **integers 0 or greater and less than a power-of-two modulus**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(N)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
 
@@ -141,10 +140,10 @@ Note that all the variables in this method are nonnegative (unsigned) integers.
                                    (1 << wordBits) - 1)
                          end
                          tempnumber = tempnumber << wordBits
-			 // NOTE: In programming languages that
-			 // support the OR operator between two
-			 // integers, that operator can replace the
-			 // plus operator below.
+                         // NOTE: In programming languages that
+                         // support the OR operator between two
+                         // integers, that operator can replace the
+                         // plus operator below.
                          tempnumber = tempnumber + rngNumber
                          bits = bits + wordBits
                     end
@@ -291,7 +290,7 @@ An important consideration with respect to shuffling is the kind of RNG used.  N
 
 To choose a random item from a list&mdash;
 
-- whose size is known in advance, use the idiom `list[RNDINT(size(list))]`.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on.
+- whose size is known in advance, use the idiom `list[RNDINT(size(list))]`.  This idiom assumes that the first item of the list is at position 0, the second is at position 1, and so on; or
 - whose size is not known in advance, use a method like the following.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 
         METHOD RandomItemFromFile(file)
@@ -320,7 +319,7 @@ The first step is to generate a list of the letters, digits, and/or other charac
 as found in the Basic Latin block of the Unicode Standard. Note that:
 
 - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-- Instead of individual characters, the list can consist of strings of characters.  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
+- Instead of individual characters, the list can consist of strings of one or more characters each.  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
 
 The second step is to build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
 
@@ -562,8 +561,8 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Quasi_randomness></a>
-## Quasi-randomness
+<a id=Quasi_Randomness></a>
+## Quasi-Randomness
 
 Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement quasi-randomness, as this technique is called, an application can do one of the following:
 
@@ -626,7 +625,7 @@ expresses the number of successes that have happened after a given number of ind
                 end
                 i = i + 1
             end
-        else	
+        else
             while i < trials
                 if RNDU() < p
                     // Success
@@ -634,7 +633,7 @@ expresses the number of successes that have happened after a given number of ind
                 end
                 i = i + 1
             end
-        end	
+        end
         return count
     END METHOD
 

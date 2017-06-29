@@ -35,11 +35,29 @@
 
 <p>The following table summarizes the kinds of RNGs covered in this document.</p>
 
-<p>| Kind of RNG   | When to Use This RNG  | Examples |
- &mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;&mdash;|&mdash;&mdash;&mdash;|
-| <a href="#Unpredictable_Random_Generators">Unpredictable-Random</a>   | In computer/information security cases, or when speed is not a concern.  | <code>/dev/urandom</code>, <code>CryptGenRandom</code> |
-| <a href="#Statistical_Random_Generators">Statistical-Random</a>   | When computer/information security is not a concern, but speed is.  See also <a href="#Shuffling">&quot;Shuffling&quot;</a>.| <code>xoroshiro128+</code>, <code>xorshift128+</code> |
-| <a href="#Seeded_Random_Generators">Seeded PRNG</a>   | When generating reproducible results in a way not practical otherwise.   | Statistical-random quality PRNG with custom seed |</p>
+<table><thead>
+<tr>
+<th>Kind of RNG</th>
+<th>When to Use This RNG</th>
+<th>Examples</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><a href="#Unpredictable_Random_Generators">Unpredictable-Random</a></td>
+<td>In computer/information security cases, or when speed is not a concern.</td>
+<td><code>/dev/urandom</code>, <code>CryptGenRandom</code></td>
+</tr>
+<tr>
+<td><a href="#Statistical_Random_Generators">Statistical-Random</a></td>
+<td>When computer/information security is not a concern, but speed is.  See also <a href="#Shuffling">&quot;Shuffling&quot;</a>.</td>
+<td><code>xoroshiro128+</code>, <code>xorshift128+</code></td>
+</tr>
+<tr>
+<td><a href="#Seeded_Random_Generators">Seeded PRNG</a></td>
+<td>When generating reproducible results in a way not practical otherwise.</td>
+<td>Statistical-random quality PRNG with custom seed</td>
+</tr>
+</tbody></table>
 
 <p><a id=Contents></a></p>
 
