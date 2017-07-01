@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 29, 2017.
+Begun on Mar. 5, 2016; last updated on July 1, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -84,7 +84,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 -  generating "salts" to vary cryptographic hashes of the same password,
 -  use in communications between two networked computers,
 -  use in transfer, transport, messaging, and other communication protocols, and
--  use in networked games where predicting future random numbers would give a player an unfair advantage.
+-  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
@@ -323,7 +323,7 @@ What has motivated me to write a more rigorous definition of random number gener
 <a id=Conclusion></a>
 ## Conclusion
 
-In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the "unpredictable-random implementations" and "Statistical RNGs" sections will meet the needs of those applications.
+In conclusion, most applications that require random numbers usually want either unpredictability (cryptographic security), or speed and high quality. I believe that RNGs that meet the descriptions specified in the [Unpredictable-Random Generators](#Unpredictable_Random_Generators) and [Statistical-Random Generators](#Statistical_Random_Generators) sections will meet the needs of those applications.
 
 In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.
 
