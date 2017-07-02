@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 1, 2017.
+Begun on June 4, 2017; last updated on July 2, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -28,13 +28,13 @@ In general, though, recommendations on which RNGs are suitable for which applica
 - [Core Random Generation Method](#Core_Random_Generation_Method)
     - [Implementation](#Implementation)
     - [Modified Core Method, Maximum Exclusive](#Modified_Core_Method_Maximum_Exclusive)
-- [Random Bits](#Random_Bits)
 - [Random Numbers Within a Range](#Random_Numbers_Within_a_Range)
     - [Random Integers Within a Range, Maximum Inclusive](#Random_Integers_Within_a_Range_Maximum_Inclusive)
     - [Random Integers Within a Range, Maximum Exclusive](#Random_Integers_Within_a_Range_Maximum_Exclusive)
     - [Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
-    - [Uniform Numbers Within a Range](#Uniform_Numbers_Within_a_Range)
+    - [Miscellaneous](#Miscellaneous)
 - [Boolean Conditions](#Boolean_Conditions)
+- [Random Bits](#Random_Bits)
 - [Shuffling](#Shuffling)
 - [Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)
 - [Creating a Random Character String](#Creating_a_Random_Character_String)
@@ -47,7 +47,7 @@ In general, though, recommendations on which RNGs are suitable for which applica
         - [Piecewise Constant Distribution](#Piecewise_Constant_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
-- [Quasi-Randomness](#Quasi_Randomness)
+- [Quasi-Random Sampling](#Quasi_Random_Sampling)
 - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
 - [Binomial Distribution](#Binomial_Distribution)
 - [Hypergeometric Distribution](#Hypergeometric_Distribution)
@@ -87,9 +87,9 @@ In this document:
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 * The `&` operator in the pseudocode is a bitwise AND operator between two integers. Although the `&` operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the `&` operator in the pseudocode effectively have that meaning, so that the form with `mod` can be used in programming languages without a built-in AND operator.
 * The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant digits in the format). For example&mdash;
-    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> significand permutations,
+    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
-    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> significand permutations, and
+    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations, and
     - arbitrary-precision floating point numbers (e.g., Java `BigDecimal`) can have a theoretically arbitrary number of significand permutations.
 
 <a id=Core_Random_Generation_Method></a>
@@ -155,6 +155,7 @@ Note that all the variables in this method are unsigned integers.
         if maxInclusive == MODULUS - 1: return RNG()
         // Special cases
         if maxInclusive == 1: return RNG() & 1
+        if maxInclusive == 3 and MODBITS >= 2: return RNG() & 3
         if maxInclusive == 255 and MODBITS >= 8: return RNG() & 255
         if maxInclusive == 65535 and MODBITS >=16: return RNG() & 65535
         if maxInclusive >= MODULUS:
@@ -223,6 +224,116 @@ A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in 
         return RNDINT(maxExclusive - 1)
      END METHOD
 
+<a id=Random_Numbers_Within_a_Range></a>
+## Random Numbers Within a Range
+
+The following methods aid in generating random numbers within a range.
+
+<a id=Random_Integers_Within_a_Range_Maximum_Inclusive></a>
+### Random Integers Within a Range, Maximum Inclusive
+
+The na&iuml;ve way of generating a **random integer `minInclusive` or greater and `maxInclusive` or less** is as follows. This approach works well for unsigned integers and arbitrary-precision integers.
+
+     METHOD RNDINTRANGE(minInclusive, maxInclusive)
+        return minInclusive + RNDINT(maxInclusive - minInclusive)
+     END METHOD
+
+The na&iuml;ve approach won't work as well, though, for signed integer formats if the difference between `maxInclusive` and `minInclusive` exceeds the highest possible integer for the format.  For fixed-length signed integer formats [<sup>(1)</sup>](#Note1), such random integers can be generated using the following pseudocode.  In the pseudocode below, `INT_MAX` is the highest possible integer in the integer format.
+
+    METHOD RNDINTRANGE(minInclusive, maxInclusive)
+       // minInclusive must not be greater than maxInclusive
+       if minInclusive > maxInclusive: return error
+       if minInclusive == maxInclusive: return minInclusive
+       if minInclusive==0: return RNDINT(maxInclusive)
+       // Difference does not exceed maxInclusive
+       if minInclusive > 0 or minInclusive + INT_MAX >= maxInclusive
+           return minInclusive + RNDINT(maxInclusive - minInclusive)
+       end
+       while true
+         ret = RNDINT(INT_MAX)
+         // NOTE: If the signed integer format uses two's-complement
+         // form, use the following line:
+         if RNDINT(1) == 0: ret = -1 - ret
+         // NOTE: If the signed integer format uses sign-magnitude
+         // form (such as .NET's `System.Decimal`) or one's-complement
+         // form,  use the following three lines instead of the preceding line;
+         // here, zero will be rejected at a 50% chance because zero occurs
+         // twice in both forms.
+         // negative = RNDINT(1) == 0
+         // if negative: ret = 0 - ret
+         // if negative and ret == 0: continue
+         if ret >= minInclusive and ret <= maxInclusive: return ret
+       end
+    END METHOD
+
+A common use case of `RNDINTRANGE` is to simulate die rolls.  For example, to simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
+
+<a id=Random_Integers_Within_a_Range_Maximum_Exclusive></a>
+### Random Integers Within a Range, Maximum Exclusive
+
+A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random integer `minInclusive` or greater and less than `maxExclusive`**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+
+    METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
+       if minInclusive >= maxExclusive: return error
+       if minInclusive >=0 or minInclusive + INT_MAX >= maxExclusive
+          return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
+       end
+       while true
+         ret = RNDINTRANGE(minInclusive, maxExclusive)
+         if ret < maxExclusive: return ret
+       end
+    END METHOD
+
+<a id=Random_Numbers_in_a_0_1_Bounded_Interval></a>
+### Random Numbers in a 0-1 Bounded Interval
+
+The following idioms generate a random number in an interval bounded at 0 and 1.
+
+- `RNDU()`, a random number 0 or greater, but less than 1 (interval `[0, 1)`): `RNDINT(X - 1) / X`
+- `RNDNZU()`, a random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X - 2) + 1) / X`
+- `RNDU_ZeroIncOneInc()`, a random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X)) / X`
+- `RNDU_ZeroExcOneInc()`, a random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X - 1) + 1) / X`
+
+In the method definitions given above, `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
+for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
+
+For fixed-precision binary floating-point numbers, the following pseudocode for `RNDU_ZeroIncOneInc()` can be used instead, which returns a uniformly-distributed **random number 0 or greater and 1 or less**.  It's based on a [technique devised by Allen Downey](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [note for "significand permutations"](#Notes_and_Definitions)).
+
+    METHOD RNDU_ZeroIncOneInc()
+        e=-SIGBITS
+        while true
+            if RNDINT(1)==0: e = e - 1
+          else: break
+        end
+        sig = RNDINT((1 << (SIGBITS - 1)) - 1)
+        if sig==0 and RNDINT(1)==0: e = e + 1
+        sig = sig + (1 << (SIGBITS - 1))
+        // NOTE: This multiplication should result in
+        // a floating-point number
+        return sig * pow(2, e)
+    end
+
+Note that each of the other three functions (`RNDU()`, `RNDNZU()`, and `RNDU_ZeroExcOneInc()`) can be implemented by calling `RNDU_ZeroIncOneInc()` in a loop until a number within the range of the other function is generated.
+
+<a id=Miscellaneous></a>
+### Miscellaneous
+
+- Random number `MIN` or greater and less than `MAX`: `MIN + RNDU()*(MAX - MIN)`
+- Alternative way of generating a random integer 0 or greater and less than `N`: `floor(RNDU()*(N))`
+
+<a id=Boolean_Conditions></a>
+## Boolean Conditions
+
+To generate a condition that is true at the specified probabilities, use
+the following idioms in an `if` condition:
+
+- True or false with equal probability: `RNDINT(1) == 0`.
+- True with X percent probability: `RNDINTEXC(100) < X`.
+- True with probability X/Y: `RNDINTEXC(Y) < X`.
+- True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU() < X`.
+- **Example:** True with probability 3/8: `RNDINTEXC(8) < 3`.
+- **Example:** True with 20% probability: `RNDINTEXC(100) < 20`.
+
 <a id=Random_Bits></a>
 ## Random Bits
 
@@ -268,99 +379,6 @@ Although this works well for arbitrary-precision integers, it won't work well fo
          // ret = RNDINT( list[bits] )
          return ret
     END METHOD
-
-<a id=Random_Numbers_Within_a_Range></a>
-## Random Numbers Within a Range
-
-The following methods aid in generating random numbers within a range.
-
-<a id=Random_Integers_Within_a_Range_Maximum_Inclusive></a>
-### Random Integers Within a Range, Maximum Inclusive
-
-The na&iuml;ve way of generating a **random integer `minInclusive` or greater and `maxInclusive` or less** is as follows. This approach works well for unsigned integers and arbitrary-precision integers.
-
-     METHOD RNDINTRANGE(minInclusive, maxInclusive)
-        return minInclusive + RNDINT(maxInclusive - minInclusive)
-     END METHOD
-
-The na&iuml;ve approach won't work as well, though, for signed integer formats if the difference between `maxInclusive` and `minInclusive` exceeds the highest possible integer for the format.  For fixed-length signed integer formats [<sup>(1)</sup>](#Note1), such random integers can be generated using the following pseudocode.  In the pseudocode below, `INT_MAX` is the highest possible integer in the integer format.
-
-    METHOD RNDINTRANGE(minInclusive, maxInclusive)
-       // minInclusive must not be greater than maxInclusive
-       if minInclusive > maxInclusive: return error
-       if minInclusive == maxInclusive: return minInclusive
-       if minInclusive==0: return RNDINT(maxInclusive)
-       // Difference does not exceed maxInclusive
-       if minInclusive > 0 or minInclusive + INT_MAX > maxInclusive
-           return minInclusive + RNDINT(maxInclusive - minInclusive)
-       end
-       while true
-         ret = RNDINT(INT_MAX)
-         // NOTE: If the signed integer format uses two's-complement
-         // form, use the following line:
-         if RNDINT(1) == 0: ret = -1 - ret
-         // NOTE: If the signed integer format uses sign-magnitude
-         // form (such as .NET's `System.Decimal`) or one's-complement
-         // form,  use the following three lines instead of the preceding line;
-         // here, zero will be rejected at a 50% chance because zero occurs
-         // twice in both forms.
-         // negative = RNDINT(1) == 0
-         // if negative: ret = 0 - ret
-         // if negative and ret == 0: continue
-         if ret >= minInclusive and ret <= maxInclusive: return ret
-       end
-    END METHOD
-
-A common use case of `RNDINTRANGE` is to simulate die rolls.  For example, to simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
-
-<a id=Random_Integers_Within_a_Range_Maximum_Exclusive></a>
-### Random Integers Within a Range, Maximum Exclusive
-
-A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random integer `minInclusive` or greater and less than `maxExclusive`**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
-
-    METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
-       if minInclusive >= maxExclusive: return error
-       if minInclusive >=0
-          return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
-       end
-       while true
-         ret = RNDINTRANGE(minInclusive, maxExclusive)
-         if ret != maxExclusive: return ret
-       end
-    END METHOD
-
-<a id=Random_Numbers_in_a_0_1_Bounded_Interval></a>
-### Random Numbers in a 0-1 Bounded Interval
-
-The following idioms generate a random number in an interval bounded at 0 and 1.
-
-- `RNDU()`, a random number 0 or greater, but less than 1 (interval `[0, 1)`): `RNDINT(X - 1) / X`
-- `RNDNZU()`, a random number greater than 0, but less than 1 (interval `(0, 1)`): `(RNDINT(X - 2) + 1) / X`
-- Random number 0 or greater, but 1 or less (interval `[0, 1]`): `(RNDINT(X)) / X`
-- Random number greater than 0, but 1 or less (interval `(0, 1]`): `(RNDINT(X - 1) + 1) / X`
-
-In the method definitions given above, `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
-for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
-
-<a id=Uniform_Numbers_Within_a_Range></a>
-### Uniform Numbers Within a Range
-
-- Random number `MIN` or greater and less than `MAX`: `MIN + RNDU()*(MAX - MIN)`
-- Alternative way of generating a random integer 0 or greater and less than `N`: `floor(RNDU()*(N))`
-    - **Example:** In JavaScript, this can be implemented as: `Math.floor(Math.random()*N)`
-
-<a id=Boolean_Conditions></a>
-## Boolean Conditions
-
-To generate a condition that is true at the specified probabilities, use
-the following idioms in an `if` condition:
-
-- True or false with equal probability: `RNDINT(1) == 0`.
-- True with X percent probability: `RNDINTEXC(100) < X`.
-- True with probability X/Y: `RNDINTEXC(Y) < X`.
-- True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU() < X`.
-- **Example:** True with probability 3/8: `RNDINTEXC(8) < 3`.
-- **Example:** True with 20% probability: `RNDINTEXC(100) < 20`.
 
 <a id=Shuffling></a>
 ## Shuffling
@@ -674,10 +692,10 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Quasi_Randomness></a>
-## Quasi-Randomness
+<a id=Quasi_Random_Sampling></a>
+## Quasi-Random Sampling
 
-Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement quasi-randomness, as this technique is called, an application can do one of the following:
+Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement _quasi-random sampling_, as this technique is called, an application can do one of the following:
 
 - Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.
 - Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
