@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 1, 2017.
+Begun on Mar. 5, 2016; last updated on July 4, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -19,7 +19,7 @@ In addition, other applications require numbers that "seem" random but are based
 
 Then, this page will explain what programming language APIs implement statistical-random and unpredictable-random generators and give advice on implementing them in programming languages.
 
-Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and two higher-level randomness methods.
+Finally, this page will discuss issues on shuffling with an RNG.
 
 <a id=Summary></a>
 ### Summary
@@ -58,6 +58,8 @@ The following table summarizes the kinds of RNGs covered in this document.
 - [Programming Language APIs](#Programming_Language_APIs)
 - [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Shuffling](#Shuffling)
+    - [Shuffling Method](#Shuffling_Method)
+    - [Generating All Permutations](#Generating_All_Permutations)
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
@@ -298,15 +300,49 @@ distribution) or fall within a given range is outside the scope of this page;  I
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
-1. **Shuffling method.** The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
-2. **Generating all permutations.** A pseudorandom number generator (PRNG) can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit state length) can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised&mdash;
-    - to use an unpredictable-random implementation, or
-    - if speed is a concern and computer and information security is not, to use a PRNG&mdash;
-        - that meets or exceeds the quality requirements of a statistical-random implementation,
-        - that has a period at least as high as the number of permutations of the list to be shuffled, and
-        - that was initialized automatically with an _unpredictable seed_ before use.
+<a id=Shuffling_Method></a>
+### Shuffling Method
 
-    (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+
+<a id=Generating_All_Permutations></a>
+### Generating All Permutations
+
+A pseudorandom number generator (PRNG) can't generate more permutations (orders) of a shuffled list than the generator's _period_. The number of permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, and _w_<sub>_k_</sub> is the number of times the item identified by _k_ appears in the list. Special cases of this are&mdash;
+- _n_! (_n_ [factorial](https://en.wikipedia.org/wiki/Factorial)), if the list consists of _n_ different items, and
+- (_nm_)! / _m_!<sup>_n_</sup>, if the list is formed from _m_ identical lists each with _n_ different items.
+
+In general, a PRNG with state length _k_ bits, as shown in the table below, can't generate all permutations of a list with more items than the given maximum list size (_k_ = &#x2308; ln (_n_!) / ln 2 &#x2309;). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't generate more than 2<sup>_k_</sup> permutations.)
+
+| State length (_k_)  |  Maximum list size (_n_) |
+| -----------------|----------------------- |
+| 64 | 20 |
+| 128 | 34 |
+| 226 | 52 |
+| 256 | 72 |
+
+A PRNG with state length less than the number of bits given below (_k_) can't generate all permutations of a list formed from _m_ identical lists each with _n_ different items, as shown in this table  (_k_ = &#x2308; ln ((_nm_)! / _m_!<sup>_n_</sup>) / ln 2 &#x2309;).
+
+| Number of lists (_m_) | Items per list (_n_) | Minimum state length (_k_) |
+| -----------------|----------|------------- |
+| 1 | 20 | 62 |
+| 2 | 20 | 140 |
+| 4 | 20 | 304 |
+| 1 | 52 | 226 |
+| 2 | 52 | 500 |
+| 4 | 52 | 1069 |
+| 1 | 60 | 273 |
+| 2 | 60 | 601 |
+| 4 | 60 | 1282 |
+
+An application concerned about generating any possible permutation of a list when shuffling it would be well advised&mdash;
+- to use an unpredictable-random implementation, or
+- if speed is a concern and computer and information security is not, to use a PRNG&mdash;
+    - that meets or exceeds the quality requirements of a statistical-random implementation,
+    - that has a period at least as high as the number of permutations of the list to be shuffled, and
+    - that was initialized automatically with an _unpredictable seed_ before use.
+
+(See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
 
 <a id=Motivation></a>
 ## Motivation
