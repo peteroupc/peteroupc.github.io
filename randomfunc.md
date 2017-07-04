@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 2, 2017.
+Begun on June 4, 2017; last updated on July 4, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -13,11 +13,17 @@ This page discusses many ways applications can extract random numbers
 from random number generators (RNGs) and includes pseudocode for most
 of them.
 
-As used in this document&mdash;
-- RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness, and
-- RNGs include not only those that use a deterministic algorithm, but also those that primarily rely on one or more nondeterministic sources for random number generation.
+As used in this document, a random number generator&mdash;
+- can seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs), or merely seek to generate number sequences likely to pass statistical tests of randomness,
+- can be initialized automatically before use, or can be initialized with an application specified "seed", and
+- can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.
 
-In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html). Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature (for instance, whether the RNG is initialized automatically or with an application-specified "seed", or whether the RNG relies on nondeterministic sources or not).
+The methods presented on this page apply to all those kinds of RNGs unless otherwise noted. Moreover, recommendations on which RNGs are suitable for which applications are generally outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html).
+
+This methods described in this document can be categorized as follows:
+- Methods to generate uniformly distributed random numbers from an underlying uniform RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
+- Common tasks to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Choosing_Several_Unique_Items).
+- Methods to generate non-uniformly distributed random numbers, including [weighted choice](#Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other statistical distributions](#Other_Non_Uniform_Distributions).
 
 <a id=Contents></a>
 ## Contents
@@ -297,7 +303,7 @@ The following idioms generate a random number in an interval bounded at 0 and 1.
 In the method definitions given above, `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks)
 for further discussion.)  Note that `RNDU()` corresponds to `Math.random()` in Java and JavaScript.
 
-For fixed-precision binary floating-point numbers, the following pseudocode for `RNDU_ZeroIncOneInc()` can be used instead, which returns a uniformly-distributed **random number 0 or greater and 1 or less**.  It's based on a [technique devised by Allen Downey](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [note for "significand permutations"](#Notes_and_Definitions)).
+For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU_ZeroIncOneInc()` can be used instead, which returns a uniformly-distributed **random number 0 or greater and 1 or less**.  It's based on a [technique devised by Allen Downey](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [note for "significand permutations"](#Notes_and_Definitions)).
 
     METHOD RNDU_ZeroIncOneInc()
         e=-SIGBITS
@@ -309,11 +315,12 @@ For fixed-precision binary floating-point numbers, the following pseudocode for 
         if sig==0 and RNDINT(1)==0: e = e + 1
         sig = sig + (1 << (SIGBITS - 1))
         // NOTE: This multiplication should result in
-        // a floating-point number
+        // a floating-point number; if `e` is sufficiently
+        // small, the number will underflow to 0
         return sig * pow(2, e)
-    end
+    END METHOD
 
-Note that each of the other three functions (`RNDU()`, `RNDNZU()`, and `RNDU_ZeroExcOneInc()`) can be implemented by calling `RNDU_ZeroIncOneInc()` in a loop until a number within the range of the other function is generated.
+Note that each of the other three methods (`RNDU()`, `RNDNZU()`, and `RNDU_ZeroExcOneInc()`) can be implemented by calling `RNDU_ZeroIncOneInc()` in a loop until a number within the range of the other method is generated.
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
@@ -414,7 +421,7 @@ The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shu
        end
     END METHOD
 
-An important consideration with respect to shuffling is the kind of RNG used.  Notably, a deterministic RNG can't generate all permutations of a list if the [factorial](https://en.wikipedia.org/wiki/Factorial) of the list's size is greater than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can't generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.
+An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, a deterministic RNG can't generate more permutations (orders) of a shuffled list than the generator's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats). RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.  See also my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.
 
 <a id=Choosing_a_Random_Item_from_a_List></a>
 ## Choosing a Random Item from a List
@@ -658,7 +665,8 @@ In many cases, the probability densities are sampled (usually at regularly space
         areas = NewList()
         i = 0
         while i < size(list) - 1
-          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+          weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+                (list[i + 1] - list[i]))
           AddItem(areas, weightArea)
           sum += weightArea
            i = i + 1

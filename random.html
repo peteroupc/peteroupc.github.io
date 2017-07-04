@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 1, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 4, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -27,7 +27,7 @@
 
 <p>Then, this page will explain what programming language APIs implement statistical-random and unpredictable-random generators and give advice on implementing them in programming languages.</p>
 
-<p>Finally, this page will discuss issues on the practical use of RNGs in applications, namely, shuffling and two higher-level randomness methods.</p>
+<p>Finally, this page will discuss issues on shuffling with an RNG.</p>
 
 <p><a id=Summary></a></p>
 
@@ -101,7 +101,12 @@
 </ul></li>
 <li><a href="#Programming_Language_APIs">Programming Language APIs</a></li>
 <li><a href="#Advice_for_New_Programming_Language_APIs">Advice for New Programming Language APIs</a></li>
-<li><a href="#Shuffling">Shuffling</a></li>
+<li><a href="#Shuffling">Shuffling</a>
+
+<ul>
+<li><a href="#Shuffling_Method">Shuffling Method</a></li>
+<li><a href="#Generating_All_Permutations">Generating All Permutations</a></li>
+</ul></li>
 <li><a href="#Motivation">Motivation</a></li>
 <li><a href="#Conclusion">Conclusion</a>
 
@@ -449,9 +454,106 @@ distribution) or fall within a given range is outside the scope of this page;  I
 
 <p>There are special considerations in play when applications use RNGs to shuffle a list of items.</p>
 
-<ol>
-<li><strong>Shuffling method.</strong> The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</li>
-<li><p><strong>Generating all permutations.</strong> A pseudorandom number generator (PRNG) can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em>. This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a PRNG with period 2<sup>64</sup> (or one with a 64-bit state length) can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items. When shuffling more than 20 items, a concerned application would be well advised&mdash;</p>
+<p><a id=Shuffling_Method></a></p>
+
+<h3>Shuffling Method</h3>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
+
+<p><a id=Generating_All_Permutations></a></p>
+
+<h3>Generating All Permutations</h3>
+
+<p>A pseudorandom number generator (PRNG) can&#39;t generate more permutations (orders) of a shuffled list than the generator&#39;s <em>period</em>. The number of permutations is the <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html">multinomial coefficient</a> <em>m</em>! / (<em>w</em><sub>1</sub>! &times; <em>w</em><sub>2</sub>! &times; ... &times; <em>w</em><sub><em>n</em></sub>!), where <em>m</em> is the list&#39;s size, <em>n</em> is the number of different items in the list, and <em>w</em><sub><em>k</em></sub> is the number of times the item identified by <em>k</em> appears in the list. Special cases of this are&mdash;</p>
+
+<ul>
+<li><em>n</em>! (<em>n</em> <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a>), if the list consists of <em>n</em> different items, and</li>
+<li>(<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>, if the list is formed from <em>m</em> identical lists each with <em>n</em> different items.</li>
+</ul>
+
+<p>In general, a PRNG with state length <em>k</em> bits, as shown in the table below, can&#39;t generate all permutations of a list with more items than the given maximum list size (<em>k</em> = &#x2308; ln (<em>n</em>!) / ln 2 &#x2309;). (Note that a PRNG with state length <em>k</em> bits can&#39;t have a period greater than 2<sup><em>k</em></sup>, so can&#39;t generate more than 2<sup><em>k</em></sup> permutations.)</p>
+
+<table><thead>
+<tr>
+<th>State length (<em>k</em>)</th>
+<th>Maximum list size (<em>n</em>)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>64</td>
+<td>20</td>
+</tr>
+<tr>
+<td>128</td>
+<td>34</td>
+</tr>
+<tr>
+<td>226</td>
+<td>52</td>
+</tr>
+<tr>
+<td>256</td>
+<td>72</td>
+</tr>
+</tbody></table>
+
+<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t generate all permutations of a list formed from <em>m</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> = &#x2308; ln ((<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>) / ln 2 &#x2309;).</p>
+
+<table><thead>
+<tr>
+<th>Number of lists (<em>m</em>)</th>
+<th>Items per list (<em>n</em>)</th>
+<th>Minimum state length (<em>k</em>)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1</td>
+<td>20</td>
+<td>62</td>
+</tr>
+<tr>
+<td>2</td>
+<td>20</td>
+<td>140</td>
+</tr>
+<tr>
+<td>4</td>
+<td>20</td>
+<td>304</td>
+</tr>
+<tr>
+<td>1</td>
+<td>52</td>
+<td>226</td>
+</tr>
+<tr>
+<td>2</td>
+<td>52</td>
+<td>500</td>
+</tr>
+<tr>
+<td>4</td>
+<td>52</td>
+<td>1069</td>
+</tr>
+<tr>
+<td>1</td>
+<td>60</td>
+<td>273</td>
+</tr>
+<tr>
+<td>2</td>
+<td>60</td>
+<td>601</td>
+</tr>
+<tr>
+<td>4</td>
+<td>60</td>
+<td>1282</td>
+</tr>
+</tbody></table>
+
+<p>An application concerned about generating any possible permutation of a list when shuffling it would be well advised&mdash;</p>
 
 <ul>
 <li>to use an unpredictable-random implementation, or</li>
@@ -464,8 +566,7 @@ distribution) or fall within a given range is outside the scope of this page;  I
 </ul></li>
 </ul>
 
-<p>(See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</p></li>
-</ol>
+<p>(See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</p>
 
 <p><a id=Motivation></a></p>
 

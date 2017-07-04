@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 2, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 4, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -18,14 +18,23 @@
 from random number generators (RNGs) and includes pseudocode for most
 of them.</p>
 
-<p>As used in this document&mdash;</p>
+<p>As used in this document, a random number generator&mdash;</p>
 
 <ul>
-<li>RNGs include those that seek to generate random numbers that are cost-prohibitive to predict (also called &quot;cryptographically strong&quot; RNGs) and those that merely seek to generate number sequences likely to pass statistical tests of randomness, and</li>
-<li>RNGs include not only those that use a deterministic algorithm, but also those that primarily rely on one or more nondeterministic sources for random number generation.</li>
+<li>can seek to generate random numbers that are cost-prohibitive to predict (also called &quot;cryptographically strong&quot; RNGs), or merely seek to generate number sequences likely to pass statistical tests of randomness,</li>
+<li>can be initialized automatically before use, or can be initialized with an application specified &quot;seed&quot;, and</li>
+<li>can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.</li>
 </ul>
 
-<p>In general, though, recommendations on which RNGs are suitable for which applications are outside the scope of this page;  I have written about this in <a href="https://peteroupc.github.io/random.html">another document</a>. Moreover, the methods presented in this page can generally be used by any RNG regardless of its nature (for instance, whether the RNG is initialized automatically or with an application-specified &quot;seed&quot;, or whether the RNG relies on nondeterministic sources or not).</p>
+<p>The methods presented on this page apply to all those kinds of RNGs unless otherwise noted. Moreover, recommendations on which RNGs are suitable for which applications are generally outside the scope of this page;  I have written about this in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
+
+<p>This methods described in this document can be categorized as follows:</p>
+
+<ul>
+<li>Methods to generate uniformly distributed random numbers from an underlying uniform RNG (such as the <a href="#Core_Random_Generation_Method">core method, <code>RNDINT(N)</code></a>).</li>
+<li>Common tasks to generate randomized content and conditions, such as <a href="#Boolean_Conditions">Boolean conditions</a>, <a href="#Shuffling">shuffling</a>, and <a href="#Choosing_Several_Unique_Items">sampling unique items from a list</a>.</li>
+<li>Methods to generate non-uniformly distributed random numbers, including <a href="#Weighted_Choice">weighted choice</a>, the <a href="#Normal_Gaussian_Distribution">normal distribution</a>, and <a href="#Other_Non_Uniform_Distributions">other statistical distributions</a>.</li>
+</ul>
 
 <p><a id=Contents></a></p>
 
@@ -349,7 +358,7 @@ END METHOD
 <p>In the method definitions given above, <code>X</code> is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, <code>X</code> should equal the number of <em>significand permutations</em> for that format. See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
 for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p>
 
-<p>For fixed-precision binary floating-point numbers, the following pseudocode for <code>RNDU_ZeroIncOneInc()</code> can be used instead, which returns a uniformly-distributed <strong>random number 0 or greater and 1 or less</strong>.  It&#39;s based on a <a href="http://allendowney.com/research/rand/">technique devised by Allen Downey</a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (for examples, see the <a href="#Notes_and_Definitions">note for &quot;significand permutations&quot;</a>).</p>
+<p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU_ZeroIncOneInc()</code> can be used instead, which returns a uniformly-distributed <strong>random number 0 or greater and 1 or less</strong>.  It&#39;s based on a <a href="http://allendowney.com/research/rand/">technique devised by Allen Downey</a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (for examples, see the <a href="#Notes_and_Definitions">note for &quot;significand permutations&quot;</a>).</p>
 
 <pre>METHOD RNDU_ZeroIncOneInc()
     e=-SIGBITS
@@ -361,12 +370,13 @@ for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Mat
     if sig==0 and RNDINT(1)==0: e = e + 1
     sig = sig + (1 &lt;&lt; (SIGBITS - 1))
     // NOTE: This multiplication should result in
-    // a floating-point number
+    // a floating-point number; if `e` is sufficiently
+    // small, the number will underflow to 0
     return sig * pow(2, e)
-end
+END METHOD
 </pre>
 
-<p>Note that each of the other three functions (<code>RNDU()</code>, <code>RNDNZU()</code>, and <code>RNDU_ZeroExcOneInc()</code>) can be implemented by calling <code>RNDU_ZeroIncOneInc()</code> in a loop until a number within the range of the other function is generated.</p>
+<p>Note that each of the other three methods (<code>RNDU()</code>, <code>RNDNZU()</code>, and <code>RNDU_ZeroExcOneInc()</code>) can be implemented by calling <code>RNDU_ZeroIncOneInc()</code> in a loop until a number within the range of the other method is generated.</p>
 
 <p><a id=Miscellaneous></a></p>
 
@@ -478,7 +488,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, a deterministic RNG can&#39;t generate all permutations of a list if the <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a> of the list&#39;s size is greater than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). This means that the items in a shuffled list of that size will never appear in certain orders when that generator is used to shuffle it. For example, a deterministic RNG with period 2<sup>64</sup> can&#39;t generate all permutations of a list with more than 20 items; with period 2<sup>128</sup>, more than 34 items; with period 2<sup>226</sup>, more than 52 items; and with period 2<sup>256</sup>, more than 57 items.  RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.</p>
+<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, a deterministic RNG can&#39;t generate more permutations (orders) of a shuffled list than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
 
 <p><a id=Choosing_a_Random_Item_from_a_List></a></p>
 
@@ -749,7 +759,8 @@ to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, li
     areas = NewList()
     i = 0
     while i &lt; size(list) - 1
-      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 * (list[i + 1] - list[i]))
+      weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
+            (list[i + 1] - list[i]))
       AddItem(areas, weightArea)
       sum += weightArea
        i = i + 1
