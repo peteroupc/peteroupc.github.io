@@ -105,7 +105,7 @@
 
 <ul>
 <li><a href="#Shuffling_Method">Shuffling Method</a></li>
-<li><a href="#Generating_All_Permutations">Generating All Permutations</a></li>
+<li><a href="#Generating_Every_Permutation">Generating Every Permutation</a></li>
 </ul></li>
 <li><a href="#Motivation">Motivation</a></li>
 <li><a href="#Conclusion">Conclusion</a>
@@ -460,18 +460,18 @@ distribution) or fall within a given range is outside the scope of this page;  I
 
 <p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
 
-<p><a id=Generating_All_Permutations></a></p>
+<p><a id=Generating_Every_Permutation></a></p>
 
-<h3>Generating All Permutations</h3>
+<h3>Generating Every Permutation</h3>
 
-<p>A pseudorandom number generator (PRNG) can&#39;t generate more permutations (orders) of a shuffled list than the generator&#39;s <em>period</em>. The number of permutations is the <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html">multinomial coefficient</a> <em>m</em>! / (<em>w</em><sub>1</sub>! &times; <em>w</em><sub>2</sub>! &times; ... &times; <em>w</em><sub><em>n</em></sub>!), where <em>m</em> is the list&#39;s size, <em>n</em> is the number of different items in the list, and <em>w</em><sub><em>k</em></sub> is the number of times the item identified by <em>k</em> appears in the list. Special cases of this are&mdash;</p>
+<p>A pseudorandom number generator (PRNG) can&#39;t generate more distinct permutations (arrangements) of a shuffled list than the generator&#39;s <em>period</em>. The number of distinct permutations is the <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html">multinomial coefficient</a> <em>m</em>! / (<em>w</em><sub>1</sub>! &times; <em>w</em><sub>2</sub>! &times; ... &times; <em>w</em><sub><em>n</em></sub>!), where <em>m</em> is the list&#39;s size, <em>n</em> is the number of different items in the list, <em>x</em>! means &quot;<em>x</em> <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a>&quot;, and <em>w</em><sub><em>i</em></sub> is the number of times the item identified by <em>i</em> appears in the list. Special cases of this are&mdash;</p>
 
 <ul>
-<li><em>n</em>! (<em>n</em> <a href="https://en.wikipedia.org/wiki/Factorial">factorial</a>), if the list consists of <em>n</em> different items, and</li>
+<li><em>n</em>!, if the list consists of <em>n</em> different items, and</li>
 <li>(<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>, if the list is formed from <em>m</em> identical lists each with <em>n</em> different items.</li>
 </ul>
 
-<p>In general, a PRNG with state length <em>k</em> bits, as shown in the table below, can&#39;t generate all permutations of a list with more items than the given maximum list size (<em>k</em> = &#x2308; ln (<em>n</em>!) / ln 2 &#x2309;). (Note that a PRNG with state length <em>k</em> bits can&#39;t have a period greater than 2<sup><em>k</em></sup>, so can&#39;t generate more than 2<sup><em>k</em></sup> permutations.)</p>
+<p>In general, a PRNG with state length <em>k</em> bits, as shown in the table below, can&#39;t generate all distinct permutations of a list with more items than the given maximum list size (<em>k</em> is the base-2 logarithm of <em>n</em>!, rounded up to an integer). (Note that a PRNG with state length <em>k</em> bits can&#39;t have a period greater than 2<sup><em>k</em></sup>, so can&#39;t generate more than 2<sup><em>k</em></sup> permutations.)</p>
 
 <table><thead>
 <tr>
@@ -497,7 +497,7 @@ distribution) or fall within a given range is outside the scope of this page;  I
 </tr>
 </tbody></table>
 
-<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t generate all permutations of a list formed from <em>m</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> = &#x2308; ln ((<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>) / ln 2 &#x2309;).</p>
+<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t generate all distinct permutations of a list formed from <em>m</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> is the base-2 logarithm of ((<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>), rounded up to an integer).</p>
 
 <table><thead>
 <tr>
@@ -553,7 +553,7 @@ distribution) or fall within a given range is outside the scope of this page;  I
 </tr>
 </tbody></table>
 
-<p>An application concerned about generating any possible permutation of a list when shuffling it would be well advised&mdash;</p>
+<p>An application concerned about generating every possible distinct permutation of a list when shuffling it would be well advised&mdash;</p>
 
 <ul>
 <li>to use an unpredictable-random implementation, or</li>

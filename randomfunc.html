@@ -364,7 +364,7 @@ for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Mat
     e=-SIGBITS
     while true
         if RNDINT(1)==0: e = e - 1
-        else: break
+      else: break
     end
     sig = RNDINT((1 &lt;&lt; (SIGBITS - 1)) - 1)
     if sig==0 and RNDINT(1)==0: e = e + 1
@@ -488,7 +488,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, a deterministic RNG can&#39;t generate more permutations (orders) of a shuffled list than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
+<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, a deterministic RNG can&#39;t generate more distinct permutations (arrangements) of a shuffled list than the generator&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats). RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
 
 <p><a id=Choosing_a_Random_Item_from_a_List></a></p>
 
