@@ -153,7 +153,7 @@
 
 <h3>Quality</h3>
 
-<p>An unpredictable-random implementation generates uniformly random bits such that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
+<p>An unpredictable-random implementation generates uniformly random bits such that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 
@@ -233,7 +233,7 @@
 <p>Examples of statistically-random generators include the following:</p>
 
 <ul>
-<li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed).</li>
+<li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed &mdash; but see warning in the <a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c">source code</a> about the lowest bit of the PRNG&#39;s outputs).</li>
 <li><code>xorshift128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>Lehmer128</code> (state length 128 bits).</li>
 <li><code>JKISS</code> on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
@@ -285,7 +285,13 @@
 <li>any feature using that random number generation method to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
 </ol>
 
-<p>(A random number generation method is <em>stable</em> if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><code>java.util.Random</code></a> is stable, while the C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><code>rand</code> method</a> and .NET&#39;s <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx"><code>System.Random</code></a> are not.)</p>
+<p>As used here, a random number generation method is <em>stable</em> if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;</p>
+
+<ul>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><code>java.util.Random</code></a> is stable,</li>
+<li>the C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><code>rand</code> method</a> is not stable (because the algorithm it uses is unspecified), and</li>
+<li>.NET&#39;s <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx"><code>System.Random</code></a> is not stable (because itis generation behavior may change in the future).</li>
+</ul>
 
 <p><a id=Seedable_PRNG_Recommendations></a></p>
 

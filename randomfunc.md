@@ -889,7 +889,12 @@ The following implementation of the negative binomial distribution allows `succe
         // integer value if NegativeBinomial is implemented to return
         // an integer)
         if p <= 0.0: return infinity
-        return Poisson(GammaDist(successes) * (1 - p) / p)
+        if successes == 1.0
+            // Geometric distribution special case
+            return floor(ln(1.0 - RNDU()) / ln(1.0 - p))
+        else
+            return Poisson(GammaDist(successes) * (1 - p) / p)
+        end
     END METHOD
 
 The following implementation of the negative binomial distribution allows `successes` to be an integer only.
@@ -905,6 +910,10 @@ The following implementation of the negative binomial distribution allows `succe
         if p <= 0.0: return infinity
         count = 0
         total = 0
+        if successes == 1
+            // Geometric distribution special case
+            return floor(ln(1.0 - RNDU()) / ln(1.0 - p))
+        end
         while true
             if RNDU() < p
                 // Success
