@@ -207,7 +207,7 @@ END METHOD
     if maxInclusive == 3 and MODBITS &gt;= 2: return RNG() &amp; 3
     if maxInclusive == 255 and MODBITS &gt;= 8: return RNG() &amp; 255
     if maxInclusive == 65535 and MODBITS &gt;=16: return RNG() &amp; 65535
-    if maxInclusive &gt;= MODULUS:
+    if maxInclusive &gt; MODULUS - 1:
         // Calculate the bit count of maxInclusive
         bitCount = 0
         tempnumber = maxInclusive
@@ -996,7 +996,7 @@ end
 <p>Extended versions of the gamma distribution:</p>
 
 <ul>
-<li>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is simply <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</li>
+<li>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</li>
 <li>The three-parameter gamma distribution (<code>GammaDist3(a, b, c)</code>), where <code>c</code> is another shape parameter, is <code>pow(GammaDist(a), 1.0 / c) * b</code>.</li>
 </ul>
 
@@ -1105,7 +1105,7 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Noncentral <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDNZU(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
-<li><strong>Rayleigh distribution</strong>: <code>sqrt(-ln(1.0 - RNDU())*2*a*a)</code>, where <code>a</code> is the scale and is greater than 0.</li>
+<li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(1.0 - RNDU()))</code>, where <code>a</code> is the scale and is greater than 0.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
