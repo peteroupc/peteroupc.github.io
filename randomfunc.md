@@ -164,7 +164,7 @@ Note that all the variables in this method are unsigned integers.
         if maxInclusive == 3 and MODBITS >= 2: return RNG() & 3
         if maxInclusive == 255 and MODBITS >= 8: return RNG() & 255
         if maxInclusive == 65535 and MODBITS >=16: return RNG() & 65535
-        if maxInclusive >= MODULUS:
+        if maxInclusive > MODULUS - 1:
             // Calculate the bit count of maxInclusive
             bitCount = 0
             tempnumber = maxInclusive
@@ -883,7 +883,7 @@ The gamma distribution models expected lifetimes. The method given here is based
 
 Extended versions of the gamma distribution:
 
-- The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is simply `GammaDist(a) * b`.  Here, `a` can be seen as the mean lifetime in unspecified units of time, and `b` indicates the size of each unit of time.
+- The two-parameter gamma distribution (`GammaDist2(a, b)`), where `b` is the scale, is `GammaDist(a) * b`.  Here, `a` can be seen as the mean lifetime in unspecified units of time, and `b` indicates the size of each unit of time.
 - The three-parameter gamma distribution (`GammaDist3(a, b, c)`), where `c` is another shape parameter, is `pow(GammaDist(a), 1.0 / c) * b`.
 
 <a id=Negative_Binomial_Distribution></a>
@@ -986,7 +986,7 @@ This expresses a distribution of minimum values.
 - **Noncentral _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to `sms`.
 - **Pareto distribution**: `pow(RNDNZU(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Pascal distribution**: `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
-- **Rayleigh distribution**: `sqrt(-ln(1.0 - RNDU())*2*a*a)`, where `a` is the scale and is greater than 0.
+- **Rayleigh distribution**: `a * sqrt(-2 * ln(1.0 - RNDU()))`, where `a` is the scale and is greater than 0.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
 - **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random number.  A `cent` other than 0 indicates a _noncentral_ distribution.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
