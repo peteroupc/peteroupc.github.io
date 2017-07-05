@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 4, 2017.
+Begun on June 4, 2017; last updated on July 5, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -756,6 +756,14 @@ expresses the number of successes that have happened after a given number of ind
         if p <= 0.0: return 0
         i = 0
         count = 0
+        // Suggested by Saucier, R. in "Computer
+        // generation of statistical distributions", 2000, p. 49
+        tp = trials * p
+  if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9)
+             countval = -1
+             while countval < 0: countval = Normal(tp, tp)
+             return floor(countval + 0.5)
+        end
         if p == 0.5
             while i < trials
                 if RNDINT(1) == 0
@@ -821,8 +829,15 @@ The random integer from the method below is such that the average of the random 
     METHOD Poisson(mean)
         if mean < 0: return error
         if mean == 0: return 0
-        pn = exp(-mean)
         p = 1.0
+        // Suggested by Saucier, R. in "Computer
+        // generation of statistical distributions", 2000, p. 49
+        if mean > 9
+      p = -1.0
+            while p < 0: p = Normal(mean, mean)
+      return floor(p + 0.5)
+        end
+        pn = exp(-mean)
         count = 0
         while true
             count = count + 1
@@ -890,7 +905,7 @@ The following implementation of the negative binomial distribution allows `succe
         // an integer)
         if p <= 0.0: return infinity
         if successes == 1.0
-            // Geometric distribution special case
+            // Geometric distribution special case (see Saucier 2000)
             return floor(ln(1.0 - RNDU()) / ln(1.0 - p))
         else
             return Poisson(GammaDist(successes) * (1 - p) / p)
@@ -911,8 +926,12 @@ The following implementation of the negative binomial distribution allows `succe
         count = 0
         total = 0
         if successes == 1
-            // Geometric distribution special case
-            return floor(ln(1.0 - RNDU()) / ln(1.0 - p))
+            if p == 0.5
+              while RNDINT(1) == 0: count = count + 1
+               return count
+            end
+            // Geometric distribution special case (see Saucier 2000)
+            return count + floor(ln(1.0 - RNDU()) / ln(1.0 - p))
         end
         while true
             if RNDU() < p
@@ -948,7 +967,7 @@ are the two parameters of the Cauchy distribution.
 - **Extreme value distribution**: `a - ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
- as in the negative binomial distribution.
+ as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)
 - **Gumbel distribution**: `a + ln(-ln(RNDNZU())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of minimum values.
 - **Half-normal distribution**: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
