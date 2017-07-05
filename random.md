@@ -95,7 +95,7 @@ An unpredictable-random implementation ultimately relies on one or more _nondete
 <a id=Quality></a>
 ### Quality
 
-An unpredictable-random implementation generates uniformly random bits such that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
+An unpredictable-random implementation generates uniformly random bits such that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 
 <a id=Seeding_and_Reseeding></a>
 ### Seeding and Reseeding
@@ -156,7 +156,7 @@ The implementation is encouraged to reseed itself from time to time (using a new
 ### Examples and Non-Examples
 
 Examples of statistically-random generators include the following:
-- `xoroshiro128+` (state length 128 bits; nonzero seed).
+- `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see warning in the [source code](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
 - `xorshift128+` (state length 128 bits; nonzero seed).
 - `Lehmer128` (state length 128 bits).
 - `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
@@ -191,7 +191,10 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-(A random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example, [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable, while the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) and .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) are not.)
+As used here, a random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
+- [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
+- the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified), and
+- .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because itis generation behavior may change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
