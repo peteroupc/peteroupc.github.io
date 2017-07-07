@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 5, 2017.
+Begun on Mar. 5, 2016; last updated on July 56, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -246,7 +246,7 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  There are two kinds of noise generation methods:
 
 1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.<sup>(2)</sup>
-2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and fractal Brownian motion, output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
+2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion), output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs

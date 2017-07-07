@@ -44,27 +44,29 @@ of them.</p>
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Contents">Contents</a></li>
 <li><a href="#Notes_and_Definitions">Notes and Definitions</a></li>
-<li><a href="#Core_Random_Generation_Method">Core Random Generation Method</a>
+<li><a href="#Uniform_Random_Numbers">Uniform Random Numbers</a>
 
 <ul>
-<li><a href="#Implementation">Implementation</a></li>
-<li><a href="#Modified_Core_Method_Maximum_Exclusive">Modified Core Method, Maximum Exclusive</a></li>
-</ul></li>
-<li><a href="#Random_Numbers_Within_a_Range">Random Numbers Within a Range</a>
-
-<ul>
-<li><a href="#Random_Integers_Within_a_Range_Maximum_Inclusive">Random Integers Within a Range, Maximum Inclusive</a></li>
-<li><a href="#Random_Integers_Within_a_Range_Maximum_Exclusive">Random Integers Within a Range, Maximum Exclusive</a></li>
+<li><a href="#RNDINT_Core_Random_Integer_Method"><code>RNDINT</code>: Core Random Integer Method</a></li>
+<li><a href="#RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>: Random Integers Within a Range, Maximum Inclusive</a></li>
+<li><a href="#RNDINTEXC_Modified_Core_Method_Maximum_Exclusive"><code>RNDINTEXC</code>: Modified Core Method, Maximum Exclusive</a></li>
+<li><a href="#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive"><code>RNDINTEXCRANGE</code>: Random Integers Within a Range, Maximum Exclusive</a></li>
+<li><a href="#RNDBITS_Random_N_Bit_Integers"><code>RNDBITS</code>: Random N-Bit Integers</a></li>
 <li><a href="#Random_Numbers_in_a_0_1_Bounded_Interval">Random Numbers in a 0-1 Bounded Interval</a></li>
-<li><a href="#Miscellaneous">Miscellaneous</a></li>
 </ul></li>
+<li><a href="#RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMINCRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</a></li>
+<li><a href="#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive"><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</a></li>
+<li><a href="#Randomization_Techniques">Randomization Techniques</a>
+
+<ul>
 <li><a href="#Boolean_Conditions">Boolean Conditions</a></li>
-<li><a href="#Random_Bits">Random Bits</a></li>
 <li><a href="#Shuffling">Shuffling</a></li>
 <li><a href="#Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a></li>
 <li><a href="#Creating_a_Random_Character_String">Creating a Random Character String</a></li>
 <li><a href="#Choosing_Several_Unique_Items">Choosing Several Unique Items</a></li>
-<li><a href="#Weighted_Choice">Weighted Choice</a>
+<li><a href="#Quasi_Random_Sampling">Quasi-Random Sampling</a></li>
+</ul></li>
+<li><a href="#Non_Uniform_Distributions">Non-Uniform Distributions</a>
 
 <ul>
 <li><a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>
@@ -74,14 +76,13 @@ of them.</p>
 <li><a href="#Weighted_Choice_Without_Replacement">Weighted Choice Without Replacement</a></li>
 <li><a href="#Choosing_Multiple_Items">Choosing Multiple Items</a></li>
 <li><a href="#Piecewise_Constant_Distribution">Piecewise Constant Distribution</a></li>
+<li><a href="#Multinomial_Distribution">Multinomial Distribution</a></li>
 </ul></li>
 <li><a href="#Continuous_Weighted_Choice">Continuous Weighted Choice</a>
 
 <ul>
 <li><a href="#Example_2">Example</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#Quasi_Random_Sampling">Quasi-Random Sampling</a></li>
 <li><a href="#Normal_Gaussian_Distribution">Normal (Gaussian) Distribution</a></li>
 <li><a href="#Binomial_Distribution">Binomial Distribution</a></li>
 <li><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a></li>
@@ -89,6 +90,7 @@ of them.</p>
 <li><a href="#Gamma_Distribution">Gamma Distribution</a></li>
 <li><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a></li>
 <li><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a></li>
+</ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
 <li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
@@ -133,15 +135,17 @@ of them.</p>
 </ul></li>
 </ul>
 
-<p><a id=Core_Random_Generation_Method></a></p>
+<p><a id=Uniform_Random_Numbers></a></p>
 
-<h2>Core Random Generation Method</h2>
+<h2>Uniform Random Numbers</h2>
+
+<p>This section describes how RNGs can be used to generate uniformly-distributed random numbers.</p>
+
+<p><a id=RNDINT_Core_Random_Integer_Method></a></p>
+
+<h3><code>RNDINT</code>: Core Random Integer Method</h3>
 
 <p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(maxInclusive)</code></strong> in this document. It generates a random integer <strong>0 or greater</strong> and <strong><code>maxInclusive</code> or less</strong>, where <code>maxInclusive</code> is an integer 0 or greater, and it assumes the underlying RNG produces uniformly random numbers. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.</p>
-
-<p><a id=Implementation></a></p>
-
-<h3>Implementation</h3>
 
 <p>The implementation of <code>RNDINT(maxInclusive)</code> depends heavily on what kind of values the underlying RNG returns.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for four kinds of uniform RNGs.</p>
 
@@ -264,27 +268,9 @@ END METHOD
 
 <p>The underlying uniform RNG can be other than already described in this section; however, a detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of a uniform RNG that is in wide use and is other than already described in this section should send me a comment.</p>
 
-<p><a id=Modified_Core_Method_Maximum_Exclusive></a></p>
+<p><a id=RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive></a></p>
 
-<h3>Modified Core Method, Maximum Exclusive</h3>
-
-<p>A method based on <code>RNDINT(maxInclusive)</code> is called <code>RNDINTEXC(maxExclusive)</code> in this document; it generates a random integer <strong>0 or greater</strong> and <strong>less than <code>maxExclusive</code></strong>, where <code>maxExclusive</code> is an integer greater than 0.  This variant is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:</p>
-
-<pre> METHOD RNDINTEXC(maxExclusive)
-    if maxExclusive &lt;= 0: return error
-    return RNDINT(maxExclusive - 1)
- END METHOD
-</pre>
-
-<p><a id=Random_Numbers_Within_a_Range></a></p>
-
-<h2>Random Numbers Within a Range</h2>
-
-<p>The following methods aid in generating random numbers within a range.</p>
-
-<p><a id=Random_Integers_Within_a_Range_Maximum_Inclusive></a></p>
-
-<h3>Random Integers Within a Range, Maximum Inclusive</h3>
+<h3><code>RNDINTRANGE</code>: Random Integers Within a Range, Maximum Inclusive</h3>
 
 <p>The na&iuml;ve way of generating a <strong>random integer <code>minInclusive</code> or greater and <code>maxInclusive</code> or less</strong> is as follows. This approach works well for unsigned integers and arbitrary-precision integers.</p>
 
@@ -324,9 +310,23 @@ END METHOD
 
 <p>A common use case of <code>RNDINTRANGE</code> is to simulate die rolls.  For example, to simulate rolling a six-sided die, generate a random number from 1 through 6 by calling <code>RNDINTRANGE(1, 6)</code>.</p>
 
-<p><a id=Random_Integers_Within_a_Range_Maximum_Exclusive></a></p>
+<p><a id=RNDINTEXC_Modified_Core_Method_Maximum_Exclusive></a></p>
 
-<h3>Random Integers Within a Range, Maximum Exclusive</h3>
+<h3><code>RNDINTEXC</code>: Modified Core Method, Maximum Exclusive</h3>
+
+<p>A method based on <code>RNDINT(maxInclusive)</code> is called <code>RNDINTEXC(maxExclusive)</code> in this document; it generates a random integer <strong>0 or greater</strong> and <strong>less than <code>maxExclusive</code></strong>, where <code>maxExclusive</code> is an integer greater than 0.  This variant is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:</p>
+
+<pre> METHOD RNDINTEXC(maxExclusive)
+    if maxExclusive &lt;= 0: return error
+    return RNDINT(maxExclusive - 1)
+ END METHOD
+</pre>
+
+<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than <code>maxExclusive</code> is the following idiom: <code>floor(RNDU()*(maxExclusive))</code>, where <code>RNDU()</code> is <a href="#Random_Numbers_in_a_0_1_Bounded_Interval">defined later</a> in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (such as JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</p>
+
+<p><a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a></p>
+
+<h3><code>RNDINTEXCRANGE</code>: Random Integers Within a Range, Maximum Exclusive</h3>
 
 <p>A version of <code>RNDINTRANGE</code>, called <code>RNDINTEXCRANGE</code> here, returns a <strong>random integer <code>minInclusive</code> or greater and less than <code>maxExclusive</code></strong>.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code></a>, as the following pseudocode demonstrates.</p>
 
@@ -342,72 +342,11 @@ END METHOD
 END METHOD
 </pre>
 
-<p><a id=Random_Numbers_in_a_0_1_Bounded_Interval></a></p>
+<p><a id=RNDBITS_Random_N_Bit_Integers></a></p>
 
-<h3>Random Numbers in a 0-1 Bounded Interval</h3>
+<h3><code>RNDBITS</code>: Random N-Bit Integers</h3>
 
-<p>The following idioms generate a random number in an interval bounded at 0 and 1.</p>
-
-<ul>
-<li><code>RNDU()</code>, a random number 0 or greater, but less than 1 (interval <code>[0, 1)</code>): <code>RNDINT(X - 1) / X</code></li>
-<li><code>RNDNZU()</code>, a random number greater than 0, but less than 1 (interval <code>(0, 1)</code>): <code>(RNDINT(X - 2) + 1) / X</code></li>
-<li><code>RNDU_ZeroIncOneInc()</code>, a random number 0 or greater, but 1 or less (interval <code>[0, 1]</code>): <code>(RNDINT(X)) / X</code></li>
-<li><code>RNDU_ZeroExcOneInc()</code>, a random number greater than 0, but 1 or less (interval <code>(0, 1]</code>): <code>(RNDINT(X - 1) + 1) / X</code></li>
-</ul>
-
-<p>In the method definitions given above, <code>X</code> is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, <code>X</code> should equal the number of <em>significand permutations</em> for that format. See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
-for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p>
-
-<p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU_ZeroIncOneInc()</code> can be used instead, which returns a uniformly-distributed <strong>random number 0 or greater and 1 or less</strong>.  It&#39;s based on a <a href="http://allendowney.com/research/rand/">technique devised by Allen Downey</a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (for examples, see the <a href="#Notes_and_Definitions">note for &quot;significand permutations&quot;</a>).</p>
-
-<pre>METHOD RNDU_ZeroIncOneInc()
-    e=-SIGBITS
-    while true
-        if RNDINT(1)==0: e = e - 1
-      else: break
-    end
-    sig = RNDINT((1 &lt;&lt; (SIGBITS - 1)) - 1)
-    if sig==0 and RNDINT(1)==0: e = e + 1
-    sig = sig + (1 &lt;&lt; (SIGBITS - 1))
-    // NOTE: This multiplication should result in
-    // a floating-point number; if `e` is sufficiently
-    // small, the number will underflow to 0
-    return sig * pow(2, e)
-END METHOD
-</pre>
-
-<p>Note that each of the other three methods (<code>RNDU()</code>, <code>RNDNZU()</code>, and <code>RNDU_ZeroExcOneInc()</code>) can be implemented by calling <code>RNDU_ZeroIncOneInc()</code> in a loop until a number within the range of the other method is generated.</p>
-
-<p><a id=Miscellaneous></a></p>
-
-<h3>Miscellaneous</h3>
-
-<ul>
-<li>Random number <code>MIN</code> or greater and less than <code>MAX</code>: <code>MIN + RNDU()*(MAX - MIN)</code></li>
-<li>Alternative way of generating a random integer 0 or greater and less than <code>N</code>: <code>floor(RNDU()*(N))</code></li>
-</ul>
-
-<p><a id=Boolean_Conditions></a></p>
-
-<h2>Boolean Conditions</h2>
-
-<p>To generate a condition that is true at the specified probabilities, use
-the following idioms in an <code>if</code> condition:</p>
-
-<ul>
-<li>True or false with equal probability: <code>RNDINT(1) == 0</code>.</li>
-<li>True with X percent probability: <code>RNDINTEXC(100) &lt; X</code>.</li>
-<li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
-<li>True with probability X, where X is from 0 through 1 (a <em>Bernoulli trial</em>): <code>RNDU() &lt; X</code>.</li>
-<li><strong>Example:</strong> True with probability 3/8: <code>RNDINTEXC(8) &lt; 3</code>.</li>
-<li><strong>Example:</strong> True with 20% probability: <code>RNDINTEXC(100) &lt; 20</code>.</li>
-</ul>
-
-<p><a id=Random_Bits></a></p>
-
-<h2>Random Bits</h2>
-
-<p>The na&iuml;ve way of generating a random sequence of bits is as follows:</p>
+<p>The following na&iuml;ve way of generating a <strong>uniformly distributed random N-bit integer</strong> is as follows:</p>
 
 <pre> METHOD RNDBITS(bits)
     // NOTE: The maximum number that could be returned
@@ -452,9 +391,91 @@ the following idioms in an <code>if</code> condition:</p>
 END METHOD
 </pre>
 
+<p><a id=Random_Numbers_in_a_0_1_Bounded_Interval></a></p>
+
+<h3>Random Numbers in a 0-1 Bounded Interval</h3>
+
+<p>The following idioms generate a <strong>random number in an interval bounded at 0 and 1</strong>.</p>
+
+<ul>
+<li><code>RNDU()</code>, a random number 0 or greater, but less than 1 (interval <code>[0, 1)</code>): <code>RNDINT(X - 1) / X</code></li>
+<li><code>RNDNZU()</code>, a random number greater than 0, but less than 1 (interval <code>(0, 1)</code>): <code>(RNDINT(X - 2) + 1) / X</code></li>
+<li><code>RNDU_ZeroIncOneInc()</code>, a random number 0 or greater, but 1 or less (interval <code>[0, 1]</code>): <code>(RNDINT(X)) / X</code></li>
+<li><code>RNDU_ZeroExcOneInc()</code>, a random number greater than 0, but 1 or less (interval <code>(0, 1]</code>): <code>(RNDINT(X - 1) + 1) / X</code></li>
+</ul>
+
+<p>In the method definitions given above, <code>X</code> is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, <code>X</code> should equal the number of <em>significand permutations</em> for that format. See &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><code>xoroshiro+</code> remarks page</a>
+for further discussion.)  Note that <code>RNDU()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p>
+
+<p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU_ZeroIncOneInc()</code> can be used instead, which returns a uniformly-distributed <strong>random number 0 or greater and 1 or less</strong>.  It&#39;s based on a <a href="http://allendowney.com/research/rand/">technique devised by Allen Downey</a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (for examples, see the <a href="#Notes_and_Definitions">note for &quot;significand permutations&quot;</a>).</p>
+
+<pre>METHOD RNDU_ZeroIncOneInc()
+    e=-SIGBITS
+    while true
+        if RNDINT(1)==0: e = e - 1
+      else: break
+    end
+    sig = RNDINT((1 &lt;&lt; (SIGBITS - 1)) - 1)
+    if sig==0 and RNDINT(1)==0: e = e + 1
+    sig = sig + (1 &lt;&lt; (SIGBITS - 1))
+    // NOTE: This multiplication should result in
+    // a floating-point number; if `e` is sufficiently
+    // small, the number will underflow to 0
+    return sig * pow(2, e)
+END METHOD
+</pre>
+
+<p>Note that each of the other three methods (<code>RNDU()</code>, <code>RNDNZU()</code>, and <code>RNDU_ZeroExcOneInc()</code>) can be implemented by calling <code>RNDU_ZeroIncOneInc()</code> in a loop until a number within the range of the other method is generated.</p>
+
+<p><a id=RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a></p>
+
+<h2><code>RNDNUMINCRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</h2>
+
+<p>To generate a <strong>random number <code>minInclusive</code> or greater and <code>maxInclusive</code> or less</strong>, use the following pseudocode:</p>
+
+<pre>METHOD RNDNUMINCRANGE(minInclusive, maxInclusive)
+    if minInclusive &gt; maxInclusive: return error
+    return minInclusive + (maxInclusive - minInclusive) * RNDU_ZeroIncOneInc()
+END
+</pre>
+
+<p><a id=RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive></a></p>
+
+<h2><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</h2>
+
+<p>To generate a <strong>random number <code>minInclusive</code> or greater and less than <code>maxExclusive</code></strong>, use the following pseudocode:</p>
+
+<pre>METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
+    if minInclusive &gt;= maxExclusive: return error
+    return minInclusive + (maxExclusive - minInclusive) * RNDU()
+END
+</pre>
+
+<p><a id=Randomization_Techniques></a></p>
+
+<h2>Randomization Techniques</h2>
+
+<p>This section describes commonly used randomization techniques, such as shuffling, selection of several unique items, and creating random strings of text.</p>
+
+<p><a id=Boolean_Conditions></a></p>
+
+<h3>Boolean Conditions</h3>
+
+<p>To generate a condition that is true at the specified probabilities, use
+the following idioms in an <code>if</code> condition:</p>
+
+<ul>
+<li>True or false with equal probability: <code>RNDINT(1) == 0</code>.</li>
+<li>True with X percent probability: <code>RNDINTEXC(100) &lt; X</code>.</li>
+<li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
+<li>True with probability X, where X is from 0 through 1 (a <em>Bernoulli trial</em>): <code>RNDU() &lt; X</code>.</li>
+<li><strong>Example:</strong> True with probability 3/8: <code>RNDINTEXC(8) &lt; 3</code>.</li>
+<li><strong>Example:</strong> True with 20% probability: <code>RNDINTEXC(100) &lt; 20</code>.</li>
+</ul>
+
 <p><a id=Shuffling></a></p>
 
-<h2>Shuffling</h2>
+<h3>Shuffling</h3>
 
 <p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
@@ -492,7 +513,7 @@ END METHOD
 
 <p><a id=Choosing_a_Random_Item_from_a_List></a></p>
 
-<h2>Choosing a Random Item from a List</h2>
+<h3>Choosing a Random Item from a List</h3>
 
 <p>To choose a random item from a list&mdash;</p>
 
@@ -517,7 +538,7 @@ end
 
 <p><a id=Creating_a_Random_Character_String></a></p>
 
-<h2>Creating a Random Character String</h2>
+<h3>Creating a Random Character String</h3>
 
 <p>A commonly asked question involves how to generate a random string of characters (usually a random <em>alphanumeric string</em>, or string of letters and digits).</p>
 
@@ -556,7 +577,7 @@ end
 
 <p><a id=Choosing_Several_Unique_Items></a></p>
 
-<h2>Choosing Several Unique Items</h2>
+<h3>Choosing Several Unique Items</h3>
 
 <p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values.  The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether <code>n</code> is known and how big it is:</p>
 
@@ -604,11 +625,29 @@ end
 <li><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a hash table storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see also <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>).</li>
 </ul>
 
-<p><a id=Weighted_Choice></a></p>
+<p><a id=Quasi_Random_Sampling></a></p>
 
-<h2>Weighted Choice</h2>
+<h3>Quasi-Random Sampling</h3>
 
-<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.</p>
+<p>Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement <em>quasi-random sampling</em>, as this technique is called, an application can do one of the following:</p>
+
+<ul>
+<li>Generate a list of possible outcomes (for example, the list can contain 10 items labeled &quot;good&quot; and three labeled &quot;bad&quot;) and <a href="#Shuffling">shuffle</a> that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.</li>
+<li>Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items &quot;good&quot; and &quot;bad&quot;, and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the <a href="#Weighted_Choice_Without_Replacement">weighted choice without replacement</a> technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.</li>
+</ul>
+
+<p>However, quasi-random techniques are not recommended&mdash;</p>
+
+<ul>
+<li>whenever computer or information security is involved, or</li>
+<li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
+</ul>
+
+<p><a id=Non_Uniform_Distributions></a></p>
+
+<h2>Non-Uniform Distributions</h2>
+
+<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others. This section describes how to use the <a href="#Uniform_Random_Numbers">uniform random number methods</a> to generate random numbers that follow a non-uniform statistical distribution.</p>
 
 <p><a id=Discrete_Weighted_Choice></a></p>
 
@@ -631,7 +670,7 @@ end
     value = RNDINTEXC(sum)
     // NOTE: If the weights can be fractional numbers,
     // use this instead:
-    // value = RNDU() * sum
+    // value = RNDNUMEXCRANGE(0, sum)
     // Choose the object according to the given value
     i = 0
     lastItem = size(weights) - 1
@@ -741,13 +780,40 @@ number = list[index] + (list[index + 1] - list[index]) * RNDU()
 <p>The code above implements the distribution <em>with replacement</em>.  Implementing the distribution <em>without replacement</em> is similar to implementing discrete weighted choice without replacement; the only change is
 to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, list[index] + (list[index + 1] - list[index]) * RNDU())</code> in the pseudocode.</p>
 
+<p><a id=Multinomial_Distribution></a></p>
+
+<h4>Multinomial Distribution</h4>
+
+<p>The discrete weighted choice method can also be used to implement a <em>multinomial distribution</em>.  This distribution models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a different probability of happening.  The pseudocode below is of a method that takes two parameters: <code>trials</code>, which is the number of trials, and <code>weights</code>, which are the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as <code>weights</code>) containing the number of successes for each event.</p>
+
+<pre>METHOD Multinomial(trials, weights)
+    if trials &lt; 0: return error
+    // create a list of successes
+    list = NewList()
+    i = 0
+    while i &lt; size(weights)
+       AddItem(list, 0)
+       i = i + 1
+    end
+    i = 0
+    while i &lt; trials
+        // Choose an index
+        index = DiscreteWeightedChoice(weights)
+        // Tally the event at the chosen index
+        list[index] = list[index] + 1
+        i = i + 1
+    end
+    return list
+END METHOD
+</pre>
+
 <p><a id=Continuous_Weighted_Choice></a></p>
 
 <h3>Continuous Weighted Choice</h3>
 
 <p>The continuous weighted choice method is used to choose a random number that follows a continuous statistical distribution (here, a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><em>piecewise linear distribution</em></a>).</p>
 
-<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns a random number that follows the distribution.  <code>list</code> is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and <code>weights</code> is a list of <em>probability densities</em> for the given numbers (where each number and its density have the same index in both lists). (A number&#39;s <em>probability density</em> is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in <code>list</code> can be returned exactly, but not the second item in <code>list</code>, assuming the numbers in <code>list</code> are arranged in ascending order.</p>
+<p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns a random number that follows the distribution.  <code>list</code> is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and <code>weights</code> is a list of <em>probability densities</em> for the given numbers (where each number and its density have the same index in both lists). (A number&#39;s <em>probability density</em> is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in <code>list</code> can be returned exactly, but not the last item in <code>list</code>, assuming the numbers in <code>list</code> are arranged in ascending order.</p>
 
 <p>In many cases, the probability densities are sampled (usually at regularly spaced points) from a so-called <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a>, a function that specifies each number&#39;s probability density.  A list of common probability density functions is outside the scope of this page.</p>
 
@@ -766,7 +832,7 @@ to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, li
        i = i + 1
     end
     // Choose a random number
-    value = RNDU() * sum
+    value = RNDNUMEXCRANGE(0, sum)
      // Interpolate a number according to the given value
      i=0
      // Get the number corresponding to the random number
@@ -796,32 +862,14 @@ END METHOD
 
 <p>Assume <code>list</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
 
-<p><a id=Quasi_Random_Sampling></a></p>
-
-<h2>Quasi-Random Sampling</h2>
-
-<p>Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement <em>quasi-random sampling</em>, as this technique is called, an application can do one of the following:</p>
-
-<ul>
-<li>Generate a list of possible outcomes (for example, the list can contain 10 items labeled &quot;good&quot; and three labeled &quot;bad&quot;) and <a href="#Shuffling">shuffle</a> that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.</li>
-<li>Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items &quot;good&quot; and &quot;bad&quot;, and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the <a href="#Weighted_Choice_Without_Replacement">weighted choice without replacement</a> technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.</li>
-</ul>
-
-<p>However, quasi-random techniques are not recommended&mdash;</p>
-
-<ul>
-<li>whenever computer or information security is involved, or</li>
-<li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
-</ul>
-
 <p><a id=Normal_Gaussian_Distribution></a></p>
 
-<h2>Normal (Gaussian) Distribution</h2>
+<h3>Normal (Gaussian) Distribution</h3>
 
 <p>The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
 <p>The following method generates two <a href="https://en.wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
-random numbers with mean (average) <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;), using the so-called <a href="https://en.wikipedia.org/wiki/Box-Muller_%20transformation">Box-Muller transformation</a>, as further explained in the pseudocode&#39;s comments.  (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.)
+random numbers with mean (average) <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;), using the so-called <a href="https://en.wikipedia.org/wiki/Box-Muller_transformation">Box-Muller transformation</a>, as further explained in the pseudocode&#39;s comments.  (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.)
 The standard deviation <code>sigma</code> affects how wide the normal distribution&#39;s &quot;bell curve&quot; appears; the
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%;
 within two standard deviations (2 times <code>sigma</code>), about 95.4%, and within three standard deviations, about 99.7%.</p>
@@ -843,7 +891,7 @@ END METHOD
 
 <p><a id=Binomial_Distribution></a></p>
 
-<h2>Binomial Distribution</h2>
+<h3>Binomial Distribution</h3>
 
 <p>The following method generates a random integer that follows a binomial distribution.  This number
 expresses the number of successes that have happened after a given number of independently performed trials
@@ -864,7 +912,7 @@ expresses the number of successes that have happened after a given number of ind
     // Suggested by Saucier, R. in &quot;Computer
     // generation of statistical distributions&quot;, 2000, p. 49
     tp = trials * p
-if tp &gt; 25 or (tp &gt; 5 and p &gt; 0.1 and p &lt; 0.9)
+    if tp &gt; 25 or (tp &gt; 5 and p &gt; 0.1 and p &lt; 0.9)
          countval = -1
          while countval &lt; 0: countval = Normal(tp, tp)
          return floor(countval + 0.5)
@@ -892,7 +940,7 @@ END METHOD
 
 <p><a id=Hypergeometric_Distribution></a></p>
 
-<h2>Hypergeometric Distribution</h2>
+<h3>Hypergeometric Distribution</h3>
 
 <p>The following method generates a random integer that follows a hypergeometric distribution.
 When a given number of items are drawn at random without replacement from a set of items
@@ -929,7 +977,7 @@ END METHOD
 
 <p><a id=Poisson_Distribution></a></p>
 
-<h2>Poisson Distribution</h2>
+<h3>Poisson Distribution</h3>
 
 <p>The following method generates a random integer that follows a Poisson distribution. In the method below, the <code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method&#39;s return value gives a random number of such events during one such unit.</p>
 
@@ -960,7 +1008,7 @@ END METHOD
 
 <p><a id=Gamma_Distribution></a></p>
 
-<h2>Gamma Distribution</h2>
+<h3>Gamma Distribution</h3>
 
 <p>The following method generates a random number that follows a gamma distribution.
 The gamma distribution models expected lifetimes. The method given here is based on Marsaglia and Tsang&#39;s method from 2000.</p>
@@ -998,11 +1046,12 @@ end
 <ul>
 <li>The two-parameter gamma distribution (<code>GammaDist2(a, b)</code>), where <code>b</code> is the scale, is <code>GammaDist(a) * b</code>.  Here, <code>a</code> can be seen as the mean lifetime in unspecified units of time, and <code>b</code> indicates the size of each unit of time.</li>
 <li>The three-parameter gamma distribution (<code>GammaDist3(a, b, c)</code>), where <code>c</code> is another shape parameter, is <code>pow(GammaDist(a), 1.0 / c) * b</code>.</li>
+<li>The four-parameter gamma distribution (<code>GammaDist4(a, b, c, d)</code>), where <code>d</code> is the minimum value, is <code>pow(GammaDist(a), 1.0 / c) * b + d</code>.</li>
 </ul>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
-<h2>Negative Binomial Distribution</h2>
+<h3>Negative Binomial Distribution</h3>
 
 <p>The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as <code>successes</code> below), where the probability of a success in each case is <code>p</code> (which can be greater than 0, never, and equal to or less than 1, always, and which can be 0.5, meaning an equal chance of success or failure).</p>
 
@@ -1066,27 +1115,35 @@ END METHOD
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 
-<h2>Other Non-Uniform Distributions</h2>
+<h3>Other Non-Uniform Distributions</h3>
 
 <ul>
-<li><strong>Beta distribution</strong>: <code>x / (x + GammaDist(b))</code>, where <code>x</code> is <code>GammaDist(a)</code> and <code>a</code> and <code>b</code> are
-the two parameters of the beta distribution.</li>
-<li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, x / (x + GammaDist(b)))</code>, where <code>x</code> is <code>GammaDist(a)</code>, <code>a</code> and <code>b</code> are
+<li><strong>Beta distribution (<code>BetaDist(a, b)</code>)</strong>: <code>x / (x + GammaDist(b))</code>, where <code>x</code> is <code>GammaDist(a)</code> and <code>a</code> and <code>b</code> are
+the two parameters of the beta distribution.  The range of the beta distribution is 0 or greater and less than 1.
+
+<ul>
+<li><strong>Arcsine distribution</strong>: <code>BetaDist(0.5, 0.5)</code> (Saucier 2000, p. 14).</li>
+<li><strong>Beta-PERT distribution</strong>: <code>startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)</code>. The distribution starts  at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>, <code>size</code> is <code>endpt - startpt</code>, and <code>shape</code> is a shape parameter that&#39;s 0 or greater, but usually 4.</li>
+<li><strong>Beta prime distribution</strong>: <code>x / (1 - x)</code>, where <code>x</code> is <code>BetaDist(a, b)</code> and <code>a</code> and <code>b</code> are the two parameters of the
+  beta distribution.</li>
+<li><strong>Parabolic distribution</strong>: <code>BetaDist(2, 2)</code> (Saucier 2000, p. 30).</li>
+</ul></li>
+<li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
-<li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, x / (x + GammaDist(b)))</code>, where <code>x</code> is <code>GammaDist(a)</code>, <code>a</code> and <code>b</code> are
-the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. (<code>NegativeBinomial</code> can be <code>NegativeBinomialInt</code> instead.)</li>
-<li><strong>Cauchy distribution</strong>: <code>scale * tan(pi * (RNDU()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
+<li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
+the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring-Yule distribution</em>. (<code>NegativeBinomial</code> can be <code>NegativeBinomialInt</code> instead.)</li>
+<li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(pi * (RNDU()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
 are the two parameters of the Cauchy distribution.</li>
-<li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
-freedom.  This expresses a sum-of-squares of <code>df</code> random variables in the standard normal distribution.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of
 freedom.</li>
+<li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
+freedom.  This expresses a sum-of-squares of <code>df</code> random variables in the standard normal distribution.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(shape) / rate</code>, where <code>shape</code> and <code>rate</code> are the two parameters of the Erlang distribution.</li>
 <li><strong>Exponential distribution</strong>: <code>-ln(1.0 - RNDU()) / lamda</code>, where <code>lamda</code> is the inverse scale. The <code>lamda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDNZU())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
 This expresses a distribution of maximum values.</li>
 <li><strong>Geometric distribution</strong>: <code>NegativeBinomialInt(1, p)</code>, where <code>p</code> has the same meaning
-as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)</li>
+as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)</li>
 <li><strong>Gumbel distribution</strong>: <code>a + ln(-ln(RNDNZU())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
 This expresses a distribution of minimum values.</li>
 <li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, sqrt(pi * 0.5) / invscale)))</code>, where <code>invscale</code> is a parameter of the half-normal distribution.</li>
@@ -1098,7 +1155,7 @@ same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>L&eacute;vy distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
-<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0+ln(1.0 - RNDU()) / ln(1.0 - pow(1.0-param,1.0 - RNDU())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
+<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(1.0 - RNDU()) / ln(1.0 - pow(1.0 - param,1.0 - RNDU())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
 <li><strong>Logistic distribution</strong>: <code>(ln(x/(1.0 - x)) * scale + mean</code>, where <code>x</code> is <code>RNDNZU()</code> and <code>mean</code> and <code>scale</code> are the two parameters of the logistic distribution.</li>
 <li><strong>Maxwell distribution</strong>: <code>scale * sqrt(GammaDist(1.5) * 2)</code>, where <code>scale</code> is the scale.</li>
 <li><strong>Noncentral chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares.</li>
@@ -1106,6 +1163,9 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDNZU(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
 <li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(1.0 - RNDU()))</code>, where <code>a</code> is the scale and is greater than 0.</li>
+<li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means of the two Poisson variables.</li>
+<li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have
+the same meaning as in the normal distribution, and <code>alpha</code> is a shape parameter.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5) * 2 / df)</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
