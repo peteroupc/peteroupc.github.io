@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 5, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 56, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -356,7 +356,7 @@
 
 <ol>
 <li><a href="https://en.wikipedia.org/wiki/Colors_of_noise">Colored noise</a>, such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.<sup>(2)</sup></li>
-<li><em>Noise functions</em>, including <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> and fractal Brownian motion, output one or more random numbers given an <em>n</em>-dimensional point as input. Although noise functions don&#39;t take seeds themselves, the core of a noise function can be an RNG that converts an <em>n</em>-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function&#39;s PRNG should follow the <a href="#Seedable_PRNG_Recommendations">seedable PRNG recommendations</a> if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it&#39;s not feasible to achieve the randomized variation without them.</li>
+<li><em>Noise functions</em>, including <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> and <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a>, output one or more random numbers given an <em>n</em>-dimensional point as input. Although noise functions don&#39;t take seeds themselves, the core of a noise function can be an RNG that converts an <em>n</em>-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function&#39;s PRNG should follow the <a href="#Seedable_PRNG_Recommendations">seedable PRNG recommendations</a> if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it&#39;s not feasible to achieve the randomized variation without them.</li>
 </ol>
 
 <p><a id=Programming_Language_APIs></a></p>
