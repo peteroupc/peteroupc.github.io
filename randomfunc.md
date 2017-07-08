@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 5, 2017.
+Begun on June 4, 2017; last updated on July 7, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -38,8 +38,8 @@ This methods described in this document can be categorized as follows:
     - [`RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive](#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive)
     - [`RNDBITS`: Random N-Bit Integers](#RNDBITS_Random_N_Bit_Integers)
     - [Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
-- [`RNDNUMINCRANGE`: Random Numbers Within a Range, Maximum Inclusive](#RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive)
-- [`RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive](#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive)
+    - [`RNDNUMRANGE`: Random Numbers Within a Range, Maximum Inclusive](#RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive)
+    - [`RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive](#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive)
 - [Randomization Techniques](#Randomization_Techniques)
     - [Boolean Conditions](#Boolean_Conditions)
     - [Shuffling](#Shuffling)
@@ -91,7 +91,7 @@ In this document:
 * `size(list)` returns the size of the list `list`.
 * `list[k]` refers to the item at index `k` of the list `list`.
 * `mod(a, b)` is the remainder when `a` is divided by `b`.
-* The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
+* The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 * The `&` operator in the pseudocode is a bitwise AND operator between two integers. Although the `&` operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the `&` operator in the pseudocode effectively have that meaning, so that the form with `mod` can be used in programming languages without a built-in AND operator.
 * The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant digits in the format). For example&mdash;
@@ -273,7 +273,7 @@ A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in 
         return RNDINT(maxExclusive - 1)
      END METHOD
 
-**Note:** An alternative way of generating a random integer 0 or greater and less than `maxExclusive` is the following idiom: `floor(RNDU()*(maxExclusive))`, where `RNDU()` is [defined later](#Random_Numbers_in_a_0_1_Bounded_Interval) in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (such as JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
+**Note:** An alternative way of generating a random integer 0 or greater and less than `maxExclusive` is the following idiom: `floor(RNDU()*(maxExclusive))`, where `RNDU()` is [defined later](#Random_Numbers_in_a_0_1_Bounded_Interval) in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
 
 <a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive
@@ -369,18 +369,19 @@ For fixed-precision binary floating-point numbers with fixed exponent range (suc
 
 Note that each of the other three methods (`RNDU()`, `RNDNZU()`, and `RNDU_ZeroExcOneInc()`) can be implemented by calling `RNDU_ZeroIncOneInc()` in a loop until a number within the range of the other method is generated.
 
-<a id=RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a>
-## `RNDNUMINCRANGE`: Random Numbers Within a Range, Maximum Inclusive
+<a id=RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a>
+### `RNDNUMRANGE`: Random Numbers Within a Range, Maximum Inclusive
 
 To generate a **random number `minInclusive` or greater and `maxInclusive` or less**, use the following pseudocode:
 
-    METHOD RNDNUMINCRANGE(minInclusive, maxInclusive)
+    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
         if minInclusive > maxInclusive: return error
-        return minInclusive + (maxInclusive - minInclusive) * RNDU_ZeroIncOneInc()
+        return minInclusive + (maxInclusive - minInclusive) *
+            RNDU_ZeroIncOneInc()
     END
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive></a>
-## `RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive
+### `RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive
 
 To generate a **random number `minInclusive` or greater and less than `maxExclusive`**, use the following pseudocode:
 
@@ -878,9 +879,9 @@ The random integer from the method below is such that the average of the random 
         // Suggested by Saucier, R. in "Computer
         // generation of statistical distributions", 2000, p. 49
         if mean > 9
-      p = -1.0
+            p = -1.0
             while p < 0: p = Normal(mean, mean)
-      return floor(p + 0.5)
+            return floor(p + 0.5)
         end
         pn = exp(-mean)
         count = 0

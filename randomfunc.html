@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 5, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 7, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -53,9 +53,9 @@ of them.</p>
 <li><a href="#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive"><code>RNDINTEXCRANGE</code>: Random Integers Within a Range, Maximum Exclusive</a></li>
 <li><a href="#RNDBITS_Random_N_Bit_Integers"><code>RNDBITS</code>: Random N-Bit Integers</a></li>
 <li><a href="#Random_Numbers_in_a_0_1_Bounded_Interval">Random Numbers in a 0-1 Bounded Interval</a></li>
-</ul></li>
-<li><a href="#RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMINCRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</a></li>
+<li><a href="#RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</a></li>
 <li><a href="#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive"><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</a></li>
+</ul></li>
 <li><a href="#Randomization_Techniques">Randomization Techniques</a>
 
 <ul>
@@ -122,7 +122,7 @@ of them.</p>
 <li><code>size(list)</code> returns the size of the list <code>list</code>.</li>
 <li><code>list[k]</code> refers to the item at index <code>k</code> of the list <code>list</code>.</li>
 <li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>.</li>
-<li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  It is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
+<li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
 <li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
 <li>The <code>&amp;</code> operator in the pseudocode is a bitwise AND operator between two integers. Although the <code>&amp;</code> operator is not always equivalent to <code>mod(a, b + 1)</code>, where <code>a</code> is the left-hand side and <code>b</code> is the right-hand side, all uses of the <code>&amp;</code> operator in the pseudocode effectively have that meaning, so that the form with <code>mod</code> can be used in programming languages without a built-in AND operator.</li>
 <li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant digits in the format). For example&mdash;
@@ -322,7 +322,7 @@ END METHOD
  END METHOD
 </pre>
 
-<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than <code>maxExclusive</code> is the following idiom: <code>floor(RNDU()*(maxExclusive))</code>, where <code>RNDU()</code> is <a href="#Random_Numbers_in_a_0_1_Bounded_Interval">defined later</a> in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (such as JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</p>
+<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than <code>maxExclusive</code> is the following idiom: <code>floor(RNDU()*(maxExclusive))</code>, where <code>RNDU()</code> is <a href="#Random_Numbers_in_a_0_1_Bounded_Interval">defined later</a> in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</p>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a></p>
 
@@ -427,21 +427,22 @@ END METHOD
 
 <p>Note that each of the other three methods (<code>RNDU()</code>, <code>RNDNZU()</code>, and <code>RNDU_ZeroExcOneInc()</code>) can be implemented by calling <code>RNDU_ZeroIncOneInc()</code> in a loop until a number within the range of the other method is generated.</p>
 
-<p><a id=RNDNUMINCRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a></p>
+<p><a id=RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a></p>
 
-<h2><code>RNDNUMINCRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</h2>
+<h3><code>RNDNUMRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</h3>
 
 <p>To generate a <strong>random number <code>minInclusive</code> or greater and <code>maxInclusive</code> or less</strong>, use the following pseudocode:</p>
 
-<pre>METHOD RNDNUMINCRANGE(minInclusive, maxInclusive)
+<pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
     if minInclusive &gt; maxInclusive: return error
-    return minInclusive + (maxInclusive - minInclusive) * RNDU_ZeroIncOneInc()
+    return minInclusive + (maxInclusive - minInclusive) *
+        RNDU_ZeroIncOneInc()
 END
 </pre>
 
 <p><a id=RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive></a></p>
 
-<h2><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</h2>
+<h3><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</h3>
 
 <p>To generate a <strong>random number <code>minInclusive</code> or greater and less than <code>maxExclusive</code></strong>, use the following pseudocode:</p>
 
@@ -990,9 +991,9 @@ END METHOD
     // Suggested by Saucier, R. in &quot;Computer
     // generation of statistical distributions&quot;, 2000, p. 49
     if mean &gt; 9
-    p = -1.0
+        p = -1.0
         while p &lt; 0: p = Normal(mean, mean)
-    return floor(p + 0.5)
+        return floor(p + 0.5)
     end
     pn = exp(-mean)
     count = 0
@@ -1203,11 +1204,9 @@ from random number generators.</p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>
 <div class="noprint">
-<!--
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=10869447">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
 <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
 name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
--->
 <p>
 <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
 <script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
