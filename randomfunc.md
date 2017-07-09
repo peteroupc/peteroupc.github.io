@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 7, 2017.
+Begun on June 4, 2017; last updated on July 9, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -34,11 +34,11 @@ This methods described in this document can be categorized as follows:
 - [Uniform Random Numbers](#Uniform_Random_Numbers)
     - [`RNDINT`: Core Random Integer Method](#RNDINT_Core_Random_Integer_Method)
     - [`RNDINTRANGE`: Random Integers Within a Range, Maximum Inclusive](#RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive)
-    - [`RNDINTEXC`: Modified Core Method, Maximum Exclusive](#RNDINTEXC_Modified_Core_Method_Maximum_Exclusive)
-    - [`RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive](#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive)
     - [`RNDBITS`: Random N-Bit Integers](#RNDBITS_Random_N_Bit_Integers)
     - [Random Numbers in a 0-1 Bounded Interval](#Random_Numbers_in_a_0_1_Bounded_Interval)
     - [`RNDNUMRANGE`: Random Numbers Within a Range, Maximum Inclusive](#RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive)
+    - [`RNDINTEXC`: Modified Core Method, Maximum Exclusive](#RNDINTEXC_Modified_Core_Method_Maximum_Exclusive)
+    - [`RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive](#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive)
     - [`RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive](#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive)
 - [Randomization Techniques](#Randomization_Techniques)
     - [Boolean Conditions](#Boolean_Conditions)
@@ -230,7 +230,9 @@ The underlying uniform RNG can be other than already described in this section; 
 The na&iuml;ve way of generating a **random integer `minInclusive` or greater and `maxInclusive` or less** is as follows. This approach works well for unsigned integers and arbitrary-precision integers.
 
      METHOD RNDINTRANGE(minInclusive, maxInclusive)
-        return minInclusive + RNDINT(maxInclusive - minInclusive)
+       // minInclusive must not be greater than maxInclusive
+       if minInclusive > maxInclusive: return error
+       return minInclusive + RNDINT(maxInclusive - minInclusive)
      END METHOD
 
 The na&iuml;ve approach won't work as well, though, for signed integer formats if the difference between `maxInclusive` and `minInclusive` exceeds the highest possible integer for the format.  For fixed-length signed integer formats [<sup>(1)</sup>](#Note1), such random integers can be generated using the following pseudocode.  In the pseudocode below, `INT_MAX` is the highest possible integer in the integer format.
@@ -263,34 +265,6 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 
 A common use case of `RNDINTRANGE` is to simulate die rolls.  For example, to simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
 
-<a id=RNDINTEXC_Modified_Core_Method_Maximum_Exclusive></a>
-### `RNDINTEXC`: Modified Core Method, Maximum Exclusive
-
-A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in this document; it generates a random integer **0 or greater** and **less than `maxExclusive`**, where `maxExclusive` is an integer greater than 0.  This variant is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:
-
-     METHOD RNDINTEXC(maxExclusive)
-        if maxExclusive <= 0: return error
-        return RNDINT(maxExclusive - 1)
-     END METHOD
-
-**Note:** An alternative way of generating a random integer 0 or greater and less than `maxExclusive` is the following idiom: `floor(RNDU()*(maxExclusive))`, where `RNDU()` is [defined later](#Random_Numbers_in_a_0_1_Bounded_Interval) in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
-
-<a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
-### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive
-
-A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random integer `minInclusive` or greater and less than `maxExclusive`**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
-
-    METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
-       if minInclusive >= maxExclusive: return error
-       if minInclusive >=0 or minInclusive + INT_MAX >= maxExclusive
-          return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
-       end
-       while true
-         ret = RNDINTRANGE(minInclusive, maxExclusive)
-         if ret < maxExclusive: return ret
-       end
-    END METHOD
-
 <a id=RNDBITS_Random_N_Bit_Integers></a>
 ### `RNDBITS`: Random N-Bit Integers
 
@@ -300,9 +274,6 @@ The following na&iuml;ve way of generating a **uniformly distributed random N-bi
         // NOTE: The maximum number that could be returned
         // here is 2^bits - 1, in which all `bits` bits are set to 1.
         return RNDINT((1 << bits) - 1)
-        // NOTE: The following line can be used instead of the
-        // preceding:
-        // return RNDINTEXC(1 << bits)
      END METHOD
 
 Although this works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ [<sup>(1)</sup>](#Note1). For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
@@ -379,6 +350,34 @@ To generate a **random number `minInclusive` or greater and `maxInclusive` or le
         return minInclusive + (maxInclusive - minInclusive) *
             RNDU_ZeroIncOneInc()
     END
+
+<a id=RNDINTEXC_Modified_Core_Method_Maximum_Exclusive></a>
+### `RNDINTEXC`: Modified Core Method, Maximum Exclusive
+
+A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in this document; it generates a random integer **0 or greater** and **less than `maxExclusive`**, where `maxExclusive` is an integer greater than 0.  This variant is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:
+
+     METHOD RNDINTEXC(maxExclusive)
+        if maxExclusive <= 0: return error
+        return RNDINT(maxExclusive - 1)
+     END METHOD
+
+**Note:** An alternative way of generating a random integer 0 or greater and less than `maxExclusive` is the following idiom: `floor(RNDU()*(maxExclusive))`, where `RNDU()` is [defined later](#Random_Numbers_in_a_0_1_Bounded_Interval) in this document.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
+
+<a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
+### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive
+
+A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random integer `minInclusive` or greater and less than `maxExclusive`**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+
+    METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
+       if minInclusive >= maxExclusive: return error
+       if minInclusive >=0 or minInclusive + INT_MAX >= maxExclusive
+          return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
+       end
+       while true
+         ret = RNDINTRANGE(minInclusive, maxExclusive)
+         if ret < maxExclusive: return ret
+       end
+    END METHOD
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive
@@ -465,6 +464,8 @@ To choose a random item from a list&mdash;
            end
         end
 
+**Note:** [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items repeatedly from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+
 <a id=Creating_a_Random_Character_String></a>
 ### Creating a Random Character String
 
@@ -500,7 +501,7 @@ _**Note:** Often applications need to generate a string of characters that's not
 <a id=Choosing_Several_Unique_Items></a>
 ### Choosing Several Unique Items
 
-Often, the need arises to choose `k` unique items or values from among `n` available items or values.  The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether `n` is known and how big it is:
+Often, the need arises to choose `k` unique items or values from among `n` available items or values.  (This is also known as _sampling without replacement_.) The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether `n` is known and how big it is:
 
 - **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 
@@ -978,7 +979,7 @@ The following implementation of the negative binomial distribution allows `succe
                return count
             end
             // Geometric distribution special case (see Saucier 2000)
-            return count + floor(ln(1.0 - RNDU()) / ln(1.0 - p))
+            return floor(ln(1.0 - RNDU()) / ln(1.0 - p))
         end
         while true
             if RNDU() < p
