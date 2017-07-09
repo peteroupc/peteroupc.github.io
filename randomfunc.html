@@ -36,6 +36,8 @@ of them.</p>
 <li>Methods to generate non-uniformly distributed random numbers, including <a href="#Weighted_Choice">weighted choice</a>, the <a href="#Normal_Gaussian_Distribution">normal distribution</a>, and <a href="#Other_Non_Uniform_Distributions">other statistical distributions</a>.</li>
 </ul>
 
+<p><a href="https://peteroupc.github.io/randomgen.py">Sample Python code</a> that implements many of the methods in this document is available.</p>
+
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
@@ -89,6 +91,7 @@ of them.</p>
 <li><a href="#Poisson_Distribution">Poisson Distribution</a></li>
 <li><a href="#Gamma_Distribution">Gamma Distribution</a></li>
 <li><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a></li>
+<li><a href="#von_Mises_distribution">von Mises distribution</a></li>
 <li><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a></li>
 </ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
@@ -110,6 +113,7 @@ of them.</p>
 <li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, respectively, where <code>a</code> is in radians.</li>
 <li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
 <li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
+<li><code>acos(a)</code> is the inverse cosine of <code>a</code>.</li>
 <li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
 <li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>nothing</code> indicates the absence of a value.  It corresponds to <code>null</code> in Java, C#, and JavaScript, <code>nil</code> in Ruby, and <code>None</code> in Python.</li>
@@ -429,7 +433,11 @@ END
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
-   if minInclusive &gt;=0 or minInclusive + INT_MAX &gt;= maxExclusive
+   // NOTE: For signed integer formats, replace the following line
+   // with &quot;if minInclusive &gt;=0 or minInclusive + INT_MAX &gt;=
+   // maxExclusive&quot;, where `INT_MAX` has the same meaning
+   // as the pseudocode for `RNDINTRANGE`.
+   if minInclusive &gt;=0
       return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
    end
    while true
@@ -536,7 +544,7 @@ end
 </pre></li>
 </ul>
 
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em></a> is a method of creating a simulated dataset by choosing random items repeatedly from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em></a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</p>
 
 <p><a id=Creating_a_Random_Character_String></a></p>
 
@@ -660,6 +668,7 @@ end
 <p>The following pseudocode takes a single list <code>weights</code>, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.</p>
 
 <pre>METHOD DiscreteWeightedChoice(weights)
+    if size(weights) == 0: return error
     sum = 0
     // Get the sum of all weights
     i = 0
@@ -830,20 +839,22 @@ END METHOD
       weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
             (list[i + 1] - list[i]))
       AddItem(areas, weightArea)
-      sum += weightArea
+      sum = sum + weightArea
        i = i + 1
     end
     // Choose a random number
     value = RNDNUMEXCRANGE(0, sum)
-     // Interpolate a number according to the given value
-     i=0
-     // Get the number corresponding to the random number
-     runningValue = 0
+    // Interpolate a number according to the given value
+    i=0
+    // Get the number corresponding to the random number
+    runningValue = 0
     while i &lt; size(list) - 1
-    area = areas[i]
+     area = areas[i]
      if area &gt; 0
       newValue = runningValue + area
       if value &lt;= newValue
+       // NOTE: The following line can also read
+       // &quot;interp = RNDU()&quot;.
        interp = (value - runningValue) / (newValue - runningValue)
        retValue = list[i] + (list[i + 1] - list[i]) * interp
        return retValue
@@ -1114,6 +1125,36 @@ END METHOD
     end
 END METHOD
 </pre>
+
+<p><a id=von_Mises_distribution></a></p>
+
+<h3>von Mises distribution</h3>
+
+<p>The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the <code>mean</code> is the mean angle, <code>kappa</code> is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best-Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
+
+<pre>METHOD VonMises(mean, kappa)
+</pre>
+
+<p>if kappa &lt; 0: return error
+        if kappa == 0
+            return RNDNUMEXCRANGE(mean-pi, mean+pi)
+        end
+        r = 1.0 + sqrt(4 * kappa * kappa + 1)
+        rho = (r - sqrt(2 * r)) / (kappa * 2)
+        s = (1 + rho * rho) / (2 * rho)
+        while true
+            u = RNDNUMEXCRANGE(-1, 1)
+            v = RNDNZU()
+            z = cos(pi * u)
+            w = (1 + s<em>z) / (s + z)
+            y = kappa * (s - w)
+            if y</em>(2 - y) - v &gt;=0 or ln(y / v) + 1 - y &gt;= 0
+               angle = acos(w)
+               if u &lt; 0: angle = -angle
+               return mean + angle
+      end
+        end
+    END METHOD</p>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 
