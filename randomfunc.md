@@ -25,6 +25,8 @@ This methods described in this document can be categorized as follows:
 - Common tasks to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Choosing_Several_Unique_Items).
 - Methods to generate non-uniformly distributed random numbers, including [weighted choice](#Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other statistical distributions](#Other_Non_Uniform_Distributions).
 
+[Sample Python code](https://peteroupc.github.io/randomgen.py) that implements many of the methods in this document is available.
+
 <a id=Contents></a>
 ## Contents
 
@@ -62,6 +64,7 @@ This methods described in this document can be categorized as follows:
     - [Poisson Distribution](#Poisson_Distribution)
     - [Gamma Distribution](#Gamma_Distribution)
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
+    - [von Mises distribution](#von_Mises_distribution)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
 - [Conclusion](#Conclusion)
 - [Notes](#Notes)
@@ -79,6 +82,7 @@ In this document:
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
+* `acos(a)` is the inverse cosine of `a`.
 * `sqrt(a)` is the square root of `a`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
@@ -370,7 +374,11 @@ A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random int
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
-       if minInclusive >=0 or minInclusive + INT_MAX >= maxExclusive
+       // NOTE: For signed integer formats, replace the following line
+       // with "if minInclusive >=0 or minInclusive + INT_MAX >=
+       // maxExclusive", where `INT_MAX` has the same meaning
+       // as the pseudocode for `RNDINTRANGE`.
+       if minInclusive >=0
           return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
        end
        while true
@@ -464,7 +472,7 @@ To choose a random item from a list&mdash;
            end
         end
 
-**Note:** [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items repeatedly from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+**Note:** [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Creating_a_Random_Character_String></a>
 ### Creating a Random Character String
@@ -569,6 +577,7 @@ The discrete weighted choice method is used to choose a random item from among a
 The following pseudocode takes a single list `weights`, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.
 
     METHOD DiscreteWeightedChoice(weights)
+        if size(weights) == 0: return error
         sum = 0
         // Get the sum of all weights
         i = 0
@@ -727,20 +736,22 @@ In many cases, the probability densities are sampled (usually at regularly space
           weightArea = abs((weights[i] + weights[i + 1]) * 0.5 *
                 (list[i + 1] - list[i]))
           AddItem(areas, weightArea)
-          sum += weightArea
+          sum = sum + weightArea
            i = i + 1
         end
         // Choose a random number
         value = RNDNUMEXCRANGE(0, sum)
-         // Interpolate a number according to the given value
-         i=0
-         // Get the number corresponding to the random number
-         runningValue = 0
+        // Interpolate a number according to the given value
+        i=0
+        // Get the number corresponding to the random number
+        runningValue = 0
         while i < size(list) - 1
-        area = areas[i]
+         area = areas[i]
          if area > 0
           newValue = runningValue + area
           if value <= newValue
+           // NOTE: The following line can also read
+           // "interp = RNDU()".
            interp = (value - runningValue) / (newValue - runningValue)
            retValue = list[i] + (list[i + 1] - list[i]) * interp
            return retValue
@@ -992,6 +1003,33 @@ The following implementation of the negative binomial distribution allows `succe
                 // Failure
                 count = count + 1
             end
+        end
+    END METHOD
+
+<a id=von_Mises_distribution></a>
+### von Mises distribution
+
+The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the `mean` is the mean angle, `kappa` is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best-Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
+
+    METHOD VonMises(mean, kappa)
+  if kappa < 0: return error
+        if kappa == 0
+            return RNDNUMEXCRANGE(mean-pi, mean+pi)
+        end
+        r = 1.0 + sqrt(4 * kappa * kappa + 1)
+        rho = (r - sqrt(2 * r)) / (kappa * 2)
+        s = (1 + rho * rho) / (2 * rho)
+        while true
+            u = RNDNUMEXCRANGE(-1, 1)
+            v = RNDNZU()
+            z = cos(pi * u)
+            w = (1 + s*z) / (s + z)
+            y = kappa * (s - w)
+            if y*(2 - y) - v >=0 or ln(y / v) + 1 - y >= 0
+               angle = acos(w)
+               if u < 0: angle = -angle
+               return mean + angle
+      end
         end
     END METHOD
 
