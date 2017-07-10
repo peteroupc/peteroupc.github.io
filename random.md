@@ -231,8 +231,6 @@ Option 1 often applies to games that generate procedural terrain for game levels
 <a id=Unit_Testing></a>
 #### Unit Testing
 
-state-based actions don't use the stack [C.R.
-
 A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 5).
 
 <a id=Verifiable_Random_Numbers></a>
