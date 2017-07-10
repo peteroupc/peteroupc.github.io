@@ -25,7 +25,7 @@ class RandomGen:
   def rndbits(self, bits):
     return self.rndint((1 << bits) - 1)
 
-  def rndu_zeroinconeinc(self):
+  def rndu01(self):
     e=-SIGBITS
     while True:
       if self.rndint(1)==0:
@@ -39,21 +39,21 @@ class RandomGen:
     # NOTE: Multiply by 1.0 to coerce to floating-point
     return sig * 1.0 * (2 ** e)
 
-  def rndu(self):
+  def rndu01oneexc(self):
     while True:
-      ret=self.rndu_zeroinconeinc()
+      ret=self.rndu01()
       if ret != 1.0:
         return ret
 
-  def rndnzu(self):
+  def rndu01zerooneexc(self):
     while True:
-      ret=self.rndu_zeroinconeinc()
+      ret=self.rndu01()
       if ret != 1.0 and ret != 0.0:
         return ret
 
-  def rndu_zeroexconeinc(self):
+  def rndu01zeroexc(self):
     while True:
-      ret=self.rndu_zeroinconeinc()
+      ret=self.rndu01()
       if ret != 0.0:
         return ret
 
@@ -80,7 +80,7 @@ class RandomGen:
     if minInclusive >= maxExclusive:
       raise ValueError
     return minInclusive + (maxExclusive - minInclusive) * \
-      self.rndu()
+      self.rndu01oneexc()
 
   def shuffle(self, list):
     if len(list) >= 2:
@@ -140,7 +140,7 @@ class RandomGen:
       if area>0:
         newValue=runningValue+area
         if value<=newValue:
-          interp=self.rndu()
+          interp=self.rndu01oneexc()
           retValue=list[i]+(list[i+1]-list[i])*interp
           return retValue
         runningValue=newValue
@@ -148,8 +148,8 @@ class RandomGen:
     return list[len(list)-1]
 
   def normal(self, mu=0.0, sigma=1.0):
-    radius=math.sqrt(-2*math.log(1.0-self.rndu()))*sigma
-    angle=2*math.pi*self.rndu()
+    radius=math.sqrt(-2*math.log(1.0-self.rndu01oneexc()))*sigma
+    angle=2*math.pi*self.rndu01oneexc()
     n1=mu+radius*math.cos(angle)
     return n1
 
@@ -157,7 +157,7 @@ class RandomGen:
     return math.exp(self.normal(mu,sigma))
 
   def weibull(self, a, b):
-    return b*(-math.log(1.0-self.rndu()))**(1.0/a)
+    return b*(-math.log(1.0-self.rndu01oneexc()))**(1.0/a)
 
   def triangular(self, startpt, midpt, endpt):
     return self.continuous_choice([startpt,midpt,endpt],\
@@ -185,7 +185,7 @@ class RandomGen:
         countval=self.normal(tp,tp)
       return int(countval+0.5)
     while i < trials:
-      if self.rndu() < p:
+      if self.rndu01oneexc() < p:
         count+=1
       i+=1
     return count
@@ -222,7 +222,7 @@ class RandomGen:
     count=0
     while True:
       count+=1
-      p*=self.rndu()
+      p*=self.rndu01oneexc()
       if p<=pn:
         return count-1
 
@@ -243,7 +243,7 @@ class RandomGen:
         v=v*v*v
         if v>0:
           break
-      u=1.0-self.rndu()
+      u=1.0-self.rndu01oneexc()
       x2=x*x
       if u<1-(0.0331*x2*x2):
         break
@@ -251,7 +251,7 @@ class RandomGen:
         break
     ret=dd*v
     if mean<1:
-      ret=ret*math.exp(math.ln(1.0-self.rndu()) / mean)
+      ret=ret*math.exp(math.ln(1.0-self.rndu01oneexc()) / mean)
     return ret**(1.0/c)*b+d
 
   def negativebinomial(self,successes,p):
@@ -262,15 +262,15 @@ class RandomGen:
     if p<=0.0:
       return 1.0/0.0
     if successes==1.0:
-      return int(math.log(1.0-self.rndu())/ln(1.0-p))
+      return int(math.log(1.0-self.rndu01oneexc())/ln(1.0-p))
     else:
       return self.poisson(self.gamma(successes)*(1-p)/p)
 
   def exponential(self,lamda):
-    return -math.log(1.0-self.rndu())/lamda
+    return -math.log(1.0-self.rndu01oneexc())/lamda
 
   def pareto(self,minimum,alpha):
-    return self.rndnzu()**(-1.0/alpha)*minimum
+    return self.rndu01zerooneexc()**(-1.0/alpha)*minimum
 
   def vonmises(self,mean,kappa):
     if kappa<0:
@@ -282,7 +282,7 @@ class RandomGen:
     s=(1+rho*rho)/(2*rho)
     while True:
       u=self.rndnumexcrange(-1,1)
-      v=self.rndnzu()
+      v=self.rndu01zerooneexc()
       z=math.cos(math.pi*u)
       w=(1+s*z)/(s+z)
       y=kappa*(s-w)
@@ -295,7 +295,3 @@ class RandomGen:
         if u<0:
           angle=-angle
         return mean+angle
-
-rg=RandomGen()
-for i in range(10):
-  print(rg.negativebinomial(10,0.5))

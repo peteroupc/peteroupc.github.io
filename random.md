@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 6, 2017.
+Begun on Mar. 5, 2016; last updated on July 10, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -311,13 +311,15 @@ There are special considerations in play when applications use RNGs to shuffle a
 The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Generating_Every_Permutation></a>
-### Generating Every Permutation
+### Choosing from Among All Permutations
 
-A pseudorandom number generator (PRNG) can't generate more distinct permutations (arrangements) of a shuffled list than the generator's _period_. The number of distinct permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [factorial](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
+If a pseudorandom number generator's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+
+The number of distinct permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [factorial](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
 - _n_!, if the list consists of _n_ different items, and
 - (_nm_)! / _m_!<sup>_n_</sup>, if the list is formed from _m_ identical lists each with _n_ different items.
 
-In general, a PRNG with state length _k_ bits, as shown in the table below, can't generate all distinct permutations of a list with more items than the given maximum list size (_k_ is the base-2 logarithm of _n_!, rounded up to an integer). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't generate more than 2<sup>_k_</sup> permutations.)
+In general, a PRNG with state length _k_ bits, as shown in the table below, can't choose from among all the distinct permutations of a list with more items than the given maximum list size (_k_ is the base-2 logarithm of _n_!, rounded up to an integer). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't choose from among more than 2<sup>_k_</sup> permutations.)
 
 | State length (_k_)  |  Maximum list size (_n_) |
 | -----------------|----------------------- |
@@ -326,7 +328,7 @@ In general, a PRNG with state length _k_ bits, as shown in the table below, can'
 | 226 | 52 |
 | 256 | 72 |
 
-A PRNG with state length less than the number of bits given below (_k_) can't generate all distinct permutations of a list formed from _m_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_nm_)! / _m_!<sup>_n_</sup>), rounded up to an integer).
+A PRNG with state length less than the number of bits given below (_k_) can't choose from among all the distinct permutations of a list formed from _m_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_nm_)! / _m_!<sup>_n_</sup>), rounded up to an integer).
 
 | Number of lists (_m_) | Items per list (_n_) | Minimum state length (_k_) |
 | -----------------|----------|------------- |
@@ -340,7 +342,7 @@ A PRNG with state length less than the number of bits given below (_k_) can't ge
 | 2 | 60 | 601 |
 | 4 | 60 | 1282 |
 
-An application concerned about generating every possible distinct permutation of a list when shuffling it would be well advised&mdash;
+An application concerned about being able to choose from among all the distinct permutations of a shuffled list (and not just from among some of them) would be well advised&mdash;
 - to use an unpredictable-random implementation, or
 - if speed is a concern and computer and information security is not, to use a PRNG&mdash;
     - that meets or exceeds the quality requirements of a statistical-random implementation,
