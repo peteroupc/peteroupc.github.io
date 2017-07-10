@@ -105,7 +105,7 @@
 
 <ul>
 <li><a href="#Shuffling_Method">Shuffling Method</a></li>
-<li><a href="#Generating_Every_Permutation">Generating Every Permutation</a></li>
+<li><a href="#Choosing_from_Among_All_Permutations">Choosing from Among All Permutations</a></li>
 </ul></li>
 <li><a href="#Motivation">Motivation</a></li>
 <li><a href="#Conclusion">Conclusion</a>
@@ -127,7 +127,7 @@
 <li><strong>Pseudorandom number generator (PRNG).</strong> A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
-<li><strong>Period.</strong> The maximum number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
+<li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
 <p><a id=Unpredictable_Random_Generators></a></p>
@@ -338,6 +338,8 @@
 
 <h4>Unit Testing</h4>
 
+<p>state-based actions don&#39;t use the stack [C.R.</p>
+
 <p>A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 5).</p>
 
 <p><a id=Verifiable_Random_Numbers></a></p>
@@ -466,9 +468,9 @@ distribution) or fall within a given range is outside the scope of this page;  I
 
 <h3>Shuffling Method</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher&ndash;Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
 
-<p><a id=Generating_Every_Permutation></a></p>
+<p><a id=Choosing_from_Among_All_Permutations></a></p>
 
 <h3>Choosing from Among All Permutations</h3>
 
@@ -646,7 +648,7 @@ distribution) or fall within a given range is outside the scope of this page;  I
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
-<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue</a></ul>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

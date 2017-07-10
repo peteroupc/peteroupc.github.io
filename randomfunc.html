@@ -522,7 +522,7 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h3>Shuffling</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher-Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher&ndash;Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre>METHOD Shuffle(list)
    // NOTE: Check size of the list early to prevent
@@ -554,7 +554,7 @@ the following idioms in an <code>if</code> condition:</p>
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG&#39;s <em>period</em> (the maximum number of values it can generate in a sequence before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can&#39;t choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
+<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG&#39;s <em>period</em> (the maximum number of values in a generated sequence for that RNG before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can&#39;t choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
 
 <p><strong>Note:</strong> In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing:</p>
 
@@ -1179,7 +1179,7 @@ END METHOD
 
 <h3>von Mises distribution</h3>
 
-<p>The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the <code>mean</code> is the mean angle, <code>kappa</code> is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best-Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
+<p>The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the <code>mean</code> is the mean angle, <code>kappa</code> is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
 
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
@@ -1224,7 +1224,7 @@ the two parameters of the beta distribution.  The range of the beta distribution
 <li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
 <li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
-the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring-Yule distribution</em>. (<code>NegativeBinomial</code> can be <code>NegativeBinomialInt</code> instead.)</li>
+the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>. (<code>NegativeBinomial</code> can be <code>NegativeBinomialInt</code> instead.)</li>
 <li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(pi * (RNDU01OneExc()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
 are the two parameters of the Cauchy distribution.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of
@@ -1291,7 +1291,7 @@ from random number generators.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
-<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue</a></ul>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
 <p>
 If you like this software, you should consider donating to me, Peter O., at the link below:</p>
 <p class="printonly"><b>peteroupc.github.io</b></p>

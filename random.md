@@ -59,7 +59,7 @@ The following table summarizes the kinds of RNGs covered in this document.
 - [Advice for New Programming Language APIs](#Advice_for_New_Programming_Language_APIs)
 - [Shuffling](#Shuffling)
     - [Shuffling Method](#Shuffling_Method)
-    - [Generating Every Permutation](#Generating_Every_Permutation)
+    - [Choosing from Among All Permutations](#Choosing_from_Among_All_Permutations)
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
@@ -74,7 +74,7 @@ The following definitions are helpful in better understanding this document.
 - **Pseudorandom number generator (PRNG).** A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
-- **Period.** The maximum number of random numbers a PRNG can generate in one sequence before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
+- **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats before the sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
 
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
@@ -231,6 +231,8 @@ Option 1 often applies to games that generate procedural terrain for game levels
 <a id=Unit_Testing></a>
 #### Unit Testing
 
+state-based actions don't use the stack [C.R.
+
 A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 5).
 
 <a id=Verifiable_Random_Numbers></a>
@@ -308,9 +310,9 @@ There are special considerations in play when applications use RNGs to shuffle a
 <a id=Shuffling_Method></a>
 ### Shuffling Method
 
-The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 
-<a id=Generating_Every_Permutation></a>
+<a id=Choosing_from_Among_All_Permutations></a>
 ### Choosing from Among All Permutations
 
 If a pseudorandom number generator's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
