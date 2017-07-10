@@ -439,7 +439,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can generate all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
+The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -470,7 +470,7 @@ The [Fisher-Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shu
        end
     END METHOD
 
-An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG's _period_ (the maximum number of values it can generate in a sequence before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.  See also my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.
+An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG's _period_ (the maximum number of values in a generated sequence for that RNG before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.  See also my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.
 
 **Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing:
 - One or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups).
@@ -1039,7 +1039,7 @@ The following implementation of the negative binomial distribution allows `succe
 <a id=von_Mises_distribution></a>
 ### von Mises distribution
 
-The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the `mean` is the mean angle, `kappa` is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best-Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
+The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the `mean` is the mean angle, `kappa` is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -1078,7 +1078,7 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 - **Beta binomial distribution**: `Binomial(trials, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
- the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring-Yule distribution_. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
+ the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
