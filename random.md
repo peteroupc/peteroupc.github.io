@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 10, 2017.
+Begun on Mar. 5, 2016; last updated on July 12, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -160,11 +160,11 @@ Examples of statistically-random generators include the following:
 - `xorshift128+` (state length 128 bits; nonzero seed).
 - `Lehmer128` (state length 128 bits).
 - `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
-- C++'s [`ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
+- C++'s [`std::ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 
 Non-examples include the following:
 - Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests. (See also S. Vigna, "[An experimental exploration of Marsaglia's `xorshift` generators, scrambled](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.)
-- Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `minstd_rand` and `minstd_rand0` engines) has a _state length_ of less than 64 bits.
+- Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 
 <a id=Seeded_Random_Generators></a>
 ## Seeded Random Generators
@@ -194,7 +194,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 As used here, a random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
 - the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified), and
-- .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because itis generation behavior may change in the future).
+- .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because its generation behavior may change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -203,7 +203,6 @@ Which PRNG to use for generating reproducible results depends on the application
 
 -  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
 -  The PRNG's _state length_ should be 64 bits or greater.
--  Any seed passed to the PRNG should be at least the same size as the PRNG's _state length_.
 
 <a id=Examples_2></a>
 ### Examples
@@ -243,10 +242,14 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  There are two kinds of noise generation methods:
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  In general, the same RNG recommendations apply to these functions as they do to most other cases, particularly if the noise implementation&mdash;
 
-1. [Colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise and pink noise. Here, the same RNG recommendations apply to these functions as they do to most other cases.<sup>(2)</sup>
-2. _Noise functions_, including [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion), output one or more random numbers given an _n_-dimensional point as input. Although noise functions don't take seeds themselves, the core of a noise function can be an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number.  The noise function's PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect.  However, noise functions (rather than other RNGs) ought to be used only if it's not feasible to achieve the randomized variation without them.
+- implements [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise or pink noise<sup>(2)</sup>, or
+- includes a _noise function_ and is initialized in advance using an RNG (for example, by generating random gradients to be used later by the noise function).
+
+(A _noise function_ is a function that outputs random numbers given an _n_-dimensional point as input.  Examples of noise functions include [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).)
+
+For noise functions having as their core an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number, that PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect. However, this kind of noise function implementation ought to be used only if it's not feasible to achieve the randomized variation otherwise.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
@@ -326,7 +329,9 @@ In general, a PRNG with state length _k_ bits, as shown in the table below, can'
 | 64 | 20 |
 | 128 | 34 |
 | 226 | 52 |
-| 256 | 72 |
+| 256 | 57 |
+| 512 | 98 |
+| 525 | 100 |
 
 A PRNG with state length less than the number of bits given below (_k_) can't choose from among all the distinct permutations of a list formed from _m_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_nm_)! / _m_!<sup>_n_</sup>), rounded up to an integer).
 
@@ -337,19 +342,15 @@ A PRNG with state length less than the number of bits given below (_k_) can't ch
 | 4 | 20 | 304 |
 | 1 | 52 | 226 |
 | 2 | 52 | 500 |
-| 4 | 52 | 1069 |
 | 1 | 60 | 273 |
-| 2 | 60 | 601 |
-| 4 | 60 | 1282 |
 
-An application concerned about being able to choose from among all the distinct permutations of a shuffled list (and not just from among some of them) would be well advised&mdash;
-- to use an unpredictable-random implementation, or
-- if speed is a concern and computer and information security is not, to use a PRNG&mdash;
-    - that meets or exceeds the quality requirements of a statistical-random implementation,
-    - that has a period at least as high as the number of permutations of the list to be shuffled, and
-    - that was initialized automatically with an _unpredictable seed_ before use.
+If an application is expected&mdash;
+- to shuffle lists of size no larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of the largest list it is expected to shuffle, whenever a [statistical-random implementation](#Statistical_Random_Generators) or [seeded RNG](#Seeded_Random_Generators) is otherwise called for. (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+- to shuffle lists of arbitrary size, or lists of size larger than 100, then practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.  In this case, the application should choose a PRNG whose period is at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large), whenever a [statistical-random implementation](#Statistical_Random_Generators) or [seeded RNG](#Seeded_Random_Generators)  is otherwise called for.
 
-(See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+The PRNG chosen this way should&mdash;
+- meet or exceed the quality requirements of a statistical-random implementation, and
+- have been initialized automatically with an _unpredictable seed_ before use.
 
 <a id=Motivation></a>
 ## Motivation
