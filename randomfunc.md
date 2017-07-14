@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 12, 2017.
+Begun on June 4, 2017; last updated on July 13, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -65,7 +65,7 @@ This methods described in this document can be categorized as follows:
     - [Poisson Distribution](#Poisson_Distribution)
     - [Gamma Distribution](#Gamma_Distribution)
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
-    - [von Mises distribution](#von_Mises_distribution)
+    - [von Mises Distribution](#von_Mises_Distribution)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
 - [Conclusion](#Conclusion)
 - [Notes](#Notes)
@@ -1036,8 +1036,8 @@ The following implementation of the negative binomial distribution allows `succe
         end
     END METHOD
 
-<a id=von_Mises_distribution></a>
-### von Mises distribution
+<a id=von_Mises_Distribution></a>
+### von Mises Distribution
 
 The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the `mean` is the mean angle, `kappa` is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
 
