@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 12, 2017.
+Begun on Mar. 5, 2016; last updated on July 13, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -179,7 +179,8 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 1. the initial state (the seed) which the "random" result will be generated from&mdash;
     - is hard-coded,
     - was entered by the user,
-    - is known to the application and was generated using a statistical or unpredictable-random implementation (as defined earlier), or
+    - is known to the application and was generated using a statistical-random or unpredictable-random implementation (as defined earlier),
+    - is a verifiable random number (as defined later), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application might need to generate the same "random" result multiple times,
 3. the application either&mdash;
@@ -311,12 +312,12 @@ There are special considerations in play when applications use RNGs to shuffle a
 <a id=Shuffling_Method></a>
 ### Shuffling Method
 
-The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+The first consideration touches on the shuffling method.  The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Choosing_from_Among_All_Permutations></a>
 ### Choosing from Among All Permutations
 
-If a pseudorandom number generator's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+The second consideration is present if the application uses PRNGs for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
 The number of distinct permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [factorial](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
 - _n_!, if the list consists of _n_ different items, and
@@ -344,9 +345,9 @@ A PRNG with state length less than the number of bits given below (_k_) can't ch
 | 2 | 52 | 500 |
 | 1 | 60 | 273 |
 
-If an application is expected&mdash;
-- to shuffle lists of size no larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of the largest list it is expected to shuffle, whenever a [statistical-random implementation](#Statistical_Random_Generators) or [seeded RNG](#Seeded_Random_Generators) is otherwise called for. (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
-- to shuffle lists of arbitrary size, or lists of size larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large), whenever a [statistical-random implementation](#Statistical_Random_Generators) or [seeded RNG](#Seeded_Random_Generators)  is otherwise called for. (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
+Whenever a [statistical-random implementation](#Statistical_Random_Generators) or [seeded RNG](#Seeded_Random_Generators) is otherwise called for, if an application is expected&mdash;
+- to shuffle lists of size no larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of the largest list it is expected to shuffle. (See "Lack of randomness" in the [BigDeal document by van Staveren](https://sater.home.xs4all.nl/doc.html) for further discussion.)
+- to shuffle lists of arbitrary size, or lists of size larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
 
 The PRNG chosen this way should&mdash;
 - meet or exceed the quality requirements of a statistical-random implementation, and

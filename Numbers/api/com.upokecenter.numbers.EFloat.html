@@ -821,7 +821,7 @@ do so.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>dbl</code> - A 64-bit floating-point number.</li>
+<li><code>dbl</code> - The parameter <code>dbl</code> is a 64-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -862,7 +862,7 @@ do so.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - A 32-bit floating-point number.</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -898,7 +898,7 @@ do so.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>ctx</code> - An EContext object specifying the precision, rounding, and
@@ -950,7 +950,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>ctx</code> - An EContext object specifying the precision, rounding, and
 exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
@@ -979,7 +979,7 @@ exponent range to apply to the parsed number. Can be null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - A text string.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 </ul>
@@ -1964,7 +1964,7 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - An arbitrary object.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2792,9 +2792,9 @@ exponent are both 0.</li>
 <li><p><code>desiredExponent</code> - The desired exponent for the result. The exponent is
 the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -2841,9 +2841,9 @@ exponent is outside that range.</li>
 <li><p><code>desiredExponentInt</code> - The desired exponent for the result. The exponent
 is the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -3073,9 +3073,9 @@ given precision.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3109,9 +3109,9 @@ arithmetic context.</li>
 <li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3146,9 +3146,9 @@ arithmetic context.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3180,7 +3180,7 @@ the valid range of the arithmetic context.</li>
 
 <ul>
 <li><p><code>exponent</code> - An arbitrary-precision integer.</p></li>
-<li><p><code>rounding</code> - An ERounding object.</p></li>
+<li><p><code>rounding</code> - The parameter <code>rounding</code> is an ERounding object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3204,9 +3204,9 @@ given precision.</li>
 <li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the sixteenth
-(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
-1000b). A value of 0 rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3383,7 +3383,7 @@ null or the precision and exponent range are unlimited.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>places</code> - A 32-bit signed integer.</li>
+<li><code>places</code> - The parameter <code>places</code> is a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3402,7 +3402,7 @@ null or the precision and exponent range are unlimited.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>places</code> - A 32-bit signed integer.</p></li>
+<li><p><code>places</code> - The parameter <code>places</code> is a 32-bit signed integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
