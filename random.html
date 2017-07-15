@@ -124,10 +124,10 @@
 <p>The following definitions are helpful in better understanding this document.</p>
 
 <ul>
-<li><strong>Pseudorandom number generator (PRNG).</strong> A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same state every time. (In this document, RNGs include PRNGs.)</li>
+<li><strong>Pseudorandom number generator (PRNG).</strong> A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same input and state every time. (In this document, RNGs include PRNGs.)</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
-<li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats before the sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
+<li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
 <p><a id=Unpredictable_Random_Generators></a></p>
@@ -563,11 +563,11 @@ distribution) or fall within a given range is outside the scope of this page;  I
 <p>Whenever a <a href="#Statistical_Random_Generators">statistical-random implementation</a> or <a href="#Seeded_Random_Generators">seeded RNG</a> is otherwise called for, if an application is expected&mdash;</p>
 
 <ul>
-<li>to shuffle lists of size no larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of the largest list it is expected to shuffle. (See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</li>
-<li>to shuffle lists of arbitrary size, or lists of size larger than 100, then the application should choose a PRNG whose period is at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</li>
+<li>to shuffle lists of size no larger than 100, any PRNG used for shuffling should have a period at least as high as the number of permutations of the largest list it is expected to shuffle. (See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</li>
+<li>to shuffle lists of arbitrary size, or lists of size larger than 100, then any PRNG used for shuffling should have a period at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</li>
 </ul>
 
-<p>The PRNG chosen this way should&mdash;</p>
+<p>The PRNG in question should&mdash;</p>
 
 <ul>
 <li>meet or exceed the quality requirements of a statistical-random implementation, and</li>
