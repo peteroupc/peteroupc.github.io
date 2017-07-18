@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 13, 2017.
+Begun on June 4, 2017; last updated on July 19, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -49,7 +49,7 @@ This methods described in this document can be categorized as follows:
     - [Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)
     - [Creating a Random Character String](#Creating_a_Random_Character_String)
     - [Choosing Several Unique Items](#Choosing_Several_Unique_Items)
-    - [Quasi-Random Sampling](#Quasi_Random_Sampling)
+    - [Almost-Random Sampling](#Almost_Random_Sampling)
 - [Non-Uniform Distributions](#Non_Uniform_Distributions)
     - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - [Example](#Example)
@@ -369,11 +369,38 @@ Three related methods also generate a **random number in an interval bounded at 
 <a id=RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a>
 ### `RNDNUMRANGE`: Random Numbers Within a Range, Maximum Inclusive
 
-To generate a **random number `minInclusive` or greater and `maxInclusive` or less**, use the following pseudocode:
+The na&iuml; way of generating **random number `minInclusive` or greater and `maxInclusive` or less**, is shown in the following pseudocode, which generally works well only if the number format can't be negative or that format uses arbitrary precision.
 
     METHOD RNDNUMRANGE(minInclusive, maxInclusive)
         if minInclusive > maxInclusive: return error
         return minInclusive + (maxInclusive - minInclusive) * RNDU01()
+    END
+
+For fixed-point or floating-point number formats with fixed precision (such as Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, following pseudocode for `RNDU01()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
+
+    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
+       if minInclusive > maxInclusive: return error
+       if minInclusive == maxInclusive: return minInclusive
+       // Difference does not exceed maxInclusive
+       if minInclusive >= 0 or minInclusive + NUM_MAX >= maxInclusive
+           return minInclusive + (maxInclusive - minInclusive) * RNDU01()
+       end
+       while true
+         ret = RNDU01() * NUM_MAX
+         // NOTE: If the number format uses sign-magnitude
+         // representation, as is the case for Java `float` and
+         // `double` and .NET's implementation of `System.Decimal`,
+         // for example, use the following:
+         negative = RNDINT(1) == 0
+         if negative: ret = 0 - ret
+         if negative and ret == 0: continue
+         // NOTE: For fixed-precision fixed-point numbers implemented
+         // using two's complement numbers (note 1), use the following line
+         // instead of the preceding three lines, where `QUANTUM` is the
+         // smallest representable number in the fixed-point format:
+   // if RNDINT(1) == 0: ret = -QUANTUM - ret
+         if ret >= minInclusive and ret <= maxInclusive: return ret
+       end
     END
 
 <a id=RNDINTEXC_Modified_Core_Method_Maximum_Exclusive></a>
@@ -414,9 +441,19 @@ A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random int
 To generate a **random number `minInclusive` or greater and less than `maxExclusive`**, use the following pseudocode:
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
-        if minInclusive >= maxExclusive: return error
-        return minInclusive + (maxExclusive - minInclusive) * RNDU01OneExc()
-    END
+       if minInclusive >= maxExclusive: return error
+       // NOTE: For signed integer formats, replace the following line
+       // with "if minInclusive >=0 or minInclusive + NUM_MAX >=
+       // maxExclusive", where `NUM_MAX` has the same meaning
+       // as the pseudocode for `RNDNUMRANGE`.
+       if minInclusive >=0
+          return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
+       end
+       while true
+         ret = RNDNUMRANGE(minInclusive, maxExclusive)
+         if ret < maxExclusive: return ret
+       end
+    END METHOD
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
@@ -468,6 +505,9 @@ The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yat
              i = i - 1
           end
        end
+       // NOTE: An implementation can return the
+       // shuffled list, as is done here, but this is not required.
+       return list
     END METHOD
 
 An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG's _period_ (the maximum number of values in a generated sequence for that RNG before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called "cryptographically strong" generators) suffer less from this problem.  See also my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.
@@ -579,17 +619,21 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
 - **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list.
 - **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).
 
-<a id=Quasi_Random_Sampling></a>
-### Quasi-Random Sampling
+<a id=Almost_Random_Sampling></a>
+### Almost-Random Sampling
 
-Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement _quasi-random sampling_, as this technique is called, an application can do one of the following:
+Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of "almost-random" sampling, an application can do one of the following:
 
-- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list again, and continue.
-- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
+- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen:
+     - If outcomes must not be repeated in a row and two or more different outcomes are possible, then note the last chosen item, shuffle the list until the first item in the list is other than the noted item, and continue.
+     - Otherwise, shuffle the list and continue.
+- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
 
-However, quasi-random techniques are not recommended&mdash;
+However, "almost-random" sampling techniques are not recommended&mdash;
 - whenever computer or information security is involved, or
 - in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
+
+**Note:** [Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The standard error in the estimate is `sqrt((Y - X * X) / N)`, where X is the estimated integral and Y is the sum of squares of the evaluated values, divided by N. (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [_low-discrepancy sequences_](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobel and Halton sequences) provide the random numbers (often together with an RNG) to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
@@ -805,24 +849,40 @@ Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the follow
 The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 The following method generates two [normally-distributed](https://en.wikipedia.org/wiki/Normal_distribution)
-random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;), using the so-called [Box-Muller transformation](https://en.wikipedia.org/wiki/Box-Muller_transformation), as further explained in the pseudocode's comments.  (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.)
+random numbers with mean (average) `mu` (&mu;) and standard deviation `sigma` (&sigma;), using the polar method [(2)](#Note2).  (In a _standard normal distribution_, &mu; = 0 and &sigma; = 1.)
 The standard deviation `sigma` affects how wide the normal distribution's "bell curve" appears; the
-probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%;
-within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
+probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
 
     METHOD Normal2(mu, sigma)
-      // Choose a Rayleigh-distributed radius (multiplied by sigma)
-      radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma
-      // Choose a random angle
-      angle = 2 * pi * RNDU01OneExc()
-      // Return two normally-distributed numbers.  This will
-      // be the X and Y coordinates of a point on a circle.
-      return [mu + radius * cos(angle), mu + radius * sin(angle)]
+      while true
+        a = RNDU01()
+        b = RNDU01()
+        if a != 0 and RNDINT(1) == 0: a = 0 - a
+        if b != 0 and RNDINT(1) == 0: b = 0 - b
+        c = a * a + b * b
+        if c != 0 and c <= 1
+           c = sqrt(-2 * ln(c) / c)
+           return [c * a, c * b]
+        end
+      end
     END METHOD
 
 Since `Normal2` returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name `Normal` will be used in this document to represent a method that returns only one normally-distributed random number rather than two.
 
 Also note that a normally-distributed random number can theoretically fall anywhere on the number line, even if it's extremely far from the mean.  Depending on the use case, an application may need to reject normally-distributed numbers lower than a minimum threshold and/or higher than a maximum threshold and generate new normally-distributed numbers, or to clamp outlying numbers to those thresholds.  But then the resulting distribution would no longer be a real normal distribution, but rather a _truncated_ or _censored_ normal distribution, respectively.   (Rejecting or clamping outlying numbers this way can be done for any statistical distribution, not just a normal distribution.)
+
+Alternatively, or in addition, the following method (implementing a ratio-of-uniforms technique) can be used to generate normally distributed random numbers.
+
+    METHOD Normal(mu, sigma)
+        bmp = 0.8577638849607068 // sqrt(2/exp(1))
+        while true
+            a=RNDU01ZeroExc()
+            b=RNDNUMRANGE(-bmp,bmp)
+            if b*b <= -a * a * 4 * ln(a)
+                return (b * sigma / a) + mu
+            end
+        end
+    END METHOD
 
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
@@ -1133,6 +1193,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 ## Notes
 
  <sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two' s-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
+ <sup id=Note2>(2)</sup> The method that formerly appeared here is the _Box-Muller-transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  An alternative method of generating standard normal random numbers, summing twelve `RNDU01OneExc()`  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.
 
 <a id=License></a>
 ## License
