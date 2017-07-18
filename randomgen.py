@@ -2,6 +2,7 @@ import math
 import random
 
 SIGBITS = 53
+FLOAT_MAX = 1.7976931348623157e+308
 
 class RandomGen:
   def __init__(self,rng=None):
@@ -9,13 +10,27 @@ class RandomGen:
       self.rng=random
     else:
       self.rng=rng
+    self.bitcount=24
+    self.curbit=0
+
+  def _rndbit(self):
+    if self.bitcount>=24:
+      self.bitcount=0
+      self.curbit=self.rng.randint(0,(1<<24) - 1)
+    ret=self.curbit&1
+    self.curbit>>=1
+    self.bitcount+=1
+    return ret
 
   def rndint(self, maxInclusive):
     if maxInclusive < 0:
       raise ValueError("maxInclusive less than 0")
     if maxInclusive==0:
       return 0
-    return self.rng.randint(0, maxInclusive + 1)
+    if maxInclusive==1:
+      return self._rndbit()
+    # NOTE: Second parameter of `randint` is inclusive maximum
+    return self.rng.randint(0, maxInclusive)
 
   def rndintrange(self, minInclusive, maxInclusive):
     # NOTE: Since Python integers are arbitrary-precision,
@@ -37,7 +52,7 @@ class RandomGen:
       e+=1
     sig=sig+(1<<(SIGBITS - 1))
     # NOTE: Multiply by 1.0 to coerce to floating-point
-    return sig * 1.0 * (2 ** e)
+    return sig * 1.0 * (2.0 ** e)
 
   def rndu01oneexc(self):
     while True:
@@ -58,29 +73,26 @@ class RandomGen:
         return ret
 
   def rndnumrange(self, minInclusive, maxInclusive):
-    if minInclusive > maxInclusive:
-      raise ValueError
-    return minInclusive + (maxInclusive - minInclusive) * \
-      self.rndu_zeroinconeinc()
-
-  def rndintexc(self, maxExclusive):
-    if maxExclusive <= 0:
-      raise ValueError
-    return self.rndint(maxExclusive - 1)
-
-  def rndintexcrange(self, minInclusive, maxExclusive):
-    if minInclusive >= maxExclusive:
-      raise ValueError
+    if minInclusive > maxInclusive
+    if minInclusive >= 0 or minInclusive + FLOAT_MAX >= maxInclusive:
+       return minInclusive + (maxInclusive - minInclusive) * self.rndu01()
     while True:
-      ret=self.rndintrange(minInclusive, maxExclusive)
-      if ret < maxExclusive:
-        return ret
+       ret = self.rndu01() * FLOAT_MAX
+       negative = self.rndint(1) == 0
+       if negative:
+          ret = 0 - ret
+       if negative and ret == 0:
+          continue
+       if ret>=minInclusive and ret<=maxInclusive:
+          return ret
 
   def rndnumexcrange(self, minInclusive, maxExclusive):
     if minInclusive >= maxExclusive:
       raise ValueError
-    return minInclusive + (maxExclusive - minInclusive) * \
-      self.rndu01oneexc()
+    while True:
+      ret=self.rndnumrange(minInclusive, maxExclusive)
+      if ret < maxExclusive:
+        return ret
 
   def shuffle(self, list):
     if len(list) >= 2:
@@ -91,6 +103,7 @@ class RandomGen:
         list[i]=list[k]
         list[k]=tmp
         i-=1
+    return list
 
   def choice(self, list):
     return list[self.rndintexc(len(list))]
@@ -148,10 +161,12 @@ class RandomGen:
     return list[len(list)-1]
 
   def normal(self, mu=0.0, sigma=1.0):
-    radius=math.sqrt(-2*math.log(1.0-self.rndu01oneexc()))*sigma
-    angle=2*math.pi*self.rndu01oneexc()
-    n1=mu+radius*math.cos(angle)
-    return n1
+    bmp=0.8577638849607068 # sqrt(2/exp(1))
+    while True:
+      a=self.rndu01zeroexc()
+      b=self.rndnumrange(-bmp,bmp)
+      if b*b <= -4 * a * a * math.log(a):
+        return (b * sigma / a) + mu
 
   def lognormal(self,mu=0.0,sigma=0.0):
     return math.exp(self.normal(mu,sigma))
@@ -295,3 +310,32 @@ class RandomGen:
         if u<0:
           angle=-angle
         return mean+angle
+
+class AlmostRandom:
+  def __init__(self, randgen, list, norepeats = False):
+    if len(list)==0:
+      raise ValueError
+    self.randgen=randgen
+    self.list=self.randgen.shuffle([x for x in list])
+    self.index=0
+    self.norepeats=(norepeats and not self._isEmptyOrSameItem())
+
+  def _isEmptyOrSameItem(self):
+    if len(list)==0:
+      return True
+    for item in self.list:
+      if item != self.list[0]:
+        return False
+    return True
+
+  def choose(self):
+    if self.index>=len(self.list):
+      self.index=0
+      lastitem=self.list[len(self.list)-1]
+      while True:
+        self.list=self.randgen.shuffle(self.list)
+        if (not self.norepeats) or self.list[0] != lastitem:
+          break
+    item=self.list[self.index]
+    self.index+=1
+    return item
