@@ -360,7 +360,7 @@
 <li>includes a <em>noise function</em> and is initialized in advance using an RNG (for example, by generating random gradients to be used later by the noise function).</li>
 </ul>
 
-<p>(A <em>noise function</em> is a function that outputs random numbers given an <em>n</em>-dimensional point as input.  Examples of noise functions include <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> and <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a>.)</p>
+<p>(A <em>noise function</em> is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point as input.  Examples of noise functions include <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> and <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a>.)</p>
 
 <p>For noise functions having as their core an RNG that converts an <em>n</em>-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number, that PRNG should follow the <a href="#Seedable_PRNG_Recommendations">seedable PRNG recommendations</a> if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect. However, this kind of noise function implementation ought to be used only if it&#39;s not feasible to achieve the randomized variation otherwise.</p>
 
@@ -372,12 +372,12 @@
 unpredictable-random and statistical-random RNGs for popular programming languages. Note the following:</p>
 
 <ul>
-<li>In single-threaded applications for both kinds of RNGs, it&#39;s encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.</li>
-<li>In multithreaded applications, it&#39;s encouraged&mdash;
+<li>In single-threaded applications, for each kind of RNG, it&#39;s encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.</li>
+<li>In multithreaded applications, for each kind of RNG, it&#39;s encouraged to either&mdash;
 
 <ul>
-<li>for both kinds of RNGs, to create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, and/or</li>
-<li>at least for statistical-random RNGs, to store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance.</li>
+<li>create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or</li>
+<li>store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this may not always be ideal for unpredictable-random RNGs).</li>
 </ul></li>
 <li>Methods and libraries mentioned in the &quot;Statistical-random&quot; column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the &quot;Unpredictable-random&quot; column).</li>
 <li>The mention of a third-party library in this section does not imply sponsorship or endorsement
@@ -569,8 +569,8 @@ meet the statistical-random requirements, strictly speaking, but may be adequate
 <p>Whenever a <a href="#Statistical_Random_Generators">statistical-random implementation</a> or <a href="#Seeded_Random_Generators">seeded RNG</a> is otherwise called for, if an application is expected&mdash;</p>
 
 <ul>
-<li>to shuffle lists of size no larger than 100, any PRNG used for shuffling should have a period at least as high as the number of permutations of the largest list it is expected to shuffle. (See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</li>
-<li>to shuffle lists of arbitrary size, or lists of size larger than 100, then any PRNG used for shuffling should have a period at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</li>
+<li>to shuffle lists of size no larger than 100, then any PRNG used for shuffling is encouraged to have a period at least as high as the number of permutations of the largest list it is expected to shuffle. (See &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html">BigDeal document by van Staveren</a> for further discussion.)</li>
+<li>to shuffle lists of arbitrary size, or lists of size larger than 100, then any PRNG used for shuffling is encouraged to have a period at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</li>
 </ul>
 
 <p>The PRNG in question should&mdash;</p>
