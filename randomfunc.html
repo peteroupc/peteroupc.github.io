@@ -21,8 +21,9 @@ of them.</p>
 <p>As used in this document, a random number generator&mdash;</p>
 
 <ul>
+<li>seeks to generate independent and identically distributed numbers that seem to occur by chance (though the numbers need not be uniformly distributed or approximately so),</li>
 <li>can seek to generate random numbers that are cost-prohibitive to predict (also called &quot;cryptographically strong&quot; RNGs), or merely seek to generate number sequences likely to pass statistical tests of randomness,</li>
-<li>can be initialized automatically before use, or can be initialized with an application specified &quot;seed&quot;, and</li>
+<li>can be initialized automatically before use, or can be initialized with an application specified &quot;seed&quot;,</li>
 <li>can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.</li>
 </ul>
 
@@ -31,7 +32,7 @@ of them.</p>
 <p>This methods described in this document can be categorized as follows:</p>
 
 <ul>
-<li>Methods to generate uniformly distributed random numbers from an underlying uniform RNG (such as the <a href="#Core_Random_Generation_Method">core method, <code>RNDINT(N)</code></a>).</li>
+<li>Methods to generate uniformly distributed random numbers from an underlying RNG (such as the <a href="#Core_Random_Generation_Method">core method, <code>RNDINT(N)</code></a>).</li>
 <li>Common tasks to generate randomized content and conditions, such as <a href="#Boolean_Conditions">Boolean conditions</a>, <a href="#Shuffling">shuffling</a>, and <a href="#Choosing_Several_Unique_Items">sampling unique items from a list</a>.</li>
 <li>Methods to generate non-uniformly distributed random numbers, including <a href="#Weighted_Choice">weighted choice</a>, the <a href="#Normal_Gaussian_Distribution">normal distribution</a>, and <a href="#Other_Non_Uniform_Distributions">other statistical distributions</a>.</li>
 </ul>
@@ -162,15 +163,16 @@ of them.</p>
 
 <h3><code>RNDINT</code>: Core Random Integer Method</h3>
 
-<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(maxInclusive)</code></strong> in this document. It generates a random integer <strong>0 or greater</strong> and <strong><code>maxInclusive</code> or less</strong>, where <code>maxInclusive</code> is an integer 0 or greater, and it assumes the underlying RNG produces uniformly random numbers. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.</p>
+<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(maxInclusive)</code></strong> in this document. It generates a <strong>random integer 0 or greater <code>maxInclusive</code> or less</strong>, where <code>maxInclusive</code> is an integer 0 or greater and the number generated is approximately uniformly distributed. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.</p>
 
-<p>The implementation of <code>RNDINT(maxInclusive)</code> depends heavily on what kind of values the underlying RNG returns.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for four kinds of uniform RNGs.</p>
+<p>The implementation of <code>RNDINT(maxInclusive)</code> depends heavily on what kind of values the underlying RNG returns.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for four kinds of RNGs.</p>
 
 <p>In this section:</p>
 
 <ul>
 <li><code>RNG()</code> is a random number returned by the underlying random number generator.</li>
 <li>The term <em>modulus</em> means an integer that is 1 higher than the highest integer that an RNG can output.</li>
+<li>The four kinds of RNG mentioned in this section are assumed to seek to generate random numbers that are approximately uniformly distributed.</li>
 </ul>
 
 <p>If the RNG outputs <strong>integers 0 or greater and less than a positive integer</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as follows.  In the pseudocode below, <code>MODULUS</code> is the RNG&#39;s modulus.   Note that all the variables in this method are unsigned integers.  (For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/">blog post by Johnny Chan</a>.)</p>
@@ -283,7 +285,7 @@ END METHOD
 
 <hr>
 
-<p>The underlying uniform RNG can be other than already described in this section; however, a detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of a uniform RNG that is in wide use and is other than already described in this section should send me a comment.</p>
+<p>The underlying RNG can be other than already described in this section; however, a detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of a RNG that is in wide use, returns uniformly distributed numbers, and is other than already described in this section should send me a comment.</p>
 
 <p><a id=RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive></a></p>
 
@@ -440,7 +442,7 @@ END METHOD
 
 <h3><code>RNDNUMRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</h3>
 
-<p>The na&iuml; way of generating <strong>random number <code>minInclusive</code> or greater and <code>maxInclusive</code> or less</strong>, is shown in the following pseudocode, which generally works well only if the number format can&#39;t be negative or that format uses arbitrary precision.</p>
+<p>The na&iuml;ve way of generating <strong>random number <code>minInclusive</code> or greater and <code>maxInclusive</code> or less</strong>, is shown in the following pseudocode, which generally works well only if the number format can&#39;t be negative or that format uses arbitrary precision.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
     if minInclusive &gt; maxInclusive: return error
@@ -448,7 +450,7 @@ END METHOD
 END
 </pre>
 
-<p>For fixed-point or floating-point number formats with fixed precision (such as Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, following pseudocode for <code>RNDU01()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
+<p>For fixed-point or floating-point number formats with fixed precision (such as Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDU01()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
@@ -470,7 +472,7 @@ END
      // using two&#39;s complement numbers (note 1), use the following line
      // instead of the preceding three lines, where `QUANTUM` is the
      // smallest representable number in the fixed-point format:
- // if RNDINT(1) == 0: ret = -QUANTUM - ret
+     // if RNDINT(1) == 0: ret = -QUANTUM - ret
      if ret &gt;= minInclusive and ret &lt;= maxInclusive: return ret
    end
 END
@@ -503,7 +505,7 @@ END
    // maxExclusive&quot;, where `INT_MAX` has the same meaning
    // as the pseudocode for `RNDINTRANGE`.
    if minInclusive &gt;=0
-      return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
+     return RNDINTRANGE(minInclusive, maxExclusive - 1)
    end
    while true
      ret = RNDINTRANGE(minInclusive, maxExclusive)
@@ -516,17 +518,11 @@ END METHOD
 
 <h3><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</h3>
 
-<p>To generate a <strong>random number <code>minInclusive</code> or greater and less than <code>maxExclusive</code></strong>, use the following pseudocode:</p>
+<p>A version of <code>RNDNUMRANGE</code>, called <code>RNDNUMEXCRANGE</code> here, returns a  <strong>random number <code>minInclusive</code> or greater and less than <code>maxExclusive</code></strong>.
+ It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code></a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
-   // NOTE: For signed integer formats, replace the following line
-   // with &quot;if minInclusive &gt;=0 or minInclusive + NUM_MAX &gt;=
-   // maxExclusive&quot;, where `NUM_MAX` has the same meaning
-   // as the pseudocode for `RNDNUMRANGE`.
-   if minInclusive &gt;=0
-      return minInclusive + RNDINT(maxExclusive - minInclusive - 1)
-   end
    while true
      ret = RNDNUMRANGE(minInclusive, maxExclusive)
      if ret &lt; maxExclusive: return ret
@@ -595,7 +591,7 @@ the following idioms in an <code>if</code> condition:</p>
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the kind of RNG used.  Notably, in general, if a deterministic RNG&#39;s <em>period</em> (the maximum number of values in a generated sequence for that RNG before that sequence repeats) is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can&#39;t choose when it shuffles that list. RNGs that seek to generate random numbers that are cost-prohibitive to predict (so-called &quot;cryptographically strong&quot; generators) suffer less from this problem.  See also my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, a deterministic RNG with a period 2<sup>226</sup> or greater is good enough for shuffling a 52-item list, if a deterministic RNG is otherwise called for.</p>
+<p>An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.  It suffices to say here that in general, whenever a deterministic, uniformly-distributed RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for an RNG before that sequence repeats).</p>
 
 <p><strong>Note:</strong> In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing:</p>
 
@@ -745,7 +741,7 @@ end
 <li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
 </ul>
 
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The standard error in the estimate is <code>sqrt((Y - X * X) / N)</code>, where X is the estimated integral and Y is the sum of squares of the evaluated values, divided by N. (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobel and Halton sequences) provide the random numbers (often together with an RNG) to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The standard error in the estimate is <code>sqrt((Y - X * X) / N)</code>, where X is the estimated integral and Y is the sum of squares of the evaluated values, divided by N. (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobel and Halton sequences), often together with a uniformly-distributed RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 
@@ -1347,7 +1343,7 @@ from random number generators.</p>
 <h2>Notes</h2>
 
 <p><sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39; s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
- <sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  An alternative method of generating standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
+ <sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
 
 <p><a id=License></a></p>
 
