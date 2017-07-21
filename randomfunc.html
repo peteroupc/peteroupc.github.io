@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 19, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 20, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -471,8 +471,8 @@ END
      // NOTE: For fixed-precision fixed-point numbers implemented
      // using two&#39;s complement numbers (note 1), use the following line
      // instead of the preceding three lines, where `QUANTUM` is the
-     // smallest representable number in the fixed-point format:
-     // if RNDINT(1) == 0: ret = -QUANTUM - ret
+     // smallest representable positive number in the fixed-point format:
+     // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
      if ret &gt;= minInclusive and ret &lt;= maxInclusive: return ret
    end
 END
@@ -741,7 +741,7 @@ end
 <li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
 </ul>
 
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The standard error in the estimate is <code>sqrt((Y - X * X) / N)</code>, where X is the estimated integral and Y is the sum of squares of the evaluated values, divided by N. (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobel and Halton sequences), often together with a uniformly-distributed RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The error in the estimate is <code>sqrt((Y - X * X) / (N)</code>, where X is the estimated integral and Y is the sum of squares of the evaluated values, divided by N. (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobel and Halton sequences), often together with a uniformly-distributed RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 

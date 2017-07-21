@@ -251,7 +251,11 @@ Randomly generated numbers can serve as _noise_, that is, a randomized variation
 
 (A _noise function_ is a function that outputs seemingly random numbers given an _n_-dimensional point as input.  Examples of noise functions include [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).)
 
-For noise functions having as their core an RNG that converts an _n_-dimensional point to a seed for a PRNG, then uses the PRNG to generate a random number, that PRNG should follow the [seedable PRNG recommendations](#Seedable_PRNG_Recommendations) if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation or if the PRNG is not used solely to generate noise; otherwise, that PRNG need only be as strong as required to achieve the desired effect. However, this kind of noise function implementation ought to be used only if it's not feasible to achieve the randomized variation otherwise.
+Two other noise function designs can optionally take a "seed" containing arbitrary data in addition to an _n_-dimensional point:
+- For noise functions that have as their core a hash function, that hash function should be designed such that it is reasonably fast and each bit of the input affects every bit of the output without a clear preference for 0 or 1.
+- Noise function designs that involve converting the input (_n_-dimensional point and "seed") to a seed for a PRNG, then using that PRNG to generate a random number, are not ideal because some PRNGs (such as `xorshift128+`) don't mix their state before generating a random number from that state.
+
+However, either kind of noise function implementation ought to be used only if it's not feasible to achieve the randomized variation otherwise.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
