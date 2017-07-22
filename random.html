@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 21, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 22, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -221,7 +221,7 @@
 <li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation,</li>
 <li>must not be a fixed value or a user-entered value,</li>
 <li>should not be trivially predictable in any of its bits, as far as practical,</li>
-<li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>(1)</sup>, and</li>
+<li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note1">(1)</a></sup>, and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
@@ -355,20 +355,23 @@
 
 <p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.</p>
 
-<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a>, such as white noise or pink noise<sup>(2)</sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.</p>
+<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a>, such as white noise or pink noise<sup><a href="#Note2">(2)</a></sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.</p>
 
-<p>Noise implementations that include a <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), as is the case, for example, for <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a> and <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a>, can be implemented in any of these ways:</p>
-
-<ul>
-<li>If the implementation is initialized in advance using an RNG (for example, by generating random gradients to be used later by the noise function), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended whenever feasible.</li>
-<li>If the noise function has as its core a hash function&mdash;
+<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a> or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), then different considerations apply depending on the implementation:</p>
 
 <ul>
-<li>that hash function should be reasonably fast and be designed such that each bit of the input affects each bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
+<li>If the implementation uses an RNG to initialize a table of gradients or hash values in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended whenever feasible.</li>
+<li>A noise implementation that uses a table of pregenerated gradients or hash values should be used only if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation (treating the implementation as using a &quot;hard-coded&quot; seed).</li>
+<li>If the noise function incorporates a hash function&mdash;
+
+<ul>
+<li>that hash function should be reasonably fast and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
 </ul></li>
-<li>Noise function designs that involve using the input to initialize a PRNG (which will help generate the output) are not recommended because some PRNGs (such as <code>xorshift128+</code>) don&#39;t mix their state before generating a random number from that state.</li>
+<li>Noise functions that incorporate a PRNG (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended because some PRNGs (such as <code>xorshift128+</code>) don&#39;t mix their state before generating a random number from that state.</li>
 </ul>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> technique combines several layers of cellular or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.</p>
 
 <p><a id=Programming_Language_APIs></a></p>
 
@@ -642,9 +645,9 @@ meet the statistical-random requirements, strictly speaking, but may be adequate
 
 <h2>Notes</h2>
 
-<p><sup>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</p>
+<p><sup id=Note1>(1)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</p>
 
-<p><sup>(2)</sup> This is because usual implementations of colored noise don&#39;t sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.</p>
+<p><sup id=Note2>(2)</sup> This is because usual implementations of colored noise don&#39;t sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.</p>
 
 <p><a id=License></a></p>
 
