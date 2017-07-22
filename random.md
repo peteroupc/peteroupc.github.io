@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 19, 2017.
+Begun on Mar. 5, 2016; last updated on July 21, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -193,7 +193,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-As used here, a random number generation method is _stable_ if it uses a PRNG, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
+As used here, a random number generation method is _stable_ if it uses a deterministic algorithm, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
 - the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified), and
 - .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because its generation behavior may change in the future).
@@ -244,18 +244,17 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  In general, the same RNG recommendations apply to these functions as they do to most other cases, particularly if the noise implementation&mdash;
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.
 
-- implements [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise or pink noise<sup>(2)</sup>, or
-- includes a _noise function_ and is initialized in advance using an RNG (for example, by generating random gradients to be used later by the noise function).
+If the noise implementation implements [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise or pink noise<sup>(2)</sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.
 
-(A _noise function_ is a function that outputs seemingly random numbers given an _n_-dimensional point as input.  Examples of noise functions include [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).)
+Noise implementations that include a _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point), as is the case, for example, for [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) and [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion), can be implemented in any of these ways:
 
-Two other noise function designs can optionally take a "seed" containing arbitrary data in addition to an _n_-dimensional point:
-- For noise functions that have as their core a hash function, that hash function should be designed such that it is reasonably fast and each bit of the input affects every bit of the output without a clear preference for 0 or 1.
-- Noise function designs that involve converting the input (_n_-dimensional point and "seed") to a seed for a PRNG, then using that PRNG to generate a random number, are not ideal because some PRNGs (such as `xorshift128+`) don't mix their state before generating a random number from that state.
-
-However, either kind of noise function implementation ought to be used only if it's not feasible to achieve the randomized variation otherwise.
+- If the implementation is initialized in advance using an RNG (for example, by generating random gradients to be used later by the noise function), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended whenever feasible.
+- If the noise function has as its core a hash function&mdash;
+    - that hash function should be reasonably fast and be designed such that each bit of the input affects each bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
+    - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
+- Noise function designs that involve using the input to initialize a PRNG (which will help generate the output) are not recommended because some PRNGs (such as `xorshift128+`) don't mix their state before generating a random number from that state.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
