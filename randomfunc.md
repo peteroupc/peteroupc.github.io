@@ -66,7 +66,7 @@ This methods described in this document can be categorized as follows:
     - [Hypergeometric Distribution](#Hypergeometric_Distribution)
     - [Poisson Distribution](#Poisson_Distribution)
     - [Gamma Distribution](#Gamma_Distribution)
-        - [Generating Random Numbers that Sum to One](#Generating_Random_Numbers_that_Sum_to_One)
+        - [Generating Random Numbers with a Given Positive Sum](#Generating_Random_Numbers_with_a_Given_Positive_Sum)
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
     - [von Mises Distribution](#von_Mises_Distribution)
     - [Stable Distribution](#Stable_Distribution)
@@ -888,6 +888,7 @@ Alternatively, or in addition, the following method (implementing a ratio-of-uni
 #### Generating Random Points on the Surface of a Hypersphere
 
 Generating N `Normal(0, 1)` random numbers, then dividing them by their _norm_ (the square root of the sum of squares of the numbers generated this way, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  [Reference](http://mathworld.wolfram.com/HyperspherePointPicking.html).
+(In the exceptional case that all numbers are 0, the process should repeat.)
 
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
@@ -1040,10 +1041,10 @@ Extended versions of the gamma distribution:
 - The three-parameter gamma distribution (`GammaDist3(a, b, c)`), where `c` is another shape parameter, is `pow(GammaDist(a), 1.0 / c) * b`.
 - The four-parameter gamma distribution (`GammaDist4(a, b, c, d)`), where `d` is the minimum value, is `pow(GammaDist(a), 1.0 / c) * b + d`.
 
-<a id=Generating_Random_Numbers_that_Sum_to_One></a>
-#### Generating Random Numbers that Sum to One
+<a id=Generating_Random_Numbers_with_a_Given_Positive_Sum></a>
+#### Generating Random Numbers with a Given Positive Sum
 
-The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  (If `total` is 1, the exponential distribution, described [later](#Other_Non_Uniform_Distributions), can be used instead of `GammaDist(1)` to generate the random numbers; see also Devroye 1986, p. 405.)
+The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  (In the exceptional case that all numbers are 0, the process should repeat. If `total` is 1, the exponential distribution, described [later](#Other_Non_Uniform_Distributions), can be used instead of `GammaDist(1)` to generate the random numbers; see also Devroye 1986, p. 405.)
 
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
@@ -1138,19 +1139,20 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 <a id=Stable_Distribution></a>
 ### Stable Distribution
 
-A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` and `beta`; if `beta` is 0, the curve is symmetric.
+A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` and `beta`; if `beta` is 0, the curve is symmetric.
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error
          if beta < -1 or beta > 1: return error
-        expo=-ln(RNDU01ZeroExc())
         halfpi = pi * 0.5
         unif=RNDNUMEXCRANGE(-halfpi, halfpi)
         if unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+        // Cauchy special case
+        if alpha == 1 and beta == 0: return tan(unif)
+        expo=-ln(RNDU01ZeroExc())
         c=cos(unif)
         if alpha == 1
                 s=sin(unif)
-                if beta == 0: return s/c # Cauchy random variate
                 return 2.0*((unif*beta+pi*0.5)*s/c -
                     beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
         end

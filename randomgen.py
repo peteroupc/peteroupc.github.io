@@ -73,7 +73,8 @@ class RandomGen:
         return ret
 
   def rndnumrange(self, minInclusive, maxInclusive):
-    if minInclusive > maxInclusive
+    if minInclusive > maxInclusive:
+      raise ValueError
     if minInclusive >= 0 or minInclusive + FLOAT_MAX >= maxInclusive:
        return minInclusive + (maxInclusive - minInclusive) * self.rndu01()
     while True:
@@ -107,6 +108,33 @@ class RandomGen:
 
   def choice(self, list):
     return list[self.rndintexc(len(list))]
+
+  def hypersphere_point(self, dimension, radius = 1.0):
+    if dimension<=0:
+      raise ValueError
+    while True:
+      norm=0
+      point=[self.normal() for i in range(dimension)]
+      for coord in point:
+        norm+=coord*coord
+      norm=math.sqrt(norm)
+      if norm>0:
+        return [p*radius/norm for p in point]
+
+  def dirichlet(self, count, sum = 1.0):
+    if count<=0 or sum<=0:
+      raise ValueError
+    while True:
+      numsum=0
+      nums=None
+      if sum==1:
+         nums=[self.exponential() for i in range(count)]
+      else:
+         nums=[self.gamma(sum) for i in range(count)]
+      for num in nums:
+        numsum+=num
+      if numsum>0:
+        return [(p/numsum)*sum for p in nums]
 
   def weighted_choice(self, weights):
     if len(weights)==0:
@@ -281,7 +309,7 @@ class RandomGen:
     else:
       return self.poisson(self.gamma(successes)*(1-p)/p)
 
-  def exponential(self,lamda):
+  def exponential(self,lamda = 1.0):
     return -math.log(1.0-self.rndu01oneexc())/lamda
 
   def pareto(self,minimum,alpha):
