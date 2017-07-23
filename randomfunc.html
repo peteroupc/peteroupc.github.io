@@ -101,7 +101,7 @@ of them.</p>
 <li><a href="#Gamma_Distribution">Gamma Distribution</a>
 
 <ul>
-<li><a href="#Generating_Random_Numbers_that_Sum_to_One">Generating Random Numbers that Sum to One</a></li>
+<li><a href="#Generating_Random_Numbers_with_a_Given_Positive_Sum">Generating Random Numbers with a Given Positive Sum</a></li>
 </ul></li>
 <li><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a></li>
 <li><a href="#von_Mises_Distribution">von Mises Distribution</a></li>
@@ -1025,7 +1025,8 @@ END METHOD
 
 <h4>Generating Random Points on the Surface of a Hypersphere</h4>
 
-<p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.</p>
+<p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.
+(In the exceptional case that all numbers are 0, the process should repeat.)</p>
 
 <p><a id=Binomial_Distribution></a></p>
 
@@ -1188,11 +1189,11 @@ end
 <li>The four-parameter gamma distribution (<code>GammaDist4(a, b, c, d)</code>), where <code>d</code> is the minimum value, is <code>pow(GammaDist(a), 1.0 / c) * b + d</code>.</li>
 </ul>
 
-<p><a id=Generating_Random_Numbers_that_Sum_to_One></a></p>
+<p><a id=Generating_Random_Numbers_with_a_Given_Positive_Sum></a></p>
 
-<h4>Generating Random Numbers that Sum to One</h4>
+<h4>Generating Random Numbers with a Given Positive Sum</h4>
 
-<p>The <em>Dirichlet distribution</em> models a distribution of N numbers that sum to a given positive number, <code>total</code>.  Generating N <code>GammaDist(total)</code> calls and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution">Wikipedia article</a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  (If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.)</p>
+<p>The <em>Dirichlet distribution</em> models a distribution of N numbers that sum to a given positive number, <code>total</code>.  Generating N <code>GammaDist(total)</code> calls and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution">Wikipedia article</a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  (In the exceptional case that all numbers are 0, the process should repeat. If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.)</p>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
@@ -1293,19 +1294,20 @@ END METHOD
 
 <h3>Stable Distribution</h3>
 
-<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> and <code>beta</code>; if <code>beta</code> is 0, the curve is symmetric.</p>
+<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> and <code>beta</code>; if <code>beta</code> is 0, the curve is symmetric.</p>
 
 <pre>METHOD Stable(alpha, beta)
      if alpha &lt;=0 or alpha &gt; 2: return error
      if beta &lt; -1 or beta &gt; 1: return error
-    expo=-ln(RNDU01ZeroExc())
     halfpi = pi * 0.5
     unif=RNDNUMEXCRANGE(-halfpi, halfpi)
     if unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+    // Cauchy special case
+    if alpha == 1 and beta == 0: return tan(unif)
+    expo=-ln(RNDU01ZeroExc())
     c=cos(unif)
     if alpha == 1
             s=sin(unif)
-            if beta == 0: return s/c # Cauchy random variate
             return 2.0*((unif*beta+pi*0.5)*s/c -
                 beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
     end
