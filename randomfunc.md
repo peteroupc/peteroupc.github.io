@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 20, 2017.
+Begun on June 4, 2017; last updated on July 23, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -61,12 +61,15 @@ This methods described in this document can be categorized as follows:
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
     - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
+        - [Generating Random Points on the Surface of a Hypersphere](#Generating_Random_Points_on_the_Surface_of_a_Hypersphere)
     - [Binomial Distribution](#Binomial_Distribution)
     - [Hypergeometric Distribution](#Hypergeometric_Distribution)
     - [Poisson Distribution](#Poisson_Distribution)
     - [Gamma Distribution](#Gamma_Distribution)
+        - [Generating Random Numbers that Sum to One](#Generating_Random_Numbers_that_Sum_to_One)
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
     - [von Mises Distribution](#von_Mises_Distribution)
+    - [Stable Distribution](#Stable_Distribution)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
 - [Conclusion](#Conclusion)
 - [Notes](#Notes)
@@ -85,6 +88,7 @@ In this document:
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
 * `acos(a)` is the inverse cosine of `a`.
+* `atan(a)` is the inverse tangent of `a`.
 * `sqrt(a)` is the square root of `a`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
@@ -880,6 +884,11 @@ Alternatively, or in addition, the following method (implementing a ratio-of-uni
         end
     END METHOD
 
+<a id=Generating_Random_Points_on_the_Surface_of_a_Hypersphere></a>
+#### Generating Random Points on the Surface of a Hypersphere
+
+Generating N `Normal(0, 1)` random numbers, then dividing them by their _norm_ (the square root of the sum of squares of the numbers generated this way, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  [Reference](http://mathworld.wolfram.com/HyperspherePointPicking.html).
+
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
 
@@ -1031,6 +1040,11 @@ Extended versions of the gamma distribution:
 - The three-parameter gamma distribution (`GammaDist3(a, b, c)`), where `c` is another shape parameter, is `pow(GammaDist(a), 1.0 / c) * b`.
 - The four-parameter gamma distribution (`GammaDist4(a, b, c, d)`), where `d` is the minimum value, is `pow(GammaDist(a), 1.0 / c) * b + d`.
 
+<a id=Generating_Random_Numbers_that_Sum_to_One></a>
+#### Generating Random Numbers that Sum to One
+
+The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  (If `total` is 1, the exponential distribution, described [later](#Other_Non_Uniform_Distributions), can be used instead of `GammaDist(1)` to generate the random numbers; see also Devroye 1986, p. 405.)
+
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
 
@@ -1121,6 +1135,39 @@ The von Mises distribution describes a distribution of circular angles.  In the 
         end
     END METHOD
 
+<a id=Stable_Distribution></a>
+### Stable Distribution
+
+A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` and `beta`; if `beta` is 0, the curve is symmetric.
+
+    METHOD Stable(alpha, beta)
+         if alpha <=0 or alpha > 2: return error
+         if beta < -1 or beta > 1: return error
+        expo=-ln(RNDU01ZeroExc())
+        halfpi = pi * 0.5
+        unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+        if unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+        c=cos(unif)
+        if alpha == 1
+                s=sin(unif)
+                if beta == 0: return s/c # Cauchy random variate
+                return 2.0*((unif*beta+pi*0.5)*s/c -
+                    beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
+        end
+        z=-tan(pi*alpha*0.5)*beta
+        y=atan(-z)/alpha
+        ug=unif+y
+        cpow=c**(-1.0/alpha)
+        return ((1.0+z*z)**(1.0/(2*alpha)))*
+            (sin(alpha*ug)*cpow)*
+            ((cos(unif-alpha*ug)/expo)**((1.0-alpha)/alpha))
+    END METHOD
+
+Extended versions of the stable distribution:
+
+- The four-parameter stable distribution (`Stable4(alpha, beta, mu, sigma)`), where `mu` is the mean and ` sigma` is the scale, is `Stable(alpha, beta) * sigma + mu`.
+- The "type 0" stable distribution (`StableType0(alpha, beta, mu, sigma)`) is `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
+
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
 
@@ -1136,13 +1183,13 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
-are the two parameters of the Cauchy distribution.
+are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
   freedom.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
   freedom.  This expresses a sum-of-squares of `df` random variables in the standard normal distribution.
 - **Erlang distribution**: `GammaDist(shape) / rate`, where `shape` and `rate` are the two parameters of the Erlang distribution.
-- **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
 - **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
@@ -1158,7 +1205,7 @@ This expresses a distribution of minimum values.
 - **L&eacute;vy distribution**: `sigma * 0.5 / GammaDist(0.5) + mu`, where `mu` is the location and `sigma` is the dispersion.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
-- **Logarithmic series distribution**: `floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param,1.0 - RNDU01OneExc())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
+- **Logarithmic series distribution**: `floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
 - **Logistic distribution**: `(ln(x/(1.0 - x)) * scale + mean`, where `x` is `RNDU01ZeroOneExc()` and `mean` and `scale` are the two parameters of the logistic distribution.
 - **Maxwell distribution**: `scale * sqrt(GammaDist(1.5) * 2)`, where `scale` is the scale.
 - **Noncentral chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares.
