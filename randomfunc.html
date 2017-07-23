@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 20, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 23, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -90,13 +90,22 @@ of them.</p>
 <ul>
 <li><a href="#Example_2">Example</a></li>
 </ul></li>
-<li><a href="#Normal_Gaussian_Distribution">Normal (Gaussian) Distribution</a></li>
+<li><a href="#Normal_Gaussian_Distribution">Normal (Gaussian) Distribution</a>
+
+<ul>
+<li><a href="#Generating_Random_Points_on_the_Surface_of_a_Hypersphere">Generating Random Points on the Surface of a Hypersphere</a></li>
+</ul></li>
 <li><a href="#Binomial_Distribution">Binomial Distribution</a></li>
 <li><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a></li>
 <li><a href="#Poisson_Distribution">Poisson Distribution</a></li>
-<li><a href="#Gamma_Distribution">Gamma Distribution</a></li>
+<li><a href="#Gamma_Distribution">Gamma Distribution</a>
+
+<ul>
+<li><a href="#Generating_Random_Numbers_that_Sum_to_One">Generating Random Numbers that Sum to One</a></li>
+</ul></li>
 <li><a href="#Negative_Binomial_Distribution">Negative Binomial Distribution</a></li>
 <li><a href="#von_Mises_Distribution">von Mises Distribution</a></li>
+<li><a href="#Stable_Distribution">Stable Distribution</a></li>
 <li><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a></li>
 </ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
@@ -119,6 +128,7 @@ of them.</p>
 <li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
 <li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
 <li><code>acos(a)</code> is the inverse cosine of <code>a</code>.</li>
+<li><code>atan(a)</code> is the inverse tangent of <code>a</code>.</li>
 <li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
 <li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>nothing</code> indicates the absence of a value.  It corresponds to <code>null</code> in Java, C#, and JavaScript, <code>nil</code> in Ruby, and <code>None</code> in Python.</li>
@@ -1011,6 +1021,12 @@ END METHOD
 END METHOD
 </pre>
 
+<p><a id=Generating_Random_Points_on_the_Surface_of_a_Hypersphere></a></p>
+
+<h4>Generating Random Points on the Surface of a Hypersphere</h4>
+
+<p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.</p>
+
 <p><a id=Binomial_Distribution></a></p>
 
 <h3>Binomial Distribution</h3>
@@ -1172,6 +1188,12 @@ end
 <li>The four-parameter gamma distribution (<code>GammaDist4(a, b, c, d)</code>), where <code>d</code> is the minimum value, is <code>pow(GammaDist(a), 1.0 / c) * b + d</code>.</li>
 </ul>
 
+<p><a id=Generating_Random_Numbers_that_Sum_to_One></a></p>
+
+<h4>Generating Random Numbers that Sum to One</h4>
+
+<p>The <em>Dirichlet distribution</em> models a distribution of N numbers that sum to a given positive number, <code>total</code>.  Generating N <code>GammaDist(total)</code> calls and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution">Wikipedia article</a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  (If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.)</p>
+
 <p><a id=Negative_Binomial_Distribution></a></p>
 
 <h3>Negative Binomial Distribution</h3>
@@ -1267,6 +1289,43 @@ END METHOD
 END METHOD
 </pre>
 
+<p><a id=Stable_Distribution></a></p>
+
+<h3>Stable Distribution</h3>
+
+<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> and <code>beta</code>; if <code>beta</code> is 0, the curve is symmetric.</p>
+
+<pre>METHOD Stable(alpha, beta)
+     if alpha &lt;=0 or alpha &gt; 2: return error
+     if beta &lt; -1 or beta &gt; 1: return error
+    expo=-ln(RNDU01ZeroExc())
+    halfpi = pi * 0.5
+    unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+    if unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+    c=cos(unif)
+    if alpha == 1
+            s=sin(unif)
+            if beta == 0: return s/c # Cauchy random variate
+            return 2.0*((unif*beta+pi*0.5)*s/c -
+                beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
+    end
+    z=-tan(pi*alpha*0.5)*beta
+    y=atan(-z)/alpha
+    ug=unif+y
+    cpow=c**(-1.0/alpha)
+    return ((1.0+z*z)**(1.0/(2*alpha)))*
+        (sin(alpha*ug)*cpow)*
+        ((cos(unif-alpha*ug)/expo)**((1.0-alpha)/alpha))
+END METHOD
+</pre>
+
+<p>Extended versions of the stable distribution:</p>
+
+<ul>
+<li>The four-parameter stable distribution (<code>Stable4(alpha, beta, mu, sigma)</code>), where <code>mu</code> is the mean and <code>sigma</code> is the scale, is <code>Stable(alpha, beta) * sigma + mu</code>.</li>
+<li>The &quot;type 0&quot; stable distribution (<code>StableType0(alpha, beta, mu, sigma)</code>) is <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
+</ul>
+
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 
 <h3>Other Non-Uniform Distributions</h3>
@@ -1287,13 +1346,13 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
 the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>. (<code>NegativeBinomial</code> can be <code>NegativeBinomialInt</code> instead.)</li>
 <li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(pi * (RNDU01OneExc()-0.5)) + mu</code>, where <code>mu</code> and <code>scale</code>
-are the two parameters of the Cauchy distribution.</li>
+are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of
 freedom.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
 freedom.  This expresses a sum-of-squares of <code>df</code> random variables in the standard normal distribution.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(shape) / rate</code>, where <code>shape</code> and <code>rate</code> are the two parameters of the Erlang distribution.</li>
-<li><strong>Exponential distribution</strong>: <code>-ln(RNDU01ZeroExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. The <code>lamda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
+<li><strong>Exponential distribution</strong>: <code>-ln(RNDU01ZeroExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. The <code>lamda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
 This expresses a distribution of maximum values.</li>
 <li><strong>Geometric distribution</strong>: <code>NegativeBinomialInt(1, p)</code>, where <code>p</code> has the same meaning
@@ -1309,7 +1368,7 @@ same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>L&eacute;vy distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
-<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param,1.0 - RNDU01OneExc())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
+<li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
 <li><strong>Logistic distribution</strong>: <code>(ln(x/(1.0 - x)) * scale + mean</code>, where <code>x</code> is <code>RNDU01ZeroOneExc()</code> and <code>mean</code> and <code>scale</code> are the two parameters of the logistic distribution.</li>
 <li><strong>Maxwell distribution</strong>: <code>scale * sqrt(GammaDist(1.5) * 2)</code>, where <code>scale</code> is the scale.</li>
 <li><strong>Noncentral chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares.</li>

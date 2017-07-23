@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 22, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 23, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -154,7 +154,7 @@
 
 <h3>Quality</h3>
 
-<p>An unpredictable-random implementation generates uniformly distributed random bits such that an outside party can guess neither prior nor future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
+<p>An unpredictable-random implementation generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 
@@ -360,15 +360,15 @@
 <p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a> or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), then different considerations apply depending on the implementation:</p>
 
 <ul>
-<li>If the implementation uses an RNG to initialize a table of gradients or hash values in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended whenever feasible.</li>
-<li>A noise implementation that uses a table of pregenerated gradients or hash values should be used only if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation (treating the implementation as using a &quot;hard-coded&quot; seed).</li>
-<li>If the noise function incorporates a hash function&mdash;
+<li>If the implementation <strong>uses an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended wherever feasible, especially where computer and information security are involved in the noise generation.</li>
+<li>A noise implementation that <strong>uses a table of pregenerated gradients or hash values</strong> should be used only if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation (treating the implementation as using a &quot;hard-coded&quot; seed).</li>
+<li>If the noise function <strong>incorporates a hash function</strong>&mdash;
 
 <ul>
 <li>that hash function should be reasonably fast and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
 </ul></li>
-<li>Noise functions that incorporate a PRNG (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended because some PRNGs (such as <code>xorshift128+</code>) don&#39;t mix their state before generating a random number from that state.</li>
+<li>Noise functions that <strong>incorporate a PRNG</strong> (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended because some PRNGs (such as <code>xorshift128+</code>) don&#39;t mix their state before generating a random number from that state.</li>
 </ul>
 
 <p>The <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> technique combines several layers of cellular or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.</p>
@@ -402,7 +402,7 @@ of that library, or imply a preference of that library over others. The list is 
 </tr>
 </thead><tbody>
 <tr>
-<td>C/C++</td>
+<td>C/C++ (G)</td>
 <td>(C)</td>
 <td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><code>xoroshiro128plus.c</code></a> (128-bit nonzero seed); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><code>xorshift128plus.c</code></a> (128-bit nonzero seed)</td>
 <td></td>
@@ -438,7 +438,7 @@ meet the statistical-random requirements, strictly speaking, but may be adequate
 
 <p>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</p>
 
-<p>(C) Read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems (both devices can generally be read from in the same way as disk files), or call the <code>CryptGenRandom</code> API in Windows-based systems (see <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a>).</p>
+<p>(C) See <a href="#Advice_for_New_Programming_Language_APIs">&quot;Advice for New Programming Language APIs&quot;</a> for implementation notes for unpredictable-random implementations.</p>
 
 <p>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical-random requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</p>
 
@@ -446,15 +446,25 @@ meet the statistical-random requirements, strictly speaking, but may be adequate
 
 <p>(F) At least in Unix-based systems, calling the <code>SecureRandom</code> constructor that takes a byte array is recommended. The byte array should be data described in note (C).</p>
 
+<p>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><code>std::random_device</code></a>, introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.</p>
+
 <p><a id=Advice_for_New_Programming_Language_APIs></a></p>
 
 <h2>Advice for New Programming Language APIs</h2>
 
-<p>Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example:</p>
+<p>Wherever possible, existing libraries or techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example&mdash;</p>
 
 <ul>
-<li>An unpredictable-random implementation can read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in Unix-based systems, or call the <code>CryptGenRandom</code> API in Windows-based systems, and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances.</li>
-<li>A statistical-random implementation can use a PRNG algorithm mentioned as an example in the <a href="#Statistical_Random_Generators">statistical-random generator</a> section.</li>
+<li><p>an unpredictable-random implementation can&mdash;</p>
+
+<ul>
+<li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
+<li>call the <code>getentropy</code> method on OpenBSD, or</li>
+<li>call the <code>CryptGenRandom</code> API in Windows-based systems,</li>
+</ul>
+
+<p>and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and</p></li>
+<li>a statistical-random implementation can use a PRNG algorithm mentioned as an example in the <a href="#Statistical_Random_Generators">statistical-random generator</a> section.</li>
 </ul>
 
 <p>If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for unpredictable-random generators could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time on the number of random bytes the API will generate.</p>
