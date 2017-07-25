@@ -751,7 +751,7 @@ end
 <li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
 </ul>
 
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The <a href="http://mathworld.wolfram.com/Variance.html">&quot;Variance&quot; MathWorld article</a> gives methods for calculating the estimate&#39;s variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobel and Halton sequences), often together with a uniformly-distributed RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The <a href="http://mathworld.wolfram.com/Variance.html">&quot;Variance&quot; MathWorld article</a> gives methods for calculating the estimate&#39;s variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobol and Halton sequences), often together with a uniformly-distributed RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 
@@ -763,7 +763,7 @@ end
 
 <h3>Discrete Weighted Choice</h3>
 
-<p>The discrete weighted choice method is used to choose a random item from among a set of them with different probabilities of being chosen.</p>
+<p>The discrete weighted choice method is used to choose a random item from among a set of them with separate probabilities of being chosen.</p>
 
 <p>The following pseudocode takes a single list <code>weights</code>, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.</p>
 
@@ -895,7 +895,7 @@ to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, li
 
 <h4>Multinomial Distribution</h4>
 
-<p>The discrete weighted choice method can also be used to implement a <em>multinomial distribution</em>.  This distribution models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a different probability of happening.  The pseudocode below is of a method that takes two parameters: <code>trials</code>, which is the number of trials, and <code>weights</code>, which are the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as <code>weights</code>) containing the number of successes for each event.</p>
+<p>The discrete weighted choice method can also be used to implement a <em>multinomial distribution</em>.  This distribution models the number of times each of several mutually exclusive events happens among a given number of trials, where each event can have a separate probability of happening.  The pseudocode below is of a method that takes two parameters: <code>trials</code>, which is the number of trials, and <code>weights</code>, which are the relative probabilities of each event.  The method tallies the events as they happen and returns a list (with the same size as <code>weights</code>) containing the number of successes for each event.</p>
 
 <pre>METHOD Multinomial(trials, weights)
     if trials &lt; 0: return error
@@ -1155,6 +1155,9 @@ The gamma distribution models expected lifetimes. The method given here is based
 <pre>METHOD GammaDist(meanLifetime)
     // Must be greater than 0
     if meanLifetime &lt;= 0: return error
+    // Exponential special case (see also
+    // Devroye 1986, p. 405)
+    if meanLifetime == 1: return -ln(RNDU01ZeroOneExc())
     d = meanLifetime
     v = 0
     if meanLifetime &lt; 1: d = d + 1
@@ -1193,7 +1196,13 @@ end
 
 <h4>Generating Random Numbers with a Given Positive Sum</h4>
 
-<p>The <em>Dirichlet distribution</em> models a distribution of N numbers that sum to a given positive number, <code>total</code>.  Generating N <code>GammaDist(total)</code> calls and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution">Wikipedia article</a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  (In the exceptional case that all numbers are 0, the process should repeat. If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.)</p>
+<p>The <em>Dirichlet distribution</em> models a distribution of N numbers that sum to a given positive number, <code>total</code>.  Generating N <code>GammaDist(total)</code> calls and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution">Wikipedia article</a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note the following:</p>
+
+<ul>
+<li>In the exceptional case that all numbers are 0, the process should repeat.</li>
+<li>A more general version of the Dirichlet distribution allows the parameter in <code>GammaDist</code> to vary for each random number.</li>
+<li>If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.</li>
+</ul>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
@@ -1294,7 +1303,7 @@ END METHOD
 
 <h3>Stable Distribution</h3>
 
-<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> and <code>beta</code>; if <code>beta</code> is 0, the curve is symmetric.</p>
+<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> (stability index) and <code>beta</code> (skewness); if <code>beta</code> is 0, the curve is symmetric.</p>
 
 <pre>METHOD Stable(alpha, beta)
      if alpha &lt;=0 or alpha &gt; 2: return error
@@ -1312,12 +1321,11 @@ END METHOD
                 beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
     end
     z=-tan(pi*alpha*0.5)*beta
-    y=atan(-z)/alpha
-    ug=unif+y
-    cpow=c**(-1.0/alpha)
-    return ((1.0+z*z)**(1.0/(2*alpha)))*
+    ug=unif+atan(-z)/alpha
+    cpow=pow(c, -1.0 / alpha)
+    return pow(1.0+z*z, 1.0 / (2*alpha))*
         (sin(alpha*ug)*cpow)*
-        ((cos(unif-alpha*ug)/expo)**((1.0-alpha)/alpha))
+        pow(cos(unif-alpha*ug)/expo, (1.0-alpha) / alpha)
 END METHOD
 </pre>
 
@@ -1337,11 +1345,11 @@ END METHOD
 the two parameters of the beta distribution.  The range of the beta distribution is 0 or greater and less than 1.
 
 <ul>
-<li><strong>Arcsine distribution</strong>: <code>BetaDist(0.5, 0.5)</code> (Saucier 2000, p. 14).</li>
+<li><strong>Arcsine distribution</strong>: <code>min + (max - min) * BetaDist(0.5, 0.5)</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 14).</li>
 <li><strong>Beta-PERT distribution</strong>: <code>startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)</code>. The distribution starts  at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>, <code>size</code> is <code>endpt - startpt</code>, and <code>shape</code> is a shape parameter that&#39;s 0 or greater, but usually 4.</li>
 <li><strong>Beta prime distribution</strong>: <code>x / (1 - x)</code>, where <code>x</code> is <code>BetaDist(a, b)</code> and <code>a</code> and <code>b</code> are the two parameters of the
   beta distribution.</li>
-<li><strong>Parabolic distribution</strong>: <code>BetaDist(2, 2)</code> (Saucier 2000, p. 30).</li>
+<li><strong>Parabolic distribution</strong>: <code>min + (max - min) * BetaDist(2, 2)</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 30).</li>
 </ul></li>
 <li><strong>Beta binomial distribution</strong>: <code>Binomial(trials, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
@@ -1377,6 +1385,7 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Noncentral <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
+<li><strong>Power distribution</strong>: <code>pow(RNDU01ZeroOneExc(), 1.0 / alpha)</code>, where <code>alpha</code>  is the shape.</li>
 <li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(RNDU01ZeroExc()))</code>, where <code>a</code> is the scale and is greater than 0.</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means of the two Poisson variables.</li>
 <li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have
@@ -1403,8 +1412,9 @@ from random number generators.</p>
 
 <h2>Notes</h2>
 
-<p><sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39; s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
- <sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
+<p><sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39; s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
+
+<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
 
 <p><a id=License></a></p>
 
