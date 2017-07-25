@@ -1,0 +1,161 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Chi-Squared Test Pseudocode</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Chi-Squared Test Pseudocode</h1>
+
+<h2>Introduction</h2>
+
+<p>This short article sets forth pseudocode for performing a <a href="https://en.wikipedia.org/wiki/Chi-squared_test">chi-squared test</a> using
+observed frequencies and probabilities.  </p>
+
+<p>In the pseudocode below&mdash;</p>
+
+<ul>
+<li>The same notation and conventions apply here as they do to my article on <a href="./randomfunc.html#Notes_and_Definitions">random number generation methods</a>,</li>
+<li><code>ALMOSTZERO</code> is a number very close to 0 (for example, 10<sup>100</sup>), and </li>
+<li><code>EPSILON</code> is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>14</sup>).</li>
+</ul>
+
+<p>The following are the parameters for <code>ChiSquaredTest</code> below:</p>
+
+<ul>
+<li><code>probabilities</code> is a list of probabilities for each event (ranging from 0, never, to 1, always).</li>
+<li><code>counts</code> is a list with the same size as <code>probabilities</code> and gives, for each event, the number of times that event occurs.  The sum of all items in <code>counts</code> should be at least 5.</li>
+</ul>
+
+<p><code>ChiSquaredTest</code> returns a list containing two items: the first item is the chi-squared statistic, and
+the second item is the <em>p-value</em> (the probability that a random sample&#39;s chi-squared statistic would
+be greater than or equal to that of the given sample).   (Note that if <code>probabilities</code> has only one item, the p-value will be meaningless.)</p>
+
+<h2>Pseudocode</h2>
+
+<p>METHOD DoubleFactorial(x)
+    if x&lt;=1: return 1
+    ret=1
+    x=floor(x)
+    smod = mod(x,2)
+    k=0
+    if smod==0: k=floor(x/2)
+    if smod==1: k=floor((x-1)/2)+1
+    i=0
+    while i&lt;k
+        ret=ret<em>2</em>(i+1)-smod
+        i=i+1
+    end
+    return ret
+END METHOD</p>
+
+<p>METHOD GammaOfHalfInteger(x)
+        if x==0: return infinity
+        if x&lt;0: return error
+    // Computes gamma(x/2) assuming <code>x</code> is an integer
+    return doublefac(x-2)<em>sqrt(pi)/pow(2,(x-1)</em>0.5)
+END METHOD</p>
+
+<p>METHOD GammaRegQ(a,b)
+        if a==0: return infinity
+        if a&lt;0: return error
+    // Computes the Q version of the regularized gamma
+    // function for <code>a</code> divisible by 1/2
+    mul=pow(b,a)<em>exp(-b)
+    // NOTE: All uses of this function assume <code>a</code> is divisible
+    // by 1/2.  For general <code>a</code>, replace &quot;GammaOfHalfInteger&quot;
+    // with a call to the full-fledged gamma function.
+    mul/=GammaOfHalfInteger(a * 2)
+    // NOTE: Continued fraction calculation technique
+    // described in Thompson and Barnett, &quot;Coulomb and
+    // Bessel functions of complex arguments and order&quot;,
+    // June 1986.
+    ret=ALMOSTZERO // For example, 10^100
+    dLast=0
+    cLast=ret
+    i=0
+    while i &lt; 100
+        // Get next convergent of continue fraction
+        if i==0
+            num=1.0
+            den=1.0-a+b
+            dencount=3.0
+            numcount=1.0
+        else
+            num=numcount</em>(a-numcount)
+            den=dencount-a+b
+            dencount+=2.0
+            numcount+=1.0
+        end
+        // Calculate more of continued fraction
+        c=den+num/cLast
+        d=den+num<em>dLast
+        if d==0: d=ALMOSTZERO
+        if c==0: c=ALMOSTZERO
+        d=1.0/d
+        delta=d</em>c
+        ret<em>=delta
+         // For example 10^14
+        if abs(delta-1.0)&lt;EPSILON: break
+        dLast=d
+        cLast=c
+        i=i+1
+    end
+    return mul</em>ret
+END METHOD</p>
+
+<p>METHOD ChiSquaredTest(probabilities, counts)
+    if size(probabilities)!=size(counts): return error
+    // Calculate number of samples
+    numSamples=0
+    i=0
+    while i&lt;size(counts)
+        numSamples=numSamples+counts[i]
+        i=i+1
+    end
+    // Calculate chi-squared statistic
+    chisq=0
+    i=0
+    while i&lt;size(probabilities)
+        ex=probabilities[i]<em>numSamples</em>1.0
+        chisq=chisq+pow(counts[i]-ex,2)/ex
+        i=i+1
+    end
+    // Calculate p-value
+    rga=(size(probabilities)-1)<em>0.5
+    pvalue=GammaRegQ(rga,chisq</em>0.5)
+    // Return statistic and p-value as a list
+    return [chisq, pvalue]
+END METHOD</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

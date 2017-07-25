@@ -357,7 +357,7 @@
 
 <p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a>, such as white noise or pink noise<sup><a href="#Note2">(2)</a></sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.</p>
 
-<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a> or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), then different considerations apply depending on the implementation:</p>
+<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a>, <a href="https://en.wikipedia.org/wiki/Value_noise">value noise</a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), then different considerations apply depending on the implementation:</p>
 
 <ul>
 <li>If the implementation <strong>uses an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended wherever feasible, especially where computer and information security are involved in the noise generation.</li>
@@ -371,7 +371,7 @@
 <li>Noise functions that <strong>incorporate a PRNG</strong> (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended because some PRNGs (such as <code>xorshift128+</code>) don&#39;t mix their state before generating a random number from that state.</li>
 </ul>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> technique combines several layers of cellular or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> technique combines several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.</p>
 
 <p><a id=Programming_Language_APIs></a></p>
 
