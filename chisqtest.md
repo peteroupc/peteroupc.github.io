@@ -44,14 +44,15 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
     END METHOD
 
     METHOD GammaRegQ(a,b)
-      if a==0: return infinity
-      if a<0: return error
       // Computes the Q version of the regularized gamma
       // function for `a` divisible by 1/2
+      if a==0: return infinity
+      if a<0: return error
       mul=pow(b,a)*exp(-b)
       // NOTE: All uses of this function assume `a` is divisible
-      // by 1/2.  For general `a`, replace "GammaOfHalfInteger"
-      // with a call to the full-fledged gamma function.
+      // by 1/2.  For general `a`, replace `GammaOfHalfInteger(a * 2)`
+      // with a call to the full-fledged gamma function like
+      // `gamma(a)`.
       mul/=GammaOfHalfInteger(a * 2)
       // NOTE: Continued fraction calculation technique
       // described in Thompson and Barnett, "Coulomb and
