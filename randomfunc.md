@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 23, 2017.
+Begun on June 4, 2017; last updated on July 27, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -1153,17 +1153,17 @@ A stable distribution is a limiting distribution of the sum of arbitrarily many 
          if beta < -1 or beta > 1: return error
         halfpi = pi * 0.5
         unif=RNDNUMEXCRANGE(-halfpi, halfpi)
-        if unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+        while unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
         // Cauchy special case
         if alpha == 1 and beta == 0: return tan(unif)
         expo=-ln(RNDU01ZeroExc())
         c=cos(unif)
         if alpha == 1
                 s=sin(unif)
-                return 2.0*((unif*beta+pi*0.5)*s/c -
-                    beta * ln(pi*0.5*expo*c/(pi*0.5+beta*unif)))/pi
+                return 2.0*((unif*beta+halfpi)*s/c -
+                    beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
         end
-        z=-tan(pi*alpha*0.5)*beta
+        z=-tan(alpha*halfpi)*beta
         ug=unif+atan(-z)/alpha
         cpow=pow(c, -1.0 / alpha)
         return pow(1.0+z*z, 1.0 / (2*alpha))*
