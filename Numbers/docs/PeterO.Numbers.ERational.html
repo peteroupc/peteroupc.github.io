@@ -27,17 +27,19 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>numerator</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>denominator</i>: Another arbitrary-precision integer.</p></li>
+<li><p><i>numerator</i>: The numerator.</p></li>
+<li><p><i>denominator</i>: The denominator.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>numerator</i>
 or  <i>denominator</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The denominator is zero.</p></li>
 </ul>
 
 <h3>NaN</h3>
@@ -496,7 +498,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -520,7 +523,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A Boolean object.</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <h3>FromByte</h3>
 
@@ -551,7 +554,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>eint</i>: A Decimal object.</li>
+<li><i>eint</i>: The parameter  <i>eint</i>
+is a Decimal object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -569,7 +573,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flt</i>: A 64-bit floating-point number.</li>
+<li><i>flt</i>: The parameter  <i>flt</i>
+is a 64-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -786,7 +791,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flt</i>: A 32-bit floating-point number.</li>
+<li><i>flt</i>: The parameter  <i>flt</i>
+is a 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

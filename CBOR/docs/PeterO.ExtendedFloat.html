@@ -157,7 +157,7 @@
     PeterO.ExtendedFloat other);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Compares this extended float to another.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -168,7 +168,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A 32-bit signed integer.</p>
+<p>Less than 0 if this value is less than, 0 if equal to, or greater than 0 if greater than the other value.</p>
 
 <h3>Create</h3>
 
@@ -300,18 +300,17 @@ is null.</li>
     string str);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a binary float from a text string that represents a number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
-is not documented yet.</li>
+<li><i>str</i>: A text string containing the number to convert.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An ExtendedFloat object.</p>
+<p>The parsed number, converted to arbitrary-precision binary float.</p>
 
 <h3>FromString</h3>
 
