@@ -423,10 +423,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissaSmall</i>: The parameter  <i>mantissaSmall</i>
-is not documented yet.</p></li>
-<li><p><i>exponentSmall</i>: The parameter  <i>exponentSmall</i>
-is not documented yet.</p></li>
+<li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
+<li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -445,10 +443,8 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: The parameter  <i>mantissa</i>
-is not documented yet.</p></li>
-<li><p><i>exponent</i>: The parameter  <i>exponent</i>
-is not documented yet.</p></li>
+<li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
+<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -824,7 +820,8 @@ is null or  <i>ctx</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -915,7 +912,8 @@ is null or  <i>ctx</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dbl</i>: A 64-bit floating-point number.</li>
+<li><i>dbl</i>: The parameter  <i>dbl</i>
+is a 64-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1024,7 +1022,8 @@ is null or  <i>ctx</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flt</i>: A 32-bit floating-point number.</li>
+<li><i>flt</i>: The parameter  <i>flt</i>
+is a 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1065,7 +1064,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
@@ -1117,7 +1117,8 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
@@ -1158,7 +1159,8 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
 <li><p><i>ctx</i>: An EContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
@@ -2179,7 +2181,7 @@ precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>desiredExponentInt</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>desiredExponentInt</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code> of the context is true, ill also store the flags resulting from the operation (the flags re in addition to the pre-existing flags). Can be null, in which ase the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2233,7 +2235,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>desiredExponent</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>desiredExponent</i>: The desired exponent for the result. The exponent is the number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision and rounding of the result. If  <code>HasFlags</code> of the context is true, ill also store the flags resulting from the operation (the flags re in addition to the pre-existing flags). Can be null, in which ase the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2358,7 +2360,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2378,7 +2380,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2398,7 +2400,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>exponentSmall</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2418,7 +2420,7 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the sixteenth (10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3, 1000b). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the thousandth (10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A value of 0 rounds the number to an integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null, in which case the default rounding mode is HalfEven.</p></li>
 </ul>
 
@@ -2438,8 +2440,8 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponent</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>rounding</i>: An ERounding object.</p></li>
+<li><p><i>exponent</i>: The minimum exponent the result can have. This is the maximum number of fractional digits in the result, expressed as a negative number. Can also be positive, which eliminates lower-order places from the number. For example, -3 means round to the eighth (10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0 rounds the number to an integer.</p></li>
+<li><p><i>rounding</i>: Desired mode for rounding this object&#39;s value.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2552,7 +2554,8 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>places</i>: A 32-bit signed integer.</li>
+<li><i>places</i>: The parameter  <i>places</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2571,7 +2574,8 @@ EContext.ForPrecision(25)  // 25-digit precision);
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>places</i>: A 32-bit signed integer.</p></li>
+<li><p><i>places</i>: The parameter  <i>places</i>
+is a 32-bit signed integer.</p></li>
 <li><p><i>ctx</i>: An arithmetic context to control precision, rounding, and exponent range of the result. If  <code>HasFlags</code>  of the context is true, will also store the flags resulting from the operation (the flags are in addition to the pre-existing flags). Can be null.</p></li>
 </ul>
 

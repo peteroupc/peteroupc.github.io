@@ -80,7 +80,7 @@
 <li><p>64-bit signed integer: -2 <sup>63</sup>to (2 <sup>63</sup>- 1).</p></li>
 </ul>
 
-<p><b>Two&#39;s complement form</b>: In <i>two&#39; s-complement form</i>, positive numbers have the highest (most significant) bit et to zero, and negative numbers have that bit (and all bits eyond) set to one. To store a negative number, decrease its bsolute value by 1 and swap the bits of the resulting umber.</p>
+<p><b>Two&#39;s complement form</b>: In <i>two&#39; s-complement form</i>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
 <p><b>64-bit floating-point number</b>: A 64-bit binary loating-point number, in the form <i>significand</i>* 2<sup><i>exponent</i></sup>. The significand is 53 bits long Precision) and the exponent ranges from -1074 (EMin) to 971 EMax). The number is stored in the following format (commonly alled the IEEE 754 format):</p>
 
@@ -526,10 +526,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissaSmall</i>: The parameter  <i>mantissaSmall</i>
-is not documented yet.</p></li>
-<li><p><i>exponentSmall</i>: The parameter  <i>exponentSmall</i>
-is not documented yet.</p></li>
+<li><p><i>mantissaSmall</i>: Desired value for the mantissa.</p></li>
+<li><p><i>exponentSmall</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -548,10 +546,8 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: The parameter  <i>mantissa</i>
-is not documented yet.</p></li>
-<li><p><i>exponent</i>: The parameter  <i>exponent</i>
-is not documented yet.</p></li>
+<li><p><i>mantissa</i>: Desired value for the mantissa.</p></li>
+<li><p><i>exponent</i>: Desired value for the exponent.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1026,7 +1022,8 @@ is null or  <i>ctx</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: An arbitrary object.</li>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1117,7 +1114,8 @@ is null or  <i>ctx</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dbl</i>: A 64-bit floating-point number.</li>
+<li><i>dbl</i>: The parameter  <i>dbl</i>
+is a 64-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1219,7 +1217,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>valueSmaller</i>: A 32-bit signed integer.</li>
+<li><i>valueSmaller</i>: The parameter  <i>valueSmaller</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1237,7 +1236,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>valueSmall</i>: A 64-bit signed integer.</li>
+<li><i>valueSmall</i>: The parameter  <i>valueSmall</i>
+is a 64-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1273,7 +1273,8 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flt</i>: A 32-bit floating-point number.</li>
+<li><i>flt</i>: The parameter  <i>flt</i>
+is a 32-bit floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2196,7 +2197,7 @@ is null.</li>
     PeterO.Numbers.EDecimal divisor);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the remainder when dividing one arbitrary-precision decimal number by another.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3099,6 +3100,17 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a byte (from 0 to 255). Returns 0 if this value is infinity or not-a-number.</p>
+
+<h3>ToDecimal</h3>
+
+<pre>public System.Decimal ToDecimal();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Not documented yet.</p>
 
 <h3>ToDouble</h3>
 
