@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 23, 2017.
+Begun on Mar. 5, 2016; last updated on July 27, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -244,7 +244,7 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, ["Noise Functions and Map Generation"](http://www.redblobgames.com/articles/noise/introduction.html#colors)).
 
 If the noise implementation implements [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), such as white noise or pink noise<sup>[(2)](#Note2)</sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.
 

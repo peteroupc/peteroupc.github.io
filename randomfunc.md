@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 27, 2017.
+Begun on June 4, 2017; last updated on July 28, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -60,6 +60,7 @@ This methods described in this document can be categorized as follows:
         - [Multinomial Distribution](#Multinomial_Distribution)
     - [Continuous Weighted Choice](#Continuous_Weighted_Choice)
         - [Example](#Example_2)
+    - [Dice](#Dice)
     - [Normal (Gaussian) Distribution](#Normal_Gaussian_Distribution)
         - [Generating Random Points on the Surface of a Hypersphere](#Generating_Random_Points_on_the_Surface_of_a_Hypersphere)
     - [Binomial Distribution](#Binomial_Distribution)
@@ -843,6 +844,51 @@ In many cases, the probability densities are sampled (usually at regularly space
 
 Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
+<a id=Dice></a>
+### Dice
+
+The following method generates a random result of rolling virtual dice.  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+
+    METHOD DiceRoll(dice, sides, bonus)
+        if dice < 0 or sides < 1: return error
+        if dice == 0: return 0
+        if sides == 1: return dice
+        ret = 0
+        if dice > 50
+            // If there are many dice to roll,
+            // use a faster approach, noting that
+            // the dice-roll distribution approaches
+            // a "discrete" normal distribution as the
+            // number of dice increases.
+            mean = dice * (sides + 1) * 0.5
+            sigma = sqrt(dice * (sides * sides - 1) / 12)
+            ret = -1
+            while ret < dice and ret > dice * sides
+                ret = floor(Normal(mean, sigma) + 0.5)
+            end
+         else
+             i = 0
+             while i < dice
+                  ret = ret + RNDINTRANGE(1, sides)
+                  i = i + 1
+              end
+         end
+         ret = ret + bonus
+         if ret < 0: ret = 0
+         return ret
+    END METHOD
+
+As examples, the result of rolling&mdash;
+- four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
+- three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
+- two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,2)`.
+
+This section used the following sources:
+
+- Red Blob Games, ["Probability and Games: Dice Rolls"](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
+- The [MathWorld article "Dice"](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
+- S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
+
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
 
@@ -914,8 +960,11 @@ expresses the number of successes that have happened after a given number of ind
         tp = trials * p
         if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9)
              countval = -1
-             while countval < 0: countval = Normal(tp, tp)
-             return floor(countval + 0.5)
+             // "countval
+             while countval < 0 and countval > trials
+                  countval = floor(Normal(tp, tp) + 0.5)
+             end
+             return countval
         end
         if p == 0.5
             while i < trials
@@ -987,8 +1036,8 @@ The random integer from the method below is such that the average of the random 
         // generation of statistical distributions", 2000, p. 49
         if mean > 9
             p = -1.0
-            while p < 0: p = Normal(mean, mean)
-            return floor(p + 0.5)
+            while p < 0: p = floor(Normal(mean, mean) + 0.5)
+            return p
         end
         pn = exp(-mean)
         count = 0

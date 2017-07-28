@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 27, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 28, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -90,6 +90,7 @@ of them.</p>
 <ul>
 <li><a href="#Example_2">Example</a></li>
 </ul></li>
+<li><a href="#Dice">Dice</a></li>
 <li><a href="#Normal_Gaussian_Distribution">Normal (Gaussian) Distribution</a>
 
 <ul>
@@ -977,6 +978,58 @@ END METHOD
 
 <p>Assume <code>list</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
 
+<p><a id=Dice></a></p>
+
+<h3>Dice</h3>
+
+<p>The following method generates a random result of rolling virtual dice.  It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
+
+<pre>METHOD DiceRoll(dice, sides, bonus)
+    if dice &lt; 0 or sides &lt; 1: return error
+    if dice == 0: return 0
+    if sides == 1: return dice
+    ret = 0
+    if dice &gt; 50
+        // If there are many dice to roll,
+        // use a faster approach, noting that
+        // the dice-roll distribution approaches
+        // a &quot;discrete&quot; normal distribution as the
+        // number of dice increases.
+        mean = dice * (sides + 1) * 0.5
+        sigma = sqrt(dice * (sides * sides - 1) / 12)
+        ret = -1
+        while ret &lt; dice and ret &gt; dice * sides
+            ret = floor(Normal(mean, sigma) + 0.5)
+        end
+     else
+         i = 0
+         while i &lt; dice
+              ret = ret + RNDINTRANGE(1, sides)
+              i = i + 1
+          end
+     end
+     ret = ret + bonus
+     if ret &lt; 0: ret = 0
+     return ret
+END METHOD
+</pre>
+
+<p>As examples, the result of rolling&mdash;</p>
+
+<ul>
+<li>four six-sided virtual dice (&quot;4d6&quot;) is <code>DiceRoll(4,6,0)</code>,</li>
+<li>three ten-sided virtual dice, with 4 added (&quot;3d10 + 4&quot;), is <code>DiceRoll(3,10,4)</code>, and</li>
+<li>two six-sided virtual dice, with 2 subtracted (&quot;2d6 - 2&quot;), is <code>DiceRoll(2,6,2)</code>.</li>
+</ul>
+
+<p>This section used the following sources:</p>
+
+<ul>
+<li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html">&quot;Probability and Games: Dice Rolls&quot;</a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
+<li>The <a href="http://mathworld.wolfram.com/Dice.html">MathWorld article &quot;Dice&quot;</a> provided the mean of the dice roll distribution.</li>
+<li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</li>
+</ul>
+
 <p><a id=Normal_Gaussian_Distribution></a></p>
 
 <h3>Normal (Gaussian) Distribution</h3>
@@ -1053,8 +1106,11 @@ expresses the number of successes that have happened after a given number of ind
     tp = trials * p
     if tp &gt; 25 or (tp &gt; 5 and p &gt; 0.1 and p &lt; 0.9)
          countval = -1
-         while countval &lt; 0: countval = Normal(tp, tp)
-         return floor(countval + 0.5)
+         // &quot;countval
+         while countval &lt; 0 and countval &gt; trials
+              countval = floor(Normal(tp, tp) + 0.5)
+         end
+         return countval
     end
     if p == 0.5
         while i &lt; trials
@@ -1130,8 +1186,8 @@ END METHOD
     // generation of statistical distributions&quot;, 2000, p. 49
     if mean &gt; 9
         p = -1.0
-        while p &lt; 0: p = Normal(mean, mean)
-        return floor(p + 0.5)
+        while p &lt; 0: p = floor(Normal(mean, mean) + 0.5)
+        return p
     end
     pn = exp(-mean)
     count = 0
