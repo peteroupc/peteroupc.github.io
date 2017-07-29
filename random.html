@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 27, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 29, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -139,7 +139,7 @@
 
 <ul>
 <li> generating keying material, such as encryption keys,</li>
-<li> generating random passwords or session identifiers,</li>
+<li> generating random passwords, nonces, or session identifiers,</li>
 <li> generating &quot;salts&quot; to vary cryptographic hashes of the same password,</li>
 <li> use in communications between two networked computers,</li>
 <li> use in transfer, transport, messaging, and other communication protocols, and</li>
@@ -291,7 +291,8 @@
 
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><code>java.util.Random</code></a> is stable,</li>
-<li>the C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><code>rand</code> method</a> is not stable (because the algorithm it uses is unspecified), and</li>
+<li>the C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><code>rand</code> method</a> is not stable (because the algorithm it uses is unspecified),</li>
+<li>C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><code>std::uniform_int_distribution</code></a>, are not stable (because the algorithms they use are implementation-defined according to the specification), and</li>
 <li>.NET&#39;s <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx"><code>System.Random</code></a> is not stable (because its generation behavior may change in the future).</li>
 </ul>
 
@@ -299,11 +300,12 @@
 
 <h3>Seedable PRNG Recommendations</h3>
 
-<p>Which PRNG to use for generating reproducible results depends on the application. But here are some recommendations:</p>
+<p>Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;</p>
 
 <ul>
-<li> Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.</li>
-<li> The PRNG&#39;s <em>state length</em> should be 64 bits or greater.</li>
+<li>should meet or exceed the quality requirements of a statistical-random implementation,</li>
+<li>should be reasonably fast, and</li>
+<li>should have a <em>state length</em> of 64 bits or greater.</li>
 </ul>
 
 <p><a id=Examples_2></a></p>

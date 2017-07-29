@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 27, 2017.
+Begun on Mar. 5, 2016; last updated on July 30, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -83,7 +83,7 @@ The following definitions are helpful in better understanding this document.
 Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in computer security and information security contexts, such as&mdash;
 
 -  generating keying material, such as encryption keys,
--  generating random passwords or session identifiers,
+-  generating random passwords, nonces, or session identifiers,
 -  generating "salts" to vary cryptographic hashes of the same password,
 -  use in communications between two networked computers,
 -  use in transfer, transport, messaging, and other communication protocols, and
@@ -165,7 +165,7 @@ Examples of statistically-random generators include the following:
 
 Non-examples include the following:
 - Mersenne Twister shows a [systematic failure](http://xoroshiro.di.unimi.it/#quality) in one of the `BigCrush` tests. (See also S. Vigna, "[An experimental exploration of Marsaglia's `xorshift` generators, scrambled](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.)
-- Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
+- Any [linear congruential generator](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.  (See also the Wikipedia article for further problems with linear congruential generators.)
 
 <a id=Seeded_Random_Generators></a>
 ## Seeded Random Generators
@@ -195,16 +195,18 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 
 As used here, a random number generation method is _stable_ if it uses a deterministic algorithm, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
-- the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified), and
+- the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified),
+- C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification), and
 - .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because its generation behavior may change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
 
-Which PRNG to use for generating reproducible results depends on the application. But here are some recommendations:
+Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;
 
--  Any PRNG algorithm selected for producing reproducible results should meet or exceed the quality requirements of a statistical-random implementation, and should be reasonably fast.
--  The PRNG's _state length_ should be 64 bits or greater.
+- should meet or exceed the quality requirements of a statistical-random implementation,
+- should be reasonably fast, and
+- should have a _state length_ of 64 bits or greater.
 
 <a id=Examples_2></a>
 ### Examples

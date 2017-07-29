@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 28, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 29, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -108,6 +108,7 @@ of them.</p>
 <li><a href="#von_Mises_Distribution">von Mises Distribution</a></li>
 <li><a href="#Stable_Distribution">Stable Distribution</a></li>
 <li><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a></li>
+<li><a href="#Generating_Random_Numbers_from_an_Arbitrary_Distribution">Generating Random Numbers from an Arbitrary Distribution</a></li>
 </ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
 <li><a href="#Notes">Notes</a></li>
@@ -126,10 +127,9 @@ of them.</p>
 <li>The pseudocode shown doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.</li>
 <li><code>pi</code> is the constant &pi;, the ratio of a circle&#39;s circumference to its diameter.</li>
 <li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, respectively, where <code>a</code> is in radians.</li>
+<li><code>asin(a)</code>, <code>acos(a)</code>, and <code>atan(a)</code> are the inverse sine, inverse cosine, and inverse tangent of <code>a</code>, respectively.</li>
 <li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
 <li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
-<li><code>acos(a)</code> is the inverse cosine of <code>a</code>.</li>
-<li><code>atan(a)</code> is the inverse tangent of <code>a</code>.</li>
 <li><code>sqrt(a)</code> is the square root of <code>a</code>.</li>
 <li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>nothing</code> indicates the absence of a value.  It corresponds to <code>null</code> in Java, C#, and JavaScript, <code>nil</code> in Ruby, and <code>None</code> in Python.</li>
@@ -927,8 +927,6 @@ END METHOD
 
 <p>The following pseudocode takes two lists, <code>list</code> and <code>weights</code>, and returns a random number that follows the distribution.  <code>list</code> is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and <code>weights</code> is a list of <em>probability densities</em> for the given numbers (where each number and its density have the same index in both lists). (A number&#39;s <em>probability density</em> is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.)  Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in <code>list</code> can be returned exactly, but not the last item in <code>list</code>, assuming the numbers in <code>list</code> are arranged in ascending order.</p>
 
-<p>In many cases, the probability densities are sampled (usually at regularly spaced points) from a so-called <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a>, a function that specifies each number&#39;s probability density.  A list of common probability density functions is outside the scope of this page.</p>
-
 <pre>METHOD ContinuousWeightedChoice(list, weights)
     if size(list) &lt;= 0 or size(weights) &lt; size(list): return error
     if size(list) == 1: return list[0]
@@ -1019,7 +1017,7 @@ END METHOD
 <ul>
 <li>four six-sided virtual dice (&quot;4d6&quot;) is <code>DiceRoll(4,6,0)</code>,</li>
 <li>three ten-sided virtual dice, with 4 added (&quot;3d10 + 4&quot;), is <code>DiceRoll(3,10,4)</code>, and</li>
-<li>two six-sided virtual dice, with 2 subtracted (&quot;2d6 - 2&quot;), is <code>DiceRoll(2,6,2)</code>.</li>
+<li>two six-sided virtual dice, with 2 subtracted (&quot;2d6 - 2&quot;), is <code>DiceRoll(2,6,-2)</code>.</li>
 </ul>
 
 <p>This section used the following sources:</p>
@@ -1260,6 +1258,33 @@ end
 <li>If <code>total</code> is 1, the exponential distribution, described <a href="#Other_Non_Uniform_Distributions">later</a>, can be used instead of <code>GammaDist(1)</code> to generate the random numbers; see also Devroye 1986, p. 405.</li>
 </ul>
 
+<p>An alternative method, which can work better if random integers are to be generated instead of random numbers, is illustrated in the following pseudocode.  In the pseudocode below, <code>Sort(list)</code> sorts the items in <code>list</code> in ascending order. (Note that details on sort algorithms are outside the scope of this document.)</p>
+
+<pre>METHOD NumbersWithSum(n, total)
+    if n &lt;= 0 or total &lt;=0: return error
+    list = NewList()
+    i = 0
+    while i &lt; n - 1
+       AddItem(list, RNDNUMRANGE(0, total))
+       // NOTE: If only integers are to be generated, the following
+       // can be used instead of the preceding line:
+       // AddItem(list, RNDINT(total))
+       i = i + 1
+     end
+     AddItem(list, total)
+</pre>
+
+<p>Sort(list)
+         prev = list[0]
+   i = 1
+   while i &lt; n
+       newValue = list[i] - prev
+             prev = list[i]
+       list[i] = newValue
+             i = i + 1
+  end
+   END METHOD</p>
+
 <p><a id=Negative_Binomial_Distribution></a></p>
 
 <h3>Negative Binomial Distribution</h3>
@@ -1417,6 +1442,8 @@ are the two parameters of the Cauchy distribution.  This distribution is similar
 freedom.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5) * 2</code>, where <code>df</code> is the number of degrees of
 freedom.  This expresses a sum-of-squares of <code>df</code> random variables in the standard normal distribution.</li>
+<li><strong>Cosine distribution</strong>: <code>min + (max - min) * asin(RNDNUMRANGE(-1, 1)) / pi</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17).</li>
+<li><strong>Double logarithmic distribution</strong>: <code>min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(shape) / rate</code>, where <code>shape</code> and <code>rate</code> are the two parameters of the Erlang distribution.</li>
 <li><strong>Exponential distribution</strong>: <code>-ln(RNDU01ZeroExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. The <code>lamda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
@@ -1427,11 +1454,13 @@ as in the negative binomial distribution.  As used here, this is the number of f
 This expresses a distribution of minimum values.</li>
 <li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, sqrt(pi * 0.5) / invscale)))</code>, where <code>invscale</code> is a parameter of the half-normal distribution.</li>
 <li><strong>Inverse chi-squared distribution</strong>: <code>df * scale / (GammaDist(df * 0.5) * 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>scale</code> is the scale, usually <code>1.0 / df</code>.</li>
-<li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
+<li><strong>Inverse gamma (Pearson V) distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> if <code>RNDU01OneExc() &lt;= mu / (mu + n)</code>, or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in <a href="http://luc.devroye.org/rnbookindex.html">Devroye 1986</a>.</li>
+<li><strong>Kumaraswamy distribution</strong>: <code>min + (max - min) * pow(a-pow(RNDU01ZeroExc(),1.0/b),1.0/a)</code>, where <code>a</code> and <code>b</code> are shape parameters, <code>min</code> is the minimum value, and <code>max</code> is the maximum value.</li>
 <li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(RNDU01ZeroExc()) - ln(RNDU01ZeroExc())) * beta + mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
 <li><strong>L&eacute;vy distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
+<li><strong>Logarithmic distribution</strong>: <code>min + (max - min) * RNDU01OneExc() * RNDU01OneExc()</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 26).</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
 <li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
@@ -1441,6 +1470,7 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Noncentral <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomialInt(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution.</li>
+<li><strong>Pearson VI distribution</strong>: <code>GammaDist(v) / (GammaDist(w))</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Power distribution</strong>: <code>pow(RNDU01ZeroOneExc(), 1.0 / alpha)</code>, where <code>alpha</code>  is the shape.</li>
 <li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(RNDU01ZeroExc()))</code>, where <code>a</code> is the scale and is greater than 0.</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means of the two Poisson variables.</li>
@@ -1451,6 +1481,28 @@ the same meaning as in the normal distribution, and <code>alpha</code> is a shap
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
 <li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a)</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>a</code> and <code>b</code> are greater than 0.</li>
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
+</ul>
+
+<p><a id=Generating_Random_Numbers_from_an_Arbitrary_Distribution></a></p>
+
+<h3>Generating Random Numbers from an Arbitrary Distribution</h3>
+
+<p>If a statistical distribution&#39;s <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a> (PDF) is known, one of the following techniques, among others, can be used to generate random numbers that follow that distribution. A PDF is a function that specifies each number&#39;s <em>probability density</em> in that distribution, where each density is 0 or greater. Note, however, that a list of common PDFs is outside the scope of this page.</p>
+
+<ul>
+<li>Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list with the densities at those points (the <code>weights</code>).  Finally call <code>ContinuousWeightedChoice(list, weights)</code> to generate a random number between the lowest and highest sampled point.</li>
+<li>In many cases, random numbers that follow the distribution can be generated using <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling">inverse transform sampling</a> (generating <code>ICDF(RNDU01OneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse cumulative distribution function</em>, or inverse of the integral of the PDF, assuming the area under the PDF is 1).  Further details on such a technique or on finding integrals or inverses are outside the scope of this document.</li>
+<li><p>Use <em>rejection sampling</em>.  Choose the lowest and highest random number to generate (<code>minValue</code> and <code>maxValue</code>, respectively) and find the maximum value of the PDF at or between those points (<code>maxDensity</code>).  The rejection sampling approach is then illustrated with the following pseudocode, where <code>PDF(X)</code> is the distribution&#39;s PDF (see also Saucier 2000, p. 39).</p>
+
+<pre>METHOD ArbitraryDist(minValue, maxValue, maxDensity)
+     if minValue &gt;= maxValue: return error
+     while True:
+         x=RNDNUMEXCRANGE(minValue, maxValue)
+         y=RNDNUMEXCRANGE(0, maxDensity)
+         if y &lt; PDF(x): return x
+     end
+END METHOD
+</pre></li>
 </ul>
 
 <p><a id=Conclusion></a></p>
