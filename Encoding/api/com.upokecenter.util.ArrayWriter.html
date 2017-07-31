@@ -9,38 +9,24 @@
 <pre>public final class ArrayWriter extends Object implements IWriter
 </pre>
 
-<p>An array of bytes that grows as needed.</p>
-
 <h2>Methods</h2>
 
 <ul>
-<li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default buffer size.</li>
-<li><code>ArrayWriter(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with the given initial buffer size.</li>
-<li><code>void Clear()</code><br>
-Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
-<li><code>byte[] ToArray()</code><br>
-Generates an array of all bytes written so far to it.</li>
+<li><code>ArrayWriter()</code><br></li>
+<li><code>ArrayWriter(int initialSize)</code><br></li>
+<li><code>void Clear()</code><br></li>
+<li><code>byte[] ToArray()</code><br></li>
 <li><code>void write(byte[] src,
  int offset,
- int length)</code><br>
-Writes a series of bytes to the array.</li>
-<li><code>void write(int byteValue)</code><br>
-Writes an 8-bit byte to the array.</li>
+ int length)</code><br></li>
+<li><code>void write(int byteValue)</code><br></li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>ArrayWriter() com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with a default buffer size.</li>
-<li><code>ArrayWriter(int initialSize) com.upokecenter.ArrayWriter</code><br>
-Initializes a new instance of the com.upokecenter.ArrayWriter class
-with the given initial buffer size.</li>
+<li><code>ArrayWriter()</code><br></li>
+<li><code>ArrayWriter(int initialSize)</code><br></li>
 </ul>
 
 <h2>Method Details</h2>
@@ -50,50 +36,25 @@ with the given initial buffer size.</li>
 <pre>public ArrayWriter()
 </pre>
 
-<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class
- with a default buffer size.</p>
-
 <h3>ArrayWriter</h3>
 
 <pre>public ArrayWriter(int initialSize)
 </pre>
-
-<p>Initializes a new instance of the <code>com.upokecenter.ArrayWriter</code> class
- with the given initial buffer size.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>initialSize</code> - The parameter <code>initialSize</code> is a 32-bit signed
-integer.</li>
-</ul>
 
 <h3>Clear</h3>
 
 <pre>public void Clear()
 </pre>
 
-<p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
-
 <h3>ToArray</h3>
 
 <pre>public byte[] ToArray()
 </pre>
 
-<p>Generates an array of all bytes written so far to it.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A byte array.</li>
-</ul>
-
 <h3>write</h3>
 
 <pre>public void write(int byteValue)
 </pre>
-
-<p>Writes an 8-bit byte to the array.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -101,42 +62,15 @@ integer.</li>
 <li><code>write</code>&nbsp;in interface&nbsp;<code>IByteWriter</code></li>
 </ul>
 
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>byteValue</code> - An integer containing the byte to write. Only the lower 8
-bits of this value will be used.</li>
-</ul>
-
 <h3>write</h3>
 
 <pre>public void write(byte[] src, int offset, int length)
 </pre>
 
-<p>Writes a series of bytes to the array.</p>
-
 <p><strong>Specified by:</strong></p>
 
 <ul>
 <li><code>write</code>&nbsp;in interface&nbsp;<code>IWriter</code></li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>src</code> - Byte array containing the data to write.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>src</code> begins.</p></li>
-<li><p><code>length</code> - The number of elements in the desired portion of <code>src</code>
-(but not more than <code>src</code> &#39;s length).</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>src</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
-less than 0 or greater than <code>src</code> &#39;s length, or <code>src</code> &#39; s
-length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

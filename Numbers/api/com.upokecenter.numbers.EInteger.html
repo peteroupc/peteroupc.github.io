@@ -67,7 +67,7 @@ Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromRadixString(String str,
            int radix)</code><br>
-Not documented yet.</li>
+Converts a string to an arbitrary-precision integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring(String str,
               int radix,
               int index,
@@ -369,19 +369,23 @@ number.</li>
 <pre>public static EInteger FromRadixString(String str, int radix)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a string to an arbitrary-precision integer in a given radix.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
-<li><p><code>radix</code> - The parameter <code>radix</code> is not documented yet.</p></li>
+<li><p><code>str</code> - A string described by the FromRadixSubstring method.</p></li>
+<li><p><code>radix</code> - A base from 2 to 36. Depending on the radix, the string can use
+the basic digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters
+A to Z (U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9,
+then A-F in radix 16.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>An arbitrary-precision integer with the same value as the given
+string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

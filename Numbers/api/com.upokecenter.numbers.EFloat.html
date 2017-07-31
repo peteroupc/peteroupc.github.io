@@ -706,10 +706,8 @@ value is negative (including a negative NaN).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissaSmall</code> - The parameter <code>mantissaSmall</code> is not documented
-yet.</p></li>
-<li><p><code>exponentSmall</code> - The parameter <code>exponentSmall</code> is not documented
-yet.</p></li>
+<li><p><code>mantissaSmall</code> - Desired value for the mantissa.</p></li>
+<li><p><code>exponentSmall</code> - Desired value for the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -728,8 +726,8 @@ yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissa</code> - The parameter <code>mantissa</code> is not documented yet.</p></li>
-<li><p><code>exponent</code> - The parameter <code>exponent</code> is not documented yet.</p></li>
+<li><p><code>mantissa</code> - Desired value for the mantissa.</p></li>
+<li><p><code>exponent</code> - Desired value for the exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -2792,9 +2790,9 @@ exponent are both 0.</li>
 <li><p><code>desiredExponent</code> - The desired exponent for the result. The exponent is
 the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the eighth
-(10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -2841,9 +2839,9 @@ exponent is outside that range.</li>
 <li><p><code>desiredExponentInt</code> - The desired exponent for the result. The exponent
 is the number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the eighth
-(10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -2886,9 +2884,9 @@ exponent is outside that range.</li>
 result. The mantissa (significand) is ignored. The exponent is the
 number of fractional digits in the result, expressed as a negative
 number. Can also be positive, which eliminates lower-order places
-from the number. For example, -3 means round to the eighth (10^-1,
-1/8), and 3 means round to the eight (2^3, 8). A value of 0 rounds
-the number to an integer.</p></li>
+from the number. For example, -3 means round to the sixteenth
+(10b^-3, 0.0001b), and 3 means round to the sixteen-place (10b^3,
+1000b). A value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision and rounding of the
 result. If <code>HasFlags</code> of the context is true, will also store
 the flags resulting from the operation (the flags are in addition to
@@ -3073,9 +3071,9 @@ given precision.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the eighth
-(10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3109,9 +3107,9 @@ arithmetic context.</li>
 <li><p><code>exponentSmall</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the eighth
-(10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
@@ -3146,9 +3144,9 @@ arithmetic context.</li>
 <li><p><code>exponent</code> - The minimum exponent the result can have. This is the
 maximum number of fractional digits in the result, expressed as a
 negative number. Can also be positive, which eliminates lower-order
-places from the number. For example, -3 means round to the eighth
-(10^-1, 1/8), and 3 means round to the eight (2^3, 8). A value of 0
-rounds the number to an integer.</p></li>
+places from the number. For example, -3 means round to the thousandth
+(10^-3, 0.0001), and 3 means round to the thousand (10^3, 1000). A
+value of 0 rounds the number to an integer.</p></li>
 <li><p><code>ctx</code> - An arithmetic context to control precision, rounding, and
 exponent range of the result. If <code>HasFlags</code> of the context is
 true, will also store the flags resulting from the operation (the
