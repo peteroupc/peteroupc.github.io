@@ -37,19 +37,19 @@ function createSkysphere(size, texture) {
     ].join("\n");
   }
   var shader = new H3DU.ShaderInfo(
- ["attribute vec3 position;",
-   "uniform mat4 projection;",
-   "uniform mat4 worldMatrix;",
-   "uniform mat4 modelViewMatrix;",
-   "varying vec4 positionVar;",
-   "void main() {",
-   "positionVar=worldMatrix*vec4(position,1.0);",
-   "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
-   "}"
- ].join("\n"), fragment
-);
+    ["attribute vec3 position;",
+      "uniform mat4 projection;",
+      "uniform mat4 worldMatrix;",
+      "uniform mat4 modelViewMatrix;",
+      "varying vec4 positionVar;",
+      "void main() {",
+      "positionVar=worldMatrix*vec4(position,1.0);",
+      "gl_Position=(projection*modelViewMatrix)*vec4(position,1.0);",
+      "}"
+    ].join("\n"), fragment
+  );
   shader.setUniformSemantic("worldMatrix", H3DU.Semantic.MODEL);
   return new H3DU.Shape(H3DU.Meshes.createSphere(size))
-  .setTexture(texture)
-  .setShader(shader);
+    .setTexture(texture)
+    .setShader(shader);
 }

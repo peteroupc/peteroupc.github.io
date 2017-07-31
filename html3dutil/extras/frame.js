@@ -34,14 +34,14 @@ H3DU.FrameCounter = function() {
 H3DU.FrameCounter.prototype.update = function() {
   "use strict";
   var now = "performance" in window ?
-   window.performance.now() : new Date().getTime() * 1000;
+    window.performance.now() : new Date().getTime() * 1000;
   if(this.lastFrame >= 0) {
     var gap = now - this.lastFrame;
     if(this.frameGaps.length > 300)
       this.frameGaps.shift();
     if(gap > 5000) {
-     // treat as a discontinuity, so discard all the
-     // frame gaps recorded so far
+      // treat as a discontinuity, so discard all the
+      // frame gaps recorded so far
       this.frameGaps = [];
     }
     this.frameGaps.push(gap);
@@ -129,7 +129,7 @@ H3DU.FrameCounterDiv.prototype.update = function() {
 var PrimitiveCounter = function() {
   "use strict";
   this.warned = false;
-/**
+  /**
  * This method used to update this object's state.
  * @deprecated Will be removed in the future.
  * @returns {Object} Return value.

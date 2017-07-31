@@ -10,7 +10,7 @@
 function spiralCurve(radius, phase) {
   "use strict";
   return new H3DU.Curve({
-/** @ignore */
+    /** @ignore */
     "evaluate":function(u) {
       var uphase = u + phase;
       var cosu = Math.cos(uphase);
@@ -18,7 +18,7 @@ function spiralCurve(radius, phase) {
       var r = radius + u;
       return [cosu * r, sinu * r];
     },
-/** @ignore */
+    /** @ignore */
     "endPoints":function() {
       return [0, 6 * Math.PI];
     }

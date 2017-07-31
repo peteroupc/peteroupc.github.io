@@ -14,9 +14,9 @@ function createWasher(inner, outer, height, slices) {
   var outerCylinder = H3DU.Meshes.createCylinder(outer, outer, height, slices, 1, false, false);
   var base = H3DU.Meshes.createDisk(inner, outer, slices, 2, true).reverseWinding();
   var top = H3DU.Meshes.createDisk(inner, outer, slices, 2, false);
-      // move the top disk to the top of the cylinder
+  // move the top disk to the top of the cylinder
   top.transform(H3DU.Math.mat4translated(0, 0, height));
-      // merge the base and the top
+  // merge the base and the top
   return innerCylinder.merge(outerCylinder).merge(base).merge(top);
 }
 
@@ -99,14 +99,14 @@ Animator.prototype.showAndMoveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
   return this.setVisibleAt(true, startInMs)
-   .moveTo(x, y, z, x2, y2, z2, startInMs, durationInMs);
+    .moveTo(x, y, z, x2, y2, z2, startInMs, durationInMs);
 };
 /** @ignore */
 Animator.prototype.moveTo = function(
   x, y, z, x2, y2, z2, startInMs, durationInMs) {
   "use strict";
   this.positionAnim.push([
-  [x, y, z], [x2, y2, z2], startInMs, startInMs + durationInMs]);
+    [x, y, z], [x2, y2, z2], startInMs, startInMs + durationInMs]);
   return this;
 };
 /** @ignore */
@@ -126,12 +126,12 @@ Animator.prototype.update = function(time) {
     if(!a)continue;
     if(time < a[2])continue; // hasn't begun yet
     if(time >= a[3]) {
-   // finished
+      // finished
       this.shape.setPosition(a[1]);
       this.positionAnim[i] = null;
       posChanged = true;
     } else {
-   // in progress
+      // in progress
       var t = (time - a[2]) / (a[3] - a[2]);
       t = t * t * (3 - 2 * t); // smoothstep
       this.shape.setPosition(H3DU.Math.vec3lerp(a[0], a[1], t));
@@ -169,10 +169,10 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
       var endX = x === tilesX - 1 ? lastX : 1.0;
       var endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
       mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(0, 1).vertex3(xStart + x * tileSize, yStart + y * tileSize, z)
-     .texCoord2(0, endY).vertex3(xStart + x * tileSize, endPosY, z)
-     .texCoord2(endX, 1).vertex3(endPosX, yStart + y * tileSize, z)
-     .texCoord2(endX, endY).vertex3(endPosX, endPosY, z);
+        .texCoord2(0, 1).vertex3(xStart + x * tileSize, yStart + y * tileSize, z)
+        .texCoord2(0, endY).vertex3(xStart + x * tileSize, endPosY, z)
+        .texCoord2(endX, 1).vertex3(endPosX, yStart + y * tileSize, z)
+        .texCoord2(endX, endY).vertex3(endPosX, endPosY, z);
     }
   }
   return mesh.toMeshBuffer();
@@ -182,5 +182,5 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
 function rotateVec(vec, angle) {
   "use strict";
   return H3DU.Math.mat4projectVec3(
-   H3DU.Math.mat4rotated(angle, 0, 0, 1), vec);
+    H3DU.Math.mat4rotated(angle, 0, 0, 1), vec);
 }

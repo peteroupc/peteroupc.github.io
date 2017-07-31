@@ -23,10 +23,10 @@ H3DU.MeshJSON = {};
 /** @ignore */
 H3DU.MeshJSON._resolvePath = function(path, name) {
   "use strict";
- // Relatively dumb for a relative path
- // resolver, but sufficient here, as it will
- // only be used with relative path
- // strings
+  // Relatively dumb for a relative path
+  // resolver, but sufficient here, as it will
+  // only be used with relative path
+  // strings
   var ret = path;
   var lastSlash = ret.lastIndexOf("/");
   if(lastSlash >= 0) {
@@ -139,7 +139,7 @@ H3DU.MeshJSON._getJsonMaterial = function(mtl, path) {
     specular = mtl.colorSpecular;
   }
   var ret = new H3DU.Material(ambient, diffuse, specular, shininess,
-   emission);
+    emission);
   if(textureName) {
     ret = ret.setParams({"texture":textureName});
   }
@@ -253,8 +253,8 @@ H3DU.MeshJSON.loadJSON = function(url) {
         }
         if(normals >= 0) {
           mesh.normal3(json.normals[json.faces[normals] * 3],
-       json.normals[json.faces[normals] * 3 + 1],
-       json.normals[json.faces[normals] * 3 + 2]);
+            json.normals[json.faces[normals] * 3 + 1],
+            json.normals[json.faces[normals] * 3 + 2]);
         }
         if(colors >= 0) {
           mesh.color3(convHexColor(json.colors[json.faces[colors]]));
@@ -265,12 +265,12 @@ H3DU.MeshJSON.loadJSON = function(url) {
           if(vnormals >= 0) {
             idx = json.faces[vnormals + (size === 4 ? quadIndices[j] : j)] * 3;
             mesh.normal3(json.normals[idx],
-        json.normals[idx + 1], json.normals[idx + 2]);
+              json.normals[idx + 1], json.normals[idx + 2]);
           }
           if(texcoord >= 0 && material >= 0) {
             idx = json.faces[texcoord + (size === 4 ? quadIndices[j] : j)] * 2;
             mesh.texCoord2(json.uvs[material][idx],
-        json.uvs[material][idx + 1]);
+              json.uvs[material][idx + 1]);
           }
           if(vcolors >= 0) {
             idx = json.faces[vcolors + (size === 4 ? quadIndices[j] : j)];
@@ -278,8 +278,8 @@ H3DU.MeshJSON.loadJSON = function(url) {
           }
           idx = json.faces[vertPtr + (size === 4 ? quadIndices[j] : j)] * 3;
           mesh.vertex3(json.vertices[idx],
-        json.vertices[idx + 1],
-        json.vertices[idx + 2]);
+            json.vertices[idx + 1],
+            json.vertices[idx + 2]);
         }
       }
       for(i = 0; i < meshes.length; i++) {

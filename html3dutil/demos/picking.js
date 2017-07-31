@@ -21,7 +21,7 @@ function getIntersectionRayBox(ray, box) {
   var p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
   var mn = 0.0;
   var mx = Number.POSITIVE_INFINITY;
-    // X intersection
+  // X intersection
   if (Math.abs(d[0]) < EPSILON) {
     if (p[0] < box[0] || p[0] > box[3]) {
       return null;
@@ -36,7 +36,7 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   }
-// Y intersection
+  // Y intersection
   if (Math.abs(d[1]) < EPSILON) {
     if (p[1] < box[1] || p[1] > box[4]) {
       return null;
@@ -51,7 +51,7 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   }
-// Z intersection
+  // Z intersection
   if (Math.abs(d[2]) < EPSILON) {
     if (p[2] < box[2] || p[2] > box[5]) {
       return null;
@@ -84,7 +84,7 @@ function polygonToPlane(polygon) {
   for(var i = 1; i < polygon.length; i++) {
     var nextIndex = i + 1 === polygon.length ? 0 : i + 1;
     H3DU.Math.vec3addInPlace(normal,
-       H3DU.Math.vec3cross(polygon[i], polygon[nextIndex]));
+      H3DU.Math.vec3cross(polygon[i], polygon[nextIndex]));
     H3DU.Math.vec3addInPlace(centroid, polygon[i]);
   }
   H3DU.Math.vec3scaleInPlace(centroid, 1.0 / polygon.length);
@@ -158,7 +158,7 @@ function getClosestPointToTriangle3D(p, a, b, c) {
 }
 
 // NOTE: Planes are as defined in the source library, HE_Mesh,
-  // not as defined in H3DU.Math
+// not as defined in H3DU.Math
 function getIntersectionRayPlane(ray, plane) {
   "use strict";
   var r1origin = ray.slice(0, 3);
@@ -170,8 +170,8 @@ function getIntersectionRayPlane(ray, plane) {
   var denom = H3DU.Math.vec3dot(p1normal, ab);
   var t = p1d - H3DU.Math.vec3dot(p1normal, r1origin);
   if(denom === 0) {
-   // Ray's direction and plane's normal are orthogonal to each
-   // other. Assume no intersection.
+    // Ray's direction and plane's normal are orthogonal to each
+    // other. Assume no intersection.
     return null;
   }
   t /= denom;
@@ -237,16 +237,16 @@ AABBTree.CROSSING = 0;
 AABBTree.FRONT = 1;
 AABBTree.BACK = 2;
 AABBTree.ON = 3;
-  // NOTE: Planes are as defined in the source library, HE_Mesh,
-  // not as defined in H3DU.Math: a normal and a point on the plane (origin).
-  // In this JavaScript code,
-  // the first three elements of the array are the normal, and
-  // the next three are the origin.
+// NOTE: Planes are as defined in the source library, HE_Mesh,
+// not as defined in H3DU.Math: a normal and a point on the plane (origin).
+// In this JavaScript code,
+// the first three elements of the array are the normal, and
+// the next three are the origin.
 function classifyPointToPlane3D(plane, point) {
   "use strict";
-    // NOTE: HE_Mesh includes fast code and robust code for this
-    // function, but only the fast code is used here
-    // to keep this code simple
+  // NOTE: HE_Mesh includes fast code and robust code for this
+  // function, but only the fast code is used here
+  // to keep this code simple
   var planeNormal = plane.slice(0, 3);
   var planeOrigin = plane.slice(3, 6);
   var planeD = H3DU.Math.vec3dot(planeNormal, planeOrigin);
@@ -260,8 +260,8 @@ function classifyPointToPlane3D(plane, point) {
   return AABBTree.BACK;
 }
 
-  // NOTE: Planes are as defined in the source library, HE_Mesh,
-  // not as defined in H3DU.Math
+// NOTE: Planes are as defined in the source library, HE_Mesh,
+// not as defined in H3DU.Math
 function classifyPolygonToPlane3D(polygon, plane) {
   "use strict";
   var numInFront = 0;
@@ -364,7 +364,7 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
     for(i = 0; i < faces.length; i++) {
       var face = faces[i];
       var cptp = classifyPolygonToPlane3D(
-            face, node.separator);
+        face, node.separator);
       if (cptp === AABBTree.CROSSING) {
         mid.push(face);
       } else if (cptp === AABBTree.BACK) {
@@ -428,8 +428,8 @@ function pickPoint(mesh, ray) {
       }
     }
   }
-    // p2 now contains the point on the face
-    // that was picked
+  // p2 now contains the point on the face
+  // that was picked
   var p = p2;
   if (typeof p === "undefined" || p === null) {
     return null;
@@ -453,7 +453,7 @@ function pickPoint(mesh, ray) {
       closest = trial;
     }
   }
-    // We now have the closest vertex
+  // We now have the closest vertex
   return {
     "point":p2,
     "vertex":closest
@@ -491,13 +491,13 @@ function raypick(x, y, projView, viewport, objects) {
       ray = makeRay(near, far); // Near and far will be in local coordinates
       var finePick = pickPoint(shape.getMeshBuffer(), ray);
       if(finePick) {
-       // Fine pick point will be in local coordinates; convert
-       // to world coordinates to check distance from the near plane
+        // Fine pick point will be in local coordinates; convert
+        // to world coordinates to check distance from the near plane
         var world = H3DU.Math.mat4projectVec3(finePick.point, worldMatrix);
         var dist = H3DU.Math.vec3dist(near, world);
         if(ret.index === -1 || dist < bestDist) {
-       // Choose this point if it's the first or closest intersecting point
-    // to the near plane
+          // Choose this point if it's the first or closest intersecting point
+          // to the near plane
           bestDist = dist;
           ret = {
             "index":i,

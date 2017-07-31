@@ -29,7 +29,7 @@ function getIntersectingPoint(p1, p2, p3) {
 
 var getSignedDistanceToPlane = function(v, p) {
   "use strict";
- // NOTE: Fast, not robust
+  // NOTE: Fast, not robust
   return p[3] + H3DU.Math.vec3dot([p[0], p[1], p[2]], v);
 };
 

@@ -26,6 +26,7 @@ ProfilingSessions/
 TestResults/
 bin/
 encoding/
+encodingfldr/
 node_modules/
 obj/
 packages/

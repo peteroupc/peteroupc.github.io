@@ -9,18 +9,18 @@
 (function(globalContext) {
   "use strict";
 
-// //////////////////////////////////////////////////////////////////////////////////////////////
-// Data structures
-// //////////////////////////////////////////////////////////////////////////////////////////////
+  // //////////////////////////////////////////////////////////////////////////////////////////////
+  // Data structures
+  // //////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @ignore */
+  /** @ignore */
   var LinkedListNode = function(item) {
     this.data = item;
     this.prev = null;
     this.next = null;
   };
 
-/** @ignore */
+  /** @ignore */
   var LinkedList = function() {
     this.root = null;
     this._last = null;
@@ -152,9 +152,9 @@
     };
   };
 
-/** @ignore */
+  /** @ignore */
   var PriorityQueue = function(comparer) {
- // Based on Doug Lea's public domain Heap class in Java
+    // Based on Doug Lea's public domain Heap class in Java
     this.comparer = comparer;
     this.nodes = [];
     this._size = 0;
@@ -184,8 +184,8 @@
       this._size += 1;
       return this;
     };
- // NOTE: Pops out the greatest element, not
- // the least, as in Doug Lea's implementation
+    // NOTE: Pops out the greatest element, not
+    // the least, as in Doug Lea's implementation
     this.pop = function() {
       var data = null;
       if(this._size > 0) {
@@ -210,8 +210,8 @@
       return data;
     };
   };
-// Mostly based on Julienne Walker's
-// public domain C implementation
+  // Mostly based on Julienne Walker's
+  // public domain C implementation
   var RedBlackTreeNode = function(data) {
     this.left = null;
     this.right = null;
@@ -285,26 +285,26 @@
       return this._size;
     };
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree._defaultCompare = function(a, b) {
     if(a === b)return 0;
     return a < b ? -1 : 1;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree.prototype.first = function() {
     var r = this.root;
     if(typeof r === "undefined" || r === null)return null;
     while(typeof r.left !== "undefined" && r.left !== null)r = r.left;
     return r;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree.prototype.last = function() {
     var r = this.root;
     if(typeof r === "undefined" || r === null)return null;
     while(typeof r.right !== "undefined" && r.right !== null)r = r.right;
     return r;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree.prototype.find = function(data) {
     var it = this.root;
     while(typeof it !== "undefined" && it !== null) {
@@ -314,11 +314,11 @@
     }
     return typeof it === "undefined" || it === null ? null : it.data;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree._red = function(node) {
     return typeof node !== "undefined" && node !== null && node.red === 1;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree._single = function(root, dir) {
     var save = root.link(!dir);
     root.setLink(!dir, save.link(dir));
@@ -327,12 +327,12 @@
     save.red = false;
     return save;
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree._double = function(root, dir) {
     root.setLink(!dir, RedBlackTree._single( root.link(!dir), !dir ));
     return RedBlackTree._single( root, dir );
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree.prototype.erase = function(data) {
     if(typeof this.root !== "undefined" && this.root !== null) {
       var head = new RedBlackTreeNode(null); /* False tree root */
@@ -340,31 +340,31 @@
       var f = null; /* Found item */
       var dir = true;
 
-    /* Set up our helpers */
+      /* Set up our helpers */
       q = head;
       g = p = null;
       q.setLink(true, this.root);
 
-    /*
+      /*
       Search and push a red node down
       to fix red violations as we go
     */
       while( q.link(dir) !== null ) {
         var last = dir;
 
-      /* Move the helpers down */
+        /* Move the helpers down */
         g = p;
         p = q;
         q = q.link(dir);
         var cmp = this.comparer( q.data, data );
         dir = cmp < 0;
-      /*
+        /*
         Save the node with matching data and keep
         going; we'll do removal tasks at the end
       */
         if( cmp === 0 )
           f = q;
-      /* Push the red node down with rotations and color flips */
+        /* Push the red node down with rotations and color flips */
         if( !RedBlackTree._red( q ) && !RedBlackTree._red( q.link(dir) ) ) {
           if( RedBlackTree._red( q.link(!dir) ) )
             p.setLink(last, p = RedBlackTree._single( q, dir ));
@@ -383,7 +383,7 @@
                   g.setLink(dir2, RedBlackTree._double( p, last ));
                 else if( RedBlackTree._red( s.link(!last) ) )
                   g.setLink(dir2, RedBlackTree._single( p, last ));
-              /* Ensure correct coloring */
+                /* Ensure correct coloring */
                 q.red = g.link(dir2).red = false;
                 g.link(dir2).left.red = true;
                 g.link(dir2).right.red = true;
@@ -393,16 +393,16 @@
         }
       }
 
-    /* Replace and remove the saved node */
+      /* Replace and remove the saved node */
       if( typeof f !== "undefined" && f !== null ) {
         f.data = q.data;
         p.setLink(p.right === q, q.link(typeof q.left === "undefined" || q.left === null));
       }
 
-    /* Update the root(it may be different) */
+      /* Update the root(it may be different) */
       this.root = head.right;
 
-    /* Make the root black for simplified logic */
+      /* Make the root black for simplified logic */
       if(typeof this.root !== "undefined" && this.root !== null) {
         this.root.p = null;
         this.root.red = false;
@@ -410,7 +410,7 @@
       --this._size;
     }
   };
-/** @ignore */
+  /** @ignore */
   RedBlackTree.prototype.insert = function(data) {
     if(!data)throw new Error();
     var retval = null;
@@ -428,13 +428,13 @@
       var dir = false,
         last = false;
 
-    /* Set up our helpers */
+      /* Set up our helpers */
       t = head;
       g = p = null;
       q = this.root;
       t.setLink(true, q);
 
-    /* Search down the tree for a place to insert */
+      /* Search down the tree for a place to insert */
       for (;;) {
         if ( typeof q === "undefined" || q === null ) {
         /* Insert a new node at the first null link */
@@ -452,9 +452,9 @@
           if ( q === p.link(last) )
             t.setLink(dir2, RedBlackTree._single( g, !last ));
           else
-          t.setLink(dir2, RedBlackTree._double( g, !last ));
+            t.setLink(dir2, RedBlackTree._double( g, !last ));
         }
-      /*
+        /*
         Stop working if we inserted a node. This
         check also disallows duplicates in the tree
       */
@@ -466,7 +466,7 @@
         last = dir;
         dir = cmp < 0;
 
-      /* Move the helpers down */
+        /* Move the helpers down */
         if ( typeof g !== "undefined" && g !== null )
           t = g;
 
@@ -475,13 +475,13 @@
         q = q.link(dir);
       }
 
-    /* Update the root (it may be different) */
+      /* Update the root (it may be different) */
       this.root = head.right;
       if(typeof this.root !== "undefined" && this.root !== null)
         this.root.p = null;
     }
 
-  /* Make the root black for simplified logic */
+    /* Make the root black for simplified logic */
     this.root.red = false;
     ++this._size;
     return retval;
@@ -531,7 +531,7 @@
       return p;
     };
   };
-/** @ignore */
+  /** @ignore */
   Polygon._Contour = function(subpath) {
     this.vertices = subpath;
     this.nvertices = function() {
@@ -565,7 +565,7 @@
       return this.closedPolygons.size();
     };
   }
-/** @ignore */
+  /** @ignore */
   Polygon.PointChain = function() {
     this.l = new LinkedList();
     this._closed = false;
@@ -589,28 +589,28 @@
         if(Clipper._ptEq(s[1], this.l.back()))
           this._closed = true;
         else
-      this.l.unshift(s[1]);
+          this.l.unshift(s[1]);
         return true;
       }
       if(Clipper._ptEq(s[1], this.l.back())) {
         if(Clipper._ptEq(s[0], this.l.front()))
           this._closed = true;
         else
-      this.l.push(s[0]);
+          this.l.push(s[0]);
         return true;
       }
       if(Clipper._ptEq(s[1], this.l.front())) {
         if(Clipper._ptEq(s[0], this.l.back()))
           this._closed = true;
         else
-      this.l.unshift(s[0]);
+          this.l.unshift(s[0]);
         return true;
       }
       if(Clipper._ptEq(s[0], this.l.back())) {
         if(Clipper._ptEq(s[1], this.l.front()))
           this._closed = true;
         else
-      this.l.push(s[1]);
+          this.l.push(s[1]);
         return true;
       }
       return false;
@@ -642,7 +642,7 @@
     }
     return false;
   };
-/** @ignore */
+  /** @ignore */
   Connector.prototype.add = function(s) {
     var j = this.openPolygons.first();
     while(j) {
@@ -663,12 +663,12 @@
       }
       j = j.next;
     }
-  // The segment cannot be connected with any open polygon
+    // The segment cannot be connected with any open polygon
     var chain = new Polygon.PointChain();
     chain.init(s);
     this.openPolygons.push(chain);
   };
-/** @ignore */
+  /** @ignore */
   Connector.prototype.toPolygon = function() {
     var polygon = new Polygon(null);
     var j = this.closedPolygons.first();
@@ -695,7 +695,7 @@
   Clipper.NON_CONTRIBUTING = 1;
   Clipper.SAME_TRANSITION = 2;
   Clipper.DIFFERENT_TRANSITION = 3;
-/** @ignore */
+  /** @ignore */
   Clipper.SweepEvent = function(pp, b, apl, o, t) {
     this.p = pp;
     this.id = -1;
@@ -711,18 +711,18 @@
     };
     this.below = function(x) {
       return this.left ?
-   Clipper.signedArea(this.p, this.other.p, x) > 0 :
-   Clipper.signedArea(this.other.p, this.p, x) > 0;
+        Clipper.signedArea(this.p, this.other.p, x) > 0 :
+        Clipper.signedArea(this.other.p, this.p, x) > 0;
     };
     this.above = function(x) {
       return !this.below(x);
     };
   };
-/*
+  /*
   Clipper.SweepEvent.prototype.toString = function() {
     return Clipper._print(this);
   };*/
-/** @ignore */
+  /** @ignore */
   Clipper.signedArea = function(a, b, c) {
     var xa = a[0] - c[0];
     var ya = a[1] - c[1];
@@ -730,12 +730,12 @@
     var yb = b[1] - c[1];
     return 0.5 * (xa * yb - xb * ya);
   };
-/** @ignore */
+  /** @ignore */
   Clipper._ptEq = function(a, b) {
     return a[0] === b[0] && a[1] === b[1];
   };
-// Compare two sweep events
-// Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
+  // Compare two sweep events
+  // Return true means that e1 is placed at the event queue after e2, i.e,, e1 is processed by the algorithm after e2
   Clipper.sweepEventComp = function(e1, e2) {
     if(e1.p[0] > e2.p[0]) // Different X coordinate
       return true;
@@ -745,15 +745,15 @@
       return e1.p[1] > e2.p[1];
     if(e1.left !== e2.left) // Same point, but one is a left endpoint and the other a right endpoint. The right endpoint is processed first
       return e1.left;
-  // Same point, both events are left endPoints or both are right endPoints. The event associate to the bottom segment is processed first
+    // Same point, both events are left endPoints or both are right endPoints. The event associate to the bottom segment is processed first
     return e1.above(e2.other.p);
   };
-/** @ignore */
+  /** @ignore */
   Clipper.sweepEventCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.sweepEventComp(e1, e2) ? -1 : 1;
   };
-// e1 and a2 are the left events of line segments(e1.p, e1.other.p) and(e2.p, e2.other.p)
+  // e1 and a2 are the left events of line segments(e1.p, e1.other.p) and(e2.p, e2.other.p)
   Clipper.segmentComp = function(e1, e2) {
     if(e1 === e2)
       return false;
@@ -763,25 +763,25 @@
       if(Clipper._ptEq(e1.p, e2.p))
         return e1.below(e2.other.p);
 
-    // Different points
+      // Different points
       if(Clipper.sweepEventComp(e1, e2)) // has the line segment associated to e1 been inserted into S after the line segment associated to e2 ?
         return e2.above(e1.p);
-    // The line segment associated to e2 has been inserted into S after the line segment associated to e1
+      // The line segment associated to e2 has been inserted into S after the line segment associated to e1
       return e1.below(e2.p);
     }
-  // Segments are collinear. Just a consistent criterion is used
+    // Segments are collinear. Just a consistent criterion is used
     if(Clipper._ptEq(e1.p, e2.p)) {
-   // console.log("collinear segments")
+      // console.log("collinear segments")
       return e1.id < e2.id;
     }
     return Clipper.sweepEventComp(e1, e2);
   };
-/** @ignore */
+  /** @ignore */
   Clipper.segmentCompNum = function(e1, e2) {
     if(e1 === e2)return 0;
     return Clipper.segmentComp(e1, e2) ? -1 : 1;
   };
-/** @ignore */
+  /** @ignore */
   Clipper.prototype.storeSweepEvent = function(e) {
     e.id = this.eventHolder.length;
     this.eventHolder.push(e);
@@ -796,7 +796,7 @@
          (e.inside ? " (Inside) " : " (Outside) ") +  (e.inOut ? " (In-Out) " : " (Out-In) ") + "Type: " +
          namesEventTypes[e.type] + " Polygon: " + (e.pl === Clipper.SUBJECT ? " (SUBJECT)" : " (CLIPPING)");
   };*/
-/** @ignore */
+  /** @ignore */
   Clipper.prototype.compute = function(op) {
   // Test 1 for trivial result case
     if(this.subject.ncontours() * this.clipping.ncontours() === 0) { // At least one of the polygons is empty
@@ -808,7 +808,7 @@
     }
     var i, j;
     var result = new Polygon();
-  // Test 2 for trivial result case
+    // Test 2 for trivial result case
     var subjBounds = this.subject.getBounds();
     var clipBounds = this.clipping.getBounds();
     var minsubj = [subjBounds[0], subjBounds[1]];
@@ -827,8 +827,8 @@
       }
       return result;
     }
-  // Boolean operation is not trivial
-  // Insert all the endPoints associated to the line segments into the event queue
+    // Boolean operation is not trivial
+    // Insert all the endPoints associated to the line segments into the event queue
     for(i = 0; i < this.subject.ncontours(); i++)
       for(j = 0; j < this.subject.contour(i).nvertices(); j++)
         this.processSegment(this.subject.contour(i).segment(j), Clipper.SUBJECT);
@@ -842,8 +842,8 @@
     var minMaxx = Math.min(maxsubj[0], maxclip[0]); // for optimization 1
     while(this.eq.size() > 0) {
       e = this.eq.pop();
-    // console.log("Process event:  "+e.toString())
-    // optimization 1
+      // console.log("Process event:  "+e.toString())
+      // optimization 1
       if(op === Clipper.INTERSECTION && e.p[0] > minMaxx ||
        op === Clipper.DIFFERENCE && e.p[0] > maxsubj[0]) {
         return connector.toPolygon(result);
@@ -859,7 +859,7 @@
         }
         return connector.toPolygon(result);
       }
-    // end of optimization 1
+      // end of optimization 1
 
       if(e.left) { // the line segment must be inserted into S
         it = S.insert(e);
@@ -870,10 +870,10 @@
         if(prev !== S.first())
           prev = prev.prev();
         else
-       prev = null;
-      // Compute the inside and inOut flags
+          prev = null;
+        // Compute the inside and inOut flags
         if(typeof prev === "undefined" || prev === null) { // there is not a previous line segment in S?
-      // console.log("prev is end")
+          // console.log("prev is end")
           e.inside = e.inOut = false;
         } else if(prev.data.type !== Clipper.NORMAL) {
           if(prev === S.first()) { // e overlaps with prev
@@ -897,31 +897,31 @@
           e.inside = !prev.data.inOut;
           e.inOut = prev.data.inside;
         }
-      /*
+        /*
       console.log("Status line after insertion:")
       var bgn=S.first()
       while(bgn) {
        console.log(" "+bgn.data.toString())
        bgn=bgn.next()
       }*/
-      // Process a possible intersection between "e" and its next neighbor in S
+        // Process a possible intersection between "e" and its next neighbor in S
         next = next.next();
         if(typeof next !== "undefined" && next !== null)
           this.possibleIntersection(e, next.data);
 
-      // Process a possible intersection between "e" and its previous neighbor in S
+        // Process a possible intersection between "e" and its previous neighbor in S
         if(typeof prev !== "undefined" && prev !== null)
           this.possibleIntersection(prev.data, e);
       } else { // the line segment must be removed from S
       // console.log([e.other.p,e.other.id])
         next = prev = sli = e.other.poss;
-      // Get the next and previous line segments to "e" in S
+        // Get the next and previous line segments to "e" in S
         next = next.next();
         if(prev !== S.first())
           prev = prev.prev();
         else
-       prev = null;
-      // Check if the line segment belongs to the Boolean operation
+          prev = null;
+        // Check if the line segment belongs to the Boolean operation
         switch(e.type) {
         default:throw new Error();
         case Clipper.NORMAL:
@@ -954,7 +954,7 @@
             connector.add(e.segment());
           break;
         }
-      // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
+        // delete line segment associated to e from S and check for intersection between the neighbors of "e" in S
         S.erase(sli.data);
         if(typeof next !== "undefined" && next !== null && (typeof prev !== "undefined" && prev !== null)) {
           this.possibleIntersection(prev.data, next.data);
@@ -971,7 +971,7 @@
     }
     return connector.toPolygon(result);
   };
-/** @ignore */
+  /** @ignore */
   Clipper.prototype.processSegment = function(s, pl) {
     if(Clipper._ptEq(s[0], s[1])) // if the two edge endPoints are equal the segment is discarded
       return;                 // in the future this can be done as preprocessing to avoid "polygons" with less than 3 edges
@@ -990,10 +990,10 @@
     this.eq.push(e1);
     this.eq.push(e2);
   };
-/** @ignore */
+  /** @ignore */
   Clipper.findIntersection = function(a, b, e, f) {
     var ret = Clipper._findIntersectionInternal(a[0][0], a[0][1], a[1][0], a[1][1],
-  b[0][0], b[0][1], b[1][0], b[1][1]);
+      b[0][0], b[0][1], b[1][0], b[1][1]);
     if(ret.length > 0) {
       e[0] = ret[0][0];
       e[1] = ret[0][1];
@@ -1004,7 +1004,7 @@
     }
     return ret.length;
   };
-/** @ignore */
+  /** @ignore */
   Clipper._findIntersectionInternal = function(a1x, a1y, a2x, a2y, b1x, b1y, b2x, b2y) {
     var dpdeltad0;
     var t2 = a2x - a1x;
@@ -1056,16 +1056,16 @@
         var s1 = (t2 * (b1x - a1x) + t3 * (b1y - a1y)) / (t2 * t2 + t3 * t3);
         var s2 = (t2 * (b2x - a1x) + t3 * (b2y - a1y)) / (t2 * t2 + t3 * t3);
         if(s1 <= 0 && s2 >= 1 || s1 >= 1 && s2 <= 0) {
-      // first line contains second line
+          // first line contains second line
           return [[a1x, a1y], [a2x, a2y]];
         } else if(s1 < 0 && s2 < 0 || s1 > 1 && s2 > 1) {
-      // lines don't overlap
+          // lines don't overlap
           return [];
         } else if(s1 <= 0 && s2 <= 0) {
-      // meets at the first point of first line
+          // meets at the first point of first line
           return [[a1x, a1y]];
         } else if(s1 >= 1 && s2 >= 1) {
-      // meets at the second point of first line
+          // meets at the second point of first line
           return [[a2x, a2y]];
         } else if(s1 < 0 || s2 < 0) {
           smax = Math.max(s1, s2);
@@ -1087,7 +1087,7 @@
           ]];
         }
       } else {
-     // console.log("parallel")
+        // console.log("parallel")
       }
     } else {
       var t29 = t24 / t21;
@@ -1100,26 +1100,26 @@
     return ret;
   };
 
-/** @ignore */
+  /** @ignore */
   Clipper.prototype.possibleIntersection = function(e1, e2) {
-// if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
-// return false;
+    // if((e1.pl == e2.pl) ) // you can uncomment these two lines if(self-intersecting polygons are not allowed
+    // return false;
 
     var ip1 = [];
     var ip2 = []; // intersection points
     var nintersections;
-  // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
+    // console.log(JSON.stringify(["possibleIntersections",e1.segment(), e2.segment()]))
     if(!(nintersections = Clipper.findIntersection(e1.segment(), e2.segment(), ip1, ip2)))
       return;
-  // console.log([ip1,ip2])
+    // console.log([ip1,ip2])
     if(nintersections === 1 && (Clipper._ptEq(e1.p, e2.p) || Clipper._ptEq(e1.other.p, e2.other.p)))
       return; // the line segments intersect at an endpoint of both line segments
 
     if(nintersections === 2 && e1.pl === e2.pl)
       return; // the line segments overlap, but they belong to the same polygon
 
-  // The line segments associated to e1 and e2 intersect
-  // nint += nintersections;
+    // The line segments associated to e1 and e2 intersect
+    // nint += nintersections;
 
     if(nintersections === 1) {
       if(!Clipper._ptEq(e1.p, ip1) && !Clipper._ptEq(e1.other.p, ip1))  // if(ip1 is not an endpoint of the line segment associated to e1 then divide "e1"
@@ -1129,7 +1129,7 @@
       return;
     }
 
-  // The line segments overlap
+    // The line segments overlap
     var sortedEvents = [];
     if(Clipper._ptEq(e1.p, e2.p)) {
       sortedEvents.push(null);
@@ -1160,7 +1160,7 @@
       if(sortedEvents[0]) // is the right endpoint the shared point?
         sortedEvents[0].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
       else // the shared point is the left endpoint
-      sortedEvents[2].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
+        sortedEvents[2].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
       this._divideSegment(sortedEvents[0] ? sortedEvents[0] : sortedEvents[2].other, sortedEvents[1].p);
       return;
     }
@@ -1171,17 +1171,17 @@
       this._divideSegment(sortedEvents[1], sortedEvents[2].p);
       return;
     }
-   // one line segment includes the other one
+    // one line segment includes the other one
     sortedEvents[1].type = sortedEvents[1].other.type = Clipper.NON_CONTRIBUTING;
     this._divideSegment(sortedEvents[0], sortedEvents[1].p);
     sortedEvents[3].other.type = e1.inOut === e2.inOut ? Clipper.SAME_TRANSITION : Clipper.DIFFERENT_TRANSITION;
     this._divideSegment(sortedEvents[3].other, sortedEvents[2].p);
   };
-/** @ignore */
+  /** @ignore */
   Clipper.prototype._divideSegment = function(e, p) {
   // "Right event" of the "left line segment" resulting from dividing e(the line segment associated to e)
     var r = this.storeSweepEvent(new Clipper.SweepEvent(p, false, e.pl, e, e.type));
-  // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
+    // "Left event" of the "right line segment" resulting from dividing e(the line segment associated to e)
     var l = this.storeSweepEvent(new Clipper.SweepEvent(p, true, e.pl, e.other, e.other.type));
     if(Clipper.sweepEventComp(l, e.other)) { // avoid a rounding error. The left event would be processed after the right event
     // console.log("Oops")
@@ -1198,9 +1198,9 @@
   };
 
   if(globalContext.H3DU.GraphicsPath) {
-/** @lends H3DU.GraphicsPath */
+    /** @lends H3DU.GraphicsPath */
     GraphicsPath = globalContext.H3DU.GraphicsPath;
-/**
+    /**
  * Computes the combination of this path's shape with another
  * path's shape. The following points apply to this method:<ul>
  * <li>This method treats unclosed subpaths as implicitly closed
@@ -1232,7 +1232,7 @@
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.UNION);
       return retval.toPath();
     };
-/**
+    /**
  * Computes the difference between this path's shape and another
  * path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
@@ -1252,7 +1252,7 @@
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.DIFFERENCE);
       return retval.toPath();
     };
-/**
+    /**
  * Computes the intersection, or the area common to both this path's shape
  * and another path's shape. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.
@@ -1272,7 +1272,7 @@
       var retval = new Clipper(polygon1, polygon2).compute(Clipper.INTERSECTION);
       return retval.toPath();
     };
-/**
+    /**
  * Computes the shape contained in either this path or another path,
  * but not both. The points given in the {@link H3DU.GraphicsPath#union} method
  * apply to this method.

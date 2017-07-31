@@ -48,9 +48,9 @@ BspTree._MiniBuilder = function() {
   };
   this.toMeshBuffer = function() {
     return new H3DU.MeshBuffer()
-    .setAttribute("POSITION", this.vertices, 3)
-    .setAttribute("NORMAL", this.normals, 3)
-    .setIndices(this.indices);
+      .setAttribute("POSITION", this.vertices, 3)
+      .setAttribute("NORMAL", this.normals, 3)
+      .setIndices(this.indices);
   };
 };
 
@@ -215,7 +215,7 @@ BspTree._splitPolygon = function(poly, splitPlane, info) {
     if(cls === (AABBTree.BACK << 4 | AABBTree.FRONT) ||
     cls === (AABBTree.FRONT << 4 | AABBTree.BACK)) {
       var p = getIntersectionRayPlane(makeRay(p1, p2),
-    splitPlane);
+        splitPlane);
       front.vertices.push(p);
       back.vertices.push(p);
     }
@@ -345,8 +345,8 @@ BspTree.prototype.union = function(other) {
   var otherBsp = other.copy();
   var thisBsp = this.copy().clip(otherBsp);
   return new BspTree(
-     thisBsp.getPolygons().concat(
-        otherBsp._clipflip2(thisBsp).getPolygons()));
+    thisBsp.getPolygons().concat(
+      otherBsp._clipflip2(thisBsp).getPolygons()));
 };
 /**
  * Generates a BSP tree that consists of the solid areas of
@@ -359,8 +359,8 @@ BspTree.prototype.difference = function(other) {
   var otherBsp = other.copy();
   var thisBsp = this.copy().flip().clip(otherBsp);
   return new BspTree(
-     thisBsp.getPolygons().concat(
-         otherBsp._clipflip2(thisBsp).getPolygons())).flip();
+    thisBsp.getPolygons().concat(
+      otherBsp._clipflip2(thisBsp).getPolygons())).flip();
 };
 /**
  * Generates a BSP tree that consists of the solid areas common
@@ -373,8 +373,8 @@ BspTree.prototype.intersection = function(other) {
   var thisBsp = this.copy().flip();
   var otherBsp = other.copy().clip(thisBsp).flip();
   return new BspTree(
-     thisBsp.clip(otherBsp).getPolygons().concat(
-         otherBsp.getPolygons())).flip();
+    thisBsp.clip(otherBsp).getPolygons().concat(
+      otherBsp.getPolygons())).flip();
 };
 /**
  * Generates a BSP tree that consists of the solid areas of
@@ -406,7 +406,7 @@ BspTree.prototype._buildNode = function(polygons) {
     var p1 = polygons[p1Index];
     var r = BspTree._classifyPolygons(polygons, p1.plane);
     // See <https://groups.google.com/d/msg/comp.graphics.algorithms/XRtRJvWLDLA/cEJCV9AlimcJ>,
-     // by Tim Sweeney
+    // by Tim Sweeney
     var score = Math.abs(r.frontFaces.length - r.backFaces.length) * 20 +
       r.crossingFaces.length * 80;
     if (best === -1 || score < best) {
