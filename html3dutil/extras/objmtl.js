@@ -90,10 +90,10 @@ H3DU.ObjData.prototype.toShapeFromName = function(name) {
 /** @ignore */
 H3DU.ObjData._resolvePath = function(path, name) {
   "use strict";
- // Relatively dumb for a relative path
- // resolver, but sufficient here, as it will
- // only be used with relative "mtllib"/"map_Kd"
- // strings
+  // Relatively dumb for a relative path
+  // resolver, but sufficient here, as it will
+  // only be used with relative "mtllib"/"map_Kd"
+  // strings
 
   var ret = path;
   var lastSlash = ret.lastIndexOf("/");
@@ -126,9 +126,9 @@ H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
     var mtl = this.list[i].data;
     if(mtl.texture) {
       var resolvedName = H3DU.ObjData._resolvePath(
-       this.url, mtl.texture);
+        this.url, mtl.texture);
       this.list[i].data = mtl.copy()
-       .setParams({"texture":resolvedName});
+        .setParams({"texture":resolvedName});
     }
   }
 };
@@ -198,7 +198,7 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
   if(Object.prototype.hasOwnProperty.call(mtl, "Ks")) {
     specular = mtl.Ks;
   }
- // NOTE: illum must be checked last
+  // NOTE: illum must be checked last
   if(Object.prototype.hasOwnProperty.call(mtl, "illum")) {
     if(mtl.illum === 0) {
       ambient = diffuse ? diffuse.slice(0, 3) : [0, 0, 0];
@@ -209,7 +209,7 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
     }
   }
   var ret = new H3DU.Material(ambient, diffuse, specular, shininess,
-   emission);
+    emission);
   if(textureName) {
     ret = ret.setParams({"texture":textureName});
   }
@@ -238,20 +238,20 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
 H3DU.ObjData.loadMtlFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url).then(
-   function(e) {
-     var mtl = H3DU.ObjData._MtlData._loadMtl(e.data);
-     if(mtl.error)return Promise.reject({
-       "url":e.url,
-       "error": mtl.error
-     });
-     var mtldata = mtl.success;
-     mtldata.url = e.url;
-     mtldata._resolveTextures();
-     return Promise.resolve(mtldata);
-   },
-   function(e) {
-     return Promise.reject(e);
-   });
+    function(e) {
+      var mtl = H3DU.ObjData._MtlData._loadMtl(e.data);
+      if(mtl.error)return Promise.reject({
+        "url":e.url,
+        "error": mtl.error
+      });
+      var mtldata = mtl.success;
+      mtldata.url = e.url;
+      mtldata._resolveTextures();
+      return Promise.resolve(mtldata);
+    },
+    function(e) {
+      return Promise.reject(e);
+    });
 };
 /**
  * Loads a WaveFront OBJ file (along with its associated MTL, or
@@ -271,14 +271,14 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
   return H3DU.ObjData.loadObjFromUrl(url).then(function(obj) {
     var o = obj;
     return textureLoader.loadTexturesAll(o._gatherTextureNames())
-     .then(function() {
-       return Promise.resolve(o);
-     }, function(results) {
-       return Promise.reject({
-         "url":url,
-         "textureResults":results
-       });
-     });
+      .then(function() {
+        return Promise.resolve(o);
+      }, function(results) {
+        return Promise.reject({
+          "url":url,
+          "textureResults":results
+        });
+      });
   });
 };
 
@@ -294,35 +294,35 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
 H3DU.ObjData.loadObjFromUrl = function(url) {
   "use strict";
   return H3DU.loadFileFromUrl(url).then(
-   function(e) {
-     var obj;
-     obj = H3DU.ObjData._loadObj(e.data);
-     if(obj.error)return Promise.reject({
-       "url":e.url,
-       "error":obj.error
-     });
-     obj = obj.success;
-     obj.url = e.url;
-     if(obj.mtllib) {
-       // load the material file if available
-       var mtlURL = H3DU.ObjData._resolvePath(e.url, obj.mtllib);
-       return H3DU.ObjData.loadMtlFromUrl(mtlURL).then(
-        function(result) {
-          obj.mtl = result;
-          return Promise.resolve(obj);
-        }, function() {
+    function(e) {
+      var obj;
+      obj = H3DU.ObjData._loadObj(e.data);
+      if(obj.error)return Promise.reject({
+        "url":e.url,
+        "error":obj.error
+      });
+      obj = obj.success;
+      obj.url = e.url;
+      if(obj.mtllib) {
+        // load the material file if available
+        var mtlURL = H3DU.ObjData._resolvePath(e.url, obj.mtllib);
+        return H3DU.ObjData.loadMtlFromUrl(mtlURL).then(
+          function(result) {
+            obj.mtl = result;
+            return Promise.resolve(obj);
+          }, function() {
           // MTL not loaded successfully, ignore
-         obj.mtl = null;
-         return Promise.resolve(obj);
-       });
-     } else {
-       // otherwise just return the object
-       return Promise.resolve(obj);
-     }
-   },
-   function(e) {
-     return Promise.reject(e);
-   });
+            obj.mtl = null;
+            return Promise.resolve(obj);
+          });
+      } else {
+        // otherwise just return the object
+        return Promise.resolve(obj);
+      }
+    },
+    function(e) {
+      return Promise.reject(e);
+    });
 };
 /** @ignore */
 H3DU.ObjData._MtlData._loadMtl = function(str) {
@@ -335,7 +335,7 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
     var rgb = [2.2878384873407613 * x - 0.8333676778352163 * y - 0.4544707958714208 * z,
       -0.5116513807438615 * x + 1.4227583763217775 * y + 0.08889300175529392 * z,
       0.005720409831409596 * x - 0.01590684851040362 * y + 1.0101864083734013 * z];
-  // ensure RGB value fits in 0..1
+    // ensure RGB value fits in 0..1
     var w = -Math.min(0, rgb[0], rgb[1], rgb[2]);
     if(w > 0) {
       rgb[0] += w; rgb[1] += w; rgb[2] += w;
@@ -367,9 +367,9 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
   var currentMat = null;
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
-  // skip empty lines
+    // skip empty lines
     if(line.length === 0)continue;
-  // skip comments
+    // skip comments
     if(line.charAt(0) === "#")continue;
     while(line.charAt(line.length - 1) === "\\" &&
     i + 1 < line.length) {
@@ -434,7 +434,7 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
     }
     e = mapLine.exec(line);
     if(e) {
-     // only allow relative paths
+      // only allow relative paths
       if((/^(?![\/\\])([^\:\?\#\s]+)$/).test(e[2])) {
         currentMat[e[1]] = e[2];
       }
@@ -500,9 +500,9 @@ H3DU.ObjData._loadObj = function(str) {
   var flat = false;
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
-  // skip empty lines
+    // skip empty lines
     if(line.length === 0)continue;
-  // skip comments
+    // skip comments
     if(line.charAt(0) === "#")continue;
     while(line.charAt(line.length - 1) === "\\" &&
     i + 1 < line.length) {
@@ -553,7 +553,7 @@ H3DU.ObjData._loadObj = function(str) {
         mesh.vertexCount() > 0) {
         mesh = mesh.toMeshBuffer();
         if(!haveNormals) {
-         // No normals in this mesh, so calculate them
+          // No normals in this mesh, so calculate them
           mesh.recalcNormals(flat);
         }
         ret.meshes.push({
@@ -567,8 +567,8 @@ H3DU.ObjData._loadObj = function(str) {
         mesh = new H3DU.Mesh();
       }
       mesh.mode(prim === H3DU.Mesh.TRIANGLES ?
-      H3DU.Mesh.TRIANGLE_FAN :
-      prim === H3DU.Mesh.LINES ? H3DU.Mesh.LINE_STRIP : H3DU.Mesh.POINTS);
+        H3DU.Mesh.TRIANGLE_FAN :
+        prim === H3DU.Mesh.LINES ? H3DU.Mesh.LINE_STRIP : H3DU.Mesh.POINTS);
       while(line.length > 0) {
         e = vertexOnly.exec(line);
         if(e) {
@@ -577,7 +577,7 @@ H3DU.ObjData._loadObj = function(str) {
           }
           vtx = H3DU.ObjData._refIndex(e[1], vertices);
           mesh.normal3(0, 0, 0).texCoord2(0, 0)
-        .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
+            .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
           line = line.substr(e[0].length);
           continue;
         }
@@ -590,9 +590,9 @@ H3DU.ObjData._loadObj = function(str) {
           norm = H3DU.ObjData._refIndex(e[2], normals);
           haveNormals = true;
           mesh.normal3(normals[norm][0], normals[norm][1],
-         normals[norm][2])
-        .texCoord2(0, 0)
-        .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
+            normals[norm][2])
+            .texCoord2(0, 0)
+            .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
           line = line.substr(e[0].length);
           continue;
         }
@@ -604,8 +604,8 @@ H3DU.ObjData._loadObj = function(str) {
           vtx = H3DU.ObjData._refIndex(e[1], vertices);
           uv = H3DU.ObjData._refIndex(e[2], uvs);
           mesh.normal3(0, 0, 0)
-        .texCoord2(uvs[uv][0], uvs[uv][1])
-        .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
+            .texCoord2(uvs[uv][0], uvs[uv][1])
+            .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
           line = line.substr(e[0].length);
           continue;
         }
@@ -619,9 +619,9 @@ H3DU.ObjData._loadObj = function(str) {
           norm = H3DU.ObjData._refIndex(e[3], normals);
           haveNormals = true;
           mesh.normal3(normals[norm][0], normals[norm][1],
-         normals[norm][2])
-        .texCoord2(uvs[uv][0], uvs[uv][1])
-        .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
+            normals[norm][2])
+            .texCoord2(uvs[uv][0], uvs[uv][1])
+            .vertex3(vertices[vtx][0], vertices[vtx][1], vertices[vtx][2]);
           line = line.substr(e[0].length);
           continue;
         }
@@ -636,7 +636,7 @@ H3DU.ObjData._loadObj = function(str) {
         if(mesh.vertexCount() > 0) {
           mesh = mesh.toMeshBuffer();
           if(!haveNormals) {
-         // No normals in this mesh, so calculate them
+            // No normals in this mesh, so calculate them
             mesh.recalcNormals(flat);
           }
           ret.meshes.push({
@@ -655,7 +655,7 @@ H3DU.ObjData._loadObj = function(str) {
         if(mesh.vertexCount() > 0) {
           mesh = mesh.toMeshBuffer();
           if(!haveNormals) {
-         // No normals in this mesh, so calculate them
+            // No normals in this mesh, so calculate them
             mesh.recalcNormals(flat);
           }
           ret.meshes.push({
@@ -691,7 +691,7 @@ H3DU.ObjData._loadObj = function(str) {
     return {"error": new Error("unsupported line: " + line)};
   }
   if(!haveNormals) {
-   // No normals in this mesh, so calculate them
+    // No normals in this mesh, so calculate them
     mesh.recalcNormals(flat);
   }
   ret.meshes.push({

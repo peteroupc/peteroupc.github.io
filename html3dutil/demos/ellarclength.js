@@ -30,7 +30,7 @@ function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
 /** @ignore */
 function _numIntegrate(func, xmin, xmax) {
   "use strict";
-/*
+  /*
 * Estimates the integral of a function. The integral
 * is like the area between the function's graph and the X axis,
 * where areas above the X axis add to the integral, and areas
@@ -56,7 +56,7 @@ function _numIntegrate(func, xmin, xmax) {
   return simpsonRec(func, mn, mx, dir, 0, null, null, null);
 }
 
-  /** @ignore */
+/** @ignore */
 function normAngleRadians(angle) {
   "use strict";
   var twopi = Math.PI * 2;
@@ -75,8 +75,8 @@ function _ellipseSemiLength(xRadius, yRadius) {
   "use strict";
   var a = Math.min(xRadius, yRadius);
   var b = Math.max(xRadius, yRadius);
-          // use James Ivory's 1798 algorithm to calculate
-    // the half-length of an ellipse
+  // use James Ivory's 1798 algorithm to calculate
+  // the half-length of an ellipse
   var c = a / b;
   var e = (1 - c) / (1 + c);
   var esq = e * e;
@@ -92,7 +92,7 @@ function _ellipseSemiLength(xRadius, yRadius) {
   series += eseries * 0.0007476806640625;
   eseries *= esq;
   series += eseries * 0.00042057037353515625;
-    // The series keeps going, but we stop here
+  // The series keeps going, but we stop here
   return b * (Math.PI / (1 + e)) * series;
 }
 /** @ignore */
@@ -124,8 +124,8 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
   "use strict";
   if(startAngle === endAngle || xRadius <= 0 || yRadius <= 0)return 0;
   if(Math.abs(endAngle - startAngle) >= Math.PI * 2) {
-      // Length of a full ellipse (NOTE: This function assumes
-      // arc lengths of 360 degrees or less)
+    // Length of a full ellipse (NOTE: This function assumes
+    // arc lengths of 360 degrees or less)
     if(xRadius === yRadius) {
       return Math.PI * 2 * xRadius;
     } else {
@@ -135,7 +135,7 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
   // for circular arc length this is extremely simple
     return Math.abs((endAngle - startAngle) * xRadius);
   } else if(Math.abs(endAngle - startAngle) === Math.PI) {
-      // Length of a half ellipse
+    // Length of a half ellipse
     return _ellipseSemiLength(xRadius, yRadius);
   }
   var mn = Math.min(xRadius, yRadius);
@@ -149,7 +149,7 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
          startAngle > endAngle && sa > ea) {
     return Math.abs(eaLength - saLength);
   } else if(startAngle < endAngle) {
-      // startAngle -- seam -- endAngle
+    // startAngle -- seam -- endAngle
     var fullEllipseLength = _ellipseSemiLength(xRadius, yRadius) * 2;
     return fullEllipseLength - saLength + eaLength;
   } else {

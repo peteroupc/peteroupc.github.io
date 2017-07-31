@@ -28,12 +28,12 @@ function pathFloor(path, z, flatness) {
   if(typeof z === "undefined" || z === null)z = 0;
   var tris = path.getTriangles(flatness);
   var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0, 0, 1);
+    .normal3(0, 0, 1);
   for(var i = 0; i < tris.length; i++) {
     var tri = tris[i];
     mesh.vertex3(tri[0], tri[1], z)
-   .vertex3(tri[2], tri[3], z)
-   .vertex3(tri[4], tri[5], z);
+      .vertex3(tri[2], tri[3], z)
+      .vertex3(tri[4], tri[5], z);
   }
   return mesh.toMeshBuffer();
 }

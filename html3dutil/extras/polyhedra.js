@@ -75,14 +75,14 @@ H3DU.Polyhedra.makeSphere = function(vi, radius, level) {
     return vi;
   }
   H3DU.Polyhedra.normDistances(vertices, radius);
- // Subdivide the triangles into many smaller triangles
+  // Subdivide the triangles into many smaller triangles
   for(var i = 0; i < level; i++) {
     var tris = indices.length;
     for(var j = 0; j < tris; j += 3) {
       var i1 = indices[j];
       var i2 = indices[j + 1];
       var i3 = indices[j + 2];
-     // Subdivide the triangle into four triangles
+      // Subdivide the triangle into four triangles
       var i1t3 = i1 * 3;
       var i2t3 = i2 * 3;
       var i3t3 = i3 * 3;
@@ -120,13 +120,13 @@ H3DU.Polyhedra.makeSphere = function(vi, radius, level) {
  * @returns {H3DU.MeshBuffer} The generated mesh.
  */
 H3DU.Polyhedra.makeMesh = function(vi) {
- // Create the mesh and generate normals
- // for a flat-shaded appearance
+  // Create the mesh and generate normals
+  // for a flat-shaded appearance
   "use strict";
   return new H3DU.MeshBuffer()
-   .setAttribute("POSITION", vi[0], 3)
-   .setIndices(vi[1])
-   .recalcNormals(true);
+    .setAttribute("POSITION", vi[0], 3)
+    .setIndices(vi[1])
+    .recalcNormals(true);
 };
 /**
  * Generates a mesh of a regular octahedron or a sphere based on that solid.

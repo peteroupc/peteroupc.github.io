@@ -52,9 +52,9 @@ H3DU._TBNFrames = function(func) {
         H3DU.Math.vec3normalizeInPlace(b);
         var cosAngle = H3DU.Math.vec3dot(this.tangents[i - 1], this.tangents[i]);
         var sinAngle = Math.abs(H3DU.Math.vec3length(
-         H3DU.Math.vec3cross(this.tangents[i - 1], this.tangents[i])));
+          H3DU.Math.vec3cross(this.tangents[i - 1], this.tangents[i])));
         this.normals[i] = H3DU._TBNFrames._rotateVector(
-        this.normals[i - 1], b, sinAngle, cosAngle);
+          this.normals[i - 1], b, sinAngle, cosAngle);
       }
     }
   }
@@ -63,7 +63,7 @@ H3DU._TBNFrames = function(func) {
     var quat = H3DU.Math.quatFromVectors(this.normals[res], this.normals[0]);
     var angle = H3DU.Math.quatToAxisAngle(quat)[3];
     angle *= H3DU.Math.ToRadians;
-  // Set basis vectors at ends to the same value
+    // Set basis vectors at ends to the same value
     this.normals[res] = this.normals[0];
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
@@ -72,7 +72,7 @@ H3DU._TBNFrames = function(func) {
         cosAngle = Math.cos(subAngle);
         sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
         this.normals[i] = H3DU._TBNFrames._rotateVector(
-           this.normals[i], this.tangents[i], sinAngle, cosAngle);
+          this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
     }
   }
@@ -102,15 +102,15 @@ H3DU._TBNFrames._getTangent = function(func, t, sampleAtPoint) {
   var direction = t === 1 ? -1 : 1;
   var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
   tangent = H3DU.Math.vec3normalizeInPlace(
-       H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
+    H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
   if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
     direction = -direction;
     sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
     tangent = H3DU.Math.vec3sub(sampleAtNearbyPoint, sampleAtPoint);
   }
   if(direction < 0) {
-      // Since we evaluated backward in this case, the tangent
-      // will be backward; negate it here
+    // Since we evaluated backward in this case, the tangent
+    // will be backward; negate it here
     H3DU.Math.vec3scaleInPlace(tangent, -1);
   }
   return H3DU.Math.vec3normalizeInPlace(tangent);
@@ -166,9 +166,9 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
       e0 = sample;
       tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
       normal = H3DU.Math.vec3normalizeInPlace(
-       H3DU.Math.vec3cross(this.binormals[index], tangent));
+        H3DU.Math.vec3cross(this.binormals[index], tangent));
       binormal = H3DU.Math.vec3normalizeInPlace(
-       H3DU.Math.vec3cross(tangent, normal));
+        H3DU.Math.vec3cross(tangent, normal));
       b = binormal;
       n = normal;
       t = tangent;
@@ -184,7 +184,7 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
       var un = uNorm - Math.floor(uNorm);
       if(un < 0)un = 1.0 + un;
       return this.getSampleAndBasisVectors(
-         this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * un);
+        this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * un);
     }
     sample = this.func.evaluate(u);
     e0 = sample;
@@ -192,7 +192,7 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
 
     normal = H3DU._TBNFrames.normalFromTangent(tangent);
     binormal = H3DU.Math.vec3normalizeInPlace(
-    H3DU.Math.vec3cross(tangent, normal));
+      H3DU.Math.vec3cross(tangent, normal));
     b = binormal;
     n = normal;
     t = tangent;

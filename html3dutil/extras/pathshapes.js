@@ -129,9 +129,9 @@ H3DU.GraphicsPath.prototype.ellipse = function(cx, cy, w, h) {
   var hh = h * 0.5;
   var px = cx + hw;
   return this.moveTo(px, cy)
-   .arcSvgTo(hw, hh, 0, false, true, px - w, cy)
-  .arcSvgTo(hw, hh, 0, false, true, px, cy)
-  .closePath();
+    .arcSvgTo(hw, hh, 0, false, true, px - w, cy)
+    .arcSvgTo(hw, hh, 0, false, true, px, cy)
+    .closePath();
 };
 /**
  * Adds path segments to this path that form an axis-aligned ellipse, given the ellipse's corner point

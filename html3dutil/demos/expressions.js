@@ -184,7 +184,7 @@ Expression.simplifyNodes = function(nodes) {
     node = null,
     nextNode = null,
     op = null;
-      // Eliminate expression nodes
+  // Eliminate expression nodes
   for(i = 0; i < nodes.length; i++) {
     node = nodes[i];
     if(!node)continue;
@@ -448,7 +448,7 @@ Operation.prototype.simplify = function() {
               }
             }
             if(!found) {
-             // no non-zero nodes after the first
+              // no non-zero nodes after the first
               this.nodes.splice(0, this.nodes.length);
               this.nodes[0] = new Constant(0);
               return this;
@@ -721,7 +721,7 @@ Operation.prototype.toJSString = function() {
       }
     }
     paren = (b = i instanceof Operation, b !== false && (typeof b !== "undefined" && b !== null) ? (c = (d = i.operator === "plus") !== false && (typeof d !== "undefined" && d !== null) ?
-       d : i.operator === "mul") !== false && (typeof c !== "undefined" && c !== null) ? c : i.operator === "div" : b);
+      d : i.operator === "mul") !== false && (typeof c !== "undefined" && c !== null) ? c : i.operator === "div" : b);
     opArray.push(paren !== false && (typeof paren !== "undefined" && paren !== null) ? "(" + i.toJSString() + ")" : i.toJSString());
   }
 
@@ -776,7 +776,7 @@ Operation.prototype.toString = function() {
   for (i__ = 0; i__ < this.nodes.length; i__++) {
     i = this.nodes[i__];
     paren = (b = i instanceof Operation, b !== false && (typeof b !== "undefined" && b !== null) ?
-        (c = (d = i.operator === "plus") !== false && (typeof d !== "undefined" && d !== null) ? d : i.operator === "mul") !== false &&
+      (c = (d = i.operator === "plus") !== false && (typeof d !== "undefined" && d !== null) ? d : i.operator === "mul") !== false &&
         (typeof c !== "undefined" && c !== null) ? c : i.operator === "div" : b);
     opArray.push(paren !== false && (typeof paren !== "undefined" && paren !== null) ? "(" + i.toString() + ")" : i.toString());
   }
@@ -1243,28 +1243,28 @@ var findPartialDerivative = function(expr, differential) {
     return new Constant(0);
   } else if (expr.isOperation("pow")) {
     if(expr.get(1).constantValue() !== null && expr.get(0).constantValue() === null) {
-       // base variable, exponent constant
+      // base variable, exponent constant
       ret = expr.get(1).multiply(expr.get(0).combineOp("pow", expr.get(1).subtract(1)));
       ret = ret.multiply(findPartialDerivative(expr.get(0), differential));
     } else if(expr.get(0).constantValue() === Math.E &&
         expr.get(1).constantValue() === null) {
-       // base E, exponent variable
+      // base E, exponent variable
       ret = expr.multiply(findPartialDerivative(expr.get(1), differential));
     } else {
-       // exponent variable
+      // exponent variable
       ret = expr.multiply(findPartialDerivative(Operation.func("ln", expr), differential));
     }
     return expr.negative ? ret.negate() : ret;
   } else if (expr.isOperation("sqrt")) {
-       // Treat sqrt as pow(x, 0.5)
+    // Treat sqrt as pow(x, 0.5)
     return findPartialDerivative(
-         expr.get(0).combineOp("pow", new Constant(0.5))
-           .multiply(expr.negative ? -1 : 1), differential);
+      expr.get(0).combineOp("pow", new Constant(0.5))
+        .multiply(expr.negative ? -1 : 1), differential);
   } else if (expr instanceof Variable) {
     if(expr.name === differential.name) {
       return new Constant(expr.negative ? -1 : 1);
     } else {
-        // other variables are treated as constants
+      // other variables are treated as constants
       return new Constant(0);
     }
   } else if (expr.isOperation("mul")) {
@@ -1315,41 +1315,41 @@ var findPartialDerivative = function(expr, differential) {
       cv = ex.constantValue(ex.get(1));
       var cv0 = ex.constantValue(ex.get(0));
       if(typeof cv === "undefined" || cv === null || Math.floor(cv) === cv || (typeof cv0 === "undefined" || cv0 === null || cv0 > 0)) {
-           // only works for rational exponents
+        // only works for rational exponents
         return findPartialDerivative(ex.get(1).multiply(Operation.func("ln", ex.get(0))), differential);
       }
     }
     return findPartialDerivative(expr.get(0), differential).divide(ex).multiply(expr.negative ? -1 : 1);
   } else if (expr.isOperation("sin")) {
     return Operation.func("cos", expr.get(0)).multiply(findPartialDerivative(expr.get(0), differential))
-       .multiply(expr.negative ? -1 : 1);
+      .multiply(expr.negative ? -1 : 1);
   } else if (expr.isOperation("abs")) {
     ex = expr.get(0);
     cv = ex.getConstantValue();
     if(typeof cv !== "undefined" && cv !== null && cv < 0)return new Constant(-1);
     if(typeof cv !== "undefined" && cv !== null && cv > 0)return new Constant(1);
     ret = ex.divide(Operation.func("abs", ex))
-       .multiply(expr.negative ? -1 : 1);
+      .multiply(expr.negative ? -1 : 1);
     return ret.multiply(findPartialDerivative(expr.get(0), differential));
   } else if (expr.isOperation("cos")) {
     return Operation.func("sin", expr.get(0)).negate().multiply(findPartialDerivative(expr.get(0), differential))
-       .multiply(expr.negative ? -1 : 1);
+      .multiply(expr.negative ? -1 : 1);
   } else if (expr.isOperation("tan")) {
     ret = new Constant(1).divide(Operation.func("cos", expr.get(0)).combineOp("pow", 2))
-       .multiply(expr.negative ? -1 : 1);
+      .multiply(expr.negative ? -1 : 1);
     return ret.multiply(findPartialDerivative(expr.get(0), differential));
   } else if (expr.isOperation("asin")) {
     return findPartialDerivative(expr.get(0), differential).divide(
-         new Constant(1).subtract(expr.get(0).combineOp("pow", 2)).combineOp("pow", 0.5))
-       .multiply(expr.negative ? -1 : 1);
+      new Constant(1).subtract(expr.get(0).combineOp("pow", 2)).combineOp("pow", 0.5))
+      .multiply(expr.negative ? -1 : 1);
   } else if (expr.isOperation("acos")) {
     return findPartialDerivative(expr.get(0), differential).divide(
-         new Constant(1).subtract(expr.get(0).combineOp("pow", 2)).combineOp("pow", 0.5)).negate()
-       .multiply(expr.negative ? -1 : 1);
+      new Constant(1).subtract(expr.get(0).combineOp("pow", 2)).combineOp("pow", 0.5)).negate()
+      .multiply(expr.negative ? -1 : 1);
   } else if (expr.isOperation("atan")) {
     return findPartialDerivative(expr.get(0), differential).divide(
-         expr.get(0).combineOp("pow", 2).add(1))
-       .multiply(expr.negative ? -1 : 1);
+      expr.get(0).combineOp("pow", 2).add(1))
+      .multiply(expr.negative ? -1 : 1);
   } else {
     throw new Error("unsupported function");
   }
@@ -1360,19 +1360,19 @@ function normalCalcExpr(vecExpr) {
   "use strict";
   var varu = new Variable("u");
   var varv = new Variable("v");
-   // partial derivative with respect to u
+  // partial derivative with respect to u
   var derivU = [
     findPartialDerivative(vecExpr[0], varu),
     findPartialDerivative(vecExpr[1], varu),
     findPartialDerivative(vecExpr[2], varu)
   ];
-   // partial derivative with respect to v
+  // partial derivative with respect to v
   var derivV = [
     findPartialDerivative(vecExpr[0], varv),
     findPartialDerivative(vecExpr[1], varv),
     findPartialDerivative(vecExpr[2], varv)
   ];
-   // cross product
+  // cross product
   return [derivU[1].multiply(derivV[2]).subtract(derivU[2].multiply(derivV[1])),
     derivU[2].multiply(derivV[0]).subtract(derivU[0].multiply(derivV[2])),
     derivU[0].multiply(derivV[1]).subtract(derivU[1].multiply(derivV[0]))];

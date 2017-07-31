@@ -248,7 +248,7 @@ H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rota
 H3DU.Hypotrochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
 
- /**
+/**
   * Finds the coordinates of a point on the curve from the given U coordinate.
   * @function
   * @param {number} u U coordinate.
@@ -269,7 +269,7 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
   return [x * this.cosPhase - y * this.sinPhase,
     y * this.cosPhase + x * this.sinPhase, 0];
 };
-  /**
+/**
    * Gets the endpoints of this curve.
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
@@ -282,7 +282,7 @@ H3DU.Hypotrochoid.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
- /**
+/**
   * Creates a modified version of this curve so that it
   * fits the given radius.
   * @function
@@ -293,15 +293,15 @@ H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
   "use strict";
   var oi = this.outer - this.inner;
   var mx = Math.abs(Math.max(
-   -oi - this.distFromInner,
-   -oi + this.distFromInner,
-   oi - this.distFromInner,
-   oi + this.distFromInner));
+    -oi - this.distFromInner,
+    -oi + this.distFromInner,
+    oi - this.distFromInner,
+    oi + this.distFromInner));
   var ratio = radius / mx;
   return new H3DU.Hypotrochoid(
-   this.outer * ratio,
-   this.inner * ratio,
-   this.distFromInner * ratio);
+    this.outer * ratio,
+    this.inner * ratio,
+    this.distFromInner * ratio);
 };
 /**
  * Finds an approximate arc length (distance) between the start of this
@@ -313,7 +313,7 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
   "use strict";
   var b = this.inner - this.distFromInner;
   if(b === 0) {
-      // Hypocycloid; drawing pen is at center of inner circle
+    // Hypocycloid; drawing pen is at center of inner circle
     var x = 8 * (this.outer - this.inner) * this.inner;
     var s = Math.sin(this.outer * u / (4 * this.inner));
     return x * s * s / this.outer;
@@ -343,7 +343,7 @@ H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
   "use strict";
   var denom = n + 1;
   return new H3DU.Hypotrochoid(2 * n * distFromInnerCenter / denom,
-      distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
+    distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
 };
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a curve drawn by a circle that rolls along the X axis.
@@ -375,7 +375,7 @@ H3DU.Trochoid = function(radius, distFromCenter) {
 H3DU.Trochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
 
- /**
+/**
   * Generates a point on the curve from the given U coordinate.
   * @function
   * @param {number} u U coordinate.
@@ -392,7 +392,7 @@ H3DU.Trochoid.prototype.evaluate = function(u) {
     0
   ];
 };
-  /**
+/**
    * Gets the endpoints of this curve.
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
@@ -467,7 +467,7 @@ H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rot
 H3DU.Epitrochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
 
- /**
+/**
   * Generates a point on the curve from the given U coordinate.
   * @function
   * @param {number} u U coordinate.
@@ -489,7 +489,7 @@ H3DU.Epitrochoid.prototype.evaluate = function(u) {
     y * this.cosPhase + x * this.sinPhase, 0];
 
 };
-  /**
+/**
    * Gets the endpoints of this curve.
    * For this curve evaluator object, the curve
    * starts at 0 and ends at &pi;*2.
@@ -502,7 +502,7 @@ H3DU.Epitrochoid.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
- /**
+/**
   * Creates a modified version of this curve so that it
   * fits the given radius.
   * @function
@@ -513,15 +513,15 @@ H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
   "use strict";
   var oi = this.outer + this.roller;
   var mx = Math.abs(Math.max(
-   -oi - this.distFromRoller,
-   -oi + this.distFromRoller,
-   oi - this.distFromRoller,
-   oi + this.distFromRoller));
+    -oi - this.distFromRoller,
+    -oi + this.distFromRoller,
+    oi - this.distFromRoller,
+    oi + this.distFromRoller));
   var ratio = radius / mx;
   return new H3DU.Epitrochoid(
-   this.outer * ratio,
-   this.roller * ratio,
-   this.distFromRoller * ratio);
+    this.outer * ratio,
+    this.roller * ratio,
+    this.distFromRoller * ratio);
 };
 
 /* exported Hypotrochoid */

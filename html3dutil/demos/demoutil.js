@@ -168,7 +168,7 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
         allsettings[name] = defvalue;
       }
       ranges.push(addRange(label, min, max, step, allsettings[name],
-     settingOnChange(name, updateMeshFunc)));
+        settingOnChange(name, updateMeshFunc)));
     }
   }
   setRanges(ranges);
@@ -177,32 +177,32 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
 
 /* exported makeMesh */
 function makeMesh(func, resolutionU, resolutionV) {
-    // Default resolution is 50
+  // Default resolution is 50
   "use strict";
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = resolutionU;
   if(typeof resolutionU === "undefined" || resolutionU === null)resolutionU = 50;
   if(typeof resolutionV === "undefined" || resolutionV === null)resolutionV = 50;
-     // define a color gradient evaluator for
-     // demonstration purposes. Instead of X, Y, and Z,
-     // generate a Red/Green/Blue color based on
-     // the same parameters U and V as the surface
-     // function for 3D points.
+  // define a color gradient evaluator for
+  // demonstration purposes. Instead of X, Y, and Z,
+  // generate a Red/Green/Blue color based on
+  // the same parameters U and V as the surface
+  // function for 3D points.
   var colorGradient = {
     "evaluate":function(u, v) {
       return [1 - u, v, u];
     }
   };
   return new H3DU.SurfaceBuilder()
-     .positionNormal(func)
-     .attribute(colorGradient, H3DU.Semantic.COLOR)
+    .positionNormal(func)
+    .attribute(colorGradient, H3DU.Semantic.COLOR)
     // Evaluate the surface and generate a triangle
     // mesh, using resolution+1 different U coordinates,
     // and resolution+1 different V coordinates.
     // Instead of H3DU.Mesh.TRIANGLES, we could use
     // H3DU.Mesh.LINES to create a wireframe mesh,
     // or H3DU.Mesh.POINTS to create a point mesh.
-     .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
-     .toMeshBuffer();
+    .evalSurface(H3DU.Mesh.TRIANGLES, resolutionU, resolutionV)
+    .toMeshBuffer();
 }
 
 window.addEventListener("load", function() {
@@ -216,7 +216,7 @@ window.addEventListener("load", function() {
   e.setAttribute("style", "border:2px solid;margin:2px 2px 2px 2px;left:10;padding:2px 2px 2px 2px;" +
   "background:rgba(255,255,255,0.8);left:10%;width:85%;height:80%;overflow:scroll;position:absolute;float:right;top:2em");
   var demoContent = document.documentElement ? document.documentElement.outerHTML :
-     document.body.outerHTML;
+    document.body.outerHTML;
   demoContent = demoContent.replace(/&/g, "&amp;");
   demoContent = demoContent.replace(/</g, "&lt;");
   demoContent = demoContent.replace(/>/g, "&gt;");
@@ -264,7 +264,7 @@ function makeAxisLines(width) {
   var xaxis2 = axisline.copy().setColor("red");
   xaxis2.getTransform().setRotation(90, 0, -1, 0).setPosition(halfLength * 3, 0, 0).setScale(3);
   return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis)
-     .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);
+    .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);
 }
 
 document.write("<script src='../extras/meshjson.js'></script>");

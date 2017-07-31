@@ -85,9 +85,9 @@ H3DU.InputTracker = function(element) {
         delta = e.originalEvent.wheelDelta;
       }
       tracker.ticksDelta += delta / 120.0;
-     // delta of 120 represents 1 tick of the mouse wheel;
-     // positive values mean moving the mouse wheel up,
-     // negative values mean down
+      // delta of 120 represents 1 tick of the mouse wheel;
+      // positive values mean moving the mouse wheel up,
+      // negative values mean down
       if(tracker.mouseWheelCallback) {
         tracker.mouseWheelCallback({
           "target":e.target,
@@ -117,7 +117,7 @@ H3DU.InputTracker = function(element) {
         tracker.clientX = e.clientX - H3DU.InputTracker._getPageX(e.target);
         tracker.clientY = e.clientY - H3DU.InputTracker._getPageY(e.target);
         if(e.button !== -1) {
-    // update mouse position to current click position
+          // update mouse position to current click position
           tracker.lastClient[0] = tracker.clientX;
           tracker.lastClient[1] = tracker.clientY;
         }
@@ -424,9 +424,9 @@ H3DU.InputTracker.prototype.update = function() {
     this.deltas.cy = 0;
   } else {
     deltaX = this.lastClient.length === 0 ? 0 :
-     this.clientX - this.lastClient[0];
+      this.clientX - this.lastClient[0];
     deltaY = this.lastClient.length === 0 ? 0 :
-     this.clientY - this.lastClient[1];
+      this.clientY - this.lastClient[1];
     this.lastClient[0] = this.clientX;
     this.lastClient[1] = this.clientY;
     this.deltas.x = deltaX;
@@ -504,11 +504,11 @@ H3DU.Camera = function(batch, fov, nearZ, farZ, canvas) {
   } else {
     batch.perspectiveAspect(fov, nearZ, farZ);
   }
- // NOTE: For compatibility only, may be removed in the future
+  // NOTE: For compatibility only, may be removed in the future
   if(!canvas) {
     canvas = document.getElementsByTagName("canvas")[0] || document;
   }
- // NOTE: For compatibility only, may be removed in the future
+  // NOTE: For compatibility only, may be removed in the future
   this.input = new H3DU.InputTracker(canvas);
 };
 
@@ -555,7 +555,7 @@ H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
 H3DU.Camera.prototype._updateView = function() {
   "use strict";
   var mat = H3DU.Math.mat4lookat(
-     this.position, this.center, this.up);
+    this.position, this.center, this.up);
   this.scene.setViewMatrix(mat);
   return this;
 };
@@ -564,7 +564,7 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
   "use strict";
   var velocity = H3DU.Math.vec3normalize( H3DU.Math.vec3sub(toVec, fromVec));
   if(velocity[0] === 0 && velocity[1] === 0 && velocity[2] === 0) {
-   // Both vectors are likely the same, so return a default vector
+    // Both vectors are likely the same, so return a default vector
     return [0, 0, 1];
   }
   return velocity;
@@ -581,7 +581,7 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
 H3DU.Camera.prototype.setDistance = function(dist) {
   "use strict";
   if(dist <= 0)return this;
- // don't move closer than the near plane
+  // don't move closer than the near plane
   dist = Math.max(this.near, dist);
   var velocity = H3DU.Camera._velocity(this.position, this.center);
   H3DU.Math.vec3scaleInPlace(velocity, dist);
@@ -885,8 +885,8 @@ H3DU.Camera.prototype.update = function(input) {
     // Update the perspective matrix for compatibility
     this.scene.setPerspective(this.perspectiveParams.fov,
       this.scene.getClientAspect(),
-     this.perspectiveParams.nearZ,
-     this.perspectiveParams.farZ);
+      this.perspectiveParams.nearZ,
+      this.perspectiveParams.farZ);
   }
   return this._updateNew(input || this.input);
 };
@@ -912,8 +912,8 @@ H3DU.Camera.prototype._updateNew = function(input) {
     this.setDistance(this.getDistance() - 0.2);
   }
   if(deltaTicks !== 0) {
-   // mousewheel up (negative) means move forward,
-   // mousewheel down (positive) means move back
+    // mousewheel up (negative) means move forward,
+    // mousewheel down (positive) means move back
     console.log(deltaTicks);
     this.setDistance(this.getDistance() - 0.6 * deltaTicks);
   }

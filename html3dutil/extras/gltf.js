@@ -1,9 +1,9 @@
 /* eslint strict: "off", no-unused-expressions: "off" */
 /* global define */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(factory());
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (factory());
 }(this, (function () { 'use strict';
 
 /* global Float32Array, H3DU, Int16Array, Int32Array, Int8Array, Uint16Array, Uint32Array, Uint8Array */
@@ -62,10 +62,10 @@ GltfArray.prototype.toValueArray = function() {
     return ret;
   }
 };
-  /** @ignore
+/** @ignore
    * @constructor */
 var GltfUtil = function() {
-    // empty
+  // empty
 };
   /** @ignore */
 GltfUtil.arrayToView = function(arr, reference) {
@@ -77,7 +77,7 @@ GltfUtil.arrayToView = function(arr, reference) {
   }
   return new Uint16Array(arr);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.lineStripToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
@@ -89,7 +89,7 @@ GltfUtil.lineStripToLines = function(strip) {
   }
   return GltfUtil.arrayToView(ret, strip);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.lineLoopToLines = function(strip) {
   var ret = [];
   if(strip.length < 2) {
@@ -144,14 +144,14 @@ GltfUtil._elementsPerValue = function(type) {
 };
 /** @ignore */
 GltfUtil._resolvePath = function(path, name) {
- // Return data URIs directly
+  // Return data URIs directly
   if(name.indexOf("data:") === 0) {
     return name;
   }
- // Relatively dumb for a relative path
- // resolver, but sufficient here, as it will
- // only be used with relative path
- // strings
+  // Relatively dumb for a relative path
+  // resolver, but sufficient here, as it will
+  // only be used with relative path
+  // strings
   var ret = path;
   var lastSlash = ret.lastIndexOf("/");
   if(lastSlash >= 0) {
@@ -195,7 +195,7 @@ GltfUtil._bytesPerElement = function(componentType) {
   if(componentType === 5126)return 4;
   return 0;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil._lerp = function(s, e, t) {
   if(s.length === 4 && e.length === 4) {
     return H3DU.Math.vec4lerp(s, e, t);
@@ -226,38 +226,38 @@ GltfUtil.hasUniqueItems = function(items) {
   }
   return true;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.addExtensionsExtras = function(property, retval) {
   retval.extras = typeof property.extras !== "undefined" && property.extras !== null ?
-  property.extras : {};
+    property.extras : {};
   retval.extensions = typeof property.extensions !== "undefined" && property.extensions !== null ?
     property.extensions : {};
   return retval;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.addExtensionsExtrasName = function(property, retval) {
   retval.name = GltfUtil.parseString(property.name);
   return GltfUtil.addExtensionsExtras(property, retval);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseStringDefault = function(value, defaultValue) {
   if(typeof value === "undefined")return defaultValue;
   if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseString = function(value) {
   if(typeof value === "undefined")return "";
   if(typeof value !== "string")throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseArrayFixedLength = function(value, len, defvalue) {
   if(typeof value === "undefined")return defvalue;
   if(!(value instanceof Array) || value.length !== len)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseArrayMin1 = function(value) {
   if(typeof value === "undefined")return [];
   if(!(value instanceof Array) || value.length === 0)throw new Error("parse error");
@@ -282,14 +282,14 @@ GltfUtil.parseNonnegativeInteger = function(value) {
      value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeNumber = function(value) {
   if(typeof value === "undefined")return -1;
   if(typeof value !== "number" || isNaN(value) ||
      value === Number.POSITIVE_INFINITY || value < 0)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseRangedNumber = function(value, mn, mx, defValue) {
   if(typeof value === "undefined")return defValue;
   if(typeof value !== "number" || isNaN(value) ||
@@ -297,7 +297,7 @@ GltfUtil.parseRangedNumber = function(value, mn, mx, defValue) {
      value === Number.NEGATIVE_INFINITY || value < mn || value > mx)throw new Error("parse error");
   return value;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseEnum = function(value, values, defValue) {
   if(typeof value === "undefined")return defValue;
   for(var i = 0; i < values.length; i++) {
@@ -305,27 +305,27 @@ GltfUtil.parseEnum = function(value, values, defValue) {
   }
   throw new Error("parse error");
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseRangedInteger = function(value, mn, mx, defValue) {
   var n = GltfUtil.parseRangedNumber(value, mn, mx, defValue);
   if(Math.floor(n) !== n)throw new Error("parse error");
   return n;
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseBoolean = function(value, defValue) {
   if(typeof value === "undefined")return defValue;
   if(value === true || value === false)return value;
   throw new Error("not a boolean");
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeNumberDefault = function(value, defValue) {
   return typeof value === "undefined" ? defValue :
-     GltfUtil.parseNonnegativeNumber(value);
+    GltfUtil.parseNonnegativeNumber(value);
 };
-  /** @ignore */
+/** @ignore */
 GltfUtil.parseNonnegativeIntegerDefault = function(value, defValue) {
   return typeof value === "undefined" ? defValue :
-     GltfUtil.parseNonnegativeInteger(value);
+    GltfUtil.parseNonnegativeInteger(value);
 };
 
 /* global H3DU */
@@ -356,21 +356,21 @@ GltfInfo.prototype.getShape = function() {
 GltfInfo._interpolate = function(node, s, e, t, path) {
   switch(path) {
   case 0: {
-      // translation
+    // translation
     node.getTransform().setPosition(
-         GltfUtil._lerp(s, e, t));
+      GltfUtil._lerp(s, e, t));
     break;
   }
   case 1: {
-      // scale
+    // scale
     node.getTransform().setScale(
-         GltfUtil._lerp(s, e, t));
+      GltfUtil._lerp(s, e, t));
     break;
   }
   case 2: {
-      // rotation
+    // rotation
     node.getTransform().setQuaternion(
-         GltfUtil._slerp(s, e, t));
+      GltfUtil._slerp(s, e, t));
     break;
   }
   default:
@@ -385,7 +385,7 @@ GltfInfo.prototype.update = function(time) {
       var node = ch.target;
       var maxInput = ch.sampler.input[ch.sampler.input.length - 1];
       var pos = H3DU.getTimePosition(this.timer, time,
-      this.maxEndTimeSecs * 1000.0);
+        this.maxEndTimeSecs * 1000.0);
       if(pos * this.maxEndTimeSecs > maxInput) {
         // Reached end of animation
         var last = ch.sampler.output[ch.sampler.output.length - 1];
@@ -396,12 +396,12 @@ GltfInfo.prototype.update = function(time) {
         for(var j = 0; j < inputLen; j++) {
           var s = ch.sampler.input[j] * invEnd;
           var e = ch.sampler.input[j + 1] * invEnd;
-      // LATER: Support STEP interpolation
+          // LATER: Support STEP interpolation
           if(pos >= s && pos <= e) {
             var fac = s === e ? 0.0 : (pos - s) / (e - s);
             GltfInfo._interpolate(node,
-      ch.sampler.output[j],
-            ch.sampler.output[j + 1], fac, ch.path);
+              ch.sampler.output[j],
+              ch.sampler.output[j + 1], fac, ch.path);
           }
         }
       }
@@ -505,7 +505,7 @@ GltfState1.prototype.readTexture = function(texture) {
   var source = texture.source;
   var format = typeof texture.format === "undefined" || texture.format === null ? 6408 : texture.format;
   var internalFormat = typeof texture.internalFormat === "undefined" || texture.internalFormat === null ?
-             format : texture.internalFormat;
+    format : texture.internalFormat;
   var target = typeof texture.target === "undefined" || texture.target === null ? 3553 : texture.target;
   var type = typeof texture.type === "undefined" || texture.type === null ? 5121 : texture.type;
   if(typeof this.gltf.samplers === "undefined" || this.gltf.samplers === null ||
@@ -556,7 +556,7 @@ GltfState1.prototype.getUniformValue = function(paramType, paramValue) {
 /** @ignore */
 GltfState1.prototype.readTechnique = function(techniqueName) {
   if(typeof this.techniques[techniqueName] !== "undefined" && this.techniques[techniqueName] !== null) {
-      // Technique was already read, return it
+    // Technique was already read, return it
     return this.techniques[techniqueName];
   }
   if(typeof this.gltf.techniques === "undefined" || this.gltf.techniques === null ||
@@ -596,7 +596,7 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
         unif[uniformKey] = unifValue;
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
-    // LATER: Semantic + param.node
+        // LATER: Semantic + param.node
         var sem = 0;
         if(param.semantic === "MODEL" && param.type === 35676) {
           sem = H3DU.Semantic.MODEL;
@@ -812,7 +812,7 @@ GltfState1.prototype.readMaterialValues = function(material, techInfo) {
   if(typeof material.values === "undefined" || material.values === null) {
     return shader;
   }
-    // We have parameter values, make a copy of this shader
+  // We have parameter values, make a copy of this shader
   shader = shader.copy();
   for(var materialKey in material.values || {})
     if(Object.prototype.hasOwnProperty.call( material.values, materialKey)) {
@@ -964,7 +964,7 @@ GltfState1.prototype.readNode = function(node, nodeName, parent) {
           }
           maxCount = Math.max(maxCount, array.valueCount);
           meshBuffer.setAttribute(attributeName, array.array,
-                      array.elementsPerValue, 0, array.elementStride());
+            array.elementsPerValue, 0, array.elementStride());
         }
       var indexArray = null;
 
@@ -992,13 +992,13 @@ GltfState1.prototype.readNode = function(node, nodeName, parent) {
         }
         indexArray = array.array;
       } else {
-     // Synthesize a list of indices
+        // Synthesize a list of indices
         var indexList = [];
         for(var k = 0; k < maxCount; k++) {
           indexList.push(k);
         }
         indexArray = maxCount - 1 < 65536 ? new Uint16Array(indexList) :
-            new Uint32Array(indexList);
+          new Uint32Array(indexList);
       }
       if(triangleFan)indexArray = GltfUtil.triangleFanToTriangles(indexArray);
       if(triangleStrip)indexArray = GltfUtil.triangleStripToTriangles(indexArray);
@@ -1110,7 +1110,7 @@ GltfState1.prototype.readScenes = function() {
     defaultScene = sceneKeys[0];
   }
   if(typeof defaultScene === "undefined" || defaultScene === null) {
-      // nothing to render
+    // nothing to render
     return this;
   }
   for(var sceneKey in scenes)
@@ -1145,7 +1145,7 @@ GltfState1.prototype.toGltf = function() {
     var input = ret.animChannels[i].sampler.input;
     ret.maxEndTimeSecs = Math.max(
       ret.maxEndTimeSecs,
-        input[input.length - 1]);
+      input[input.length - 1]);
   }
   return ret;
 };
@@ -1184,14 +1184,14 @@ GltfState1.readGltf = function(gltf, path) {
   var promiseNames = [];
   GltfState1.readBuffersAndShaders(gltf, path, promises, promiseKinds, promiseNames);
   return H3DU.getPromiseResultsAll(promises)
-   .then(function(promiseResults) {
-     var state = new GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames);
-     var retState = state.readScenes();
-     if(!retState)return Promise.reject(state.error);
-     retState = state.readAnimations();
-     if(!retState)return Promise.reject(state.error);
-     return Promise.resolve(state.toGltf());
-   });
+    .then(function(promiseResults) {
+      var state = new GltfState1(gltf, path, promiseResults, promiseKinds, promiseNames);
+      var retState = state.readScenes();
+      if(!retState)return Promise.reject(state.error);
+      retState = state.readAnimations();
+      if(!retState)return Promise.reject(state.error);
+      return Promise.resolve(state.toGltf());
+    });
 };
 
 /* global GltfState2, H3DU, Promise */

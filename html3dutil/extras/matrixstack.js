@@ -26,7 +26,7 @@
 H3DU.MatrixStack = function() {
   "use strict";
   this.stack = [
-  [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   ];
 };
 /**
@@ -513,18 +513,18 @@ H3DU.MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
     -0.5 * t16,
     mat[8], mat[9], mat[10], mat[11],
     0.5 * t9 + -0.5 * t13 + (
-    t5 * mat[0] +
+      t5 * mat[0] +
     t6 * mat[4] +
    mat[12]),
     0.5 * t10 + -0.5 * t14 + (t5 * mat[1] +
     t6 * mat[5] +
    mat[13]),
     0.5 * t11 + -0.5 * t15 + (
-    t5 * mat[2] +
+      t5 * mat[2] +
     t6 * mat[6] +
    mat[14]),
     0.5 * t12 + -0.5 * t16 + (
-    t5 * mat[3] +
+      t5 * mat[3] +
     t6 * mat[7] +
    mat[15])];
   return this;
