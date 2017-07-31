@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on July 29, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on July 30, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -245,7 +245,7 @@
 
 <ul>
 <li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality">systematic failure</a> in one of the <code>BigCrush</code> tests. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf">An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
-<li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">linear congruential generator</a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.</li>
+<li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">linear congruential generator</a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.  (See also the Wikipedia article for further problems with linear congruential generators.)</li>
 </ul>
 
 <p><a id=Seeded_Random_Generators></a></p>
