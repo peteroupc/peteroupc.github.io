@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on July 29, 2017.</p>
+<p>Begun on June 4, 2017; last updated on July 31, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -298,6 +298,8 @@ END METHOD
 
 <p>The underlying RNG can be other than already described in this section; however, a detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of a RNG that is in wide use, returns uniformly distributed numbers, and is other than already described in this section should send me a comment.</p>
 
+<p><em><strong>Note:</strong> To generate a random number that&#39;s either -1 or 1, the following idiom can be used: <code>(RNDINT(1) * 2 - 1)</code>.</em></p>
+
 <p><a id=RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive></a></p>
 
 <h3><code>RNDINTRANGE</code>: Random Integers Within a Range, Maximum Inclusive</h3>
@@ -501,7 +503,7 @@ END
  END METHOD
 </pre>
 
-<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than <code>maxExclusive</code> is the following idiom: <code>floor(RNDU01OneExc()*(maxExclusive))</code>.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</p>
+<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than the integer <code>maxExclusive</code> is the following idiom: <code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.  (The idiom <code>floor(RNDU01OneExc()*(maxExclusive))</code> is not prescribed here because rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned.)</p>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a></p>
 

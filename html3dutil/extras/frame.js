@@ -130,10 +130,10 @@ var PrimitiveCounter = function() {
   "use strict";
   this.warned = false;
   /**
- * This method used to update this object's state.
- * @deprecated Will be removed in the future.
- * @returns {Object} Return value.
- */
+   * This method used to update this object's state.
+   * @deprecated Will be removed in the future.
+   * @returns {Object} Return value.
+   */
   this.update = function() {
     if(!this.warned)console.warn("PrimitiveCounter is deprecated");
     this.warned = true;

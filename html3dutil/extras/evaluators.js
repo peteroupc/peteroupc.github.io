@@ -249,12 +249,12 @@ H3DU.Hypotrochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
 
 /**
-  * Finds the coordinates of a point on the curve from the given U coordinate.
-  * @function
-  * @param {number} u U coordinate.
-  * @returns {Array<number>} A 3-element array specifying a 3D point.
-  * Only the X and Y coordinates can be other than 0.
-  */
+ * Finds the coordinates of a point on the curve from the given U coordinate.
+ * @function
+ * @param {number} u U coordinate.
+ * @returns {Array<number>} A 3-element array specifying a 3D point.
+ * Only the X and Y coordinates can be other than 0.
+ */
 H3DU.Hypotrochoid.prototype.evaluate = function(u) {
   "use strict";
   var oi = this.outer - this.inner;
@@ -270,25 +270,25 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
     y * this.cosPhase + x * this.sinPhase, 0];
 };
 /**
-   * Gets the endpoints of this curve.
-   * For this curve evaluator object, the curve
-   * starts at 0 and ends at &pi;*2.
-   * @function
-   * @returns {Array<number>} An array containing the two
-   * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve.
-   */
+ * Gets the endpoints of this curve.
+ * For this curve evaluator object, the curve
+ * starts at 0 and ends at &pi;*2.
+ * @function
+ * @returns {Array<number>} An array containing the two
+ * endpoints of the curve. The first number is the start of the curve,
+ * and the second number is the end of the curve.
+ */
 H3DU.Hypotrochoid.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
 /**
-  * Creates a modified version of this curve so that it
-  * fits the given radius.
-  * @function
-  * @param {number} radius Desired radius of the curve.
-  * @returns {H3DU.Hypotrochoid} Return value.
-  */
+ * Creates a modified version of this curve so that it
+ * fits the given radius.
+ * @function
+ * @param {number} radius Desired radius of the curve.
+ * @returns {H3DU.Hypotrochoid} Return value.
+ */
 H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
   "use strict";
   var oi = this.outer - this.inner;
@@ -376,12 +376,12 @@ H3DU.Trochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
 
 /**
-  * Generates a point on the curve from the given U coordinate.
-  * @function
-  * @param {number} u U coordinate.
-  * @returns {Array<number>} A 3-element array specifying a 3D point.
-  * Only the X and Y coordinates will be other than 0.
-  */
+ * Generates a point on the curve from the given U coordinate.
+ * @function
+ * @param {number} u U coordinate.
+ * @returns {Array<number>} A 3-element array specifying a 3D point.
+ * Only the X and Y coordinates will be other than 0.
+ */
 H3DU.Trochoid.prototype.evaluate = function(u) {
   "use strict";
   var cosu = Math.cos(u);
@@ -393,14 +393,14 @@ H3DU.Trochoid.prototype.evaluate = function(u) {
   ];
 };
 /**
-   * Gets the endpoints of this curve.
-   * For this curve evaluator object, the curve
-   * starts at 0 and ends at &pi;*2.
-   * @function
-   * @returns {Array<number>} An array containing the two
-   * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. *
-   */
+ * Gets the endpoints of this curve.
+ * For this curve evaluator object, the curve
+ * starts at 0 and ends at &pi;*2.
+ * @function
+ * @returns {Array<number>} An array containing the two
+ * endpoints of the curve. The first number is the start of the curve,
+ * and the second number is the end of the curve. *
+ */
 H3DU.Trochoid.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2];
@@ -468,12 +468,12 @@ H3DU.Epitrochoid.prototype = Object.create(H3DU.Curve.prototype);
 H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
 
 /**
-  * Generates a point on the curve from the given U coordinate.
-  * @function
-  * @param {number} u U coordinate.
-  * @returns {Array<number>} A 3-element array specifying a 3D point.
-  * Only the X and Y coordinates will be other than 0.
-  */
+ * Generates a point on the curve from the given U coordinate.
+ * @function
+ * @param {number} u U coordinate.
+ * @returns {Array<number>} A 3-element array specifying a 3D point.
+ * Only the X and Y coordinates will be other than 0.
+ */
 H3DU.Epitrochoid.prototype.evaluate = function(u) {
   "use strict";
   var oi = this.outer + this.roller;
@@ -490,25 +490,25 @@ H3DU.Epitrochoid.prototype.evaluate = function(u) {
 
 };
 /**
-   * Gets the endpoints of this curve.
-   * For this curve evaluator object, the curve
-   * starts at 0 and ends at &pi;*2.
-   * @function
-   * @returns {Array<number>} An array containing the two
-   * endpoints of the curve. The first number is the start of the curve,
-   * and the second number is the end of the curve. *
-   */
+ * Gets the endpoints of this curve.
+ * For this curve evaluator object, the curve
+ * starts at 0 and ends at &pi;*2.
+ * @function
+ * @returns {Array<number>} An array containing the two
+ * endpoints of the curve. The first number is the start of the curve,
+ * and the second number is the end of the curve. *
+ */
 H3DU.Epitrochoid.prototype.endPoints = function() {
   "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
 /**
-  * Creates a modified version of this curve so that it
-  * fits the given radius.
-  * @function
-  * @param {number} radius Desired radius of the curve.
-  * @returns {H3DU.Epitrochoid} Return value.
-  */
+ * Creates a modified version of this curve so that it
+ * fits the given radius.
+ * @function
+ * @param {number} radius Desired radius of the curve.
+ * @returns {H3DU.Epitrochoid} Return value.
+ */
 H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
   "use strict";
   var oi = this.outer + this.roller;
