@@ -109,6 +109,18 @@ class RandomGen:
   def choice(self, list):
     return list[self.rndintexc(len(list))]
 
+  def ball_point(self, dimension, radius = 1.0):
+    if dimension<=0:
+      raise ValueError
+    while True:
+      norm=0
+      point=[self.rndnumrange(-1,1) for i in range(dimension)]
+      for coord in point:
+        norm+=coord*coord
+      norm=math.sqrt(norm)
+      if norm<=1.0:
+        return point
+
   def hypersphere_point(self, dimension, radius = 1.0):
     if dimension<=0:
       raise ValueError
