@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 31, 2017.
+Begun on June 4, 2017; last updated on Aug. 1, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -422,7 +422,7 @@ A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in 
         return RNDINT(maxExclusive - 1)
      END METHOD
 
-**Note:** An alternative way of generating a random integer 0 or greater and less than the integer `maxExclusive` is the following idiom: `floor(RNDNUMEXCRANGE(0, maxExclusive))`.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.  (The idiom `floor(RNDU01OneExc()*(maxExclusive))` is not prescribed here because rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned.)
+**Note:** An alternative way of generating a random integer 0 or greater and less than the integer `maxExclusive` is the following idiom: `floor(RNDNUMEXCRANGE(0, maxExclusive))`.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.  (The idiom `floor(RNDU01OneExc()*(maxExclusive))` is not prescribed here because rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.)
 
 <a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive
@@ -936,6 +936,17 @@ Alternatively, or in addition, the following method (implementing a ratio-of-uni
 Generating N `Normal(0, 1)` random numbers, then dividing them by their _norm_ (the square root of the sum of squares of the numbers generated this way, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  [Reference](http://mathworld.wolfram.com/HyperspherePointPicking.html).
 (In the exceptional case that all numbers are 0, the process should repeat.)
 
+#### Generating Random Points Inside a Ball
+
+To generate an N-dimensional point inside an N-dimensional ball of radius R, an application can either&mdash;
+
+- generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X`, or
+- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(3)](#Note3)</sup> until the _norm_ of the N numbers is R or less,
+
+although the former method "may ... be slower" "in practice", according to a [MathWorld article](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
+
+If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the _norm_ of a point generated this way is within the desired range of distances.
+
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
 
@@ -1310,13 +1321,22 @@ the same meaning as in the normal distribution, and `alpha` is a shape parameter
 - **Weibull distribution**: `b * pow(-ln(RNDU01ZeroExc()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
+### Generating Random Numbers from a Distribution of Data Points
+
+To generate a random number based on the distribution of a list of numbers (or data points), then the application can&mdash;
+
+- choose one of the numbers or points at random (see, for example, [Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)), and
+- add a randomized "jitter" to the chosen number or point; for example, add `Normal(0, sigma)` to the chosen number, or a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_ (where the greater the bandwidth, the "smoother" the estimated probability density).
+
+A detailed discussion on how to calculate bandwidth or other possible ways to add randomized "jitter" (formally called _kernels_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the [Wikipedia article](https://en.wikipedia.org/wiki/Kernel_density_estimation) or a [blog post by M. Kay](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
+
 <a id=Generating_Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Generating Random Numbers from an Arbitrary Distribution
 
 If a statistical distribution's [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) is known, one of the following techniques, among others, can be used to generate random numbers that follow that distribution. A PDF is a function that specifies each number's _probability density_ in that distribution, where each density is 0 or greater. Note, however, that a list of common PDFs is outside the scope of this page.
 
-- Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list with the densities at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number between the lowest and highest sampled point.
-- In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling) (generating `ICDF(RNDU01OneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_, or inverse of the integral of the PDF, assuming the area under the PDF is 1).  Further details on such a technique or on finding integrals or inverses are outside the scope of this document.
+- Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list with the densities at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point.
+- In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01OneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_, or inverse of the integral of the PDF, assuming the area under the PDF is 1.  Further details on such a technique or on finding integrals or inverses are outside the scope of this document.
 - Use _rejection sampling_.  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
@@ -1344,6 +1364,8 @@ I acknowledge the commenters to the CodeProject version of this page, including 
  <sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two' s-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
 
  <sup id=Note2>(2)</sup> The method that formerly appeared here is the _Box-Muller-transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve `RNDU01OneExc()`  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.
+
+ <sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with size `2 * R` and centered at the origin of space.
 
 <a id=License></a>
 ## License
