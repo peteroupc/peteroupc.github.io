@@ -63,7 +63,7 @@ GltfArray.prototype.toValueArray = function() {
   }
 };
 /** @ignore
-   * @constructor */
+ * @constructor */
 var GltfUtil = function() {
   // empty
 };

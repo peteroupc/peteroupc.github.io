@@ -267,14 +267,14 @@
   GraphicsPath.CUBIC = 3;
   GraphicsPath.ARC = 4;
   /**
- * Returns whether the curve path is incomplete
- * because of an error in parsing the curve string.
- * This flag will be reset if a moveTo command,
- * closePath command, or another path segment
- * is added to the path.
- * @returns {boolean} Return value.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Returns whether the curve path is incomplete
+   * because of an error in parsing the curve string.
+   * This flag will be reset if a moveTo command,
+   * closePath command, or another path segment
+   * is added to the path.
+   * @returns {boolean} Return value.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.isIncomplete = function() {
     return this.incomplete;
   };
@@ -507,12 +507,12 @@
   };
 
   /**
- * Merges the path segments in another path onto this one.
- * @param {H3DU.GraphicsPath} path Another graphics path.
- * Can be null.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Merges the path segments in another path onto this one.
+   * @param {H3DU.GraphicsPath} path Another graphics path.
+   * Can be null.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.merge = function(path) {
     var oldpos = null;
     if(!path)return this;
@@ -548,12 +548,12 @@
   };
 
   /**
- * Returns this path in the form of a string in SVG path format.
- * See {@link H3DU.GraphicsPath.fromString}.
- * @returns {string} A string describing the path in the SVG path
- * format.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Returns this path in the form of a string in SVG path format.
+   * See {@link H3DU.GraphicsPath.fromString}.
+   * @returns {string} A string describing the path in the SVG path
+   * format.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.toString = function() {
     var oldpos = null;
     var ret = "";
@@ -588,12 +588,12 @@
     return ret;
   };
   /**
- * Finds the approximate length of this path.
- * @param {number} [flatness] No longer used by this method.
- * @returns {number} Approximate length of this path
- * in units.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Finds the approximate length of this path.
+   * @param {number} [flatness] No longer used by this method.
+   * @returns {number} Approximate length of this path
+   * in units.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.pathLength = function(flatness) {
     if(this.segments.length === 0)return 0;
     if(typeof flatness !== "undefined" && flatness !== null) {
@@ -602,18 +602,18 @@
     return this.getCurves().getLength();
   };
   /**
- * Gets an array of line segments approximating
- * the path.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of line segments.
- * Each line segment is an array of four numbers: the X and
- * Y coordinates of the start point, respectively, then the X and
- * Y coordinates of the end point, respectively.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Gets an array of line segments approximating
+   * the path.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of line segments.
+   * Each line segment is an array of four numbers: the X and
+   * Y coordinates of the start point, respectively, then the X and
+   * Y coordinates of the end point, respectively.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getLines = function(flatness) {
     var ret = [];
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
@@ -634,16 +634,16 @@
     return ret;
   };
   /**
- * Creates a path in which curves and arcs are decomposed
- * to line segments.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {H3DU.GraphicsPath} A path consisting only of line
- * segments and close commands.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Creates a path in which curves and arcs are decomposed
+   * to line segments.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {H3DU.GraphicsPath} A path consisting only of line
+   * segments and close commands.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.toLinePath = function(flatness) {
     var ret = [];
     var path = new GraphicsPath();
@@ -794,15 +794,15 @@
     }
   };
   /**
- * Calculates an axis-aligned bounding box that tightly
- * fits this graphics path.
- * @returns {Array<number>} An array of four numbers
- * describing the bounding box. The first two are
- * the lowest X and Y coordinates, and the last two are
- * the highest X and Y coordinates. If the path is empty,
- * returns the array (Infinity, Infinity, -Infinity, -Infinity).
- * @memberof! H3DU.GraphicsPath#
- */
+   * Calculates an axis-aligned bounding box that tightly
+   * fits this graphics path.
+   * @returns {Array<number>} An array of four numbers
+   * describing the bounding box. The first two are
+   * the lowest X and Y coordinates, and the last two are
+   * the highest X and Y coordinates. If the path is empty,
+   * returns the array (Infinity, Infinity, -Infinity, -Infinity).
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getBounds = function() {
     var inf = Number.POSITIVE_INFINITY;
     var ret = [inf, inf, -inf, inf];
@@ -916,11 +916,11 @@
   };
 
   /**
- * Returns a path that reverses the course of this path.
- * @returns {H3DU.GraphicsPath} A GraphicsPath
- * object with its path segments reversed.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Returns a path that reverses the course of this path.
+   * @returns {H3DU.GraphicsPath} A GraphicsPath
+   * object with its path segments reversed.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.reverse = function() {
     var lastptx = 0;
     var lastpty = 0;
@@ -1064,22 +1064,22 @@
     return this.curves;
   };
   /**
- * Does a linear interpolation between two graphics paths.
- * @param {H3DU.GraphicsPath} other The second graphics path.
- * @param {number} t An interpolation factor, generally ranging from 0 through 1.
- * Closer to 0 means closer to this path, and closer to 1 means closer
- * to "other". If the input paths contain arc
- * segments that differ in the large arc and sweep flags, the flags from
- * the first path's arc are used if "t" is less than 0.5; and the flags from
- * the second path's arc are used otherwise.<p>For a nonlinear
- * interpolation, define a function that takes a value that usually ranges from 0 through 1
- * and generally returns a value that usually ranges from 0 through 1,
- * and pass the result of that function to this method.
- * See the documentation for {@link H3DU.Math.vec3lerp}
- * for examples of interpolation functions.
- * @returns {H3DU.GraphicsPath} The interpolated path.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Does a linear interpolation between two graphics paths.
+   * @param {H3DU.GraphicsPath} other The second graphics path.
+   * @param {number} t An interpolation factor, generally ranging from 0 through 1.
+   * Closer to 0 means closer to this path, and closer to 1 means closer
+   * to "other". If the input paths contain arc
+   * segments that differ in the large arc and sweep flags, the flags from
+   * the first path's arc are used if "t" is less than 0.5; and the flags from
+   * the second path's arc are used otherwise.<p>For a nonlinear
+   * interpolation, define a function that takes a value that usually ranges from 0 through 1
+   * and generally returns a value that usually ranges from 0 through 1,
+   * and pass the result of that function to this method.
+   * See the documentation for {@link H3DU.Math.vec3lerp}
+   * for examples of interpolation functions.
+   * @returns {H3DU.GraphicsPath} The interpolated path.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.interpolate = function(other, t) {
     if(!other || other.segments.length !== this.segments.length) {
       return null;
@@ -1251,22 +1251,22 @@
   };
 
   /**
- * Gets an array of points evenly spaced across the length
- * of the path.
- * @param {number} numPoints Number of points to return.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments for the purpose of
- * calculating their length, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of points lying on
- * the path and evenly spaced across the length of the path,
- * starting and ending with the path's endPoints. Returns
- * an empty array if <i>numPoints</i> is less than 1. Returns
- * an array consisting of the start point if <i>numPoints</i>
- * is 1.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Gets an array of points evenly spaced across the length
+   * of the path.
+   * @param {number} numPoints Number of points to return.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments for the purpose of
+   * calculating their length, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of points lying on
+   * the path and evenly spaced across the length of the path,
+   * starting and ending with the path's endPoints. Returns
+   * an empty array if <i>numPoints</i> is less than 1. Returns
+   * an array consisting of the start point if <i>numPoints</i>
+   * is 1.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
     if(numPoints < 1)return [];
     if(numPoints === 1) {
@@ -1285,11 +1285,11 @@
     return points;
   };
   /**
- * Makes this path closed. Adds a line segment to the
- * path's start position, if necessary.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Makes this path closed. Adds a line segment to the
+   * path's start position, if necessary.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.closePath = function() {
     if(this.startPos[0] !== this.endPos[0] ||
    this.startPos[1] !== this.endPos[1]) {
@@ -1303,12 +1303,12 @@
   };
 
   /**
- * Moves the current start position and end position to the given position.
- * @param {number} x X coordinate of the position.
- * @param {number} y Y coordinate of the position.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Moves the current start position and end position to the given position.
+   * @param {number} x X coordinate of the position.
+   * @param {number} y Y coordinate of the position.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.moveTo = function(x, y) {
     this.startPos[0] = x;
     this.startPos[1] = y;
@@ -1318,14 +1318,14 @@
     return this;
   };
   /**
- * Adds a line segment to the path, starting
- * at the path's end position, then
- * sets the end position to the end of the segment.
- * @param {number} x X coordinate of the end of the line segment.
- * @param {number} y Y coordinate of the end of the line segment.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds a line segment to the path, starting
+   * at the path's end position, then
+   * sets the end position to the end of the segment.
+   * @param {number} x X coordinate of the end of the line segment.
+   * @param {number} y Y coordinate of the end of the line segment.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.lineTo = function(x, y) {
     this.segments.push([GraphicsPath.LINE,
       this.endPos[0], this.endPos[1], x, y]);
@@ -1335,10 +1335,10 @@
     return this;
   };
   /**
- * Gets the current point stored in this path.
- * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Gets the current point stored in this path.
+   * @returns {Array<number>} A two-element array giving the X and Y coordinates of the current point.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getCurrentPoint = function() {
     return [this.endPos[0], this.endPos[1]];
   };
@@ -1358,27 +1358,27 @@
     return t6[0] * t6[0] + t6[1] * t6[1] === 0;
   };
   /**
- * Adds path segments in the form of a circular arc to this path,
- * using the parameterization specified in the "arcTo" method of the
- * HTML Canvas 2D Context.
- * @param {number} x1 X coordinate of a point that, along with the
- * current end point, forms a tangent line. The point where the
- * circle touches this tangent line is the start point of the arc, and if the
- * point isn't the same as the current end point, this method adds
- * a line segment connecting the two points. (Note that the start point
- * of the arc is not necessarily the same as (x1, y1) or the current end point.)
- * @param {number} y1 Y coordinate of the point described under "x1".
- * @param {number} x2 X coordinate of a point that, along with the
- * point (x1, y1), forms a tangent line. The point where the
- * circle touches this tangent line is the end point of the arc. (Note that the
- * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
- * When this method returns, the current end point will be set to the end
- * point of the arc.
- * @param {number} y2 Y coordinate of the point described under "x2".
- * @param {number} radius Radius of the circle the arc forms a part of.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds path segments in the form of a circular arc to this path,
+   * using the parameterization specified in the "arcTo" method of the
+   * HTML Canvas 2D Context.
+   * @param {number} x1 X coordinate of a point that, along with the
+   * current end point, forms a tangent line. The point where the
+   * circle touches this tangent line is the start point of the arc, and if the
+   * point isn't the same as the current end point, this method adds
+   * a line segment connecting the two points. (Note that the start point
+   * of the arc is not necessarily the same as (x1, y1) or the current end point.)
+   * @param {number} y1 Y coordinate of the point described under "x1".
+   * @param {number} x2 X coordinate of a point that, along with the
+   * point (x1, y1), forms a tangent line. The point where the
+   * circle touches this tangent line is the end point of the arc. (Note that the
+   * end point of the arc is not necessarily the same as (x1, y1) or (x2, y2).)
+   * When this method returns, the current end point will be set to the end
+   * point of the arc.
+   * @param {number} y2 Y coordinate of the point described under "x2".
+   * @param {number} radius Radius of the circle the arc forms a part of.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arcTo = function(x1, y1, x2, y2, radius) {
     if(radius < 0) {
       throw new Error("IndexSizeError");
@@ -1406,22 +1406,22 @@
     return this.arcSvgTo(radius, radius, 0, false, sweep, endTangent[0], endTangent[1]);
   };
   /**
- * Adds path segments in the form of a circular arc to this path,
- * using the parameterization specified in the "arc" method of the
- * HTML Canvas 2D Context.
- * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
- * @param {number} y Y coordinate of the circle's center.
- * @param {number} radius Radius of the circle.
- * @param {number} startAngle Starting angle of the arc, in radians.
- * 0 means the positive X axis, &pi;/2 means the positive Y axis,
- * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
- * @param {number} endAngle Ending angle of the arc, in radians.
- * @param {Boolean} ccw Whether the arc runs counterclockwise
- * (assuming the X axis points right and the Y axis points
- * down under the coordinate system).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds path segments in the form of a circular arc to this path,
+   * using the parameterization specified in the "arc" method of the
+   * HTML Canvas 2D Context.
+   * @param {number} x X coordinate of the center of the circle that the arc forms a part of.
+   * @param {number} y Y coordinate of the circle's center.
+   * @param {number} radius Radius of the circle.
+   * @param {number} startAngle Starting angle of the arc, in radians.
+   * 0 means the positive X axis, &pi;/2 means the positive Y axis,
+   * &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.
+   * @param {number} endAngle Ending angle of the arc, in radians.
+   * @param {Boolean} ccw Whether the arc runs counterclockwise
+   * (assuming the X axis points right and the Y axis points
+   * down under the coordinate system).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arc = function(x, y, radius, startAngle, endAngle, ccw) {
     return this._arcInternal(x, y, radius, startAngle, endAngle, ccw, true);
   };
@@ -1473,16 +1473,16 @@
   };
 
   /**
- * Adds a quadratic B&eacute;zier curve to this path starting
- * at this path's current position. The current position will be
- * the curve's first control point.
- * @param {number} x X coordinate of the curve's second control point.
- * @param {number} y Y coordinate of the curve's second control point.
- * @param {number} x2 X coordinate of the curve's end point (third control point).
- * @param {number} y2 Y coordinate of the curve's end point (third control point).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds a quadratic B&eacute;zier curve to this path starting
+   * at this path's current position. The current position will be
+   * the curve's first control point.
+   * @param {number} x X coordinate of the curve's second control point.
+   * @param {number} y Y coordinate of the curve's second control point.
+   * @param {number} x2 X coordinate of the curve's end point (third control point).
+   * @param {number} y2 Y coordinate of the curve's end point (third control point).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.quadraticCurveTo = function(x, y, x2, y2) {
     this.segments.push([GraphicsPath.QUAD,
       this.endPos[0], this.endPos[1], x, y, x2, y2]);
@@ -1492,18 +1492,18 @@
     return this;
   };
   /**
- * Adds a cubic B&eacute;zier curve to this path starting
- * at this path's current position. The current position will be
- * the curve's first control point.
- * @param {number} x X coordinate of the curve's second control point.
- * @param {number} y X coordinate of the curve's second control point.
- * @param {number} x2 Y coordinate of the curve's third control point.
- * @param {number} y2 Y coordinate of the curve's third control point.
- * @param {number} x3 X coordinate of the curve's end point (fourth control point).
- * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds a cubic B&eacute;zier curve to this path starting
+   * at this path's current position. The current position will be
+   * the curve's first control point.
+   * @param {number} x X coordinate of the curve's second control point.
+   * @param {number} y X coordinate of the curve's second control point.
+   * @param {number} x2 Y coordinate of the curve's third control point.
+   * @param {number} y2 Y coordinate of the curve's third control point.
+   * @param {number} x3 X coordinate of the curve's end point (fourth control point).
+   * @param {number} y3 Y coordinate of the curve's end point (fourth control point).
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.bezierCurveTo = function(x, y, x2, y2, x3, y3) {
     this.segments.push([GraphicsPath.CUBIC,
       this.endPos[0], this.endPos[1], x, y, x2, y2, x3, y3]);
@@ -1621,26 +1621,26 @@
   };
 
   /**
- * Adds path segments in the form of an elliptical arc to this path,
- * using the parameterization used by the SVG specification.
- * @param {number} rx X axis radius of the ellipse that the arc will
- * be formed from.
- * @param {number} ry Y axis radius of the ellipse that the arc will
- * be formed from.
- * @param {number} rot Rotation of the ellipse in degrees (clockwise
- * assuming the X axis points right and the Y axis points
- * down under the coordinate system).
- * @param {Boolean} largeArc In general, there are four possible solutions
- * for arcs given the start and end points, rotation, and x- and y-radii. If true,
- * chooses an arc solution with the larger arc length; if false, smaller.
- * @param {Boolean} sweep If true, the arc solution chosen will run
- * clockwise (assuming the X axis points right and the Y axis points
- * down under the coordinate system); if false, counterclockwise.
- * @param {number} x2 X coordinate of the arc's end point.
- * @param {number} y2 Y coordinate of the arc's end point.
- * @returns {H3DU.GraphicsPath} This object.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Adds path segments in the form of an elliptical arc to this path,
+   * using the parameterization used by the SVG specification.
+   * @param {number} rx X axis radius of the ellipse that the arc will
+   * be formed from.
+   * @param {number} ry Y axis radius of the ellipse that the arc will
+   * be formed from.
+   * @param {number} rot Rotation of the ellipse in degrees (clockwise
+   * assuming the X axis points right and the Y axis points
+   * down under the coordinate system).
+   * @param {Boolean} largeArc In general, there are four possible solutions
+   * for arcs given the start and end points, rotation, and x- and y-radii. If true,
+   * chooses an arc solution with the larger arc length; if false, smaller.
+   * @param {Boolean} sweep If true, the arc solution chosen will run
+   * clockwise (assuming the X axis points right and the Y axis points
+   * down under the coordinate system); if false, counterclockwise.
+   * @param {number} x2 X coordinate of the arc's end point.
+   * @param {number} y2 Y coordinate of the arc's end point.
+   * @returns {H3DU.GraphicsPath} This object.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.arcSvgTo = function(rx, ry, rot, largeArc, sweep, x2, y2) {
     if(rx === 0 || ry === 0) {
       return this.lineTo(x2, y2);
@@ -1843,17 +1843,17 @@
   };
 
   /**
- * Returns a modified version of this path that is transformed
- * according to the given affine transformation (a transformation
- * that keeps straight lines straight and parallel lines parallel).
- * @param {Array<number>} trans An array of six numbers
- * describing a 2-dimensional affine transformation. For each
- * point in the current path, its new X coordinate is `trans[0] * X +
- * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
- * trans[3] * Y + trans[5]`.
- * @returns {H3DU.GraphicsPath} The transformed version of this path.
- * @memberof! H3DU.GraphicsPath#
- */
+   * Returns a modified version of this path that is transformed
+   * according to the given affine transformation (a transformation
+   * that keeps straight lines straight and parallel lines parallel).
+   * @param {Array<number>} trans An array of six numbers
+   * describing a 2-dimensional affine transformation. For each
+   * point in the current path, its new X coordinate is `trans[0] * X +
+   * trans[2] * Y + trans[4]`, and its new Y coordinate is `trans[1] * X +
+   * trans[3] * Y + trans[5]`.
+   * @returns {H3DU.GraphicsPath} The transformed version of this path.
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.transform = function(trans) {
     var ret = new GraphicsPath();
     var a = trans[0];
@@ -1961,48 +1961,48 @@
   };
 
   /**
- * Creates a graphics path from a string whose format follows
- * the SVG specification.
- * @param {string} str A string, in the SVG path format, representing
- * a two-dimensional path. An SVG path consists of a number of
- * path segments, starting with a single letter, as follows:
- * <ul>
- * <li>M/m (x y) - Moves the current position to (x, y). Further
- * XY pairs specify line segments.
- * <li>L/l (x y) - Specifies line segments to the given XY points.
- * <li>H/h (x) - Specifies horizontal line segments to the given X points.
- * <li>V/v (y) - Specifies vertical line segments to the given Y points.
- * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
- * (see quadraticCurveTo).
- * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
- * quadratic curve.
- * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
- * (see bezierCurveTo).
- * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
- * cubic curve.
- * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
- * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
- * "rot" is in degrees.
- * <li>Z/z - Closes the current path; similar to adding a line segment
- * to the first XY point given in the last M/m command.
- * </ul>
- * Lower-case letters mean any X and Y coordinates are relative
- * to the current position of the path. Each group of parameters
- * can be repeated in the same path segment. Each parameter after
- * the starting letter is separated by whitespace and/or a single comma,
- * and the starting letter can be separated by whitespace.
- * This separation can be left out as long as doing so doesn't
- * introduce ambiguity. All commands set the current point
- * to the end of the path segment (including Z/z, which adds a line
- * segment if needed).
- * @returns {H3DU.GraphicsPath} The resulting path. If an error
- * occurs while parsing the path, the path's "isIncomplete() method
- * will return <code>true</code>.
- * @example <caption>The following example creates a graphics path
- * from an SVG string describing a polyline.</caption>
- * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
- * @memberof! H3DU.GraphicsPath
- */
+   * Creates a graphics path from a string whose format follows
+   * the SVG specification.
+   * @param {string} str A string, in the SVG path format, representing
+   * a two-dimensional path. An SVG path consists of a number of
+   * path segments, starting with a single letter, as follows:
+   * <ul>
+   * <li>M/m (x y) - Moves the current position to (x, y). Further
+   * XY pairs specify line segments.
+   * <li>L/l (x y) - Specifies line segments to the given XY points.
+   * <li>H/h (x) - Specifies horizontal line segments to the given X points.
+   * <li>V/v (y) - Specifies vertical line segments to the given Y points.
+   * <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves
+   * (see quadraticCurveTo).
+   * <li>T/t (x y) - Specifies quadratic curves tangent to the previous
+   * quadratic curve.
+   * <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves
+   * (see bezierCurveTo).
+   * <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous
+   * cubic curve.
+   * <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo).
+   * "largeArc" and "sweep" are flags, "0" for false and "1" for true.
+   * "rot" is in degrees.
+   * <li>Z/z - Closes the current path; similar to adding a line segment
+   * to the first XY point given in the last M/m command.
+   * </ul>
+   * Lower-case letters mean any X and Y coordinates are relative
+   * to the current position of the path. Each group of parameters
+   * can be repeated in the same path segment. Each parameter after
+   * the starting letter is separated by whitespace and/or a single comma,
+   * and the starting letter can be separated by whitespace.
+   * This separation can be left out as long as doing so doesn't
+   * introduce ambiguity. All commands set the current point
+   * to the end of the path segment (including Z/z, which adds a line
+   * segment if needed).
+   * @returns {H3DU.GraphicsPath} The resulting path. If an error
+   * occurs while parsing the path, the path's "isIncomplete() method
+   * will return <code>true</code>.
+   * @example <caption>The following example creates a graphics path
+   * from an SVG string describing a polyline.</caption>
+   * var path=H3DU.GraphicsPath.fromString("M10,20L40,30,24,32,55,22")
+   * @memberof! H3DU.GraphicsPath
+   */
   GraphicsPath.fromString = function(str) {
     var index = [0];
     var started = false;
@@ -2813,25 +2813,25 @@
   }
 
   /**
- * Converts the subpaths in this path to triangles.
- * Treats each subpath as a polygon even if it isn't closed.
- * Each subpath should not contain self-intersections or
- * duplicate vertices, except duplicate vertices that appear
- * consecutively or at the start and end.<p>
- * The path can contain holes. In this case, subpaths
- * whose winding order (counterclockwise or clockwise)
- * differs from the first subpath's winding order can be holes.
- * @param {number} [flatness] When curves and arcs
- * are decomposed to line segments, the
- * segments will be close to the true path of the curve by this
- * value, given in units. If null, undefined, or omitted, default is 1.
- * @returns {Array<Array<number>>} Array of six-element
- * arrays each describing a single triangle. For each six-element
- * array, the first two, next two, and last two numbers each
- * describe a vertex position of that triangle (X and Y coordinates
- * in that order).
- * @memberof! H3DU.GraphicsPath#
- */
+   * Converts the subpaths in this path to triangles.
+   * Treats each subpath as a polygon even if it isn't closed.
+   * Each subpath should not contain self-intersections or
+   * duplicate vertices, except duplicate vertices that appear
+   * consecutively or at the start and end.<p>
+   * The path can contain holes. In this case, subpaths
+   * whose winding order (counterclockwise or clockwise)
+   * differs from the first subpath's winding order can be holes.
+   * @param {number} [flatness] When curves and arcs
+   * are decomposed to line segments, the
+   * segments will be close to the true path of the curve by this
+   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @returns {Array<Array<number>>} Array of six-element
+   * arrays each describing a single triangle. For each six-element
+   * array, the first two, next two, and last two numbers each
+   * describe a vertex position of that triangle (X and Y coordinates
+   * in that order).
+   * @memberof! H3DU.GraphicsPath#
+   */
   GraphicsPath.prototype.getTriangles = function(flatness) {
     if(typeof flatness === "undefined" || flatness === null)flatness = 1.0;
     // NOTE: _getSubpaths doesn't add degenerate line segments
@@ -2943,10 +2943,10 @@
   }
   /* exported GraphicsPath */
   /**
- * Alias for the {@link H3DU.GraphicsPath} class.
- * @constructor
- * @alias GraphicsPath
- * @deprecated Use {@link H3DU.GraphicsPath} instead.
- */
+   * Alias for the {@link H3DU.GraphicsPath} class.
+   * @constructor
+   * @alias GraphicsPath
+   * @deprecated Use {@link H3DU.GraphicsPath} instead.
+   */
   exports.GraphicsPath = GraphicsPath;
 }));

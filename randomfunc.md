@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 29, 2017.
+Begun on June 4, 2017; last updated on July 31, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -243,6 +243,8 @@ If the RNG outputs **floating-point numbers 0 or greater and less than 1**, then
 
 The underlying RNG can be other than already described in this section; however, a detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of a RNG that is in wide use, returns uniformly distributed numbers, and is other than already described in this section should send me a comment.
 
+_**Note:** To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`._
+
 <a id=RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive></a>
 ### `RNDINTRANGE`: Random Integers Within a Range, Maximum Inclusive
 
@@ -420,7 +422,7 @@ A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in 
         return RNDINT(maxExclusive - 1)
      END METHOD
 
-**Note:** An alternative way of generating a random integer 0 or greater and less than `maxExclusive` is the following idiom: `floor(RNDU01OneExc()*(maxExclusive))`.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
+**Note:** An alternative way of generating a random integer 0 or greater and less than the integer `maxExclusive` is the following idiom: `floor(RNDNUMEXCRANGE(0, maxExclusive))`.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.  (The idiom `floor(RNDU01OneExc()*(maxExclusive))` is not prescribed here because rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned.)
 
 <a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive

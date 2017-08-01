@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 30, 2017.
+Begun on Mar. 5, 2016; last updated on July 31, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -118,7 +118,11 @@ Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `CryptGenRandom` method on Windows.
-- Cryptographic hash functions that take very hard-to-predict signals as input (such as disk access timings, keystroke timings, thermal noise, and/or A. Seznec's technique called hardware volatile entropy gathering and expansion).
+- Cryptographic hash functions that take very hard-to-predict signals as input, preferably from more than one nondeterministic source.  Such sources include, where available&mdash;
+    - disk access timings,
+    - keystroke timings,
+    - thermal noise, and
+    - A. Seznec's technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
@@ -257,7 +261,7 @@ If the noise implementation implements [cellular noise](https://en.wikipedia.org
 - If the noise function **incorporates a hash function**&mdash;
     - that hash function should be reasonably fast and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
-- Noise functions that **incorporate a PRNG** (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended because some PRNGs (such as `xorshift128+`) don't mix their state before generating a random number from that state.
+- Noise functions that **incorporate a PRNG** (where the input serves as a seed to that PRNG), rather than a hash function, are not recommended, in part because some PRNGs (such as `xorshift128+`) don't mix their state before generating a random number from that state.
 
 The [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) technique combines several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.
 
