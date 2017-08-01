@@ -95,6 +95,7 @@ of them.</p>
 
 <ul>
 <li><a href="#Generating_Random_Points_on_the_Surface_of_a_Hypersphere">Generating Random Points on the Surface of a Hypersphere</a></li>
+<li><a href="#Generating_Random_Points_Inside_a_Ball">Generating Random Points Inside a Ball</a></li>
 </ul></li>
 <li><a href="#Binomial_Distribution">Binomial Distribution</a></li>
 <li><a href="#Hypergeometric_Distribution">Hypergeometric Distribution</a></li>
@@ -108,6 +109,7 @@ of them.</p>
 <li><a href="#von_Mises_Distribution">von Mises Distribution</a></li>
 <li><a href="#Stable_Distribution">Stable Distribution</a></li>
 <li><a href="#Other_Non_Uniform_Distributions">Other Non-Uniform Distributions</a></li>
+<li><a href="#Generating_Random_Numbers_from_a_Distribution_of_Data_Points">Generating Random Numbers from a Distribution of Data Points</a></li>
 <li><a href="#Generating_Random_Numbers_from_an_Arbitrary_Distribution">Generating Random Numbers from an Arbitrary Distribution</a></li>
 </ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
@@ -1081,6 +1083,8 @@ END METHOD
 <p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.
 (In the exceptional case that all numbers are 0, the process should repeat.)</p>
 
+<p><a id=Generating_Random_Points_Inside_a_Ball></a></p>
+
 <h4>Generating Random Points Inside a Ball</h4>
 
 <p>To generate an N-dimensional point inside an N-dimensional ball of radius R, an application can either&mdash;</p>
@@ -1498,16 +1502,23 @@ the same meaning as in the normal distribution, and <code>alpha</code> is a shap
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
+<p><a id=Generating_Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
+
 <h3>Generating Random Numbers from a Distribution of Data Points</h3>
 
-<p>To generate a random number based on the distribution of a list of numbers (or data points), then the application can&mdash;</p>
+<p>To generate a random number (or data point) based on the distribution of a list of numbers (or data points), an application can&mdash;</p>
 
 <ul>
 <li>choose one of the numbers or points at random (see, for example, <a href="#Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a>), and</li>
-<li>add a randomized &quot;jitter&quot; to the chosen number or point; for example, add <code>Normal(0, sigma)</code> to the chosen number, or a separately generated <code>Normal(0, sigma)</code> to each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em> (where the greater the bandwidth, the &quot;smoother&quot; the estimated probability density).</li>
+<li>add a randomized &quot;jitter&quot; to the chosen number or point; for example&mdash;
+
+<ul>
+<li>add <code>Normal(0, sigma)</code> to the chosen number, where <code>sigma</code> is the <em>bandwidth</em> (which should be as small as allows the estimated probability density to fit the data distribution and remain smooth), or</li>
+<li>add a separately generated <code>Normal(0, sigma)</code> to each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note4">(4)</a></sup>.</li>
+</ul></li>
 </ul>
 
-<p>A detailed discussion on how to calculate bandwidth or other possible ways to add randomized &quot;jitter&quot; (formally called <em>kernels</em>) is outside the scope of this document.  For further information on <em>kernel density estimation</em>, which the random number generation technique here is related to, see the <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Wikipedia article</a> or a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/">blog post by M. Kay</a>.</p>
+<p>A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized &quot;jitter&quot; (whose distribution is formally called a <em>kernel</em>) is outside the scope of this document.  For further information on <em>kernel density estimation</em>, which the random number generation technique here is related to, see the Wikipedia articles on <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">single-variable</a> and <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation">multiple-variable</a> estimation, or a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/">blog post by M. Kay</a>.</p>
 
 <p><a id=Generating_Random_Numbers_from_an_Arbitrary_Distribution></a></p>
 
@@ -1551,6 +1562,8 @@ from random number generators.</p>
 <p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
 
 <p><sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with size <code>2 * R</code> and centered at the origin of space.</p>
+
+<p><sup id=Note4>(4)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a>.  This point is generated by generating <code>Normal(0, 1)</code> for each of its components, then multiplying that point by the principal square root of a <em>covariance matrix</em> (which in this context serves as a <em>bandwidth matrix</em>). Computing the <a href="https://en.wikipedia.org/wiki/Square_root_of_a_matrix">principal square root of a matrix</a>, though, is very complicated and outside the scope of this page. (This distribution also takes a separate <em>mean point</em>, which would be added to the resulting point, but that&#39;s not necessary here.)  The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</p>
 
 <p><a id=License></a></p>
 
