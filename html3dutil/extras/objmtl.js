@@ -312,9 +312,9 @@ H3DU.ObjData.loadObjFromUrl = function(url) {
             return Promise.resolve(obj);
           }, function() {
           // MTL not loaded successfully, ignore
-          obj.mtl = null;
-          return Promise.resolve(obj);
-        });
+            obj.mtl = null;
+            return Promise.resolve(obj);
+          });
       } else {
         // otherwise just return the object
         return Promise.resolve(obj);
