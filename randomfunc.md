@@ -72,6 +72,7 @@ This methods described in this document can be categorized as follows:
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
     - [von Mises Distribution](#von_Mises_Distribution)
     - [Stable Distribution](#Stable_Distribution)
+- [Multivariate Normal Distribution](#Multivariate_Normal_Distribution)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
     - [Generating Random Numbers from a Distribution of Data Points](#Generating_Random_Numbers_from_a_Distribution_of_Data_Points)
     - [Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)
@@ -621,8 +622,28 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
            Shuffle(list)
            return list
         end
-- **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a hash table storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).
+- **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Either&mdash;
+    - store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list, or
+    - if the items are already stored in a list, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or items corresponding to those indices) from the latter list.
+- **If `n` is relatively small and items are to be chosen in order**, then the following pseudocode can be used (based on technique presented in Devroye 1986, p. 620):
+
+        METHOD RandomKItemsInOrder(list, k)
+           i = 0
+           kk = k
+           ret = NewList()
+     n = size(list)
+           while i  < n and size(ret) < k
+             u = RNDINTEXC(n - i)
+             if u <= kk
+              AddItem(ret, list[i])
+              kk = kk - 1
+             end
+             i = i + 1
+          end
+          return ret
+        END METHOD
+
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).
 
 <a id=Almost_Random_Sampling></a>
 ### Almost-Random Sampling
@@ -1264,6 +1285,85 @@ Extended versions of the stable distribution:
 - The four-parameter stable distribution (`Stable4(alpha, beta, mu, sigma)`), where `mu` is the mean and ` sigma` is the scale, is `Stable(alpha, beta) * sigma + mu`.
 - The "type 0" stable distribution (`StableType0(alpha, beta, mu, sigma)`) is `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
 
+<a id=Multivariate_Normal_Distribution></a>
+## Multivariate Normal Distribution
+
+The following pseudocode calculates a random point in space that follows a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes a list, `mu`, which indicates the means
+to add to each component of the random point, and a list of lists, `cov`, that specifies
+a _covariance matrix_ (a symmetric positive definite NxN matrix with as many
+rows and as many columns as components of the random point.)
+
+For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=0 to Y; [Statements] ; end` is shorthand for `X = 0; while X <= Y; [Statements]; X = X + 1; end`.
+
+    METHOD Decompose(matrix)
+      numrows = size(matrix)
+      if matrix[0]!=numrows: return error
+      // Does a Cholesky decomposition of a matrix
+      // assuming it's positive definite and invertible
+      ret=NewList()
+      for i = 0 to numrows - 1
+        submat = NewList()
+        for j = 0 to numrows - 1
+          AddItem(submat, 0)
+        end
+        AddItem(ret, submat)
+      end
+      s1 = sqrt(matrix[0][0])
+      if s1==0: return ret // For robustness
+      for i = 1 to numrows - 1
+        ret[0][i]=matrix[0][i]*1.0/s1
+      end
+      for i = 1 to numrows - 1
+        sum=0.0
+        for j = 0 to i - 1
+          sum = sum + ret[j][i]*ret[j][i]
+        end
+        sq=matrix[i][i]-sum
+        if sq<0: sq=0 // For robustness
+        ret[i][i]=math.sqrt(sq)
+      end
+      for j = 1 to numrows - 1
+        for i = j + 1 to numrows - 1
+          // For robustness
+          if ret[j][j]==0: ret[j][i]=0
+          if ret[j][j]!=0
+            sum=0
+            for k = 0 to j - 1
+              sum = sumret[k][i]*ret[k][j]
+            end
+            ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
+          end
+        end
+      end
+      return ret
+    END METHOD
+
+    METHOD MultivariateNormal(mu, cov)
+      mulen = size(mu)
+       if mulen!=size(cov): return error
+       if mulen!=size(cov[0]): return error
+      // NOTE: If multiple random points will
+      // be generated using the same covariance
+      // matrix, an implementation can consider
+      // precalculating the decomposed matrix
+      // in advance rather than calculating it here.
+      cho=Decompose(cov)
+      i=0
+      ret=NewList()
+      while i<mulen
+        nv=Normal(0,1)
+        sum=mu[i]
+        j=0
+        while j<mulen
+          sum=sum+nv*cho[j][i]
+          j=j+1
+        end
+        AddItem(ret, sum)
+        i=i+1
+      end
+      return ret
+    end
+
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
 
@@ -1278,6 +1378,7 @@ Extended versions of the stable distribution:
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
+- **Binormal distribution**: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1.
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
@@ -1373,7 +1474,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
  <sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with size `2 * R` and centered at the origin of space.
 
- <sup id=Note4>(4)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  This point is generated by generating `Normal(0, 1)` for each of its components, then multiplying that point by the principal square root of a _covariance matrix_ (which in this context serves as a _bandwidth matrix_). Computing the [principal square root of a matrix](https://en.wikipedia.org/wiki/Square_root_of_a_matrix), though, is very complicated and outside the scope of this page. (This distribution also takes a separate _mean point_, which would be added to the resulting point, but that's not necessary here.)  The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
+ <sup id=Note4>(4)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a_covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
 
 <a id=License></a>
 ## License
