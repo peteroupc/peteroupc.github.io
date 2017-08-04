@@ -445,7 +445,7 @@ END METHOD
 <ul>
 <li>Call <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.  This is preferred.</li>
 <li><code>(RNDINT(X - 1) + 1) / X</code>, where X is the number of fractional parts between 0 and 1 (see previous section).</li>
-<li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
+<li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers <code>RNDU01OneExc()</code> could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
 </ul></li>
 <li><strong><code>RNDU01ZeroOneExc()</code> (greater than 0, but less than 1)</strong> can be implemented in one of the following ways:
 
@@ -1124,10 +1124,15 @@ END METHOD
 
 <h3>Binomial Distribution</h3>
 
-<p>The following method generates a random integer that follows a binomial distribution.  This number
-expresses the number of successes that have happened after a given number of independently performed trials
+<p>The following method generates a random integer that follows a binomial distribution.  This number&mdash;</p>
+
+<ul>
+<li>expresses the number of successes that have happened after a given number of independently performed trials
 (expressed as <code>trials</code> below), where the probability of a success in each trial is <code>p</code> (which ranges from 0, never, to
-1, always, and which can be 0.5, meaning an equal chance of success or failure).</p>
+1, always, and which can be 0.5, meaning an equal chance of success or failure), and</li>
+<li>is also known as  [<em>Hamming distance</em>](<a href="https://en.wikipedia.org/wiki/Hamming_distance">https://en.wikipedia.org/wiki/Hamming_distance</a>], if each trial is treated
+as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and if <code>p</code> is 0.5.</li>
+</ul>
 
 <p><strong>Example:</strong> If <code>p</code> is 0.5, the binomial distribution models the task &quot;Flip N coins, then count the number of heads.&quot;</p>
 
@@ -1266,7 +1271,7 @@ The gamma distribution models expected lifetimes. The method given here is based
            v = v * v * v
            if v &gt; 0: break
         end
-        u = 1.0 - RNDU01OneExc()
+        u = RNDU01ZeroExc()
         x2 = x * x
         if u &lt; 1 - (0.0331 * x2 * x2): break
         if ln(u) &lt; (0.5 * x2) + (d * (1 - v + ln(v))): break
@@ -1447,7 +1452,7 @@ END METHOD
     cpow=pow(c, -1.0 / alpha)
     return pow(1.0+z*z, 1.0 / (2*alpha))*
         (sin(alpha*ug)*cpow)*
-        pow(cos(unif-alpha*ug)/expo, (1.0-alpha) / alpha)
+        pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
 END METHOD
 </pre>
 

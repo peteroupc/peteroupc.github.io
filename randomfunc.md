@@ -975,10 +975,12 @@ If the ball is hollow, that is, only points within a range of distances from the
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
 
-The following method generates a random integer that follows a binomial distribution.  This number
-expresses the number of successes that have happened after a given number of independently performed trials
+The following method generates a random integer that follows a binomial distribution.  This number&mdash;
+- expresses the number of successes that have happened after a given number of independently performed trials
 (expressed as `trials` below), where the probability of a success in each trial is `p` (which ranges from 0, never, to
-1, always, and which can be 0.5, meaning an equal chance of success or failure).
+1, always, and which can be 0.5, meaning an equal chance of success or failure), and
+- is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance], if each trial is treated
+as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 
 **Example:** If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
 
@@ -1111,7 +1113,7 @@ The gamma distribution models expected lifetimes. The method given here is based
                v = v * v * v
                if v > 0: break
             end
-            u = 1.0 - RNDU01OneExc()
+            u = RNDU01ZeroExc()
             x2 = x * x
             if u < 1 - (0.0331 * x2 * x2): break
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
@@ -1278,7 +1280,7 @@ A stable distribution is a limiting distribution of the sum of arbitrarily many 
         cpow=pow(c, -1.0 / alpha)
         return pow(1.0+z*z, 1.0 / (2*alpha))*
             (sin(alpha*ug)*cpow)*
-            pow(cos(unif-alpha*ug)/expo, (1.0-alpha) / alpha)
+            pow(cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
     END METHOD
 
 Extended versions of the stable distribution:
