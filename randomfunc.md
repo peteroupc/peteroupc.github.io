@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 1, 2017.
+Begun on June 4, 2017; last updated on Aug. 4, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -72,8 +72,9 @@ This methods described in this document can be categorized as follows:
     - [Negative Binomial Distribution](#Negative_Binomial_Distribution)
     - [von Mises Distribution](#von_Mises_Distribution)
     - [Stable Distribution](#Stable_Distribution)
-- [Multivariate Normal Distribution](#Multivariate_Normal_Distribution)
+    - [Multivariate Normal Distribution](#Multivariate_Normal_Distribution)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
+    - [Correlated Random Numbers](#Correlated_Random_Numbers)
     - [Generating Random Numbers from a Distribution of Data Points](#Generating_Random_Numbers_from_a_Distribution_of_Data_Points)
     - [Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)
 - [Conclusion](#Conclusion)
@@ -373,7 +374,7 @@ Three related methods also generate a **random number in an interval bounded at 
 - **`RNDU01ZeroExc()` (greater than 0, but 1 or less)** can be implemented in one of the following ways:
     - Call `RNDU01()` in a loop until a number other than 0.0 is generated this way.  This is preferred.
     - `(RNDINT(X - 1) + 1) / X`, where X is the number of fractional parts between 0 and 1 (see previous section).
-    - `1.0 - RNDU01OneExc()`.
+    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
 - **`RNDU01ZeroOneExc()` (greater than 0, but less than 1)** can be implemented in one of the following ways:
     - Call `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.
     - `(RNDINT(X - 2) + 1) / X`, where X is the number of fractional parts between 0 and 1 (see previous section).
@@ -545,6 +546,8 @@ To choose a random item from a list&mdash;
            end
         end
 
+Choosing an item this way is also known as _sampling with replacement_.
+
 **Note:** [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Creating_a_Random_Character_String></a>
@@ -625,13 +628,13 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
 - **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Either&mdash;
     - store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list, or
     - if the items are already stored in a list, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or items corresponding to those indices) from the latter list.
-- **If `n` is relatively small and items are to be chosen in order**, then the following pseudocode can be used (based on technique presented in Devroye 1986, p. 620):
+- **If `n` is relatively small and items are to be chosen in order**, then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):
 
         METHOD RandomKItemsInOrder(list, k)
            i = 0
            kk = k
            ret = NewList()
-     n = size(list)
+           n = size(list)
            while i  < n and size(ret) < k
              u = RNDINTEXC(n - i)
              if u <= kk
@@ -643,16 +646,14 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
           return ret
         END METHOD
 
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  Performance considerations involved in storing data in hash tables, and in retrieving data from them, are outside the scope of this document.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).  If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` items are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.
 
 <a id=Almost_Random_Sampling></a>
 ### Almost-Random Sampling
 
 Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of "almost-random" sampling, an application can do one of the following:
 
-- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen:
-     - If outcomes must not be repeated in a row and two or more different outcomes are possible, then note the last chosen item, shuffle the list until the first item in the list is other than the noted item, and continue.
-     - Otherwise, shuffle the list and continue.
+- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [shuffle](#Shuffling) that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list and continue.
 - Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the [weighted choice without replacement](#Weighted_Choice_Without_Replacement) technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
 
 However, "almost-random" sampling techniques are not recommended&mdash;
@@ -1255,7 +1256,7 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 <a id=Stable_Distribution></a>
 ### Stable Distribution
 
-A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables with infinite variance; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index) and `beta` (skewness); if `beta` is 0, the curve is symmetric.
+A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, greater than 0 and 2 or less) and `beta` (skewness, -1 or greater and 1 or less); if `beta` is 0, the curve is symmetric.
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error
@@ -1286,14 +1287,14 @@ Extended versions of the stable distribution:
 - The "type 0" stable distribution (`StableType0(alpha, beta, mu, sigma)`) is `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
 
 <a id=Multivariate_Normal_Distribution></a>
-## Multivariate Normal Distribution
+### Multivariate Normal Distribution
 
 The following pseudocode calculates a random point in space that follows a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes a list, `mu`, which indicates the means
 to add to each component of the random point, and a list of lists, `cov`, that specifies
 a _covariance matrix_ (a symmetric positive definite NxN matrix with as many
 rows and as many columns as components of the random point.)
 
-For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=0 to Y; [Statements] ; end` is shorthand for `X = 0; while X <= Y; [Statements]; X = X + 1; end`.
+For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=Y to Z; [Statements] ; end` is shorthand for `X = Y; while X <= Z; [Statements]; X = X + 1; end`.
 
     METHOD Decompose(matrix)
       numrows = size(matrix)
@@ -1425,6 +1426,17 @@ the same meaning as in the normal distribution, and `alpha` is a shape parameter
 - **Weibull distribution**: `b * pow(-ln(RNDU01ZeroExc()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution truncated by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
+<a id=Correlated_Random_Numbers></a>
+### Correlated Random Numbers
+
+To generate two correlated (dependent) random variables&mdash;
+
+- generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
+- calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient` -1 or greater and 1 or less.
+  If `rho` is 0, the variables are uncorrelated.
+
+See Saucier 2000, sec. 3.8, which was the source of the technique given here.
+
 <a id=Generating_Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Generating Random Numbers from a Distribution of Data Points
 
@@ -1442,8 +1454,8 @@ A detailed discussion on how to calculate bandwidth or on other possible ways to
 
 If a statistical distribution's [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) is known, one of the following techniques, among others, can be used to generate random numbers that follow that distribution. A PDF is a function that specifies each number's _probability density_ in that distribution, where each density is 0 or greater. Note, however, that a list of common PDFs is outside the scope of this page.
 
-- Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list with the densities at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point.
-- In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01OneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_, or inverse of the integral of the PDF, assuming the area under the PDF is 1.  Further details on such a technique or on finding integrals or inverses are outside the scope of this document.
+- Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the densities at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point.
+- In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_, or inverse of the integral of the PDF, assuming the area under the PDF is 1.  Further details on such a technique or on finding integrals or inverses are outside the scope of this document.
 - Use _rejection sampling_.  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)

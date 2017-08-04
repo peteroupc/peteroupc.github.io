@@ -352,30 +352,17 @@ class RandomGen:
         return mean+angle
 
 class AlmostRandom:
-  def __init__(self, randgen, list, norepeats = False):
+  def __init__(self, randgen, list):
     if len(list)==0:
       raise ValueError
     self.randgen=randgen
     self.list=self.randgen.shuffle([x for x in list])
     self.index=0
-    self.norepeats=(norepeats and not self._isEmptyOrSameItem())
-
-  def _isEmptyOrSameItem(self):
-    if len(list)==0:
-      return True
-    for item in self.list:
-      if item != self.list[0]:
-        return False
-    return True
 
   def choose(self):
     if self.index>=len(self.list):
       self.index=0
-      lastitem=self.list[len(self.list)-1]
-      while True:
-        self.list=self.randgen.shuffle(self.list)
-        if (not self.norepeats) or self.list[0] != lastitem:
-          break
+      self.list=self.randgen.shuffle(self.list)
     item=self.list[self.index]
     self.index+=1
     return item
