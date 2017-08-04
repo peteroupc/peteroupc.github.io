@@ -7,7 +7,7 @@ FLOAT_MAX = 1.7976931348623157e+308
 class RandomGen:
   def __init__(self,rng=None):
     if rng==None:
-      self.rng=random
+      self.rng=random.Random()
     else:
       self.rng=rng
     self.bitcount=24
@@ -286,6 +286,8 @@ class RandomGen:
       raise ValueError
     dd=mean
     v=0
+    if mean==1:
+      return -math.log(self.rndu01zerooneexc())
     if mean<1:
       dd+=1
     dd-=1.0/3
@@ -298,7 +300,7 @@ class RandomGen:
         v=v*v*v
         if v>0:
           break
-      u=1.0-self.rndu01oneexc()
+      u=self.rndu01zeroexc()
       x2=x*x
       if u<1-(0.0331*x2*x2):
         break
