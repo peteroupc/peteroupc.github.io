@@ -23,7 +23,7 @@ of them.</p>
 <ul>
 <li>seeks to generate independent and identically distributed numbers that seem to occur by chance (though the numbers need not be uniformly distributed or approximately so),</li>
 <li>can seek to generate random numbers that are cost-prohibitive to predict (also called &quot;cryptographically strong&quot; RNGs), or merely seek to generate number sequences likely to pass statistical tests of randomness,</li>
-<li>can be initialized automatically before use, or can be initialized with an application specified &quot;seed&quot;,</li>
+<li>can be initialized automatically before use, or can be initialized with an application specified &quot;seed&quot;, and</li>
 <li>can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.</li>
 </ul>
 
@@ -34,7 +34,7 @@ of them.</p>
 <ul>
 <li>Methods to generate uniformly distributed random numbers from an underlying RNG (such as the <a href="#Core_Random_Generation_Method">core method, <code>RNDINT(N)</code></a>).</li>
 <li>Common tasks to generate randomized content and conditions, such as <a href="#Boolean_Conditions">Boolean conditions</a>, <a href="#Shuffling">shuffling</a>, and <a href="#Choosing_Several_Unique_Items">sampling unique items from a list</a>.</li>
-<li>Methods to generate non-uniformly distributed random numbers, including <a href="#Weighted_Choice">weighted choice</a>, the <a href="#Normal_Gaussian_Distribution">normal distribution</a>, and <a href="#Other_Non_Uniform_Distributions">other statistical distributions</a>.</li>
+<li>Methods to generate non-uniformly distributed random numbers, including <a href="#Discrete_Weighted_Choice">weighted choice</a>, the <a href="#Normal_Gaussian_Distribution">normal distribution</a>, and <a href="#Other_Non_Uniform_Distributions">other statistical distributions</a>.</li>
 </ul>
 
 <p><a href="https://peteroupc.github.io/randomgen.py">Sample Python code</a> that implements many of the methods in this document is available.</p>
@@ -46,22 +46,22 @@ of them.</p>
 <ul>
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Contents">Contents</a></li>
-<li><a href="#Notes_and_Definitions">Notes and Definitions</a></li>
+<li><a href="#Notation_and_Definitions">Notation and Definitions</a></li>
 <li><a href="#Uniform_Random_Numbers">Uniform Random Numbers</a>
 
 <ul>
 <li><a href="#RNDINT_Core_Random_Integer_Method"><code>RNDINT</code>: Core Random Integer Method</a></li>
 <li><a href="#RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>: Random Integers Within a Range, Maximum Inclusive</a></li>
 <li><a href="#RNDBITS_Random_N_Bit_Integers"><code>RNDBITS</code>: Random N-Bit Integers</a></li>
-<li><a href="#RNDU01_Random_Numbers_0_or_Greater_and_1_or_Less"><code>RNDU01</code>: Random Numbers 0 or Greater and 1 or Less</a>
-
-<ul>
-<li><a href="#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Related_Methods"><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Related Methods</a></li>
-</ul></li>
+<li><a href="#RNDU01_Random_Numbers_0_or_Greater_and_1_or_Less"><code>RNDU01</code>: Random Numbers 0 or Greater and 1 or Less</a></li>
 <li><a href="#RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</a></li>
 <li><a href="#RNDINTEXC_Modified_Core_Method_Maximum_Exclusive"><code>RNDINTEXC</code>: Modified Core Method, Maximum Exclusive</a></li>
 <li><a href="#RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive"><code>RNDINTEXCRANGE</code>: Random Integers Within a Range, Maximum Exclusive</a></li>
-<li><a href="#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive"><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</a></li>
+<li><a href="#RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive"><code>RNDNUMEXCRANGE</code>: Random Numbers Within a Range, Maximum Exclusive</a>
+
+<ul>
+<li><a href="#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Related_Methods_for_Random_Numbers_Bounded_by_0_and_1"><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Related Methods for Random Numbers Bounded by 0 and 1</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#Randomization_Techniques">Randomization Techniques</a>
 
@@ -119,9 +119,9 @@ of them.</p>
 <li><a href="#License">License</a></li>
 </ul>
 
-<p><a id=Notes_and_Definitions></a></p>
+<p><a id=Notation_and_Definitions></a></p>
 
-<h2>Notes and Definitions</h2>
+<h2>Notation and Definitions</h2>
 
 <p>In this document:</p>
 
@@ -178,7 +178,7 @@ of them.</p>
 
 <h3><code>RNDINT</code>: Core Random Integer Method</h3>
 
-<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(maxInclusive)</code></strong> in this document. It generates a <strong>random integer 0 or greater <code>maxInclusive</code> or less</strong>, where <code>maxInclusive</code> is an integer 0 or greater and the number generated is approximately uniformly distributed. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.</p>
+<p>The core method for generating random numbers using an RNG is called <strong><code>RNDINT(maxInclusive)</code></strong> in this document. It generates a <strong>random integer 0 or greater and <code>maxInclusive</code> or less</strong>, where <code>maxInclusive</code> is an integer 0 or greater and the number generated is approximately uniformly distributed. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.</p>
 
 <p>The implementation of <code>RNDINT(maxInclusive)</code> depends heavily on what kind of values the underlying RNG returns.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for four kinds of RNGs.</p>
 
@@ -425,36 +425,6 @@ END METHOD
 END METHOD
 </pre>
 
-<p><a id=RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Related_Methods></a></p>
-
-<h4><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Related Methods</h4>
-
-<p>Three related methods also generate a <strong>random number in an interval bounded at 0 and 1</strong>.  They can be implemented as follows.</p>
-
-<ul>
-<li><p><strong><code>RNDU01OneExc()</code> (0 or greater, but less than 1)</strong> can be implemented in one of the following ways:</p>
-
-<ul>
-<li>Call <code>RNDU01()</code> in a loop until a number other than 1.0 is generated this way.  This is preferred.</li>
-<li><code>RNDINT(X - 1) / X</code>, where X is the number of fractional parts between 0 and 1 (see previous section).</li>
-</ul>
-
-<p>Note that <code>RNDU01OneExc()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p></li>
-<li><strong><code>RNDU01ZeroExc()</code> (greater than 0, but 1 or less)</strong> can be implemented in one of the following ways:
-
-<ul>
-<li>Call <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.  This is preferred.</li>
-<li><code>(RNDINT(X - 1) + 1) / X</code>, where X is the number of fractional parts between 0 and 1 (see previous section).</li>
-<li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers <code>RNDU01OneExc()</code> could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
-</ul></li>
-<li><strong><code>RNDU01ZeroOneExc()</code> (greater than 0, but less than 1)</strong> can be implemented in one of the following ways:
-
-<ul>
-<li>Call <code>RNDU01()</code> in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.</li>
-<li><code>(RNDINT(X - 2) + 1) / X</code>, where X is the number of fractional parts between 0 and 1 (see previous section).</li>
-</ul></li>
-</ul>
-
 <p><a id=RNDNUMRANGE_Random_Numbers_Within_a_Range_Maximum_Inclusive></a></p>
 
 <h3><code>RNDNUMRANGE</code>: Random Numbers Within a Range, Maximum Inclusive</h3>
@@ -507,7 +477,20 @@ END
  END METHOD
 </pre>
 
-<p><strong>Note:</strong> An alternative way of generating a random integer 0 or greater and less than the integer <code>maxExclusive</code> is the following idiom: <code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.  This approach, though, is recommended only if the programming language supports only floating-point numbers (an example is JavaScript) or doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.  (The idiom <code>floor(RNDU01OneExc()*(maxExclusive))</code> is not prescribed here because rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.)</p>
+<p><strong>Note:</strong> Alternative ways of generating a random integer 0 or greater and less than the integer <code>maxExclusive</code> are the following:</p>
+
+<ul>
+<li><code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.</li>
+<li>Generate <code>X = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>X &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5">(5)</a></sup>)</li>
+</ul>
+
+<p>These approaches, though, are recommended only if the programming language&mdash;</p>
+
+<ul>
+<li>supports only floating-point numbers (an example is JavaScript),</li>
+<li>is a dialect of SQL, or</li>
+<li>doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</li>
+</ul>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a></p>
 
@@ -546,6 +529,39 @@ END METHOD
    end
 END METHOD
 </pre>
+
+<p><a id=RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Related_Methods_for_Random_Numbers_Bounded_by_0_and_1></a></p>
+
+<h4><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Related Methods for Random Numbers Bounded by 0 and 1</h4>
+
+<p>Three related methods also generate a <strong>random number in an interval bounded at 0 and 1</strong>.  They can be implemented as follows.</p>
+
+<ul>
+<li><p><strong><code>RNDU01OneExc()</code> (0 or greater, but less than 1)</strong> can be implemented in one of the following ways:</p>
+
+<ul>
+<li>Call <code>RNDU01()</code> in a loop until a number other than 1.0 is generated this way.  This is preferred.</li>
+<li><code>RNDINT(X - 1) / X</code>, where X is the number of fractional parts between 0 and 1 (see <code>RNDU01()</code> section).</li>
+<li><code>RNDINTEXC(X) / X</code>, where X is the number of fractional parts between 0 and 1.</li>
+</ul>
+
+<p>Note that <code>RNDU01OneExc()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p></li>
+<li><strong><code>RNDU01ZeroExc()</code> (greater than 0, but 1 or less)</strong> can be implemented in one of the following ways:
+
+<ul>
+<li>Call <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.  This is preferred.</li>
+<li><code>(RNDINT(X - 1) + 1) / X</code>, where X is the number of fractional parts between 0 and 1.</li>
+<li><code>(RNDINTEXC(X) + 1) / X</code>, where X is the number of fractional parts between 0 and 1.</li>
+<li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers <code>RNDU01OneExc()</code> could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
+</ul></li>
+<li><strong><code>RNDU01ZeroOneExc()</code> (greater than 0, but less than 1)</strong> can be implemented in one of the following ways:
+
+<ul>
+<li>Call <code>RNDU01()</code> in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.</li>
+<li><code>(RNDINT(X - 2) + 1) / X</code>, where X is the number of fractional parts between 0 and 1.</li>
+<li><code>(RNDINTEXC(X - 1) + 1) / X</code>, where X is the number of fractional parts between 0 and 1.</li>
+</ul></li>
+</ul>
 
 <p><a id=Randomization_Techniques></a></p>
 
@@ -757,7 +773,7 @@ end
   return ret
 END METHOD
 </pre></li>
-<li><p><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table">hash table</a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see also <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>).  If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red&ndash;black tree</a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> items are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.</p></li>
+<li><p><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table">hash table</a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see also <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>).  If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red&ndash;black tree</a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.</p></li>
 </ul>
 
 <p><a id=Almost_Random_Sampling></a></p>
@@ -816,6 +832,7 @@ END METHOD
     while i &lt; size(weights)
        if weights[i] &gt; 0
           newValue = runningValue + weights[i]
+          // NOTE: Includes start, excludes end
           if value &lt; newValue: return i
           runningValue = newValue
           lastItem = i
@@ -977,7 +994,8 @@ END METHOD
      area = areas[i]
      if area &gt; 0
       newValue = runningValue + area
-      if value &lt;= newValue
+      // NOTE: Includes start, excludes end
+      if value &lt; newValue
        // NOTE: The following line can also read
        // &quot;interp = RNDU01OneExc()&quot;, that is, a new number is generated
        // within the chosen area rather than using the point
@@ -1061,7 +1079,7 @@ END METHOD
 <p>The normal distribution (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
 <p>The following method generates two <a href="https://en.wikipedia.org/wiki/Normal_distribution">normally-distributed</a>
-random numbers with mean (average) <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;), using the polar method <a href="#Note2">(2)</a>.  (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.)
+random numbers with mean (average) <code>mu</code> (&mu;) and standard deviation <code>sigma</code> (&sigma;), using the polar method <sup><a href="#Note2">(2)</a></sup>.  (In a <em>standard normal distribution</em>, &mu; = 0 and &sigma; = 1.)
 The standard deviation <code>sigma</code> affects how wide the normal distribution&#39;s &quot;bell curve&quot; appears; the
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%, and within three standard deviations, about 99.7%.</p>
 
@@ -1103,7 +1121,7 @@ END METHOD
 <h4>Generating Random Points on the Surface of a Hypersphere</h4>
 
 <p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.
-(In the exceptional case that all numbers are 0, the process should repeat.)</p>
+(In the exceptional case that the norm is 0, the process should repeat.)</p>
 
 <p><a id=Generating_Random_Points_Inside_a_Ball></a></p>
 
@@ -1112,7 +1130,7 @@ END METHOD
 <p>To generate an N-dimensional point inside an N-dimensional ball of radius R, an application can either&mdash;</p>
 
 <ul>
-<li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code>, or</li>
+<li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
 <li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note3">(3)</a></sup> until the <em>norm</em> of the N numbers is R or less,</li>
 </ul>
 
@@ -1318,18 +1336,18 @@ end
        i = i + 1
      end
      AddItem(list, total)
+     Sort(list)
+     prev = list[0]
+     i = 1
+    while i &lt; n
+         newValue = list[i] - prev
+         prev = list[i]
+         list[i] = newValue
+         i = i + 1
+    end
 </pre>
 
-<p>Sort(list)
-         prev = list[0]
-   i = 1
-   while i &lt; n
-       newValue = list[i] - prev
-             prev = list[i]
-       list[i] = newValue
-             i = i + 1
-  end
-   END METHOD</p>
+<p>END METHOD</p>
 
 <p><a id=Negative_Binomial_Distribution></a></p>
 
@@ -1619,8 +1637,8 @@ the same meaning as in the normal distribution, and <code>alpha</code> is a shap
 
 <ul>
 <li>generate two independent and identically distributed random variables <code>x</code> and <code>y</code> (for example, two <code>Normal(0, 1)</code> variables or two <code>RNDU01()</code> variables), and</li>
-<li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a _correlation coefficient<code>-1 or greater and 1 or less.
-If</code>rho` is 0, the variables are uncorrelated.</li>
+<li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a <em>correlation coefficient</em> -1 or greater and 1 or less.
+If <code>rho</code> is 0, the variables are uncorrelated.</li>
 </ul>
 
 <p>See Saucier 2000, sec. 3.8, which was the source of the technique given here.</p>
@@ -1682,11 +1700,13 @@ from random number generators.</p>
 
 <p><sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39; s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
-<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6, results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
+<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
 
-<p><sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with size <code>2 * R</code> and centered at the origin of space.</p>
+<p><sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</p>
 
 <p><sup id=Note4>(4)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> with all the means equal to 0 and a_covariance matrix_ that, in this context, serves as a <em>bandwidth matrix</em>. The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</p>
+
+<p><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer 0 or greater and less than <code>maxExclusive</code>; however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
 
 <p><a id=License></a></p>
 
