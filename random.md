@@ -250,7 +250,7 @@ One process to generate verifiable random numbers is described in [RFC 3797](htt
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, ["Noise Functions and Map Generation"](http://www.redblobgames.com/articles/noise/introduction.html#colors)).
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, ["Noise Functions and Map Generation"](http://www.redblobgames.com/articles/noise/introduction.html)).
 
 If the noise implementation implements [cellular noise](https://en.wikipedia.org/wiki/Cellular_noise), [value noise](https://en.wikipedia.org/wiki/Value_noise), or [gradient noise](https://en.wikipedia.org/wiki/Gradient_noise) (such as [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise)), then different considerations apply depending on the implementation:
 
@@ -319,11 +319,11 @@ Unpredictable-random and statistical-random implementations&mdash;
 - should be reasonably fast for most applications, and
 - should be safe for concurrent use by multiple threads, whenever convenient.
 
-In my opinion, a new programming language's standard library should include&mdash;
-- a method that returns a random integer 0 or greater and less than a positive integer, and
-- a method that returns a floating-point number 0 or greater and less than 1,
-
-and should include those two methods separately for unpredictable-random generators and for statistical RNGs. However, a detailed discussion of how to implement those two methods or other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range is outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/randomfunc.html).
+My document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) includes details on
+eleven uniform random number methods; in my opinion, a new programming language's standard library should include
+those eleven methods separately for unpredictable-random generators and for statistical RNGs. That document also
+discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
+as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.
 
 <a id=Shuffling></a>
 ## Shuffling

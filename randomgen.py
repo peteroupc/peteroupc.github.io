@@ -192,7 +192,7 @@ class RandomGen:
       area=areas[i]
       if area>0:
         newValue=runningValue+area
-        if value<=newValue:
+        if value<newValue:
           interp=self.rndu01oneexc()
           retValue=list[i]+(list[i+1]-list[i])*interp
           return retValue
