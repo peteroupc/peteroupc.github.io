@@ -675,7 +675,9 @@ However, "almost-random" sampling techniques are not recommended&mdash;
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
 
-Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others. This section describes how to use the [uniform random number methods](#Uniform_Random_Numbers) to generate random numbers that follow a non-uniform statistical distribution.
+Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.
+This section describes how to use the [uniform random number methods](#Uniform_Random_Numbers) to generate random numbers that follow a non-uniform statistical distribution.  (Some of the techniques in this section discuss ways to generate data uniformly at random;
+they're included here because they often involve non-uniform distributions.)
 
 <a id=Discrete_Weighted_Choice></a>
 ### Discrete Weighted Choice
@@ -994,7 +996,10 @@ The following method generates a random integer that follows a binomial distribu
 - is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance], if each trial is treated
 as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 
-**Example:** If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
+**Example:**
+- If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
+- The idiom `Binomial(N, 0.5) >= C` is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).
+- The idiom `Binomial(N, 1/S)` models the task "Flip N S-sided dice, then count the number of dice that show S."
 
     METHOD Binomial(trials, p)
         if trials < 0: return error
@@ -1270,7 +1275,7 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 <a id=Stable_Distribution></a>
 ### Stable Distribution
 
-A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, greater than 0 and 2 or less) and `beta` (skewness, -1 or greater and 1 or less); if `beta` is 0, the curve is symmetric.
+A stable distribution is a limiting distribution of the sum of independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, greater than 0 and 2 or less) and `beta` (skewness, -1 or greater and 1 or less); if `beta` is 0, the curve is symmetric.
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error

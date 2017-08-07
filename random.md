@@ -257,7 +257,10 @@ If the noise implementation implements [cellular noise](https://en.wikipedia.org
 - If the implementation **uses an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended wherever feasible, especially where computer and information security are involved in the noise generation.
 - A noise implementation that **uses a table of pregenerated gradients or hash values** should be used only if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation (treating the implementation as using a "hard-coded" seed).
 - If the noise function **incorporates a hash function** (including a PRNG that takes the input as a seed and outputs a random number<sup>[(3)](#Note3)</sup>)&mdash;
-    - that hash function should be reasonably fast and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
+    - that hash function should&mdash;
+        - be reasonably fast,
+        - be _stable_ (as defined in ["Seeding Recommendations"](#Seeding_Recommendations)), and
+        - be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
 
 The [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) technique combines several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.
