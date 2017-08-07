@@ -800,7 +800,9 @@ END METHOD
 
 <h2>Non-Uniform Distributions</h2>
 
-<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others. This section describes how to use the <a href="#Uniform_Random_Numbers">uniform random number methods</a> to generate random numbers that follow a non-uniform statistical distribution.</p>
+<p>Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.
+This section describes how to use the <a href="#Uniform_Random_Numbers">uniform random number methods</a> to generate random numbers that follow a non-uniform statistical distribution.  (Some of the techniques in this section discuss ways to generate data uniformly at random;
+they&#39;re included here because they often involve non-uniform distributions.)</p>
 
 <p><a id=Discrete_Weighted_Choice></a></p>
 
@@ -1152,9 +1154,14 @@ END METHOD
 as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and if <code>p</code> is 0.5.</li>
 </ul>
 
-<p><strong>Example:</strong> If <code>p</code> is 0.5, the binomial distribution models the task &quot;Flip N coins, then count the number of heads.&quot;</p>
+<p><strong>Example:</strong></p>
 
-<pre>METHOD Binomial(trials, p)
+<ul>
+<li>If <code>p</code> is 0.5, the binomial distribution models the task &quot;Flip N coins, then count the number of heads.&quot;</li>
+<li>The idiom <code>Binomial(N, 0.5) &gt;= C</code> is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).</li>
+<li><p>The idiom <code>Binomial(N, 1/S)</code> models the task &quot;Flip N S-sided dice, then count the number of dice that show S.&quot;</p>
+
+<p>METHOD Binomial(trials, p)
     if trials &lt; 0: return error
     if trials == 0: return 0
     // Always succeeds
@@ -1192,8 +1199,8 @@ as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and 
         end
     end
     return count
-END METHOD
-</pre>
+END METHOD</p></li>
+</ul>
 
 <p><a id=Hypergeometric_Distribution></a></p>
 
@@ -1448,7 +1455,7 @@ END METHOD
 
 <h3>Stable Distribution</h3>
 
-<p>A stable distribution is a limiting distribution of the sum of arbitrarily many independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> (stability index, greater than 0 and 2 or less) and <code>beta</code> (skewness, -1 or greater and 1 or less); if <code>beta</code> is 0, the curve is symmetric.</p>
+<p>A stable distribution is a limiting distribution of the sum of independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are <code>alpha</code> (stability index, greater than 0 and 2 or less) and <code>beta</code> (skewness, -1 or greater and 1 or less); if <code>beta</code> is 0, the curve is symmetric.</p>
 
 <pre>METHOD Stable(alpha, beta)
      if alpha &lt;=0 or alpha &gt; 2: return error
