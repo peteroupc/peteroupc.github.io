@@ -993,13 +993,15 @@ The following method generates a random integer that follows a binomial distribu
 - expresses the number of successes that have happened after a given number of independently performed trials
 (expressed as `trials` below), where the probability of a success in each trial is `p` (which ranges from 0, never, to
 1, always, and which can be 0.5, meaning an equal chance of success or failure), and
-- is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance], if each trial is treated
+- is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance), if each trial is treated
 as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 
-**Example:**
+**Examples:**
 - If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
 - The idiom `Binomial(N, 0.5) >= C` is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).
-- The idiom `Binomial(N, 1/S)` models the task "Flip N S-sided dice, then count the number of dice that show S."
+- The idiom `Binomial(N, 1/S)` models the task "Flip N S-sided dice, then count the number of dice that show the number S."
+
+----
 
     METHOD Binomial(trials, p)
         if trials < 0: return error
@@ -1180,7 +1182,7 @@ An alternative method, which can work better if random integers are to be genera
              list[i] = newValue
              i = i + 1
         end
-   END METHOD
+    END METHOD
 
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
