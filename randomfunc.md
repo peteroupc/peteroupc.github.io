@@ -999,7 +999,7 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 **Examples:**
 - If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
 - The idiom `Binomial(N, 0.5) >= C` is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).
-- The idiom `Binomial(N, 1/S)` models the task "Flip N S-sided dice, then count the number of dice that show the number S."
+- The idiom `Binomial(N, 1/S)` models the task "Roll N S-sided dice, then count the number of dice that show the number S."
 
 ----
 
