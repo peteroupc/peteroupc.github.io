@@ -86,11 +86,11 @@
 <pre>public static PeterO.Numbers.EInteger Zero { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets the number zero as an arbitrary-precision integer.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>The number zero as an arbitrary-precision integer.</p>
 
 <h3>Abs</h3>
 
@@ -259,8 +259,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
-is not documented yet.</li>
+<li><i>other</i>: The integer to compare to this value.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -689,7 +688,7 @@ The string portion is empty or in an invalid format.</p></li>
     PeterO.Numbers.EInteger bigintSecond);
 </pre>
 
-<p>Returns the greatest common divisor of two integers. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
+<p>Returns the greatest common divisor of this integer and the given integer. The greatest common divisor (GCD) is also known as the greatest common factor (GCF).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -734,11 +733,11 @@ is null.</li>
 <pre>public int GetDigitCount();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the number of decimal digits used by this integer.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A 32-bit signed integer.</p>
+<p>The number of digits in the decimal form of this integer. Returns 1 if this number is 0.</p>
 
 <h3>GetHashCode</h3>
 
@@ -878,18 +877,20 @@ is null.</p></li>
     PeterO.Numbers.EInteger mod);
 </pre>
 
-<p>Calculates the remainder when an arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</p>
+<p>Calculates the remainder when this arbitrary-precision integer raised to a certain power is divided by another arbitrary-precision integer.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>pow</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>mod</i>: An arbitrary-precision integer. (3).</p></li>
+<li><p><i>pow</i>: The power to raise this integer by.</p></li>
+<li><p><i>mod</i>: The integer to divide the raised number by.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision integer.</p>
+<p>The value (  <code>this</code>  ^  <i>pow</i>
+ )%  <i>mod</i>
+.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -913,12 +914,9 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bigintValue</i>: The parameter  <i>bigintValue</i>
-is not documented yet.</p></li>
-<li><p><i>pow</i>: The parameter  <i>pow</i>
-is not documented yet.</p></li>
-<li><p><i>mod</i>: The parameter  <i>mod</i>
-is not documented yet.</p></li>
+<li><p><i>bigintValue</i>: The starting operand.</p></li>
+<li><p><i>pow</i>: The power to raise this integer by.</p></li>
+<li><p><i>mod</i>: The integer to divide the raised number by.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -984,7 +982,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>valueA</i>: Another arbitrary-precision integer.</li>
+<li><i>valueA</i>: The operand as an arbitrary-precision integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1006,15 +1004,13 @@ is null.</li>
     PeterO.Numbers.EInteger augend);
 </pre>
 
-<p>Adds an arbitrary-precision integer and an arbitrary-precision integer object.</p>
+<p>Adds two arbitrary-precision integer objects and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bthis</i>: The parameter  <i>bthis</i>
-is not documented yet.</p></li>
-<li><p><i>augend</i>: The parameter  <i>augend</i>
-is not documented yet.</p></li>
+<li><p><i>bthis</i>: The first operand.</p></li>
+<li><p><i>augend</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1043,8 +1039,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>thisValue</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>otherValue</i>: Another arbitrary-precision integer.</p></li>
+<li><p><i>thisValue</i>: The first operand.</p></li>
+<li><p><i>otherValue</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1195,14 +1191,13 @@ is null.</li>
     int bitCount);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision integer with the bits shifted to the left by a number of bits. A value of 1 doubles this value, a value of 2 multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bthis</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>bitCount</i>: The parameter  <i>bitCount</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>bthis</i>: The arbitrary-precision integer to shift left.</p></li>
+<li><p><i>bitCount</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of this parameter.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1323,18 +1318,25 @@ is null.</li>
     PeterO.Numbers.EInteger thisValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns an arbitrary-precision integer with every bit flipped.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>thisValue</i>: The parameter  <i>thisValue</i>
-is not documented yet.</li>
+<li><i>thisValue</i>: The operand as an arbitrary-precision integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>thisValue</i>
+is null.</li>
+</ul>
 
 <h3>Operator <code>&gt;&gt;</code></h3>
 
@@ -1435,8 +1437,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>second</i>: An arbitrary-precision integer. (3).</p></li>
+<li><p><i>first</i>: The first operand.</p></li>
+<li><p><i>second</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1548,7 +1550,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>numberBits</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of numberBits.</li>
+<li><i>numberBits</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of this parameter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
