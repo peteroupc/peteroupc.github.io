@@ -1023,7 +1023,7 @@ is a 64-bit floating-point number.</li>
 
 <ul>
 <li><i>flt</i>: The parameter  <i>flt</i>
-is a 32-bit floating-point number.</li>
+is a 32-bit binary floating-point number.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1037,18 +1037,18 @@ is a 32-bit floating-point number.</li>
     string str);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a binary float from a text string that represents a number, using an unlimited precision context. For more information, see the  <code>FromString(String, int,
+            int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
-is not documented yet.</li>
+<li><i>str</i>: A text string to convert to a binary float.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An EFloat object.</p>
+<p>The parsed number, converted to arbitrary-precision binary float.</p>
 
 <h3>FromString</h3>
 
@@ -1124,7 +1124,7 @@ begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>ctx</i>: An EContext object specifying the precision, rounding, and exponent range (in bits) to apply to the parsed number. Can be null.</p></li>
+<li><p><i>ctx</i>: A precision context specifying the precision, rounding, and exponent range (in bits) to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1154,14 +1154,14 @@ is less than  <i>length</i>
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Creates a binary float from a text string that represents a number. For more information, see the FromString(String, int, int, EContext) method.</p>
+<p>Creates a binary float from a text string that represents a number. For more information, see the  <code>FromString(String, int,
+            int, EContext)</code>  method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
-is a text string.</p></li>
-<li><p><i>ctx</i>: An EContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
+<li><p><i>str</i>: A text string to convert to a binary float.</p></li>
+<li><p><i>ctx</i>: A precision context specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1887,15 +1887,13 @@ is null.</li>
     PeterO.Numbers.EFloat otherValue);
 </pre>
 
-<p>Adds this object and another binary float and returns the result.</p>
+<p>Adds two arbitrary-precision binary floating-point numbers and returns the result.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bthis</i>: The parameter  <i>bthis</i>
-is not documented yet.</p></li>
-<li><p><i>otherValue</i>: The parameter  <i>otherValue</i>
-is not documented yet.</p></li>
+<li><p><i>bthis</i>: The first arbitrary-precision binary floating-point number.</p></li>
+<li><p><i>otherValue</i>: The second arbitrary-precision binary floating-point number.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1907,6 +1905,7 @@ is not documented yet.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter  <i>bthis</i>
+or  <i>otherValue</i>
 is null.</li>
 </ul>
 
@@ -1917,7 +1916,7 @@ is null.</li>
     PeterO.Numbers.EFloat divisor);
 </pre>
 
-<p>Divides this object by another binary float and returns the result. When possible, the result will be exact.</p>
+<p>Divides one binary float by another and returns the result. When possible, the result will be exact.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2001,15 +2000,13 @@ is null.</li>
     PeterO.Numbers.EFloat subtrahend);
 </pre>
 
-<p>Subtracts an arbitrary-precision binary float from this instance and returns the result.</p>
+<p>Subtracts one arbitrary-precision binary float from another.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bthis</i>: The parameter  <i>bthis</i>
-is not documented yet.</p></li>
-<li><p><i>subtrahend</i>: The parameter  <i>subtrahend</i>
-is not documented yet.</p></li>
+<li><p><i>bthis</i>: The first operand.</p></li>
+<li><p><i>subtrahend</i>: The second operand.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2035,13 +2032,12 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigValue</i>: The parameter  <i>bigValue</i>
-is not documented yet.</li>
+<li><i>bigValue</i>: An arbitrary-precision binary float.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision binary float. If this value is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
+<p>The negated form of the given number. If the given number is positive zero, returns negative zero. Returns signaling NaN if this value is signaling NaN.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2761,11 +2757,11 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public double ToDouble();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to a 64-bit floating-point number.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A 64-bit floating-point number.</p>
+<p>This number, converted to a 64-bit floating-point number.</p>
 
 <h3>ToEDecimal</h3>
 
@@ -2776,7 +2772,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>An arbitrary-precision decimal number.</p>
+<p>This number, converted to an arbitrary-precision decimal number.</p>
 
 <h3>ToEInteger</h3>
 
@@ -3088,7 +3084,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p><b>Return Value:</b></p>
 
-<p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+<p>The closest 32-bit binary floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
 
 <h3>ToString</h3>
 
