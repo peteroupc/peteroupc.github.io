@@ -701,7 +701,12 @@ end
   END METHOD
 </pre>
 
-<p><em><strong>Note:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.</em></p>
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.</li>
+<li>Generating a random hexadecimal string is equivalent to calling <code>RandomString(hexList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
+</ul>
 
 <p><a id=Choosing_Several_Unique_Items></a></p>
 
@@ -749,11 +754,12 @@ end
    return list
 end
 </pre></li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Either&mdash;
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Do one of the following:
 
 <ul>
-<li>store all the items in a list, <a href="#Shuffling">shuffle</a> that list, then choose the first <code>k</code> items from that list, or</li>
-<li>if the items are already stored in a list, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or items corresponding to those indices) from the latter list.</li>
+<li>Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, then choose the first <code>k</code> items from that list.</li>
+<li>If the items are already stored in a list and the list&#39;s order can be changed, then shuffle that list and choose the first <code>k</code> items from the shuffled list.</li>
+<li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or items corresponding to those indices) from the latter list.</li>
 </ul></li>
 <li><p><strong>If <code>n</code> is relatively small and items are to be chosen in order</strong>, then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):</p>
 
@@ -808,7 +814,7 @@ they&#39;re included here because they often involve non-uniform distributions.)
 
 <h3>Discrete Weighted Choice</h3>
 
-<p>The discrete weighted choice method is used to choose a random item from among a set of them with separate probabilities of being chosen.</p>
+<p>The discrete weighted choice method is used to choose a random item from among a set of them with separate probabilities of each item being chosen.</p>
 
 <p>The following pseudocode takes a single list <code>weights</code>, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.</p>
 
