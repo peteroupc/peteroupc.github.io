@@ -224,135 +224,19 @@ IRI are like URIs except that they also allow non-ASCII characters.</li>
 
 <h2>Release Notes</h2>
 
-<h3>Version 2.5.2</h3>
+<h3>Version 3.0.0</h3>
+
+<p>Version 3.0.0</p>
 
 <ul>
-<li>Unlike version 2.4.2, signed CBOR assembly with a strong name key.</li>
-<li>Unlike version 2.4.2, library uses strong-named version of  <a href="https://www.nuget.org/packages/PeterO.Numbers"><code>PeterO.Numbers</code></a>, version 0.4.0</li>
+<li>Moved from .NET Portable to .NET Standard 1.0.</li>
+<li>Deprecated arbitrary-precision classes in PeterO namespace; use the classes from the &quot;PeterO.Numbers&quot; library and namespace instead.  In particular, methods that used the former classes were deprecated and often replaced with versions that use the newer classes.</li>
+<li>Change JSON output behavior slightly, including preserving negative zero</li>
+<li>Hash code calculation was changed in this version</li>
+<li>Deprecated OutermostTag in favor of MostOuterTag in CBORObject</li>
+<li>Deprecated InnermostTag in favor of MostInnerTag in CBORObject</li>
+<li>Bug fixes</li>
 </ul>
-
-<h3>Version 2.5.1</h3>
-
-<ul>
-<li>Release was erroneous.</li>
-</ul>
-
-<h3>Version 2.5</h3>
-
-<ul>
-<li>Release was erroneous.</li>
-</ul>
-
-<h3>Version 2.4.2</h3>
-
-<ul>
-<li>Really use 0.2.2 of
-<a href="https://www.nuget.org/packages/PeterO.Numbers"><code>PeterO.Numbers</code></a>
-as dependency in NuGet package</li>
-</ul>
-
-<h3>Version 2.4.1</h3>
-
-<ul>
-<li>C# implementation now uses version 0.2.2 of
-<a href="https://www.nuget.org/packages/PeterO.Numbers"><code>PeterO.Numbers</code></a></li>
-</ul>
-
-<h3>Version 2.4.0</h3>
-
-<ul>
-<li>The arbitrary-precision classes in this library are being replaced
-with a new library (called <a href="https://www.nuget.org/packages/PeterO.Numbers"><code>PeterO.Numbers</code></a> in C#).  As a result, most
-of the methods in the existing classes are obsolete.  This affects the
-classes <code>BigInteger</code>, <code>ExtendedDecimal</code>, <code>ExtendedFloat</code>, <code>ExtendedRational</code>,
-<code>Rounding</code>, <code>PrecisionContext</code>, and <code>TrapException</code>.  Changes were made
-to those classes to call the new classes, and the behavior is mostly
-compatible with the previous behavior (with the notable exception
-of a new dependency in the CBOR library).</li>
-<li>After version 2.3.1, the classes in the new library were greatly changed
-from what they were in version 2.3.1.  Version 2.4.0 currently uses
-version 0.2 of the new library, but this may change in future versions.  See the
-<a href="https://github.com/peteroupc/Numbers">new library&#39;s release notes</a>,
-and this repository&#39;s commit history (from &quot;version 2.3.1&quot;
-to &quot;move big number library...&quot;) for details.</li>
-<li>The FromObject method of the CBORObject class can now convert
-arbitrary-precision number objects from the new library
-appropriately, such as <code>EInteger</code> and <code>EDecimal</code>.  However, there are
-no methods that directly take or return one of those classes, for
-compatibility with version 2.0.</li>
-<li>Added Zero field and IsNegative property to the CBORObject class</li>
-<li>Added overloads to ReadJSON and FromJSONString in CBORObject class</li>
-<li>Added parameter in the ParseJSONNumber method of CBORDataUtilities
-to preserve negative zeros</li>
-<li>Added CBOR decoding option to disable duplicate keys</li>
-<li>Fixed JSON parsing bugs</li>
-</ul>
-
-<h3>Older Versions</h3>
-
-<p>In version 2.3.1:</p>
-
-<ul>
-<li>Fixed NuGet package</li>
-<li>No changes of note in the Java version</li>
-</ul>
-
-<p>In version 2.3:</p>
-
-<ul>
-<li>The C# version of the library now also targets &quot;dotnet&quot;, which should make it compatible with platform .NET runtime
-environments such as the upcoming cross-platform &quot;coreclr&quot; runtime.</li>
-<li>Added GetUtf8Bytes overload to DataUtilities</li>
-<li>Fixed line break bug when setting lenientLineBreaks to true in the PeterO.Cbor.DataUtilities.WriteUtf8 method</li>
-<li>In BigInteger, fixed divideAndRemainder method, added certain methods and made other methods obsolete</li>
-<li>Many additions to the documentation</li>
-<li>Other bug fixes</li>
-</ul>
-
-<p>In version 2.2:</p>
-
-<ul>
-<li>Portable Class Library compatibility expanded</li>
-<li>Add option to always use definite length string encoding when generating CBOR objects</li>
-</ul>
-
-<p>Known issue in version 2.2:</p>
-
-<ul>
-<li>Setting <code>lenientLineBreaks</code> to <code>true</code> in the <code>PeterO.Cbor.DataUtilities.WriteUtf8</code> method
-doesn&#39;t correctly write CR/LF line breaks.  This will be fixed in a future version of the library.</li>
-</ul>
-
-<p>In version 2.1:</p>
-
-<ul>
-<li>Added Ulp, Precision, MovePointLeft, MovePointRight, and ScaleToPowerOfTwo/-Ten methods to
-ExtendedDecimal and ExtendedFloat</li>
-<li>Fixed double-rounding issue with ToDouble and ToFloat methods
-of ExtendedDecimal</li>
-<li>Added Odd and OddOrZeroFiveUp rounding modes</li>
-<li>Added non-decimal base conversion features to BigInteger</li>
-<li>Other bug fixes</li>
-</ul>
-
-<p>In version 2.0:</p>
-
-<ul>
-<li>Several very special characters are escaped in JSON output, such as line and paragraph
-separators, and byte order marks.</li>
-<li>BigInteger&#39;s longValue method was fixed</li>
-<li>BigInteger was changed to have no public constructors</li>
-<li>ReadJSON now supports UTF-16 and UTF-32 in addition to UTF-8</li>
-<li>PrecisionContext&#39;s JavaBigDecimal object was corrected.</li>
-<li>Fixed bugs in parsing JSON numbers in some cases</li>
-<li>CBORObject&#39;s one-argument Add method now adds CBORObject.Null if passed null,
-rather than throwing an exception.</li>
-</ul>
-
-<p><strong>NOTE</strong>: In the &quot;2.0&quot; tag for this repository, the file <code>DataUtilities.cs</code> should be copied
-from the <code>PeterO</code> directory to the root directory for this repository, in order for the CBORDocs
-and CBORDocs2 projects to build.  This issue may probably exist in other older versions
-as well.</p>
 
 <p>See <a href="https://github.com/peteroupc/CBOR/tree/master/History.md">History.md</a>
 for release notes for older versions.</p>
