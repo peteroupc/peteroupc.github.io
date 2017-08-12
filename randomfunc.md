@@ -590,7 +590,10 @@ The second step is to build a new string whose characters are chosen from that c
             return newString
       END METHOD
 
-_**Note:** Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results._
+**Notes:**
+
+- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.
+- Generating a random hexadecimal string is equivalent to calling `RandomString(hexList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
 
 <a id=Choosing_Several_Unique_Items></a>
 ### Choosing Several Unique Items
@@ -635,9 +638,10 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
            Shuffle(list)
            return list
         end
-- **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Either&mdash;
-    - store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list, or
-    - if the items are already stored in a list, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or items corresponding to those indices) from the latter list.
+- **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Do one of the following:
+    - Store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list.
+    - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
+    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or items corresponding to those indices) from the latter list.
 - **If `n` is relatively small and items are to be chosen in order**, then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):
 
         METHOD RandomKItemsInOrder(list, k)
@@ -682,7 +686,7 @@ they're included here because they often involve non-uniform distributions.)
 <a id=Discrete_Weighted_Choice></a>
 ### Discrete Weighted Choice
 
-The discrete weighted choice method is used to choose a random item from among a set of them with separate probabilities of being chosen.
+The discrete weighted choice method is used to choose a random item from among a set of them with separate probabilities of each item being chosen.
 
 The following pseudocode takes a single list `weights`, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.
 
