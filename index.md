@@ -11,6 +11,7 @@ Open-source articles on programming subjects.
 
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation Methods](./randomfunc.html)
+* [Color Generation and Conversion Methods](./colorgen.html)
 * [Generating Verifiable Random Numbers](./randomverif.html)
 * [Chi-Squared Test](./chisqtest.html)
 
