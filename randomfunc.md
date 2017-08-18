@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 4, 2017.
+Begun on June 4, 2017; last updated on Aug. 18, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -51,6 +51,8 @@ This methods described in this document can be categorized as follows:
     - [Creating a Random Character String](#Creating_a_Random_Character_String)
     - [Choosing Several Unique Items](#Choosing_Several_Unique_Items)
     - [Almost-Random Sampling](#Almost_Random_Sampling)
+    - [Choosing a Random Date/Time](#Choosing_a_Random_Date_Time)
+    - [Generating Random Numbers in Sorted Order](#Generating_Random_Numbers_in_Sorted_Order)
 - [Non-Uniform Distributions](#Non_Uniform_Distributions)
     - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - [Example](#Example)
@@ -675,6 +677,35 @@ However, "almost-random" sampling techniques are not recommended&mdash;
 - in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 **Note:** [Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The ["Variance" MathWorld article](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [_low-discrepancy sequences_](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with a uniformly-distributed RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+
+<a id=Choosing_a_Random_Date_Time></a>
+### Choosing a Random Date/Time
+
+Choosing a random date/time at or between two others is equivalent to&mdash;
+
+- converting the two input date/times to an integer or number (here called `date1` and `date2`, where `date1` represents the earlier date/time and `date2` the other) at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date/time format and are outside the scope of this document);
+- generating `newDate = RNDINTRANGE(date1, date2)` or `newDate = RNDNUMRANGE(date1, date2)`, respectively, and
+- converting `newDate` to a date/time.
+
+If either input date/time generated as the random date, but that is not desired, the process just given can be repeated until such a date/time is not generated this way.
+
+<a id=Generating_Random_Numbers_in_Sorted_Order></a>
+### Generating Random Numbers in Sorted Order
+
+The following pseudocode describes a method that random numbers 0 or greater and 1 or less in sorted order.   `count` is the number of random numbers to generate this way. The method is based on an algorithm from Bentley and Saxe 1979.
+
+     METHOD SortedRandom(count)
+        list = NewList()
+        k = count
+        c = 1.0
+        while k > 0
+            c = pow(RNDU01(), 1.0 / k) * c
+            AddItem(list, c)
+        end
+        return list
+     END METHOD
+
+Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
