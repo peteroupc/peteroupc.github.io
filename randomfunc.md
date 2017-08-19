@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 18, 2017.
+Begun on June 4, 2017; last updated on Aug. 19, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -683,7 +683,7 @@ However, "almost-random" sampling techniques are not recommended&mdash;
 
 Choosing a random date/time at or between two others is equivalent to&mdash;
 
-- converting the two input date/times to an integer or number (here called `date1` and `date2`, where `date1` represents the earlier date/time and `date2` the other) at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date/time format and are outside the scope of this document);
+- converting the two input date/times to an integer or number (here called `date1` and `date2`, where `date1` represents the earlier date/time and `date2` the other) at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date/time format and are outside the scope of this document),
 - generating `newDate = RNDINTRANGE(date1, date2)` or `newDate = RNDNUMRANGE(date1, date2)`, respectively, and
 - converting `newDate` to a date/time.
 
