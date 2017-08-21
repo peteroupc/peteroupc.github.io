@@ -11,7 +11,8 @@ This document discusses&mdash;
 - several color spaces of practical interest, including conversion methods,
 - how to generate colors with certain properties,
 - color differences,
-- color mixing, and
+- color mixing,
+- color maps, and
 - how to find the dominant colors of an image.
 
 The following are out of the scope of this document:
@@ -48,19 +49,22 @@ The following are out of the scope of this document:
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
-    - [Shades and Tints](#Shades_and_Tints)
+    - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Color Intensity (Grayscale)](#Color_Intensity_Grayscale)
     - [Color Schemes](#Color_Schemes)
+    - [Color Matrices](#Color_Matrices)
     - [Miscellaneous](#Miscellaneous)
 - [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
     - [Examples](#Examples)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Mixture](#Color_Mixture)
-- [Color Topics](#Color_Topics)
+- [Color Maps](#Color_Maps)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
+- [Color Topics](#Color_Topics)
     - [Colorblindness](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
+- [Conclusion](#Conclusion)
 - [Notes](#Notes)
 - [License](#License)
 
@@ -78,13 +82,13 @@ In this document:
     - 0 if `y == 0 and x == 0`.
 - The term _RGB_ means red-green-blue.
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
-- The term _nonlinearized_ refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).
+- The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).
 
 <a id=Utility_Functions></a>
 ### Utility Functions
 
 The utility function&mdash;
-- `Lerp3`, returns a blended form of two lists of three numbers (`list1` and `list2`); here, `fac` ranges from 0 through 1, where 0 means equal to `list1` and 1 means equal to `list2`, and `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language);
+- `Lerp3`, returns a blended form of two lists of three numbers (`list1` and `list2`); here, `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`, and `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language);
 - `Clamp` returns `minimum` if the given value is less than `minimum`, `maximum` if greater than `maximum`,
 or `value` otherwise, and is equivalent to `clamp` in GLSL;
 - `Clamp3` applies the `Clamp` function separately to each item of a three-element list; here, `value`, `minimum`,
@@ -92,7 +96,7 @@ and `maximum` are each three-element lists;
 - `Min3` is the smallest of three numbers; and
 - `Max3` is the largest of three numbers.
 
-**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`, 
+**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`,
 where `FUNC` is an arbitrary function of `x`) can be done to achieve special nonlinear interpolations.
 Detailing such interpolations is outside the scope of this document, but are described in further detail [in this page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
@@ -129,9 +133,9 @@ Detailing such interpolations is outside the scope of this document, but are des
 <a id=RGB_Colors></a>
 ## RGB Colors
 
-RGB color spaces describe the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.  For many RGB color spaces, this intensity relationship is nonlinear because human color perception is nonlinear.
+Red-green-blue (RGB) color spaces describe the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.  For many RGB color spaces, this intensity relationship is nonlinear because human color perception is nonlinear.
 
-The following details concepts related to red-green-blue (RGB) color spaces.
+The following details concepts related to RGB color spaces.
 
 <a id=0_1_Format></a>
 ### 0-1 Format
@@ -140,9 +144,9 @@ In an RGB color space, an _RGB color_ consists of three components.  Given `colo
 - `color[1]` is the color's green component, and
 - `color[2]` is the color's blue component,
 
-and each component ranges from 0 through 1, where brighter colors have higher-valued components in general. (The term **0-1 format** will be used in this document to describe this format.  All RGB colors in this document are in the 0-1 format unless noted otherwise.)
+and each component is 0 or greater and 1 or less, where brighter colors have higher-valued components in general. (The term **0-1 format** will be used in this document to describe this format.  All RGB colors in this document are in the 0-1 format unless noted otherwise.)
 
-Some RGB colors also contain an alpha component, expressed as `color[3]` (the fourth item in `color`) and ranging from 0 to 1, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).
+Some RGB colors also contain an alpha component, expressed as `color[3]` (the fourth item in `color`) and being 0 or greater and 1 or less, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).
 
 **Note:** An RGB color is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components.
 An RGB image or collection of RGB colors is achromatic if all its RGB colors are achromatic.
@@ -261,20 +265,20 @@ characters) to and from the HTML color format or the 3-digit format.
 
     METHOD HexToNum(x)
         hexlist=["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-	hexdown=["a", "b", "c", "d", "e", "f"]
+  hexdown=["a", "b", "c", "d", "e", "f"]
         i = 0
         while i < 16
                 if hexlist[i] == x: return i
                 i = i + 1
         end
-	i = 0
+  i = 0
         while i < 6
                 if hexdown[i] == x: return 10 + i
                 i = i + 1
         end
         return -1
     END METHOD
-    
+
     METHOD ColorToHtml(rgb)
        // NOTE: Upscale method is given earlier in "Integer
        // Component Formats"
@@ -369,10 +373,10 @@ The following methods linearize and de-linearize sRGB colors.
 
 [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB), is a transformation of RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
 
-- _Hue_, or angle in the color wheel, which is in radians and ranges from 0 through 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
+- _Hue_, or angle in the color wheel, which is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
 - _Saturation_, the distance of the color from gray and white (but not necessarily from black),
- which ranges from 0 through 1.
-- A component variously called "brightness" or "value", which is the distance of the color from black and ranges from 0 through 1.
+ which is 0 or greater and 1 or less.
+- A component variously called "brightness" or "value", which is the distance of the color from black and is 0 or greater and 1 or less.
 
 The following pseudocode converts colors between RGB and HSV. Each RGB color is in 0-1 format.
 Note that for best results, the methods given below need to use [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
@@ -421,7 +425,7 @@ In the rest of this document&mdash;
 - **`HSVSat(color)`** is the HSV saturation component of a color, that is, `RgbToHsv(color)[1]`, and
 - **`HSVVal(color)`** is the HSV brightness or "value" component of a color, that is, `RgbToHsv(color)[2]`.
 
-**Note:** 
+**Note:**
 
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
 
@@ -430,13 +434,13 @@ In the rest of this document&mdash;
 
 [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) (also known as HLS), like HSV, is a transformation of RGB colors to ease intuition.  An HSL color consists of three components, in the following order:
 
-- _Hue_, or angle in the color wheel, which is in radians and ranges from 0 through 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
+- _Hue_, or angle in the color wheel, which is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
 - A component called "saturation", the distance of the color from gray (but not necessarily from
-black or white), which ranges from 0 through 1.
+black or white), which is 0 or greater and 1 or less.
 - A component variously called "lightness", "luminance", or "luminosity", which is roughly the amount
-of black or white mixed with the color and which ranges from 0 through 1, where 0 is black
+of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black
  and 1 is white.
- 
+
 The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.
 Note that for best results, the methods given below need to use [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
 
@@ -514,7 +518,7 @@ In the rest of this document&mdash;
 - **`HSLSat(color)`** is the HSL "saturation" component of a color, that is, `RgbToHsl(color)[1]`, and
 - **`HSLLgt(color)`** is the HSL "lightness" component of a color, that is, `RgbToHsl(color)[2]`.
 
-**Notes:** 
+**Notes:**
 
 - In some applications and specifications, especially where this color space is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
@@ -522,7 +526,8 @@ In the rest of this document&mdash;
 <a id=CIE_L_a_b></a>
 ### CIE L\*a\*b\*
 
-The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*, a color space that describes every color in nature and is designed for color comparisons.
+The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*, a color space that is often called a "perceptually uniform" color space, describes every color in nature, and is designed for color comparisons.  In the pseudocode,
+the L\*a\*b* color is relative to the D50 illuminant and the 1931 2-degree standard observer.
 
 A color in CIE L\*a\*b\* consists of three components, in the following order:
 
@@ -629,15 +634,15 @@ The following techniques show how existing colors can be modified to create new 
 
 Note that for best results, these techniques need to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB), unless noted otherwise.
 
-<a id=Shades_and_Tints></a>
+<a id=Shades_Tints_and_Tones></a>
 ### Shades, Tints, and Tones
 
 - **Shades**: The idiom `Lerp3(color, [0, 0, 0], shading)` generates a shade of the given `color` (a mixing of `color`
-  with black).  The parameter `shading` ranges from 0 through 1 (0 means equal to `color` and 1 means equal to black).
+  with black).  The parameter `shading` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to black).
 - **Tints**: The idiom `Lerp3(color, [1, 1, 1], tinting)` generates a tint of the given `color` (a mixing of `color`
-  with white).  The parameter `tinting` ranges from 0 through 1 (0 means equal to `color` and 1 means equal to white).
+  with white).  The parameter `tinting` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to white).
 - **Tones**: The idiom `Lerp3(color, [0.5, 0.5, 0.5], toning)` generates a tone of the given `color` (a mixing of `color`
-  with white).  The parameter `toning` ranges from 0 through 1 (0 means equal to `color` and 1 means equal to gray).
+  with white).  The parameter `toning` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to gray).
 - **Lighten/Darken**: A choice of&mdash;
     - `Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])`, or
     - `HslToRgb(HSLHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`,
@@ -649,7 +654,7 @@ Note that for best results, these techniques need to be carried out with [_linea
 <a id=Color_Intensity_Grayscale></a>
 ### Color Intensity (Grayscale)
 
-Color intensity is a single number, ranging from 0 through 1, indicating how light or dark a color is; 0 means
+Color intensity is a single number, being 0 or greater and 1 or less, indicating how light or dark a color is; 0 means
 black and 1 means white.  Some formulas for color intensity follow:
 
 - **Simple**: `(color[0]+color[1]+color[2])/3.0`.
@@ -664,7 +669,7 @@ In the sections that follow, the method **[`Intensity(color)`](#Color_Intensity_
 Two applications of color intensity are the following:
 - **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Intensity(color), Intensity(color), Intensity(color)]`.
 - **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  For example, if [`Intensity(color)`](#Color_Intensity_Grayscale) is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.
-    - **Note**: In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the _relative luminance_ of a color, as defined in the guidelines<sup>[(4)](#Note4)</sup>; `brighter` is the color with higher relative luminance; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
+    - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the _relative luminance_ of a color, as defined in the guidelines<sup>[(4)](#Note4)</sup>; `brighter` is the color with higher relative luminance; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
 
 <a id=Color_Schemes></a>
 ### Color Schemes
@@ -684,17 +689,40 @@ The following techniques generate new colors that are related to existing colors
 - **HSV Brightness Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary brightness.
 - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary saturation.
 
+<a id=Color_Matrices></a>
+### Color Matrices
+
+A _color matrix_ is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (`color`)
+is transformed with a color matrix (`matrix`) as follows:
+
+    newColor = [
+       color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],
+       color[0]*matrix[1]+color[1]*matrix[4]+color[2]*matrix[5],
+       color[0]*matrix[2]+color[1]*matrix[7]+color[2]*matrix[8]
+    ]
+
+Examples of matrices include:
+
+- **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
+- **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
+ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the
+ upper-case-Y components of the RGB color space's red, green, and blue primaries,
+ respectively (see "[Color Intensity (Grayscale)](#Color_Intensity_Grayscale)")<sup>[(2)](#Note2)</sup>
+ (the source recommends different values for `r`, `g`, and `b` <sup>[(7)](#Note7)</sup>).
+
 <a id=Miscellaneous></a>
 ### Miscellaneous
 
-- **Alpha Blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ ranging from 0 through 1 (0 means equal to `color1` and 1 means equal to `color2`).
+- **Alpha Blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
     - Shading is equivalent to alpha blending one color with black `[0, 0, 0]`.
     - Tinting is equivalent to alpha blending one color with white `[1, 1, 1]`.
     - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
     - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
 - **Average**: Equivalent to alpha blend with `alpha` equal to 0.5: `Lerp3(color1, color2, 0.5)`.
 - **Invert (negative)**: Generate `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`, where `color` is the given color.
-    - **Note**: This is the CMY (cyan-magenta-yellow) version of the RGB color.  The CMY-to-RGB conversion is done in the same way.
+    - **Note:** This is the CMY (cyan-magenta-yellow) version of the RGB color.  The CMY-to-RGB conversion is done in the same way.
+- **Swap blue and red channels**: Generate `[color[2], color[1], color[0]]`.
+- **Alpha compositing**: See the [alpha compositing article on Wikipedia](https://en.wikipedia.org/wiki/Alpha_compositing) for alpha-compositing formulas between two RGBA colors.
 
 <a id=Color_Difference_and_Nearest_Colors></a>
 ## Color Difference and Nearest Colors
@@ -785,9 +813,9 @@ This technique is independent of RGB color space, but see the [note from earlier
 
 There are several methods of finding the kind or kinds of colors that appear most prominently in an image.
 
-One simple way to do so (called _averaging_) is to add the RGB colors of all the pixels in the image (or a sample of those pixels), then divide the result by the number of pixels. (For RGB colors, adding two colors means adding each of their components individually.)  Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
+One simple way to do so (called _averaging_) is to add the RGB colors of all the pixels in the image (or a sample of those pixels), then divide the result by the number of pixels added this way. (For RGB colors, adding two colors means adding each of their components individually.)  Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
-A second, more complicated technique is called [_color quantization_](https://en.wikipedia.org/wiki/Color_quantization), where the colors of the image are reduced to a small set of colors (for example, ten to twenty).  To reduce processing time, some implementations resize the input image to fit no more than a given area of pixels before performing color quantization.  The quantization algorithm is too complicated to discuss in the document, and algorithms to resize images are out of scope for this page. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
+A second, more complicated technique is called [_color quantization_](https://en.wikipedia.org/wiki/Color_quantization), where the colors of the image are reduced to a small set of colors (for example, ten to twenty).  To reduce processing time, some implementations resize the input image to fit no more than a given area of pixels before performing color quantization.  The quantization algorithm is too complicated to discuss in the document, and algorithms to resize or "resample" images are out of scope for this page. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
 A third technique is called _histogram binning_.  To find the dominant colors using this technique (which is independent of color space):
 
@@ -798,7 +826,7 @@ A third technique is called _histogram binning_.  To find the dominant colors us
 
 Again, to reduce processing, the image can be resized before the histogram binning begins.
 
-**Note**: Reducing the number of colors in an image usually involves finding that image's dominant colors and either applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)) or applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique.  However, dithering is outside the scope of this article.
+**Note:** Reducing the number of colors in an image usually involves finding that image's dominant colors and either applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)) or applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique.  However, dithering is outside the scope of this article.
 
 <a id=Color_Mixture></a>
 ## Color Mixture
@@ -815,17 +843,29 @@ can be mixed this way by&mdash;
 
 This algorithm, though, is too complicated to present in this document.
 
-<a id=Color_Topics></a>
-## Color Topics
+<a id=Color_Maps></a>
+## Color Maps
 
-This section discusses miscellaneous topics related to colors.
+A _color map_ is a list of related colors. Note that for best results, each color in a color map needs to be a [_linearized RGB_ color](#sRGB_and_Linearized_RGB) rather than a nonlinearized one, but all the colors in a color map can be in any color space.
+
+- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV):
+
+  list = NewList()
+        i = 0
+  for i < numColors
+       AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
+       i = i + 1
+  end
+
+If each color in a color map has a name associated with it, the color map is also called a [named color list](#Named_Colors).
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
 
-Many applications need to use colors that are easily distinguishable.  In this respect&mdash;
+Color maps can be used to list colors used to identify different items. Because of this
+use, many applications need to use colors that are easily distinguishable.  In this respect&mdash;
 
-- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast", the first nine of which
+- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(7)](#Note7)</sup>, the first nine of which
   were intended for readers with normal and defective color vision, and
 - R. Boynton (1989) revealed a list of "eleven colors that are almost never confused", namely,
   black, white, gray, magenta, pink, red, green, blue, yellow, orange, and brown.
@@ -835,10 +875,10 @@ Any application that needs to distinguish more than 22 items should use other me
 (or rather than color) to help users identify them. (Note that under the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
 color should generally not be the only means to call attention to information.)
 
-The following method can be used to generate a random list of distinguishable colors;
-`numColors` is the number of colors to generate. `MINDIST` is the
+The following method can be used to generate a color map of randomly generated
+distinguishable colors; `numColors` is the number of colors to generate. `MINDIST` is the
 minimum distance between colors that should be attempted; for
-RGB colors in 0-1 format, this value should be 0.2.
+RGB colors in 0-1 format, this value should be about 0.2.
 
     METHOD RandomColorList(numColors)
         list = NewList()
@@ -859,6 +899,11 @@ RGB colors in 0-1 format, this value should be 0.2.
         end
         return list
     END METHOD
+
+<a id=Color_Topics></a>
+## Color Topics
+
+This section discusses miscellaneous topics related to colors.
 
 <a id=Colorblindness></a>
 ### Colorblindness
@@ -913,6 +958,10 @@ Feel free to send comments. They may help improve this page.  In particular, cor
 
 - an 8-digit format, consisting of "#" followed by two base-16 digits each for the red, green, blue, and alpha components, respectively, and
 - a 4-digit format, consisting of "#" followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, "#345F" is the same as "#334455FF" in the 6-digit format).
+
+<sup id=Note7>(7)</sup> An approximation of the colors to nonlinearized sRGB, in order, is (in HTML color format): "#F0F0F1", "#000000", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (except for black) to sRGB using the Python `colour-science` package.
+
+<sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.
 
 <a id=License></a>
 ## License
