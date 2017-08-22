@@ -11,7 +11,7 @@ This document discusses&mdash;
 - several color spaces of practical interest, including conversion methods,
 - how to generate colors with certain properties,
 - color differences,
-- color mixing,
+- color mixing, 
 - color maps, and
 - how to find the dominant colors of an image.
 
@@ -49,22 +49,19 @@ The following are out of the scope of this document:
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
-    - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
+    - [Shades and Tints](#Shades_and_Tints)
     - [Color Intensity (Grayscale)](#Color_Intensity_Grayscale)
     - [Color Schemes](#Color_Schemes)
-    - [Color Matrices](#Color_Matrices)
     - [Miscellaneous](#Miscellaneous)
 - [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
     - [Examples](#Examples)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Mixture](#Color_Mixture)
-- [Color Maps](#Color_Maps)
-    - [Visually Distinct Colors](#Visually_Distinct_Colors)
 - [Color Topics](#Color_Topics)
+    - [Visually Distinct Colors](#Visually_Distinct_Colors)
     - [Colorblindness](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
-- [Conclusion](#Conclusion)
 - [Notes](#Notes)
 - [License](#License)
 
@@ -93,10 +90,11 @@ The utility function&mdash;
 or `value` otherwise, and is equivalent to `clamp` in GLSL;
 - `Clamp3` applies the `Clamp` function separately to each item of a three-element list; here, `value`, `minimum`,
 and `maximum` are each three-element lists;
+- `MeanAngle` finds the average of one or more angles expressed in radians (which is important when averaging HSL or HSV colors, which contain hue components that are angles);
 - `Min3` is the smallest of three numbers; and
 - `Max3` is the largest of three numbers.
 
-**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`,
+**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`, 
 where `FUNC` is an arbitrary function of `x`) can be done to achieve special nonlinear interpolations.
 Detailing such interpolations is outside the scope of this document, but are described in further detail [in this page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
@@ -130,10 +128,23 @@ Detailing such interpolations is outside the scope of this document, but are des
         return v3
     END METHOD
 
+    METHOD MeanAngle(angles)
+        if size(angles)==0: return 0
+        xm=0
+        ym=0
+        i=0
+        while i < size(angles)
+            xm = xm + cos(angles[i])
+            ym = ym + sin(angles[i])
+            i = i + 1
+	end
+	return atan2(ym / size(angles), xm / size(angles))
+    END
+
 <a id=RGB_Colors></a>
 ## RGB Colors
 
-Red-green-blue (RGB) color spaces describe the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.  For many RGB color spaces, this intensity relationship is nonlinear because human color perception is nonlinear.
+Red-green-blue (RGB) color spaces describe, at least theoretically, the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup>  For many RGB color spaces, this intensity relationship is nonlinear because human color perception is nonlinear.
 
 The following details concepts related to RGB color spaces.
 
@@ -265,20 +276,20 @@ characters) to and from the HTML color format or the 3-digit format.
 
     METHOD HexToNum(x)
         hexlist=["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-  hexdown=["a", "b", "c", "d", "e", "f"]
+	hexdown=["a", "b", "c", "d", "e", "f"]
         i = 0
         while i < 16
                 if hexlist[i] == x: return i
                 i = i + 1
         end
-  i = 0
+	i = 0
         while i < 6
                 if hexdown[i] == x: return 10 + i
                 i = i + 1
         end
         return -1
     END METHOD
-
+    
     METHOD ColorToHtml(rgb)
        // NOTE: Upscale method is given earlier in "Integer
        // Component Formats"
@@ -321,19 +332,6 @@ characters) to and from the HTML color format or the 3-digit format.
 
 **Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or the 3-digit format are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
 
-<a id=Named_Colors></a>
-### Named Colors
-
-Certain specific colors can be given specific names, such as "red", "blue", or "orange".  In general, lists of named colors are outside the scope of this article, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](./html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
-
-Converting an RGB color (such as one in 8/8/8 format) to a named color is equivalent to&mdash;
-- retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
-- finding the [nearest color](#Color_Difference_and_Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).
-
-Converting a named color to an RGB color is equivalent to retrieving the RGB color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn't exist in the hash table.
-
-**Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, named colors defined in that module are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
-
 <a id=Color_Spaces></a>
 ## Color Spaces
 
@@ -342,7 +340,9 @@ The following discusses several color spaces of practical interest.
 <a id=sRGB_and_Linearized_RGB></a>
 ### sRGB and Linearized RGB
 
-The _sRGB color space_ is a nonlinear "working space" for describing red-green-blue colors.  Although most RGB working spaces are linearized by _gamma encoding_, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup>[(3)](#Note3)</sup>
+The _sRGB color space_ is a nonlinear "working space" for describing red-green-blue colors and based on the color output of cathode-ray-tube monitors under typical viewing conditions.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)
+
+Although most RGB working spaces are linearized by _gamma encoding_, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup>[(3)](#Note3)</sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term _scRGB_ to refer above all to linearized sRGB colors in the 0-1 format<sup>[(9)](#Note9).)
 
 The following methods linearize and de-linearize sRGB colors.
 
@@ -384,19 +384,19 @@ Note that for best results, the methods given below need to use [_linearized RGB
     METHOD RgbToHsv(rgb)
         mx=Max3(rgb[0],rgb[1],rgb[2])
         mn=Min3(rgb[0],rgb[1],rgb[2])
-        if mx==0 and mn==0: return [0,0,mx]
+        if mx==mn: return [0,0,mx]
         s=(mx-mn)/mx
         h=0
-        if r==max
+        if rgb[0]==mx
                 h=(rgb[1]-rgb[2])/(mx-mn)
-        else if g==max:
+        else if rgb[1]==mx
                 h=2+(rgb[2]-rgb[0])/(mx-mn)
         else
                 h=4+(rgb[0]-rgb[1])/(mx-mn)
         end
         if h < 6: h = 6 - mod(-h, 6)
         if h >= 6: h = mod(h, 6)
-        return [hue * (pi / 3), s, mx]
+        return [h * (pi / 3), s, mx]
     END METHOD
 
     METHOD HsvToRgb(hsv)
@@ -425,7 +425,7 @@ In the rest of this document&mdash;
 - **`HSVSat(color)`** is the HSV saturation component of a color, that is, `RgbToHsv(color)[1]`, and
 - **`HSVVal(color)`** is the HSV brightness or "value" component of a color, that is, `RgbToHsv(color)[2]`.
 
-**Note:**
+**Note:** 
 
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
 
@@ -440,7 +440,7 @@ black or white), which is 0 or greater and 1 or less.
 - A component variously called "lightness", "luminance", or "luminosity", which is roughly the amount
 of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black
  and 1 is white.
-
+ 
 The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.
 Note that for best results, the methods given below need to use [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
 
@@ -518,7 +518,7 @@ In the rest of this document&mdash;
 - **`HSLSat(color)`** is the HSL "saturation" component of a color, that is, `RgbToHsl(color)[1]`, and
 - **`HSLLgt(color)`** is the HSL "lightness" component of a color, that is, `RgbToHsl(color)[2]`.
 
-**Notes:**
+**Notes:** 
 
 - In some applications and specifications, especially where this color space is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
@@ -526,7 +526,7 @@ In the rest of this document&mdash;
 <a id=CIE_L_a_b></a>
 ### CIE L\*a\*b\*
 
-The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*, a color space that is often called a "perceptually uniform" color space, describes every color in nature, and is designed for color comparisons.  In the pseudocode,
+The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*, a color space that describes every color in nature, and is designed for color comparisons.<sup>[(11)](#Note11)</sup>  In the pseudocode,
 the L\*a\*b* color is relative to the D50 illuminant and the 1931 2-degree standard observer.
 
 A color in CIE L\*a\*b\* consists of three components, in the following order:
@@ -592,7 +592,7 @@ A color in CIE L\*a\*b\* consists of three components, in the following order:
         return LinearTosRGB3([r,g,b])
     END METHOD
 
-A color's _chroma_ (or relative colorfulness) can be derived from a L\*a\*b* color
+A color's _chroma_ (or relative colorfulness) can be derived from a L\*a\*b\* color
 with a method demonstrated in the following pseudocode.
 For sRGB, chroma ranges from 0 to about 145.9.  The closer chroma
 is to 0 &mdash; or the closer the point (a\*, b\*) is to the origin (0, 0) &mdash;
@@ -601,8 +601,19 @@ the closer the color is to gray.
     METHOD LabToChroma(lab)
         return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
     END METHOD
+    
+A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness) can be derived from a L\*a\*b\* color
+with a method demonstrated in the following pseudocode.  Saturation is
+0 or greater and less than 1.
 
-A color's _hue_ (an angle in radians) can be derived from a L\*a\*b* color
+    METHOD LabToSaturation(lab)
+        chromasq=lab[1]*lab[1] + lab[2]*lab[2]
+        den=sqrt(lab[0]*lab[0]+chromasq)
+        if den==0: return 0
+        return sqrt(chromasq)/den
+    END METHOD
+
+A color's _hue_ (an angle in radians) can be derived from a L\*a\*b\* color
 with a method demonstrated in the following pseudocode. (Radians
 can be converted to degrees by multiplying by `180 / pi`.)
 
@@ -634,7 +645,7 @@ The following techniques show how existing colors can be modified to create new 
 
 Note that for best results, these techniques need to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB), unless noted otherwise.
 
-<a id=Shades_Tints_and_Tones></a>
+<a id=Shades_and_Tints></a>
 ### Shades, Tints, and Tones
 
 - **Shades**: The idiom `Lerp3(color, [0, 0, 0], shading)` generates a shade of the given `color` (a mixing of `color`
@@ -689,40 +700,62 @@ The following techniques generate new colors that are related to existing colors
 - **HSV Brightness Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary brightness.
 - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary saturation.
 
-<a id=Color_Matrices></a>
 ### Color Matrices
 
 A _color matrix_ is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (`color`)
 is transformed with a color matrix (`matrix`) as follows:
 
-    newColor = [
+    newColor = Clamp3([
        color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],
-       color[0]*matrix[1]+color[1]*matrix[4]+color[2]*matrix[5],
-       color[0]*matrix[2]+color[1]*matrix[7]+color[2]*matrix[8]
-    ]
+       color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],
+       color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8]
+    ], [0,0,0], [1,1,1])
 
 Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
- a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the
- upper-case-Y components of the RGB color space's red, green, and blue primaries,
- respectively (see "[Color Intensity (Grayscale)](#Color_Intensity_Grayscale)")<sup>[(2)](#Note2)</sup>
- (the source recommends different values for `r`, `g`, and `b` <sup>[(7)](#Note7)</sup>).
+ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the 
+ upper-case-Y components of the RGB color space's red, green, and blue primaries, 
+ respectively (see "[Color Intensity (Grayscale)](#Color_Intensity_Grayscale)")<sup>[(2)](#Note2)</sup> 
+ (the source recommends different values for `r`, `g`, and `b` <sup>[(8)](#Note8)</sup>).
+- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(8)](#Note8)</sup>
 
-<a id=Miscellaneous></a>
-### Miscellaneous
+### Alpha Compositing and Blending
 
-- **Alpha Blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
+**General alpha blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
     - Shading is equivalent to alpha blending one color with black `[0, 0, 0]`.
     - Tinting is equivalent to alpha blending one color with white `[1, 1, 1]`.
     - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
     - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
+
+**Porter&ndash;Duff Formulas**: Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors. In the formulas below, it is assumed that the two colors are in the 0-1 format and have been premultiplied (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
+- **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
+- **Source In**: `[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]`.
+- **Source Held Out**: `[src[0]*(1 - dst[3]), src[1]*(1 - dst[3]), src[2]*(1 - dst[3]), src[3]*(1 - dst[3])]`.
+- **Source Atop**: `[dst[0]*src[3] - src[0]*(dst[3] - 1), dst[1]*src[3] - src[1]*(dst[3] - 1), dst[2]*src[3] - src[2]*(dst[3] - 1), src[3]]`.
+- **Destination Over**: `[dst[0] - src[0]*(dst[3] - 1), dst[1] - src[1]*(dst[3] - 1), dst[2] - src[2]*(dst[3] - 1), dst[3] - src[3]*(dst[3] - 1)]`.
+- **Destination In**: `[dst[0]*src[3], dst[1]*src[3], dst[2]*src[3], dst[3]*src[3]]`.  Uses the destination color/alpha with the source alpha as the "mask".
+- **Destination Held Out**: `[dst[0]*(1 - src[3]), dst[1]*(1 - src[3]), dst[2]*(1 - src[3]), dst[3]*(1 - src[3])]`.
+- **Destination Atop**: `[dst[3]*src[0] - dst[0]*(src[3] - 1), dst[3]*src[1] - dst[1]*(src[3] - 1), dst[3]*src[2] - dst[2]*(src[3] - 1), dst[3]]`.
+- **Source**: `src`.
+- **Destination**: `dst`.
+- **Clear**: `[0, 0, 0, 0]`.
+- **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
+
+Other blending modes, such as multiply, darken, and lighten, exist.
+
+<a id=Miscellaneous></a>
+### Miscellaneous
+
 - **Average**: Equivalent to alpha blend with `alpha` equal to 0.5: `Lerp3(color1, color2, 0.5)`.
 - **Invert (negative)**: Generate `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`, where `color` is the given color.
     - **Note:** This is the CMY (cyan-magenta-yellow) version of the RGB color.  The CMY-to-RGB conversion is done in the same way.
+- **Colorize**: Given a desired `color` and a source color `srcColor`, generate
+ `[color[0]*Intensity(srcColor), color[1]*Intensity(srcColor), color[2]*Intensity(srcColor)]`.
 - **Swap blue and red channels**: Generate `[color[2], color[1], color[0]]`.
-- **Alpha compositing**: See the [alpha compositing article on Wikipedia](https://en.wikipedia.org/wiki/Alpha_compositing) for alpha-compositing formulas between two RGBA colors.
+
+**Note:** Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include [_chroma key_](https://en.wikipedia.org/wiki/Chroma_key), are largely out of the scope of this document.
 
 <a id=Color_Difference_and_Nearest_Colors></a>
 ## Color Difference and Nearest Colors
@@ -779,7 +812,7 @@ T. Riemersma suggests an algorithm for color difference to be applied to nonline
 Sorting colors into **color categories** is equivalent to&mdash;
 
 - defining a list of _representative colors_ `repColors` (for example, representative colors for red, blue, black, white, and so on), then
-- for each color (`color`) to be sorted, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`.
+- for each color (`color`) to be sorted, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`).
 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
@@ -826,7 +859,12 @@ A third technique is called _histogram binning_.  To find the dominant colors us
 
 Again, to reduce processing, the image can be resized before the histogram binning begins.
 
-**Note:** Reducing the number of colors in an image usually involves finding that image's dominant colors and either applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)) or applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique.  However, dithering is outside the scope of this article.
+**Notes:**
+
+- Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
+    - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)), or
+    - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
+- Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)
 
 <a id=Color_Mixture></a>
 ## Color Mixture
@@ -843,21 +881,32 @@ can be mixed this way by&mdash;
 
 This algorithm, though, is too complicated to present in this document.
 
-<a id=Color_Maps></a>
-## Color Maps
+## Color Maps and Named Colors
 
 A _color map_ is a list of related colors. Note that for best results, each color in a color map needs to be a [_linearized RGB_ color](#sRGB_and_Linearized_RGB) rather than a nonlinearized one, but all the colors in a color map can be in any color space.
 
-- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV):
+- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV): 
 
-  list = NewList()
-        i = 0
-  for i < numColors
-       AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
-       i = i + 1
-  end
+          list = NewList()
+          i = 0
+          for i < numColors
+	       AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
+	       i = i + 1
+          end
 
-If each color in a color map has a name associated with it, the color map is also called a [named color list](#Named_Colors).
+<a id=Named_Colors></a>
+### Named Colors
+
+If each color in a color map has a name associated with it, the color map is also called a [named color list](#Named_Colors).  Examples of names are "red", "blue", and "orange".  In general, lists of named colors are outside the scope of this document, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](./html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).  Although names are usually associated to RGB colors, the colors can be in any color space.
+
+Converting a color in a given color space (such as an RGB color) to a color name is equivalent to&mdash;
+- retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
+- finding the [nearest color](#Color_Difference_and_Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).
+
+Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn't exist in the hash table.
+
+**Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, named colors defined in that module are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
+
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
@@ -872,11 +921,17 @@ use, many applications need to use colors that are easily distinguishable.  In t
 
 In general, more than 22 colors (the number of colors in Kelly's list) are hard to distinguish from each other.
 Any application that needs to distinguish more than 22 items should use other means in addition to color
-(or rather than color) to help users identify them. (Note that under the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
+(or rather than color) to help users identify them. (Note that under the 
+[Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
 color should generally not be the only means to call attention to information.)
 
+In general, any method that seeks to choose colors that are maximally distant in a particular
+color space (that is, where the smallest color difference, or `COLORDIFF`,
+between them is maximized as much as feasible) can be used to select visually
+distinct colors.  Such colors can be pregenerated or generated at runtime.
+
 The following method can be used to generate a color map of randomly generated
-distinguishable colors; `numColors` is the number of colors to generate. `MINDIST` is the
+distinguishable RGB colors; `numColors` is the number of colors to generate. `MINDIST` is the
 minimum distance between colors that should be attempted; for
 RGB colors in 0-1 format, this value should be about 0.2.
 
@@ -884,6 +939,7 @@ RGB colors in 0-1 format, this value should be about 0.2.
         list = NewList()
         attempts = 0
         while size(list) < numColors
+            // Generate a random RGB color
             color = [RNDU01(), RNDU01(), RNDU01()]
             dist = 0
             j = 0
@@ -910,9 +966,9 @@ This section discusses miscellaneous topics related to colors.
 
 What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more cones in the retina of each eye and affects a small portion of people, usually males.
 
-Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a light stimulus.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly are harder to distinguish (usually greens and reds).
+Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a light stimulus.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly (usually magenta-red and green-cyan hues) are harder to distinguish.
 
-TODO: More to be written.
+However, "effective luminance contrast [that is, [color contrast](#Color_Intensity_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as magenta and red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
 
 <a id=Terminal_Colors></a>
 ### Terminal Colors
@@ -957,11 +1013,17 @@ Feel free to send comments. They may help improve this page.  In particular, cor
 <sup id=Note6>(6)</sup> A [Working Draft](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
 
 - an 8-digit format, consisting of "#" followed by two base-16 digits each for the red, green, blue, and alpha components, respectively, and
-- a 4-digit format, consisting of "#" followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, "#345F" is the same as "#334455FF" in the 6-digit format).
+- a 4-digit format, consisting of "#" followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, "#345F" is the same as "#334455FF" in the 8-digit format).
 
-<sup id=Note7>(7)</sup> An approximation of the colors to nonlinearized sRGB, in order, is (in HTML color format): "#F0F0F1", "#000000", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (except for black) to sRGB using the Python `colour-science` package.
+<sup id=Note7>(7)</sup> An approximation of the colors to nonlinearized sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
-<sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.
+<sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue primaries.
+
+<sup id=Note9>(9)</sup> B. Crow, ["HDR and Color Spaces"](https://blogs.msdn.microsoft.com/billcrow/2007/10/25/hdr-and-color-spaces/).  According to that article, the _scRGB_ color profile was created because "other color profiles ... rel[ied] on unsigned integers" to define colors, and scRGB's floating-point format is supposedly intended to "allow color values that are beyond the gamut limits" of the sRGB color space.
+
+<sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and RGBW color spaces describe, roughly, the intensity of those four dots in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
+
+<sup id=Note11>(11)</sup> Although L\*a\*b\* is also often called a "perceptually uniform" color space, it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <a id=License></a>
 ## License
