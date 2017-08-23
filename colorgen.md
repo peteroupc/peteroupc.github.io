@@ -11,7 +11,7 @@ This document discusses&mdash;
 - several color spaces of practical interest, including conversion methods,
 - how to generate colors with certain properties,
 - color differences,
-- color mixing, 
+- color mixing,
 - color maps, and
 - how to find the dominant colors of an image.
 
@@ -41,7 +41,6 @@ The following are out of the scope of this document:
     - [0-1 Format](#0_1_Format)
     - [Integer Component Formats](#Integer_Component_Formats)
     - [HTML Color Format](#HTML_Color_Format)
-    - [Named Colors](#Named_Colors)
 - [Color Spaces](#Color_Spaces)
     - [sRGB and Linearized RGB](#sRGB_and_Linearized_RGB)
     - [HSV](#HSV)
@@ -49,19 +48,24 @@ The following are out of the scope of this document:
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
-    - [Shades and Tints](#Shades_and_Tints)
+    - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Color Intensity (Grayscale)](#Color_Intensity_Grayscale)
     - [Color Schemes](#Color_Schemes)
+    - [Color Matrices](#Color_Matrices)
+    - [Alpha Compositing and Blending](#Alpha_Compositing_and_Blending)
     - [Miscellaneous](#Miscellaneous)
 - [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
     - [Examples](#Examples)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Mixture](#Color_Mixture)
-- [Color Topics](#Color_Topics)
+- [Color Maps and Named Colors](#Color_Maps_and_Named_Colors)
+    - [Named Colors](#Named_Colors)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
+- [Color Topics](#Color_Topics)
     - [Colorblindness](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
+- [Conclusion](#Conclusion)
 - [Notes](#Notes)
 - [License](#License)
 
@@ -94,7 +98,7 @@ and `maximum` are each three-element lists;
 - `Min3` is the smallest of three numbers; and
 - `Max3` is the largest of three numbers.
 
-**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`, 
+**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`,
 where `FUNC` is an arbitrary function of `x`) can be done to achieve special nonlinear interpolations.
 Detailing such interpolations is outside the scope of this document, but are described in further detail [in this page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
@@ -137,8 +141,8 @@ Detailing such interpolations is outside the scope of this document, but are des
             xm = xm + cos(angles[i])
             ym = ym + sin(angles[i])
             i = i + 1
-	end
-	return atan2(ym / size(angles), xm / size(angles))
+  end
+  return atan2(ym / size(angles), xm / size(angles))
     END
 
 <a id=RGB_Colors></a>
@@ -276,20 +280,20 @@ characters) to and from the HTML color format or the 3-digit format.
 
     METHOD HexToNum(x)
         hexlist=["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"]
-	hexdown=["a", "b", "c", "d", "e", "f"]
+  hexdown=["a", "b", "c", "d", "e", "f"]
         i = 0
         while i < 16
                 if hexlist[i] == x: return i
                 i = i + 1
         end
-	i = 0
+  i = 0
         while i < 6
                 if hexdown[i] == x: return 10 + i
                 i = i + 1
         end
         return -1
     END METHOD
-    
+
     METHOD ColorToHtml(rgb)
        // NOTE: Upscale method is given earlier in "Integer
        // Component Formats"
@@ -425,7 +429,7 @@ In the rest of this document&mdash;
 - **`HSVSat(color)`** is the HSV saturation component of a color, that is, `RgbToHsv(color)[1]`, and
 - **`HSVVal(color)`** is the HSV brightness or "value" component of a color, that is, `RgbToHsv(color)[2]`.
 
-**Note:** 
+**Note:**
 
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
 
@@ -440,7 +444,7 @@ black or white), which is 0 or greater and 1 or less.
 - A component variously called "lightness", "luminance", or "luminosity", which is roughly the amount
 of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black
  and 1 is white.
- 
+
 The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.
 Note that for best results, the methods given below need to use [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
 
@@ -518,7 +522,7 @@ In the rest of this document&mdash;
 - **`HSLSat(color)`** is the HSL "saturation" component of a color, that is, `RgbToHsl(color)[1]`, and
 - **`HSLLgt(color)`** is the HSL "lightness" component of a color, that is, `RgbToHsl(color)[2]`.
 
-**Notes:** 
+**Notes:**
 
 - In some applications and specifications, especially where this color space is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
@@ -601,7 +605,7 @@ the closer the color is to gray.
     METHOD LabToChroma(lab)
         return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
     END METHOD
-    
+
 A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness) can be derived from a L\*a\*b\* color
 with a method demonstrated in the following pseudocode.  Saturation is
 0 or greater and less than 1.
@@ -645,7 +649,7 @@ The following techniques show how existing colors can be modified to create new 
 
 Note that for best results, these techniques need to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB), unless noted otherwise.
 
-<a id=Shades_and_Tints></a>
+<a id=Shades_Tints_and_Tones></a>
 ### Shades, Tints, and Tones
 
 - **Shades**: The idiom `Lerp3(color, [0, 0, 0], shading)` generates a shade of the given `color` (a mixing of `color`
@@ -700,6 +704,7 @@ The following techniques generate new colors that are related to existing colors
 - **HSV Brightness Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary brightness.
 - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary saturation.
 
+<a id=Color_Matrices></a>
 ### Color Matrices
 
 A _color matrix_ is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (`color`)
@@ -715,12 +720,13 @@ Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
- a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the 
- upper-case-Y components of the RGB color space's red, green, and blue primaries, 
- respectively (see "[Color Intensity (Grayscale)](#Color_Intensity_Grayscale)")<sup>[(2)](#Note2)</sup> 
+ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the
+ upper-case-Y components of the RGB color space's red, green, and blue primaries,
+ respectively (see "[Color Intensity (Grayscale)](#Color_Intensity_Grayscale)")<sup>[(2)](#Note2)</sup>
  (the source recommends different values for `r`, `g`, and `b` <sup>[(8)](#Note8)</sup>).
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(8)](#Note8)</sup>
 
+<a id=Alpha_Compositing_and_Blending></a>
 ### Alpha Compositing and Blending
 
 **General alpha blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
@@ -881,17 +887,18 @@ can be mixed this way by&mdash;
 
 This algorithm, though, is too complicated to present in this document.
 
+<a id=Color_Maps_and_Named_Colors></a>
 ## Color Maps and Named Colors
 
 A _color map_ is a list of related colors. Note that for best results, each color in a color map needs to be a [_linearized RGB_ color](#sRGB_and_Linearized_RGB) rather than a nonlinearized one, but all the colors in a color map can be in any color space.
 
-- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV): 
+- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV):
 
           list = NewList()
           i = 0
           for i < numColors
-	       AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
-	       i = i + 1
+         AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
+         i = i + 1
           end
 
 <a id=Named_Colors></a>
@@ -907,7 +914,6 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 
 **Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, named colors defined in that module are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
 
-
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
 
@@ -921,7 +927,7 @@ use, many applications need to use colors that are easily distinguishable.  In t
 
 In general, more than 22 colors (the number of colors in Kelly's list) are hard to distinguish from each other.
 Any application that needs to distinguish more than 22 items should use other means in addition to color
-(or rather than color) to help users identify them. (Note that under the 
+(or rather than color) to help users identify them. (Note that under the
 [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
 color should generally not be the only means to call attention to information.)
 
@@ -994,6 +1000,14 @@ The _color number_ is one of the following, whose RGB color value can vary with 
 ## Conclusion
 
 This page discussed many topics on color that are generally relevant in programming.
+
+If there is interest, the following topics may be discussed in future versions of this document:
+
+- Blending modes.
+- The YCbCr color space.
+    - In particular, clarifications on what RGB color space is to be used in the YCbCr conversion would be appreciated.
+- Getting the RGBA color for a given RGB color on a given RGB background.
+- Spectrum curves to RGB colors.
 
 Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on this page are welcome.
 
