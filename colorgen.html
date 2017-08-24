@@ -59,7 +59,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <ul>
 <li><a href="#0_1_Format">0-1 Format</a></li>
 <li><a href="#Integer_Component_Formats">Integer Component Formats</a></li>
-<li><a href="#HTML_Color_Format">HTML Color Format</a></li>
+<li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
 </ul></li>
 <li><a href="#Color_Spaces">Color Spaces</a>
 
@@ -67,6 +67,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#sRGB_and_Linearized_RGB">sRGB and Linearized RGB</a></li>
 <li><a href="#HSV">HSV</a></li>
 <li><a href="#HSL">HSL</a></li>
+<li><a href="#HWB">HWB</a></li>
 <li><a href="#CIE_L_a_b">CIE L*a*b*</a></li>
 <li><a href="#CMYK">CMYK</a></li>
 </ul></li>
@@ -88,7 +89,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
 <li><a href="#Dominant_Colors_of_an_Image">Dominant Colors of an Image</a></li>
 <li><a href="#Color_Mixture">Color Mixture</a></li>
-<li><a href="#Color_Maps_and_Named_Colors">Color Maps and Named Colors</a>
+<li><a href="#Color_Maps">Color Maps</a>
 
 <ul>
 <li><a href="#Named_Colors">Named Colors</a></li>
@@ -187,8 +188,8 @@ METHOD MeanAngle(angles)
         xm = xm + cos(angles[i])
         ym = ym + sin(angles[i])
         i = i + 1
-end
-return atan2(ym / size(angles), xm / size(angles))
+    end
+    return atan2(ym / size(angles), xm / size(angles))
 END
 </pre>
 
@@ -321,9 +322,9 @@ METHOD From565(rgb, scale)
 END METHOD
 </pre>
 
-<p><a id=HTML_Color_Format></a></p>
+<p><a id=HTML_Related_Color_Formats></a></p>
 
-<h3>HTML Color Format</h3>
+<h3>HTML-Related Color Formats</h3>
 
 <p>A color string in the <em>HTML color format</em> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as a string, consists of&mdash;</p>
 
@@ -351,13 +352,13 @@ END METHOD
 
 METHOD HexToNum(x)
     hexlist=[&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;]
-hexdown=[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
+    hexdown=[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]
     i = 0
     while i &lt; 16
             if hexlist[i] == x: return i
             i = i + 1
     end
-i = 0
+    i = 0
     while i &lt; 6
             if hexdown[i] == x: return 10 + i
             i = i + 1
@@ -457,7 +458,7 @@ END METHOD
 <li><em>Hue</em>, or angle in the color wheel, which is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).</li>
 <li><em>Saturation</em>, the distance of the color from gray and white (but not necessarily from black),
 which is 0 or greater and 1 or less.</li>
-<li>A component variously called &quot;brightness&quot; or &quot;value&quot;, which is the distance of the color from black and is 0 or greater and 1 or less.</li>
+<li>A component variously called &quot;value&quot; or &quot;brightness&quot;, which is the distance of the color from black and is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The following pseudocode converts colors between RGB and HSV. Each RGB color is in 0-1 format.
@@ -527,8 +528,7 @@ END METHOD
 <li>A component called &quot;saturation&quot;, the distance of the color from gray (but not necessarily from
 black or white), which is 0 or greater and 1 or less.</li>
 <li>A component variously called &quot;lightness&quot;, &quot;luminance&quot;, or &quot;luminosity&quot;, which is roughly the amount
-of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black
-and 1 is white.</li>
+of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black, 1 is white, and 0.5 is neither black nor white.</li>
 </ul>
 
 <p>The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.
@@ -618,17 +618,28 @@ END METHOD
 <li>In most applications, hue is in degrees and is 0 or greater and less than 360.</li>
 </ul>
 
+<p><a id=HWB></a></p>
+
+<h3>HWB</h3>
+
+<p>In 1996, the HWB model, which seeks to improve on HSV and HSL, was published (Smith and Lyons 1996).  An HWB color consists, in the following order, of <em>hue</em>, which is the same as in HSV, <em>whiteness</em>, which is the amount of white in the color, and <em>blackness</em>, the amount of black in the color.</p>
+
+<ul>
+<li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), Min3(color[0], color[1], color[2]), 1 - Max3(color[0], color[1], color[2])]</code>.</li>
+<li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[0, 0, 0]</code> otherwise.</li>
+</ul>
+
 <p><a id=CIE_L_a_b></a></p>
 
 <h3>CIE L*a*b*</h3>
 
-<p>The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L*a*b*, a color space that describes every color in nature, and is designed for color comparisons.<sup><a href="#Note11">(11)</a></sup>  In the pseudocode,
+<p>The following pseudocode converts an RGB color between nonlinearized sRGB and CIE L*a*b*, a color space that describes every color in nature and is designed for color comparisons.<sup><a href="#Note11">(11)</a></sup>  In the pseudocode,
 the L*a*b* color is relative to the D50 illuminant and the 1931 2-degree standard observer.</p>
 
 <p>A color in CIE L*a*b* consists of three components, in the following order:</p>
 
 <ul>
-<li>L*, or <em>lightness</em> of a color, ranges from 0 (black) to 100 (white).</li>
+<li>L*, or <em>lightness</em> of a color, ranges from 0 (black) to 100 (white).  The L*a*b* color <code>[100, 0, 0]</code> is the same as the white point of the corresponding illuminant (which is the D50 illuminant in the pseudocode below).</li>
 <li>a* ranges from about -79.2 to about 93.5 for sRGB.</li>
 <li>b* ranges from about -112 to about 93.4 for sRGB.</li>
 </ul>
@@ -695,7 +706,7 @@ END METHOD
 with a method demonstrated in the following pseudocode.
 For sRGB, chroma ranges from 0 to about 145.9.  The closer chroma
 is to 0 &mdash; or the closer the point (a*, b*) is to the origin (0, 0) &mdash;
-the closer the color is to gray.</p>
+the closer the color is to the &quot;gray&quot; line.</p>
 
 <pre>METHOD LabToChroma(lab)
     return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
@@ -950,15 +961,21 @@ END METHOD
    d1=color2[0] - color1[0]
    d2=color2[1] - color1[1]
    d3=color2[2] - color1[2]
-   return sqrt(d1*d1+d2*d2+d3*d3)
+   sqdist=d1*d1+d2*d2+d3*d3
+   return sqrt(sqdist)
 END METHOD
 </pre>
 
-<p>The Euclidean distance can be used, for example, if the colors passed to <code>NearestColorIndex</code>&mdash;</p>
+<p>Note that&mdash;</p>
+
+<ul>
+<li>the Euclidean distance can be used, for example, if the colors passed to <code>NearestColorIndex</code>&mdash;
 
 <ul>
 <li>are expressed in a <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color space</a>, or</li>
-<li>are expressed in CIE L*a*b* (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 Delta-E color difference method, where differences around 2.3 are just noticeable (Mahy et al., 1994).</li>
+<li>are expressed in CIE L*a*b* (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 Delta-E color difference method, where differences around 2.3 are just noticeable (Mahy et al., 1994), and</li>
+</ul></li>
+<li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 
 <p>T. Riemersma suggests an algorithm for color difference to be applied to nonlinearized RGB colors in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
@@ -971,7 +988,7 @@ END METHOD
 
 <ul>
 <li>defining a list of <em>representative colors</em> <code>repColors</code> (for example, representative colors for red, blue, black, white, and so on), then</li>
-<li>for each color (<code>color</code>) to be sorted, finding the nearest color to that color among the representative colors (for example, by calling <code>NearestColorIndex(color, repColors)</code>).</li>
+<li>for each color (<code>color</code>) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling <code>NearestColorIndex(color, repColors)</code>).</li>
 </ul>
 
 <p><a id=Generating_a_Random_Color></a></p>
@@ -1025,7 +1042,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <ul>
 <li>Generate a list of colors that cover the color space well.  This is the <em>color palette</em>. A good example is the list of <a href="./html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">&quot;web-safe colors&quot;</a>.</li>
 <li>Create a list with as many zeros as the number of colors in the palette.  This is the <em>histogram</em>.</li>
-<li>For each pixel in the image, find the <a href="#Nearest_Colors">nearest color</a> in the color palette to that pixel&#39;s color, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
+<li>For each pixel in the image, find the <a href="#Color_Difference_and_Nearest_Colors">nearest color</a> in the color palette to that pixel&#39;s color, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
 <li>Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.</li>
 </ul>
 
@@ -1061,20 +1078,28 @@ takes into account the relative proportions of the colors or pigments in the mix
 
 <p>This algorithm, though, is too complicated to present in this document.</p>
 
-<p><a id=Color_Maps_and_Named_Colors></a></p>
+<p><a id=Color_Maps></a></p>
 
-<h2>Color Maps and Named Colors</h2>
+<h2>Color Maps</h2>
 
 <p>A <em>color map</em> is a list of related colors. Note that for best results, each color in a color map needs to be a <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color</a> rather than a nonlinearized one, but all the colors in a color map can be in any color space.</p>
 
 <ul>
+<li>To extract a <strong>continuous color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>)&mdash;
+
+<ul>
+<li>generate <code>index = (value * (N - 1)) - floor(value * (N - 1))</code>, then</li>
+<li>generate <code>color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)</code>.</li>
+</ul></li>
+<li>To extract a <strong>discrete color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>),
+generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
 <li><p>A <strong>rainbow color map</strong> uses the following colors (<code>numColors</code> in total), defined in the <a href="#HSV">HSV color space</a>:</p>
 
 <pre>  list = NewList()
   i = 0
   for i &lt; numColors
-   AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
-   i = i + 1
+    AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
+    i = i + 1
   end
 </pre></li>
 </ul>
@@ -1135,7 +1160,7 @@ RGB colors in 0-1 format, this value should be about 0.2.</p>
         dist = 0
         j = 0
         while j &lt; size(list)
-            newdist = COLORDIST(list[j], color)
+            newdist = COLORDIFF(list[j], color)
             if newdist &lt; dist or j == 0: newdist = dist
             j = j + 1
         end
@@ -1185,7 +1210,7 @@ END METHOD
 <li>&quot;11&quot; followed by color number: Brighter background color.</li>
 </ul>
 
-<p>The <em>color number</em> is one of the following, whose RGB color value can vary with the implementation: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the ANSI color codes given here.</p>
+<p>The <em>color number</em> is one of the following, whose RGB color value can vary with the implementation: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the ANSI SGR codes given here.</p>
 
 <p><a id=Conclusion></a></p>
 
