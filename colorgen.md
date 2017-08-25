@@ -8,7 +8,7 @@
 This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  In particular, this document discusses&mdash;
 
 - popular formats for red-green-blue (RGB) colors,
-- several color spaces of practical interest, including conversion methods,
+- several color models of practical interest, including conversion methods,
 - how to generate colors with certain properties,
 - color differences,
 - color mixing,
@@ -48,6 +48,7 @@ In general, topics that are specific to a programming language or application-pr
     - [HWB](#HWB)
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
+    - [YCbCr](#YCbCr)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Luminance (Grayscale)](#Luminance_Grayscale)
@@ -83,6 +84,8 @@ In this document:
     - `-pi / 2` if `y < 0 and x == 0`,
     - `pi / 2` if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
+- `min(a, b)` is the smaller of `a` and `b`.
+- `max(a, b)` is the larger of `a` and `b`.
 - The term _RGB_ means red-green-blue.
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
 - The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).
@@ -100,8 +103,8 @@ and `maximum` are each three-element lists;
 - `Min3` is the smallest of three numbers; and
 - `Max3` is the largest of three numbers.
 
-**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(x))`,
-where `FUNC` is an arbitrary function of `x`) can be done to achieve special nonlinear interpolations.
+**Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
+where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.
 Detailing such interpolations is outside the scope of this document, but are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
     METHOD Lerp3(a, b, fac)
@@ -148,14 +151,13 @@ Detailing such interpolations is outside the scope of this document, but are des
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
-A _color model_ describes generally the relationship of colors in a theoretical space.  A _color space_ is a mapping
-from colors to numbers that follows a particular color model.
+A _color model_ describes, in general terms, the relationship of colors in a theoretical space.  A _color space_ is a mapping from colors to numbers that follows a particular color model.
 
-The _Red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup>  The RGB model is a three-dimensional cube with one vertex set to black, another vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
+The _Red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, another vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
 
-For many RGB _color spaces_, the intensity relationship is nonlinear because human color perception is nonlinear.
+In general, _RGB color spaces_ differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their _companding_ conversions (conversions to and from linearized RGB).
 
-The following details concepts related to RGB color spaces.
+The following details concepts related to the RGB color model.
 
 <a id=RGB_Colors_and_the_0_1_Format></a>
 ### RGB Colors and the 0-1 Format
@@ -526,7 +528,7 @@ In the rest of this document&mdash;
 
 **Notes:**
 
-- In some applications and specifications, especially where this color space is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
+- In some applications and specifications, especially where this color model is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
 
 <a id=HWB></a>
@@ -545,7 +547,7 @@ The conversion is relatively simple given HSV conversion methods:
 <a id=CIE_L_a_b></a>
 ### CIE L\*a\*b\*
 
-CIE L\*a\*b\* is a color model that is designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in the model.
+CIE L\*a\*b\* is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, L\*a\*b\* color spaces differ in what they consider white (also called a _reference white point_).
 
 A color in CIE L\*a\*b\* consists of three components, in the following order:
 
@@ -553,12 +555,10 @@ A color in CIE L\*a\*b\* consists of three components, in the following order:
 - a\* ranges from about -79.2 to about 93.5 for sRGB.
 - b\* ranges from about -112 to about 93.4 for sRGB.
 
-A CIE L\*a\*b\* color is determined not just by those three components, but also by a _color matching function_ and by a _reference white point_.
-
 In the following pseudocode, which converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*&mdash;
 - the `SRGBToLab` method convers a nonlinearized sRGB color to CIE L\*a\*b\*,
 - the `SRGBFromLab` method performs the opposite conversion, and
-- the L\*a\*b* color is relative to the CIE 1931 2-degree color matching function and the D65 reference white point (the comments show how to get a L\*a\*b\* color relative to the D50 white point instead).
+- the L\*a\*b* color is relative to the white point determined by the CIE 1931 2-degree color matching function and the D65 illuminant (the comments show how to get a L\*a\*b\* color relative to the D50/2-degree white point instead).
 
 The pseudocode follows.
 
@@ -621,14 +621,14 @@ The pseudocode follows.
         lin=LinearFromsRGB3(rgb)
         // XYZ conversion for D65 reference white.
         xyz=RGBToNormXYZ(lin, [0.4124564, 0.3575761, 0.1804375,
-    0.2126729, 0.7151522, 0.07217499, 0.01933390,
-    0.1191920, 0.9503041], 0.95047, 1.08883)
+          0.2126729, 0.7151522, 0.07217499, 0.01933390,
+          0.1191920, 0.9503041], 0.95047, 1.08883)
         // Note: For an XYZ conversion for the D50 reference white,
         // for use in International Color Consortium (ICC) v2 profiles,
-  // for example, use the following line instead:
+        // for example, use the following line instead:
         // xyz=RGBToNormXYZ(lin, [0.4360747, 0.3850649, 0.1430804,
-  //    0.2225045, 0.7168786, 0.06061694, 0.01393218,
-  //    0.09710454, 0.7141733], 0.96422, 0.82521)
+        //    0.2225045, 0.7168786, 0.06061694, 0.01393218,
+        //    0.09710454, 0.7141733], 0.96422, 0.82521)
         return NormXYZToLab(xyz)
     END METHOD
 
@@ -636,13 +636,13 @@ The pseudocode follows.
         xyz=LabToNormXYZ(lab)
         // XYZ conversion for D65 reference white.
         rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
-    -0.9692660, 1.876011, 0.04155602, 0.05564343,
-    -0.2040259, 1.057225], 0.95047, 1.08883)
+          -0.9692660, 1.876011, 0.04155602, 0.05564343,
+          -0.2040259, 1.057225], 0.95047, 1.08883)
         // Note: For an XYZ conversion for the D50 reference white,
         // for use in ICC v2 profiles, for example, use the following line instead:
         // rgb=NormXYZToRGB(xyz, [3.133856, -1.616867, -0.4906146,
-  //    -0.9787684, 1.916141, 0.03345398, 0.07194529,
-  //    -0.2289914, 1.405243], 0.96422, 0.82521)
+        //    -0.9787684, 1.916141, 0.03345398, 0.07194529,
+        //    -0.2289914, 1.405243], 0.96422, 0.82521)
         return LinearTosRGB3(rgb)
     END METHOD
 
@@ -692,6 +692,74 @@ L\*a\*b* color.  It takes a list of those three elements in that order.
 CMYK is a color model describing the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to RGB, or vice versa, is not trivial, in part because&mdash;
 - the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
 - the meaning of CMYK colors can vary depending on the specific inks used, since different inks have different light reflectances, as well as on the kind of paper that the color will be printed on.<sup>[(5)](#Note5)</sup>
+
+<a id=YCbCr></a>
+### YCbCr
+
+[YCbCr](https://en.wikipedia.org/wiki/YCbCr) is a color model used above all in video encoding.  A color in YCbCr consists of three components in the following order:
+
+- Y&prime;, or _luma_, specifies the brightness of the color, and is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.
+- Cb, or _blue chroma_, is the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
+- Cr, or _red chroma_, is the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
+
+The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8 format with the components separated out. There are three variants shown here, namely&mdash;
+
+- the ITU-R BT.601 variant (for digital standard-definition video), as the `YCbCrToRgb` and `RgbToYCbCr` methods,
+- the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
+- the JPEG variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods,
+
+For all these variants, the transformation should be done using [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB).   For efficiency reasons, however, YCbCr conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods given below.
+
+    METHOD RgbToYCbCr(rgb)
+        y = floor(16.0+rgb[0]*0.25678824+rgb[1]*0.50412941+rgb[2]*0.097905882)
+        cb = floor(128.0-rgb[0]*0.1482229-rgb[1]*0.29099279+rgb[2]*0.43921569)
+        cr = floor(128.0+rgb[0]*0.43921569-rgb[1]*0.36778831-rgb[2]*0.071427373)
+        return [y, cb, cr]
+    END METHOD
+
+    METHOD RgbToYCbCr709(rgb)
+        y = floor(0.06200706*rgb[2] + 0.6142306*rgb[1] + 0.1825859*rgb[0] + 16.0)
+        cb = floor(0.4392157*rgb[2] - 0.338572*rgb[1] - 0.1006437*rgb[0] + 128.0)
+        cr = floor(-0.04027352*rgb[2] - 0.3989422*rgb[1] + 0.4392157*rgb[0] + 128.0)
+        return [y, cb, cr]
+    END METHOD
+
+    METHOD RgbToYCbCrJpeg(rgb)
+        y = floor(0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2])
+        cb = floor(-0.1687359*rgb[0] - 0.3312641*rgb[1] + 0.5*rgb[2] + 128.0)
+        cr = floor(0.5*rgb[0] - 0.4186876*rgb[1] - 0.08131241*rgb[2] + 128.0)
+        return [y, cb, cr]
+    END METHOD
+
+    METHOD YCbCrToRgb(ycbcr)
+        cb = ycbcr[1] - 128
+        cr = ycbcr[2] - 128
+        yp = 1.1643836 * (ycbcr[0] -16)
+        r = yp + 1.5960268 * cr
+        g = yp - 0.39176229 * cb - 0.81296765 * cr
+        b = yp + 2.0172321 * cb
+        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    END METHOD
+
+    METHOD YCbCrToRgb709(ycbcr)
+        cb = ycbcr[1] - 128
+        cr = ycbcr[2] - 128
+        yp = 1.1643836 * (ycbcr[0] -16)
+        r = yp + 1.7927411 * cr
+        g = yp - 0.21324861 * cb - 0.53290933 * cr
+        b = yp + 2.1124018 * cb
+        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    END METHOD
+
+    METHOD YCbCrToRgbJpeg(ycbcr)
+        cb = ycbcr[1] - 128
+        cr = ycbcr[2] - 128
+        yp = ycbcr[0]
+        r = yp + 1.402 * cr
+        g = yp - 0.34413629 * cb - 0.71413629 * cr
+        b = yp + 1.772 * cb
+        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    END METHOD
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -821,7 +889,7 @@ In the pseudocode below:
 
 - The method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.
 - `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) between two colors, where the lower the number, the closer the two colors are.
-- The method `NearestColorIndex` is independent of color space; however, both `color` and each color in `list` must be in the same color space.
+- The method `NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
 
 The pseudocode follows.
 
@@ -908,9 +976,9 @@ One simple way to do so (called _averaging_) is to add all the RGB colors (or a 
 
 A second, more complicated technique is called [_color quantization_](https://en.wikipedia.org/wiki/Color_quantization), where the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
-A third technique is called _histogram binning_.  To find the dominant colors using this technique (which is independent of color space):
+A third technique is called _histogram binning_.  To find the dominant colors using this technique (which is independent of color model):
 
-- Generate a list of colors that cover the color space well.  This is the _color palette_. A good example is the list of ["web-safe colors"](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+- Generate a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of ["web-safe colors"](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
 - For each color in the collection of colors, find the [nearest color](#Color_Difference_and_Nearest_Colors) in the color palette to that pixel's color, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.
@@ -928,7 +996,7 @@ For all three techniques, in the case of a raster image, an implementation can r
 ## Color Mixture
 
 In general, mixing colors in a similar way to mixing paint is not as simple as
-averaging two colors in RGB or other color spaces.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors
+averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors
 can be mixed this way by&mdash;
 
 - finding the _reflectance curves_ of the pigments or colors (a _reflectance curve_ specifies the degree
@@ -949,7 +1017,7 @@ A _color map_ (or _color palette_) is a list of colors (which are usually relate
     - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
 - To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
    generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
-- A **rainbow color map** uses the following colors (`numColors` in total), defined in the [HSV color space](#HSV):
+- A **rainbow color map** uses the following [HSV](#HSV) colors (`numColors` in total):
 
           list = NewList()
           i = 0
@@ -965,7 +1033,7 @@ A _color map_ (or _color palette_) is a list of colors (which are usually relate
 
 If each color in a color map has a name associated with it, the color map is also called a _named color list_.  Examples of names are "red", "blue", and "orange".  In general, lists of named colors are outside the scope of this document, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).  Although names are usually associated with RGB colors, the colors can be in any color space.
 
-Converting a color in a given color space (such as an RGB color) to a color name is equivalent to&mdash;
+Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
 - finding the [nearest color](#Color_Difference_and_Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).
 
@@ -1063,7 +1131,6 @@ This page discussed many topics on color that are generally relevant in programm
 If there is interest, the following topics may be discussed in future versions of this document:
 
 - Blending modes.
-- YCbCr.
 - Getting the RGBA color for a given RGB color on a given RGB background.
 - Spectrum curves to RGB colors.
 
@@ -1077,7 +1144,7 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 
  <sup id=Note1>(1)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A to F can be uppercase or lowercase.
 
-<sup id=Note2>(2)</sup> B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".
+<sup id=Note2>(2)</sup> Working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on RGB working spaces.
 
 <sup id=Note3>(3)</sup> J. Novak, in "[What every coder should know about gamma](http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/)", uses the terms _physically linear_ and _perceptually linear_ to refer to what are called _linearized_ and _nonlinearized_ RGB color spaces, respectively, in this document.
 
@@ -1096,9 +1163,9 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 
 <sup id=Note9>(9)</sup> B. Crow, ["HDR and Color Spaces"](https://blogs.msdn.microsoft.com/billcrow/2007/10/25/hdr-and-color-spaces/).  According to that article, the _scRGB_ color profile was created because "other color profiles ... rel[ied] on unsigned integers" to define colors, and scRGB's floating-point format is supposedly intended to "allow color values that are beyond the gamut limits" of the sRGB color space.
 
-<sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and RGBW color spaces describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
+<sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 
-<sup id=Note11>(11)</sup> Although L\*a\*b\* is also often called a "perceptually uniform" color space, it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
+<sup id=Note11>(11)</sup> Although the L\*a\*b\* color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
