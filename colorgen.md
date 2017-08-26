@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  In particular, this document discusses&mdash;
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.   Many of the topics contain pseudocode that shows their implementation. In particular, this document discusses&mdash;
 
 - popular formats for red-green-blue (RGB) colors,
 - several color models of practical interest, including conversion methods,
@@ -54,7 +54,7 @@ In general, topics that are specific to a programming language or application-pr
     - [Luminance (Grayscale)](#Luminance_Grayscale)
     - [Color Schemes](#Color_Schemes)
     - [Color Matrices](#Color_Matrices)
-    - [Alpha Compositing and Blending](#Alpha_Compositing_and_Blending)
+    - [Blending and Alpha Compositing](#Blending_and_Alpha_Compositing)
     - [Miscellaneous](#Miscellaneous)
 - [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
     - [Examples](#Examples)
@@ -93,7 +93,7 @@ In this document:
 <a id=Utility_Functions></a>
 ### Utility Functions
 
-The utility function&mdash;
+In the pseudocode below, the utility function&mdash;
 - `Lerp3`, returns a blended form of two lists of three numbers (`list1` and `list2`); here, `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`, and `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language);
 - `Clamp` returns `minimum` if the given value is less than `minimum`, `maximum` if greater than `maximum`,
 or `value` otherwise, and is equivalent to `clamp` in GLSL;
@@ -153,7 +153,7 @@ Detailing such interpolations is outside the scope of this document, but are des
 
 A _color model_ describes, in general terms, the relationship of colors in a theoretical space.  A _color space_ is a mapping from colors to numbers that follows a particular color model.
 
-The _Red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, another vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
+The _red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, another vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
 
 In general, _RGB color spaces_ differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their _companding_ conversions (conversions to and from linearized RGB).
 
@@ -696,11 +696,11 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 <a id=YCbCr></a>
 ### YCbCr
 
-[YCbCr](https://en.wikipedia.org/wiki/YCbCr) is a color model used above all in video encoding.  A color in YCbCr consists of three components in the following order:
+[YCbCr](https://en.wikipedia.org/wiki/YCbCr) (also known as Y&prime;CbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in YCbCr consists of three components in the following order:
 
 - Y&prime;, or _luma_, specifies the brightness of the color, and is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.
-- Cb, or _blue chroma_, is the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
-- Cr, or _red chroma_, is the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
+- Cb, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
+- Cr, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
 The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8 format with the components separated out. There are three variants shown here, namely&mdash;
 
@@ -844,14 +844,15 @@ Examples of matrices include:
  (the source recommends different values for `r`, `g`, and `b` <sup>[(8)](#Note8)</sup>).
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(8)](#Note8)</sup>
 
-<a id=Alpha_Compositing_and_Blending></a>
-### Alpha Compositing and Blending
+<a id=Blending_and_Alpha_Compositing></a>
+### Blending and Alpha Compositing
 
 **General alpha blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
-    - Shading is equivalent to alpha blending one color with black `[0, 0, 0]`.
-    - Tinting is equivalent to alpha blending one color with white `[1, 1, 1]`.
-    - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
-    - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
+- Shading is equivalent to alpha blending one color with black `[0, 0, 0]`.
+- Tinting is equivalent to alpha blending one color with white `[1, 1, 1]`.
+- Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
+- Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
+- Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
 
 **Porter&ndash;Duff Formulas**: Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors. In the formulas below, it is assumed that the two colors are in the 0-1 format and have been premultiplied (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
 - **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
@@ -867,12 +868,22 @@ Examples of matrices include:
 - **Clear**: `[0, 0, 0, 0]`.
 - **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
 
-Other blending modes, such as multiply, darken, and lighten, exist.
+**Blend Modes**: Blend modes take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
+
+- **Normal**: `src`.
+- **Lighten**: `max(src, dst)`.
+- **Darken**: `min(src, dst)`.
+- **Add**: `min(1.0, src + dst)`.
+- **Subtract**: `max(0.0, src - dst)`.
+- **Multiply**: `(src + dst)`.
+- **Screen**: `1 - (1 - dst) * (1 - src)`.
+- **Average**: `(src + dst) * 0.5`.
+- **Difference**: `abs(src - dst)`.
+- **Exclusion**: `src - 2 * src * dst + dst`.
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
 
-- **Average**: Equivalent to alpha blend with `alpha` equal to 0.5: `Lerp3(color1, color2, 0.5)`.
 - **Invert (negative)**: Generate `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`, where `color` is the given color.<sup>[(12)](#Note12)</sup>
 - **Colorize**: Given a desired `color` and a source color `srcColor`, generate
  `[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]`.
@@ -1130,7 +1141,6 @@ This page discussed many topics on color that are generally relevant in programm
 
 If there is interest, the following topics may be discussed in future versions of this document:
 
-- Blending modes.
 - Getting the RGBA color for a given RGB color on a given RGB background.
 - Spectrum curves to RGB colors.
 
