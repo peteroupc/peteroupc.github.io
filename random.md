@@ -21,6 +21,9 @@ Then, this page will explain what programming language APIs implement statistica
 
 Finally, this page will discuss issues on shuffling with an RNG.
 
+Note that a discussion on how to test an RNG implementation for adequate random number
+generation is outside the scope of this document.
+
 <a id=Summary></a>
 ### Summary
 
@@ -427,4 +430,4 @@ Comments on any aspect of the document are welcome, but answers to the following
 <a id=License></a>
 ## License
 
-This page is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/).
+This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).
