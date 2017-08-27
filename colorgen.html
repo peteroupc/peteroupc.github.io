@@ -89,13 +89,19 @@ programming interface, document format, or plotting or charting technology.</p><
 </ul></li>
 <li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
 <li><a href="#Dominant_Colors_of_an_Image">Dominant Colors of an Image</a></li>
-<li><a href="#Color_Mixture">Color Mixture</a></li>
 <li><a href="#Color_Maps">Color Maps</a>
 
 <ul>
 <li><a href="#Named_Colors">Named Colors</a></li>
 <li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
 </ul></li>
+<li><a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a>
+
+<ul>
+<li><a href="#Spectral_Power_Distributions">Spectral Power Distributions</a></li>
+<li><a href="#Reflectance">Reflectance</a></li>
+</ul></li>
+<li><a href="#Color_Mixture">Color Mixture</a></li>
 <li><a href="#Other_Color_Topics">Other Color Topics</a>
 
 <ul>
@@ -120,7 +126,8 @@ programming interface, document format, or plotting or charting technology.</p><
 
 <ul>
 <li>the inverse tangent of <code>y/x</code> if <code>x &gt; 0</code>,</li>
-<li>&pi; plus the inverse tangent of <code>y/x</code> if <code>x &lt; 0</code>,</li>
+<li>&pi; plus the inverse tangent of <code>y/x</code> if <code>y &gt;= 0 and x &lt; 0</code>,</li>
+<li>-&pi; plus the inverse tangent of <code>y/x</code> if <code>y &lt; 0 and x &lt; 0</code>,</li>
 <li><code>-pi / 2</code> if <code>y &lt; 0 and x == 0</code>,</li>
 <li><code>pi / 2</code> if <code>y &gt; 0 and x == 0</code>, and</li>
 <li>0 if <code>y == 0 and x == 0</code>.</li>
@@ -128,6 +135,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><code>min(a, b)</code> is the smaller of <code>a</code> and <code>b</code>.</li>
 <li><code>max(a, b)</code> is the larger of <code>a</code> and <code>b</code>.</li>
 <li>The term <em>RGB</em> means red-green-blue.</li>
+<li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
 <li>The term <em>linearized</em> refers to RGB colors with a linear relationship of emitted light (rather than perceived light).</li>
 <li>The term <em>nonlinearized</em> or <em>companded</em> refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).</li>
 </ul>
@@ -542,7 +550,7 @@ of black or white mixed with the color and which is 0 or greater and 1 or less, 
     vmax = Max3(rgb[0], rgb[1], rgb[2])
     vmin = Min3(rgb[0], rgb[1], rgb[2])
     vadd = vmax + vmin
-    // NOTE: Lightness is the midpoint between
+    // NOTE: &quot;Lightness&quot; is the midpoint between
     // the greatest and least RGB component
     lt = vadd / 2.0
     if vmax==vmin: return [0, 0, lt]
@@ -650,17 +658,17 @@ END METHOD
 <p>A color in CIE L*a*b* consists of three components, in the following order:</p>
 
 <ul>
-<li>L*, or <em>lightness</em> of a color, ranges from 0 (black) to 100 (white).  The L*a*b* color <code>[100, 0, 0]</code> is the same as the reference white point (such as the D50 or D65 reference white point).</li>
+<li>L*, or <em>lightness</em> of a color, ranges from 0 (black) to 100 (white).  The L*a*b* color <code>[100, 0, 0]</code> is the same as the reference white point.</li>
 <li>a* ranges from about -79.2 to about 93.5 for sRGB.</li>
 <li>b* ranges from about -112 to about 93.4 for sRGB.</li>
 </ul>
 
-<p>In the following pseudocode, which converts an RGB color between nonlinearized sRGB and CIE L*a*b*&mdash;</p>
+<p>In the following pseudocode, which converts a color between nonlinearized sRGB and CIE L*a*b*&mdash;</p>
 
 <ul>
 <li>the <code>SRGBToLab</code> method convers a nonlinearized sRGB color to CIE L*a*b*,</li>
 <li>the <code>SRGBFromLab</code> method performs the opposite conversion, and</li>
-<li>the L*a*b* color is relative to the white point determined by the CIE 1931 2-degree color matching function and the D65 illuminant (the comments show how to get a L*a*b* color relative to the D50/2-degree white point instead).</li>
+<li>the L*a*b* color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a L*a*b* color relative to the D50/2-degree white point instead).</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -776,7 +784,8 @@ END METHOD
 
 <p>A color&#39;s <em>hue</em> (an angle in radians) can be derived from a L*a*b* color
 with a method demonstrated in the following pseudocode. (Radians
-can be converted to degrees by multiplying by <code>180 / pi</code>.)</p>
+can be converted to degrees by multiplying by <code>180 / pi</code>.)  Hue is 0 or greater
+and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to magenta to red)</p>
 
 <pre>METHOD LabToHSLHue(lab)
     h = atan2(lab[2], lab[1])
@@ -906,6 +915,8 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</p></li>
+<li><strong>Lighten/Darken (L*a*b*)</strong>: If <code>color</code> is a nonlinearized sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a dark
+generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</li>
 <li><strong>Lighten/Darken (L*a*b*)</strong>: If <code>color</code> is a nonlinearized sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a darker version.</li>
 <li><strong>Saturate/Desaturate</strong>: Generate <code>hsv = RgbToHsv(color)</code>, then generate <code>modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 </ul>
@@ -914,18 +925,13 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 
 <h3>Luminance (Grayscale)</h3>
 
-<p>Luminance is a single number, being 0 or greater and 1 or less, indicating how light or dark a color is; 0 means
-black and 1 means white.  Some formulas for luminance follow:</p>
+<p>Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; 0 means
+black and 1 means white.  Luminance is equivalent to the Y-axis in the CIE&#39;s <em>XYZ color model</em>. For <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color spaces</a>, luminance can be found by calculating <code>(color[0] * r +color[1] * g + color[2] * b)</code>,
+where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (luminances) of the RGB color space&#39;s red, green, and blue
+points, respectively.<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note13">(13)</a></sup> An example follows for sRGB:</p>
 
 <ul>
-<li><strong>Simple</strong>: <code>(color[0]+color[1]+color[2])/3.0</code>.</li>
-<li><strong>HSL &quot;Lightness&quot;</strong>: <code>0.5 * (Min3(color[0], color[1], color[2]) + Max3(color[0], color[1], color[2]))</code>
-(see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
-<li><strong>CIE Y</strong>: <code>(color[0] * r +color[1] * g + color[2] * b)</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components of the RGB color space&#39;s red, green, and blue primaries, respectively<sup><a href="#Note2">(2)</a></sup>.  The following is a special case of this:
-
-<ul>
-<li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y primaries<sup><a href="#Note2">(2)</a></sup>).</li>
-</ul></li>
+<li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y values of red/green/blue<sup><a href="#Note2">(2)</a></sup>).</li>
 </ul>
 
 <p>In the sections that follow, the method <strong><a href="#Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the luminance of the color <code>color</code>.</p>
@@ -1022,7 +1028,7 @@ respectively (see &quot;<a href="#Luminance_Grayscale">Luminance (Grayscale)</a>
 <li><strong>Xor</strong>: <code>[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]</code>.</li>
 </ul>
 
-<p><strong>Blend Modes</strong>: Blend modes take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, <code>src</code> is one component of the source color, <code>dst</code> is the same component of the destination color (for example, <code>src</code> and <code>dst</code> can both be two RGB colors&#39; red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.</p>
+<p><strong>Blend Modes</strong>: <a href="https://en.wikipedia.org/wiki/Blend_modes">Blend modes</a> take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, <code>src</code> is one component of the source color, <code>dst</code> is the same component of the destination color (for example, <code>src</code> and <code>dst</code> can both be two RGB colors&#39; red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.</p>
 
 <ul>
 <li><strong>Normal</strong>: <code>src</code>.</li>
@@ -1194,24 +1200,6 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)</li>
 </ul>
 
-<p><a id=Color_Mixture></a></p>
-
-<h2>Color Mixture</h2>
-
-<p>In general, mixing colors in a similar way to mixing paint is not as simple as
-averaging two colors in an RGB color space or another color space.  In a <a href="http://scottburns.us/subtractive-color-mixture/">Web article</a>, Scott A. Burns (who uses the term <em>subtractive color mixture</em> for this kind of mixing) indicates that two pigments or colors
-can be mixed this way by&mdash;</p>
-
-<ul>
-<li>finding the <em>reflectance curves</em> of the pigments or colors (a <em>reflectance curve</em> specifies the degree
-to which a pigment or color reflects light at each point of the visible spectrum),</li>
-<li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
-takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.</li>
-</ul>
-
-<p>This algorithm, though, is too complicated to present in this document.</p>
-
 <p><a id=Color_Maps></a></p>
 
 <h2>Color Maps</h2>
@@ -1308,6 +1296,146 @@ RGB colors in 0-1 format, this value should be about 0.2.</p>
 END METHOD
 </pre>
 
+<p><a id=Colors_as_Spectral_Functions></a></p>
+
+<h2>Colors as Spectral Functions</h2>
+
+<p>Colors can also be represented as functions that describe the power or reflectance of a light or object at each
+wavelength of the visible spectrum, as this section describes further.</p>
+
+<p><a id=Spectral_Power_Distributions></a></p>
+
+<h3>Spectral Power Distributions</h3>
+
+<p>A source of white or colored light is described by a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by an SPD and then integrated, give the three coordinates of the light&#39;s color in the <em>XYZ color model</em>.
+(Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although SPDs and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</p>
+
+<p>In the pseudocode below&mdash;</p>
+
+<ul>
+<li><code>SPD(wavelength)</code> is an arbitrary function returning the spectral power of the light source at <code>wavelength</code>,</li>
+<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z coordinates, respectively, of the color matching functions at <code>wavelength</code>,</li>
+<li><code>SpectrumToXYZ</code> computes the XYZ color of the light source using the <code>SPD</code> and <code>CMF</code> functions,</li>
+<li><code>SpectrumTosRGB</code> computes the nonlinearized sRGB color of the light source,</li>
+<li><code>XYZTosRGB</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, and</li>
+<li><code>WavelengthTosRGB</code> computes the nonlinearized sRGB color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
+</ul>
+
+<p>The pseudocode follows.</p>
+
+<pre>METHOD SpectrumToXYZ()
+    i = 380 # Start of visible spectrum
+    xyz=[0,0,0]
+    while i &lt;= 780 # End of visible spectrum
+             cmf=CMF(i)
+             spec=SPD(i)
+             xyz[0]=xyz[0]+spec*cmf[0]
+             xyz[1]=xyz[1]+spec*cmf[1]
+             xyz[2]=xyz[2]+spec*cmf[2]
+             i = i + 5
+    end
+    return xyz
+END METHOD
+
+METHOD XYZTosRGB(xyz)
+    rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
+      -0.9692660, 1.876011, 0.04155602, 0.05564343,
+      -0.2040259, 1.057225], 1, 1)
+    return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+END METHOD
+
+METHOD WavelengthTosRGB(wavelength)
+    return XYZTosRGB(CMF(wavelength))
+END METHOD
+
+METHOD SpectrumTosRGB()
+    return XYZTosRGB(SpectrumToXYZ())
+END METHOD
+</pre>
+
+<p>There are various choices for the <code>CMF</code> function.  One of the most popular is the CIE 1931 2-degree standard observer, of which the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  This
+standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+
+<p><a id=Reflectance></a></p>
+
+<h3>Reflectance</h3>
+
+<p>Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light source from which an object reflects light is called an <em>illuminant</em>, and finding an object&#39;s color requires knowing its reflectance curve, the illuminant&#39;s SPD, and the color matching functions in use.  The pseudocode below demonstrates converting a reflectance curve to the corresponding XYZ color, where:</p>
+
+<ul>
+<li><code>REFL(wavelength)</code> is an arbitrary function returning the object&#39;s reflectance at <code>wavelength</code>.</li>
+<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <a href="#Spectral_Power_Distributions">spectral power</a> of the illuminant at <code>wavelength</code>.  There are various choices for the illuminant <code>ILLUM</code>, one of which is the D65 illuminant, the same illuminant used in the sRGB color space. The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> of the D65 illuminant at its Web site.</li>
+</ul>
+
+<p>The pseudocode follows.</p>
+
+<pre>METHOD ReflectanceToXYZ()
+    i = 380 # Start of visible spectrum
+    xyz=[0,0,0]
+    weight = 0
+    while i &lt;= 780 # End of visible spectrum
+             cmf=CMF(i)
+             refl=REFL(i)
+             spec=ILLUM(i)
+             weight=weight+cmf[1]*spec
+             xyz[0]=xyz[0]+refl*spec*cmf[0]
+             xyz[1]=xyz[1]+refl*spec*cmf[1]
+             xyz[2]=xyz[2]+refl*spec*cmf[2]
+             i = i + 5
+    end
+    // NOTE: Note that `weight` is constant for a given
+    // set of illuminant and color matching functions, so
+    // that `weight` can be precomputed if both will
+    // not change.        For example, `weight` is
+    // about 2113.454 for the D65 illuminant and
+    // the CIE 1931 standard observer together,
+    // both of which are used by sRGB.
+    xyz[0] = xyz[0] / weight
+    xyz[1] = xyz[1] / weight
+    xyz[2] = xyz[2] / weight
+    return xyz
+END METHOD
+</pre>
+
+<p><a id=Color_Mixture></a></p>
+
+<h2>Color Mixture</h2>
+
+<p>In general, mixing colors in a similar way to mixing paint is not as simple as
+averaging two colors in an RGB color space or another color space.  In a <a href="http://scottburns.us/subtractive-color-mixture/">Web article</a>, Scott A. Burns (who uses the term <em>subtractive color mixture</em> for this kind of mixing) indicates that two pigments or colors
+can be mixed this way by&mdash;</p>
+
+<ul>
+<li>finding the <em>reflectance curves</em> of the pigments or colors,</li>
+<li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
+takes into account the relative proportions of the colors or pigments in the mixture, and</li>
+<li><a href="#Reflectance">converting</a> the mixed reflectance curve to an RGB color.</li>
+</ul>
+
+<p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
+
+<pre>METHOD WGM(values, weights)
+    if size(values)!=size(weights): return error
+    if size(values)==0: return values[0]
+    sum=0
+    i=0
+    while i &lt; size(weights)
+      sum=sum+weights[i]
+      i=i+1
+    end
+    if sum&lt;=0: return error
+    ret=1
+    while i &lt; size(values)
+      ret=ret*pow(values[i],weights[i]/sum)
+      i=i+1
+    end
+    return ret
+END METHOD
+</pre>
+
+<p>When computing the weighted geometric mean of several reflectance curves, all the numbers
+passed at once to the <code>WGM</code> function just given must be from the same wavelength.</p>
+
 <p><a id=Other_Color_Topics></a></p>
 
 <h2>Other Color Topics</h2>
@@ -1353,13 +1481,6 @@ END METHOD
 
 <p>This page discussed many topics on color that are generally relevant in programming.</p>
 
-<p>If there is interest, the following topics may be discussed in future versions of this document:</p>
-
-<ul>
-<li>Getting the RGBA color for a given RGB color on a given RGB background.</li>
-<li>Spectrum curves to RGB colors.</li>
-</ul>
-
 <p>Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on
 this page are welcome.</p>
 
@@ -1397,6 +1518,8 @@ this page are welcome.</p>
 <p><sup id=Note11>(11)</sup> Although the L*a*b* color model is also often called &quot;perceptually uniform&quot;, it wasn&#39;t designed that way, according to <a href="http://www.brucelindbloom.com/index.html?UPLab.html">B. Lindbloom</a>.</p>
 
 <p><sup id=Note12>(12)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
+
+<p><sup id=Note13>(13)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (<code>(color[0]+color[1]+color[2])/3.0</code>) or using the <a href="#HSL">HSL</a> &quot;lightness&quot; as the luminance (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>.</p>
 
 <p><a id=License></a></p>
 

@@ -110,7 +110,6 @@ In this document:
 * `mod(a, b)` is the remainder when `a` is divided by `b`.
 * The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
-* The `&` operator in the pseudocode is a bitwise AND operator between two integers. Although the `&` operator is not always equivalent to `mod(a, b + 1)`, where `a` is the left-hand side and `b` is the right-hand side, all uses of the `&` operator in the pseudocode effectively have that meaning, so that the form with `mod` can be used in programming languages without a built-in AND operator.
 * The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant digits in the format). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
@@ -189,10 +188,10 @@ Note that all the variables in this method are unsigned integers.
         // maxInclusive equals maximum
         if maxInclusive == MODULUS - 1: return RNG()
         // Special cases
-        if maxInclusive == 1: return RNG() & 1
-        if maxInclusive == 3 and MODBITS >= 2: return RNG() & 3
-        if maxInclusive == 255 and MODBITS >= 8: return RNG() & 255
-        if maxInclusive == 65535 and MODBITS >=16: return RNG() & 65535
+        if maxInclusive == 1: return mod(RNG(), 2)
+        if maxInclusive == 3 and MODBITS >= 2: return mod(RNG(), 4)
+        if maxInclusive == 255 and MODBITS >= 8: return mod(RNG(), 256)
+        if maxInclusive == 65535 and MODBITS >=16: return mod(RNG(), 65535)
         if maxInclusive > MODULUS - 1:
             // Calculate the bit count of maxInclusive
             bitCount = 0
@@ -214,8 +213,10 @@ Note that all the variables in this method are unsigned integers.
                          if wordBits > bitCount
                             wordBits = bitCount
                             // Truncate number to 'wordBits' bits
-                            rngNumber = rngNumber & (
-                               (1 << wordBits) - 1)
+          // NOTE: If the programming language supports a bitwise
+          // AND operator, the mod operation can be implemented
+          // as "rndNumber AND ((1 << wordBits) - 1)"
+                            rngNumber = mod(rngNumber, (1 << wordBits))
                          end
                          tempnumber = tempnumber << wordBits
                          // NOTE: In programming languages that
@@ -1549,4 +1550,4 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 <a id=License></a>
 ## License
 
-This page is licensed under [A Public Domain dedication](http://creativecommons.org/licenses/publicdomain/).
+This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).

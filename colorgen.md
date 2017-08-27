@@ -60,10 +60,13 @@ In general, topics that are specific to a programming language or application-pr
     - [Examples](#Examples)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
-- [Color Mixture](#Color_Mixture)
 - [Color Maps](#Color_Maps)
     - [Named Colors](#Named_Colors)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
+- [Colors as Spectral Functions](#Colors_as_Spectral_Functions)
+    - [Spectral Power Distributions](#Spectral_Power_Distributions)
+    - [Reflectance](#Reflectance)
+- [Color Mixture](#Color_Mixture)
 - [Other Color Topics](#Other_Color_Topics)
     - [Colorblindness](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
@@ -80,13 +83,15 @@ In this document:
 - `RNDNUMRANGE`, `RNDU01`, and `RNDINT` are as defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
 - `atan2(y, x)` is&mdash;
     - the inverse tangent of `y/x` if `x > 0`,
-    - &pi; plus the inverse tangent of `y/x` if `x < 0`,
+    - &pi; plus the inverse tangent of `y/x` if `y >= 0 and x < 0`,
+    - -&pi; plus the inverse tangent of `y/x` if `y < 0 and x < 0`,
     - `-pi / 2` if `y < 0 and x == 0`,
     - `pi / 2` if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
 - `min(a, b)` is the smaller of `a` and `b`.
 - `max(a, b)` is the larger of `a` and `b`.
 - The term _RGB_ means red-green-blue.
+- The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
 - The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).
 
@@ -456,7 +461,7 @@ The following pseudocode converts colors between RGB and HSL. Each RGB color is 
         vmax = Max3(rgb[0], rgb[1], rgb[2])
         vmin = Min3(rgb[0], rgb[1], rgb[2])
         vadd = vmax + vmin
-        // NOTE: Lightness is the midpoint between
+        // NOTE: "Lightness" is the midpoint between
         // the greatest and least RGB component
         lt = vadd / 2.0
         if vmax==vmin: return [0, 0, lt]
@@ -551,14 +556,14 @@ CIE L\*a\*b\* is a color model designed for color comparisons.<sup>[(11)](#Note1
 
 A color in CIE L\*a\*b\* consists of three components, in the following order:
 
-- L\*, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The L\*a\*b\* color `[100, 0, 0]` is the same as the reference white point (such as the D50 or D65 reference white point).
+- L\*, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The L\*a\*b\* color `[100, 0, 0]` is the same as the reference white point.
 - a\* ranges from about -79.2 to about 93.5 for sRGB.
 - b\* ranges from about -112 to about 93.4 for sRGB.
 
-In the following pseudocode, which converts an RGB color between nonlinearized sRGB and CIE L\*a\*b\*&mdash;
+In the following pseudocode, which converts a color between nonlinearized sRGB and CIE L\*a\*b\*&mdash;
 - the `SRGBToLab` method convers a nonlinearized sRGB color to CIE L\*a\*b\*,
 - the `SRGBFromLab` method performs the opposite conversion, and
-- the L\*a\*b* color is relative to the white point determined by the CIE 1931 2-degree color matching function and the D65 illuminant (the comments show how to get a L\*a\*b\* color relative to the D50/2-degree white point instead).
+- the L\*a\*b* color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a L\*a\*b\* color relative to the D50/2-degree white point instead).
 
 The pseudocode follows.
 
@@ -670,7 +675,8 @@ is to 0, the closer the color is to the "gray" line.
 
 A color's _hue_ (an angle in radians) can be derived from a L\*a\*b\* color
 with a method demonstrated in the following pseudocode. (Radians
-can be converted to degrees by multiplying by `180 / pi`.)
+can be converted to degrees by multiplying by `180 / pi`.)  Hue is 0 or greater
+and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to magenta to red)
 
     METHOD LabToHSLHue(lab)
         h = atan2(lab[2], lab[1])
@@ -782,20 +788,20 @@ Note that for best results, these techniques need to be carried out with [_linea
     - `HslToRgb(HSLHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`,
 
     generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative.
+- **Lighten/Darken (L\*a\*b\*)**: If `color` is a nonlinearized sRGB color, generate `lab = SRGBToLab(color)`, then generate `modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])`, where a positive `value` generates a lighter version of `color` and a negative `value`, a dark
+    generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative.
 - **Lighten/Darken (L\*a\*b\*)**: If `color` is a nonlinearized sRGB color, generate `lab = SRGBToLab(color)`, then generate `modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])`, where a positive `value` generates a lighter version of `color` and a negative `value`, a darker version.
 - **Saturate/Desaturate**: Generate `hsv = RgbToHsv(color)`, then generate `modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)
 
 <a id=Luminance_Grayscale></a>
 ### Luminance (Grayscale)
 
-Luminance is a single number, being 0 or greater and 1 or less, indicating how light or dark a color is; 0 means
-black and 1 means white.  Some formulas for luminance follow:
+Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; 0 means
+black and 1 means white.  Luminance is equivalent to the Y-axis in the CIE's _XYZ color model_. For [_linearized RGB_ color spaces](#sRGB_and_Linearized_RGB), luminance can be found by calculating `(color[0] * r +color[1] * g + color[2] * b)`,
+where `r`, `g`, and `b` are the upper-case-Y components (luminances) of the RGB color space's red, green, and blue
+points, respectively.<sup>[(2)](#Note2)</sup><sup>[(13)](#Note13)</sup> An example follows for sRGB:
 
-- **Simple**: `(color[0]+color[1]+color[2])/3.0`.
-- **HSL "Lightness"**: `0.5 * (Min3(color[0], color[1], color[2]) + Max3(color[0], color[1], color[2]))`
-   (see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
-- **CIE Y**: `(color[0] * r +color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components of the RGB color space's red, green, and blue primaries, respectively<sup>[(2)](#Note2)</sup>.  The following is a special case of this:
-    - **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y primaries<sup>[(2)](#Note2)</sup>).
+- **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y values of red/green/blue<sup>[(2)](#Note2)</sup>).
 
 In the sections that follow, the method **[`Luminance(color)`](#Luminance_Grayscale)** returns the luminance of the color `color`.
 
@@ -868,7 +874,7 @@ Examples of matrices include:
 - **Clear**: `[0, 0, 0, 0]`.
 - **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
 
-**Blend Modes**: Blend modes take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
+**Blend Modes**: [Blend modes](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
 
 - **Normal**: `src`.
 - **Lighten**: `max(src, dst)`.
@@ -1003,21 +1009,6 @@ For all three techniques, in the case of a raster image, an implementation can r
     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)
 
-<a id=Color_Mixture></a>
-## Color Mixture
-
-In general, mixing colors in a similar way to mixing paint is not as simple as
-averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors
-can be mixed this way by&mdash;
-
-- finding the _reflectance curves_ of the pigments or colors (a _reflectance curve_ specifies the degree
-   to which a pigment or color reflects light at each point of the visible spectrum),
-- generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
-  takes into account the relative proportions of the colors or pigments in the mixture, and
-- converting the mixed reflectance curve to an RGB color.
-
-This algorithm, though, is too complicated to present in this document.
-
 <a id=Color_Maps></a>
 ## Color Maps
 
@@ -1100,6 +1091,133 @@ RGB colors in 0-1 format, this value should be about 0.2.
         return list
     END METHOD
 
+<a id=Colors_as_Spectral_Functions></a>
+## Colors as Spectral Functions
+
+Colors can also be represented as functions that describe the power or reflectance of a light or object at each
+wavelength of the visible spectrum, as this section describes further.
+
+<a id=Spectral_Power_Distributions></a>
+### Spectral Power Distributions
+
+A source of white or colored light is described by a _spectral power distribution_ (SPD), a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three _color matching functions_, which, when multiplied by an SPD and then integrated, give the three coordinates of the light's color in the _XYZ color model_.
+(Here, the Y coordinate of an XYZ color is also called [_luminance_](#Luminance_Grayscale).) Although SPDs and color matching functions are continuous functions, in practice the "integration" is done by sampling at discrete wavelengths.
+
+In the pseudocode below&mdash;
+
+- `SPD(wavelength)` is an arbitrary function returning the spectral power of the light source at `wavelength`,
+- `CMF(wavelength)` is an arbitrary function returning a three-item list containing the X, Y, and Z coordinates, respectively, of the color matching functions at `wavelength`,
+- `SpectrumToXYZ` computes the XYZ color of the light source using the `SPD` and `CMF` functions,
+- `SpectrumTosRGB` computes the nonlinearized sRGB color of the light source,
+- `XYZTosRGB` converts an XYZ color (`xyz`) to nonlinearized sRGB, and
+- `WavelengthTosRGB` computes the nonlinearized sRGB color of a light source that emits light only at the wavelength `wavelength`.
+
+The pseudocode follows.
+
+    METHOD SpectrumToXYZ()
+        i = 380 # Start of visible spectrum
+        xyz=[0,0,0]
+        while i <= 780 # End of visible spectrum
+                 cmf=CMF(i)
+                 spec=SPD(i)
+                 xyz[0]=xyz[0]+spec*cmf[0]
+                 xyz[1]=xyz[1]+spec*cmf[1]
+                 xyz[2]=xyz[2]+spec*cmf[2]
+                 i = i + 5
+        end
+        return xyz
+    END METHOD
+
+    METHOD XYZTosRGB(xyz)
+        rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
+          -0.9692660, 1.876011, 0.04155602, 0.05564343,
+          -0.2040259, 1.057225], 1, 1)
+        return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+    END METHOD
+
+    METHOD WavelengthTosRGB(wavelength)
+        return XYZTosRGB(CMF(wavelength))
+    END METHOD
+
+    METHOD SpectrumTosRGB()
+        return XYZTosRGB(SpectrumToXYZ())
+    END METHOD
+
+There are various choices for the `CMF` function.  One of the most popular is the CIE 1931 2-degree standard observer, of which the CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) at its Web site.  This
+standard observer can also be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+
+<a id=Reflectance></a>
+### Reflectance
+
+Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light source from which an object reflects light is called an _illuminant_, and finding an object's color requires knowing its reflectance curve, the illuminant's SPD, and the color matching functions in use.  The pseudocode below demonstrates converting a reflectance curve to the corresponding XYZ color, where:
+
+- `REFL(wavelength)` is an arbitrary function returning the object's reflectance at `wavelength`.
+- `ILLUM(wavelength)` is an arbitrary function returning the [spectral power](#Spectral_Power_Distributions) of the illuminant at `wavelength`.  There are various choices for the illuminant `ILLUM`, one of which is the D65 illuminant, the same illuminant used in the sRGB color space. The CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) of the D65 illuminant at its Web site.
+
+The pseudocode follows.
+
+    METHOD ReflectanceToXYZ()
+        i = 380 # Start of visible spectrum
+        xyz=[0,0,0]
+        weight = 0
+        while i <= 780 # End of visible spectrum
+                 cmf=CMF(i)
+                 refl=REFL(i)
+                 spec=ILLUM(i)
+                 weight=weight+cmf[1]*spec
+                 xyz[0]=xyz[0]+refl*spec*cmf[0]
+                 xyz[1]=xyz[1]+refl*spec*cmf[1]
+                 xyz[2]=xyz[2]+refl*spec*cmf[2]
+                 i = i + 5
+        end
+        // NOTE: Note that `weight` is constant for a given
+        // set of illuminant and color matching functions, so
+        // that `weight` can be precomputed if both will
+        // not change.        For example, `weight` is
+        // about 2113.454 for the D65 illuminant and
+        // the CIE 1931 standard observer together,
+        // both of which are used by sRGB.
+        xyz[0] = xyz[0] / weight
+        xyz[1] = xyz[1] / weight
+        xyz[2] = xyz[2] / weight
+        return xyz
+    END METHOD
+
+<a id=Color_Mixture></a>
+## Color Mixture
+
+In general, mixing colors in a similar way to mixing paint is not as simple as
+averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors
+can be mixed this way by&mdash;
+
+- finding the _reflectance curves_ of the pigments or colors,
+- generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
+  takes into account the relative proportions of the colors or pigments in the mixture, and
+- [converting](#Reflectance) the mixed reflectance curve to an RGB color.
+
+For convenience, computing the weighted geometric mean of one or more numbers is given below.
+
+    METHOD WGM(values, weights)
+        if size(values)!=size(weights): return error
+        if size(values)==0: return values[0]
+        sum=0
+        i=0
+        while i < size(weights)
+          sum=sum+weights[i]
+          i=i+1
+        end
+        if sum<=0: return error
+        ret=1
+        while i < size(values)
+          ret=ret*pow(values[i],weights[i]/sum)
+          i=i+1
+        end
+        return ret
+    END METHOD
+
+When computing the weighted geometric mean of several reflectance curves, all the numbers
+passed at once to the `WGM` function just given must be from the same wavelength.
+
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
 
@@ -1139,11 +1257,6 @@ The _color number_ is one of the following, whose RGB color value can vary with 
 
 This page discussed many topics on color that are generally relevant in programming.
 
-If there is interest, the following topics may be discussed in future versions of this document:
-
-- Getting the RGBA color for a given RGB color on a given RGB background.
-- Spectrum curves to RGB colors.
-
 Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on
 this page are welcome.
 
@@ -1178,6 +1291,8 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 <sup id=Note11>(11)</sup> Although the L\*a\*b\* color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+
+<sup id=Note13>(13)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (`(color[0]+color[1]+color[2])/3.0`) or using the [HSL](#HSL) "lightness" as the luminance (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/).
 
 <a id=License></a>
 ## License
