@@ -96,12 +96,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Named_Colors">Named Colors</a></li>
 <li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
 </ul></li>
-<li><a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a>
-
-<ul>
-<li><a href="#Spectral_Power_Distributions">Spectral Power Distributions</a></li>
-<li><a href="#Reflectance">Reflectance</a></li>
-</ul></li>
+<li><a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a></li>
 <li><a href="#Color_Mixture">Color Mixture</a></li>
 <li><a href="#Other_Color_Topics">Other Color Topics</a>
 
@@ -210,7 +205,7 @@ END
 
 <p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space.  A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.</p>
 
-<p>The <em>red-green-blue (RGB) color model</em> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, another vertex set to white, and the remaining vertices set to what are called the &quot;additive primaries&quot; red, green, and blue, and the &quot;subtractive primaries&quot; cyan, yellow, and magenta.</p>
+<p>The <em>red-green-blue (RGB) color model</em> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to what are called the &quot;additive primaries&quot; red, green, and blue, and the &quot;subtractive primaries&quot; cyan, yellow, and magenta.</p>
 
 <p>In general, <em>RGB color spaces</em> differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their <em>companding</em> conversions (conversions to and from linearized RGB).</p>
 
@@ -427,9 +422,9 @@ END METHOD
 
 <h3>sRGB and Linearized RGB</h3>
 
-<p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>. The <em>sRGB color space</em> is a nonlinear &quot;working space&quot; for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB">sRGB proposal</a>.)</p>
+<p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>. The <em>sRGB color space</em> is a nonlinear &quot;working space&quot; for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB">sRGB proposal</a>.)<sup><a href="#Note2">(2)</a></sup></p>
 
-<p>Although most RGB working spaces are linearized by <em>gamma encoding</em>, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup><a href="#Note3">(3)</a></sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term <em>scRGB</em> to refer above all to linearized sRGB colors in the 0-1 format<sup><a href="#Note9">(9)</a></sup>.)</p>
+<p>Although most RGB working spaces are linearized by <em>gamma decoding</em>, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup><a href="#Note3">(3)</a></sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term <em>scRGB</em> to refer above all to linearized sRGB colors in the 0-1 format<sup><a href="#Note9">(9)</a></sup>.)</p>
 
 <p>The following methods linearize and de-linearize sRGB colors.</p>
 
@@ -827,6 +822,9 @@ END METHOD
 <li>Cr, or <em>red chroma</em>, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.</li>
 </ul>
 
+<p>Note that a thorough survey of the various ways in which YCbCr data has been encoded is outside
+the scope of this document.</p>
+
 <p>The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
 
@@ -936,10 +934,11 @@ points, respectively.<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note13">(
 
 <p>In the sections that follow, the method <strong><a href="#Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the luminance of the color <code>color</code>.</p>
 
-<p>Two applications of luminance are the following:</p>
+<p>Applications of luminance include the following:</p>
 
 <ul>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
+<li><strong>Black and White.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
 <li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.
 
 <ul>
@@ -1303,7 +1302,7 @@ RGB colors in 0-1 format, this value should be about 0.2.</p>
         end
         if dist &gt; MINDIST or size(list) == 0 or attempts &gt; 500
            AddItem(list, color)
-     attempts=0
+           attempts=0
         end
     end
     return list
@@ -1314,42 +1313,58 @@ END METHOD
 
 <h2>Colors as Spectral Functions</h2>
 
-<p>Colors can also be represented as functions that describe a light source&#39;s power or an object&#39;s reflectance at each
-wavelength of the visible spectrum, as this section describes further.</p>
-
-<p><a id=Spectral_Power_Distributions></a></p>
-
-<h3>Spectral Power Distributions</h3>
-
-<p>A source of white or colored light is described by a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by an SPD and then integrated, give the three coordinates of the light&#39;s color in the <em>XYZ color model</em>.
-(Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although SPDs and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</p>
-
-<p>In the pseudocode below&mdash;</p>
+<p>Colors can also be represented as functions that describe a color sensation at each
+wavelength of the visible spectrum.  There are two cases of objects that provoke such a color sensation:</p>
 
 <ul>
-<li><code>SPD(wavelength)</code> is an arbitrary function returning the spectral power of the light source at <code>wavelength</code>,</li>
-<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the color matching functions at <code>wavelength</code>,</li>
-<li><code>SpectrumToXYZ</code> computes the XYZ color of the light source using the <code>SPD</code> and <code>CMF</code> functions,</li>
-<li><code>SpectrumTosRGB</code> computes the nonlinearized sRGB color of the light source,</li>
-<li><code>XYZTosRGB</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, and</li>
-<li><code>WavelengthTosRGB</code> computes the nonlinearized sRGB color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
+<li><strong>Light sources.</strong> A source of white or colored light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <em>XYZ color model</em>. (Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
+<li><strong>Reflective objects.</strong> Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light received by the object is called an <em>illuminant</em>, and finding an object&#39;s perceived color requires knowing its reflectance curve, the illuminant&#39;s spectral power distribution, and the color matching functions in use.</li>
 </ul>
+
+<p>In the pseudocode below:</p>
+
+<ul>
+<li><code>REFL(wavelength)</code> is an arbitrary function returning&mdash;
+
+<ul>
+<li>the <strong>object&#39;s reflectance</strong> at <code>wavelength</code> (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less), or</li>
+<li>the number 1 at every wavelength, if a reflective object is not being modeled.</li>
+</ul></li>
+<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <strong>relative spectral power of the light source or illuminant</strong> at <code>wavelength</code>.</li>
+<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the <strong>color matching functions</strong> at <code>wavelength</code>.</li>
+<li><code>SpectrumToXYZ</code> computes, in XYZ form, the color perceived from a reflective object or a light source.</li>
+<li><code>SpectrumTosRGB</code> computes, in nonlinearized sRGB, the perceived color of the light source.</li>
+<li><code>XYZTosRGB</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB.</li>
+<li><code>WavelengthTosRGB</code> computes, in nonlinearized sRGB, the perceived sRGB color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
+</ul>
+
+<p>There are various choices for the <code>ILLUM</code> and <code>CMF</code> functions.  Popular choices include the D65 illuminant and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the <a href="#sRGB_and_Linearized_RGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
 <p>The pseudocode follows.</p>
 
 <pre>METHOD SpectrumToXYZ()
     i = 360 # Start of visible spectrum
     xyz=[0,0,0]
+    weight = 0
     while i &lt;= 830 # End of visible spectrum
              cmf=CMF(i)
-             spec=SPD(i)
-             xyz[0]=xyz[0]+spec*cmf[0]
-             xyz[1]=xyz[1]+spec*cmf[1]
-             xyz[2]=xyz[2]+spec*cmf[2]
+             refl=REFL(i)
+             spec=ILLUM(i)
+             weight=weight+cmf[1]*spec*5
+             xyz[0]=xyz[0]+refl*spec*cmf[0]*5
+             xyz[1]=xyz[1]+refl*spec*cmf[1]*5
+             xyz[2]=xyz[2]+refl*spec*cmf[2]*5
              i = i + 5
     end
-    sum=xyz[0]+xyz[1]+xyz[2]
-    return [xyz[0]/sum,xyz[1]/sum,xyz[2]/sum]
+    if weight==0: return xyz
+    // NOTE: Note that `weight` is constant for a given
+    // color matching function set and illuminant together,
+    // so that `weight` can be precomputed if they will
+    // not change.
+    xyz[0] = xyz[0] / weight
+    xyz[1] = xyz[1] / weight
+    xyz[2] = xyz[2] / weight
+    return xyz
 END METHOD
 
 METHOD XYZTosRGB(xyz)
@@ -1368,48 +1383,6 @@ METHOD SpectrumTosRGB()
 END METHOD
 </pre>
 
-<p>There are various choices for the <code>CMF</code> function.  One of the most popular is the CIE 1931 2-degree standard observer, of which the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  This
-standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
-
-<p><a id=Reflectance></a></p>
-
-<h3>Reflectance</h3>
-
-<p>Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light received by the object is called an <em>illuminant</em>, and finding an object&#39;s color requires knowing its reflectance curve, the illuminant&#39;s SPD, and the color matching functions in use.  The pseudocode below demonstrates converting a reflectance curve to the corresponding XYZ color, where:</p>
-
-<ul>
-<li><code>REFL(wavelength)</code> is an arbitrary function returning the object&#39;s reflectance at <code>wavelength</code>.  The reflectance is 0 or greater and usually no greater than 1.</li>
-<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <a href="#Spectral_Power_Distributions">spectral power</a> of the illuminant at <code>wavelength</code>.  There are various choices for the illuminant <code>ILLUM</code>, one of which is the D65 illuminant, the same illuminant used in the sRGB color space. The CIE&#39;s Web site includes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> of the D65 illuminant.</li>
-</ul>
-
-<p>The pseudocode follows.</p>
-
-<pre>METHOD ReflectanceToXYZ()
-    i = 360 # Start of visible spectrum
-    xyz=[0,0,0]
-    weight = 0
-    while i &lt;= 830 # End of visible spectrum
-             cmf=CMF(i)
-             refl=REFL(i)
-             spec=ILLUM(i)
-             weight=weight+cmf[1]*spec
-             xyz[0]=xyz[0]+refl*spec*cmf[0]
-             xyz[1]=xyz[1]+refl*spec*cmf[1]
-             xyz[2]=xyz[2]+refl*spec*cmf[2]
-             i = i + 5
-    end
-    // NOTE: Note that `weight` is constant for a given
-    // set of illuminant and color matching functions, so
-    // that `weight` can be precomputed if both will
-    // not change.
-    xyz[0] = xyz[0] / weight
-    xyz[1] = xyz[1] / weight
-    xyz[2] = xyz[2] / weight
-    sum=xyz[0]+xyz[1]+xyz[2]
-    return [xyz[0]/sum,xyz[1]/sum,xyz[2]/sum]
-END METHOD
-</pre>
-
 <p><a id=Color_Mixture></a></p>
 
 <h2>Color Mixture</h2>
@@ -1419,10 +1392,10 @@ averaging two colors in an RGB color space or another color space.  In a <a href
 can be mixed this way by&mdash;</p>
 
 <ul>
-<li>finding the <em>reflectance curves</em> of the pigments or colors,</li>
+<li>finding the <a href="#Colors_as_Spectral_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li><a href="#Reflectance">converting</a> the mixed reflectance curve to an RGB color.</li>
+<li>converting the mixed reflectance curve to an RGB color.</li>
 </ul>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
@@ -1505,7 +1478,7 @@ this page are welcome.</p>
 
 <p><sup id=Note1>(1)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A to F can be uppercase or lowercase.</p>
 
-<p><sup id=Note2>(2)</sup> Working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html">RGB Working Space Information</a>&quot;, contains further information on RGB working spaces.</p>
+<p><sup id=Note2>(2)</sup> RGB working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html">RGB Working Space Information</a>&quot;, contains further information on RGB working spaces.</p>
 
 <p><sup id=Note3>(3)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>nonlinearized</em> RGB color spaces, respectively, in this document.</p>
 
@@ -1532,7 +1505,7 @@ this page are welcome.</p>
 
 <p><sup id=Note12>(12)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
 
-<p><sup id=Note13>(13)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (<code>(color[0]+color[1]+color[2])/3.0</code>) or using the <a href="#HSL">HSL</a> &quot;lightness&quot; as the luminance (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>.</p>
+<p><sup id=Note13>(13)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (<code>(color[0]+color[1]+color[2])/3.0</code>) or using the <a href="#HSL">HSL</a> &quot;lightness&quot; as the luminance (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</p>
 
 <p><a id=License></a></p>
 

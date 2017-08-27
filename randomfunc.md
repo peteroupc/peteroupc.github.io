@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 19, 2017.
+Begun on June 4, 2017; last updated on Aug. 27, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -601,7 +601,7 @@ The second step is to build a new string whose characters are chosen from that c
 <a id=Choosing_Several_Unique_Items></a>
 ### Choosing Several Unique Items
 
-Often, the need arises to choose `k` unique items or values from among `n` available items or values.  (This is also known as _sampling without replacement_.) The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether `n` is known and how big it is:
+Often, the need arises to choose `k` unique items or values from among `n` available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether `n` is known and how big `n` and `k` are:
 
 - **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 
@@ -641,29 +641,37 @@ Often, the need arises to choose `k` unique items or values from among `n` avail
            Shuffle(list)
            return list
         end
+- **If items are to be chosen in order:**
+    - **If `n` is relatively small,** then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):
+
+            METHOD RandomKItemsInOrder(list, k)
+               i = 0
+               kk = k
+               ret = NewList()
+               n = size(list)
+               while i  < n and size(ret) < k
+                 u = RNDINTEXC(n - i)
+                 if u <= kk
+                  AddItem(ret, list[i])
+                  kk = kk - 1
+                 end
+                 i = i + 1
+              end
+              return ret
+            END METHOD
+
+    - **If `n` is relatively large,** see the item "If `n` is relatively large", later.
 - **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Do one of the following:
     - Store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
-    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or items corresponding to those indices) from the latter list.
-- **If `n` is relatively small and items are to be chosen in order**, then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):
-
-        METHOD RandomKItemsInOrder(list, k)
-           i = 0
-           kk = k
-           ret = NewList()
-           n = size(list)
-           while i  < n and size(ret) < k
-             u = RNDINTEXC(n - i)
-             if u <= kk
-              AddItem(ret, list[i])
-              kk = kk - 1
-             end
-             i = i + 1
-          end
-          return ret
-        END METHOD
-
+    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
+- **If `k` is much smaller than `n` and the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[Shuffling](#Shuffling), except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
+- **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
+    - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
+    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
 - **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).  If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.
+
+Choosing several unique items as just described is also known as _sampling without replacement_.
 
 <a id=Almost_Random_Sampling></a>
 ### Almost-Random Sampling
