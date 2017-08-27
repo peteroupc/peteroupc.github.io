@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Aug. 19, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Aug. 27, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.</p>
 
@@ -715,7 +715,7 @@ end
 
 <h3>Choosing Several Unique Items</h3>
 
-<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values.  (This is also known as <em>sampling without replacement</em>.) The following assumes that each item has an equal chance of being chosen.  There are several techniques for doing this depending on whether <code>n</code> is known and how big it is:</p>
+<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether <code>n</code> is known and how big <code>n</code> and <code>k</code> are:</p>
 
 <ul>
 <li><p><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.</p>
@@ -757,14 +757,10 @@ end
    return list
 end
 </pre></li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Do one of the following:
+<li><p><strong>If items are to be chosen in order:</strong></p>
 
 <ul>
-<li>Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, then choose the first <code>k</code> items from that list.</li>
-<li>If the items are already stored in a list and the list&#39;s order can be changed, then shuffle that list and choose the first <code>k</code> items from the shuffled list.</li>
-<li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or items corresponding to those indices) from the latter list.</li>
-</ul></li>
-<li><p><strong>If <code>n</code> is relatively small and items are to be chosen in order</strong>, then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):</p>
+<li><p><strong>If <code>n</code> is relatively small,</strong> then the following pseudocode can be used (based on a technique presented in Devroye 1986, p. 620):</p>
 
 <pre>METHOD RandomKItemsInOrder(list, k)
    i = 0
@@ -782,8 +778,26 @@ end
   return ret
 END METHOD
 </pre></li>
-<li><p><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table">hash table</a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see also <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>).  If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red&ndash;black tree</a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.</p></li>
+<li><p><strong>If <code>n</code> is relatively large,</strong> see the item &quot;If <code>n</code> is relatively large&quot;, later.</p></li>
+</ul></li>
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong> Do one of the following:
+
+<ul>
+<li>Store all the items in a list, <a href="#Shuffling">shuffle</a> that list, then choose the first <code>k</code> items from that list.</li>
+<li>If the items are already stored in a list and the list&#39;s order can be changed, then shuffle that list and choose the first <code>k</code> items from the shuffled list.</li>
+<li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or the items corresponding to those indices) from the latter list.</li>
+</ul></li>
+<li><strong>If <code>k</code> is much smaller than <code>n</code> and the items are stored in a list whose order can be changed:</strong> Do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.  A <em>partial shuffle</em> proceeds as given in the section &quot;<a href="#Shuffling">Shuffling</a>, except the partial shuffle stops after <code>k</code> swaps have been made (where swapping one item with itself counts as a swap).</li>
+<li><strong>If <code>k</code> is much smaller than <code>n</code> and <code>n</code> is not very large (for example, less than 5000):</strong> Do one of the following:
+
+<ul>
+<li>Store all the items in a list, do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.</li>
+<li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, do a <em>partial shuffle</em> of the latter list, then choose the <em>last</em> <code>k</code> indices (or the items corresponding to those indices) from the latter list.</li>
+</ul></li>
+<li><strong>If <code>n</code> is relatively large (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is a greater power of 2):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table">hash table</a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way.  This technique can also be used for relatively small <code>n</code>, if some of the items have a higher probability of being chosen than others (see also <a href="#Discrete_Weighted_Choice">Discrete Weighted Choice</a>).  If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">red&ndash;black tree</a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.</li>
 </ul>
+
+<p>Choosing several unique items as just described is also known as <em>sampling without replacement</em>.</p>
 
 <p><a id=Almost_Random_Sampling></a></p>
 
