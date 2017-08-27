@@ -150,7 +150,6 @@ of them.</p>
 <li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>.</li>
 <li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
 <li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
-<li>The <code>&amp;</code> operator in the pseudocode is a bitwise AND operator between two integers. Although the <code>&amp;</code> operator is not always equivalent to <code>mod(a, b + 1)</code>, where <code>a</code> is the left-hand side and <code>b</code> is the right-hand side, all uses of the <code>&amp;</code> operator in the pseudocode effectively have that meaning, so that the form with <code>mod</code> can be used in programming languages without a built-in AND operator.</li>
 <li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant digits in the format). For example&mdash;
 
 <ul>
@@ -243,10 +242,10 @@ END METHOD
     // maxInclusive equals maximum
     if maxInclusive == MODULUS - 1: return RNG()
     // Special cases
-    if maxInclusive == 1: return RNG() &amp; 1
-    if maxInclusive == 3 and MODBITS &gt;= 2: return RNG() &amp; 3
-    if maxInclusive == 255 and MODBITS &gt;= 8: return RNG() &amp; 255
-    if maxInclusive == 65535 and MODBITS &gt;=16: return RNG() &amp; 65535
+    if maxInclusive == 1: return mod(RNG(), 2)
+    if maxInclusive == 3 and MODBITS &gt;= 2: return mod(RNG(), 4)
+    if maxInclusive == 255 and MODBITS &gt;= 8: return mod(RNG(), 256)
+    if maxInclusive == 65535 and MODBITS &gt;=16: return mod(RNG(), 65535)
     if maxInclusive &gt; MODULUS - 1:
         // Calculate the bit count of maxInclusive
         bitCount = 0
@@ -268,8 +267,10 @@ END METHOD
                      if wordBits &gt; bitCount
                         wordBits = bitCount
                         // Truncate number to &#39;wordBits&#39; bits
-                        rngNumber = rngNumber &amp; (
-                           (1 &lt;&lt; wordBits) - 1)
+      // NOTE: If the programming language supports a bitwise
+      // AND operator, the mod operation can be implemented
+      // as &quot;rndNumber AND ((1 &lt;&lt; wordBits) - 1)&quot;
+                        rngNumber = mod(rngNumber, (1 &lt;&lt; wordBits))
                      end
                      tempnumber = tempnumber &lt;&lt; wordBits
                      // NOTE: In programming languages that
@@ -1763,7 +1764,7 @@ from random number generators.</p>
 
 <h2>License</h2>
 
-<p>This page is licensed under <a href="http://creativecommons.org/licenses/publicdomain/">A Public Domain dedication</a>.</p>
+<p>This page is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero</a>.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
