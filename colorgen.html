@@ -18,8 +18,9 @@
 <li>how to generate colors with certain properties,</li>
 <li>color differences,</li>
 <li>color mixing,</li>
-<li>color maps, and</li>
-<li>how to find the dominant colors of an image.</li>
+<li>color maps,</li>
+<li>how to find the dominant colors of an image, and</li>
+<li>colors as spectral functions.</li>
 </ul>
 
 <p>In general, topics that are specific to a programming language or application-programming interface are out of the scope of this document.  Moreover, the following topics are beyond this page&#39;s scope:</p>
@@ -428,7 +429,7 @@ END METHOD
 
 <p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>. The <em>sRGB color space</em> is a nonlinear &quot;working space&quot; for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB">sRGB proposal</a>.)</p>
 
-<p>Although most RGB working spaces are linearized by <em>gamma encoding</em>, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup><a href="#Note3">(3)</a></sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term <em>scRGB</em> to refer above all to linearized sRGB colors in the 0-1 format<sup><a href="#Note9">(9)</a>.)</p>
+<p>Although most RGB working spaces are linearized by <em>gamma encoding</em>, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup><a href="#Note3">(3)</a></sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term <em>scRGB</em> to refer above all to linearized sRGB colors in the 0-1 format<sup><a href="#Note9">(9)</a></sup>.)</p>
 
 <p>The following methods linearize and de-linearize sRGB colors.</p>
 
@@ -465,7 +466,7 @@ END METHOD
 
 <h3>HSV</h3>
 
-<p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a>  (also known as HSB), is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:</p>
+<p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a>  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:</p>
 
 <ul>
 <li><em>Hue</em>, or angle in the color wheel, is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).</li>
@@ -826,7 +827,8 @@ END METHOD
 <li>Cr, or <em>red chroma</em>, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8 format with the components separated out. There are three variants shown here, namely&mdash;</p>
+<p>The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8
+format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
 
 <ul>
 <li>the ITU-R BT.601 variant (for digital standard-definition video), as the <code>YCbCrToRgb</code> and <code>RgbToYCbCr</code> methods,</li>
@@ -860,7 +862,7 @@ END METHOD
 METHOD YCbCrToRgb(ycbcr)
     cb = ycbcr[1] - 128
     cr = ycbcr[2] - 128
-    yp = 1.1643836 * (ycbcr[0] -16)
+    yp = 1.1643836 * (ycbcr[0] - 16)
     r = yp + 1.5960268 * cr
     g = yp - 0.39176229 * cb - 0.81296765 * cr
     b = yp + 2.0172321 * cb
@@ -870,7 +872,7 @@ END METHOD
 METHOD YCbCrToRgb709(ycbcr)
     cb = ycbcr[1] - 128
     cr = ycbcr[2] - 128
-    yp = 1.1643836 * (ycbcr[0] -16)
+    yp = 1.1643836 * (ycbcr[0] - 16)
     r = yp + 1.7927411 * cr
     g = yp - 0.21324861 * cb - 0.53290933 * cr
     b = yp + 2.1124018 * cb
@@ -915,8 +917,6 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</p></li>
-<li><strong>Lighten/Darken (L*a*b*)</strong>: If <code>color</code> is a nonlinearized sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a dark
-generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</li>
 <li><strong>Lighten/Darken (L*a*b*)</strong>: If <code>color</code> is a nonlinearized sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a darker version.</li>
 <li><strong>Saturate/Desaturate</strong>: Generate <code>hsv = RgbToHsv(color)</code>, then generate <code>modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 </ul>
@@ -945,6 +945,13 @@ points, respectively.<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note13">(
 <ul>
 <li><strong>Note:</strong> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the <em>relative luminance</em> of a color, as defined in the guidelines<sup><a href="#Note4">(4)</a></sup>; <code>brighter</code> is the color with higher relative luminance; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 (or 7) or greater.</li>
 </ul></li>
+</ul>
+
+<p>Finding the <strong>average luminance of an image</strong> or collection of colors is often equivalent to&mdash;</p>
+
+<ul>
+<li>adding all the luminances of the colors in the image or collection (where the luminance of each color <code>color</code> is <code>Luminance(color)</code>), then</li>
+<li>dividing the result by the number of such colors.</li>
 </ul>
 
 <p><a id=Color_Schemes></a></p>
@@ -1163,7 +1170,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
 <li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary hue.</li>
 <li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
-<li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Difference_and_Nearest_Colors">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.  For example, if a reddish color is to be generated, <code>color2</code> would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.</li>
+<li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Difference_and_Nearest_Colors">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.  For example, if a reddish color is to be generated, <code>color2</code> would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.</li>
 <li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property).</li>
 </ul>
 
@@ -1173,7 +1180,14 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <p>There are several methods of finding the kind or kinds of colors that appear most prominently in a collection of colors (including a raster image).</p>
 
-<p>One simple way to do so (called <em>averaging</em>) is to add all the RGB colors (or a sample of them) in the collection of colors, then divide the result by the number of pixels added this way. (For RGB colors, adding two colors means adding each of their components individually.)  Note that for best results, this technique needs to be carried out with <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB colors</em></a>.</p>
+<p>One simple way to do so (called <em>averaging</em>) is to&mdash;</p>
+
+<ul>
+<li>add all the RGB colors (or a sample of them) in the collection of colors, then</li>
+<li>divide the result by the number of pixels added this way.</li>
+</ul>
+
+<p>(For RGB colors, adding two colors means adding each of their components individually.)  Note that for best results, this technique needs to be carried out with <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB colors</em></a>.</p>
 
 <p>A second, more complicated technique is called <a href="https://en.wikipedia.org/wiki/Color_quantization"><em>color quantization</em></a>, where the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB colors</em></a>.</p>
 
@@ -1248,7 +1262,7 @@ generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
 
 <h3>Visually Distinct Colors</h3>
 
-<p>Color maps can be used to list colors used to identify different items. Because of this
+<p>Color maps can list colors used to identify different items. Because of this
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
@@ -1300,7 +1314,7 @@ END METHOD
 
 <h2>Colors as Spectral Functions</h2>
 
-<p>Colors can also be represented as functions that describe the power or reflectance of a light or object at each
+<p>Colors can also be represented as functions that describe a light source&#39;s power or an object&#39;s reflectance at each
 wavelength of the visible spectrum, as this section describes further.</p>
 
 <p><a id=Spectral_Power_Distributions></a></p>
@@ -1314,7 +1328,7 @@ wavelength of the visible spectrum, as this section describes further.</p>
 
 <ul>
 <li><code>SPD(wavelength)</code> is an arbitrary function returning the spectral power of the light source at <code>wavelength</code>,</li>
-<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z coordinates, respectively, of the color matching functions at <code>wavelength</code>,</li>
+<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the color matching functions at <code>wavelength</code>,</li>
 <li><code>SpectrumToXYZ</code> computes the XYZ color of the light source using the <code>SPD</code> and <code>CMF</code> functions,</li>
 <li><code>SpectrumTosRGB</code> computes the nonlinearized sRGB color of the light source,</li>
 <li><code>XYZTosRGB</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, and</li>
@@ -1324,9 +1338,9 @@ wavelength of the visible spectrum, as this section describes further.</p>
 <p>The pseudocode follows.</p>
 
 <pre>METHOD SpectrumToXYZ()
-    i = 380 # Start of visible spectrum
+    i = 360 # Start of visible spectrum
     xyz=[0,0,0]
-    while i &lt;= 780 # End of visible spectrum
+    while i &lt;= 830 # End of visible spectrum
              cmf=CMF(i)
              spec=SPD(i)
              xyz[0]=xyz[0]+spec*cmf[0]
@@ -1334,7 +1348,8 @@ wavelength of the visible spectrum, as this section describes further.</p>
              xyz[2]=xyz[2]+spec*cmf[2]
              i = i + 5
     end
-    return xyz
+    sum=xyz[0]+xyz[1]+xyz[2]
+    return [xyz[0]/sum,xyz[1]/sum,xyz[2]/sum]
 END METHOD
 
 METHOD XYZTosRGB(xyz)
@@ -1360,20 +1375,20 @@ standard observer can also be approximated using the methods given in <a href="h
 
 <h3>Reflectance</h3>
 
-<p>Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light source from which an object reflects light is called an <em>illuminant</em>, and finding an object&#39;s color requires knowing its reflectance curve, the illuminant&#39;s SPD, and the color matching functions in use.  The pseudocode below demonstrates converting a reflectance curve to the corresponding XYZ color, where:</p>
+<p>Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light received by the object is called an <em>illuminant</em>, and finding an object&#39;s color requires knowing its reflectance curve, the illuminant&#39;s SPD, and the color matching functions in use.  The pseudocode below demonstrates converting a reflectance curve to the corresponding XYZ color, where:</p>
 
 <ul>
-<li><code>REFL(wavelength)</code> is an arbitrary function returning the object&#39;s reflectance at <code>wavelength</code>.</li>
-<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <a href="#Spectral_Power_Distributions">spectral power</a> of the illuminant at <code>wavelength</code>.  There are various choices for the illuminant <code>ILLUM</code>, one of which is the D65 illuminant, the same illuminant used in the sRGB color space. The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> of the D65 illuminant at its Web site.</li>
+<li><code>REFL(wavelength)</code> is an arbitrary function returning the object&#39;s reflectance at <code>wavelength</code>.  The reflectance is 0 or greater and usually no greater than 1.</li>
+<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <a href="#Spectral_Power_Distributions">spectral power</a> of the illuminant at <code>wavelength</code>.  There are various choices for the illuminant <code>ILLUM</code>, one of which is the D65 illuminant, the same illuminant used in the sRGB color space. The CIE&#39;s Web site includes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> of the D65 illuminant.</li>
 </ul>
 
 <p>The pseudocode follows.</p>
 
 <pre>METHOD ReflectanceToXYZ()
-    i = 380 # Start of visible spectrum
+    i = 360 # Start of visible spectrum
     xyz=[0,0,0]
     weight = 0
-    while i &lt;= 780 # End of visible spectrum
+    while i &lt;= 830 # End of visible spectrum
              cmf=CMF(i)
              refl=REFL(i)
              spec=ILLUM(i)
@@ -1386,14 +1401,12 @@ standard observer can also be approximated using the methods given in <a href="h
     // NOTE: Note that `weight` is constant for a given
     // set of illuminant and color matching functions, so
     // that `weight` can be precomputed if both will
-    // not change.        For example, `weight` is
-    // about 2113.454 for the D65 illuminant and
-    // the CIE 1931 standard observer together,
-    // both of which are used by sRGB.
+    // not change.
     xyz[0] = xyz[0] / weight
     xyz[1] = xyz[1] / weight
     xyz[2] = xyz[2] / weight
-    return xyz
+    sum=xyz[0]+xyz[1]+xyz[2]
+    return [xyz[0]/sum,xyz[1]/sum,xyz[2]/sum]
 END METHOD
 </pre>
 
