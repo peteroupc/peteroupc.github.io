@@ -601,7 +601,7 @@ The second step is to build a new string whose characters are chosen from that c
 <a id=Choosing_Several_Unique_Items></a>
 ### Choosing Several Unique Items
 
-Often, the need arises to choose `k` unique items or values from among `n` available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether `n` is known and how big `n` and `k` are:
+Often, the need arises to choose `k` unique items or values from among `n` available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether `n` is known, how big `n` and `k` are, and other considerations:
 
 - **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 
