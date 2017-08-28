@@ -351,7 +351,7 @@ characters) to and from the HTML color format or the 3-digit format.
 
 Among RGB color spaces, one of the most popular is the _sRGB color space_. The _sRGB color space_ is a nonlinear "working space" for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(2)](#Note2)</sup>
 
-Although most RGB working spaces are linearized by _gamma decoding_, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup>[(3)](#Note3)</sup> (Microsoft documentation, especially for Windows Presentation Foundation, uses the term _scRGB_ to refer above all to linearized sRGB colors in the 0-1 format<sup>[(9)](#Note9)</sup>.)
+Although most RGB working spaces are linearized by _gamma decoding_, sRGB is different; the formula to use to linearize sRGB colors is similar to, but is not, applying a gamma exponent of 2.2.<sup>[(3)](#Note3)</sup>
 
 The following methods linearize and de-linearize sRGB colors.
 
@@ -800,7 +800,7 @@ Note that for best results, these techniques need to be carried out with [_linea
 Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; 0 means
 black and 1 means white.  Luminance is equivalent to the Y-axis in the CIE's _XYZ color model_. For [_linearized RGB_ color spaces](#sRGB_and_Linearized_RGB), luminance can be found by calculating `(color[0] * r +color[1] * g + color[2] * b)`,
 where `r`, `g`, and `b` are the upper-case-Y components (luminances) of the RGB color space's red, green, and blue
-points, respectively.<sup>[(2)](#Note2)</sup><sup>[(13)](#Note13)</sup> An example follows for sRGB:
+points, respectively.<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup> An example follows for sRGB:
 
 - **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y values of red/green/blue<sup>[(2)](#Note2)</sup>).
 
@@ -1267,15 +1267,13 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 
 <sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue primaries.
 
-<sup id=Note9>(9)</sup> B. Crow, ["HDR and Color Spaces"](https://blogs.msdn.microsoft.com/billcrow/2007/10/25/hdr-and-color-spaces/).  According to that article, the _scRGB_ color profile was created because "other color profiles ... rel[ied] on unsigned integers" to define colors, and scRGB's floating-point format is supposedly intended to "allow color values that are beyond the gamut limits" of the sRGB color space.
+<sup id=Note9>(9)</sup> [Reserved] Other methods that have been used for calculating luminance, as used here, include averaging the three color components (`(color[0]+color[1]+color[2])/3.0`) or using the [HSL](#HSL) "lightness" as the luminance (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
 
 <sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 
 <sup id=Note11>(11)</sup> Although the L\*a\*b\* color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
-
-<sup id=Note13>(13)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (`(color[0]+color[1]+color[2])/3.0`) or using the [HSL](#HSL) "lightness" as the luminance (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
 
 <a id=License></a>
 ## License

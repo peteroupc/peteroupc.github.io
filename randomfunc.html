@@ -715,7 +715,7 @@ end
 
 <h3>Choosing Several Unique Items</h3>
 
-<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether <code>n</code> is known and how big <code>n</code> and <code>k</code> are:</p>
+<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether <code>n</code> is known, how big <code>n</code> and <code>k</code> are, and other considerations:</p>
 
 <ul>
 <li><p><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.</p>
