@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on August 29, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on August 30, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -128,7 +128,7 @@ generation is outside the scope of this document.</p>
 
 <ul>
 <li><strong>Random number generator (RNG).</strong> A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note4">(4)</a></sup>.</li>
-<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same input and state every time.</li>
+<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time) and without making explicit use of nondeterminism.</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
 <li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
@@ -186,7 +186,7 @@ generation is outside the scope of this document.</p>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>CryptGenRandom</code> method on Windows.</li>
-<li>Cryptographic hash functions that take very hard-to-predict signals as input, preferably from more than one nondeterministic source.  Such sources include, where available&mdash;
+<li>Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals as input, preferably from more than one nondeterministic source.  Such sources include, where available&mdash;
 
 <ul>
 <li>disk access timings,</li>
@@ -215,7 +215,7 @@ generation is outside the scope of this document.</p>
 
 <h3>Quality</h3>
 
-<p>A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes. The implementation must be highly likely to pass all the tests used in <code>TestU01</code>&#39;s <code>Crush</code>, <code>SmallCrush</code>, and <code>BigCrush</code> test batteries [L&#39;Ecuyer and Simard 2007], and ought to be highly likely to pass other known statistical randomness tests. The RNG need not be equidistributed. (Mentioning specific test batteries here is in the interest of precision and makes it clearer whether a particular RNG meets these quality requirements.)</p>
+<p>A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a deterministic algorithm, that algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
@@ -229,8 +229,7 @@ generation is outside the scope of this document.</p>
 
 <ul>
 <li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from an unpredictable-random implementation,</li>
-<li>must not be a fixed value or a user-entered value,</li>
-<li>should not be trivially predictable in any of its bits, as far as practical,</li>
+<li>must not be a fixed value, a nearly fixed value, or a user-entered value,</li>
 <li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note1">(1)</a></sup>, and</li>
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
@@ -241,20 +240,22 @@ generation is outside the scope of this document.</p>
 
 <h3>Examples and Non-Examples</h3>
 
-<p>Examples of statistically-random generators include the following:</p>
+<p>Examples of statistical-random generators include the following:</p>
 
 <ul>
+<li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
+<li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
 <li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed &mdash; but see warning in the <a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c">source code</a> about the lowest bit of the PRNG&#39;s outputs).</li>
-<li><code>xorshift128+</code> (state length 128 bits; nonzero seed).</li>
 <li><code>Lehmer128</code> (state length 128 bits).</li>
 <li><code>JKISS</code> on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><code>std::ranlux48</code> engine</a> (state length 577 bits; nonzero seed).</li>
+<li>PCG (classes named <code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code>; state lengths 127, 255, and 127 bits, respectively) by Melissa O&#39;Neill.</li>
 </ul>
 
 <p>Non-examples include the following:</p>
 
 <ul>
-<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality">systematic failure</a> in one of the <code>BigCrush</code> tests. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf">An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
+<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality">systematic failure</a> in one of the tests in <code>BigCrush</code>, part of  L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf">An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
 <li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">linear congruential generator</a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.  (See also the Wikipedia article for further problems with linear congruential generators.)</li>
 </ul>
 
@@ -640,7 +641,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <p>I acknowledge&mdash;</p>
 
 <ul>
-<li>the commenters to the CodeProject version of this page, including Cryptonite, and</li>
+<li>the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including Cryptonite, and</li>
 <li>Lee Daniel Crocker, who reviewed this document and gave comments.</li>
 </ul>
 
