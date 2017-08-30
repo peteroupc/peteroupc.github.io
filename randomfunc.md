@@ -423,7 +423,7 @@ A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in 
 - Generate `X = floor(RNDU01OneExc()*(maxExclusive))` until `X < maxExclusive`. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.<sup>[(5)](#Note5)</sup>)
 
 These approaches, though, are recommended only if the programming language&mdash;
-- supports only floating-point numbers (an example is JavaScript),
+- supports floating-point number types and no other number types (an example is JavaScript),
 - is a dialect of SQL, or
 - doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
 

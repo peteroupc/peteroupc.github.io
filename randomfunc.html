@@ -502,7 +502,7 @@ END
 <p>These approaches, though, are recommended only if the programming language&mdash;</p>
 
 <ul>
-<li>supports only floating-point numbers (an example is JavaScript),</li>
+<li>supports floating-point number types and no other number types (an example is JavaScript),</li>
 <li>is a dialect of SQL, or</li>
 <li>doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</li>
 </ul>
@@ -1783,9 +1783,9 @@ METHOD GaussianCopula(covar)
    sqrt2=sqrt(2)
    while i &lt; size(covar)
        stdev=sqrt(covar[i][i])
-   // Apply the normal CDF to get uniform
-   // variables
-   mvn[i] = (erf(mvn[i]/(stdev*sqrt2))+1)*0.5
+ // Apply the normal CDF to get uniform
+ // variables
+ mvn[i] = (erf(mvn[i]/(stdev*sqrt2))+1)*0.5
        i = i + 1
    end
    return mvn
