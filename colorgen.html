@@ -655,8 +655,7 @@ END METHOD
 
 <ul>
 <li>L*, or <em>lightness</em> of a color, ranges from 0 (black) to 100 (white).  The L*a*b* color <code>[100, 0, 0]</code> is the same as the reference white point.</li>
-<li>a* ranges from about -79.2 to about 93.5 for sRGB.</li>
-<li>b* ranges from about -112 to about 93.4 for sRGB.</li>
+<li>a* and b*  are coordinates of two axes that extend away from the gray line.</li>
 </ul>
 
 <p>In the following pseudocode, which converts a color between nonlinearized sRGB and CIE L*a*b*&mdash;</p>
@@ -1170,7 +1169,12 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary hue.</li>
 <li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Difference_and_Nearest_Colors">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.  For example, if a reddish color is to be generated, <code>color2</code> would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.</li>
-<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property).</li>
+<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that&mdash;
+
+<ul>
+<li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
+<li>if the hashing implicates computer or information security, it is cost-prohibitive to find a second input with the same output as that of a given input or to find an unknown input that leads to a given output.</li>
+</ul></li>
 </ul>
 
 <p><a id=Dominant_Colors_of_an_Image></a></p>
@@ -1317,7 +1321,7 @@ END METHOD
 wavelength of the visible spectrum.  There are two cases of objects that provoke such a color sensation:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A source of white or colored light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <em>XYZ color model</em>. (Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
+<li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <em>XYZ color model</em>. (Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
 <li><strong>Reflective objects.</strong> Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light received by the object is called an <em>illuminant</em>, and finding an object&#39;s perceived color requires knowing its reflectance curve, the illuminant&#39;s spectral power distribution, and the color matching functions in use.</li>
 </ul>
 
@@ -1333,9 +1337,9 @@ wavelength of the visible spectrum.  There are two cases of objects that provoke
 <li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <strong>relative spectral power of the light source or illuminant</strong> at <code>wavelength</code>.</li>
 <li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the <strong>color matching functions</strong> at <code>wavelength</code>.</li>
 <li><code>SpectrumToXYZ</code> computes, in XYZ form, the color perceived from a reflective object or a light source.</li>
-<li><code>SpectrumTosRGB</code> computes, in nonlinearized sRGB, the perceived color of the light source.</li>
+<li><code>SpectrumTosRGB</code> computes, in nonlinearized sRGB, the perceived color of the light source, illuminant, or reflective object.</li>
+<li><code>WavelengthTosRGB</code> computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
 <li><code>XYZTosRGB</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB.</li>
-<li><code>WavelengthTosRGB</code> computes, in nonlinearized sRGB, the perceived sRGB color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
 </ul>
 
 <p>There are various choices for the <code>ILLUM</code> and <code>CMF</code> functions.  Popular choices include the D65 illuminant and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the <a href="#sRGB_and_Linearized_RGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
@@ -1497,13 +1501,13 @@ this page are welcome.</p>
 
 <p><sup id=Note8>(8)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB capital-Y values for the red, green, and blue primaries.</p>
 
-<p><sup id=Note9>(9)</sup> [Reserved] Other methods that have been used for calculating luminance, as used here, include averaging the three color components (<code>(color[0]+color[1]+color[2])/3.0</code>) or using the <a href="#HSL">HSL</a> &quot;lightness&quot; as the luminance (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</p>
+<p><sup id=Note9>(9)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (<code>(color[0]+color[1]+color[2])/3.0</code>) or using the <a href="#HSL">HSL</a> &quot;lightness&quot; as the luminance (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</p>
 
 <p><sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.</p>
 
 <p><sup id=Note11>(11)</sup> Although the L*a*b* color model is also often called &quot;perceptually uniform&quot;, it wasn&#39;t designed that way, according to <a href="http://www.brucelindbloom.com/index.html?UPLab.html">B. Lindbloom</a>.</p>
 
-<p><sup id=Note12>(12)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color, (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
+<p><sup id=Note12>(12)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
 
 <p><a id=License></a></p>
 

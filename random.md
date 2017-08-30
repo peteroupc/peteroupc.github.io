@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on July 31, 2017.
+Begun on Mar. 5, 2016; last updated on August 29, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -74,8 +74,8 @@ The following table summarizes the kinds of RNGs covered in this document.
 
 The following definitions are helpful in better understanding this document.
 
-- **Random number generator (RNG).** A number generator that outputs numbers that seem to occur by chance. (In this document, RNGs are limited to those that seek to generate random numbers that are approximately uniformly distributed.)
-- **Pseudorandom number generator (PRNG).** A number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same input and state every time. (In this document, RNGs include PRNGs.)
+- **Random number generator (RNG).** A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(4)](#Note4)</sup>.
+- **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm, that is, an algorithm that returns the same output for the same input and state every time.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
@@ -426,6 +426,8 @@ Comments on any aspect of the document are welcome, but answers to the following
 <sup id=Note2>(2)</sup> This is because usual implementations of colored noise don't sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.
 
 <sup id=Note3>(3)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.
+
+<sup id=Note4>(4)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A cumulative distribution function (CDF) returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.
 
 <a id=License></a>
 ## License

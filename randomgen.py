@@ -236,7 +236,7 @@ class RandomGen:
     tp=trials*p*1.0
     if tp>25 or (tp > 5 and p>0.1 and p<0.9):
       countval=-1
-      while countval<0:
+      while countval<0 or countval > trials:
         countval=self.normal(tp,tp)
       return int(countval+0.5)
     while i < trials:
