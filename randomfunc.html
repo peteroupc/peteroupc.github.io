@@ -1782,9 +1782,10 @@ METHOD GaussianCopula(covar)
     i = 0
    sqrt2=sqrt(2)
    while i &lt; size(covar)
+      stdev=sqrt(covar[i][i])
       // Apply the standard normal distribution&#39;s cumulative
       // distribution function to get uniform variables
-      mvn[i] = (erf(mvn[i]/sqrt2)+1)*0.5
+      mvn[i] = (erf(mvn[i]/(stdev*sqrt2))+1)*0.5
        i = i + 1
    end
    return mvn

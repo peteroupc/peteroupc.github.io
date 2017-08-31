@@ -264,7 +264,7 @@ If the noise implementation implements [cellular noise](https://en.wikipedia.org
     - that hash function should&mdash;
         - be reasonably fast,
         - use a deterministic algorithm,
-        - have no unspecified or implementation-defined behavior or behavior that may change in the future, and
+        - have no unspecified or implementation-dependent behavior or behavior that may change in the future, and
         - be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
 
