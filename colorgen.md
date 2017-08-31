@@ -49,7 +49,7 @@ In general, topics that are specific to a programming language or application-pr
     - [HWB](#HWB)
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
-    - [YCbCr](#YCbCr)
+    - [Y&prime;CbCr](#Y_prime_CbCr)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Luminance (Grayscale)](#Luminance_Grayscale)
@@ -697,26 +697,26 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 - the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
 - the meaning of CMYK colors can vary depending on the specific inks used, since different inks have different light reflectances, as well as on the kind of paper that the color will be printed on.<sup>[(5)](#Note5)</sup>
 
-<a id=YCbCr></a>
-### YCbCr
+<a id=Y_prime_CbCr></a>
+### Y&prime;CbCr
 
-[YCbCr](https://en.wikipedia.org/wiki/YCbCr) (also known as Y&prime;CbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in YCbCr consists of three components in the following order:
+[Y&prime;CbCr](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;CbCr consists of three components in the following order:
 
 - Y&prime;, or _luma_, specifies the brightness of the color, and is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.
 - Cb, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
 - Cr, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
-Note that a thorough survey of the various ways in which YCbCr data has been encoded is outside
+Note that a thorough survey of the various ways in which Y&prime;CbCr data has been encoded is outside
 the scope of this document.
 
-The following pseudocode converts colors between RGB and YCbCr.  Each RGB color is in 8/8/8
+The following pseudocode converts colors between RGB and Y&prime;CbCr.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;
 
-- the ITU-R BT.601 variant (for digital standard-definition video), as the `YCbCrToRgb` and `RgbToYCbCr` methods,
-- the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
-- the JPEG variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods,
+- the ITU-R BT.601 variant (for digital standard-definition video), as the `YCbCrToRgb` and `RgbToYCbCr` methods (the prime symbol is left out of those and other names in the pseudocode below for convenience only),
+- the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToCbCr709` methods, and
+- the [JPEG File Interchange Format](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-For all these variants, the transformation should be done using [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB).   For efficiency reasons, however, YCbCr conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods given below.
+For all these variants, the transformation should be done using [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB).   For efficiency reasons, however, Y&prime;CbCr conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods given below.
 
     METHOD RgbToYCbCr(rgb)
         y = floor(16.0+rgb[0]*0.25678824+rgb[1]*0.50412941+rgb[2]*0.097905882)
@@ -739,30 +739,30 @@ For all these variants, the transformation should be done using [_nonlinearized 
         return [y, cb, cr]
     END METHOD
 
-    METHOD YCbCrToRgb(ycbcr)
-        cb = ycbcr[1] - 128
-        cr = ycbcr[2] - 128
-        yp = 1.1643836 * (ycbcr[0] - 16)
+    METHOD YCbCrToRgb(YCbCr)
+        cb = YCbCr[1] - 128
+        cr = YCbCr[2] - 128
+        yp = 1.1643836 * (YCbCr[0] - 16)
         r = yp + 1.5960268 * cr
         g = yp - 0.39176229 * cb - 0.81296765 * cr
         b = yp + 2.0172321 * cb
         return Clamp3([r, g, b], [0,0,0],[255,255,255])
     END METHOD
 
-    METHOD YCbCrToRgb709(ycbcr)
-        cb = ycbcr[1] - 128
-        cr = ycbcr[2] - 128
-        yp = 1.1643836 * (ycbcr[0] - 16)
+    METHOD YCbCrToRgb709(YCbCr)
+        cb = YCbCr[1] - 128
+        cr = YCbCr[2] - 128
+        yp = 1.1643836 * (YCbCr[0] - 16)
         r = yp + 1.7927411 * cr
         g = yp - 0.21324861 * cb - 0.53290933 * cr
         b = yp + 2.1124018 * cb
         return Clamp3([r, g, b], [0,0,0],[255,255,255])
     END METHOD
 
-    METHOD YCbCrToRgbJpeg(ycbcr)
-        cb = ycbcr[1] - 128
-        cr = ycbcr[2] - 128
-        yp = ycbcr[0]
+    METHOD YCbCrToRgbJpeg(YCbCr)
+        cb = YCbCr[1] - 128
+        cr = YCbCr[2] - 128
+        yp = YCbCr[0]
         r = yp + 1.402 * cr
         g = yp - 0.34413629 * cb - 0.71413629 * cr
         b = yp + 1.772 * cb
@@ -799,7 +799,7 @@ Note that for best results, these techniques need to be carried out with [_linea
 Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; 0 means
 black and 1 means white.  Luminance is equivalent to the Y-axis in the CIE's _XYZ color model_. For [_linearized RGB_ color spaces](#sRGB_and_Linearized_RGB), luminance can be found by calculating `(color[0] * r +color[1] * g + color[2] * b)`,
 where `r`, `g`, and `b` are the upper-case-Y components (luminances) of the RGB color space's red, green, and blue
-points, respectively.<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup> An example follows for sRGB:
+points, respectively.<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup> (Note that applying that same formula to _nonlinearized RGB_ colors results in a value more correctly called [_luma_](#Y_CbCr), not luminance; see C. Poynton, ["YUV and luminance considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).) An example follows for sRGB:
 
 - **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y values of red/green/blue<sup>[(2)](#Note2)</sup>).
 
@@ -899,6 +899,11 @@ Examples of matrices include:
 - **Colorize**: Given a desired `color` and a source color `srcColor`, generate
  `[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]`.
 - **Swap blue and red channels**: Generate `[color[2], color[1], color[0]]`.
+- **Red channel**: Generate `[color[0], color[0], color[0]]`.
+- **Green channel**: Generate `[color[1], color[1], color[1]]`.
+- **Blue channel**: Generate `[color[2], color[2], color[2]]`.
+- **Maximum**: Generate `[c, c, c]`, where `c` is `Max3(color[0], color[1], color[2])`.
+- **Minimum**: Generate `[c, c, c]`, where `c` is `Min3(color[0], color[1], color[2])`.
 
 **Note:** Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include [_chroma key_](https://en.wikipedia.org/wiki/Chroma_key), are largely out of the scope of this document.
 
@@ -997,10 +1002,10 @@ This technique is independent of RGB color space, but see the [note from earlier
 There are several methods of finding the kind or kinds of colors that appear most prominently in a collection of colors (including a raster image).
 
 One simple way to do so (called _averaging_) is to&mdash;
-- add all the RGB colors (or a sample of them) in the collection of colors, then
+- add all the RGB colors (or a sample of them) in the collection of colors (for RGB colors, adding two colors means adding each of their components individually), then
 - divide the result by the number of pixels added this way.
 
-(For RGB colors, adding two colors means adding each of their components individually.)  Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
+Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
 A second, more complicated technique is called [_color quantization_](https://en.wikipedia.org/wiki/Color_quantization), where the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
@@ -1072,7 +1077,7 @@ Any application that needs to distinguish more than 22 items should use other me
 color should generally not be the only means to call attention to information.)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest color difference, or `COLORDIFF`,
+color space (that is, where the smallest [color difference](#Color_Difference_and_Nearest_Colors), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
 distinct colors.  Such colors can be pregenerated or generated at runtime.
 
@@ -1210,7 +1215,7 @@ This section discusses miscellaneous topics related to colors.
 <a id=Colorblindness></a>
 ### Colorblindness
 
-What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more cones in the retina of each eye and affects a small portion of people, usually males.
+What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
 Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a light stimulus.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly (usually magenta-red and green-cyan hues) are harder to distinguish.
 
@@ -1268,7 +1273,7 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 
 <sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue primaries.
 
-<sup id=Note9>(9)</sup> Other methods that have been used for calculating luminance, as used here, include averaging the three color components (`(color[0]+color[1]+color[2])/3.0`) or using the [HSL](#HSL) "lightness" as the luminance (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
+<sup id=Note9>(9)</sup> Other methods that have been used for calculating luminance (which don't really yield "luminance" as used here) include averaging the three color components (`(color[0]+color[1]+color[2])/3.0`) or using the [HSL](#HSL) "lightness" as the luminance (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
 
 <sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 

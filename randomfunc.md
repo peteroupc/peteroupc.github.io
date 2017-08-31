@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 29, 2017.
+Begun on June 4, 2017; last updated on Aug. 30, 2017.
 
 Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
 
@@ -503,7 +503,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
+The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -1527,7 +1527,7 @@ See Saucier 2000, sec. 3.8, which was the source of the technique given here.
 <a id=Gaussian_Copula></a>
 #### Gaussian Copula
 
-Another way to generate correlated random numbers is to use a [multivariate normal distribution](#Multivariate_Normal_Distribution), then apply the normal distribution's cumulative distribution function to the resulting numbers to get uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:
+Another way to generate correlated random numbers is to use a [multivariate normal distribution](#Multivariate_Normal_Distribution), then convert the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:
 
 - The parameter `covar` is the covariance matrix for the multivariate normal distribution.
 - `erf(v)` is the [error function](https://en.wikipedia.org/wiki/Error_function) of the variable `v`.  It's provided here because some popular programming languages, such as JavaScript at the time of this writing, don't include a built-in version of `erf`.  In the method, `EPSILON` is a very small number to end the iterative calculation.
@@ -1566,10 +1566,9 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
         i = 0
        sqrt2=sqrt(2)
        while i < size(covar)
-           stdev=sqrt(covar[i][i])
-     // Apply the normal CDF to get uniform
-     // variables
-     mvn[i] = (erf(mvn[i]/(stdev*sqrt2))+1)*0.5
+          // Apply the standard normal distribution's cumulative
+          // distribution function to get uniform variables
+          mvn[i] = (erf(mvn[i]/sqrt2)+1)*0.5
            i = i + 1
        end
        return mvn

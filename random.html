@@ -215,7 +215,7 @@ generation is outside the scope of this document.</p>
 
 <h3>Quality</h3>
 
-<p>A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a deterministic algorithm, that algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
+<p>A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
@@ -380,7 +380,8 @@ generation is outside the scope of this document.</p>
 
 <ul>
 <li>be reasonably fast,</li>
-<li>be <em>stable</em> (as defined in <a href="#Seeding_Recommendations">&quot;Seeding Recommendations&quot;</a>), and</li>
+<li>use a deterministic algorithm,</li>
+<li>have no unspecified or implementation-defined behavior or behavior that may change in the future, and</li>
 <li>be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
 </ul></li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
@@ -641,7 +642,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <p>I acknowledge&mdash;</p>
 
 <ul>
-<li>the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including Cryptonite, and</li>
+<li>the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including &quot;Cryptonite&quot; and member 3027120, and</li>
 <li>Lee Daniel Crocker, who reviewed this document and gave comments.</li>
 </ul>
 
