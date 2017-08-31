@@ -49,7 +49,7 @@ In general, topics that are specific to a programming language or application-pr
     - [HWB](#HWB)
     - [CIE L\*a\*b\*](#CIE_L_a_b)
     - [CMYK](#CMYK)
-    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_CbCr)
+    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_sub__B__sub_C_sub__R__sub)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Luminance (Grayscale)](#Luminance_Grayscale)
@@ -65,6 +65,7 @@ In general, topics that are specific to a programming language or application-pr
     - [Named Colors](#Named_Colors)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
 - [Colors as Spectral Functions](#Colors_as_Spectral_Functions)
+    - [Color Temperature](#Color_Temperature)
 - [Color Mixture](#Color_Mixture)
 - [Other Color Topics](#Other_Color_Topics)
     - [Colorblindness](#Colorblindness)
@@ -602,9 +603,9 @@ The pseudocode follows.
         end
         return xyz
     END METHOD
-    
+
     // Converts linear RGB to XYZ given a matrix, then divides
-    // XYZ by a reference white point (in the form of 
+    // XYZ by a reference white point (in the form of
     // capital-X and capital-Z values).  White point (1, 1) means
     // a straight RGB-to-XYZ conversion.
     METHOD RGBToNormXYZ(rgb, xyzmatrix, whitex, whitez)
@@ -615,7 +616,7 @@ The pseudocode follows.
         return [x/whitex, y, z/whitez]
     END METHOD
 
-    // Multiplies XYZ by a reference white point (in the form of 
+    // Multiplies XYZ by a reference white point (in the form of
     // capital-X and capital-Z values), then converts XYZ to
     // linear RGB given a matrix.  White point (1, 1) means
     // a straight XYZ-to-RGB conversion.
@@ -631,7 +632,7 @@ The pseudocode follows.
 
     METHOD XYZFromsRGB(rgb)
         lin=LinearFromsRGB3(rgb)
-	return NormXYZToRGB(lin, [0.4124564, 0.3575761, 0.1804375,
+  return NormXYZToRGB(lin, [0.4124564, 0.3575761, 0.1804375,
           0.2126729, 0.7151522, 0.07217499, 0.01933390,
           0.1191920, 0.9503041], 1, 1)
     END METHOD
@@ -720,7 +721,7 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 - the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
 - the meaning of CMYK colors can vary depending on the specific inks used, since different inks have different light reflectances, as well as on the kind of paper that the color will be printed on.<sup>[(5)](#Note5)</sup>
 
-<a id=Y_prime_CbCr></a>
+<a id=Y_prime_C_sub__B__sub_C_sub__R__sub></a>
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>
 
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
@@ -1186,7 +1187,8 @@ Note that for purposes of color reproduction, only wavelengths within the range 
     METHOD SpectrumTosRGB()
         return XYZTosRGB(SpectrumToXYZ())
     END METHOD
-    
+
+<a id=Color_Temperature></a>
 ### Color Temperature
 
 Another choice for `ILLUM` is the formula for finding the spectral power of an ideal black-body radiator (an object that emits light based only on its temperature).  Such a formula is useful for converting **color temperature** to RGB colors.  The formula follows, where `TEMP` is the radiator's temperature in kelvins (source: J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)"):
@@ -1194,7 +1196,7 @@ Another choice for `ILLUM` is the formula for finding the spectral power of an i
     METHOD ILLUM(wavelength)
         meters = wavelength*pow(10, -9)
         num = 3.74183*pow(10, -16)*pow(meters, -5)
-	return num / (exp(0.014388/(meters*TEMP)) - 1)
+  return num / (exp(0.014388/(meters*TEMP)) - 1)
     END METHOD
 
 <a id=Color_Mixture></a>
@@ -1209,7 +1211,7 @@ can be mixed this way by&mdash;
   takes into account the relative proportions of the colors or pigments in the mixture, and
 - converting the mixed reflectance curve to an RGB color.
 
-Finding a representative reflectance curve for an arbitrary color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/).
+Finding a representative reflectance curve for an arbitrary RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/).
 
 For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
@@ -1312,6 +1314,7 @@ I acknowledge the CodeProject user Mike-MadBadger, who suggested additional clar
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 </small>
+
 <a id=License></a>
 ## License
 This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).
