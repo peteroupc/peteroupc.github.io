@@ -96,7 +96,11 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Named_Colors">Named Colors</a></li>
 <li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
 </ul></li>
-<li><a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a></li>
+<li><a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a>
+
+<ul>
+<li><a href="#Color_Temperature">Color Temperature</a></li>
+</ul></li>
 <li><a href="#Color_Mixture">Color Mixture</a></li>
 <li><a href="#Other_Color_Topics">Other Color Topics</a>
 
@@ -1359,11 +1363,11 @@ wavelength of the visible spectrum.  There are two cases of objects that provoke
 <li><code>REFL(wavelength)</code> is an arbitrary function returning&mdash;
 
 <ul>
-<li>the <strong>object&#39;s reflectance</strong> at <code>wavelength</code> (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less), or</li>
+<li>the <strong>object&#39;s reflectance</strong> at <code>wavelength</code> (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less, and the wavelength is in nanometers [nm]), or</li>
 <li>the number 1 at every wavelength, if a reflective object is not being modeled.</li>
 </ul></li>
-<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <strong>relative spectral power of the light source or illuminant</strong> at <code>wavelength</code>.</li>
-<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the <strong>color matching functions</strong> at <code>wavelength</code>.</li>
+<li><code>ILLUM(wavelength)</code> is an arbitrary function returning the <strong>relative spectral power of the light source or illuminant</strong> at <code>wavelength</code> (the wavelength is in nm).</li>
+<li><code>CMF(wavelength)</code> is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the <strong>color matching functions</strong> at <code>wavelength</code> (the wavelength is in nm).</li>
 <li><code>SpectrumToXYZ</code> computes, in XYZ form, the color perceived from a reflective object or a light source.</li>
 <li><code>SpectrumTosRGB</code> computes, in nonlinearized sRGB, the perceived color of the light source, illuminant, or reflective object.</li>
 <li><code>WavelengthTosRGB</code> computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
@@ -1407,6 +1411,19 @@ METHOD SpectrumTosRGB()
 END METHOD
 </pre>
 
+<p><a id=Color_Temperature></a></p>
+
+<h3>Color Temperature</h3>
+
+<p>Another choice for <code>ILLUM</code> is the formula for finding the spectral power of an ideal black-body radiator (an object that emits light based only on its temperature).  Such a formula is useful for converting <strong>color temperature</strong> to RGB colors.  The formula follows, where <code>TEMP</code> is the radiator&#39;s temperature in kelvins (source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;):</p>
+
+<pre>METHOD ILLUM(wavelength)
+    meters = wavelength*pow(10, -9)
+    num = 3.74183*pow(10, -16)*pow(meters, -5)
+return num / (exp(0.014388/(meters*TEMP)) - 1)
+END METHOD
+</pre>
+
 <p><a id=Color_Mixture></a></p>
 
 <h2>Color Mixture</h2>
@@ -1422,7 +1439,7 @@ takes into account the relative proportions of the colors or pigments in the mix
 <li>converting the mixed reflectance curve to an RGB color.</li>
 </ul>
 
-<p>Finding a representative reflectance curve for an arbitrary color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>.</p>
+<p>Finding a representative reflectance curve for an arbitrary RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>.</p>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
 
