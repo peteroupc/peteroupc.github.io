@@ -142,7 +142,7 @@ A statistical-random implementation is usually implemented with a PRNG, but can 
 <a id=Quality_2></a>
 ### Quality
 
-A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a deterministic algorithm, that algorithm's expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.
+A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm's expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.
 
 <a id=Seeding_and_Reseeding_2></a>
 ### Seeding and Reseeding
@@ -263,7 +263,8 @@ If the noise implementation implements [cellular noise](https://en.wikipedia.org
 - If the noise function **incorporates a hash function** (including a PRNG that takes the input as a seed and outputs a random number<sup>[(3)](#Note3)</sup>)&mdash;
     - that hash function should&mdash;
         - be reasonably fast,
-        - be _stable_ (as defined in ["Seeding Recommendations"](#Seeding_Recommendations)), and
+        - use a deterministic algorithm,
+        - have no unspecified or implementation-defined behavior or behavior that may change in the future, and
         - be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
 
@@ -401,7 +402,7 @@ In conclusion, most applications that require random numbers usually want either
 In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.
 
 I acknowledge&mdash;
-- the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including Cryptonite, and
+- the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including "Cryptonite" and member 3027120, and
 - Lee Daniel Crocker, who reviewed this document and gave comments.
 
 <a id=Request_for_Comments></a>
