@@ -1566,9 +1566,10 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
         i = 0
        sqrt2=sqrt(2)
        while i < size(covar)
+          stdev=sqrt(covar[i][i])
           // Apply the standard normal distribution's cumulative
           // distribution function to get uniform variables
-          mvn[i] = (erf(mvn[i]/sqrt2)+1)*0.5
+          mvn[i] = (erf(mvn[i]/(stdev*sqrt2))+1)*0.5
            i = i + 1
        end
        return mvn
