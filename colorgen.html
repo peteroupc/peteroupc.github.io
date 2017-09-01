@@ -69,6 +69,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#HSV">HSV</a></li>
 <li><a href="#HSL">HSL</a></li>
 <li><a href="#HWB">HWB</a></li>
+<li><a href="#CIE_XYZ">CIE XYZ</a></li>
 <li><a href="#CIE_L_a_b">CIE L*a*b*</a></li>
 <li><a href="#CMYK">CMYK</a></li>
 <li><a href="#Y_prime_C_sub__B__sub_C_sub__R__sub">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a></li>
@@ -211,7 +212,7 @@ END
 
 <p>The <em>red-green-blue (RGB) color model</em> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to what are called the &quot;additive primaries&quot; red, green, and blue, and the &quot;subtractive primaries&quot; cyan, yellow, and magenta.</p>
 
-<p>In general, <em>RGB color spaces</em> differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their <em>companding</em> conversions (conversions to and from linearized RGB).</p>
+<p>In general, <em>RGB color spaces</em> differ in what they consider pure red, green, blue, black, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their <em>companding</em> conversions (conversions to and from linearized RGB).</p>
 
 <p>The following details concepts related to the RGB color model.</p>
 
@@ -649,6 +650,77 @@ END METHOD
 <li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[0, 0, 0]</code> otherwise.</li>
 </ul>
 
+<p><a id=CIE_XYZ></a></p>
+
+<h3>CIE XYZ</h3>
+
+<p>The CIE&#39;s <em>XYZ color model</em> is a transformation of a color sensation into a point in three-dimensional space, as further explained in &quot;<a href="#Colors_as_Spectral_Functions">Colors as Spectral Functions</a>&quot;.  An XYZ color consists of three components, in the following order:</p>
+
+<ul>
+<li>X is a component without special meaning.</li>
+<li>Y indicates the <em>luminance</em> of the color.</li>
+<li>Z is a component without special meaning.</li>
+</ul>
+
+<p>There are at least two conventions for XYZ colors:</p>
+
+<ul>
+<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents a luminance in candelas per square meter.</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.</li>
+</ul>
+
+<p><strong>Note:</strong> In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point.</p>
+
+<p>In the following pseudocode&mdash;</p>
+
+<ul>
+<li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, and</li>
+<li><code>XYZTosRGB(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB.</li>
+</ul>
+
+<p>The pseudocode follows.</p>
+
+<pre>// Converts linear RGB to XYZ given a matrix, then divides
+// XYZ by a reference white point (in the form of
+// capital-X and capital-Z values).  White point (1, 1) means
+// a straight RGB-to-XYZ conversion.
+METHOD RGBToNormXYZ(rgb, xyzmatrix, whitex, whitez)
+    x=rgb[0]*xyzmatrix[0]+rgb[1]*xyzmatrix[1]+rgb[2]*xyzmatrix[2]
+    y=rgb[0]*xyzmatrix[3]+rgb[1]*xyzmatrix[4]+rgb[2]*xyzmatrix[5]
+    z=rgb[0]*xyzmatrix[6]+rgb[1]*xyzmatrix[7]+rgb[2]*xyzmatrix[8]
+    // NOTE: At this point, &quot;x, y, z&quot;
+    return [x/whitex, y, z/whitez]
+END METHOD
+
+// Multiplies XYZ by a reference white point (in the form of
+// capital-X and capital-Z values), then converts XYZ to
+// linear RGB given a matrix.  White point (1, 1) means
+// a straight XYZ-to-RGB conversion.
+METHOD NormXYZToRGB(xyz, xyzmatrix, whitex, whitez)
+    x=xyz[0]*whitex
+    y=xyz[1]
+    z=xyz[2]*whitez
+    r=x*xyzmatrix[0]+y*xyzmatrix[1]+z*xyzmatrix[2]
+    g=x*xyzmatrix[3]+y*xyzmatrix[4]+z*xyzmatrix[5]
+    b=x*xyzmatrix[6]+y*xyzmatrix[7]+z*xyzmatrix[8]
+    return [r,g,b]
+END METHOD
+
+METHOD XYZFromsRGB(rgb)
+    lin=LinearFromsRGB3(rgb)
+    return NormXYZToRGB(lin, [0.4124564, 0.3575761, 0.1804375,
+      0.2126729, 0.7151522, 0.07217499, 0.01933390,
+      0.1191920, 0.9503041], 1, 1)
+END METHOD
+
+METHOD XYZTosRGB(xyz)
+    rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
+      -0.9692660, 1.876011, 0.04155602, 0.05564343,
+      -0.2040259, 1.057225], 1, 1)
+    return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+END METHOD
+</pre>
+
 <p><a id=CIE_L_a_b></a></p>
 
 <h3>CIE L*a*b*</h3>
@@ -666,10 +738,8 @@ END METHOD
 
 <ul>
 <li>the <code>SRGBToLab</code> method convers a nonlinearized sRGB color to CIE L*a*b*,</li>
-<li>the <code>SRGBFromLab</code> method performs the opposite conversion,</li>
+<li>the <code>SRGBFromLab</code> method performs the opposite conversion, and</li>
 <li>the L*a*b* color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a L*a*b* color relative to the D50/2-degree white point instead),</li>
-<li><code>XYZTosRGB(xyz)</code> converts a color in the CIE&#39;s <a href="#Colors_as_Spectral_Functions"><em>XYZ color model</em></a> (<code>xyz</code>) to nonlinearized sRGB, and</li>
-<li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color.</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -710,53 +780,13 @@ METHOD LabToNormXYZ(xyz)
     return xyz
 END METHOD
 
-// Converts linear RGB to XYZ given a matrix, then divides
-// XYZ by a reference white point (in the form of
-// capital-X and capital-Z values).  White point (1, 1) means
-// a straight RGB-to-XYZ conversion.
-METHOD RGBToNormXYZ(rgb, xyzmatrix, whitex, whitez)
-    x=rgb[0]*xyzmatrix[0]+rgb[1]*xyzmatrix[1]+rgb[2]*xyzmatrix[2]
-    y=rgb[0]*xyzmatrix[3]+rgb[1]*xyzmatrix[4]+rgb[2]*xyzmatrix[5]
-    z=rgb[0]*xyzmatrix[6]+rgb[1]*xyzmatrix[7]+rgb[2]*xyzmatrix[8]
-    // NOTE: At this point, &quot;x, y, z&quot;
-    return [x/whitex, y, z/whitez]
-END METHOD
-
-// Multiplies XYZ by a reference white point (in the form of
-// capital-X and capital-Z values), then converts XYZ to
-// linear RGB given a matrix.  White point (1, 1) means
-// a straight XYZ-to-RGB conversion.
-METHOD NormXYZToRGB(xyz, xyzmatrix, whitex, whitez)
-    x=xyz[0]*whitex
-    y=xyz[1]
-    z=xyz[2]*whitez
-    r=x*xyzmatrix[0]+y*xyzmatrix[1]+z*xyzmatrix[2]
-    g=x*xyzmatrix[3]+y*xyzmatrix[4]+z*xyzmatrix[5]
-    b=x*xyzmatrix[6]+y*xyzmatrix[7]+z*xyzmatrix[8]
-    return [r,g,b]
-END METHOD
-
-METHOD XYZFromsRGB(rgb)
-    lin=LinearFromsRGB3(rgb)
-return NormXYZToRGB(lin, [0.4124564, 0.3575761, 0.1804375,
-      0.2126729, 0.7151522, 0.07217499, 0.01933390,
-      0.1191920, 0.9503041], 1, 1)
-END METHOD
-
-METHOD XYZTosRGB(xyz)
-    rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
-      -0.9692660, 1.876011, 0.04155602, 0.05564343,
-      -0.2040259, 1.057225], 1, 1)
-    return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
-END METHOD
-
 METHOD SRGBToLab(rgb)
     lin=LinearFromsRGB3(rgb)
     // XYZ conversion for D65 reference white.
     xyz=RGBToNormXYZ(lin, [0.4124564, 0.3575761, 0.1804375,
       0.2126729, 0.7151522, 0.07217499, 0.01933390,
       0.1191920, 0.9503041], 0.95047, 1.08883)
-    // Note: For an XYZ conversion for the D50 reference white,
+    // Note: For an XYZ conversion for the D50/2-degree reference white,
     // for use in International Color Consortium (ICC) v2 profiles,
     // for example, use the following line instead:
     // xyz=RGBToNormXYZ(lin, [0.4360747, 0.3850649, 0.1430804,
@@ -771,7 +801,7 @@ METHOD SRGBFromLab(lab)
     rgb=NormXYZToRGB(xyz, [3.240454, -1.537139, -0.4985314,
       -0.9692660, 1.876011, 0.04155602, 0.05564343,
       -0.2040259, 1.057225], 0.95047, 1.08883)
-    // Note: For an XYZ conversion for the D50 reference white,
+    // Note: For an XYZ conversion for the D50/2-degree reference white,
     // for use in ICC v2 profiles, for example, use the following line instead:
     // rgb=NormXYZToRGB(xyz, [3.133856, -1.616867, -0.4906146,
     //    -0.9787684, 1.916141, 0.03345398, 0.07194529,
@@ -949,10 +979,22 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 
 <h3>Luminance (Grayscale)</h3>
 
-<p>Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; 0 means
-black and 1 means white.  Luminance is equivalent to the Y-axis in the CIE&#39;s <a href="#Colors_as_Spectral_Functions"><em>XYZ color model</em></a>. For <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color spaces</a>, luminance can be found by calculating <code>(color[0] * r +color[1] * g + color[2] * b)</code>,
+<p>Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; luminance is equivalent to the Y-axis in the CIE&#39;s <a href="#CIE_XYZ"><em>XYZ color model</em></a>.</p>
+
+<ul>
+<li>For <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color spaces</a>&mdash;
+
+<ul>
+<li>luminance can be found by calculating <code>(color[0] * r +color[1] * g + color[2] * b)</code>,
 where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (luminances) of the RGB color space&#39;s red, green, and blue
-points, respectively.<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note9">(9)</a></sup> (Note that applying that same formula to <em>nonlinearized RGB</em> colors results in a value more properly called <a href="#Y_CbCr"><em>luma</em></a>, not luminance; see C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;YUV and luminance considered harmful&quot;</a>.) An example follows for sRGB:</p>
+points, respectively<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note9">(9)</a></sup>,</li>
+<li>the RGB color space&#39;s &quot;black point&quot; has a luminance of 0, and</li>
+<li>the RGB color space&#39;s white point has a luminance of 1.</li>
+</ul></li>
+<li>Applying the formula just given to <em>nonlinearized RGB</em> colors results in a value more properly called <em>luma</em>, not luminance; see C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;YUV and luminance considered harmful&quot;</a>.</li>
+</ul>
+
+<p>An example follows for sRGB:</p>
 
 <ul>
 <li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y values of red/green/blue<sup><a href="#Note2">(2)</a></sup>).</li>
@@ -1353,7 +1395,7 @@ END METHOD
 wavelength of the visible spectrum.  There are two cases of objects that provoke such a color sensation:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <em>XYZ color model</em>. (Here, the Y coordinate of an XYZ color is also called <a href="#Luminance_Grayscale"><em>luminance</em></a>.) Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
+<li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <a href="#CIE_XYZ"><em>XYZ color model</em></a>.  Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
 <li><strong>Reflective objects.</strong> Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  The light received by the object is called an <em>illuminant</em>, and finding an object&#39;s perceived color requires knowing its reflectance curve, the illuminant&#39;s spectral power distribution, and the color matching functions in use.</li>
 </ul>
 
@@ -1373,9 +1415,9 @@ wavelength of the visible spectrum.  There are two cases of objects that provoke
 <li><code>WavelengthTosRGB</code> computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code>.</li>
 </ul>
 
-<p>There are various choices for the <code>ILLUM</code> and <code>CMF</code> functions.  Popular choices include the D65 illuminant and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the <a href="#sRGB_and_Linearized_RGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+<p>There are various choices for the <code>ILLUM</code> and <code>CMF</code> functions.  Popular choices include the D65 illuminant (a theoretical light source) and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the <a href="#sRGB_and_Linearized_RGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
-<p>Note that for purposes of color reproduction, only wavelengths within the range 360-740 nm (0.36-0.74 &mu;m) are relevant in practice.</p>
+<p>Note that for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.</p>
 
 <pre>METHOD SpectrumToXYZ()
     i = 360 # Start of visible spectrum
@@ -1420,7 +1462,24 @@ END METHOD
 <pre>METHOD ILLUM(wavelength)
     meters = wavelength*pow(10, -9)
     num = 3.74183*pow(10, -16)*pow(meters, -5)
-return num / (exp(0.014388/(meters*TEMP)) - 1)
+    return num / (exp(0.014388/(meters*TEMP)) - 1)
+END METHOD
+</pre>
+
+<p>The following method (<code>XYZToCCT</code>) computes an approximate color temperature, in kelvins, from an
+<a href="#CIE_XYZ">XYZ color</a>. Because of the limited perceived color range of light emitted by ideal black-body
+radiators (namely red, orange, pale yellow, white, or sky blue), the color temperature found by
+this formula is often called <em>correlated color temperature</em> (CCT).  The formula given here is based on
+the one found in McCamy 1992.</p>
+
+<pre>METHOD XYZToCCT(xyz)
+    sum = xyz[0] + xyz[1] + xyz[2]
+    // Adjust sum to avoid division by 0
+    if sum == 0: sum = 0.00001
+    sx = xyz[0] / sum
+    sy = xyz[1] / sum
+    c = (sx - 0.3320) / (0.1858 - sy)
+    return ((449*c+3525)*c+6823.3)*c+5520.33
 END METHOD
 </pre>
 
@@ -1526,7 +1585,7 @@ this page are welcome.</p>
 
 <p><sup id=Note3>(3)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>nonlinearized</em> RGB color spaces, respectively, in this document.</p>
 
-<p><sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.</p>
+<p><sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, luminance, as used in this document, is ultimately relative to a reference white point, such as that used by the sRGB color space, rather than being expressed in absolute units such as candelas per square meter.)</p>
 
 <p><sup id=Note5>(5)</sup> A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
 
