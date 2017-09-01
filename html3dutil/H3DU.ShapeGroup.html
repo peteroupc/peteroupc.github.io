@@ -316,7 +316,7 @@ rather than the transform for each shape in the group.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>material</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br><a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in the <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">sRGB color space</a>.</li>
+<li><code>material</code> (Type: <a href="H3DU.Texture.html">H3DU.Texture</a> | String)<br><a href="H3DU.Texture.html">H3DU.Texture</a> object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet. This parameter can also be a <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a> object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">nonlinearized sRGB</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
