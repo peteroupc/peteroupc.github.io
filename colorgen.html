@@ -139,7 +139,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li>The abbreviation <em>ICC</em> means the International Color Consortium.</li>
 <li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
 <li>The term <em>linearized</em> refers to RGB colors with a linear relationship of emitted light (rather than perceived light).</li>
-<li>The term <em>nonlinearized</em> or <em>companded</em> refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).<sup><a href="#Note3">(3)</a></sup></li>
+<li>The term <em>nonlinearized</em> or <em>companded</em> refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup><a href="#Note3">(3)</a></sup></li>
 </ul>
 
 <p><a id=Utility_Functions></a></p>
@@ -742,7 +742,7 @@ END METHOD
 <ul>
 <li>the <code>SRGBToLab</code> method convers a nonlinearized sRGB color to CIE <em>L*a*b*</em>,</li>
 <li>the <code>SRGBFromLab</code> method performs the opposite conversion, and</li>
-<li>the <em>L*a*b*</em> color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a <em>L*a*b*</em> color relative to the D50/2-degree white point instead, e.g., for interoperability with applications color-managed with International Color Consortium v2 profiles),</li>
+<li>the <em>L*a*b*</em> color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a <em>L*a*b*</em> color relative to the D50/2-degree white point instead, e.g., for interoperability with applications color-managed with ICC v2 profiles),</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -1062,9 +1062,7 @@ is transformed with a color matrix (<code>matrix</code>) as follows:</p>
 <ul>
 <li><strong>Sepia</strong>: <code>[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]</code>.</li>
 <li><strong>Saturate</strong>: <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> is
-a saturation factor (0 for totally saturated and 1 for totally unsaturated), and <code>r</code>, <code>g</code>, and <code>b</code> are the
-upper-case-Y components of the RGB color space&#39;s red, green, and blue points,
-respectively (see &quot;<a href="#Luminance_Grayscale">Luminance (Grayscale)</a>&quot;)<sup><a href="#Note2">(2)</a></sup>
+a saturation factor (0 for totally saturated and 1 for totally unsaturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Grayscale">Luminance (Grayscale)</a>&quot;
 (the source recommends different values for <code>r</code>, <code>g</code>, and <code>b</code> <sup><a href="#Note8">(8)</a></sup>).</li>
 <li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle in radians.<sup><a href="#Note8">(8)</a></sup></li>
 </ul>
