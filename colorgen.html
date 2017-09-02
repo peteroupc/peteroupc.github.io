@@ -1456,7 +1456,7 @@ END METHOD
 
 <p>Another choice for <code>LIGHT</code> is the formula for finding the spectral power of a blackbody (an idealized object that emits light based only on its temperature).  Such a formula is useful for converting <strong>color temperature</strong> to RGB colors.  The formula follows, where <code>TEMP</code> is the blackbody&#39;s temperature in kelvins (source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;):</p>
 
-<pre>METHOD ILLUM(wavelength)
+<pre>METHOD LIGHT(wavelength)
     meters = wavelength*pow(10, -9)
     num = 3.74183*pow(10, -16)*pow(meters, -5)
     return num / (exp(0.014388/(meters*TEMP)) - 1)
@@ -1553,8 +1553,8 @@ passed at once to the <code>WGM</code> function just given must be from the same
 <li>&quot;21&quot;, &quot;22&quot;, &quot;23&quot;, &quot;24&quot;, &quot;27&quot;, &quot;28&quot;: Turns off the feature mentioned earlier in &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;7&quot;, or &quot;8&quot;, respectively.</li>
 <li>&quot;3&quot; followed by one of the <em>color numbers</em> below: Dimmer foreground color.</li>
 <li>&quot;4&quot; followed by color number: Dimmer background color.</li>
-<li>&quot;10&quot; followed by color number: Brighter foreground color.</li>
-<li>&quot;11&quot; followed by color number: Brighter background color.</li>
+<li>&quot;9&quot; followed by color number: Brighter foreground color.</li>
+<li>&quot;10&quot; followed by color number: Brighter background color.</li>
 </ul>
 
 <p>The <em>color number</em> is one of the following, whose RGB color value can vary with the implementation: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the ANSI SGR codes given here.</p>

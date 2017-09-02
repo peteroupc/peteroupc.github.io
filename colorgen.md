@@ -1217,7 +1217,7 @@ Note that for purposes of color reproduction, only wavelengths within the range 
 
 Another choice for `LIGHT` is the formula for finding the spectral power of a blackbody (an idealized object that emits light based only on its temperature).  Such a formula is useful for converting **color temperature** to RGB colors.  The formula follows, where `TEMP` is the blackbody's temperature in kelvins (source: J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)"):
 
-    METHOD ILLUM(wavelength)
+    METHOD LIGHT(wavelength)
         meters = wavelength*pow(10, -9)
         num = 3.74183*pow(10, -16)*pow(meters, -5)
         return num / (exp(0.014388/(meters*TEMP)) - 1)
@@ -1304,8 +1304,8 @@ Some command-line shells support coloring the background or foreground of text. 
 - "21", "22", "23", "24", "27", "28": Turns off the feature mentioned earlier in "1", "2", "3", "4", "7", or "8", respectively.
 - "3" followed by one of the _color numbers_ below: Dimmer foreground color.
 - "4" followed by color number: Dimmer background color.
-- "10" followed by color number: Brighter foreground color.
-- "11" followed by color number: Brighter background color.
+- "9" followed by color number: Brighter foreground color.
+- "10" followed by color number: Brighter background color.
 
 The _color number_ is one of the following, whose RGB color value can vary with the implementation: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here.
 
