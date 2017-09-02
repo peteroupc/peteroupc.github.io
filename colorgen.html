@@ -140,6 +140,8 @@ programming interface, document format, or plotting or charting technology.</p><
 <li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
 <li>The term <em>linearized</em> refers to RGB colors with a linear relationship of emitted light (rather than perceived light).</li>
 <li>The term <em>nonlinearized</em> or <em>companded</em> refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup><a href="#Note3">(3)</a></sup></li>
+<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 color matching functions.</li>
+<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 color matching functions.</li>
 </ul>
 
 <p><a id=Utility_Functions></a></p>
@@ -667,22 +669,16 @@ END METHOD
 
 <ul>
 <li>In one convention (&quot;absolute XYZ&quot;), the Y component represents a luminance in candelas per square meter.</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.</li>
-</ul>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point.</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.</li>
 </ul>
 
 <p>In the following pseudocode&mdash;</p>
 
 <ul>
-<li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color,</li>
-<li><code>XYZTosRGB(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB,</li>
-<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where the XYZ color is relative to the CIE 1931 2-degree color matching functions and the D50 illuminant (rather than those functions and the D65 illuminant, as is usually the case for sRGB), e.g., for interoperability with applications color-managed with ICC v2 profiles, and</li>
-<li><code>XYZTosRGBD50(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, where the XYZ color is relative to the 2-degree functions and D50 illuminant.</li>
+<li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB),</li>
+<li><code>XYZTosRGB(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D65 white point,</li>
+<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC v2 profiles, and</li>
+<li><code>XYZTosRGBD50(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D50 white point.</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -724,6 +720,12 @@ METHOD XYZTosRGB(xyz)
 END METHOD
 </pre>
 
+<p><strong>Note:</strong></p>
+
+<ul>
+<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point.</li>
+</ul>
+
 <p><a id=CIE__L_a_b></a></p>
 
 <h3>CIE <em>L*a*b*</em></h3>
@@ -742,7 +744,7 @@ END METHOD
 <ul>
 <li>the <code>SRGBToLab</code> method convers a nonlinearized sRGB color to CIE <em>L*a*b*</em>,</li>
 <li>the <code>SRGBFromLab</code> method performs the opposite conversion, and</li>
-<li>the <em>L*a*b*</em> color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a <em>L*a*b*</em> color relative to the D50/2-degree white point instead, e.g., for interoperability with applications color-managed with ICC v2 profiles),</li>
+<li>the <em>L*a*b*</em> color <code>[100, 0, 0]</code> is the same as the D65 white point (the comments show how to get a <em>L*a*b*</em> color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC v2 profiles),</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -779,15 +781,15 @@ METHOD LabToXYZ(xyz,wpx,wpz)
     else
             xyz[1]=lab[0]*27/24389.0 // See BruceLindbloom.com
     end
-    xyz[0]*=wpx
-    xyz[2]*=wpz
+    xyz[0]=xyz[0]*wpx
+    xyz[2]=xyz[2]*wpz
     return xyz
 END METHOD
 
 METHOD SRGBToLab(rgb)
     xyz=XYZFromsRGB(rgb)
     return XYZToLab(xyz, 0.9504559, 1.089058)
-    // Note: For an XYZ conversion for the D50/2-degree reference white,
+    // Note: For an XYZ conversion for the D50 white point,
     // use the following lines instead:
     // xyz=XYZFromsRGBD50(rgb)
     // return XYZToLab(xyz, 0.9642957, 0.8251046)
@@ -796,7 +798,7 @@ END METHOD
 METHOD SRGBFromLab(lab)
     xyz=LabToXYZ(lab, 0.9504559, 1.089058)
     return XYZTosRGB(rgb)
-    // Note: For an XYZ conversion for the D50/2-degree reference white,
+    // Note: For an XYZ conversion for the D50 white point,
     // use the following lines instead:
     // xyz= LabToXYZ(lab, 0.9642957, 0.8251046)
     // return XYZTosRGBD50(rgb)
@@ -995,7 +997,7 @@ adaptation are outside the scope of this document, but see the examples. (See al
 
 <ul>
 <li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y values of red/green/blue<sup><a href="#Note2">(2)</a></sup>).</li>
-<li><strong>sRGB with D50/2-degree white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code> (for interoperability with applications color-managed with ICC v2 profiles).</li>
+<li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code> (for interoperability with applications color-managed with ICC v2 profiles).</li>
 </ul>
 
 <p>In the sections that follow, the method <strong><a href="#Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the luminance of the color <code>color</code>.</p>
