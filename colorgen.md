@@ -95,7 +95,7 @@ In this document:
 - The abbreviation _ICC_ means the International Color Consortium.
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
-- The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a fairly linear relationship of perceived light).<sup>[(3)](#Note3)</sup>
+- The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup>[(3)](#Note3)</sup>
 
 <a id=Utility_Functions></a>
 ### Utility Functions
@@ -627,7 +627,7 @@ A color in CIE _L\*a\*b\*_ consists of three components, in the following order:
 In the following pseudocode, which converts a color between nonlinearized sRGB and CIE _L\*a\*b\*_&mdash;
 - the `SRGBToLab` method convers a nonlinearized sRGB color to CIE _L\*a\*b\*_,
 - the `SRGBFromLab` method performs the opposite conversion, and
-- the _L\*a\*b*_ color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a _L\*a\*b\*_ color relative to the D50/2-degree white point instead, e.g., for interoperability with applications color-managed with International Color Consortium v2 profiles),
+- the _L\*a\*b*_ color is relative to the white point determined by the CIE 1931 2-degree color matching functions and the D65 illuminant (the comments show how to get a _L\*a\*b\*_ color relative to the D50/2-degree white point instead, e.g., for interoperability with applications color-managed with ICC v2 profiles),
 
 The pseudocode follows.
 
@@ -898,9 +898,7 @@ Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
- a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are the
- upper-case-Y components of the RGB color space's red, green, and blue points,
- respectively (see "[Luminance (Grayscale)](#Luminance_Grayscale)")<sup>[(2)](#Note2)</sup>
+ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are as defined in the section "[Luminance (Grayscale)](#Luminance_Grayscale)"
  (the source recommends different values for `r`, `g`, and `b` <sup>[(8)](#Note8)</sup>).
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(8)](#Note8)</sup>
 
