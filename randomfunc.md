@@ -2,24 +2,26 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 30, 2017.
+Begun on June 4, 2017; last updated on Sep. 3, 2017.
 
-Discusses many ways in which applications can extract random numbers from RNGs and includes pseudocode for most of them.
+Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
 <a id=Introduction></a>
 ## Introduction
 
 This page discusses many ways applications can extract random numbers
-from random number generators (RNGs) and includes pseudocode for most
+from an underlying random number generator (RNG) and includes pseudocode for most
 of them.
 
 As used in this document, a random number generator&mdash;
 - seeks to generate numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(6)](#Note6)</sup>,
-- can seek to generate random numbers that are cost-prohibitive to predict (also called "cryptographically strong" RNGs), or merely seek to generate number sequences likely to pass statistical tests of randomness,
+- can seek to generate random numbers that are cost-prohibitive (but not necessarily _impossible_) to predict, or merely seek to generate number sequences likely to pass statistical tests of randomness,
 - can be initialized automatically before use, or can be initialized with an application-specified "seed", and
 - can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.
 
-The methods presented on this page apply to all those kinds of RNGs unless otherwise noted. Moreover, recommendations on which RNGs are suitable for which applications are generally outside the scope of this page;  I have written about this in [another document](https://peteroupc.github.io/random.html).
+All the random number methods presented on this page assume the existence of an underlying RNG.
+
+This page does not describe the nature of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind, or how that RNG is implemented at a low level), and in general, the methods presented in this document do not assume any particular quality of the underlying RNG.  Moreover, with few exceptions, neither does this page make recommendations on which RNGs are suitable for which applications;  I have written about this in [another document](https://peteroupc.github.io/random.html).
 
 This methods described in this document can be categorized as follows:
 - Methods to generate uniformly distributed random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
@@ -126,7 +128,7 @@ In this document, the following terms are used:
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
 
-This section describes how RNGs can be used to generate uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
+This section describes how an underlying RNG can be used to generate uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
 
 * Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTRANGEEXC`.
 * Random Bits: `RNDBITS`.
