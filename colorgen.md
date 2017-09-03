@@ -564,8 +564,8 @@ The CIE's _XYZ color model_ is a transformation of a distribution of light into 
 
 There are at least two conventions for XYZ colors:
 
-- In one convention ("absolute XYZ"), the Y component represents a luminance in candelas per square meter.
-- In another convention ("relative XYZ"), the three components are normalized to a reference white point and "black point", such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the "black point", then divided by the absolute-Y difference between the white point and the "black point", then multiplied by a normalizing factor such as 1 or 100.
+- In one convention ("absolute XYZ"), the Y component represents a luminance in candelas per square meter (cd/m<sup>2</sup>).
+- In another convention ("relative XYZ"), the three components are normalized to a reference white point and "black point", such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the "black point", then divided by the absolute-Y difference between the white point and the "black point", then multiplied by a normalizing factor such as 1 or 100.  In this sense, the "black point" is generally, but not always, the absolute XYZ color `[0, 0, 0]`, that is, one having a Y component (luminance) of 0 cd/m<sup>2</sup>.
 
 In the following pseudocode&mdash;
 
@@ -614,7 +614,7 @@ The pseudocode follows.
 
 **Note:**
 
-- In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point.
+- In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point and 0 for a color with an ideal luminance of 0 cd/m<sup>2</sup>.
 
 <a id=CIE__L_a_b></a>
 ### CIE _L\*a\*b\*_
@@ -858,7 +858,7 @@ In the sections that follow, the method **[`Luminance(color)`](#Luminance_Graysc
 
 Applications of luminance include the following:
 - **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
-- **Black and White.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
+- **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
 - **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  For example, if [`Luminance(color)`](#Luminance_Grayscale) is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.
     - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the _relative luminance_ of a color, as defined in the guidelines<sup>[(4)](#Note4)</sup>; `brighter` is the color with higher relative luminance; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
 

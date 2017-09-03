@@ -668,8 +668,8 @@ END METHOD
 <p>There are at least two conventions for XYZ colors:</p>
 
 <ul>
-<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents a luminance in candelas per square meter.</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.</li>
+<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents a luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the &quot;black point&quot; is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code>, that is, one having a Y component (luminance) of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
 <p>In the following pseudocode&mdash;</p>
@@ -723,7 +723,7 @@ END METHOD
 <p><strong>Note:</strong></p>
 
 <ul>
-<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point.</li>
+<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point and 0 for a color with an ideal luminance of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
 <p><a id=CIE__L_a_b></a></p>
@@ -1006,7 +1006,7 @@ adaptation are outside the scope of this document, but see the examples. (See al
 
 <ul>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
-<li><strong>Black and White.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
+<li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
 <li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.
 
 <ul>
