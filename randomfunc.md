@@ -11,15 +11,17 @@ Discusses many ways in which applications can extract random numbers from an und
 
 This page discusses many ways applications can extract random numbers from an underlying random number generator (RNG) and includes pseudocode for most of them.
 
-As used in this document, a random number generator&mdash;
-- seeks to generate numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(6)](#Note6)</sup>,
-- can seek to generate random numbers that are cost-prohibitive (but not necessarily _impossible_) to predict, or merely seek to generate number sequences likely to pass statistical tests of randomness,
-- can be initialized automatically before use, or can be initialized with an application-specified "seed", and
-- can use a deterministic algorithm, or primarily rely on one or more nondeterministic sources for random number generation.
+As used in this document, a _random number generator_ is a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(6)](#Note6)</sup>.  This definition includes RNGs that&mdash;
+- seek to generate random numbers that are at least cost-prohibitive (but not necessarily _impossible_) to predict,
+- merely seek to generate number sequences likely to pass statistical tests of randomness,
+- are initialized automatically before use,
+- are initialized with an application-specified "seed",
+- use a deterministic algorithm for random number generation, and/or
+- primarily rely on one or more nondeterministic sources for random number generation.
 
 All the random number methods presented on this page assume the existence of an underlying RNG.
 
-This page does not describe the nature of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind, or how that RNG is implemented at a low level), and in general, the methods presented in this document do not assume any particular quality of the underlying RNG.  Moreover, with few exceptions, neither does this page make recommendations on which RNGs are suitable for which applications;  I have written about this in [another document](https://peteroupc.github.io/random.html).
+This page does not describe the nature of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind, or how that RNG is implemented at a low level), and in general, the methods presented in this document do not assume any particular quality of the underlying RNG.  Moreover, in general, this page does not make recommendations on which RNGs are suitable for which applications;  I have written about this in [another document](https://peteroupc.github.io/random.html).
 
 This methods described in this document can be categorized as follows:
 - Methods to generate uniformly distributed random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
@@ -147,7 +149,7 @@ In this section:
 * The term _modulus_ means an integer that is 1 higher than the highest integer that an RNG can output.
 * The four kinds of RNG mentioned in this section are assumed to seek to generate random numbers that are approximately uniformly distributed.
 
-If the RNG outputs **integers 0 or greater and less than a positive integer** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  In the pseudocode below, `MODULUS` is the RNG's modulus.   Note that all the variables in this method are unsigned integers.  (For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).)
+If the underlying RNG outputs **integers 0 or greater and less than a positive integer** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  In the pseudocode below, `MODULUS` is the RNG's modulus.   Note that all the variables in this method are unsigned integers.  (For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).)
 
     METHOD RNDINT(maxInclusive)
       // maxInclusive must be 0 or greater
@@ -181,7 +183,7 @@ If the RNG outputs **integers 0 or greater and less than a positive integer** (f
       end
     END METHOD
 
-If the RNG outputs **integers 0 or greater and less than a positive integer that's a power of two**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(maxInclusive)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
+If the underlying RNG outputs **integers 0 or greater and less than a positive integer that's a power of two**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(maxInclusive)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
 
 - If the RNG outputs random 32-bit integers, `MODULUS` is 2<sup>32</sup> and `MODBITS` is 32.
 - If the RNG outputs random 8-bit bytes, `MODULUS` is 256 and `MODBITS` is 8.
@@ -249,13 +251,13 @@ Note that all the variables in this method are unsigned integers.
 
 Note that this implementation of `RNDINT(maxInclusive)` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  It would be outside the scope of this document to describe how a more sophisticated implementation may save those bits for later reuse.
 
-If the RNG outputs **fixed-point numbers 0 or greater and less than a positive integer**, that is, numbers with a fixed number of fractional parts, then find `A` and `B`, where `A` is the greatest integer that is less than the highest number the RNG can output, and `B` is the number of fractional parts the fixed-point number format can have, and use one of the two methods given above depending on whether `A * B` is a power of two (`A * B` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * B)` instead.
+If the underlying RNG outputs **fixed-point numbers 0 or greater and less than a positive integer**, that is, numbers with a fixed number of fractional parts, then find `A` and `B`, where `A` is the greatest integer that is less than the highest number the RNG can output, and `B` is the number of fractional parts the fixed-point number format can have, and use one of the two methods given above depending on whether `A * B` is a power of two (`A * B` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * B)` instead.
 
-If the RNG outputs **floating-point numbers 0 or greater and less than 1**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use one of the two methods given above depending on whether `s` is a power of two (`s` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
+If the underlying RNG outputs **floating-point numbers 0 or greater and less than 1**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use one of the two methods given above depending on whether `s` is a power of two (`s` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
 
 ----------------
 
-The underlying RNG can be other than already described in this section; however, a detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and is other than already described in this section should send me a comment.
+The underlying RNG can be other than already described in this section; however, a detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
 
 _**Note:** To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`._
 

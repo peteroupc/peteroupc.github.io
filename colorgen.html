@@ -71,6 +71,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#HWB">HWB</a></li>
 <li><a href="#CIE_XYZ">CIE XYZ</a></li>
 <li><a href="#CIE__L_a_b">CIE <em>L*a*b*</em></a></li>
+<li><a href="#CIE__L_u_v">CIE <em>L*u*v*</em></a></li>
 <li><a href="#CMYK">CMYK</a></li>
 <li><a href="#Y_prime_C_sub__B__sub_C_sub__R__sub">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a></li>
 </ul></li>
@@ -151,7 +152,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <p>In the pseudocode below, the utility function&mdash;</p>
 
 <ul>
-<li><code>Lerp3</code>, returns a blended form of two lists of three numbers (<code>list1</code> and <code>list2</code>); here, <code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>, and <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language);</li>
+<li><code>Lerp3</code> returns a blended form of two lists of three numbers (<code>list1</code> and <code>list2</code>); here, <code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>, and <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language);</li>
 <li><code>Clamp</code> returns <code>minimum</code> if the given value is less than <code>minimum</code>, <code>maximum</code> if greater than <code>maximum</code>,
 or <code>value</code> otherwise, and is equivalent to <code>clamp</code> in GLSL;</li>
 <li><code>Clamp3</code> applies the <code>Clamp</code> function separately to each item of a three-element list; here, <code>value</code>, <code>minimum</code>,
@@ -273,7 +274,6 @@ of the formats described below, and <code>color</code> is an RGB color in <a hre
 <p>Special cases of these formats include the following:</p>
 
 <ul>
-<li><strong>4/4/4 format:</strong> As 12-bit integers (4 bits per component).</li>
 <li><strong>5/5/5 format:</strong> As 15-bit integers (5 bits per component).</li>
 <li><strong>5/6/5 format:</strong> As 16-bit integers (5 bits each for red and blue, and 6 bits for green).</li>
 <li><strong>8/8/8 format:</strong> As 24-bit integers (8 bits per component).</li>
@@ -434,7 +434,7 @@ END METHOD
 
 <p>Although many RGB working spaces are linearized by <em>gamma decoding</em>, sRGB is different; the formula to use to linearize sRGB colors (the sRGB <em>transfer function</em>) is similar to, but is not, applying a gamma exponent of 2.2.</p>
 
-<p>The following methods linearize and de-linearize sRGB colors.</p>
+<p>The following methods linearize and de-linearize sRGB colors.  (Note that <code>0.4045</code> and <code>0.0031308</code> are those of the sRGB standard of the International Electrotechnical Commission; the sRGB proposal has different values for these thresholds.)</p>
 
 <pre>// Convert a color component from nonlinearized to linearized RGB
 METHOD LinearFromsRGB(c)
@@ -541,7 +541,7 @@ END METHOD
 <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSL</a> (also known as HLS), like HSV, is a color model that transforms RGB colors to ease intuition.  An HSL color consists of three components, in the following order:</p>
 
 <ul>
-<li><em>Hue</em>, or angle in the color wheel, is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).</li>
+<li><em>Hue</em>, which is the same for a given RGB color as in HSV.</li>
 <li>A component called &quot;saturation&quot; is the distance of the color from gray (but not necessarily from
 black or white), which is 0 or greater and 1 or less.</li>
 <li>A component variously called &quot;lightness&quot;, &quot;luminance&quot;, or &quot;luminosity&quot;, is roughly the amount
@@ -622,7 +622,6 @@ END METHOD
 <p>In the rest of this document&mdash;</p>
 
 <ul>
-<li><strong><code>HSLHue(color)</code></strong> is the HSL &quot;hue&quot; component of a color, that is, <code>RgbToHsl(color)[0]</code>,</li>
 <li><strong><code>HSLSat(color)</code></strong> is the HSL &quot;saturation&quot; component of a color, that is, <code>RgbToHsl(color)[1]</code>, and</li>
 <li><strong><code>HSLLgt(color)</code></strong> is the HSL &quot;lightness&quot; component of a color, that is, <code>RgbToHsl(color)[2]</code>.</li>
 </ul>
@@ -677,7 +676,7 @@ END METHOD
 <ul>
 <li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB),</li>
 <li><code>XYZTosRGB(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D65 white point,</li>
-<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC v2 profiles, and</li>
+<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>xyz</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and</li>
 <li><code>XYZTosRGBD50(xyz)</code> converts an XYZ color (<code>xyz</code>) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D50 white point.</li>
 </ul>
 
@@ -720,10 +719,16 @@ METHOD XYZTosRGB(xyz)
 END METHOD
 </pre>
 
-<p><strong>Note:</strong></p>
+<p><strong>Notes:</strong></p>
 
 <ul>
 <li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point and 0 for a color with an ideal luminance of 0 cd/m<sup>2</sup>.</li>
+<li>An XYZ color (<code>xyz</code>) can be converted to &quot;xyY&quot; form (where the &quot;xy&quot; is <em>chromaticity</em> and &quot;Y&quot; is <em>luminance</em>) by generating
+<code>[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]</code>.  Note that if the sum of the XYZ components is 0, the result
+is undefined.</li>
+<li>A color in &quot;xyY&quot; form (<code>xyy</code>) can be converted to an XYZ color by generating
+<code>[xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]</code>.  Note that if the small-<code>y</code> component is 0,
+the result is undefined.</li>
 </ul>
 
 <p><a id=CIE__L_a_b></a></p>
@@ -739,12 +744,12 @@ END METHOD
 <li><em>a*</em> and <em>b*</em>, in that order, are coordinates of two axes that extend away from the gray line.</li>
 </ul>
 
-<p>In the following pseudocode, which converts a color between nonlinearized sRGB and CIE <em>L*a*b*</em>&mdash;</p>
+<p>In the following pseudocode&mdash;</p>
 
 <ul>
 <li>the <code>SRGBToLab</code> method convers a nonlinearized sRGB color to CIE <em>L*a*b*</em>,</li>
 <li>the <code>SRGBFromLab</code> method performs the opposite conversion, and</li>
-<li>the <em>L*a*b*</em> color <code>[100, 0, 0]</code> is the same as the D65 white point (the comments show how to get a <em>L*a*b*</em> color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC v2 profiles),</li>
+<li>the <em>L*a*b*</em> color <code>[100, 0, 0]</code> is the same as the D65 white point (the comments show how to get a <em>L*a*b*</em> color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC profiles)</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -788,6 +793,9 @@ END METHOD
 
 METHOD SRGBToLab(rgb)
     xyz=XYZFromsRGB(rgb)
+    // NOTE: The second and third parameters are the X and Z
+    // components of the D65 white point (which was converted
+    // from the x and y chromaticities of that white point).
     return XYZToLab(xyz, 0.9504559, 1.089058)
     // Note: For an XYZ conversion for the D50 white point,
     // use the following lines instead:
@@ -806,8 +814,7 @@ END METHOD
 </pre>
 
 <p>A color&#39;s <em>chroma</em> (or relative colorfulness) can be derived from a <em>L*a*b*</em> color
-with a method demonstrated in the following pseudocode.
-For sRGB, chroma ranges from 0 to about 145.9.  The closer chroma
+with a method demonstrated in the following pseudocode.  The closer chroma
 is to 0 &mdash; or the closer the point (<em>a*</em>, <em>b*</em>) is to the origin (0, 0) &mdash;
 the closer the color is to the &quot;gray&quot; line.</p>
 
@@ -834,7 +841,7 @@ with a method demonstrated in the following pseudocode. (Radians
 can be converted to degrees by multiplying by <code>180 / pi</code>.)  Hue is 0 or greater
 and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to magenta to red).</p>
 
-<pre>METHOD LabToHSLHue(lab)
+<pre>METHOD LabToHue(lab)
     h = atan2(lab[2], lab[1])
     if h &lt; 0: h = h + pi * 2
     return h
@@ -849,6 +856,77 @@ END METHOD
    return [lch[0], lch[1] * cos(lch[2]), lch[1] * sin(lch[2])]
 END METHOD
 </pre>
+
+<p><a id=CIE__L_u_v></a></p>
+
+<h3>CIE <em>L*u*v*</em></h3>
+
+<p>CIE <em>L*u*v*</em> is a second color model designed for color comparisons, but is probably less common
+than CIE <em>L*a*b*</em>.   <em>L*u*v*</em> is similar to <em>L*a*b*</em>, except that the three components
+are <em>L*</em>, or <em>lightness</em> of a color (which is the same as in <em>L*a*b*</em>), <em>u*</em>,
+and <em>v*</em>, in that order.</p>
+
+<p>In the following pseudocode&mdash;</p>
+
+<ul>
+<li>the <code>SRGBToLuv</code> method convers a nonlinearized sRGB color to CIE <em>L*u*v*</em>,</li>
+<li>the <code>SRGBFromLuv</code> method performs the opposite conversion, and</li>
+<li>the <em>L*u*v*</em> color <code>[100, 0, 0]</code> is the same as the D65 white point (the comments show how to get a <em>L*u*v*</em> color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC profiles).</li>
+</ul>
+
+<p>The pseudocode follows.</p>
+
+<pre>METHOD XYZToLuv(xyz, xwhite, zwhite)
+    lab=XYZToLab(xyz, xwhite, zwhite)
+    sum=xyz[0]+xyz[1]*15+xyz[2]*3
+    lt=lab[0]
+    if sum==0: return [lt, 0, 0]
+    upr=4*xyz[0]/sum // U-prime chromaticity
+    vpr=9*xyz[1]/sum // V-prime chromaticity
+    sumwhite=xwhite+15+zwhite*3
+    return [lt,
+            lt*13*(upr - 4*xyzwhite/sumwhite),
+            lt*13*(vpr - 9.0/sumwhite)]
+END METHOD
+
+METHOD LuvToXYZ(luv, xwhite, zwhite)
+    xyz=LabToXYZ([luv[0], 1, 1],xwhite,zwhite)
+    sumwhite=xwhite+15+zwhite*3
+    u0=4*xwhite/sumwhite
+    v0=9.0/sumwhite
+    lt=luv[0]
+    a=(52*lt/(luv[1]+13*u0*lt)-1)/3.0
+    d=xyz[1]*(39*lt/(luv[2]+13*v0*lt)-5)
+    x=(d+5*xyz[1])/(a+1.0/3)
+    z=x*a-5*xyz[1]
+    return [x,xyz[1],z]
+END METHOD
+
+METHOD SRGBToLuv(rgb)
+    xyz=XYZFromsRGB(rgb)
+    return XYZToLuv(xyz, 0.9504559, 1.089058)
+    // Note: For an XYZ conversion for the D50 white point,
+    // use the following lines instead:
+    // xyz=XYZFromsRGBD50(rgb)
+    // return XYZToLuv(xyz, 0.9642957, 0.8251046)
+END METHOD
+
+METHOD SRGBFromLuv(Luv)
+    xyz=LuvToXYZ(Luv, 0.9504559, 1.089058)
+    return XYZTosRGB(rgb)
+    // Note: For an XYZ conversion for the D50 white point,
+    // use the following lines instead:
+    // xyz= LuvToXYZ(Luv, 0.9642957, 0.8251046)
+    // return XYZTosRGBD50(rgb)
+END METHOD
+</pre>
+
+<p>Hue, chroma, and saturation can be derived from a
+<em>L*u*v*</em> color in a similar way as from a <em>L*a*b*</em>, color, with
+<em>u*</em> and <em>v*</em> used instead of <em>a*</em> and <em>b*</em>, respectively.
+The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabToSaturation</code>, and
+<code>LchToLab</code> methods from the previous section work with
+<em>L*u*v*</em> colors analogously to <em>L*a*b*</em> colors.</p>
 
 <p><a id=CMYK></a></p>
 
@@ -887,13 +965,16 @@ format with the components separated out (still 0 or greater and 255 or less). T
 
 <p>For all these variants, the transformation should be done using <a href="#sRGB_and_Linearized_RGB"><em>nonlinearized RGB</em> colors</a>.   For efficiency reasons, however, Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods given below.</p>
 
-<pre>METHOD RgbToYCbCr(rgb)
+<pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminances
+// in the NTSC color space
+METHOD RgbToYCbCr(rgb)
     y = floor(16.0+rgb[0]*0.25678824+rgb[1]*0.50412941+rgb[2]*0.097905882)
     cb = floor(128.0-rgb[0]*0.1482229-rgb[1]*0.29099279+rgb[2]*0.43921569)
     cr = floor(128.0+rgb[0]*0.43921569-rgb[1]*0.36778831-rgb[2]*0.071427373)
     return [y, cb, cr]
 END METHOD
 
+// NOTE: Derived from scaled YPbPr using red/green/blue BT.709 luminances
 METHOD RgbToYCbCr709(rgb)
     y = floor(0.06200706*rgb[2] + 0.6142306*rgb[1] + 0.1825859*rgb[0] + 16.0)
     cb = floor(0.4392157*rgb[2] - 0.338572*rgb[1] - 0.1006437*rgb[0] + 128.0)
@@ -901,6 +982,8 @@ METHOD RgbToYCbCr709(rgb)
     return [y, cb, cr]
 END METHOD
 
+// NOTE: Derived from unscaled YPbPr using red/green/blue luminances
+// in the NTSC color space
 METHOD RgbToYCbCrJpeg(rgb)
     y = floor(0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2])
     cb = floor(-0.1687359*rgb[0] - 0.3312641*rgb[1] + 0.5*rgb[2] + 128.0)
@@ -962,7 +1045,7 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 
 <ul>
 <li><code>Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])</code>, or</li>
-<li><code>HslToRgb(HSLHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))</code>,</li>
+<li><code>HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))</code>,</li>
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</p></li>
@@ -997,7 +1080,7 @@ adaptation are outside the scope of this document, but see the examples. (See al
 
 <ul>
 <li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y values of red/green/blue<sup><a href="#Note2">(2)</a></sup>).</li>
-<li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code> (for interoperability with applications color-managed with ICC v2 profiles).</li>
+<li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code> (for interoperability with applications color-managed with ICC profiles).</li>
 </ul>
 
 <p>In the sections that follow, the method <strong><a href="#Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the luminance of the color <code>color</code>.</p>
@@ -1028,21 +1111,25 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <p>The following techniques generate new colors that are related to existing colors.</p>
 
 <ul>
-<li><strong>Color harmonies</strong> result by generating several related colors, such as with the idiom <code>HslToRgb(HSLHue(color) + X, HSLSat(color), HSLLgt(color))</code>, where X is the following for each color:
+<li><strong>Color harmonies</strong> result by generating several related colors, such as with the idiom <code>HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))</code>, where X is the following for each color:
 
 <ul>
 <li><strong>Analogous</strong>: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, <em>analogous colors</em> are colors spaced at equal hue intervals from a central color.</li>
-<li><strong>Complementary</strong>: 0, &pi;.</li>
-<li><strong>Two-tone</strong>: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2.</li>
-<li><strong>Double complementary</strong>: 0, Y, &pi;, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.</li>
-<li><strong>Split complementary</strong>: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.</li>
-<li><strong>Triadic</strong>: 0, 2&pi;/3, 4&pi;/3.</li>
+<li><strong>Complementary</strong>: 0, &pi;.  This is the base hue with its opposite hue.</li>
+<li><strong>Split complementary</strong>: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.</li>
+<li><strong>Triadic</strong>: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.</li>
+<li><strong>Two-tone</strong>: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.</li>
+<li><strong>Double complementary</strong>: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.</li>
 </ul></li>
-<li><strong>Monochrome colors</strong>: Generate one or more <code>HslToRgb(HSLHue(color), S, L)</code>, where <code>S</code> is an arbitrary &quot;saturation&quot; and <code>L</code> is an arbitrary &quot;lightness&quot;.</li>
-<li><strong>HSL &quot;Lightness&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSLHue(color), HSLSat(color), L)</code>, where <code>L</code> is an arbitrary &quot;lightness&quot; (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).</li>
-<li><strong>HSL &quot;Saturation&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSLHue(color), S, HSLLgt(color))</code>, where <code>S</code> is an arbitrary &quot;saturation&quot;.</li>
+<li><strong>Monochrome colors</strong>: Colors with the same hue.  Examples of generating such colors include the following:
+
+<ul>
+<li><strong>Arbitrary monochrome colors</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), S, V)</code>, where <code>S</code> is an arbitrary saturation and <code>V</code> is an arbitrary brightness.</li>
+<li><strong>HSL &quot;Lightness&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSVHue(color), HSLSat(color), L)</code>, where <code>L</code> is an arbitrary &quot;lightness&quot; (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).</li>
+<li><strong>HSL &quot;Saturation&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSVHue(color), S, HSLLgt(color))</code>, where <code>S</code> is an arbitrary &quot;saturation&quot;.</li>
 <li><strong>HSV Brightness Adjustments</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), HSVSat(color), V)</code>, where <code>V</code> is an arbitrary brightness.</li>
 <li><strong>HSV Saturation Adjustments</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), S, HSVVal(color))</code>, where <code>S</code> is an arbitrary saturation.</li>
+</ul></li>
 </ul>
 
 <p><a id=Color_Matrices></a></p>
@@ -1190,7 +1277,7 @@ END METHOD
 
 <ul>
 <li>are expressed in a <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color space</a>, or</li>
-<li>are expressed in CIE <em>L*a*b*</em> (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 Delta-E color difference method, where differences around 2.3 are just noticeable (Mahy et al., 1994), and</li>
+<li>are expressed in CIE <em>L*a*b*</em> or CIE <em>L*u*v*</em> (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 Delta-E color difference method for the corresponding color model (for the <em>L*a*b*</em> Delta-E method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and</li>
 </ul></li>
 <li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
@@ -1293,7 +1380,7 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <h2>Color Maps</h2>
 
-<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors (which are usually related). Note that for best results, each color in a color map needs to be a <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color</a> rather than a nonlinearized one, but all the colors in a color map can be in any color space.</p>
+<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors (which are usually related). All the colors in a color map can be in any color space.</p>
 
 <ul>
 <li>To extract a <strong>continuous color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>)&mdash;
@@ -1304,16 +1391,8 @@ maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To extract a <strong>discrete color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>),
 generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
-<li><p>A <strong>rainbow color map</strong> uses the following <a href="#HSV">HSV</a> colors (<code>numColors</code> in total):</p>
-
-<pre>  list = NewList()
-  i = 0
-  for i &lt; numColors
-    AddItem(list, [i * (pi * 2) / (numColors - 1), 1.0, 1.0])
-    i = i + 1
-  end
-</pre></li>
-<li><p>The <a href="http://colorbrewer2.org/"><em>ColorBrewer 2.0</em></a> Web site contains many helpful suggestions for color maps.  The suggested color maps are designed above all to show discrete categories of data on land maps.</p></li>
+<li>The <strong>grayscale color map</strong> consists of the nonlinearized sRGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</li>
+<li>The <a href="http://colorbrewer2.org/"><em>ColorBrewer 2.0</em></a> Web site contains many helpful suggestions for color maps.  The suggested color maps are designed above all to show discrete categories of data on land maps.</li>
 </ul>
 
 <p><a id=Named_Colors></a></p>
@@ -1474,9 +1553,14 @@ the one found in McCamy 1992.</p>
     sum = xyz[0] + xyz[1] + xyz[2]
     // Adjust sum to avoid division by 0
     if sum == 0: sum = 0.00001
-    sx = xyz[0] / sum
-    sy = xyz[1] / sum
-    c = (sx - 0.3320) / (0.1858 - sy)
+    x = xyz[0] / sum
+    y = xyz[1] / sum
+    // NOTE: `x` and `y` (and optionally `z = 1 - x - y`)
+    // define the _chromaticity_ of an XYZ color
+    // (`x=y=z=0` actually has undefined chromaticity,
+    // but in such a case, the sum is changed to nonzero
+    // here for convenience).
+    c = (x - 0.3320) / (0.1858 - y)
     return ((449*c+3525)*c+6823.3)*c+5520.33
 END METHOD
 </pre>
