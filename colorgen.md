@@ -164,7 +164,7 @@ A _color model_ describes, in general terms, the relationship of colors in a the
 
 The _red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
 
-In general, _RGB color spaces_ differ in what they consider pure red, green, blue, black, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their _transfer functions_ (also known as _companding_ conversions, conversions to and from linearized RGB).
+In general, _RGB color spaces_ differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their _transfer functions_ (also known as _companding_ conversions, conversions to and from linearized RGB).
 
 The following details concepts related to the RGB color model.
 

@@ -9,9 +9,7 @@ Discusses many ways in which applications can extract random numbers from an und
 <a id=Introduction></a>
 ## Introduction
 
-This page discusses many ways applications can extract random numbers
-from an underlying random number generator (RNG) and includes pseudocode for most
-of them.
+This page discusses many ways applications can extract random numbers from an underlying random number generator (RNG) and includes pseudocode for most of them.
 
 As used in this document, a random number generator&mdash;
 - seeks to generate numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(6)](#Note6)</sup>,
