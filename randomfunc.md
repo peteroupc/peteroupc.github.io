@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 3, 2017.
+Begun on June 4, 2017; last updated on Sep. 5, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -21,7 +21,7 @@ As used in this document, a _random number generator_ is a number generator that
 
 All the random number methods presented on this page assume the existence of an underlying RNG.
 
-This page does not describe the nature of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind, or how that RNG is implemented at a low level), and in general, the methods presented in this document do not assume any particular quality of the underlying RNG.  Moreover, in general, this page does not make recommendations on which RNGs are suitable for which applications;  I have written about this in [another document](https://peteroupc.github.io/random.html).
+This page does not describe the nature of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind, or how that RNG is implemented at a low level), and in general, the methods presented in this document do not assume any particular quality of the underlying RNG.  Moreover, in general, this page does not make recommendations on which underlying RNGs are suitable for which applications. In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 
 This methods described in this document can be categorized as follows:
 - Methods to generate uniformly distributed random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
@@ -99,10 +99,10 @@ In this document:
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
 * `true` and `false` are the two Boolean values.
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
-* `asin(a)`, `acos(a)`, and `atan(a)` are the inverse sine, inverse cosine, and inverse tangent of `a`, respectively.
+* `asin(a)`, `acos(a)`, and `atan(a)` are the inverse sine, inverse cosine, and inverse tangent of `a`, respectively, in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
-* `sqrt(a)` is the square root of `a`.
+* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
@@ -111,19 +111,22 @@ In this document:
 * `AddItem(list, item)` adds the item `item` to the list `list`.
 * `size(list)` returns the size of the list `list`.
 * `list[k]` refers to the item at index `k` of the list `list`.
-* `mod(a, b)` is the remainder when `a` is divided by `b`.
+* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
 * The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 
-In this document, the following terms are used:
+In this document, the following terms and conventions are used:
 
+* **Intervals**: The following notation is used for intervals:
+    - [`a`, `b`) means "`a` or greater, but less than `b`".
+    - (`a`, `b`) means "greater than`a`, but less than `b`".
+    - (`a`, `b`] means "greater than`a` and less than or equal to`b`".
+    - [`a`, `b`] means "`a` or greater and `b` or less".
 * The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant digits in the format). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
     - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations, and
     - arbitrary-precision floating point numbers (e.g., Java `BigDecimal`) can have a theoretically arbitrary number of significand permutations.
-* A number's _probability density_, with respect to a statistical distribution, is the relative probability that a randomly chosen value will be infinitesimally close to that number, assuming no precision limits.
-* A statistical distribution's [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is a function that specifies each number's _probability density_ in that distribution, where each density is 0 or greater.
 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
@@ -140,16 +143,14 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Core_Random_Integer_Method></a>
 ### `RNDINT`: Core Random Integer Method
 
-The core method for generating random numbers using an RNG is called **`RNDINT(maxInclusive)`** in this document. It generates a **random integer 0 or greater and `maxInclusive` or less**, where `maxInclusive` is an integer 0 or greater and the number generated is approximately uniformly distributed. This core method can serve as the basis for all other methods described in later sections that extract random numbers from RNGs.
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`)**.  This section explains how `RNDINT(maxInclusive)` can be implemented if `RNG()` returns&mdash;
 
-The implementation of `RNDINT(maxInclusive)` depends heavily on what kind of values the underlying RNG returns.  This section explains how `RNDINT(maxInclusive)` can be implemented for four kinds of RNGs.
+1. integers in the interval [0, positive `MODULUS`),
+2. integers in the interval [0, positive power of 2),
+3. fixed-point numbers in the interval [0, positive integer), or
+4. floating-point numbers in the interval [0, 1).
 
-In this section:
-* `RNG()` is a random number returned by the underlying random number generator.
-* The term _modulus_ means an integer that is 1 higher than the highest integer that an RNG can output.
-* The four kinds of RNG mentioned in this section are assumed to seek to generate random numbers that are approximately uniformly distributed.
-
-If the underlying RNG outputs **integers 0 or greater and less than a positive integer** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  In the pseudocode below, `MODULUS` is the RNG's modulus.   Note that all the variables in this method are unsigned integers.  (For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).)
+**Method 1**: If `RNG()` outputs **integers in the interval [0, positive `MODULUS`)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  Note that all the variables in this method are unsigned integers.<sup>[(7)](#Note7)</sup>
 
     METHOD RNDINT(maxInclusive)
       // maxInclusive must be 0 or greater
@@ -183,7 +184,7 @@ If the underlying RNG outputs **integers 0 or greater and less than a positive i
       end
     END METHOD
 
-If the underlying RNG outputs **integers 0 or greater and less than a positive integer that's a power of two**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(maxInclusive)` can be implemented as follows. In the pseudocode below, `MODULUS` is the RNG's modulus, and `MODBITS` is the number of bits, minus 1, used to represent the modulus.  For example:
+**Method 2**: If `RNG()` outputs outputs **integers in the interval [0, positive power of 2)**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(maxInclusive)` can be implemented as follows. In the pseudocode below, `MODULUS` is the positive power of 2, and `MODBITS` is the number of bits, minus 1, used to represent `MODULUS`.  For example:
 
 - If the RNG outputs random 32-bit integers, `MODULUS` is 2<sup>32</sup> and `MODBITS` is 32.
 - If the RNG outputs random 8-bit bytes, `MODULUS` is 256 and `MODBITS` is 8.
@@ -249,22 +250,24 @@ Note that all the variables in this method are unsigned integers.
        end
     END METHOD
 
-Note that this implementation of `RNDINT(maxInclusive)` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  It would be outside the scope of this document to describe how a more sophisticated implementation may save those bits for later reuse.
+Note that this implementation of `RNDINT(maxInclusive)` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
 
-If the underlying RNG outputs **fixed-point numbers 0 or greater and less than a positive integer**, that is, numbers with a fixed number of fractional parts, then find `A` and `B`, where `A` is the greatest integer that is less than the highest number the RNG can output, and `B` is the number of fractional parts the fixed-point number format can have, and use one of the two methods given above depending on whether `A * B` is a power of two (`A * B` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * B)` instead.
+**Method 3**: If `RNG()` outputs **fixed-point numbers in the interval [0, positive integer)**, that is, numbers with a fixed number of fractional parts, then find `A` and `B`, where `A` is that positive integer, and `B` is the number of fractional parts the fixed-point number format can have, and use either method 1 or method 2 depending on whether `A * B` is a power of two, where `MODULUS` is `A * B` and `RNG()` is `floor(RNG() * B)` instead.
 
-If the underlying RNG outputs **floating-point numbers 0 or greater and less than 1**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use one of the two methods given above depending on whether `s` is a power of two (`s` is treated as the _modulus_ for that purpose).  Here, though, `RNG()` in the methods above is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
+**Method 4**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use one of the two methods given above depending on whether `s` is a power of two, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
 
-----------------
+**Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
 
-The underlying RNG can be other than already described in this section; however, a detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
+**Notes:**
 
-_**Note:** To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`._
+- To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
+- To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`),
+let `X` be that integer, then generate `X - mod(X, DIV)` if `X >= 0`, or `X - (DIV - mod(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
 
 <a id=RNDINTRANGE_Random_Integers_Within_a_Range_Maximum_Inclusive></a>
 ### `RNDINTRANGE`: Random Integers Within a Range, Maximum Inclusive
 
-The na&iuml;ve way of generating a **random integer `minInclusive` or greater and `maxInclusive` or less** is as follows. This approach works well for unsigned integers and arbitrary-precision integers.
+The na&iuml;ve way of generating a **random integer in the interval [`minInclusive`, `maxInclusive`]**, shown below, works well for unsigned integers and arbitrary-precision integers.
 
      METHOD RNDINTRANGE(minInclusive, maxInclusive)
        // minInclusive must not be greater than maxInclusive
@@ -300,7 +303,9 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
        end
     END METHOD
 
-A common use case of `RNDINTRANGE` is to simulate die rolls.  For example, to simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
+**Note:**
+
+- To simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
 
 <a id=RNDBITS_Random_N_Bit_Integers></a>
 ### `RNDBITS`: Random N-Bit Integers
@@ -348,15 +353,9 @@ Although this works well for arbitrary-precision integers, it won't work well fo
 <a id=RNDU01_Random_Numbers_0_or_Greater_and_1_or_Less></a>
 ### `RNDU01`: Random Numbers 0 or Greater and 1 or Less
 
-The following method, `RNDU01()`, generates a **random number 0 or greater and 1 or less**:
+The idiom `RNDINT(X) / X` (called **`RNDU01()`** in this document), generates a **random number in the interval [0, 1)**, where `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks) for further discussion.)
 
-     METHOD RNDU01()
-        return RNDINT(X) / X
-     END METHOD
-
-In the method above, `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [`xoroshiro+` remarks page](http://xoroshiro.di.unimi.it/#remarks) for further discussion.)
-
-For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead, which returns a uniformly-distributed **random number 0 or greater and 1 or less**.  It's based on a [technique devised by Allen Downey](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [note for "significand permutations"](#Notes_and_Definitions)).
+For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead, which returns a uniformly-distributed **random number 0 or greater and 1 or less**.  It's based on a [technique devised by Allen Downey](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [note for "significand permutations"](#Notation_and_Definitions)).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -413,16 +412,16 @@ For fixed-point or floating-point number formats with fixed precision (such as J
 <a id=RNDINTEXC_Modified_Core_Method_Maximum_Exclusive></a>
 ### `RNDINTEXC`: Modified Core Method, Maximum Exclusive
 
-A method based on `RNDINT(maxInclusive)` is called `RNDINTEXC(maxExclusive)` in this document; it generates a random integer **0 or greater** and **less than `maxExclusive`**, where `maxExclusive` is an integer greater than 0.  This variant is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:
+`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval [0, `maxExclusive`)**, is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method. The method can be implemented as follows:
 
      METHOD RNDINTEXC(maxExclusive)
         if maxExclusive <= 0: return error
         return RNDINT(maxExclusive - 1)
      END METHOD
 
-**Note:** Alternative ways of generating a random integer 0 or greater and less than the integer `maxExclusive` are the following:
+**Note:** The following are alternative ways of generating a random integer in the interval [0, `maxExclusive`):
 - `floor(RNDNUMEXCRANGE(0, maxExclusive))`.
-- Generate `X = floor(RNDU01OneExc()*(maxExclusive))` until `X < maxExclusive`. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.<sup>[(5)](#Note5)</sup>)
+- Generate `N = floor(RNDU01OneExc()*(maxExclusive))` until `N < maxExclusive`. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.<sup>[(5)](#Note5)</sup>)
 
 These approaches, though, are recommended only if the programming language&mdash;
 - supports floating-point number types and no other number types (an example is JavaScript),
@@ -432,7 +431,7 @@ These approaches, though, are recommended only if the programming language&mdash
 <a id=RNDINTEXCRANGE_Random_Integers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDINTEXCRANGE`: Random Integers Within a Range, Maximum Exclusive
 
-A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random integer `minInclusive` or greater and less than `maxExclusive`**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** here, returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -452,7 +451,7 @@ A version of `RNDINTRANGE`, called `RNDINTEXCRANGE` here, returns a **random int
 <a id=RNDNUMEXCRANGE_Random_Numbers_Within_a_Range_Maximum_Exclusive></a>
 ### `RNDNUMEXCRANGE`: Random Numbers Within a Range, Maximum Exclusive
 
-A version of `RNDNUMRANGE`, called `RNDNUMEXCRANGE` here, returns a  **random number `minInclusive` or greater and less than `maxExclusive`**.
+**`RNDNUMEXCRANGE`** returns a  **random number in the interval [`minInclusive`, `maxExclusive`)**.
  It can be implemented using [`RNDNUMRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
@@ -466,23 +465,24 @@ A version of `RNDNUMRANGE`, called `RNDNUMEXCRANGE` here, returns a  **random nu
 <a id=RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Related_Methods_for_Random_Numbers_Bounded_by_0_and_1></a>
 #### `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Related Methods for Random Numbers Bounded by 0 and 1
 
-Three related methods also generate a **random number in an interval bounded at 0 and 1**.  They can be implemented as follows.
+Three methods related to `RNDU01()` can be implemented as follows, where
+`X` is the number of fractional parts between 0 and 1 (see `RNDU01()` section).
 
-- **`RNDU01OneExc()` (0 or greater, but less than 1)** can be implemented in one of the following ways:
+- **`RNDU01OneExc()`, interval [0, 1)**, can be implemented in one of the following ways:
     - Call `RNDU01()` in a loop until a number other than 1.0 is generated this way.  This is preferred.
-    - `RNDINT(X - 1) / X`, where X is the number of fractional parts between 0 and 1 (see `RNDU01()` section).
-    - `RNDINTEXC(X) / X`, where X is the number of fractional parts between 0 and 1.
+    - `RNDINT(X - 1) / X`.
+    - `RNDINTEXC(X) / X`.
 
     Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.
-- **`RNDU01ZeroExc()` (greater than 0, but 1 or less)** can be implemented in one of the following ways:
+- **`RNDU01ZeroExc()`, interval (0, 1]**, can be implemented in one of the following ways:
     - Call `RNDU01()` in a loop until a number other than 0.0 is generated this way.  This is preferred.
-    - `(RNDINT(X - 1) + 1) / X`, where X is the number of fractional parts between 0 and 1.
-    - `(RNDINTEXC(X) + 1) / X`, where X is the number of fractional parts between 0 and 1.
+    - `(RNDINT(X - 1) + 1) / X`.
+    - `(RNDINTEXC(X) + 1) / X`.
     - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
-- **`RNDU01ZeroOneExc()` (greater than 0, but less than 1)** can be implemented in one of the following ways:
+- **`RNDU01ZeroOneExc()`, interval (0, 1)**, can be implemented in one of the following ways:
     - Call `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.
-    - `(RNDINT(X - 2) + 1) / X`, where X is the number of fractional parts between 0 and 1.
-    - `(RNDINTEXC(X - 1) + 1) / X`, where X is the number of fractional parts between 0 and 1.
+    - `(RNDINT(X - 2) + 1) / X`.
+    - `(RNDINTEXC(X - 1) + 1) / X`.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
@@ -604,9 +604,9 @@ The second step is to build a new string whose characters are chosen from that c
 
 **Notes:**
 
-- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations, such as the need to synchronize access, apply if the strings identify database rows, file system paths, or other shared resources; such special considerations are not discussed further in this document.
-- Generating a random hexadecimal string is equivalent to calling `RandomString(hexList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
-- Generating a random base-10 digit string is equivalent to calling `RandomString(hexList, stringSize)`, where `characterList` is `["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]` and `stringSize` is the desired size.
+- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
+- Generating a random hexadecimal string is equivalent to calling `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
+- Generating a random base-10 digit string is equivalent to calling `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]` and `stringSize` is the desired size.
 
 <a id=Choosing_Several_Unique_Items></a>
 ### Choosing Several Unique Items
@@ -706,7 +706,7 @@ Choosing a random date/time at or between two others is equivalent to&mdash;
 - generating `newDate = RNDINTRANGE(date1, date2)` or `newDate = RNDNUMRANGE(date1, date2)`, respectively, and
 - converting `newDate` to a date/time.
 
-If either input date/time generated as the random date, but that is not desired, the process just given can be repeated until such a date/time is not generated this way.
+If either input date/time was generated as the random date, but that is not desired, the process just given can be repeated until such a date/time is not generated this way.
 
 <a id=Generating_Random_Numbers_in_Sorted_Order></a>
 ### Generating Random Numbers in Sorted Order
@@ -730,13 +730,12 @@ Alternatively, random numbers can be generated (using any method and where the n
 ## Non-Uniform Distributions
 
 Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others.
-This section describes how to use the [uniform random number methods](#Uniform_Random_Numbers) to generate random numbers that follow a non-uniform statistical distribution.  (Some of the techniques in this section discuss ways to generate data uniformly at random;
-they're included here because they often involve non-uniform distributions.)
+Most of the the techniques in this section show how to use the [uniform random number methods](#Uniform_Random_Numbers) to generate such  random items or numbers.
 
 <a id=Discrete_Weighted_Choice></a>
 ### Discrete Weighted Choice
 
-The discrete weighted choice method is used to choose a random item from among a collection of them with separate probabilities of each item being chosen.
+The discrete weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.
 
 The following pseudocode takes a single list `weights`, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.
 
@@ -884,9 +883,14 @@ The discrete weighted choice method can also be used to implement a _multinomial
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
 
-The continuous weighted choice method is used to choose a random number that follows a continuous statistical distribution (here, a [_piecewise linear distribution_](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
+The continuous weighted choice method generates a random number that follows a continuous statistical distribution (here, a [_piecewise linear distribution_](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
 
-The following pseudocode takes two lists, `list` and `weights`, and returns a random number that follows the distribution.  `list` is a list of numbers (which can be fractional numbers) that should be arranged in ascending order, and `weights` is a list of _probability densities_ for the given numbers (where each number and its density have the same index in both lists). Each probability density should be 0 or greater.  Both lists should be the same size.  In the pseudocode below, the first number in `list` can be returned exactly, but not the last item in `list`, assuming the numbers in `list` are arranged in ascending order.
+The pseudocode below takes two lists as follows:
+
+- `list` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last item.
+- `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that that number will be close to the randomly chosen number.
+
+----
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
@@ -934,7 +938,7 @@ The following pseudocode takes two lists, `list` and `weights`, and returns a ra
 <a id=Example_2></a>
 #### Example
 
-Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The probability density for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher probability density than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
+Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
 <a id=Dice></a>
 ### Dice
@@ -1135,7 +1139,8 @@ The gamma distribution models expected lifetimes. The method given here is based
     METHOD GammaDist(meanLifetime)
         // Must be greater than 0
         if meanLifetime <= 0: return error
-        // Exponential special case (see also
+        // Exponential distribution special case if
+        // `meanLifetime` is 1 (see also
         // Devroye 1986, p. 405)
         if meanLifetime == 1: return -ln(RNDU01ZeroOneExc())
         d = meanLifetime
@@ -1176,7 +1181,6 @@ The _Dirichlet distribution_ models a distribution of N numbers that sum to a gi
 
 - In the exceptional case that all numbers are 0, the process should repeat.
 - A more general version of the Dirichlet distribution allows the parameter in `GammaDist` to vary for each random number.
-- If `total` is 1, the exponential distribution, described [later](#Other_Non_Uniform_Distributions), can be used instead of `GammaDist(1)` to generate the random numbers; see also Devroye 1986, p. 405.
 
 An alternative method, which can work better if random integers are to be generated instead of random numbers, is illustrated in the following pseudocode.  In the pseudocode below, `Sort(list)` sorts the items in `list` in ascending order. (Note that details on sort algorithms are outside the scope of this document.)
 
@@ -1208,7 +1212,7 @@ The problem of generating N random numbers with a given sum is equivalent to the
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
 
-The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (which can be greater than 0, never, and equal to or less than 1, always, and which can be 0.5, meaning an equal chance of success or failure).
+The following method generates a random integer that follows a negative binomial distribution.  This number expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
 **Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
@@ -1298,7 +1302,7 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 <a id=Stable_Distribution></a>
 ### Stable Distribution
 
-A stable distribution is a limiting distribution of the sum of independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, greater than 0 and 2 or less) and `beta` (skewness, -1 or greater and 1 or less); if `beta` is 0, the curve is symmetric.
+A stable distribution is a limiting distribution of the sum of independent and identically distributed random variables; the distribution resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, interval (0, 2]) and `beta` (skewness, interval [-1, 1]); if `beta` is 0, the curve is symmetric.
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error
@@ -1451,10 +1455,10 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
 
-Commonly used:
+Most commonly used:
 
 - **Beta distribution (`BetaDist(a, b)`)**: `x / (x + GammaDist(b))`, where `x` is `GammaDist(a)` and `a` and `b` are
- the two parameters of the beta distribution.  The range of the beta distribution is 0 or greater and less than 1.
+ the two parameters of the beta distribution.  The range of the beta distribution is greater than or equal to 0, but less than 1.
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
@@ -1477,7 +1481,7 @@ This expresses a distribution of minimum values.
 - **Triangular distribution**: `ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])`. The distribution starts at `startpt`, peaks at `midpt`, and ends at `endpt`.
 - **Weibull distribution**: `b * pow(-ln(RNDU01ZeroExc()),1.0 / a)`, where `a` is the shape, `b` is the scale, and `a` and `b` are greater than 0.
 
-Uncommonly used:
+Miscellaneous:
 
 - **Arcsine distribution**: `min + (max - min) * BetaDist(0.5, 0.5)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 14).
 - **Beta binomial distribution**: `Binomial(trials, BetaDist(a, b))`, where `a` and `b` are
@@ -1518,13 +1522,10 @@ the same meaning as in the normal distribution, and `alpha` is a shape parameter
 <a id=Correlated_Random_Numbers></a>
 ### Correlated Random Numbers
 
-To generate two correlated (dependent) random variables&mdash;
+According to (Saucier 2000), sec. 3.8, to generate two correlated (dependent) random variables&mdash;
 
 - generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
-- calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ -1 or greater and 1 or less.
-  If `rho` is 0, the variables are uncorrelated.
-
-See Saucier 2000, sec. 3.8, which was the source of the technique given here.
+- calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ -1 or greater and 1 or less (if `rho` is 0, the variables are uncorrelated).
 
 <a id=Gaussian_Copula></a>
 #### Gaussian Copula
@@ -1588,7 +1589,7 @@ To generate a random number (or data point) based on the distribution of a list 
 
 - choose one of the numbers or points at random (see, for example, [Choosing a Random Item from a List](#Choosing_a_Random_Item_from_a_List)), and
 - add a randomized "jitter" to the chosen number or point; for example&mdash;
-    - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as small as allows the estimated probability density to fit the data distribution and remain smooth), or
+    - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as small as allows the estimated distribution to fit the data and remain smooth), or
     - add a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_<sup>[(4)](#Note4)</sup>.
 
 A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized "jitter" (whose distribution is formally called a _kernel_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the Wikipedia articles on [single-variable](https://en.wikipedia.org/wiki/Kernel_density_estimation) and [multiple-variable](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation) estimation, or a [blog post by M. Kay](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
@@ -1596,11 +1597,16 @@ A detailed discussion on how to calculate bandwidth or on other possible ways to
 <a id=Generating_Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Generating Random Numbers from an Arbitrary Distribution
 
-If a statistical distribution's [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function) (PDF) is known, one of the following techniques, among others, can be used to generate random numbers that follow that distribution. Note, however, that a list of common PDFs is outside the scope of this page.
+Many statistical distributions can be defined in terms of any of the following:
 
-1. Use the PDF to calculate the probability density for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the densities at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point. **OR**
-2. In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_, or inverse of the integral of the PDF, assuming the area under the PDF is 1.  Further details on such a technique or on finding integrals or inverses are outside the scope of this document. **OR**
-3. Use _rejection sampling_.  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).
+* A [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less.
+* A [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)).  The CDF is also defined as the integral of the PDF (details on integrals are outside the scope of this document).
+
+If a statistical distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
+
+1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
+2. In many cases, random numbers that follow the distribution can be generated using [inverse transform sampling](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1. **OR**
+3. Use _rejection sampling_.  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
              if minValue >= maxValue: return error
@@ -1611,10 +1617,16 @@ If a statistical distribution's [_probability density function_](https://en.wiki
              end
         END METHOD
 
-If both a PDF and a uniform random variable 0 or greater and 1 or less are given, then one of the following techniques can be used to generate a random number that follows that distribution:
+If both **a PDF and a uniform random variable in the interval [0, 1)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
 
-1. Do the same process as method 1, given earlier, but divide the densities in the `weights` list by the sum of all densities before calling `ContinuousWeightedChoice`.  **OR**
-2. Call `ICDF(randomVariable)`, where `randomVariable` is the uniform random variable and `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (see method 2, given earlier).
+1. Do the same process as method 1, given earlier, but divide the weights in the `weights` list by the sum of all weights before calling `ContinuousWeightedChoice`.  **OR**
+2. Call `ICDF(randomVariable)`, where `randomVariable` is the uniform random variable and `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+
+If both **a CDF and a uniform random variable in the interval [0, 1)** are given, then the following technique can be used to generate a random number that follows that distribution:
+
+-  Call `ICDF(randomVariable)`, where `randomVariable` is the uniform random variable and `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+
+**Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
 <a id=Generating_a_Random_Latitude_and_Longitude></a>
 ### Generating a Random Latitude and Longitude
@@ -1650,9 +1662,11 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
  <sup id=Note4>(4)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
 
- <sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer 0 or greater and less than `maxExclusive`; however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.
+ <sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer greater than or equal to 0, but less than `maxExclusive`; however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.
 
-<sup id=Note6>(6)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A cumulative distribution function (CDF) returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less.  The CDF is also defined as the integral of the distribution's _probability density function_ (PDF).  Outside the scope of this document are further details on this kind of conversion, a list of CDFs or PDFs, and details on finding integrals.
+<sup id=Note6>(6)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)".  Outside the scope of this document are further details on this kind of conversion, a list of CDFs or PDFs, and details on finding integrals.
+
+<sup id=Note7>(7)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
 <a id=License></a>
 ## License
