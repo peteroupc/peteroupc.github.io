@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 3, 2017.
+Begun on Mar. 5, 2016; last updated on Sep. 5, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -99,7 +99,7 @@ An unpredictable-random implementation ultimately relies on one or more _nondete
 <a id=Quality></a>
 ### Quality
 
-An unpredictable-random implementation generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
+An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
 
 <a id=Seeding_and_Reseeding></a>
 ### Seeding and Reseeding

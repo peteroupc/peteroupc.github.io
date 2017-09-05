@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 3, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 5, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -157,7 +157,7 @@ generation is outside the scope of this document.</p>
 
 <h3>Quality</h3>
 
-<p>An unpredictable-random implementation generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
+<p>An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 

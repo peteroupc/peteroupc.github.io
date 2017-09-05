@@ -23,7 +23,7 @@
 <li>colors as spectral functions.</li>
 </ul>
 
-<p>In general, topics that are specific to a programming language or application-programming interface are out of the scope of this document.  Moreover, the following topics are beyond this page&#39;s scope:</p>
+<p>In general, topics that are specific to a programming language or application programming interface are out of the scope of this document.  Moreover, the following topics are beyond this page&#39;s scope:</p>
 
 <ul>
 <li><p>Procedures to change or set the color used&mdash;</p>
@@ -79,7 +79,7 @@ programming interface, document format, or plotting or charting technology.</p><
 
 <ul>
 <li><a href="#Shades_Tints_and_Tones">Shades, Tints, and Tones</a></li>
-<li><a href="#Luminance_Grayscale">Luminance (Grayscale)</a></li>
+<li><a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a></li>
 <li><a href="#Color_Schemes">Color Schemes</a></li>
 <li><a href="#Color_Matrices">Color Matrices</a></li>
 <li><a href="#Blending_and_Alpha_Compositing">Blending and Alpha Compositing</a></li>
@@ -649,7 +649,7 @@ END METHOD
 
 <ul>
 <li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), Min3(color[0], color[1], color[2]), 1 - Max3(color[0], color[1], color[2])]</code>.</li>
-<li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[0, 0, 0]</code> otherwise.</li>
+<li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[hwb[0], 0, 0]</code> otherwise.</li>
 </ul>
 
 <p><a id=CIE_XYZ></a></p>
@@ -667,8 +667,8 @@ END METHOD
 <p>There are at least two conventions for XYZ colors:</p>
 
 <ul>
-<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents a luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the &quot;black point&quot; is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code>, that is, one having a Y component (luminance) of 0 cd/m<sup>2</sup>.</li>
+<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the &quot;black point&quot; is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code>, that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
 <p>In the following pseudocode&mdash;</p>
@@ -722,7 +722,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point and 0 for a color with an ideal luminance of 0 cd/m<sup>2</sup>.</li>
+<li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.</li>
 <li>An XYZ color (<code>xyz</code>) can be converted to &quot;xyY&quot; form (where the &quot;xy&quot; is <em>chromaticity</em> and &quot;Y&quot; is <em>luminance</em>) by generating
 <code>[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]</code>.  Note that if the sum of the XYZ components is 0, the result
 is undefined.</li>
@@ -936,7 +936,7 @@ The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabToSaturation</code
 
 <ul>
 <li>the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), and</li>
-<li>the meaning of CMYK colors can vary depending on the specific inks used, since different inks have different light reflectances, as well as on the kind of paper that the color will be printed on.<sup><a href="#Note5">(5)</a></sup></li>
+<li>the meaning and conversion of CMYK colors can vary depending on numerous printing conditions, including inks and paper; for example, different inks have different light reflectances.<sup><a href="#Note5">(5)</a></sup></li>
 </ul>
 
 <p><a id=Y_prime_C_sub__B__sub_C_sub__R__sub></a></p>
@@ -952,7 +952,8 @@ The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabToSaturation</code
 </ul>
 
 <p>Note that a thorough survey of the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> data has been encoded is outside
-the scope of this document.</p>
+the scope of this document; in general, such encodings take advantage of the generally greater sensitivity in brightness (Y)
+than in hue (Cb, Cr) in human vision.</p>
 
 <p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
@@ -1053,27 +1054,27 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 <li><strong>Saturate/Desaturate</strong>: Generate <code>hsv = RgbToHsv(color)</code>, then generate <code>modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 </ul>
 
-<p><a id=Luminance_Grayscale></a></p>
+<p><a id=Relative_Luminance_Grayscale></a></p>
 
-<h3>Luminance (Grayscale)</h3>
+<h3>Relative Luminance (Grayscale)</h3>
 
-<p>Luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; luminance is equivalent to the Y-axis in the CIE&#39;s <a href="#CIE_XYZ"><em>XYZ color model</em></a>.</p>
+<p>Relativeuminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the CIE&#39;s <a href="#CIE_XYZ"><em>XYZ color model</em></a>.</p>
 
 <ul>
 <li><p>For <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB</em> color spaces</a>&mdash;</p>
 
 <ul>
-<li>luminance can be found by calculating <code>(color[0] * r +color[1] * g + color[2] * b)</code>,
-where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (luminances) of the RGB color space&#39;s red, green, and blue
+<li>relative luminance can be found by calculating <code>(color[0] * r +color[1] * g + color[2] * b)</code>,
+where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (relative luminances) of the RGB color space&#39;s red, green, and blue
 points, respectively<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note9">(9)</a></sup>,</li>
-<li>the RGB color space&#39;s &quot;black point&quot; has a luminance of 0, and</li>
-<li>the RGB color space&#39;s white point has a luminance of 1.</li>
+<li>the RGB color space&#39;s &quot;black point&quot; has a relative luminance of 0, and</li>
+<li>the RGB color space&#39;s white point has a relative luminance of 1.</li>
 </ul>
 
-<p>Where a different white point than the RGB color space&#39;s usual white point should have a luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the
-corresponding luminances after <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another.  Further details on such
+<p>Where a different white point than the RGB color space&#39;s usual white point should have a relative luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the
+corresponding relative luminances after <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another.  Further details on such
 adaptation are outside the scope of this document, but see the examples. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html">sRGB luminance</a>&quot;, 2013.)</p></li>
-<li>Applying the formula just given to <em>nonlinearized RGB</em> colors results in a value more properly called <em>luma</em>, not luminance; see C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;YUV and luminance considered harmful&quot;</a>.</li>
+<li>Applying the formula just given to <em>nonlinearized RGB</em> colors results in a value more properly called <em>luma</em>, not luminance; see C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</li>
 </ul>
 
 <p>Examples follow for sRGB:</p>
@@ -1083,24 +1084,24 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code> (for interoperability with applications color-managed with ICC profiles).</li>
 </ul>
 
-<p>In the sections that follow, the method <strong><a href="#Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the luminance of the color <code>color</code>.</p>
+<p>In the sections that follow, the method <strong><a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the relative luminance of the color <code>color</code>.</p>
 
 <p>Applications of luminance include the following:</p>
 
 <ul>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
 <li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.
+<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.
 
 <ul>
-<li><strong>Note:</strong> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the <em>relative luminance</em> of a color, as defined in the guidelines<sup><a href="#Note4">(4)</a></sup>; <code>brighter</code> is the color with higher relative luminance; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 (or 7) or greater.</li>
+<li><strong>Note:</strong> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the relative luminance of a color, as defined in the guidelines<sup><a href="#Note4">(4)</a></sup>; <code>brighter</code> is the color with higher <code>RelLum</code>; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 (or 7) or greater.</li>
 </ul></li>
 </ul>
 
 <p>Finding the <strong>average luminance of an image</strong> or collection of colors is often equivalent to&mdash;</p>
 
 <ul>
-<li>adding all the luminances of the colors in the image or collection (where the luminance of each color <code>color</code> is <code>Luminance(color)</code>), then</li>
+<li>adding all the relative luminances (<code>Luminance(color)</code>) of the colors in the image or collection, then</li>
 <li>dividing the result by the number of such colors.</li>
 </ul>
 
@@ -1151,7 +1152,7 @@ is transformed with a color matrix (<code>matrix</code>) as follows:</p>
 <ul>
 <li><strong>Sepia</strong>: <code>[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]</code>.</li>
 <li><strong>Saturate</strong>: <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> is
-a saturation factor (0 for totally saturated and 1 for totally unsaturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Luminance_Grayscale">Luminance (Grayscale)</a>&quot;
+a saturation factor (0 for totally saturated and 1 for totally unsaturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Luminance (Grayscale)</a>&quot;
 (the source recommends different values for <code>r</code>, <code>g</code>, and <code>b</code> <sup><a href="#Note8">(8)</a></sup>).</li>
 <li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle in radians.<sup><a href="#Note8">(8)</a></sup></li>
 </ul>
@@ -1311,17 +1312,17 @@ This technique is independent of RGB color space, but see the <a href="#HTML_Col
 <li>To generate a random <strong>dark color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is less than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]</code>, where <code>maxComp</code> is the
 maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than a given threshold, e.g., 0.5, or</li>
 <li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
 </ul></li>
-<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than 0.75 and less than 0.9.</li>
+<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than 0.75 and less than 0.9.</li>
 <li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp(color1, color2, RNDU01())</code>.</li>
 <li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))</code>.</li>
 <li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
@@ -1468,9 +1469,8 @@ END METHOD
 
 <h2>Colors as Spectral Functions</h2>
 
-<p>Colors can also be represented as functions that describe a distribution of light across
-the visible spectrum.  There are two cases of objects that provoke a color sensation
-by light:</p>
+<p>Colors can also be represented as functions that describe a distribution of radiation (such as light) across
+the visible spectrum.  There are two cases of objects that provoke a color sensation by light:</p>
 
 <ul>
 <li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three <em>color matching functions</em>, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light&#39;s perceived color in the <a href="#CIE_XYZ"><em>XYZ color model</em></a>.  Although spectral power distributions and color matching functions are continuous functions, in practice the &quot;integration&quot; is done by sampling at discrete wavelengths.</li>
@@ -1620,7 +1620,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <p>Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a light stimulus.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, <em>protanopia</em> and <em>deuteranopia</em>, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly (usually magenta-red and green-cyan hues) are harder to distinguish.</p>
 
-<p>However, &quot;effective luminance contrast [that is, <a href="#Luminance_Grayscale">color contrast</a>] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as magenta and red] against darker colors ... for [people with] protanopia&quot; (see &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Understanding WCAG 2.0</a>&quot;).</p>
+<p>However, &quot;effective luminance contrast [that is, <a href="#Relative_Luminance_Grayscale">color contrast</a>] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as magenta and red] against darker colors ... for [people with] protanopia&quot; (see &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Understanding WCAG 2.0</a>&quot;).</p>
 
 <p><a id=Terminal_Colors></a></p>
 
@@ -1672,7 +1672,7 @@ this page are welcome.</p>
 
 <p><sup id=Note3>(3)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>nonlinearized</em> RGB color spaces, respectively, in this document.</p>
 
-<p><sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, luminance, as used in this document, is ultimately relative to a reference white point, such as that used by the sRGB color space, rather than being expressed in absolute units such as candelas per square meter.)</p>
+<p><sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)</p>
 
 <p><sup id=Note5>(5)</sup> A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
 
