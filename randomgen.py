@@ -1,3 +1,12 @@
+"""
+Sample code for the article "Random Number Generation Methods"
+https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
+
+Written by Peter O.
+Any copyright is released to the Public Domain.
+https://creativecommons.org/publicdomain/zero/1.0/
+"""
+
 import math
 import random
 
