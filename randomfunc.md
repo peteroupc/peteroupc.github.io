@@ -88,31 +88,7 @@ In general, security, performance, quality, and other considerations will determ
 
 In this document:
 
-* Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.
-* Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
-* The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
-* `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
-* `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
-* `true` and `false` are the two Boolean values.
-* `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
-* `asin(a)`, `acos(a)`, and `atan(a)` are the inverse sine, inverse cosine, and inverse tangent of `a`, respectively, in radians.
-* `pow(a, b)` is the number `a` raised to the power `b`.
-* `abs(a)` is the absolute value of `a`.
-* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
-* `floor(a)` is the highest integer that is less than or equal to `a`.
-* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
-* `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
-* `GetNextLine(file)` is a method that gets the next line from a file, or returns `nothing` if the end of the file was reached.
-* `NewList()` creates a new empty list.
-* `AddItem(list, item)` adds the item `item` to the list `list`.
-* `size(list)` returns the size of the list `list`.
-* `list[k]` refers to the item at index `k` of the list `list`.
-* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
-* The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
-* The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
-
-In this document, the following terms and conventions are used:
-
+* The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 * **Intervals**: The following notation is used for intervals:
     - [`a`, `b`) means "`a` or greater, but less than `b`".
     - (`a`, `b`) means "greater than`a`, but less than `b`".

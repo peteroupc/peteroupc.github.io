@@ -81,17 +81,8 @@ In general, topics that are specific to a programming language or application pr
 
 In this document:
 
-- The same notation and conventions that apply to my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html#Notes_and_Definitions) apply to this document as well.
+- The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 - `RNDNUMRANGE`, `RNDU01`, and `RNDINT` are as defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
-- `atan2(y, x)` is&mdash;
-    - the inverse tangent of `y/x` if `x > 0`,
-    - &pi; plus the inverse tangent of `y/x` if `y >= 0 and x < 0`,
-    - -&pi; plus the inverse tangent of `y/x` if `y < 0 and x < 0`,
-    - `-pi / 2` if `y < 0 and x == 0`,
-    - `pi / 2` if `y > 0 and x == 0`, and
-    - 0 if `y == 0 and x == 0`.
-- `min(a, b)` is the smaller of `a` and `b`.
-- `max(a, b)` is the larger of `a` and `b`.
 - The term _RGB_ means red-green-blue.
 - The abbreviation _ICC_ means the International Color Consortium.
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
@@ -108,10 +99,8 @@ In the pseudocode below, the utility function&mdash;
 - `Clamp` returns `minimum` if the given value is less than `minimum`, `maximum` if greater than `maximum`,
 or `value` otherwise, and is equivalent to `clamp` in GLSL;
 - `Clamp3` applies the `Clamp` function separately to each item of a three-element list; here, `value`, `minimum`,
-and `maximum` are each three-element lists;
-- `MeanAngle` finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models, which contain hue components that are angles);
-- `Min3` is the smallest of three numbers; and
-- `Max3` is the largest of three numbers.
+and `maximum` are each three-element lists; and
+- `MeanAngle` finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models, which contain hue components that are angles).
 
 **Note:** For `Lerp3`, making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.
@@ -131,18 +120,6 @@ Detailing such interpolations is outside the scope of this document, but are des
         return [Clamp(value[0],minimum[0], maximum[0]),
           Clamp(value[1],minimum[1], maximum[1]),
           Clamp(value[2],minimum[2], maximum[2])]
-    END METHOD
-
-    METHOD Min3(v1, v2, v3)
-        if v1 < v2 and v1 < v3: return v1
-        if v2 < v3: return v2
-        return v3
-    END METHOD
-
-    METHOD Max3(v1, v2, v3)
-        if v1 > v2 and v1 > v3: return v1
-        if v2 > v3: return v2
-        return v3
     END METHOD
 
     METHOD MeanAngle(angles)
@@ -358,7 +335,7 @@ Among RGB color spaces, one of the most popular is the _sRGB color space_. The _
 
 Although many RGB working spaces are linearized by _gamma decoding_, sRGB is different; the formula to use to linearize sRGB colors (the sRGB _transfer function_) is similar to, but is not, applying a gamma exponent of 2.2.
 
-The following methods linearize and de-linearize sRGB colors.  (Note that `0.4045` and `0.0031308` are those of the sRGB standard of the International Electrotechnical Commission; the sRGB proposal has different values for these thresholds.)
+The following methods linearize and de-linearize sRGB colors.  (Note that `0.4045` and `0.0031308` are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has different values for these thresholds.)
 
     // Convert a color component from nonlinearized to linearized RGB
     METHOD LinearFromsRGB(c)
@@ -401,8 +378,8 @@ The following pseudocode converts colors between RGB and HSV. Each RGB color is 
 The transformation is independent of RGB color space, but should be done using [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
 
     METHOD RgbToHsv(rgb)
-        mx=Max3(rgb[0],rgb[1],rgb[2])
-        mn=Min3(rgb[0],rgb[1],rgb[2])
+        mx = max(max(rgb[0], rgb[1]), rgb[2])
+        mn = min(min(rgb[0], rgb[1]), rgb[2])
         if mx==mn: return [0,0,mx]
         s=(mx-mn)/mx
         h=0
@@ -444,9 +421,10 @@ In the rest of this document&mdash;
 - **`HSVSat(color)`** is the HSV saturation component of a color, that is, `RgbToHsv(color)[1]`, and
 - **`HSVVal(color)`** is the HSV brightness or "value" component of a color, that is, `RgbToHsv(color)[2]`.
 
-**Note:**
+**Notes:**
 
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
+- The HSV color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
 
 <a id=HSL></a>
 ### HSL
@@ -462,8 +440,8 @@ of black or white mixed with the color and which is 0 or greater and 1 or less, 
 The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.  The transformation is independent of RGB color space, but should be done using [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).
 
     METHOD RgbToHsl(rgb)
-        vmax = Max3(rgb[0], rgb[1], rgb[2])
-        vmin = Min3(rgb[0], rgb[1], rgb[2])
+        vmax = max(max(rgb[0], rgb[1]), rgb[2])
+        vmin = min(min(rgb[0], rgb[1]), rgb[2])
         vadd = vmax + vmin
         // NOTE: "Lightness" is the midpoint between
         // the greatest and least RGB component
@@ -538,6 +516,7 @@ In the rest of this document&mdash;
 
 - In some applications and specifications, especially where this color model is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
 - In most applications, hue is in degrees and is 0 or greater and less than 360.
+- The HSL color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
 
 <a id=HWB></a>
 ### HWB
@@ -549,13 +528,15 @@ In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was pu
 
 The conversion is relatively simple given HSV conversion methods:
 
-- To convert an RGB color `color` to HWB, generate `[HSVHue(color), Min3(color[0], color[1], color[2]), 1 - Max3(color[0], color[1], color[2])]`.
+- To convert an RGB color `color` to HWB, generate `[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`.
 - To convert an HWB color `hwb` to RGB, generate `HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])` if `hwb[2] < 1`, or `[hwb[0], 0, 0]` otherwise.
+
+**Note:** The HWB color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
 
 <a id=CIE_XYZ></a>
 ### CIE XYZ
 
-The CIE's _XYZ color model_ is a transformation of a distribution of light into a point in three-dimensional space, as further explained in "[Colors as Spectral Functions](#Colors_as_Spectral_Functions)".  An XYZ color consists of three components, in the following order:
+The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a distribution of light into a point in three-dimensional space, as further explained in "[Colors as Spectral Functions](#Colors_as_Spectral_Functions)".  An XYZ color consists of three components, in the following order:
 
 - X is a component without special meaning.
 - Y indicates the _luminance_ of the color.
@@ -568,10 +549,8 @@ There are at least two conventions for XYZ colors:
 
 In the following pseudocode&mdash;
 
-- `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`xyz`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB),
-- `XYZTosRGB(xyz)` converts an XYZ color (`xyz`) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D65 white point,
-- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`xyz`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and
-- `XYZTosRGBD50(xyz)` converts an XYZ color (`xyz`) to nonlinearized sRGB, where an XYZ color with Y = 1 is the D50 white point.
+- `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` performs the opposite conversion, and
+- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGB(xyz)` performs the opposite conversion (see the notes later in this section).
 
 The pseudocode follows.
 
@@ -614,6 +593,9 @@ The pseudocode follows.
 **Notes:**
 
 - In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.
+- In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the inverse of the matrix shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.
+- Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
+- Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 - An XYZ color (`xyz`) can be converted to "xyY" form (where the "xy" is _chromaticity_ and "Y" is _luminance_) by generating
 `[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]`.  Note that if the sum of the XYZ components is 0, the result
 is undefined.
@@ -632,9 +614,11 @@ A color in CIE _L\*a\*b\*_ consists of three components, in the following order:
 - _a\*_ and _b\*_, in that order, are coordinates of two axes that extend away from the gray line.
 
 In the following pseudocode&mdash;
-- the `SRGBToLab` method convers a nonlinearized sRGB color to CIE _L\*a\*b\*_,
-- the `SRGBFromLab` method performs the opposite conversion, and
-- the _L\*a\*b*_ color `[100, 0, 0]` is the same as the D65 white point (the comments show how to get a _L\*a\*b\*_ color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC profiles)
+- the `SRGBToLab` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where 
+ the _L\*a\*b*_ color `[100, 0, 0]` is the same as the D65 white point, and the `SRGBFromLab` method performs the opposite conversion,
+- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where 
+ the _L\*a\*b*_ color `[100, 0, 0]` is the same as the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method performs the opposite conversion, and 
+- the `XYZToLab(xyz, wpx, wpz)` method converts an XYZ color to _L\*a\*b\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LabToXYZ(lab, wpx, wpz)` method performs the opposite conversion.
 
 The pseudocode follows.
 
@@ -676,24 +660,19 @@ The pseudocode follows.
     END METHOD
 
     METHOD SRGBToLab(rgb)
-        xyz=XYZFromsRGB(rgb)
-        // NOTE: The second and third parameters are the X and Z
-        // components of the D65 white point (which was converted
-        // from the x and y chromaticities of that white point).
-        return XYZToLab(xyz, 0.9504559, 1.089058)
-        // Note: For an XYZ conversion for the D50 white point,
-        // use the following lines instead:
-        // xyz=XYZFromsRGBD50(rgb)
-        // return XYZToLab(xyz, 0.9642957, 0.8251046)
+        return XYZToLab(XYZFromsRGB(rgb), 0.9504559, 1.089058)
     END METHOD
 
     METHOD SRGBFromLab(lab)
-        xyz=LabToXYZ(lab, 0.9504559, 1.089058)
-        return XYZTosRGB(rgb)
-        // Note: For an XYZ conversion for the D50 white point,
-        // use the following lines instead:
-        // xyz= LabToXYZ(lab, 0.9642957, 0.8251046)
-        // return XYZTosRGBD50(rgb)
+        return XYZTosRGB(LabToXYZ(lab, 0.9504559, 1.089058))
+    END METHOD
+
+    METHOD SRGBToLabD50(rgb)
+        return XYZToLab(XYZFromsRGBD50(rgb), 0.9642957, 0.8251046)
+    END METHOD
+
+    METHOD SRGBFromLabD50(lab)
+        return XYZTosRGBD50(LabToXYZ(lab, 0.9642957, 0.8251046))
     END METHOD
 
 A color's _chroma_ (or relative colorfulness) can be derived from a _L\*a\*b\*_ color
@@ -745,29 +724,32 @@ are _L\*_, or _lightness_ of a color (which is the same as in _L\*a\*b\*_), _u\*
 and _v\*_, in that order.
 
 In the following pseudocode&mdash;
-- the `SRGBToLuv` method convers a nonlinearized sRGB color to CIE _L\*u\*v\*_,
-- the `SRGBFromLuv` method performs the opposite conversion, and
-- the _L\*u\*v*_ color `[100, 0, 0]` is the same as the D65 white point (the comments show how to get a _L\*u\*v\*_ color relative to the D50 white point instead, e.g., for interoperability with applications color-managed with ICC profiles).
+- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where 
+ the _L\*u\*v*_ color `[100, 0, 0]` is the same as the D65 white point, and the `SRGBFromLuv` method performs the opposite conversion,
+- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where 
+ the _L\*u\*v*_ color `[100, 0, 0]` is the same as the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method performs the opposite conversion, and 
+- the `XYZToLuv(xyz, wpx, wpz)` method converts an XYZ color to _L\*u\*v\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LuvToXYZ(luv, wpx, wpz)` method performs the opposite conversion.
 
 The pseudocode follows.
 
-    METHOD XYZToLuv(xyz, xwhite, zwhite)
-        lab=XYZToLab(xyz, xwhite, zwhite)
+    METHOD XYZToLuv(xyz, wpx, wpz)
+        lab=XYZToLab(xyz, wpx, wpz)
         sum=xyz[0]+xyz[1]*15+xyz[2]*3
         lt=lab[0]
         if sum==0: return [lt, 0, 0]
         upr=4*xyz[0]/sum // U-prime chromaticity
         vpr=9*xyz[1]/sum // V-prime chromaticity
-        sumwhite=xwhite+15+zwhite*3
+        sumwhite=wpx+15+wpz*3
         return [lt,
-                lt*13*(upr - 4*xyzwhite/sumwhite),
+                lt*13*(upr - 4*xywpz/sumwhite),
                 lt*13*(vpr - 9.0/sumwhite)]
     END METHOD
 
-    METHOD LuvToXYZ(luv, xwhite, zwhite)
-        xyz=LabToXYZ([luv[0], 1, 1],xwhite,zwhite)
-        sumwhite=xwhite+15+zwhite*3
-        u0=4*xwhite/sumwhite
+    METHOD LuvToXYZ(luv, wpx, wpz)
+	if luv[0]==0: return [0, 0, 0]
+        xyz=LabToXYZ([luv[0], 1, 1],wpx,wpz)
+        sumwhite=wpx+15+wpz*3
+        u0=4*wpx/sumwhite
         v0=9.0/sumwhite
         lt=luv[0]
         a=(52*lt/(luv[1]+13*u0*lt)-1)/3.0
@@ -778,21 +760,19 @@ The pseudocode follows.
     END METHOD
 
     METHOD SRGBToLuv(rgb)
-        xyz=XYZFromsRGB(rgb)
-        return XYZToLuv(xyz, 0.9504559, 1.089058)
-        // Note: For an XYZ conversion for the D50 white point,
-        // use the following lines instead:
-        // xyz=XYZFromsRGBD50(rgb)
-        // return XYZToLuv(xyz, 0.9642957, 0.8251046)
+        return XYZToLuv(XYZFromsRGB(rgb), 0.9504559, 1.089058)
     END METHOD
 
-    METHOD SRGBFromLuv(Luv)
-        xyz=LuvToXYZ(Luv, 0.9504559, 1.089058)
-        return XYZTosRGB(rgb)
-        // Note: For an XYZ conversion for the D50 white point,
-        // use the following lines instead:
-        // xyz= LuvToXYZ(Luv, 0.9642957, 0.8251046)
-        // return XYZTosRGBD50(rgb)
+    METHOD SRGBFromLuv(luv)
+        return XYZTosRGB(LuvToXYZ(luv, 0.9504559, 1.089058))
+    END METHOD
+
+    METHOD SRGBToLuvD50(rgb)
+        return XYZToLuv(XYZFromsRGBD50(rgb), 0.9642957, 0.8251046)
+    END METHOD
+
+    METHOD SRGBFromLuvD50(luv)
+        return XYZTosRGBD50(LuvToXYZ(luv, 0.9642957, 0.8251046))
     END METHOD
 
 Hue, chroma, and saturation can be derived from a
@@ -814,13 +794,13 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
 
-- Y&prime;, or _luma_, specifies the brightness of the color, and is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.
-- Cb, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
-- Cr, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
+- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.  The prime symbol appears near Y because the conversion from RGB usually involves [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y)<sup>[(13)](#Note13)</sup>.
+- C<sub>_B_</sub>, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
+- C<sub>_R_</sub>, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
 Note that a thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
-the scope of this document; in general, such encodings take advantage of the generally greater sensitivity in brightness (Y)
-than in hue (Cb, Cr) in human vision.
+the scope of this document; in general, such encodings take advantage of the generally greater sensitivity in luminance (approximated by Y&prime;)
+than in hue in human vision.
 
 The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;
@@ -914,10 +894,10 @@ Note that for best results, these techniques need to be carried out with [_linea
 <a id=Relative_Luminance_Grayscale></a>
 ### Relative Luminance (Grayscale)
 
-Relative luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the CIE's [_XYZ color model_](#CIE_XYZ).
+Relative luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the [XYZ color model](#CIE_XYZ).
 
 - For [_linearized RGB_ color spaces](#sRGB_and_Linearized_RGB)&mdash;
-    - relative luminance can be found by calculating `(color[0] * r +color[1] * g + color[2] * b)`,
+    - relative luminance can be found by calculating `(color[0] * r + color[1] * g + color[2] * b)`,
 where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue
 points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
     - the RGB color space's "black point" has a relative luminance of 0, and
@@ -926,7 +906,7 @@ points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
     Where a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
     corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.  Further details on such
     adaptation are outside the scope of this document, but see the examples. (See also E. Stone, "[sRGB luminance](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
-- Applying the formula just given to _nonlinearized RGB_ colors results in a value more properly called _luma_, not luminance; see C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
+- Applying the formula just given to _nonlinearized RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(13)](#Note13)</sup>
 
 Examples follow for sRGB:
 
@@ -941,7 +921,7 @@ Applications of luminance include the following:
 - **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  For example, if [`Luminance(color)`](#Relative_Luminance_Grayscale) is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.
     - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the relative luminance of a color, as defined in the guidelines<sup>[(4)](#Note4)</sup>; `brighter` is the color with higher `RelLum`; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
 
-Finding the **average luminance of an image** or collection of colors is often equivalent to&mdash;
+Finding the **average relative luminance of an image** or collection of colors is often equivalent to&mdash;
 - adding all the relative luminances (`Luminance(color)`) of the colors in the image or collection, then
 - dividing the result by the number of such colors.
 
@@ -958,11 +938,11 @@ The following techniques generate new colors that are related to existing colors
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
 - **Monochrome colors**: Colors with the same hue.  Examples of generating such colors include the following:
-    - **Arbitrary monochrome colors**: Generate one or more `HsvToRgb(HSVHue(color), S, V)`, where `S` is an arbitrary saturation and `V` is an arbitrary brightness.
-    - **HSL "Lightness" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), HSLSat(color), L)`, where `L` is an arbitrary "lightness" (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).
-    - **HSL "Saturation" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), S, HSLLgt(color))`, where `S` is an arbitrary "saturation".
-    - **HSV Brightness Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary brightness.
-    - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary saturation.
+    - **Arbitrary monochrome colors**: Generate one or more `HsvToRgb(HSVHue(color), S, V)`, where `S` is an arbitrary HSV saturation and `V` is an arbitrary HSV brightness.
+    - **HSL "Lightness" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), HSLSat(color), L)`, where `L` is an arbitrary HSL "lightness" (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).
+    - **HSL "Saturation" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), S, HSLLgt(color))`, where `S` is an arbitrary  HSL "saturation".
+    - **HSV Brightness Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary  HSV brightness.
+    - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary  HSV saturation.
 
 <a id=Color_Matrices></a>
 ### Color Matrices
@@ -1031,8 +1011,8 @@ Examples of matrices include:
 - **Red channel**: Generate `[color[0], color[0], color[0]]`.
 - **Green channel**: Generate `[color[1], color[1], color[1]]`.
 - **Blue channel**: Generate `[color[2], color[2], color[2]]`.
-- **Maximum**: Generate `[c, c, c]`, where `c` is `Max3(color[0], color[1], color[2])`.
-- **Minimum**: Generate `[c, c, c]`, where `c` is `Min3(color[0], color[1], color[2])`.
+- **Maximum**: Generate `[c, c, c]`, where `c` is `max(max(color[0], color[1]), color[2])`.
+- **Minimum**: Generate `[c, c, c]`, where `c` is `min(min(color[0], color[1]), color[2])`.
 
 **Note:** Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include [_chroma key_](https://en.wikipedia.org/wiki/Chroma_key), are largely out of the scope of this document.
 
@@ -1203,25 +1183,31 @@ between them is maximized as much as feasible) can be used to select visually
 distinct colors.  Such colors can be pregenerated or generated at runtime.
 
 The following method can be used to generate a color map of randomly generated
-distinguishable RGB colors; `numColors` is the number of colors to generate. `MINDIST` is the
-minimum distance between colors that should be attempted; for
-RGB colors in 0-1 format, this value should be about 0.2.
+distinguishable nonlinearized sRGB colors; `numColors` is the number of colors to generate.
 
     METHOD RandomColorList(numColors)
         list = NewList()
+        lablist = NewList()
         attempts = 0
         while size(list) < numColors
-            // Generate a random RGB color
+            // Generate a random sRGB color
             color = [RNDU01(), RNDU01(), RNDU01()]
+	    // Convert to CIELAB
+            lab = SRGBToLab(color)
             dist = 0
             j = 0
-            while j < size(list)
-                newdist = COLORDIFF(list[j], color)
+            while j < size(lablist)
+		exlab = lablist[j]
+		dl=color[0]-exlab[0]
+		da=color[1]-exlab[1]
+		db=color[2]-exlab[2]
+                newdist = dl*dl+da*da+db*db
                 if newdist < dist or j == 0: newdist = dist
                 j = j + 1
             end
-            if dist > MINDIST or size(list) == 0 or attempts > 500
+            if dist > 20 or size(list) == 0 or attempts > 100
                AddItem(list, color)
+	       AddItem(lablist, lab)
                attempts=0
             end
         end
@@ -1234,7 +1220,7 @@ RGB colors in 0-1 format, this value should be about 0.2.
 Colors can also be represented as functions that describe a distribution of radiation (such as light) across
 the visible spectrum.  There are two cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three _color matching functions_, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light's perceived color in the [_XYZ color model_](#CIE_XYZ).  Although spectral power distributions and color matching functions are continuous functions, in practice the "integration" is done by sampling at discrete wavelengths.
+- **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three _color matching functions_, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light's perceived color in the [XYZ color model](#CIE_XYZ).  Although spectral power distributions and color matching functions are continuous functions, in practice the "integration" is done by sampling at discrete wavelengths.
 - **Reflective objects.** Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding an object's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
 
 In the pseudocode below:
@@ -1396,7 +1382,8 @@ Feel free to send comments. They may help improve this page.  In particular, cor
 this page are welcome.
 
 I acknowledge&mdash;
-- the CodeProject user Mike-MadBadger, who suggested additional clarification on color spaces and color models, and
+- the CodeProject user Mike-MadBadger, who suggested additional clarification on color spaces and color models,
+- Elle Stone, and
 - Thomas Mansencal.
 
 <a id=Notes></a>
@@ -1432,6 +1419,9 @@ I acknowledge&mdash;
 <sup id=Note11>(11)</sup> Although the _L\*a\*b\*_ color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+
+<sup id=Note13>(13)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
+
 </small>
 
 <a id=License></a>

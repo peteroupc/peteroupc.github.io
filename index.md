@@ -9,6 +9,7 @@ to see this site's source code.
 
 Open-source articles on programming subjects.
 
+* [Pseudocode Conventions](./pseudocode.html)
 * [Random Number Generator Recommendations for Applications](./random.html)
 * [Random Number Generation Methods](./randomfunc.html)
 * [Color Generation and Conversion Methods](./colorgen.html)
