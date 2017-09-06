@@ -127,33 +127,7 @@
 <p>In this document:</p>
 
 <ul>
-<li>Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.</li>
-<li>Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list&#39;s size minus 1.</li>
-<li>The pseudocode shown doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.</li>
-<li><code>pi</code> is the constant &pi;, the ratio of a circle&#39;s circumference to its diameter.</li>
-<li><code>nothing</code> indicates the absence of a value.  It corresponds to <code>null</code> in Java, C#, and JavaScript, <code>nil</code> in Ruby, and <code>None</code> in Python.</li>
-<li><code>true</code> and <code>false</code> are the two Boolean values.</li>
-<li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, respectively, where <code>a</code> is in radians.</li>
-<li><code>asin(a)</code>, <code>acos(a)</code>, and <code>atan(a)</code> are the inverse sine, inverse cosine, and inverse tangent of <code>a</code>, respectively, in radians.</li>
-<li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
-<li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
-<li><code>sqrt(a)</code> is the square root of <code>a</code>, and is equivalent to <code>pow(a, 0.5)</code>.</li>
-<li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
-<li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
-<li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
-<li><code>GetNextLine(file)</code> is a method that gets the next line from a file, or returns <code>nothing</code> if the end of the file was reached.</li>
-<li><code>NewList()</code> creates a new empty list.</li>
-<li><code>AddItem(list, item)</code> adds the item <code>item</code> to the list <code>list</code>.</li>
-<li><code>size(list)</code> returns the size of the list <code>list</code>.</li>
-<li><code>list[k]</code> refers to the item at index <code>k</code> of the list <code>list</code>.</li>
-<li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>, where <code>a</code> must be 0 or greater, and is equivalent to <code>a - floor(a / b) * b</code>.</li>
-<li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
-<li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
-</ul>
-
-<p>In this document, the following terms and conventions are used:</p>
-
-<ul>
+<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
 <li><strong>Intervals</strong>: The following notation is used for intervals:
 
 <ul>

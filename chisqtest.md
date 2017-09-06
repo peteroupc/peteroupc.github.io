@@ -6,7 +6,7 @@ This short article sets forth pseudocode for performing a [chi-squared test](htt
 observed frequencies and probabilities.
 
 In the pseudocode below&mdash;
-- the same notation and conventions that apply to my article on [random number generation methods](./randomfunc.html#Notes_and_Definitions) apply to this document as well,
+- the [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply,
 - `ALMOSTZERO` is a number very close to 0 (for example, 10<sup>100</sup>), and
 - `EPSILON` is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>14</sup>).
 
