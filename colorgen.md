@@ -331,7 +331,7 @@ characters) to and from the HTML color format or the 3-digit format.
 <a id=sRGB_and_Linearized_RGB></a>
 ### sRGB and Linearized RGB
 
-Among RGB color spaces, one of the most popular is the _sRGB color space_. The _sRGB color space_ is a "working space" for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(2)](#Note2)</sup>
+Among RGB color spaces, one of the most popular is the sRGB color space. The _sRGB color space_ is a "working space" for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(2)](#Note2)</sup>
 
 Although many RGB working spaces are linearized by _gamma decoding_, sRGB is different; the formula to use to linearize sRGB colors (the sRGB _transfer function_) is similar to, but is not, applying a gamma exponent of 2.2.
 
@@ -549,8 +549,8 @@ There are at least two conventions for XYZ colors:
 
 In the following pseudocode&mdash;
 
-- `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` performs the opposite conversion, and
-- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGB(xyz)` performs the opposite conversion (see the notes later in this section).
+- `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` does the opposite conversion, and
+- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGB(xyz)` does the opposite conversion (see the notes later in this section).
 
 The pseudocode follows.
 
@@ -606,19 +606,19 @@ the result is undefined.
 <a id=CIE__L_a_b></a>
 ### CIE _L\*a\*b\*_
 
-CIE _L\*a\*b\*_ is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, _L\*a\*b\*_ color spaces differ in what they consider white (also called a _reference white point_).
+CIE _L\*a\*b\*_ (also known as CIELAB) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, _L\*a\*b\*_ color spaces differ in what they consider white (also called a _reference white point_).
 
 A color in CIE _L\*a\*b\*_ consists of three components, in the following order:
 
-- _L\*_, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The _L\*a\*b\*_ color `[100, 0, 0]` is the same as the reference white point.
+- _L\*_, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The _L\*a\*b\*_ color `[100, 0, 0]` is the reference white point.
 - _a\*_ and _b\*_, in that order, are coordinates of two axes that extend away from the gray line.
 
 In the following pseudocode&mdash;
-- the `SRGBToLab` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where 
- the _L\*a\*b*_ color `[100, 0, 0]` is the same as the D65 white point, and the `SRGBFromLab` method performs the opposite conversion,
-- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where 
- the _L\*a\*b*_ color `[100, 0, 0]` is the same as the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method performs the opposite conversion, and 
-- the `XYZToLab(xyz, wpx, wpz)` method converts an XYZ color to _L\*a\*b\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LabToXYZ(lab, wpx, wpz)` method performs the opposite conversion.
+- the `SRGBToLab` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where
+ the _L\*a\*b*_ color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
+- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where
+ the _L\*a\*b*_ color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
+- the `XYZToLab(xyz, wpx, wpz)` method converts an XYZ color to _L\*a\*b\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LabToXYZ(lab, wpx, wpz)` method does the opposite conversion.
 
 The pseudocode follows.
 
@@ -718,17 +718,17 @@ _L\*a\*b*_ color.  It takes a list of those three elements in that order.
 <a id=CIE__L_u_v></a>
 ### CIE _L\*u\*v\*_
 
-CIE _L\*u\*v\*_ is a second color model designed for color comparisons, but is probably less common
+CIE _L\*u\*v\*_ (also known as CIELUV) is a second color model designed for color comparisons, but is probably less common
 than CIE _L\*a\*b\*_.   _L\*u\*v\*_ is similar to _L\*a\*b\*_, except that the three components
 are _L\*_, or _lightness_ of a color (which is the same as in _L\*a\*b\*_), _u\*_,
 and _v\*_, in that order.
 
 In the following pseudocode&mdash;
-- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where 
- the _L\*u\*v*_ color `[100, 0, 0]` is the same as the D65 white point, and the `SRGBFromLuv` method performs the opposite conversion,
-- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where 
- the _L\*u\*v*_ color `[100, 0, 0]` is the same as the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method performs the opposite conversion, and 
-- the `XYZToLuv(xyz, wpx, wpz)` method converts an XYZ color to _L\*u\*v\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LuvToXYZ(luv, wpx, wpz)` method performs the opposite conversion.
+- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where
+ the _L\*u\*v*_ color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLuv` method does the opposite conversion,
+- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where
+ the _L\*u\*v*_ color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method does the opposite conversion, and
+- the `XYZToLuv(xyz, wpx, wpz)` method converts an XYZ color to _L\*u\*v\*_ assuming the white point is the relative XYZ color `[wpx, 1, wpz]`, and the `LuvToXYZ(luv, wpx, wpz)` method does the opposite conversion.
 
 The pseudocode follows.
 
@@ -746,7 +746,7 @@ The pseudocode follows.
     END METHOD
 
     METHOD LuvToXYZ(luv, wpx, wpz)
-	if luv[0]==0: return [0, 0, 0]
+        if luv[0]==0: return [0, 0, 0]
         xyz=LabToXYZ([luv[0], 1, 1],wpx,wpz)
         sumwhite=wpx+15+wpz*3
         u0=4*wpx/sumwhite
@@ -794,7 +794,7 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
 
-- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.  The prime symbol appears near Y because the conversion from RGB usually involves [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y)<sup>[(13)](#Note13)</sup>.
+- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[(14)](#Note14)</sup>
 - C<sub>_B_</sub>, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
 - C<sub>_R_</sub>, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
@@ -1063,7 +1063,7 @@ There are many ways to implement `COLORDIFF`, the color difference.  One simple 
 Note that&mdash;
 - the Euclidean distance can be used, for example, if the colors passed to `NearestColorIndex`&mdash;
     - are expressed in a [_linearized RGB_ color space](#sRGB_and_Linearized_RGB), or
-    - are expressed in CIE _L\*a\*b\*_ or CIE _L\*u\*v\*_ (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 Delta-E color difference method for the corresponding color model (for the _L\*a\*b\*_ Delta-E method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
+    - are expressed in CIE _L\*a\*b\*_ or CIE _L\*u\*v\*_ (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 _&Delta;E\*_ ("delta E") color difference method for the corresponding color model (for the _L\*a\*b\*_ _&Delta;E\*_ method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
 - if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 T. Riemersma suggests an algorithm for color difference to be applied to nonlinearized RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1180,39 +1180,8 @@ color should generally not be the only means to call attention to information.)
 In general, any method that seeks to choose colors that are maximally distant in a particular
 color space (that is, where the smallest [color difference](#Color_Difference_and_Nearest_Colors), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
-distinct colors.  Such colors can be pregenerated or generated at runtime.
-
-The following method can be used to generate a color map of randomly generated
-distinguishable nonlinearized sRGB colors; `numColors` is the number of colors to generate.
-
-    METHOD RandomColorList(numColors)
-        list = NewList()
-        lablist = NewList()
-        attempts = 0
-        while size(list) < numColors
-            // Generate a random sRGB color
-            color = [RNDU01(), RNDU01(), RNDU01()]
-	    // Convert to CIELAB
-            lab = SRGBToLab(color)
-            dist = 0
-            j = 0
-            while j < size(lablist)
-		exlab = lablist[j]
-		dl=color[0]-exlab[0]
-		da=color[1]-exlab[1]
-		db=color[2]-exlab[2]
-                newdist = dl*dl+da*da+db*db
-                if newdist < dist or j == 0: newdist = dist
-                j = j + 1
-            end
-            if dist > 20 or size(list) == 0 or attempts > 100
-               AddItem(list, color)
-	       AddItem(lablist, lab)
-               attempts=0
-            end
-        end
-        return list
-    END METHOD
+distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
+should be _&Delta;E\*_ ("delta E") or another color difference method that takes human color perception into account.
 
 <a id=Colors_as_Spectral_Functions></a>
 ## Colors as Spectral Functions
@@ -1421,6 +1390,8 @@ I acknowledge&mdash;
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
 <sup id=Note13>(13)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
+
+<sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [nonlinearized RGB colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
 
 </small>
 
