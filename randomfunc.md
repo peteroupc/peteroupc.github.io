@@ -68,16 +68,16 @@ In general, security, performance, quality, and other considerations will determ
     - [Stable Distribution](#Stable_Distribution)
     - [Hypergeometric Distribution](#Hypergeometric_Distribution)
     - [Multivariate Normal Distribution](#Multivariate_Normal_Distribution)
+    - [Dirichlet Distribution: Random Numbers with a Given Positive Sum](#Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum)
     - [Other Non-Uniform Distributions](#Other_Non_Uniform_Distributions)
     - [Correlated Random Numbers](#Correlated_Random_Numbers)
         - [Gaussian Copula](#Gaussian_Copula)
     - [Generating Random Numbers from a Distribution of Data Points](#Generating_Random_Numbers_from_a_Distribution_of_Data_Points)
     - [Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)
     - [Truncation and Censoring](#Truncation_and_Censoring)
-    - [Generating Random Points on the Surface of a Hypersphere](#Generating_Random_Points_on_the_Surface_of_a_Hypersphere)
-    - [Generating Random Points Inside a Ball](#Generating_Random_Points_Inside_a_Ball)
-    - [Generating Random Numbers with a Given Positive Sum](#Generating_Random_Numbers_with_a_Given_Positive_Sum)
-    - [Generating a Random Latitude and Longitude](#Generating_a_Random_Latitude_and_Longitude)
+    - [Random Points on the Surface of a Hypersphere](#Random_Points_on_the_Surface_of_a_Hypersphere)
+    - [Random Points Inside a Ball](#Random_Points_Inside_a_Ball)
+    - [Random Latitude and Longitude](#Random_Latitude_and_Longitude)
 - [Conclusion](#Conclusion)
 - [Notes](#Notes)
 - [License](#License)
@@ -117,22 +117,15 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`)**.  This section explains how `RNDINT(maxInclusive)` can be implemented if `RNG()` returns&mdash;
 
-1. integers in the interval \[0, positive `MODULUS`\),
-2. integers in the interval \[0, positive power of 2\) (a special case of method 1), or
-3. floating-point numbers in the interval [0, 1).
+1. integers in the interval \[0, positive `MODULUS`\), or
+2. floating-point numbers in the interval [0, 1).
 
 **Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  Note that all the variables in this method are unsigned integers.<sup>[(7)](#Note7)</sup>
 
-    METHOD RNDINT(maxInclusive)
-      // maxInclusive must be 0 or greater
-      if maxInclusive < 0: return error
-      if maxInclusive == 0: return 0
-      // N equals modulus
-      if maxInclusive == MODULUS - 1: return RNG()
-      if maxInclusive >= MODULUS:
+    METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
         while true
-           ret = cx * RNG
+           ret = cx * RNG()
            // NOTE: If this method is implemented using a fixed-
            // precision type, the addition operation below should
            // check for overflow and should reject the number
@@ -140,40 +133,13 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
            ret = ret + RNDINT(cx - 1)
            if ret <= maxInclusive: return ret
         end
-      else
-        // NOTE: If the programming language implements
-        // division with two integers by truncating to an
-        // integer, the division can be used as is without
-        // calling a "floor" function.
-              nPlusOne = maxInclusive + 1
-              maxexc = floor((MODULUS - 1) / nPlusOne) * nPlusOne
-              while true
-                        ret = RNG()
-                        if ret < nPlusOne: return ret
-                        if ret < maxexc: return mod(ret, nPlusOne)
-              end
-      end
     END METHOD
 
-**Method 2**: If `RNG()` outputs **integers in the interval \[0, positive power of 2\)**, such as random bits, random bytes, or random values of a given number of bits, then `RNDINT(maxInclusive)` can be implemented as follows. In the pseudocode below, `MODULUS` is the positive power of 2, and `MODBITS` is the number of bits, minus 1, used to represent `MODULUS`.  For example:
-
-- If the RNG outputs random 32-bit integers, `MODULUS` is 2<sup>32</sup> and `MODBITS` is 32.
-- If the RNG outputs random 8-bit bytes, `MODULUS` is 256 and `MODBITS` is 8.
-
-Note that all the variables in this method are unsigned integers.
-
-    METHOD RNDINT(maxInclusive)
-       // maxInclusive must be 0 or greater
-        if maxInclusive < 0: return error
-        if maxInclusive == 0: return 0
-        // maxInclusive equals maximum
-        if maxInclusive == MODULUS - 1: return RNG()
-        // Special cases
-        if maxInclusive == 1: return mod(RNG(), 2)
-        if maxInclusive == 3 and MODBITS >= 2: return mod(RNG(), 4)
-        if maxInclusive == 255 and MODBITS >= 8: return mod(RNG(), 256)
-        if maxInclusive == 65535 and MODBITS >=16: return mod(RNG(), 65535)
-        if maxInclusive > MODULUS - 1:
+    METHOD RndIntHelperPowerOfTwo(maxInclusive)
+            // NOTE: Finds the number of bits minus 1 needed
+            // to represent MODULUS. This will be a constant
+            // here, though.
+            modBits = ln(MODULUS)/ln(2)
             // Calculate the bit count of maxInclusive
             bitCount = 0
             tempnumber = maxInclusive
@@ -189,7 +155,7 @@ Note that all the variables in this method are unsigned integers.
                    // Build a number with `bitCount` bits
                     tempnumber = 0
                     while bitCount > 0
-                         wordBits = MODBITS
+                         wordBits = modBits
                          rngNumber = RNG()
                          if wordBits > bitCount
                             wordBits = bitCount
@@ -210,7 +176,39 @@ Note that all the variables in this method are unsigned integers.
                     // Accept the number if allowed
                     if tempnumber <= maxInclusive: return tempnumber
              end
-       else
+    END METHOD
+
+    METHOD RNDINT(maxInclusive)
+      // maxInclusive must be 0 or greater
+      if maxInclusive < 0: return error
+      if maxInclusive == 0: return 0
+      // N equals modulus
+      if maxInclusive == MODULUS - 1: return RNG()
+      // NOTE: Finds the number of bits minus 1 needed
+      // to represent MODULUS (if it's a power of 2).
+      // This will be a constant here, though.
+      modBits=ln(MODULUS)/ln(2)
+      // NOTE: The following condition checks if MODULUS
+      // is a power of 2.  This will be a constant here, though.
+      isPowerOfTwo=floor(modBits) == modBits
+      // Special cases if MODULUS is a power of 2
+      if isPowerOfTwo
+           if maxInclusive == 1: return mod(RNG(), 2)
+           if maxInclusive == 3 and modBits >= 2: return mod(RNG(), 4)
+           if maxInclusive == 255 and modBits >= 8: return mod(RNG(), 256)
+           if maxInclusive == 65535 and modBits >=16: return mod(RNG(), 65535)
+       end
+      if maxInclusive > MODULUS - 1:
+         if isPowerOfTwo
+           return RndIntHelperPowerOfTwo(maxInclusive)
+         else
+           return RndIntHelperNonPowerOfTwo(maxInclusive)
+         end
+      else
+        // NOTE: If the programming language implements
+        // division with two integers by truncating to an
+        // integer, the division can be used as is without
+        // calling a "floor" function.
               nPlusOne = maxInclusive + 1
               maxexc = floor((MODULUS - 1) / nPlusOne) * nPlusOne
               while true
@@ -218,12 +216,13 @@ Note that all the variables in this method are unsigned integers.
                         if ret < nPlusOne: return ret
                         if ret < maxexc: return mod(ret, nPlusOne)
               end
-       end
+      end
     END METHOD
 
-Note that this implementation of `RNDINT(maxInclusive)` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+**Note:** If `MODULUS` is a power of 2, calling `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+Note that all the variables in this method are unsigned integers.
 
-**Method 3**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use one of the two methods given above depending on whether `s` is a power of two, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
+**Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
 
 **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
 
@@ -274,7 +273,9 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 
 **Note:**
 
-- To simulate rolling a six-sided die, generate a random number from 1 through 6 by calling `RNDINTRANGE(1, 6)`.
+- To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by calling `RNDINTRANGE(1, N)`.
+- Generating a random 1-digit integer is equivalent to generating `RNDINTRANGE(0, 9)`.
+- Generating a random N-digit integer (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 
 <a id=RNDU01_Random_Numbers_in_0_1></a>
 ### `RNDU01`: Random Numbers in [0, 1]
@@ -414,15 +415,9 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 <a id=RNDBITS_Random_N_Bit_Integers></a>
 ### `RNDBITS`: Random N-Bit Integers
 
-The following na&iuml;ve way of generating a **uniformly distributed random N-bit integer** is as follows:
+The idiom `RNDINT((1 << b) - 1)`, called **`RNDBITS(b)`** in this document, is a na&iuml;ve way of generating a **uniformly distributed random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
 
-     METHOD RNDBITS(bits)
-        // NOTE: The maximum number that could be returned
-        // here is 2^bits - 1, in which all `bits` bits are set to 1.
-        return RNDINT((1 << bits) - 1)
-     END METHOD
-
-Although this works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ [<sup>(1)</sup>](#Note1). For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
+Although this idiom works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ [<sup>(1)</sup>](#Note1). For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
 
     METHOD RNDBITS(bits)
          if bits<0 or bits > BITCOUNT: return error
@@ -561,7 +556,7 @@ as found in the Basic Latin block of the Unicode Standard.
 To choose a random item from a list&mdash;
 
 - whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
-- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in pseudocode given in a [later section](#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
+- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in pseudocode given in a [later section](#Sampling_Without_Replacement_Choosing_Several_Unique_Items) (the result will be a 1-item list or be an empty list if there are no items).
 
 Choosing an item this way is also known as _sampling with replacement_.
 
@@ -810,9 +805,9 @@ The discrete weighted choice method can also be used to implement a [_piecewise 
     // Choose a random index
     index = DiscreteWeightedChoice(weights)
     // Choose a random number in the chosen interval on the list
-    number = list[index] + (list[index + 1] - list[index]) * RNDU01OneExc()
+    number = RNDNUMEXCRANGE(list[index], list[index + 1])
 
-The code above implements the distribution _with replacement_.  Implementing the distribution _without replacement_ is similar to implementing discrete weighted choice without replacement; the only change is to replace `AddItem(items, list[index])` with `AddItem(items, list[index] + (list[index + 1] - list[index]) * RNDU01OneExc())` in the pseudocode.
+The code above implements the distribution _with replacement_.  Implementing the distribution _without replacement_ is similar to implementing discrete weighted choice without replacement; the only change is to replace `AddItem(items, list[index])` with `AddItem(items, RNDNUMEXCRANGE(list[index], list[index + 1]))` in the pseudocode.
 
 <a id=Multinomial_Distribution></a>
 #### Multinomial Distribution
@@ -946,12 +941,12 @@ This section used the following sources:
 
 The [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-The pseudocode below uses the polar method <sup>[(2)](#Note2) to generates two normally-distributed random numbers
+The pseudocode below uses the polar method <sup>[(2)](#Note2)</sup> to generate two normally-distributed random numbers
 using the following two parameters:
 
 - `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
 - `sigma` (&sigma;), the standard deviation, affects how wide the normal distribution's "bell curve" appears. The
-probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%, and within three standard deviations, about 99.7%.
+probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
 
 ----
 
@@ -997,6 +992,8 @@ The following method generates a random integer that follows a binomial distribu
 1, always, and which can be 0.5, meaning an equal chance of success or failure), and
 - is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance), if each trial is treated
 as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
+
+----
 
     METHOD Binomial(trials, p)
         if trials < 0: return error
@@ -1121,26 +1118,7 @@ Extended versions of the gamma distribution:
 
 A random integer that follows a _negative binomial distribution_ expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
-The following implementation of the negative binomial distribution allows `successes` to be an integer or a non-integer (and implements a distribution also known as the _P&oacute;lya distribution_).
-
-    METHOD NegativeBinomial(successes, p)
-        // Must be 0 or greater
-        if successes < 0: return error
-        // No failures if no successes or if always succeeds
-        if successes == 0 or p >= 1.0: return 0
-        // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomial is implemented to return
-        // an integer)
-        if p <= 0.0: return infinity
-        if successes == 1.0
-            // Geometric distribution special case (see Saucier 2000)
-            return floor(ln(RNDU01ZeroExc()) / ln(1.0 - p))
-        else
-            return Poisson(GammaDist(successes) * (1 - p) / p)
-        end
-    END METHOD
-
-The following implementation of the negative binomial distribution allows `successes` to be an integer only.
+If the negative binomial distribution allows `successes` to be a non-integer, the distribution is also called the _P&oacute;lya distribution_.
 
     METHOD NegativeBinomialInt(successes, p)
         // Must be 0 or greater
@@ -1151,6 +1129,11 @@ The following implementation of the negative binomial distribution allows `succe
         // integer value if NegativeBinomialInt is implemented to return
         // an integer)
         if p <= 0.0: return infinity
+        // NOTE: If 'successes' can be an integer only,
+        // omit the following three lines:
+        if floor(successes) != successes
+            return Poisson(GammaDist(successes) * (1 - p) / p)
+        end
         count = 0
         total = 0
         if successes == 1
@@ -1211,7 +1194,12 @@ The von Mises distribution describes a distribution of circular angles.  In the 
 
 As more and more independent and identically distributed random variables are added
 together, their distribution tends to a [_stable distribution_](https://en.wikipedia.org/wiki/Stable_distribution),
-which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The two shape parameters are `alpha` (stability index, interval (0, 2]) and `beta` (skewness, interval [-1, 1]); if `beta` is 0, the curve is symmetric.
+which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
+
+- `alpha` is a stability index in the interval (0, 2].
+- `beta` is a skewness in the interval [-1, 1]); if `beta` is 0, the curve is symmetric.
+
+----
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error
@@ -1251,11 +1239,6 @@ this way that are labeled `1`.  In the method below, `trials` is the number of i
 drawn at random, `ones` is the number of items labeled `1` in the set, and `count` is
 the number of items labeled `1` or `0` in that set.
 
-**Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
-cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number
-of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
-12, and `count` is 52.
-
     METHOD Hypergeometric(trials, ones, count)
         if ones < 0 or count < 0 or trials < 0 or ones > count or trials > count
                 return error
@@ -1275,6 +1258,11 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
         end
         return successes
     END METHOD
+
+**Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
+cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number
+of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
+12, and `count` is 52.
 
 <a id=Multivariate_Normal_Distribution></a>
 ### Multivariate Normal Distribution
@@ -1360,6 +1348,43 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
       end
       return ret
     end
+
+<a id=Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum></a>
+### Dirichlet Distribution: Random Numbers with a Given Positive Sum
+
+The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat. (A more general version of the Dirichlet distribution allows the parameter in `GammaDist` to vary for each random number.)
+
+An alternative method, which can work better if random integers are to be generated instead of random numbers, is illustrated in the following pseudocode.  In the pseudocode below, `Sort(list)` sorts the items in `list` in ascending order. (Note that details on sort algorithms are outside the scope of this document.)
+
+    METHOD NumbersWithSum(n, total)
+        if n <= 0 or total <=0: return error
+        list = NewList()
+        i = 0
+        while i < n - 1
+           AddItem(list, RNDNUMRANGE(0, total))
+           // NOTE: If only integers are to be generated, the following
+           // can be used instead of the preceding line:
+           // AddItem(list, RNDINT(total))
+           i = i + 1
+         end
+         AddItem(list, total)
+         Sort(list)
+         prev = list[0]
+         i = 1
+        while i < n
+             newValue = list[i] - prev
+             prev = list[i]
+             list[i] = newValue
+             i = i + 1
+        end
+    END METHOD
+
+**Notes:**
+
+- The problem of generating N random numbers with a given sum is equivalent to the problem of generating a uniformly distributed point
+inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.
+- Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers
+with the sum `N * avg`.
 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
@@ -1514,7 +1539,7 @@ Many statistical distributions can be defined in terms of any of the following:
 If a statistical distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
 1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
-2. In many cases, random numbers that follow the distribution can be generated using [_inverse transform sampling_](https://en.wikipedia.org/wiki/Inverse_transform_sampling), that is, by generating `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1. **OR**
+2. Use [_inverse transform sampling_](https://en.wikipedia.org/wiki/Inverse_transform_sampling). Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1. **OR**
 3. Use _rejection sampling_.  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
@@ -1526,14 +1551,14 @@ If a statistical distribution's **PDF is known**, one of the following technique
              end
         END METHOD
 
-If both **a PDF and a uniform random variable in the interval [0, 1)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
+If both **a PDF and a uniform random variable in the interval [0, 1) (`randomVariable`)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
 
-1. Do the same process as method 1, given earlier, but divide the weights in the `weights` list by the sum of all weights before calling `ContinuousWeightedChoice`.  **OR**
-2. Call `ICDF(randomVariable)`, where `randomVariable` is the uniform random variable and `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+1. Do the same process as method 1, given earlier, except&mdash;
+    - divide the weights in the `weights` list by the sum of all weights, and
+    - use a modified version of [`ContinuousWeightedChoice`](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
+2. Call `ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
 
-If both **a CDF and a uniform random variable in the interval [0, 1)** are given, then the following technique can be used to generate a random number that follows that distribution:
-
--  Call `ICDF(randomVariable)`, where `randomVariable` is the uniform random variable and `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
 
 **Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
@@ -1546,14 +1571,14 @@ To sample from a _censored_ statistical distribution, an application generates a
 - if that number is less than a minimum threshold, uses the minimum threshold instead, and/or
 - if that number is greater than a maximum threshold, uses the maximum threshold instead.
 
-<a id=Generating_Random_Points_on_the_Surface_of_a_Hypersphere></a>
-### Generating Random Points on the Surface of a Hypersphere
+<a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
+### Random Points on the Surface of a Hypersphere
 
 Generating N `Normal(0, 1)` random numbers, then dividing them by their _norm_ (the square root of the sum of squares of the numbers generated this way, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  [Reference](http://mathworld.wolfram.com/HyperspherePointPicking.html).
 (In the exceptional case that the norm is 0, the process should repeat.)
 
-<a id=Generating_Random_Points_Inside_a_Ball></a>
-### Generating Random Points Inside a Ball
+<a id=Random_Points_Inside_a_Ball></a>
+### Random Points Inside a Ball
 
 To generate an N-dimensional point inside an N-dimensional ball of radius R, an application can either&mdash;
 
@@ -1564,44 +1589,8 @@ although the former method "may ... be slower" "in practice", according to a [Ma
 
 If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the _norm_ of a point generated this way is within the desired range of distances.
 
-<a id=Generating_Random_Numbers_with_a_Given_Positive_Sum></a>
-### Generating Random Numbers with a Given Positive Sum
-
-The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat. (A more general version of the Dirichlet distribution allows the parameter in `GammaDist` to vary for each random number.)
-
-An alternative method, which can work better if random integers are to be generated instead of random numbers, is illustrated in the following pseudocode.  In the pseudocode below, `Sort(list)` sorts the items in `list` in ascending order. (Note that details on sort algorithms are outside the scope of this document.)
-
-    METHOD NumbersWithSum(n, total)
-        if n <= 0 or total <=0: return error
-        list = NewList()
-        i = 0
-        while i < n - 1
-           AddItem(list, RNDNUMRANGE(0, total))
-           // NOTE: If only integers are to be generated, the following
-           // can be used instead of the preceding line:
-           // AddItem(list, RNDINT(total))
-           i = i + 1
-         end
-         AddItem(list, total)
-         Sort(list)
-         prev = list[0]
-         i = 1
-        while i < n
-             newValue = list[i] - prev
-             prev = list[i]
-             list[i] = newValue
-             i = i + 1
-        end
-    END METHOD
-
-**Notes:**
-
-- The problem of generating N random numbers with a given sum is equivalent to the problem of generating a uniformly distributed point inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.
-- Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers
-with the sum `N * avg`.
-
-<a id=Generating_a_Random_Latitude_and_Longitude></a>
-### Generating a Random Latitude and Longitude
+<a id=Random_Latitude_and_Longitude></a>
+### Random Latitude and Longitude
 
 To generate a random latitude and longitude on a sphere such that the resulting point
 is (practically) uniformly distributed on the surface of a sphere&mdash;
@@ -1644,7 +1633,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 - use a deterministic algorithm for random number generation, and/or
 - primarily rely on one or more nondeterministic sources for random number generation.
 
-If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)").  Outside the scope of this document are further details on this kind of conversion and a list of CDFs.
+If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.
 
 <sup id=Note7>(7)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
