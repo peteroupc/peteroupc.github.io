@@ -7,11 +7,21 @@
 
 This document explains the conventions and common functions used in some of my articles that use pseudocode.
 
+<a id=Contents></a>
 ## Contents
 
+- [Introduction](#Introduction)
+- [Contents](#Contents)
+- [Symbols](#Symbols)
+- [Lists and Files](#Lists_and_Files)
+- [Functions](#Functions)
+- [Pseudocode Notes](#Pseudocode_Notes)
 - [License](#License)
 
+<a id=Symbols></a>
 ## Symbols
+
+In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) operators, other symbols are defined below.
 
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
@@ -19,7 +29,10 @@ This document explains the conventions and common functions used in some of my a
 * The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 
+<a id=Lists_and_Files></a>
 ## Lists and Files
+
+In the pseudocode, lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
 
 * `NewList()` creates a new empty list.
 * `AddItem(list, item)` adds the item `item` to the list `list`.
@@ -27,6 +40,7 @@ This document explains the conventions and common functions used in some of my a
 * `list[k]` refers to the item at index `k` of the list `list`.
 * `GetNextLine(file)` is a method that gets the next line from a file, or returns `nothing` if the end of the file was reached.
 
+<a id=Functions></a>
 ## Functions
 
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
@@ -48,12 +62,12 @@ This document explains the conventions and common functions used in some of my a
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
 
+<a id=Pseudocode_Notes></a>
 ## Pseudocode Notes
 
 In the pseudocode:
 
 * Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.
-* Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
 * The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
 
 <a id=License></a>

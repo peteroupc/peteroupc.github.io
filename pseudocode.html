@@ -12,13 +12,25 @@
 
 <p>This document explains the conventions and common functions used in some of my articles that use pseudocode.</p>
 
+<p><a id=Contents></a></p>
+
 <h2>Contents</h2>
 
 <ul>
+<li><a href="#Introduction">Introduction</a></li>
+<li><a href="#Contents">Contents</a></li>
+<li><a href="#Symbols">Symbols</a></li>
+<li><a href="#Lists_and_Files">Lists and Files</a></li>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Pseudocode_Notes">Pseudocode Notes</a></li>
 <li><a href="#License">License</a></li>
 </ul>
 
+<p><a id=Symbols></a></p>
+
 <h2>Symbols</h2>
+
+<p>In addition to the familiar <code>+</code>, <code>-</code>, <code>*</code> (multiplication), and <code>/</code> (division) operators, other symbols are defined below.</p>
 
 <ul>
 <li><code>pi</code> is the constant &pi;, the ratio of a circle&#39;s circumference to its diameter.</li>
@@ -28,7 +40,11 @@
 <li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
 </ul>
 
+<p><a id=Lists_and_Files></a></p>
+
 <h2>Lists and Files</h2>
+
+<p>In the pseudocode, lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list&#39;s size minus 1.</p>
 
 <ul>
 <li><code>NewList()</code> creates a new empty list.</li>
@@ -37,6 +53,8 @@
 <li><code>list[k]</code> refers to the item at index <code>k</code> of the list <code>list</code>.</li>
 <li><code>GetNextLine(file)</code> is a method that gets the next line from a file, or returns <code>nothing</code> if the end of the file was reached.</li>
 </ul>
+
+<p><a id=Functions></a></p>
 
 <h2>Functions</h2>
 
@@ -64,13 +82,14 @@
 <li><code>max(a, b)</code> is the larger of <code>a</code> and <code>b</code>.</li>
 </ul>
 
+<p><a id=Pseudocode_Notes></a></p>
+
 <h2>Pseudocode Notes</h2>
 
 <p>In the pseudocode:</p>
 
 <ul>
 <li>Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.</li>
-<li>Lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list&#39;s size minus 1.</li>
 <li>The pseudocode shown doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.</li>
 </ul>
 

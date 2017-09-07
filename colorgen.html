@@ -653,7 +653,7 @@ END METHOD
 
 <ul>
 <li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and <code>XYZTosRGB(xyz)</code> does the opposite conversion, and</li>
-<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and <code>XYZTosRGB(xyz)</code> does the opposite conversion (see the notes later in this section).</li>
+<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and <code>XYZTosRGBD50(xyz)</code> does the opposite conversion (see the notes later in this section).</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -700,7 +700,10 @@ END METHOD
 <ul>
 <li>In this document, unless noted otherwise, XYZ colors use a &quot;relative XYZ&quot; convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.</li>
 <li>In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the inverse of the matrix shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.</li>
-<li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point, a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.</li>
+<li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point,
+a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another (such as a linear Bradford transformation)
+needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
+The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.</li>
 <li>Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.</li>
 <li>An XYZ color (<code>xyz</code>) can be converted to &quot;xyY&quot; form (where the &quot;xy&quot; is <em>chromaticity</em> and &quot;Y&quot; is <em>luminance</em>) by generating
 <code>[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]</code>.  Note that if the sum of the XYZ components is 0, the result
@@ -730,13 +733,14 @@ the result is undefined.</li>
 the <em>L*a*b*</em> color <code>[100, 0, 0]</code> is the D65 white point, and the <code>SRGBFromLab</code> method does the opposite conversion,</li>
 <li>the <code>SRGBToLabD50</code> method converts a nonlinearized sRGB color to CIE <em>L*a*b*</em>, where
 the <em>L*a*b*</em> color <code>[100, 0, 0]</code> is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the <code>SRGBFromLabD50</code> method does the opposite conversion, and</li>
-<li>the <code>XYZToLab(xyz, wpx, wpz)</code> method converts an XYZ color to <em>L*a*b*</em> assuming the white point is the relative XYZ color <code>[wpx, 1, wpz]</code>, and the <code>LabToXYZ(lab, wpx, wpz)</code> method does the opposite conversion.</li>
+<li>the <code>XYZToLab(xyz, wpoint)</code> method converts an XYZ color to <em>L*a*b*</em> relative to the white point <code>wpoint</code> (a relative XYZ color),
+and the <code>LabToXYZ(lab, wpoint)</code> method does the opposite conversion.</li>
 </ul>
 
 <p>The pseudocode follows.</p>
 
-<pre>METHOD XYZToLab(xyzval, wpx, wpz)
-    xyz=[xyzval[0]/wpx,xyzval[1],xyzval[2]/wpz]
+<pre>METHOD XYZToLab(xyzval, wpoint)
+    xyz=[xyzval[0]/wpoint[0],xyzval[1]/wpoint[1],xyzval[2]/wpoint[2]]
     i=0
     while i &lt; 3
        if xyz[i] &gt; 216.0 / 24389 // See BruceLindbloom.com
@@ -773,19 +777,19 @@ METHOD LabToXYZ(xyz,wpx,wpz)
 END METHOD
 
 METHOD SRGBToLab(rgb)
-    return XYZToLab(XYZFromsRGB(rgb), 0.9504559, 1.089058)
+    return XYZToLab(XYZFromsRGB(rgb), [0.9504559, 1, 1.089058])
 END METHOD
 
 METHOD SRGBFromLab(lab)
-    return XYZTosRGB(LabToXYZ(lab, 0.9504559, 1.089058))
+    return XYZTosRGB(LabToXYZ(lab, [0.9504559, 1, 1.089058]))
 END METHOD
 
 METHOD SRGBToLabD50(rgb)
-    return XYZToLab(XYZFromsRGBD50(rgb), 0.9642957, 0.8251046)
+    return XYZToLab(XYZFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
 END METHOD
 
 METHOD SRGBFromLabD50(lab)
-    return XYZTosRGBD50(LabToXYZ(lab, 0.9642957, 0.8251046))
+    return XYZTosRGBD50(LabToXYZ(lab, [0.9642957, 1, 0.8251046]))
 END METHOD
 </pre>
 
@@ -796,19 +800,6 @@ the closer the color is to the &quot;gray&quot; line.</p>
 
 <pre>METHOD LabToChroma(lab)
     return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
-END METHOD
-</pre>
-
-<p>A color&#39;s <a href="https://en.wikipedia.org/wiki/Colorfulness"><em>saturation</em></a> can be derived from a <em>L*a*b*</em> color
-with a method demonstrated in the following pseudocode.  Saturation is
-0 or greater and less than 1.  The closer saturation
-is to 0, the closer the color is to the &quot;gray&quot; line.</p>
-
-<pre>METHOD LabToSaturation(lab)
-    chromasq=lab[1]*lab[1] + lab[2]*lab[2]
-    den=sqrt(lab[0]*lab[0]+chromasq)
-    if den==0: return 0
-    return sqrt(chromasq)/den
 END METHOD
 </pre>
 
@@ -833,6 +824,9 @@ END METHOD
 END METHOD
 </pre>
 
+<p>CIE <em>L*a*b*</em> has no formal saturation formula (see the Wikipedia article
+on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
+
 <p><a id=CIE__L_u_v></a></p>
 
 <h3>CIE <em>L*u*v*</em></h3>
@@ -849,30 +843,31 @@ and <em>v*</em>, in that order.</p>
 the <em>L*u*v*</em> color <code>[100, 0, 0]</code> is the D65 white point, and the <code>SRGBFromLuv</code> method does the opposite conversion,</li>
 <li>the <code>SRGBToLuvD50</code> method converts a nonlinearized sRGB color to CIE <em>L*u*v*</em>, where
 the <em>L*u*v*</em> color <code>[100, 0, 0]</code> is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the <code>SRGBFromLuvD50</code> method does the opposite conversion, and</li>
-<li>the <code>XYZToLuv(xyz, wpx, wpz)</code> method converts an XYZ color to <em>L*u*v*</em> assuming the white point is the relative XYZ color <code>[wpx, 1, wpz]</code>, and the <code>LuvToXYZ(luv, wpx, wpz)</code> method does the opposite conversion.</li>
+<li>the <code>XYZToLuv(xyz, wpoint)</code> method converts an XYZ color to <em>L*u*v*</em>  relative to the white point <code>wpoint</code> (a relative XYZ color),
+and the <code>LuvToXYZ(luv, wpoint)</code> method does the opposite conversion.</li>
 </ul>
 
 <p>The pseudocode follows.</p>
 
-<pre>METHOD XYZToLuv(xyz, wpx, wpz)
-    lab=XYZToLab(xyz, wpx, wpz)
+<pre>METHOD XYZToLuv(xyz, wpoint)
+    lab=XYZToLab(xyz, wpoint)
     sum=xyz[0]+xyz[1]*15+xyz[2]*3
     lt=lab[0]
     if sum==0: return [lt, 0, 0]
     upr=4*xyz[0]/sum // U-prime chromaticity
     vpr=9*xyz[1]/sum // V-prime chromaticity
-    sumwhite=wpx+15+wpz*3
+    sumwhite=wpoint[0]+15*wpoint[1]+wpoint[2]*3
     return [lt,
-            lt*13*(upr - 4*xywpz/sumwhite),
-            lt*13*(vpr - 9.0/sumwhite)]
+            lt*13*(upr - 4*wpoint[0]/sumwhite),
+            lt*13*(vpr - 9.0*wpoint[1]/sumwhite)]
 END METHOD
 
-METHOD LuvToXYZ(luv, wpx, wpz)
+METHOD LuvToXYZ(luv, wpoint)
     if luv[0]==0: return [0, 0, 0]
-    xyz=LabToXYZ([luv[0], 1, 1],wpx,wpz)
-    sumwhite=wpx+15+wpz*3
-    u0=4*wpx/sumwhite
-    v0=9.0/sumwhite
+    xyz=LabToXYZ([luv[0], 1, 1],wpoint)
+    sumwhite=wpoint[0]+15*wpoint[1]+wpoint[2]*3
+    u0=4*wpoint[0]/sumwhite
+    v0=9.0*wpoint[1]/sumwhite
     lt=luv[0]
     a=(52*lt/(luv[1]+13*u0*lt)-1)/3.0
     d=xyz[1]*(39*lt/(luv[2]+13*v0*lt)-5)
@@ -882,28 +877,37 @@ METHOD LuvToXYZ(luv, wpx, wpz)
 END METHOD
 
 METHOD SRGBToLuv(rgb)
-    return XYZToLuv(XYZFromsRGB(rgb), 0.9504559, 1.089058)
+    return XYZToLuv(XYZFromsRGB(rgb), [0.9504559, 1, 1.089058])
 END METHOD
 
 METHOD SRGBFromLuv(luv)
-    return XYZTosRGB(LuvToXYZ(luv, 0.9504559, 1.089058))
+    return XYZTosRGB(LuvToXYZ(luv, [0.9504559, 1, 1.089058]))
 END METHOD
 
 METHOD SRGBToLuvD50(rgb)
-    return XYZToLuv(XYZFromsRGBD50(rgb), 0.9642957, 0.8251046)
+    return XYZToLuv(XYZFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
 END METHOD
 
 METHOD SRGBFromLuvD50(luv)
-    return XYZTosRGBD50(LuvToXYZ(luv, 0.9642957, 0.8251046))
+    return XYZTosRGBD50(LuvToXYZ(luv, [0.9642957, 1, 0.8251046]))
 END METHOD
 </pre>
 
-<p>Hue, chroma, and saturation can be derived from a
+<p>Hue and chroma can be derived from a
 <em>L*u*v*</em> color in a similar way as from a <em>L*a*b*</em>, color, with
 <em>u*</em> and <em>v*</em> used instead of <em>a*</em> and <em>b*</em>, respectively.
-The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabToSaturation</code>, and
+The <code>LabToHue</code>, <code>LabToChroma</code>, and
 <code>LchToLab</code> methods from the previous section work with
-<em>L*u*v*</em> colors analogously to <em>L*a*b*</em> colors.</p>
+<em>L*u*v*</em> colors analogously to <em>L*a*b*</em> colors.
+A color&#39;s <a href="https://en.wikipedia.org/wiki/Colorfulness"><em>saturation</em></a>
+can be derived from a <em>L*u*v*</em> color with a method demonstrated
+in the following pseudocode:</p>
+
+<pre>METHOD LuvToSaturation(luv)
+    if luv[0]==0: return 0
+    return sqrt(luv[1]*luv[1]+luv[2]*luv[2])/luv[0]
+END METHOD
+</pre>
 
 <p><a id=CMYK></a></p>
 
@@ -929,8 +933,7 @@ The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabToSaturation</code
 </ul>
 
 <p>Note that a thorough survey of the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> data has been encoded is outside
-the scope of this document; in general, such encodings take advantage of the generally greater sensitivity in luminance (approximated by Y&prime;)
-than in hue in human vision.</p>
+the scope of this document.</p>
 
 <p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
