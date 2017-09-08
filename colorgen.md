@@ -335,7 +335,7 @@ Among RGB color spaces, one of the most popular is the sRGB color space. The _sR
 
 Although many RGB working spaces are linearized by _gamma decoding_, sRGB is different; the formula to use to linearize sRGB colors (the sRGB _transfer function_) is similar to, but is not, applying a gamma exponent of 2.2.
 
-The following methods linearize and de-linearize sRGB colors.  (Note that `0.4045` and `0.0031308` are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has different values for these thresholds.)
+The following methods linearize and de-linearize sRGB colors.  (Note that the thresholds `0.4045` and `0.0031308` are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has different values for these thresholds.)
 
     // Convert a color component from nonlinearized to linearized RGB
     METHOD LinearFromsRGB(c)
@@ -1086,7 +1086,7 @@ The following techniques can be used to generate random RGB colors.
 
 Note that for best results, these techniques need to use [_linearized RGB colors_](#sRGB_and_Linearized_RGB), unless noted otherwise.
 
-- Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`, where `RNDINT(x)` returns a [random integer 0 or greater and `x` or less](https://peteroupc.github.io/randomfunc.html#RNDINT_Core_Random_Integer_Method).  This technique is independent of RGB color space.
+- Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`. This technique is independent of RGB color space.
 - Generating a random string in the **HTML color format** is equivalent to generating a [random hexadecimal string](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
 This technique is independent of RGB color space, but see the [note from earlier](#HTML_Color_Format).
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
@@ -1380,13 +1380,13 @@ I acknowledge&mdash;
 
 <sup id=Note8>(8)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue points.
 
-<sup id=Note9>(9)</sup> Other methods that have been used for approximating luminance (and which don't really yield "luminance" as used here) include&mdash;
+<sup id=Note9>(9)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
 
-- using the average (`(color[0]+color[1]+color[2])/3.0`), minimum, or maximum of the three color components ( as shown on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example),
+- using the average (`(color[0]+color[1]+color[2])/3.0`), minimum, or maximum of the three color components (as shown on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example),
 - using the [HSL](#HSL) "lightness" (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)), and
 - using one of the three color components (also as seen on T. Helland's site).
 
-<sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
+<sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 
 <sup id=Note11>(11)</sup> Although the _L\*a\*b\*_ color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
