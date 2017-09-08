@@ -36,6 +36,8 @@
 
 <p>In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
 
+<p>In general, techniques that are specific to an application programming interface are outside the scope of this document.</p>
+
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
@@ -56,6 +58,7 @@
 <li><a href="#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_in_0_1_0_1_or_0_1"><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers in [0, 1), (0, 1], or (0, 1)</a></li>
 <li><a href="#RNDNUMEXCRANGE_Random_Numbers_in_X_Y"><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</a></li>
 <li><a href="#RNDBITS_Random_N_Bit_Integers"><code>RNDBITS</code>: Random N-Bit Integers</a></li>
+<li><a href="#Special_Programming_Environments">Special Programming Environments</a></li>
 </ul></li>
 <li><a href="#Randomization_Techniques">Randomization Techniques</a>
 
@@ -127,6 +130,7 @@
 <li>[<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
 </ul></li>
 <li>The term <em>random number generator</em>, or <em>RNG</em>, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup><a href="#Note6">(6)</a></sup></li>
+<li>The <em>norm</em> of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
 <li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant digits in the format). For example&mdash;
 
 <ul>
@@ -324,8 +328,8 @@ END METHOD
 
 <ul>
 <li>To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by calling <code>RNDINTRANGE(1, N)</code>.</li>
-<li>Generating a random 1-digit integer is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.</li>
-<li>Generating a random N-digit integer (where N is 2 or greater) is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
+<li>Generating a random integer with one base-10 digit is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.</li>
+<li>Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
 </ul>
 
 <p><a id=RNDU01_Random_Numbers_in_0_1></a></p>
@@ -530,6 +534,30 @@ END METHOD
      return ret
 END METHOD
 </pre>
+
+<p><a id=Special_Programming_Environments></a></p>
+
+<h3>Special Programming Environments</h3>
+
+<p>In certain programming environments it&#39;s often impractical to implement the uniform random number generation methods just described without recurring to other programming languages.  These include the following:</p>
+
+<ul>
+<li>Microsoft Windows batch files (newer versions of which, at least, include a <code>%RANDOM%</code> variable).</li>
+<li><code>bash</code> and other shell scripts (some of which include a <code>$RANDOM</code> variable which returns a random integer in the interval [0, 32767)).</li>
+<li><p>SQL dialects, such as&mdash;</p>
+
+<ul>
+<li>MySQL (which has a <code>RAND()</code> akin to <code>RNDU01OneExc()</code>),</li>
+<li>T-SQL,</li>
+<li>PL/SQL,</li>
+<li>PostgreSQL, and</li>
+<li>SQLite,</li>
+</ul>
+
+<p>especially within a single query.</p></li>
+</ul>
+
+<p>Readers aware of how these environments can support those uniform random number methods should send me a comment.</p>
 
 <p><a id=Randomization_Techniques></a></p>
 
@@ -759,7 +787,7 @@ END METHOD
 
 <h3>Almost-Random Sampling</h3>
 
-<p>Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of &quot;almost-random&quot; sampling, an application can do one of the following:</p>
+<p>Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of &quot;almost-random&quot; sampling, do one of the following:</p>
 
 <ul>
 <li>Generate a list of possible outcomes (for example, the list can contain 10 items labeled &quot;good&quot; and three labeled &quot;bad&quot;) and <a href="#Shuffling">shuffle</a> that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list and continue.</li>
@@ -1210,7 +1238,7 @@ END METHOD
 
 <h3>Poisson Distribution</h3>
 
-<p>The following method generates a random integer that follows a Poisson distribution. In the method below, the <code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method&#39;s return value gives a random number of such events during one such unit.</p>
+<p>In the following method, which generates a random integer that follows a <em>Poisson distribution</em>, the <code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method&#39;s return value gives a random number of such events during one such unit.</p>
 
 <p>The random integer from the method below is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can be an integer or a non-integer. The method given here is based on Knuth&#39;s method from 1969.</p>
 
@@ -1724,7 +1752,7 @@ END METHOD
 
 <h3>Generating Random Numbers from a Distribution of Data Points</h3>
 
-<p>To generate a random number (or data point) based on the distribution of a list of numbers (or data points), an application can&mdash;</p>
+<p>To generate a random number (or data point) based on the distribution of a list of numbers (or data points)&mdash;</p>
 
 <ul>
 <li>choose one of the numbers or points at random (see, for example, <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a>), and</li>
@@ -1787,36 +1815,37 @@ END METHOD
 
 <h3>Truncation and Censoring</h3>
 
-<p>To sample from a <em>truncated</em> statistical distribution, an application generates a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeats this process.</p>
+<p>To sample from a <em>truncated</em> statistical distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.</p>
 
-<p>To sample from a <em>censored</em> statistical distribution, an application generates a random number from that distribution and&mdash;</p>
+<p>To sample from a <em>censored</em> statistical distribution, generate a random number from that distribution and&mdash;</p>
 
 <ul>
-<li>if that number is less than a minimum threshold, uses the minimum threshold instead, and/or</li>
-<li>if that number is greater than a maximum threshold, uses the maximum threshold instead.</li>
+<li>if that number is less than a minimum threshold, use the minimum threshold instead, and/or</li>
+<li>if that number is greater than a maximum threshold, use the maximum threshold instead.</li>
 </ul>
 
 <p><a id=Random_Points_on_the_Surface_of_a_Hypersphere></a></p>
 
 <h3>Random Points on the Surface of a Hypersphere</h3>
 
-<p>Generating N <code>Normal(0, 1)</code> random numbers, then dividing them by their <em>norm</em> (the square root of the sum of squares of the numbers generated this way, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>) will result in an N-dimensional point lying on the surface of an N-dimensional hypersphere of radius 1 (that is, the surface formed by all points lying 1 unit away from a common point in N-dimensional space).  <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">Reference</a>.
-(In the exceptional case that the norm is 0, the process should repeat.)</p>
+<p>To generate an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N <code>Normal(0, 1)</code> random numbers, then divide them by <code>R / X</code>, where <code>X</code> is those numbers&#39; <a href="#Notation_and_Definitions"><em>norm</em></a> (if <code>X</code> is 0, the process should repeat). A hypersphere&#39;s surface is formed by all points lying 1 unit away from a common point in N-dimensional space. Based on a technique described in <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">MathWorld</a>.</p>
+
+<p>This problem is equivalent to generating a random unit vector (vector with length 1) in N-dimensional space.</p>
 
 <p><a id=Random_Points_Inside_a_Ball></a></p>
 
 <h3>Random Points Inside a Ball</h3>
 
-<p>To generate an N-dimensional point inside an N-dimensional ball of radius R, an application can either&mdash;</p>
+<p>To generate an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;</p>
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
-<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note3">(3)</a></sup> until the <em>norm</em> of the N numbers is R or less,</li>
+<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note3">(3)</a></sup> until their <a href="#Notation_and_Definitions"><em>norm</em></a> is R or less,</li>
 </ul>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html">MathWorld article</a>, which was the inspiration for the two methods given here.</p>
 
-<p>If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the <em>norm</em> of a point generated this way is within the desired range of distances.</p>
+<p>If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the <a href="#Notation_and_Definitions"><em>norm</em></a> of the numbers making up that point is within the desired range of distances.</p>
 
 <p><a id=Random_Latitude_and_Longitude></a></p>
 
@@ -1854,7 +1883,7 @@ from random number generators.</p>
 
 <p><sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39; s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
-<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6, but results outside that range will occur only with a generally negligible probability.</p>
+<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller-transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  calls and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</p>
 
 <p><sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</p>
 

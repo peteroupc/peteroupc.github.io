@@ -408,7 +408,7 @@ END METHOD
 
 <p>Although many RGB working spaces are linearized by <em>gamma decoding</em>, sRGB is different; the formula to use to linearize sRGB colors (the sRGB <em>transfer function</em>) is similar to, but is not, applying a gamma exponent of 2.2.</p>
 
-<p>The following methods linearize and de-linearize sRGB colors.  (Note that <code>0.4045</code> and <code>0.0031308</code> are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has different values for these thresholds.)</p>
+<p>The following methods linearize and de-linearize sRGB colors.  (Note that the thresholds <code>0.4045</code> and <code>0.0031308</code> are those of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has different values for these thresholds.)</p>
 
 <pre>// Convert a color component from nonlinearized to linearized RGB
 METHOD LinearFromsRGB(c)
@@ -1285,7 +1285,7 @@ END METHOD
 <p>Note that for best results, these techniques need to use <a href="#sRGB_and_Linearized_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
 
 <ul>
-<li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>, where <code>RNDINT(x)</code> returns a <a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Core_Random_Integer_Method">random integer 0 or greater and <code>x</code> or less</a>.  This technique is independent of RGB color space.</li>
+<li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>. This technique is independent of RGB color space.</li>
 <li>Generating a random string in the <strong>HTML color format</strong> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String">random hexadecimal string</a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.
 This technique is independent of RGB color space, but see the <a href="#HTML_Color_Format">note from earlier</a>.</li>
 <li>Generating a random color in the <strong>0-1 format</strong> is equivalent to generating <code>[RNDU01(), RNDU01(), RNDU01()]</code>.</li>
@@ -1642,15 +1642,15 @@ this page are welcome.</p>
 
 <p><sup id=Note8>(8)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB capital-Y values for the red, green, and blue points.</p>
 
-<p><sup id=Note9>(9)</sup> Other methods that have been used for approximating luminance (and which don&#39;t really yield &quot;luminance&quot; as used here) include&mdash;</p>
+<p><sup id=Note9>(9)</sup> Other methods that have been used for approximating relative luminance (and which don&#39;t really yield &quot;relative luminance&quot; as used here) include&mdash;</p>
 
 <ul>
-<li>using the average (<code>(color[0]+color[1]+color[2])/3.0</code>), minimum, or maximum of the three color components ( as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example),</li>
+<li>using the average (<code>(color[0]+color[1]+color[2])/3.0</code>), minimum, or maximum of the three color components (as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example),</li>
 <li>using the <a href="#HSL">HSL</a> &quot;lightness&quot; (for the latter, see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>), and</li>
 <li>using one of the three color components (also as seen on T. Helland&#39;s site).</li>
 </ul>
 
-<p><sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, roughly, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.</p>
+<p><sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.</p>
 
 <p><sup id=Note11>(11)</sup> Although the <em>L*a*b*</em> color model is also often called &quot;perceptually uniform&quot;, it wasn&#39;t designed that way, according to <a href="http://www.brucelindbloom.com/index.html?UPLab.html">B. Lindbloom</a>.</p>
 
