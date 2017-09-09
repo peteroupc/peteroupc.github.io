@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 5, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 9, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.</p>
 
@@ -71,6 +71,7 @@
 <li><a href="#Almost_Random_Sampling">Almost-Random Sampling</a></li>
 <li><a href="#Choosing_a_Random_Date_Time">Choosing a Random Date/Time</a></li>
 <li><a href="#Generating_Random_Numbers_in_Sorted_Order">Generating Random Numbers in Sorted Order</a></li>
+<li><a href="#Rejection_Sampling">Rejection Sampling</a></li>
 </ul></li>
 <li><a href="#Non_Uniform_Distributions">Non-Uniform Distributions</a>
 
@@ -360,7 +361,7 @@ END METHOD
 
 <h3><code>RNDNUMRANGE</code>: Random Numbers in [X, Y]</h3>
 
-<p>The na&iuml;ve way of generating <strong>random number in the interval [<code>minInclusive</code>, <code>maxInclusive</code>]</strong>, is shown in the following pseudocode, which generally works well only if the number format can&#39;t be negative or that format uses arbitrary precision.</p>
+<p>The na&iuml;ve way of generating a <strong>random number in the interval [<code>minInclusive</code>, <code>maxInclusive</code>]</strong>, is shown in the following pseudocode, which generally works well only if the number format can&#39;t be negative or that format uses arbitrary precision.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
     if minInclusive &gt; maxInclusive: return error
@@ -400,7 +401,7 @@ END
 
 <h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
 
-<p><code>RNDINTEXC(maxExclusive)</code>, which generates a **random number in the interval [0, <code>maxExclusive</code>)**,
+<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random number in the interval [0, <code>maxExclusive</code>)</strong>,
 can be implemented as follows<sup><a href="#Note8">(8)</a></sup>:</p>
 
 <pre> METHOD RNDINTEXC(maxExclusive)
@@ -836,6 +837,22 @@ END METHOD
 </pre>
 
 <p>Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.</p>
+
+<p><a id=Rejection_Sampling></a></p>
+
+<h3>Rejection Sampling</h3>
+
+<p><em>Rejection sampling</em> is a simple and flexible technique for generating random content that
+meets certain requirements.  To implement rejection sampling&mdash;</p>
+
+<ol>
+<li>Generate the random content (such as a random number) by any method and with any distribution and range.</li>
+<li>If the content doesn&#39;t meet predetermined criteria, go to step 1.</li>
+</ol>
+
+<p>Example criteria include checking whether a random number is prime, whether that number
+is divisible or not by certain numbers, and/or whether that number is not included in a &quot;blacklist&quot; of numbers.
+(Algorithms that check for prime numbers are outside the scope of this document.)</p>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 
@@ -1600,7 +1617,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>The problem of generating N random numbers with a given sum is equivalent to the problem of generating a uniformly distributed point
+<li>The problem of generating N random numbers with a given positive sum is equivalent to the problem of generating a uniformly distributed point
 inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.</li>
 <li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers
 with the sum <code>N * avg</code>.</li>
