@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 5, 2017.
+Begun on June 4, 2017; last updated on Sep. 9, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -54,6 +54,7 @@ In general, techniques that are specific to an application programming interface
     - [Almost-Random Sampling](#Almost_Random_Sampling)
     - [Choosing a Random Date/Time](#Choosing_a_Random_Date_Time)
     - [Generating Random Numbers in Sorted Order](#Generating_Random_Numbers_in_Sorted_Order)
+    - [Rejection Sampling](#Rejection_Sampling)
 - [Non-Uniform Distributions](#Non_Uniform_Distributions)
     - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
@@ -306,7 +307,7 @@ For fixed-precision binary floating-point numbers with fixed exponent range (suc
 <a id=RNDNUMRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMRANGE`: Random Numbers in [X, Y]
 
-The na&iuml;ve way of generating **random number in the interval \[`minInclusive`, `maxInclusive`\]**, is shown in the following pseudocode, which generally works well only if the number format can't be negative or that format uses arbitrary precision.
+The na&iuml;ve way of generating a **random number in the interval \[`minInclusive`, `maxInclusive`\]**, is shown in the following pseudocode, which generally works well only if the number format can't be negative or that format uses arbitrary precision.
 
     METHOD RNDNUMRANGE(minInclusive, maxInclusive)
         if minInclusive > maxInclusive: return error
@@ -343,7 +344,7 @@ For fixed-point or floating-point number formats with fixed precision (such as J
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
-`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval [0, `maxExclusive`)**,
+`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval \[0, `maxExclusive`\)**,
 can be implemented as follows<sup>[(8)](#Note8)</sup>:
 
      METHOD RNDINTEXC(maxExclusive)
@@ -703,6 +704,19 @@ The following pseudocode describes a method that generates random numbers in the
      END METHOD
 
 Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.
+
+<a id=Rejection_Sampling></a>
+### Rejection Sampling
+
+_Rejection sampling_ is a simple and flexible technique for generating random content that
+meets certain requirements.  To implement rejection sampling&mdash;
+
+1. Generate the random content (such as a random number) by any method and with any distribution and range.
+2. If the content doesn't meet predetermined criteria, go to step 1.
+
+Example criteria include checking whether a random number is prime, whether that number
+is divisible or not by certain numbers, and/or whether that number is not included in a "blacklist" of numbers.
+(Algorithms that check for prime numbers are outside the scope of this document.)
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
@@ -1403,7 +1417,7 @@ An alternative method, which can work better if random integers are to be genera
 
 **Notes:**
 
-- The problem of generating N random numbers with a given sum is equivalent to the problem of generating a uniformly distributed point
+- The problem of generating N random numbers with a given positive sum is equivalent to the problem of generating a uniformly distributed point
 inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.
 - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers
 with the sum `N * avg`.
