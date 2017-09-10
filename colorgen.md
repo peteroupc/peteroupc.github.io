@@ -1184,7 +1184,7 @@ In general, any method that seeks to choose colors that are maximally distant in
 color space (that is, where the smallest [color difference](#Color_Difference_and_Nearest_Colors), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
-should be _&Delta;E\*_ ("delta E") or another color difference method that takes human color perception into account.
+should be _&Delta;E\*_ ("delta E") or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
 
 <a id=Colors_as_Spectral_Functions></a>
 ## Colors as Spectral Functions
