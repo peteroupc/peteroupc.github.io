@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 9, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 10, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.</p>
 
@@ -36,7 +36,12 @@
 
 <p>In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
 
-<p>In general, techniques that are specific to an application programming interface are outside the scope of this document.</p>
+<p>In general, the following are outside the scope of this document:</p>
+
+<ul>
+<li>Techniques that are specific to an application programming interface.</li>
+<li>Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).</li>
+</ul>
 
 <p><a id=Contents></a></p>
 
@@ -104,6 +109,7 @@
 </ul></li>
 <li><a href="#Generating_Random_Numbers_from_a_Distribution_of_Data_Points">Generating Random Numbers from a Distribution of Data Points</a></li>
 <li><a href="#Generating_Random_Numbers_from_an_Arbitrary_Distribution">Generating Random Numbers from an Arbitrary Distribution</a></li>
+<li><a href="#Mixtures_of_Distributions">Mixtures of Distributions</a></li>
 <li><a href="#Truncation_and_Censoring">Truncation and Censoring</a></li>
 <li><a href="#Random_Points_on_the_Surface_of_a_Hypersphere">Random Points on the Surface of a Hypersphere</a></li>
 <li><a href="#Random_Points_Inside_a_Ball">Random Points Inside a Ball</a></li>
@@ -132,12 +138,13 @@
 </ul></li>
 <li>The term <em>random number generator</em>, or <em>RNG</em>, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup><a href="#Note6">(6)</a></sup></li>
 <li>The <em>norm</em> of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
-<li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant digits in the format). For example&mdash;
+<li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant radix digits that the format can represent without loss). For example&mdash;
 
 <ul>
 <li>the 64-bit IEEE 754 binary floating-point format (e.g., Java <code>double</code>) has 2<sup>53</sup> (9007199254740992) significand permutations,</li>
 <li>the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,</li>
-<li>the 32-bit IEEE 754 binary floating-point format (e.g., Java <code>float</code>) has 2<sup>24</sup> (16777216) significand permutations, and</li>
+<li>the 32-bit IEEE 754 binary floating-point format (e.g., Java <code>float</code>) has 2<sup>24</sup> (16777216) significand permutations,</li>
+<li>the .NET Framework decimal format (<code>System.Decimal</code>) has a precision of 28 (since it can represent up to that many significant digits without loss, even though it can represent some numbers greater than 10<sup>28</sup>), so it has 10<sup>28</sup> significand permutations, and</li>
 <li>arbitrary-precision floating point numbers (e.g., Java <code>BigDecimal</code>) can have a theoretically arbitrary number of significand permutations.</li>
 </ul></li>
 </ul>
@@ -543,8 +550,8 @@ END METHOD
 <p>In certain programming environments it&#39;s often impractical to implement the uniform random number generation methods just described without recurring to other programming languages.  These include the following:</p>
 
 <ul>
-<li>Microsoft Windows batch files (newer versions of which, at least, include a <code>%RANDOM%</code> variable).</li>
-<li><code>bash</code> and other shell scripts (some of which include a <code>$RANDOM</code> variable which returns a random integer in the interval [0, 32767)).</li>
+<li>Microsoft Windows batch files (newer versions of which, at least, include a <code>%RANDOM%</code> variable which returns a random 16-bit integer).</li>
+<li><code>bash</code> and other shell scripts (some of which include a <code>$RANDOM</code> variable which returns a random 16-bit integer).</li>
 <li><p>SQL dialects, such as&mdash;</p>
 
 <ul>
@@ -559,6 +566,8 @@ END METHOD
 </ul>
 
 <p>Readers aware of how these environments can support those uniform random number methods should send me a comment.</p>
+
+<p>Moreover, in functional programming languages such as Haskell, it may be important to separate code that directly uses RNGs from other code, usually by rewriting certain functions to take one or more pregenerated random numbers rather than directly calling <code>RNDINT</code>, <code>RNDNUMRANGE</code>, or another random number generation method presented earlier in this document.</p>
 
 <p><a id=Randomization_Techniques></a></p>
 
@@ -577,8 +586,10 @@ the following idioms in an <code>if</code> condition:</p>
 <li>True or false with equal probability: <code>RNDINT(1) == 0</code>.</li>
 <li>True with X percent probability: <code>RNDINTEXC(100) &lt; X</code>.</li>
 <li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
+<li>True with odds of X to Y: <code>RNDINTEXC(X + Y) &lt; X</code>.</li>
 <li>True with probability X, where X is from 0 through 1 (a <em>Bernoulli trial</em>): <code>RNDU01OneExc() &lt; X</code>.</li>
 <li><strong>Example:</strong> True with probability 3/8: <code>RNDINTEXC(8) &lt; 3</code>.</li>
+<li><strong>Example:</strong> True with odds of 100 to 1: <code>RNDINTEXC(101) &lt; 1</code>.</li>
 <li><strong>Example:</strong> True with 20% probability: <code>RNDINTEXC(100) &lt; 20</code>.</li>
 </ul>
 
@@ -644,7 +655,8 @@ END METHOD
 
 <p>Generate a random string of characters (usually a random <em>alphanumeric string</em>, or string of letters and digits) has two steps.</p>
 
-<p><strong>First step:</strong> Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;</p>
+<ol>
+<li><p>Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;</p>
 
 <ul>
 <li>the basic digits &quot;0&quot; to &quot;9&quot; (U+0030-U+0039, nos. 48-57),</li>
@@ -652,23 +664,23 @@ END METHOD
 <li>the basic lower case letters &quot;a&quot; to &quot;z&quot; (U+0061-U+007A, nos. 96-122),</li>
 </ul>
 
-<p>as found in the Basic Latin block of the Unicode Standard.</p>
+<p>as found in the Basic Latin block of the Unicode Standard.</p></li>
+<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)</p>
 
-<p><strong>Second step</strong>: Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)</p>
-
-<pre>  METHOD RandomString(characterList, stringSize)
-       i = 0
-       newString = NewList()
-       while i &lt; stringSize
-           // Choose a character from the list
-           randomChar = characterList[RNDINTEXC(size(characterList))]
-           // Add the character to the string
-           AddItem(newString, randomChar)
-           i = i + 1
+<pre>METHOD RandomString(characterList, stringSize)
+        i = 0
+        newString = NewList()
+        while i &lt; stringSize
+                // Choose a character from the list
+                randomChar = characterList[RNDINTEXC(size(characterList))]
+                // Add the character to the string
+                AddItem(newString, randomChar)
+                i = i + 1
         end
         return newString
-  END METHOD
-</pre>
+END METHOD
+</pre></li>
+</ol>
 
 <p><strong>Notes:</strong></p>
 
@@ -699,11 +711,11 @@ END METHOD
 
 <h3>Sampling Without Replacement: Choosing Several Unique Items</h3>
 
-<p>Often, the need arises to choose <code>k</code> unique items or values from among <code>n</code> available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether <code>n</code> is known, how big <code>n</code> and <code>k</code> are, and other considerations:</p>
+<p>There are several techniques for choosing <code>k</code> unique items or values from among <code>n</code> available items or values, depending on whether <code>n</code> is known, how big <code>n</code> and <code>k</code> are, and other considerations. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.</p>
 
 <ul>
-<li><p><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.  See the <code>RandomKItemsFromFile</code> method in the pseudocode below.</p></li>
-<li><p><strong>If items are to be chosen in order:</strong></p>
+<li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.  See the <code>RandomKItemsFromFile</code> method in the pseudocode below.</li>
+<li><strong>If items are to be chosen in order:</strong>
 
 <ul>
 <li><strong>If <code>n</code> is relatively small,</strong> then the <code>RandomKItemsInOrder</code> method, in the pseudocode below, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).</li>
@@ -850,9 +862,19 @@ meets certain requirements.  To implement rejection sampling&mdash;</p>
 <li>If the content doesn&#39;t meet predetermined criteria, go to step 1.</li>
 </ol>
 
-<p>Example criteria include checking whether a random number is prime, whether that number
-is divisible or not by certain numbers, and/or whether that number is not included in a &quot;blacklist&quot; of numbers.
-(Algorithms that check for prime numbers are outside the scope of this document.)</p>
+<p>Example criteria include checking&mdash;</p>
+
+<ul>
+<li>whether a random number is prime,</li>
+<li>whether a random number is divisible or not by certain numbers,</li>
+<li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
+
+<ul>
+<li>whether that number is not included in a &quot;blacklist&quot; of numbers.</li>
+</ul></li>
+</ul>
+
+<p>(KD-trees and prime-number testing algorithms are outside the scope of this document.)</p>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 
@@ -976,6 +998,8 @@ while i &lt; k or i &lt; size(weights)
 end
 // `chosenItems` now contains the items chosen
 </pre>
+
+<p>Sorting a list of items such that higher-weighted items are more likely to appear first is equivalent to the technique presented in this section.</p>
 
 <p><a id=Piecewise_Constant_Distribution></a></p>
 
@@ -1137,8 +1161,7 @@ END METHOD
 
 <p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
-<p>The pseudocode below uses the polar method <sup><a href="#Note2">(2)</a></sup> to generate two normally-distributed random numbers
-using the following two parameters:</p>
+<p>In the pseudocode below, which uses the polar method <sup><a href="#Note2">(2)</a></sup> to generate two normally-distributed random numbers:</p>
 
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or the peak of the distribution&#39;s &quot;bell curve&quot;.</li>
@@ -1255,9 +1278,19 @@ END METHOD
 
 <h3>Poisson Distribution</h3>
 
-<p>In the following method, which generates a random integer that follows a <em>Poisson distribution</em>, the <code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method&#39;s return value gives a random number of such events during one such unit.</p>
+<p>In the following method, which generates a random integer that follows a <em>Poisson distribution</em>&mdash;</p>
 
-<p>The random integer from the method below is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can be an integer or a non-integer. The method given here is based on Knuth&#39;s method from 1969.</p>
+<ul>
+<li><code>mean</code> is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer, and</li>
+<li>the method&#39;s return value&mdash;
+
+<ul>
+<li>gives a random number of such events during one such unit, and</li>
+<li>is such that the average of the return values approaches <code>mean</code> when this method is called repeatedly with the same value for <code>mean</code>.</li>
+</ul></li>
+</ul>
+
+<p>The method given here is based on Knuth&#39;s method from 1969.</p>
 
 <pre>METHOD Poisson(mean)
     if mean &lt; 0: return error
@@ -1383,7 +1416,15 @@ END METHOD
 
 <h3>von Mises Distribution</h3>
 
-<p>The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the <code>mean</code> is the mean angle, <code>kappa</code> is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
+<p>In the following method, which generates a random number that follows a <em>von Mises distribution</em>, which describes a distribution of circular angles&mdash;</p>
+
+<ul>
+<li><code>mean</code> is the mean angle,</li>
+<li><code>kappa</code> is a shape parameter, and</li>
+<li>the method can return a number within &pi; of that mean.</li>
+</ul>
+
+<p>The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).</p>
 
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
@@ -1617,10 +1658,8 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>The problem of generating N random numbers with a given positive sum is equivalent to the problem of generating a uniformly distributed point
-inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.</li>
-<li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers
-with the sum <code>N * avg</code>.</li>
+<li>The problem of generating N random numbers with a given positive sum <code>sum</code> is equivalent to the problem of generating a uniformly distributed point inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of <code>sum</code> units.</li>
+<li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers with the sum <code>N * avg</code>.</li>
 </ul>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
@@ -1646,6 +1685,7 @@ This expresses a distribution of minimum values.</li>
 <li><strong>Inverse gamma (Pearson V) distribution</strong>: <code>b / GammaDist(a)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the two-parameter gamma distribution.</li>
 <li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(RNDU01ZeroExc()) - ln(RNDU01ZeroExc())) * beta + mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
+<li><strong>Logarithmic distribution</strong>: <code>min + (max - min) * RNDU01OneExc() * RNDU01OneExc()</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to <code>min</code> are exponentially more likely than numbers closer to <code>max</code>.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
@@ -1678,7 +1718,6 @@ This expresses a distribution of maximum values.</li>
 <li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> if <code>RNDU01OneExc() &lt;= mu / (mu + n)</code>, or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in <a href="http://luc.devroye.org/rnbookindex.html">Devroye 1986</a>.</li>
 <li><strong>Kumaraswamy distribution</strong>: <code>min + (max - min) * pow(a-pow(RNDU01ZeroExc(),1.0/b),1.0/a)</code>, where <code>a</code> and <code>b</code> are shape parameters, <code>min</code> is the minimum value, and <code>max</code> is the maximum value.</li>
 <li><strong>L&eacute;vy distribution</strong>: <code>sigma * 0.5 / GammaDist(0.5) + mu</code>, where <code>mu</code> is the location and <code>sigma</code> is the dispersion.</li>
-<li><strong>Logarithmic distribution</strong>: <code>min + (max - min) * RNDU01OneExc() * RNDU01OneExc()</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 26).</li>
 <li><strong>Logarithmic series distribution</strong>: <code>floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))</code>, where <code>param</code> is a number greater than 0 and less than 1. Based on method described in Devroye 1986.</li>
 <li><strong>Logistic distribution</strong>: <code>(ln(x/(1.0 - x)) * scale + mean</code>, where <code>x</code> is <code>RNDU01ZeroOneExc()</code> and <code>mean</code> and <code>scale</code> are the two parameters of the logistic distribution.</li>
 <li><strong>Maxwell distribution</strong>: <code>scale * sqrt(GammaDist(1.5) * 2)</code>, where <code>scale</code> is the scale.</li>
@@ -1828,6 +1867,41 @@ END METHOD
 
 <p><strong>Note:</strong> Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.</p>
 
+<p><a id=Mixtures_of_Distributions></a></p>
+
+<h3>Mixtures of Distributions</h3>
+
+<p>A <em>mixture</em> consists of two or more statistical distributions with separate probabilities of being sampled.
+To generate random content from a mixture&mdash;</p>
+
+<ol>
+<li>generate <code>index = DiscreteWeightedChoice(weights)</code>, where <code>weights</code> is a list of relative probabilities that each distribution in the mixture will be sampled, then</li>
+<li>based on the value of <code>index</code>, generate the random content from the corresponding distribution.</li>
+</ol>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li><p>One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:</p>
+
+<pre>index = DiscreteWeightedChoice([80, 20])
+number = 0
+// If index 0 was chosen, sample from the mean 1 normal
+if index==0: number = Normal(1, 1)
+// Else index 1 was chosen, sample from the mean -1 normal
+else: number = Normal(-1, 1)
+</pre></li>
+<li><p>Choosing a point uniformly at random from a complex shape is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into triangles, and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.</p></li>
+<li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
+
+<ul>
+<li>each range has a weight of <code>(mx - mn) + 1</code>, where <code>mn</code> is that range&#39;s minimum and <code>mx</code> is its maximum, and</li>
+<li>the chosen range is sampled by generating <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the that range&#39;s minimum and <code>mx</code> is its maximum.</li>
+</ul>
+
+<p>For generating random numbers that may or may not be integers from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the sampling call is <code>RNDNUMRANGE(mn, mx)</code> instead.</p></li>
+</ul>
+
 <p><a id=Truncation_and_Censoring></a></p>
 
 <h3>Truncation and Censoring</h3>
@@ -1868,8 +1942,7 @@ END METHOD
 
 <h3>Random Latitude and Longitude</h3>
 
-<p>To generate a random latitude and longitude on a sphere such that the resulting point
-is (practically) uniformly distributed on the surface of a sphere&mdash;</p>
+<p>To generate a random latitude and longitude on a sphere (in radians with west and south coordinates negative) such that the resulting point is (practically) uniformly distributed on the surface of a sphere&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDNUMEXCRANGE(-pi, pi)</code>, where the longitude ranges from -&pi; to &pi;, and</li>

@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 9, 2017.
+Begun on June 4, 2017; last updated on Sep. 10, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -26,7 +26,10 @@ All the random number methods presented on this page&mdash;
 
 In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 
-In general, techniques that are specific to an application programming interface are outside the scope of this document.
+In general, the following are outside the scope of this document:
+
+- Techniques that are specific to an application programming interface.
+- Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).
 
 <a id=Contents></a>
 ## Contents
@@ -78,6 +81,7 @@ In general, techniques that are specific to an application programming interface
         - [Gaussian Copula](#Gaussian_Copula)
     - [Generating Random Numbers from a Distribution of Data Points](#Generating_Random_Numbers_from_a_Distribution_of_Data_Points)
     - [Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)
+    - [Mixtures of Distributions](#Mixtures_of_Distributions)
     - [Truncation and Censoring](#Truncation_and_Censoring)
     - [Random Points on the Surface of a Hypersphere](#Random_Points_on_the_Surface_of_a_Hypersphere)
     - [Random Points Inside a Ball](#Random_Points_Inside_a_Ball)
@@ -99,10 +103,11 @@ In this document:
     - [`a`, `b`] means "`a` or greater and `b` or less".
 * The term _random number generator_, or _RNG_, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup>[(6)](#Note6)</sup>
 * The _norm_ of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
-* The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant digits in the format). For example&mdash;
+* The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant radix digits that the format can represent without loss). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
-    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations, and
+    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations,
+    - the .NET Framework decimal format (`System.Decimal`) has a precision of 28 (since it can represent up to that many significant digits without loss, even though it can represent some numbers greater than 10<sup>28</sup>), so it has 10<sup>28</sup> significand permutations, and
     - arbitrary-precision floating point numbers (e.g., Java `BigDecimal`) can have a theoretically arbitrary number of significand permutations.
 
 <a id=Uniform_Random_Numbers></a>
@@ -459,8 +464,8 @@ Although this idiom works well for arbitrary-precision integers, it won't work w
 
 In certain programming environments it's often impractical to implement the uniform random number generation methods just described without recurring to other programming languages.  These include the following:
 
-- Microsoft Windows batch files (newer versions of which, at least, include a `%RANDOM%` variable).
-- `bash` and other shell scripts (some of which include a `$RANDOM` variable which returns a random integer in the interval \[0, 32767\)).
+- Microsoft Windows batch files (newer versions of which, at least, include a `%RANDOM%` variable which returns a random 16-bit integer).
+- `bash` and other shell scripts (some of which include a `$RANDOM` variable which returns a random 16-bit integer).
 - SQL dialects, such as&mdash;
     - MySQL (which has a `RAND()` akin to `RNDU01OneExc()`),
     - T-SQL,
@@ -471,6 +476,8 @@ In certain programming environments it's often impractical to implement the unif
     especially within a single query.
 
 Readers aware of how these environments can support those uniform random number methods should send me a comment.
+
+Moreover, in functional programming languages such as Haskell, it may be important to separate code that directly uses RNGs from other code, usually by rewriting certain functions to take one or more pregenerated random numbers rather than directly calling `RNDINT`, `RNDNUMRANGE`, or another random number generation method presented earlier in this document.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
@@ -486,8 +493,10 @@ the following idioms in an `if` condition:
 - True or false with equal probability: `RNDINT(1) == 0`.
 - True with X percent probability: `RNDINTEXC(100) < X`.
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
+- True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
 - True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU01OneExc() < X`.
 - **Example:** True with probability 3/8: `RNDINTEXC(8) < 3`.
+- **Example:** True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
 - **Example:** True with 20% probability: `RNDINTEXC(100) < 20`.
 
 <a id=Shuffling></a>
@@ -543,27 +552,26 @@ An important consideration with respect to shuffling is the nature of the underl
 
 Generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits) has two steps.
 
-**First step:** Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;
-* the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
-* the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
-* the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
+1. Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;
+    * the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
+    * the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
+    * the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
 
-as found in the Basic Latin block of the Unicode Standard.
+    as found in the Basic Latin block of the Unicode Standard.
+2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
 
-**Second step**: Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)
-
-      METHOD RandomString(characterList, stringSize)
-           i = 0
-           newString = NewList()
-           while i < stringSize
-               // Choose a character from the list
-               randomChar = characterList[RNDINTEXC(size(characterList))]
-               // Add the character to the string
-               AddItem(newString, randomChar)
-               i = i + 1
-            end
-            return newString
-      END METHOD
+        METHOD RandomString(characterList, stringSize)
+                i = 0
+                newString = NewList()
+                while i < stringSize
+                        // Choose a character from the list
+                        randomChar = characterList[RNDINTEXC(size(characterList))]
+                        // Add the character to the string
+                        AddItem(newString, randomChar)
+                        i = i + 1
+                end
+                return newString
+        END METHOD
 
 **Notes:**
 
@@ -588,10 +596,9 @@ Choosing an item this way is also known as _sampling with replacement_.
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
 
-Often, the need arises to choose `k` unique items or values from among `n` available items or values. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.  There are several techniques for doing this depending on whether `n` is known, how big `n` and `k` are, and other considerations:
+There are several techniques for choosing `k` unique items or values from among `n` available items or values, depending on whether `n` is known, how big `n` and `k` are, and other considerations. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.
 
 - **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.  See the `RandomKItemsFromFile` method in the pseudocode below.
-
 - **If items are to be chosen in order:**
     - **If `n` is relatively small,** then the `RandomKItemsInOrder` method, in the pseudocode below, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).
     - **If `n` is relatively large,** see the item "If `n` is relatively large", later.
@@ -714,9 +721,13 @@ meets certain requirements.  To implement rejection sampling&mdash;
 1. Generate the random content (such as a random number) by any method and with any distribution and range.
 2. If the content doesn't meet predetermined criteria, go to step 1.
 
-Example criteria include checking whether a random number is prime, whether that number
-is divisible or not by certain numbers, and/or whether that number is not included in a "blacklist" of numbers.
-(Algorithms that check for prime numbers are outside the scope of this document.)
+Example criteria include checking&mdash;
+- whether a random number is prime,
+- whether a random number is divisible or not by certain numbers,
+- whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
+ - whether that number is not included in a "blacklist" of numbers.
+
+(KD-trees and prime-number testing algorithms are outside the scope of this document.)
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
@@ -832,6 +843,8 @@ The discrete weighted choice method can also be used for choosing multiple items
         AddItem(chosenItems, list[index])
     end
     // `chosenItems` now contains the items chosen
+
+Sorting a list of items such that higher-weighted items are more likely to appear first is equivalent to the technique presented in this section.
 
 <a id=Piecewise_Constant_Distribution></a>
 #### Piecewise Constant Distribution
@@ -977,9 +990,7 @@ This section used the following sources:
 
 The [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-The pseudocode below uses the polar method <sup>[(2)](#Note2)</sup> to generate two normally-distributed random numbers
-using the following two parameters:
-
+In the pseudocode below, which uses the polar method <sup>[(2)](#Note2)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
 - `sigma` (&sigma;), the standard deviation, affects how wide the normal distribution's "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1079,9 +1090,14 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 <a id=Poisson_Distribution></a>
 ### Poisson Distribution
 
-In the following method, which generates a random integer that follows a _Poisson distribution_, the `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and the method's return value gives a random number of such events during one such unit.
+In the following method, which generates a random integer that follows a _Poisson distribution_&mdash;
 
-The random integer from the method below is such that the average of the random integers approaches the given mean number when this method is called repeatedly with the same mean.  Note that the mean can be an integer or a non-integer. The method given here is based on Knuth's method from 1969.
+- `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer, and
+- the method's return value&mdash;
+    - gives a random number of such events during one such unit, and
+    - is such that the average of the return values approaches `mean` when this method is called repeatedly with the same value for `mean`.
+
+The method given here is based on Knuth's method from 1969.
 
     METHOD Poisson(mean)
         if mean < 0: return error
@@ -1199,7 +1215,13 @@ If the negative binomial distribution allows `successes` to be a non-integer, th
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
 
-The von Mises distribution describes a distribution of circular angles.  In the pseudocode below, the `mean` is the mean angle, `kappa` is a shape parameter, and the method can return a number within &pi; of that mean.  The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
+In the following method, which generates a random number that follows a _von Mises distribution_, which describes a distribution of circular angles&mdash;
+
+- `mean` is the mean angle,
+- `kappa` is a shape parameter, and
+- the method can return a number within &pi; of that mean.
+
+The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described in Devroye 1986 with errata incorporated).
 
     METHOD VonMises(mean, kappa)
         if kappa < 0: return error
@@ -1417,10 +1439,8 @@ An alternative method, which can work better if random integers are to be genera
 
 **Notes:**
 
-- The problem of generating N random numbers with a given positive sum is equivalent to the problem of generating a uniformly distributed point
-inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of one unit.
-- Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers
-with the sum `N * avg`.
+- The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
+- Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
@@ -1443,6 +1463,7 @@ This expresses a distribution of minimum values.
 - **Inverse gamma (Pearson V) distribution**: `b / GammaDist(a)`, where `a` and `b` have the
  same meaning as in the two-parameter gamma distribution.
 - **Laplace (double exponential) distribution**: `(ln(RNDU01ZeroExc()) - ln(RNDU01ZeroExc())) * beta + mu`, where `beta` is the scale and `mu` is the mean.
+- **Logarithmic distribution**: `min + (max - min) * RNDU01OneExc() * RNDU01OneExc()`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to `min` are exponentially more likely than numbers closer to `max`.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
 - **Pareto distribution**: `pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
@@ -1473,7 +1494,6 @@ This expresses a distribution of maximum values.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU01OneExc() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in [Devroye 1986](http://luc.devroye.org/rnbookindex.html).
 - **Kumaraswamy distribution**: `min + (max - min) * pow(a-pow(RNDU01ZeroExc(),1.0/b),1.0/a)`, where `a` and `b` are shape parameters, `min` is the minimum value, and `max` is the maximum value.
 - **L&eacute;vy distribution**: `sigma * 0.5 / GammaDist(0.5) + mu`, where `mu` is the location and `sigma` is the dispersion.
-- **Logarithmic distribution**: `min + (max - min) * RNDU01OneExc() * RNDU01OneExc()`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 26).
 - **Logarithmic series distribution**: `floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
 - **Logistic distribution**: `(ln(x/(1.0 - x)) * scale + mean`, where `x` is `RNDU01ZeroOneExc()` and `mean` and `scale` are the two parameters of the logistic distribution.
 - **Maxwell distribution**: `scale * sqrt(GammaDist(1.5) * 2)`, where `scale` is the scale.
@@ -1598,6 +1618,33 @@ If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, whe
 
 **Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
+<a id=Mixtures_of_Distributions></a>
+### Mixtures of Distributions
+
+A _mixture_ consists of two or more statistical distributions with separate probabilities of being sampled.
+To generate random content from a mixture&mdash;
+
+1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
+2. based on the value of `index`, generate the random content from the corresponding distribution.
+
+**Examples:**
+
+- One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
+
+        index = DiscreteWeightedChoice([80, 20])
+        number = 0
+        // If index 0 was chosen, sample from the mean 1 normal
+        if index==0: number = Normal(1, 1)
+        // Else index 1 was chosen, sample from the mean -1 normal
+        else: number = Normal(-1, 1)
+
+- Choosing a point uniformly at random from a complex shape is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into triangles, and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.
+- For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
+    - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
+    - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
+
+    For generating random numbers that may or may not be integers from nonoverlapping number ranges, each weight is `mx - mn` instead and the sampling call is `RNDNUMRANGE(mn, mx)` instead.
+
 <a id=Truncation_and_Censoring></a>
 ### Truncation and Censoring
 
@@ -1629,8 +1676,7 @@ If the ball is hollow, that is, only points within a range of distances from the
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
 
-To generate a random latitude and longitude on a sphere such that the resulting point
-is (practically) uniformly distributed on the surface of a sphere&mdash;
+To generate a random latitude and longitude on a sphere (in radians with west and south coordinates negative) such that the resulting point is (practically) uniformly distributed on the surface of a sphere&mdash;
 
 - generate the longitude `RNDNUMEXCRANGE(-pi, pi)`, where the longitude ranges from -&pi; to &pi;, and
 - generate the latitude&mdash;
