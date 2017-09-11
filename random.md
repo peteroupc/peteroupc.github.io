@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 5, 2017.
+Begun on Mar. 5, 2016; last updated on Sep. 11, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -153,6 +153,7 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
+- must not contain, in whole or in part, the RNG's own output,
 - must not be a fixed value, a nearly fixed value, or a user-entered value,
 - is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>[(1)](#Note1)</sup>, and
 - must be at least the same size as the PRNG's _state length_.

@@ -14,7 +14,7 @@ This page discusses many ways applications can extract random numbers from an un
 This methods described in this document can be categorized as follows:
 - Methods to generate uniformly distributed random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
 - Common tasks to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
-- Methods to generate non-uniformly distributed random numbers, including [weighted choice](#Discrete_Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other statistical distributions](#Other_Non_Uniform_Distributions).
+- Methods to generate non-uniformly distributed random numbers, including [weighted choice](#Discrete_Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other probability distributions](#Other_Non_Uniform_Distributions).
 
 [Sample Python code](https://peteroupc.github.io/randomgen.py) that implements many of the methods in this document is available.
 
@@ -495,9 +495,10 @@ the following idioms in an `if` condition:
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
 - True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
 - True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU01OneExc() < X`.
-- **Example:** True with probability 3/8: `RNDINTEXC(8) < 3`.
-- **Example:** True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
-- **Example:** True with 20% probability: `RNDINTEXC(100) < 20`.
+- **Examples:**
+    - True with probability 3/8: `RNDINTEXC(8) < 3`.
+    - True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
+    - True with 20% probability: `RNDINTEXC(100) < 20`.
 
 <a id=Shuffling></a>
 ### Shuffling
@@ -591,7 +592,12 @@ To choose a random item from a list&mdash;
 
 Choosing an item this way is also known as _sampling with replacement_.
 
-**Note:** [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+**Notes:**
+
+- Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
+    - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
+    - choosing a random item from the list generated this way.
+- [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -610,7 +616,7 @@ There are several techniques for choosing `k` unique items or values from among 
 - **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
     - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way.  This technique can also be used for relatively small `n`, if some of the items have a higher probability of being chosen than others (see also [Discrete Weighted Choice](#Discrete_Weighted_Choice)).  If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -669,6 +675,9 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
               return ret
         END METHOD
 
+**Note:** Removing `k` items from a list of `n` items (`list`) is equivalent to generating a new
+list by calling `RandomKItemsInOrder(list, n - k)`.
+
 <a id=Almost_Random_Sampling></a>
 ### Almost-Random Sampling
 
@@ -724,10 +733,11 @@ meets certain requirements.  To implement rejection sampling&mdash;
 Example criteria include checking&mdash;
 - whether a random number is prime,
 - whether a random number is divisible or not by certain numbers,
+- whether a random number was already chosen (with the aid of a hash table, red-black tree, or similar structure),
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
  - whether that number is not included in a "blacklist" of numbers.
 
-(KD-trees and prime-number testing algorithms are outside the scope of this document.)
+(KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
@@ -886,7 +896,7 @@ The discrete weighted choice method can also be used to implement a _multinomial
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
 
-The continuous weighted choice method generates a random number that follows a continuous statistical distribution (here, a [_piecewise linear distribution_](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
+The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a [_piecewise linear distribution_](http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution)).
 
 The pseudocode below takes two lists as follows:
 
@@ -1052,7 +1062,7 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
         i = 0
         count = 0
         // Suggested by Saucier, R. in "Computer
-        // generation of statistical distributions", 2000, p. 49
+        // generation of probability distributions", 2000, p. 49
         tp = trials * p
         if tp > 25 or (tp > 5 and p > 0.1 and p < 0.9)
              countval = -1
@@ -1104,7 +1114,7 @@ The method given here is based on Knuth's method from 1969.
         if mean == 0: return 0
         p = 1.0
         // Suggested by Saucier, R. in "Computer
-        // generation of statistical distributions", 2000, p. 49
+        // generation of probability distributions", 2000, p. 49
         if mean > 9
             p = -1.0
             while p < 0: p = floor(Normal(mean, mean) + 0.5)
@@ -1451,8 +1461,7 @@ Most commonly used:
  the two parameters of the beta distribution.  The range of the beta distribution is [0, 1).
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with "fatter" tails.
-- **Chi-squared distribution**: `GammaDist(df * 0.5) * 2`, where `df` is the number of degrees of
-  freedom.  This expresses a sum-of-squares of `df` random variables in the standard normal distribution.
+- **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
@@ -1480,7 +1489,7 @@ Miscellaneous:
 - **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.
 - **Beta prime distribution**: `x / (1 - x)`, where `x` is `BetaDist(a, b)` and `a` and `b` are the two parameters of the beta distribution.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
- the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_. (`NegativeBinomial` can be `NegativeBinomialInt` instead.)
+ the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
 - **Binormal distribution**: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
   freedom.
@@ -1497,16 +1506,15 @@ This expresses a distribution of maximum values.
 - **Logarithmic series distribution**: `floor(1.0 + ln(RNDU01ZeroExc()) / ln(1.0 - pow(1.0 - param, RNDU01ZeroOneExc())))`, where `param` is a number greater than 0 and less than 1. Based on method described in Devroye 1986.
 - **Logistic distribution**: `(ln(x/(1.0 - x)) * scale + mean`, where `x` is `RNDU01ZeroOneExc()` and `mean` and `scale` are the two parameters of the logistic distribution.
 - **Maxwell distribution**: `scale * sqrt(GammaDist(1.5) * 2)`, where `scale` is the scale.
-- **Noncentral chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares.
-- **Noncentral _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, one of which has a noncentral distribution with sum of mean squares equal to `sms`.
 - **Parabolic distribution**: `min + (max - min) * BetaDist(2, 2)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 30).
-- **Pascal distribution**: `NegativeBinomialInt(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution.
+- **Pascal distribution**: `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution, except `successes` must be an integer.
 - **Pearson VI distribution**: `GammaDist(v) / (GammaDist(w))`, where `v` and `w` are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional `b` parameter is defined, but that parameter is canceled out in the source code).
-- **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha)`, where `alpha`  is the shape.
+- **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha)`, where `alpha`  is the shape.  Nominally in the interval (0, 1).
+- **Power law distribution**: `pow(pow(mn,n+1) + (pow(mx,n+1) - pow(mn,n+1)) * RNDU01(), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [Reference](http://mathworld.wolfram.com/RandomNumber.html).
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson variables.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have
 the same meaning as in the normal distribution, and `alpha` is a shape parameter.
-- **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution.
+- **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [truncated](#Truncation_and_Censoring) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
 <a id=Correlated_Random_Numbers></a>
@@ -1568,7 +1576,7 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
        return mvn
     END METHOD
 
-Each of the resulting uniform variables will be in the interval [0, 1], and each one can be further transformed to any other statistical distribution (which is called a _marginal distribution_ here) by one of the methods given in "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)".  The transformed variables will have the same correlation as the uniform variables, regardless of the marginal distributions chosen.
+Each of the resulting uniform variables will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by one of the methods given in "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)".  The transformed variables will have the same correlation as the uniform variables, regardless of the marginal distributions chosen.
 
 **Example**: To generate two correlated uniform variables by this method, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [_rank correlation_](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a bivariate normal distribution, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
 
@@ -1587,12 +1595,12 @@ A detailed discussion on how to calculate bandwidth or on other possible ways to
 <a id=Generating_Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Generating Random Numbers from an Arbitrary Distribution
 
-Many statistical distributions can be defined in terms of any of the following:
+Many probability distributions can be defined in terms of any of the following:
 
 * The [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)).  The CDF is also defined as the integral of the PDF (details on integrals are outside the scope of this document).  Each value of the PDF must be 0 or greater.
+* The [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)).  The CDF is also defined as the _integral_ of the PDF. Each value of the PDF must be 0 or greater.
 
-If a statistical distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
+If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
 1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally call `ContinuousWeightedChoice(list, weights)` to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
 2. Use [_inverse transform sampling_](https://en.wikipedia.org/wiki/Inverse_transform_sampling). Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1. **OR**
@@ -1621,7 +1629,7 @@ If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, whe
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
 
-A _mixture_ consists of two or more statistical distributions with separate probabilities of being sampled.
+A _mixture_ consists of two or more probability distributions with separate probabilities of being sampled.
 To generate random content from a mixture&mdash;
 
 1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
@@ -1648,9 +1656,9 @@ To generate random content from a mixture&mdash;
 <a id=Truncation_and_Censoring></a>
 ### Truncation and Censoring
 
-To sample from a _truncated_ statistical distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.
+To sample from a _truncated_ probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.
 
-To sample from a _censored_ statistical distribution, generate a random number from that distribution and&mdash;
+To sample from a _censored_ probability distribution, generate a random number from that distribution and&mdash;
 - if that number is less than a minimum threshold, use the minimum threshold instead, and/or
 - if that number is greater than a maximum threshold, use the maximum threshold instead.
 
