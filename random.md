@@ -63,6 +63,7 @@ The following table summarizes the kinds of RNGs covered in this document.
 - [Shuffling](#Shuffling)
     - [Shuffling Method](#Shuffling_Method)
     - [Choosing from Among All Permutations](#Choosing_from_Among_All_Permutations)
+- [GPU Programming Environments](#GPU_Programming_Environments)
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
@@ -382,6 +383,16 @@ Whenever a [statistical-random implementation](#Statistical_Random_Generators) o
 The PRNG in question should&mdash;
 - meet or exceed the quality requirements of a statistical-random implementation, and
 - have been initialized automatically with an _unpredictable seed_ before use.
+
+<a id=GPU_Programming_Environments></a>
+## GPU Programming Environments
+
+Because GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
+- have limited access to some system resources compared with other programming environments,
+- are often designed for parallel execution, and
+- do not generally store state,
+
+random number generators for such environments are often designed as hash functions, because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
 
 <a id=Motivation></a>
 ## Motivation
