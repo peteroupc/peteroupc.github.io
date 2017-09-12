@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 11, 2017.
+Begun on June 4, 2017; last updated on Sep. 12, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -1509,7 +1509,7 @@ Miscellaneous:
 - **Arcsine distribution**: `min + (max - min) * BetaDist(0.5, 0.5)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 14).
 - **Beta binomial distribution**: `Binomial(trials, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
-- **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.
+- **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.  If the mean (`mean`) is known rather than the peak, `midpt = 3 * mean / 2 - (startpt + endpt) / 4`.
 - **Beta prime distribution**: `x / (1 - x)`, where `x` is `BetaDist(a, b)` and `a` and `b` are the two parameters of the beta distribution.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
