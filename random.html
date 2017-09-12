@@ -110,6 +110,7 @@ generation is outside the scope of this document.</p>
 <li><a href="#Shuffling_Method">Shuffling Method</a></li>
 <li><a href="#Choosing_from_Among_All_Permutations">Choosing from Among All Permutations</a></li>
 </ul></li>
+<li><a href="#GPU_Programming_Environments">GPU Programming Environments</a></li>
 <li><a href="#Motivation">Motivation</a></li>
 <li><a href="#Conclusion">Conclusion</a>
 
@@ -615,6 +616,20 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <li>meet or exceed the quality requirements of a statistical-random implementation, and</li>
 <li>have been initialized automatically with an <em>unpredictable seed</em> before use.</li>
 </ul>
+
+<p><a id=GPU_Programming_Environments></a></p>
+
+<h2>GPU Programming Environments</h2>
+
+<p>Because GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;</p>
+
+<ul>
+<li>have limited access to some system resources compared with other programming environments,</li>
+<li>are often designed for parallel execution, and</li>
+<li>do not generally store state,</li>
+</ul>
+
+<p>random number generators for such environments are often designed as hash functions, because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
 
 <p><a id=Motivation></a></p>
 

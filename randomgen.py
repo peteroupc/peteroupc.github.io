@@ -44,7 +44,10 @@ class RandomGen:
   def rndintrange(self, minInclusive, maxInclusive):
     # NOTE: Since Python integers are arbitrary-precision,
     # the naive approach will work well here
-    return minInclusive + self.rndint(self.maxInclusive - minInclusive)
+    return minInclusive + self.rndint(maxInclusive - minInclusive)
+
+  def rndintexcrange(self, minInclusive, maxExclusive):
+    return minInclusive + self.rndint(maxExclusive - minInclusive - 1)
 
   def rndbits(self, bits):
     return self.rndint((1 << bits) - 1)
@@ -361,6 +364,32 @@ class RandomGen:
         if u<0:
           angle=-angle
         return mean+angle
+
+  def nonzeroIntegersWithSum(self, n, total):
+    if n <= 0 or total <=0:
+        raise ValueError
+    ls = []
+    i = 0
+    list.insert(ls,0,0)
+    while len(ls) < n:
+        c = self.rndintexcrange(1, total)
+        found = False
+        j = 1
+        while j < len(ls):
+            if ls[j] == c:
+                found = True
+                break
+            j = j + 1
+        if found == False:
+            list.insert(ls,len(ls),c)
+    ls.sort()
+    list.insert(ls,len(ls),total)
+    return [ls[i]-ls[i-1] for i in range(1,len(ls))]
+
+def integersWithSum(self, n, total):
+    if n <= 0 or total <=0:
+        raise ValueError
+    return [s-1 for s in self.nonzeroIntegersWithSum(n, total + n)]
 
 class AlmostRandom:
   def __init__(self, randgen, list):

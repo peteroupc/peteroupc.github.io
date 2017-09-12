@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 10, 2017.
+Begun on June 4, 2017; last updated on Sep. 11, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -21,8 +21,8 @@ This methods described in this document can be categorized as follows:
 All the random number methods presented on this page&mdash;
 
 - assume the existence of an underlying RNG,
-- do not assume any particular implementation of the underlying RNG (e.g., whether that RNG is a deterministic RNG or some other kind), and
-- do not assume, in general, any particular quality of the underlying RNG.
+- make no assumptions on the underlying RNG's implementation (e.g., whether that RNG is a deterministic RNG or some other kind), and
+- make no assumptions on the statistical quality or predictability of the underlying RNG.
 
 In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 
@@ -125,7 +125,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`)**.  This section explains how `RNDINT(maxInclusive)` can be implemented if `RNG()` returns&mdash;
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT(maxInclusive)` can be implemented if `RNG()` returns&mdash;
 
 1. integers in the interval \[0, positive `MODULUS`\), or
 2. floating-point numbers in the interval [0, 1).
@@ -551,7 +551,7 @@ An important consideration with respect to shuffling is the nature of the underl
 <a id=Creating_a_Random_Character_String></a>
 ### Creating a Random Character String
 
-Generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits) has two steps.
+To generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits):
 
 1. Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;
     * the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
@@ -1422,35 +1422,58 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
 
 The _Dirichlet distribution_ models a distribution of N numbers that sum to a given positive number, `total`.  Generating N `GammaDist(total)` calls and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [Wikipedia article](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat. (A more general version of the Dirichlet distribution allows the parameter in `GammaDist` to vary for each random number.)
 
-An alternative method, which can work better if random integers are to be generated instead of random numbers, is illustrated in the following pseudocode.  In the pseudocode below, `Sort(list)` sorts the items in `list` in ascending order. (Note that details on sort algorithms are outside the scope of this document.)
+The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, "[Sampling Uniformly from the Unit Simplex](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.)  In the pseudocode below&mdash;
 
-    METHOD NumbersWithSum(n, total)
+- the method `NonzeroIntegersWithSum` returns `n` positive integers that sum to `total`,
+- the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`,
+- `Sort(list)` sorts the items in `list` in ascending order (note that details on sort algorithms are outside the scope of this document).
+
+----
+
+    METHOD NonzeroIntegersWithSum(n, total)
         if n <= 0 or total <=0: return error
-        list = NewList()
-        i = 0
-        while i < n - 1
-           AddItem(list, RNDNUMRANGE(0, total))
-           // NOTE: If only integers are to be generated, the following
-           // can be used instead of the preceding line:
-           // AddItem(list, RNDINT(total))
-           i = i + 1
-         end
-         AddItem(list, total)
-         Sort(list)
-         prev = list[0]
-         i = 1
-        while i < n
-             newValue = list[i] - prev
-             prev = list[i]
-             list[i] = newValue
-             i = i + 1
+        ls = NewList()
+        ret = NewList()
+        AddItem(ls, 0)
+        while size(ls) < n
+                c = RNDINTEXCRANGE(1, total)
+                found = false
+                j = 1
+                while j < size(ls)
+                        if ls[j] == c
+                                found = true
+                                break
+                        end
+                        j = j + 1
+                end
+                if found == false: AddItem(ls, c)
         end
+        Sort(ls)
+        AddItem(ls, total)
+         i = 1
+        while i < size(ls):
+                AddItem(ret, list[i] - list[i - 1])
+                i = i + 1
+        end
+        return ret
+    END METHOD
+
+    METHOD IntegersWithSum(n, total)
+        if n <= 0 or total <=0: return error
+        ret = NonzeroIntegersWithSum(n, total + n)
+         i = 0
+        while i < size(ret):
+                ret[i] = ret[i] - 1
+                i = i + 1
+        end
+        return ret
     END METHOD
 
 **Notes:**
 
-- The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an (N-1) dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
+- The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
 - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
+- Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
@@ -1651,7 +1674,7 @@ To generate random content from a mixture&mdash;
     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
 
-    For generating random numbers that may or may not be integers from nonoverlapping number ranges, each weight is `mx - mn` instead and the sampling call is `RNDNUMRANGE(mn, mx)` instead.
+    For generating random numbers that may or may not be integers from nonoverlapping number ranges, each weight is `mx - mn` instead and the sampling call is `RNDNUMEXCRANGE(mn, mx)` instead.
 
 <a id=Truncation_and_Censoring></a>
 ### Truncation and Censoring
@@ -1722,7 +1745,8 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 - are initialized automatically before use,
 - are initialized with an application-specified "seed",
 - use a deterministic algorithm for random number generation, and/or
-- primarily rely on one or more nondeterministic sources for random number generation.
+-  rely, at least primarily, on one or more nondeterministic sources for random number
+   generation (including by extracting uniformly distributed bits from two or more such sources).
 
 If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.
 
