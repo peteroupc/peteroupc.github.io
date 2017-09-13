@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 12, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 13, 2017.</p>
 
 <p>Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.</p>
 
@@ -40,6 +40,8 @@
 
 <ul>
 <li>Techniques that are specific to an application programming interface.</li>
+<li>Techniques that are specific to certain kinds of RNGs.</li>
+<li>Generating sequences of unique integers using specific kinds of deterministic RNGs.</li>
 <li>Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).</li>
 </ul>
 
@@ -77,6 +79,7 @@
 <li><a href="#Choosing_a_Random_Date_Time">Choosing a Random Date/Time</a></li>
 <li><a href="#Generating_Random_Numbers_in_Sorted_Order">Generating Random Numbers in Sorted Order</a></li>
 <li><a href="#Rejection_Sampling">Rejection Sampling</a></li>
+<li><a href="#Random_Point_Inside_a_Triangle">Random Point Inside a Triangle</a></li>
 </ul></li>
 <li><a href="#Non_Uniform_Distributions">Non-Uniform Distributions</a>
 
@@ -168,14 +171,18 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented if <code>RNG()</code> returns&mdash;</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for two kinds of underlying RNGs.</p>
 
-<ol>
-<li>integers in the interval [0, positive <code>MODULUS</code>), or</li>
-<li>floating-point numbers in the interval [0, 1).</li>
-</ol>
+<p><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note7">(7)</a></sup>  Note that:</p>
 
-<p><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as follows.  Note that all the variables in this method are unsigned integers.<sup><a href="#Note7">(7)</a></sup></p>
+<ul>
+<li>If <code>MODULUS</code> is a power of 2, calling <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</li>
+<li>All the variables in the pseudocode are unsigned integers.</li>
+</ul>
+
+<p><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible by calling the underlying RNG.)</p>
+
+<p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.</p>
 
 <pre>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
     cx = floor(maxInclusive / MODULUS) + 1
@@ -275,19 +282,19 @@ METHOD RNDINT(maxInclusive)
 END METHOD
 </pre>
 
-<p><strong>Note:</strong> If <code>MODULUS</code> is a power of 2, calling <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.
-Note that all the variables in this method are unsigned integers.</p>
-
-<p><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible by calling the underlying RNG.)</p>
-
-<p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.</p>
-
 <p><strong>Notes:</strong></p>
 
 <ul>
 <li>To generate a random number that&#39;s either -1 or 1, the following idiom can be used: <code>(RNDINT(1) * 2 - 1)</code>.</li>
 <li>To generate a random integer that&#39;s divisible by a positive integer (<code>DIV</code>), generate the integer with any method (such as <code>RNDINT</code>),
 let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> if <code>X &gt;= 0</code>, or <code>X - (DIV - mod(abs(X), DIV))</code> otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)</li>
+<li>A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
+
+<ul>
+<li>To generate a random NxM point <code>P</code>, generate <code>P = RNDINT(N * M - 1)</code> (<code>P</code> is thus in the interval [0, <code>N * M</code>)).</li>
+<li>To convert a point <code>P</code> to its 2D coordinates, generate <code>[mod(P, N), floor(P / N)]</code>. (Each coordinate starts at 0.)</li>
+<li>To convert 2D coordinates <code>coord</code> to an NxM point, generate <code>P = coord[1] * N + coord[0]</code>.</li>
+</ul></li>
 </ul>
 
 <p><a id=RNDINTRANGE_Random_Integers_in_N_M></a></p>
@@ -436,7 +443,7 @@ can be implemented as follows<sup><a href="#Note8">(8)</a></sup>:</p>
 
 <h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
 
-<p><strong><code>RNDINTEXCRANGE</code></strong> here, returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code></a>, as the following pseudocode demonstrates.</p>
+<p><strong><code>RNDINTEXCRANGE</code></strong> returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code></a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
@@ -617,10 +624,10 @@ the following idioms in an <code>if</code> condition:</p>
          // at i+1 is excluded.
          k = RNDINTEXC(i + 1)
          // The following is wrong since it introduces biases:
-         // k = RNDINTEXC(size(list))
+         // &quot;k = RNDINTEXC(size(list))&quot;
          // The following is wrong since the algorithm won&#39;t
          // choose from among all possible permutations:
-         // k = RNDINTEXC(i)
+         // &quot;k = RNDINTEXC(i)&quot;
          // Swap item at index i with item at index k;
          // in this case, i and k may be the same
          tmp = list[i]
@@ -690,10 +697,11 @@ END METHOD
 
 <ul>
 <li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
-<li>Instead of individual characters, the list can consist of strings of one or more characters each.  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.</li>
+<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.</li>
 <li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating a random hexadecimal string is equivalent to calling <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
 <li>Generating a random base-10 digit string is equivalent to calling <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;]</code> and <code>stringSize</code> is the desired size.</li>
+<li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note10">(10)</a></sup>, or to generate strings that match a regular expression are too complicated to discuss in this document.</li>
 </ul>
 
 <p><a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a></p>
@@ -725,10 +733,10 @@ END METHOD
 
 <h3>Sampling Without Replacement: Choosing Several Unique Items</h3>
 
-<p>There are several techniques for choosing <code>k</code> unique items or values from among <code>n</code> available items or values, depending on whether <code>n</code> is known, how big <code>n</code> and <code>k</code> are, and other considerations. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.</p>
+<p>There are several techniques for choosing <code>k</code> unique items or values uniformly at random from among <code>n</code> available items or values, depending on whether <code>n</code> is known, how big <code>n</code> and <code>k</code> are, and other considerations.</p>
 
 <ul>
-<li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.  See the <code>RandomKItemsFromFile</code> method in the pseudocode below.</li>
+<li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.</li>
 <li><strong>If items are to be chosen in order:</strong>
 
 <ul>
@@ -810,7 +818,7 @@ END METHOD
     END METHOD
 </pre>
 
-<p><strong>Note:</strong> Removing <code>k</code> items from a list of <code>n</code> items (<code>list</code>) is equivalent to generating a new
+<p><strong>Note:</strong> Removing <code>k</code> random items from a list of <code>n</code> items (<code>list</code>) is equivalent to generating a new
 list by calling <code>RandomKItemsInOrder(list, n - k)</code>.</p>
 
 <p><a id=Almost_Random_Sampling></a></p>
@@ -884,15 +892,44 @@ meets certain requirements.  To implement rejection sampling&mdash;</p>
 <ul>
 <li>whether a random number is prime,</li>
 <li>whether a random number is divisible or not by certain numbers,</li>
-<li>whether a random number was already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
-<li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
-
-<ul>
+<li>whether a random number is not among recently chosen random numbers,</li>
+<li>whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
+<li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or</li>
 <li>whether that number is not included in a &quot;blacklist&quot; of numbers.</li>
-</ul></li>
 </ul>
 
 <p>(KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)</p>
+
+<p><a id=Random_Point_Inside_a_Triangle></a></p>
+
+<h3>Random Point Inside a Triangle</h3>
+
+<p>The following pseudocode, which
+generates a uniformly random point inside a 2-dimensional triangle,
+takes three parameters, <code>p0</code>, <code>p1</code>, and <code>p2</code>, each of which is a 2-item list containing the X and Y
+coordinates, respectively, of one vertex of the triangle.</p>
+
+<pre>    METHOD RandomPointInTriangle(
+            x1=p1[0]-p0[0]
+            y1=p1[1]-p0[1]
+            x2=p2[0]-p0[0]
+            y2=p2[1]-p0[1]
+            den=(x1*y2-x2*y1)
+            // Avoid division by zero
+            if den==0: den=0.0000001
+            r=RNDU01()
+            s=RNDU01()
+            xv=r*x1 + s*x2
+            yv=r*y1 + s*y2
+            a=(xv*y2 - x2*yv)/den
+            b=(x1*yv - xv*y1)/den
+            if a&lt;=0 or b&lt;=0 or a+b&gt;=1
+                    return [x1+x2+p0[0]-xv,y1+y2+p0[1]-yv]
+            else
+                    return [p0[0]+xv, p0[1]+yv]
+            end
+    end
+</pre>
 
 <p><a id=Non_Uniform_Distributions></a></p>
 
@@ -1125,7 +1162,7 @@ END METHOD
 
 <h3>Dice</h3>
 
-<p>The following method generates a random result of rolling virtual dice.  It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
+<p>The following method generates a random result of rolling virtual dice.<sup><a href="#Note9">(9)</a></sup>  It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
 
 <pre>METHOD DiceRoll(dice, sides, bonus)
     if dice &lt; 0 or sides &lt; 1: return error
@@ -1165,14 +1202,6 @@ END METHOD
 <li>two six-sided virtual dice, with 2 subtracted (&quot;2d6 - 2&quot;), is <code>DiceRoll(2,6,-2)</code>.</li>
 </ul>
 
-<p>This section used the following sources:</p>
-
-<ul>
-<li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html">&quot;Probability and Games: Dice Rolls&quot;</a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
-<li>The <a href="http://mathworld.wolfram.com/Dice.html">MathWorld article &quot;Dice&quot;</a> provided the mean of the dice roll distribution.</li>
-<li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</li>
-</ul>
-
 <p><a id=Normal_Gaussian_Distribution></a></p>
 
 <h3>Normal (Gaussian) Distribution</h3>
@@ -1183,7 +1212,7 @@ END METHOD
 
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or the peak of the distribution&#39;s &quot;bell curve&quot;.</li>
-<li><code>sigma</code> (&sigma;), the standard deviation, affects how wide the normal distribution&#39;s &quot;bell curve&quot; appears. The
+<li><code>sigma</code> (&sigma;), the standard deviation, affects how wide the &quot;bell curve&quot; appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.</li>
 </ul>
 
@@ -1337,8 +1366,7 @@ END METHOD
 
 <h3>Gamma Distribution</h3>
 
-<p>The following method generates a random number that follows a gamma distribution.
-The gamma distribution models expected lifetimes. The method given here is based on Marsaglia and Tsang&#39;s method from 2000.</p>
+<p>The gamma distribution models expected lifetimes. The following method, which generates a random number that follows a gamma distribution, is based on Marsaglia and Tsang&#39;s method from 2000.</p>
 
 <pre>METHOD GammaDist(meanLifetime)
     // Must be greater than 0
@@ -1932,7 +1960,7 @@ if index==0: number = Normal(1, 1)
 // Else index 1 was chosen, sample from the mean -1 normal
 else: number = Normal(-1, 1)
 </pre></li>
-<li><p>Choosing a point uniformly at random from a complex shape is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into triangles, and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.</p></li>
+<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle">triangles</a>, and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.</p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
 <ul>
@@ -2008,6 +2036,13 @@ from random number generators.</p>
 
 <p>I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.</p>
 
+<p>Currently, the following are not covered in this document, but may be added based on reader interest:</p>
+
+<ul>
+<li>Techniques to generate random mazes, graphs, matrices, or paths.</li>
+<li>Brownian motion and other random movement and stochastic processes.</li>
+</ul>
+
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
@@ -2030,7 +2065,7 @@ from random number generators.</p>
 <li>are initialized automatically before use,</li>
 <li>are initialized with an application-specified &quot;seed&quot;,</li>
 <li>use a deterministic algorithm for random number generation, and/or</li>
-<li> rely, at least primarily, on one or more nondeterministic sources for random number
+<li>rely, at least primarily, on one or more nondeterministic sources for random number
 generation (including by extracting uniformly distributed bits from two or more such sources).</li>
 </ul>
 
@@ -2039,6 +2074,16 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><sup id=Note7>(7)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/">blog post by Johnny Chan</a>.</p>
 
 <p><sup id=Note8>(8)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
+
+<p><sup id=Note9>(9)</sup>The &quot;Dice&quot; section used the following sources:</p>
+
+<ul>
+<li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html">&quot;Probability and Games: Dice Rolls&quot;</a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
+<li>The <a href="http://mathworld.wolfram.com/Dice.html">MathWorld article &quot;Dice&quot;</a> provided the mean of the dice roll distribution.</li>
+<li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</li>
+</ul>
+
+<p><sup id=Note10>(10)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><em>Markov chains</em></a>, which are outside this page&#39;s scope.</p>
 
 <p><a id=License></a></p>
 

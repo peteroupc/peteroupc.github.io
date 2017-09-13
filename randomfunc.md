@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 12, 2017.
+Begun on June 4, 2017; last updated on Sep. 13, 2017.
 
 Discusses many ways in which applications can extract random numbers from an underlying RNG and includes pseudocode for most of them.
 
@@ -27,8 +27,9 @@ All the random number methods presented on this page&mdash;
 In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 
 In general, the following are outside the scope of this document:
-
 - Techniques that are specific to an application programming interface.
+- Techniques that are specific to certain kinds of RNGs.
+- Generating sequences of unique integers using specific kinds of deterministic RNGs.
 - Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).
 
 <a id=Contents></a>
@@ -58,6 +59,7 @@ In general, the following are outside the scope of this document:
     - [Choosing a Random Date/Time](#Choosing_a_Random_Date_Time)
     - [Generating Random Numbers in Sorted Order](#Generating_Random_Numbers_in_Sorted_Order)
     - [Rejection Sampling](#Rejection_Sampling)
+    - [Random Point Inside a Triangle](#Random_Point_Inside_a_Triangle)
 - [Non-Uniform Distributions](#Non_Uniform_Distributions)
     - [Discrete Weighted Choice](#Discrete_Weighted_Choice)
         - [Weighted Choice Without Replacement](#Weighted_Choice_Without_Replacement)
@@ -125,12 +127,16 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT(maxInclusive)` can be implemented if `RNG()` returns&mdash;
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT(maxInclusive)` can be implemented for two kinds of underlying RNGs.
 
-1. integers in the interval \[0, positive `MODULUS`\), or
-2. floating-point numbers in the interval [0, 1).
+**Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(7)](#Note7)</sup>  Note that:
 
-**Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as follows.  Note that all the variables in this method are unsigned integers.<sup>[(7)](#Note7)</sup>
+- If `MODULUS` is a power of 2, calling `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+- All the variables in the pseudocode are unsigned integers.
+
+**Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
+
+**Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -229,18 +235,15 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
       end
     END METHOD
 
-**Note:** If `MODULUS` is a power of 2, calling `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
-Note that all the variables in this method are unsigned integers.
-
-**Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible by calling the underlying RNG.)
-
-**Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
-
 **Notes:**
 
 - To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
 - To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`),
 let `X` be that integer, then generate `X - mod(X, DIV)` if `X >= 0`, or `X - (DIV - mod(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
+- A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
+     - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
+     - To convert a point `P` to its 2D coordinates, generate `[mod(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
+     - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
 
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTRANGE`: Random Integers in [N, M]
@@ -369,7 +372,7 @@ These approaches, though, are recommended only if the programming language&mdash
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
 
-**`RNDINTEXCRANGE`** here, returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -519,10 +522,10 @@ The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yat
              // at i+1 is excluded.
              k = RNDINTEXC(i + 1)
              // The following is wrong since it introduces biases:
-             // k = RNDINTEXC(size(list))
+             // "k = RNDINTEXC(size(list))"
              // The following is wrong since the algorithm won't
              // choose from among all possible permutations:
-             // k = RNDINTEXC(i)
+             // "k = RNDINTEXC(i)"
              // Swap item at index i with item at index k;
              // in this case, i and k may be the same
              tmp = list[i]
@@ -577,10 +580,11 @@ To generate a random string of characters (usually a random _alphanumeric string
 **Notes:**
 
 - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-- Instead of individual characters, the list can consist of strings of one or more characters each.  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
+- Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
 - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
 - Generating a random hexadecimal string is equivalent to calling `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
 - Generating a random base-10 digit string is equivalent to calling `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]` and `stringSize` is the desired size.
+- Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(10)](#Note10)</sup>, or to generate strings that match a regular expression are too complicated to discuss in this document.
 
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 ### Sampling With Replacement: Choosing a Random Item from a List
@@ -602,9 +606,9 @@ Choosing an item this way is also known as _sampling with replacement_.
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
 
-There are several techniques for choosing `k` unique items or values from among `n` available items or values, depending on whether `n` is known, how big `n` and `k` are, and other considerations. The following assumes that each item has an equal chance of being chosen, unless noted otherwise.
+There are several techniques for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on whether `n` is known, how big `n` and `k` are, and other considerations.
 
-- **If `n` is not known in advance:** Use the _reservoir sampling_ method, implemented below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.  See the `RandomKItemsFromFile` method in the pseudocode below.
+- **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 - **If items are to be chosen in order:**
     - **If `n` is relatively small,** then the `RandomKItemsInOrder` method, in the pseudocode below, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).
     - **If `n` is relatively large,** see the item "If `n` is relatively large", later.
@@ -675,7 +679,7 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
               return ret
         END METHOD
 
-**Note:** Removing `k` items from a list of `n` items (`list`) is equivalent to generating a new
+**Note:** Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by calling `RandomKItemsInOrder(list, n - k)`.
 
 <a id=Almost_Random_Sampling></a>
@@ -733,11 +737,41 @@ meets certain requirements.  To implement rejection sampling&mdash;
 Example criteria include checking&mdash;
 - whether a random number is prime,
 - whether a random number is divisible or not by certain numbers,
-- whether a random number was already chosen (with the aid of a hash table, red-black tree, or similar structure),
+- whether a random number is not among recently chosen random numbers,
+- whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
- - whether that number is not included in a "blacklist" of numbers.
+- whether that number is not included in a "blacklist" of numbers.
 
 (KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)
+
+<a id=Random_Point_Inside_a_Triangle></a>
+### Random Point Inside a Triangle
+
+The following pseudocode, which
+generates a uniformly random point inside a 2-dimensional triangle,
+takes three parameters, `p0`, `p1`, and `p2`, each of which is a 2-item list containing the X and Y
+coordinates, respectively, of one vertex of the triangle.
+
+        METHOD RandomPointInTriangle(
+                x1=p1[0]-p0[0]
+                y1=p1[1]-p0[1]
+                x2=p2[0]-p0[0]
+                y2=p2[1]-p0[1]
+                den=(x1*y2-x2*y1)
+                // Avoid division by zero
+                if den==0: den=0.0000001
+                r=RNDU01()
+                s=RNDU01()
+                xv=r*x1 + s*x2
+                yv=r*y1 + s*y2
+                a=(xv*y2 - x2*yv)/den
+                b=(x1*yv - xv*y1)/den
+                if a<=0 or b<=0 or a+b>=1
+                        return [x1+x2+p0[0]-xv,y1+y2+p0[1]-yv]
+                else
+                        return [p0[0]+xv, p0[1]+yv]
+                end
+        end
 
 <a id=Non_Uniform_Distributions></a>
 ## Non-Uniform Distributions
@@ -953,7 +987,7 @@ The pseudocode below takes two lists as follows:
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[(9)](#Note9)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -989,12 +1023,6 @@ As examples, the result of rolling&mdash;
 - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
 - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
 
-This section used the following sources:
-
-- Red Blob Games, ["Probability and Games: Dice Rolls"](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
-- The [MathWorld article "Dice"](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
-- S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
-
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
 
@@ -1002,7 +1030,7 @@ The [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) (al
 
 In the pseudocode below, which uses the polar method <sup>[(2)](#Note2)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
-- `sigma` (&sigma;), the standard deviation, affects how wide the normal distribution's "bell curve" appears. The
+- `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
 
 ----
@@ -1134,8 +1162,7 @@ The method given here is based on Knuth's method from 1969.
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
 
-The following method generates a random number that follows a gamma distribution.
-The gamma distribution models expected lifetimes. The method given here is based on Marsaglia and Tsang's method from 2000.
+The gamma distribution models expected lifetimes. The following method, which generates a random number that follows a gamma distribution, is based on Marsaglia and Tsang's method from 2000.
 
     METHOD GammaDist(meanLifetime)
         // Must be greater than 0
@@ -1669,7 +1696,7 @@ To generate random content from a mixture&mdash;
         // Else index 1 was chosen, sample from the mean -1 normal
         else: number = Normal(-1, 1)
 
-- Choosing a point uniformly at random from a complex shape is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into triangles, and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.
+- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.
 - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1726,6 +1753,11 @@ Feel free to send comments. They may help improve this page.  In particular, cor
 
 I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.
 
+Currently, the following are not covered in this document, but may be added based on reader interest:
+
+- Techniques to generate random mazes, graphs, matrices, or paths.
+- Brownian motion and other random movement and stochastic processes.
+
 <a id=Notes></a>
 ## Notes
 
@@ -1745,7 +1777,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 - are initialized automatically before use,
 - are initialized with an application-specified "seed",
 - use a deterministic algorithm for random number generation, and/or
--  rely, at least primarily, on one or more nondeterministic sources for random number
+- rely, at least primarily, on one or more nondeterministic sources for random number
    generation (including by extracting uniformly distributed bits from two or more such sources).
 
 If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Generating Random Numbers from an Arbitrary Distribution](#Generating_Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.
@@ -1753,6 +1785,14 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 <sup id=Note7>(7)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
 <sup id=Note8>(8)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.
+
+<sup id=Note9>(9)</sup>The "Dice" section used the following sources:
+
+- Red Blob Games, ["Probability and Games: Dice Rolls"](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
+- The [MathWorld article "Dice"](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
+- S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
+
+<sup id=Note10>(10)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
 
 <a id=License></a>
 ## License
