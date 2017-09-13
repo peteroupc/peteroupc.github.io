@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 11, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 13, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -187,7 +187,7 @@ generation is outside the scope of this document.</p>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>CryptGenRandom</code> method on Windows.</li>
-<li>Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals as input, preferably from more than one nondeterministic source.  Such sources include, where available&mdash;
+<li>Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
 
 <ul>
 <li>disk access timings,</li>

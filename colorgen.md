@@ -85,9 +85,10 @@ In this document:
 - `RNDNUMRANGE`, `RNDU01`, and `RNDINT` are as defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
 - The term _RGB_ means red-green-blue.
 - The abbreviation _ICC_ means the International Color Consortium.
+- The abbreviation _IEC_ means the International Electrotechnical Commission.
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
-- The term _nonlinearized_ or _companded_ refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup>[(3)](#Note3)</sup>
+- The term _nonlinearized_ refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup>[(3)](#Note3)</sup>
 - The term _D65 white point_ means the white point determined by the CIE's D65 illuminant and the CIE 1931 color matching functions.
 - The term _D50 white point_ means the white point determined by the CIE's D50 illuminant and the CIE 1931 color matching functions.
 
