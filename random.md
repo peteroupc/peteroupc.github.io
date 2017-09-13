@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 11, 2017.
+Begun on Mar. 5, 2016; last updated on Sep. 13, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -122,7 +122,7 @@ Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `CryptGenRandom` method on Windows.
-- Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals as input, preferably from more than one nondeterministic source.  Such sources include, where available&mdash;
+- Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
     - disk access timings,
     - keystroke timings,
     - thermal noise, and
