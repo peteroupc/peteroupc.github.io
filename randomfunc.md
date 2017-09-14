@@ -881,7 +881,7 @@ The continuous weighted choice method generates a random number that follows a c
 
 The pseudocode below takes two lists as follows:
 
-- `list` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last item.
+- `list` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
 ----
@@ -997,7 +997,7 @@ To generate random content from a mixture&mdash;
         // Else index 1 was chosen, sample from the mean -1 normal
         else: number = Normal(-1, 1)
 
-- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled. Triangulation is nontrivial and outside the scope of this document.
+- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(11)](#Note11)</sup>
 - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1804,6 +1804,8 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
 
 <sup id=Note10>(10)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
+
+<sup id=Note11>(11)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.
 
 <a id=License></a>
 ## License

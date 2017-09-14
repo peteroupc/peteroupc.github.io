@@ -48,8 +48,8 @@ In general, topics that are specific to a programming language or application pr
     - [HSL](#HSL)
     - [HWB](#HWB)
     - [CIE XYZ](#CIE_XYZ)
-    - [CIE _L\*a\*b\*_](#CIE__L_a_b)
-    - [CIE _L\*u\*v\*_](#CIE__L_u_v)
+    - [CIELAB](#CIELAB)
+    - [CIELUV](#CIELUV)
     - [CMYK](#CMYK)
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_sub__B__sub_C_sub__R__sub)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
@@ -64,6 +64,7 @@ In general, topics that are specific to a programming language or application pr
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Maps](#Color_Maps)
+    - [Kinds of Color Maps](#Kinds_of_Color_Maps)
     - [Named Colors](#Named_Colors)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
 - [Colors as Spectral Functions](#Colors_as_Spectral_Functions)
@@ -529,7 +530,7 @@ In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was pu
 
 The conversion is relatively simple given HSV conversion methods:
 
-- To convert an RGB color `color` to HWB, generate `[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`.
+- To convert an RGB color `color` to HWB, generate `[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`. (The transformation is independent of RGB color space, but should be done using [_linearized RGB_ colors](#sRGB_and_Linearized_RGB).)
 - To convert an HWB color `hwb` to RGB, generate `HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])` if `hwb[2] < 1`, or `[hwb[0], 0, 0]` otherwise.
 
 **Note:** The HWB color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
@@ -607,22 +608,22 @@ is undefined.
 `[xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]`.  Note that if the small-_y_ component is 0,
 the result is undefined.
 
-<a id=CIE__L_a_b></a>
-### CIE _L\*a\*b\*_
+<a id=CIELAB></a>
+### CIELAB
 
-CIE _L\*a\*b\*_ (also known as CIELAB) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, _L\*a\*b\*_ color spaces differ in what they consider white (also called a _reference white point_).
+CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, CIELAB color spaces differ in what they consider white (also called a _reference white point_).
 
-A color in CIE _L\*a\*b\*_ consists of three components, in the following order:
+A color in CIELAB consists of three components, in the following order:
 
-- _L\*_, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The _L\*a\*b\*_ color `[100, 0, 0]` is the reference white point.
+- _L\*_, or _lightness_ of a color, ranges from 0 (black) to 100 (white).  The CIELAB color `[100, 0, 0]` is the reference white point.
 - _a\*_ and _b\*_, in that order, are coordinates of two axes that extend away from the gray line.
 
 In the following pseudocode&mdash;
-- the `SRGBToLab` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where
- the _L\*a\*b*_ color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
-- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIE _L\*a\*b\*_, where
- the _L\*a\*b*_ color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
-- the `XYZToLab(xyz, wpoint)` method converts an XYZ color to _L\*a\*b\*_ relative to the white point `wpoint` (a relative XYZ color),
+- the `SRGBToLab` method converts a nonlinearized sRGB color to CIELAB, where
+ the CIELAB color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
+- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIELAB, where
+ the CIELAB color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
+- the `XYZToLab(xyz, wpoint)` method converts an XYZ color to CIELAB relative to the white point `wpoint` (a relative XYZ color),
  and the `LabToXYZ(lab, wpoint)` method does the opposite conversion.
 
 The pseudocode follows.
@@ -680,7 +681,7 @@ The pseudocode follows.
         return XYZTosRGBD50(LabToXYZ(lab, [0.9642957, 1, 0.8251046]))
     END METHOD
 
-A color's _chroma_ (or relative colorfulness) can be derived from a _L\*a\*b\*_ color
+A color's _chroma_ (or relative colorfulness) can be derived from a CIELAB color
 with a method demonstrated in the following pseudocode.  The closer chroma
 is to 0 &mdash; or the closer the point (_a\*_, _b\*_) is to the origin (0, 0) &mdash;
 the closer the color is to the "gray" line.
@@ -689,7 +690,7 @@ the closer the color is to the "gray" line.
         return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
     END METHOD
 
-A color's _hue_ (an angle in radians) can be derived from a _L\*a\*b\*_ color
+A color's _hue_ (an angle in radians) can be derived from a CIELAB color
 with a method demonstrated in the following pseudocode. (Radians
 can be converted to degrees by multiplying by `180 / pi`.)  Hue is 0 or greater
 and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to magenta to red).
@@ -701,30 +702,30 @@ and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to
     END METHOD
 
 The following method converts lightness, chroma, and hue to a
-_L\*a\*b*_ color.  It takes a list of those three elements in that order.
+CIELAB color.  It takes a list of those three elements in that order.
 
     METHOD LchToLab(lch)
        // NOTE: Assumes hue is in radians, not degrees
        return [lch[0], lch[1] * cos(lch[2]), lch[1] * sin(lch[2])]
     END METHOD
 
-CIE _L\*a\*b\*_ has no formal saturation formula (see the Wikipedia article
+CIELAB has no formal saturation formula (see the Wikipedia article
 on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
 
-<a id=CIE__L_u_v></a>
-### CIE _L\*u\*v\*_
+<a id=CIELUV></a>
+### CIELUV
 
-CIE _L\*u\*v\*_ (also known as CIELUV) is a second color model designed for color comparisons, but is probably less common
-than CIE _L\*a\*b\*_.   _L\*u\*v\*_ is similar to _L\*a\*b\*_, except that the three components
-are _L\*_, or _lightness_ of a color (which is the same as in _L\*a\*b\*_), _u\*_,
+CIELUV (also known as CIE _L\*u\*v\*_) is a second color model designed for color comparisons, but is probably less common
+than CIELAB.   CIELUV is similar to CIELAB, except that the three components
+are _L\*_, or _lightness_ of a color (which is the same as in CIELAB), _u\*_,
 and _v\*_, in that order.
 
 In the following pseudocode&mdash;
-- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where
- the _L\*u\*v*_ color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLuv` method does the opposite conversion,
-- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIE _L\*u\*v\*_, where
- the _L\*u\*v*_ color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method does the opposite conversion, and
-- the `XYZToLuv(xyz, wpoint)` method converts an XYZ color to _L\*u\*v\*_  relative to the white point `wpoint` (a relative XYZ color),
+- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIELUV, where
+ the CIELUV color `[100, 0, 0]` is the D65 white point, and the `SRGBFromLuv` method does the opposite conversion,
+- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIELUV, where
+ the CIELUV color `[100, 0, 0]` is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method does the opposite conversion, and
+- the `XYZToLuv(xyz, wpoint)` method converts an XYZ color to CIELUV  relative to the white point `wpoint` (a relative XYZ color),
 and the `LuvToXYZ(luv, wpoint)` method does the opposite conversion.
 
 The pseudocode follows.
@@ -773,13 +774,13 @@ The pseudocode follows.
     END METHOD
 
 Hue and chroma can be derived from a
-_L\*u\*v\*_ color in a similar way as from a _L\*a\*b\*_, color, with
+CIELUV color in a similar way as from a CIELAB, color, with
 _u\*_ and _v\*_ used instead of _a\*_ and _b\*_, respectively.
 The `LabToHue`, `LabToChroma`, and
 `LchToLab` methods from the previous section work with
-_L\*u\*v\*_ colors analogously to _L\*a\*b\*_ colors.
+CIELUV colors analogously to CIELAB colors.
 A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness)
-can be derived from a _L\*u\*v\*_ color with a method demonstrated
+can be derived from a CIELUV color with a method demonstrated
 in the following pseudocode:
 
     METHOD LuvToSaturation(luv)
@@ -804,7 +805,7 @@ CMYK is a color model describing the amount and proportion of cyan, magenta, yel
 - C<sub>_R_</sub>, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
 Note that a thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
-the scope of this document.
+the scope of this document; in general, such encodings take into account human vision's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
 
 The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color is in 8/8/8
 format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;
@@ -892,7 +893,7 @@ Note that for best results, these techniques need to be carried out with [_linea
     - `HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`,
 
     generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative.
-- **Lighten/Darken (_L\*a\*b\*_)**: If `color` is a nonlinearized sRGB color, generate `lab = SRGBToLab(color)`, then generate `modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])`, where a positive `value` generates a lighter version of `color` and a negative `value`, a darker version.
+- **Lighten/Darken (CIELAB)**: If `color` is a nonlinearized sRGB color, generate `lab = SRGBToLab(color)`, then generate `modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])`, where a positive `value` generates a lighter version of `color` and a negative `value`, a darker version.
 - **Saturate/Desaturate**: Generate `hsv = RgbToHsv(color)`, then generate `modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)
 
 <a id=Relative_Luminance_Grayscale></a>
@@ -1067,7 +1068,7 @@ There are many ways to implement `COLORDIFF`, the color difference.  One simple 
 Note that&mdash;
 - the Euclidean distance can be used, for example, if the colors passed to `NearestColorIndex`&mdash;
     - are expressed in a [_linearized RGB_ color space](#sRGB_and_Linearized_RGB), or
-    - are expressed in CIE _L\*a\*b\*_ or CIE _L\*u\*v\*_ (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 _&Delta;E\*_ ("delta E") color difference method for the corresponding color model (for the _L\*a\*b\*_ _&Delta;E\*_ method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
+    - are expressed in CIELAB or CIELUV (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 _&Delta;E\*_ ("delta E") color difference method for the corresponding color model (for the CIELAB _&Delta;E\*_ method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
 - if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 T. Riemersma suggests an algorithm for color difference to be applied to nonlinearized RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1107,7 +1108,7 @@ This technique is independent of RGB color space, but see the [note from earlier
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Difference_and_Nearest_Colors)) is less than a predetermined threshold, where `color2` is the color to compare.  For example, if a reddish color is to be generated, `color2` would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.
 - **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a _hash function_ to convert the data to a _hash code_ (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that&mdash;
     - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
-    - if the hashing implicates computer or information security, it is cost-prohibitive to find a second input with the same output as that of a given input or to find an unknown input that leads to a given output.
+    - if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input with the same output as that of a given input or to find an unknown input that leads to a given output.
 
 <a id=Dominant_Colors_of_an_Image></a>
 ## Dominant Colors of an Image
@@ -1149,7 +1150,15 @@ A _color map_ (or _color palette_) is a list of colors (which are usually relate
 - To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
    generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
 - The **grayscale color map** consists of the nonlinearized sRGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
-- The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site contains many helpful suggestions for color maps.  The suggested color maps are designed above all to show discrete categories of data on land maps.
+
+<a id=Kinds_of_Color_Maps></a>
+### Kinds of Color Maps
+
+The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site contains many helpful suggestions for color maps.  The suggested color maps are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
+
+- **Sequential color maps** for showing "ordered data that progress from low to high". Those found in _ColorBrewer 2.0_ use varying tints of the same hue or of two close hues.
+- **Diverging color maps** for showing continuous data with a well-defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
+- **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
 <a id=Named_Colors></a>
 ### Named Colors
@@ -1176,7 +1185,7 @@ use, many applications need to use colors that are easily distinguishable by hum
   black, white, gray, magenta, pink, red, green, blue, yellow, orange, and brown.
 
 In general, more than 22 colors (the number of colors in Kelly's list) are hard to distinguish from each other.
-Any application that needs to distinguish more than 22 items should use other means in addition to color
+Any application that needs to distinguish many items should use other means in addition to color
 (or rather than color) to help users identify them. (Note that under the
 [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
 color should generally not be the only means to call attention to information.)
@@ -1203,11 +1212,11 @@ In the pseudocode below:
    - the number 1 at every wavelength, if a reflective object is not being modeled.
 - `LIGHT(wavelength)` is an arbitrary function returning the **relative spectral power of the light source** at `wavelength` (the wavelength is in nm).
 - `CMF(wavelength)` is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the **color matching functions** at `wavelength` (the wavelength is in nm).
-- `SpectrumToXYZ` computes, in XYZ form, the color perceived from a reflective object or a light source.
+- `SpectrumToXYZ` computes, in XYZ form, the perceived color of the light source or reflective object.
 - `SpectrumTosRGB` computes, in nonlinearized sRGB, the perceived color of the light source or reflective object.
 - `WavelengthTosRGB` computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength `wavelength`.
 
-There are various choices for the `LIGHT` and `CMF` functions.  Popular choices include the D65 _illuminant_ (a theoretical light source) and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the [sRGB color space](#sRGB_and_Linearized_RGB), and for both, the CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+There are various choices for the `LIGHT` and `CMF` functions.  Popular choices include the D65 _illuminant_ and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the [sRGB color space](#sRGB_and_Linearized_RGB), and for both, the CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
 
 Note that for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.
 
@@ -1332,10 +1341,10 @@ However, "effective luminance contrast [that is, [color contrast](#Relative_Lumi
 Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence:
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
-- "1": Set the color of the following text in bold.
+- "1": Set the following text in bold.
 - "2": Use a slightly dimmer foreground color than usual.
-- "3": Set the color of the following text in italics.
-- "4": Set the color of the following text underlined.
+- "3": Set the following text in italics.
+- "4": Underline the following text.
 - "7": Reverse the meaning of "foreground" and "background" in the following text.
 - "8": Hide text while still taking up space.
 - "21", "22", "23", "24", "27", "28": Turns off the feature mentioned earlier in "1", "2", "3", "4", "7", or "8", respectively.
@@ -1344,7 +1353,7 @@ Some command-line shells support coloring the background or foreground of text. 
 - "9" followed by color number: Brighter foreground color.
 - "10" followed by color number: Brighter background color.
 
-The _color number_ is one of the following, whose RGB color value can vary with the implementation: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here.
+The _color number_ is one of the following, whose exact RGB color value can vary with the implementation: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here.
 
 <a id=Conclusion></a>
 ## Conclusion
@@ -1389,7 +1398,7 @@ I acknowledge&mdash;
 
 <sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 
-<sup id=Note11>(11)</sup> Although the _L\*a\*b\*_ color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
+<sup id=Note11>(11)</sup> Although the CIELAB color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
