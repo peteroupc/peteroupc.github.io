@@ -1154,7 +1154,7 @@ A _color map_ (or _color palette_) is a list of colors (which are usually relate
 <a id=Kinds_of_Color_Maps></a>
 ### Kinds of Color Maps
 
-The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site contains many helpful suggestions for color maps.  The suggested color maps are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
+The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site suggestions for color maps, which are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
 
 - **Sequential color maps** for showing "ordered data that progress from low to high". Those found in _ColorBrewer 2.0_ use varying tints of the same hue or of two close hues.
 - **Diverging color maps** for showing continuous data with a well-defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".

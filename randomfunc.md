@@ -1494,7 +1494,7 @@ The _Dirichlet distribution_ models a distribution of N numbers that sum to a gi
 The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, "[Sampling Uniformly from the Unit Simplex](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.)  In the pseudocode below&mdash;
 
 - the method `NonzeroIntegersWithSum` returns `n` positive integers that sum to `total`,
-- the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`,
+- the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`, and
 - `Sort(list)` sorts the items in `list` in ascending order (note that details on sort algorithms are outside the scope of this document).
 
 ----
