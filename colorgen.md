@@ -60,14 +60,15 @@ In general, topics that are specific to a programming language or application pr
     - [Blending and Alpha Compositing](#Blending_and_Alpha_Compositing)
     - [Miscellaneous](#Miscellaneous)
 - [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
-    - [Examples](#Examples)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Maps](#Color_Maps)
     - [Kinds of Color Maps](#Kinds_of_Color_Maps)
     - [Named Colors](#Named_Colors)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
+    - [Idioms](#Idioms)
 - [Colors as Spectral Functions](#Colors_as_Spectral_Functions)
+    - [Light Source and Color Matching Functions](#Light_Source_and_Color_Matching_Functions)
     - [Color Temperature](#Color_Temperature)
 - [Color Mixture](#Color_Mixture)
 - [Other Color Topics](#Other_Color_Topics)
@@ -552,7 +553,7 @@ There are at least two conventions for XYZ colors:
 In the following pseudocode&mdash;
 
 - `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` does the opposite conversion, and
-- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGBD50(xyz)` does the opposite conversion (see the notes later in this section).
+- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGBD50(xyz)` does the opposite conversion (see note 3 later in this section).
 
 The pseudocode follows.
 
@@ -580,6 +581,7 @@ The pseudocode follows.
 
     METHOD XYZFromsRGB(rgb)
         lin=LinearFromsRGB3(rgb)
+        // NOTE: Official matrix is rounded to nearest 1/10000
         return Apply3x3Matrix(lin, [0.4123908, 0.3575843, 0.1804808,
                 0.2126390, 0.7151687, 0.07219232, 0.01933082,
                 0.1191948, 0.9505322])
@@ -594,17 +596,17 @@ The pseudocode follows.
 
 **Notes:**
 
-- In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.
-- In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the inverse of the matrix shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.
-- Where the XYZ color will be relative to a different white point than the RGB color space's usual white point,
+1. In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.
+2. In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the inverse of the matrix shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.
+3. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point,
 a [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation)
 needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
 The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.
-- Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
-- An XYZ color (`xyz`) can be converted to "xyY" form (where the "xy" is _chromaticity_ and "Y" is _luminance_) by generating
+4. Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
+5. An XYZ color (`xyz`) can be converted to "xyY" form (where the "xy" is _chromaticity_ and "Y" is _luminance_) by generating
 `[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]`.  Note that if the sum of the XYZ components is 0, the result
 is undefined.
-- A color in "xyY" form (`xyy`) can be converted to an XYZ color by generating
+6. A color in "xyY" form (`xyy`) can be converted to an XYZ color by generating
 `[xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]`.  Note that if the small-_y_ component is 0,
 the result is undefined.
 
@@ -910,7 +912,7 @@ points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
 
     Where a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
     corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.  Further details on such
-    adaptation are outside the scope of this document, but see the examples. (See also E. Stone, "[sRGB luminance](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
+    adaptation are outside the scope of this document, but see the examples. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
 - Applying the formula just given to _nonlinearized RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(13)](#Note13)</sup>
 
 Examples follow for sRGB:
@@ -1073,10 +1075,7 @@ Note that&mdash;
 
 T. Riemersma suggests an algorithm for color difference to be applied to nonlinearized RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
 
-<a id=Examples></a>
-### Examples
-
-Sorting colors into **color categories** is equivalent to&mdash;
+**Example:** Sorting colors into **color categories** is equivalent to&mdash;
 
 - defining a list of _representative colors_ `repColors` (for example, representative colors for red, blue, black, white, and so on), then
 - for each color (`color`) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`).
@@ -1144,20 +1143,13 @@ For all three techniques, in the case of a raster image, an implementation can r
 
 A _color map_ (or _color palette_) is a list of colors (which are usually related). All the colors in a color map can be in any color space, but unless noted otherwise, a linearized RGB color space should be used rather than a nonlinearized RGB color space.
 
-- To extract a **continuous color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`)&mdash;
-    - generate `index = (value * (N - 1)) - floor(value * (N - 1))`, then
-    - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
-- To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
-   generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
-- The **grayscale color map** consists of the nonlinearized sRGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
-
 <a id=Kinds_of_Color_Maps></a>
 ### Kinds of Color Maps
 
-The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site suggestions for color maps, which are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
+The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for color maps are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
 
 - **Sequential color maps** for showing "ordered data that progress from low to high". Those found in _ColorBrewer 2.0_ use varying tints of the same hue or of two close hues.
-- **Diverging color maps** for showing continuous data with a well-defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
+- **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
 <a id=Named_Colors></a>
@@ -1171,7 +1163,7 @@ Converting a color (such as an RGB color) to a color name is equivalent to&mdash
 
 Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn't exist in the hash table.
 
-**Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, named colors defined in that module are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
+**Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the (nonlinearized) [_sRGB color space_](#sRGB_and_Linearized_RGB).
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
@@ -1185,10 +1177,10 @@ use, many applications need to use colors that are easily distinguishable by hum
   black, white, gray, magenta, pink, red, green, blue, yellow, orange, and brown.
 
 In general, more than 22 colors (the number of colors in Kelly's list) are hard to distinguish from each other.
-Any application that needs to distinguish many items should use other means in addition to color
+Any application that needs to distinguish many items should use other visual means in addition to color
 (or rather than color) to help users identify them. (Note that under the
 [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/),
-color should generally not be the only means to call attention to information.)
+color should not be ["the only visual means of conveying information"](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
 color space (that is, where the smallest [color difference](#Color_Difference_and_Nearest_Colors), or `COLORDIFF`,
@@ -1196,31 +1188,38 @@ between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
 should be _&Delta;E\*_ ("delta E") or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
 
+<a id=Idioms></a>
+### Idioms
+
+- To extract a **continuous color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`)&mdash;
+    - generate `index = (value * (N - 1)) - floor(value * (N - 1))`, then
+    - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
+- To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
+   generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
+- The **grayscale color map** consists of the nonlinearized sRGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
+
 <a id=Colors_as_Spectral_Functions></a>
 ## Colors as Spectral Functions
 
 Colors can also be represented as functions that describe a distribution of radiation (such as light) across
 the visible spectrum.  There are two cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  In 1931, the CIE published three _color matching functions_, which, when multiplied by a spectral power distribution and then integrated, give the three coordinates of the light's perceived color in the [XYZ color model](#CIE_XYZ).  Although spectral power distributions and color matching functions are continuous functions, in practice the "integration" is done by sampling at discrete wavelengths.
+- **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  The light's color stimulus can be converted to three numbers (called _tristimulus values_) by multiplying that distribution by a set of three _color matching functions_ and then integrating the result (see note 3 in this section).
 - **Reflective objects.** Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding an object's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
 
 In the pseudocode below:
 
+- `SpectrumToTristim` computes the _tristimulus values_ of the perceived color stimulus of the light source or reflective object.
 - `REFL(wavelength)` is an arbitrary function returning&mdash;
-   - the **object's reflectance** at `wavelength` (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less, and the wavelength is in nanometers [nm]), or
+   - the **object's reflectance** at `wavelength` (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less), or
    - the number 1 at every wavelength, if a reflective object is not being modeled.
-- `LIGHT(wavelength)` is an arbitrary function returning the **relative spectral power of the light source** at `wavelength` (the wavelength is in nm).
-- `CMF(wavelength)` is an arbitrary function returning a three-item list containing the X, Y, and Z components, respectively, of the **color matching functions** at `wavelength` (the wavelength is in nm).
-- `SpectrumToXYZ` computes, in XYZ form, the perceived color of the light source or reflective object.
-- `SpectrumTosRGB` computes, in nonlinearized sRGB, the perceived color of the light source or reflective object.
-- `WavelengthTosRGB` computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength `wavelength`.
+- `LIGHT(wavelength)` is an arbitrary function returning the **relative spectral power of the light source** at `wavelength`.
+- `CMF(wavelength)` is an arbitrary function returning a three-item list containing the values of the **color matching functions** at `wavelength`. `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. (For example, if `CMF` implements the CIE 1931 color matching functions, `SpectrumToTristim` will return an [XYZ color](#CIE_XYZ).)
+- `REFL`, `LIGHT`, and `CMF` take a wavelength in nanometers (nm).
 
-There are various choices for the `LIGHT` and `CMF` functions.  Popular choices include the D65 _illuminant_ and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the [sRGB color space](#sRGB_and_Linearized_RGB), and for both, the CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+----
 
-Note that for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.
-
-    METHOD SpectrumToXYZ()
+    METHOD SpectrumToTristim()
         i = 360 # Start of visible spectrum
         xyz=[0,0,0]
         weight = 0
@@ -1245,13 +1244,18 @@ Note that for purposes of color reproduction, only wavelengths within the range 
         return xyz
     END METHOD
 
-    METHOD WavelengthTosRGB(wavelength)
-        return XYZTosRGB(CMF(wavelength))
-    END METHOD
+**Notes:**
+1. For purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.
+2. In general, wavelengths in this section mean wavelengths in air. (See the entry "[wavelength](http://eilv.cie.co.at/term/1426)" in the CIE's International Lighting Vocabulary.)
+3. Although spectral power distributions and color matching functions are continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as demonstrated by the `SpectrumToTristim` method.
 
-    METHOD SpectrumTosRGB()
-        return XYZTosRGB(SpectrumToXYZ())
-    END METHOD
+<a id=Light_Source_and_Color_Matching_Functions></a>
+### Light Source and Color Matching Functions
+
+There are various choices for the `LIGHT` and `CMF` functions.  Popular choices include the D65 _illuminant_ and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the [sRGB color space](#sRGB_and_Linearized_RGB), and for both, the CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).  For such choices of `LIGHT` and `CMF`&mdash;
+- the tristimulus values (e.g., from `SpectrumToTristim()`) will be an [XYZ color](#CIE_XYZ) relative to the D65 white point,
+- the idiom `XYZTosRGB(SpectrumToTristim())` computes, in nonlinearized sRGB, the perceived color of the light source or reflective object, and
+- the idiom `XYZTosRGB(CMF(wavelength))` computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength `wavelength`, expressed in nm (a _monochromatic stimulus_).
 
 <a id=Color_Temperature></a>
 ### Color Temperature
@@ -1331,9 +1335,9 @@ This section discusses miscellaneous topics related to colors.
 
 What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
-Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a light stimulus.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly (usually magenta-red and green-cyan hues) are harder to distinguish.
+Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, colors where the S and M or S and L cones, respectively, respond similarly (usually magenta-red and green-cyan hues) are harder to distinguish.
 
-However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as magenta and red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
+However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
 
 <a id=Terminal_Colors></a>
 ### Terminal Colors
@@ -1398,7 +1402,9 @@ I acknowledge&mdash;
 
 <sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of display hardware and display driver development.
 
-<sup id=Note11>(11)</sup> Although the CIELAB color model is also often called "perceptually uniform", it wasn't designed that way, according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html).
+<sup id=Note11>(11)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
+- CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and
+- such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "Good Colour Maps: How to Design Them", arXiv:1509.03700 [cs.GR], 2015).
 
 <sup id=Note12>(12)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
