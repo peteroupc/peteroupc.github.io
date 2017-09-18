@@ -556,7 +556,7 @@ There are at least two conventions for XYZ colors:
 In the following pseudocode&mdash;
 
 - `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` does the opposite conversion, and
-- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and `XYZTosRGBD50(xyz)` does the opposite conversion (see note 3 later in this section).
+- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC V2 or V4 profiles, and `XYZTosRGBD50(xyz)` does the opposite conversion (see note 3 later in this section).
 
 The pseudocode follows.
 
@@ -600,23 +600,20 @@ The pseudocode follows.
 **Notes:**
 
 1. In this document, unless noted otherwise, XYZ colors use a "relative XYZ" convention in which the Y component is 1 for the white point and 0 for a color with an ideal absolute luminance of 0 cd/m<sup>2</sup>.
-2. In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the inverse of the matrix shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.
+2. In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the inverse of the matrix shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[(16)](#Note16)</sup>
 3. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point,
 a [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation)
 needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
-The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.
-4. Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
-5. An XYZ color (`xyz`) can be converted to "xyY" form (where the "xy" is _chromaticity_ and "Y" is _luminance_) by generating
-`[xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]`.  Note that if the sum of the XYZ components is 0, the result
-is undefined.
-6. A color in "xyY" form (`xyy`) can be converted to an XYZ color by generating
-`[xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]`.  Note that if the small-_y_ component is 0,
+The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(16)](#Note16)</sup>
+4. A color can be converted between XYZ and "xyY" form (where "x" and "y" are _chromaticity coordinates_ and "Y" is _luminance_) as follows:
+    - **XYZ (`xyz`) to xyY**: Generate `xyy = [xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]`.  (Note that if the sum of the XYZ components is 0, the result is undefined.)  The small-"z" coordinate is then `1 - xyy[0] - xyy[1]`.
+    - **xyY (`xyy`) to XYZ**: Generate `xyz = [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]`.  Note that if the small-_y_ component is 0,
 the result is undefined.
 
 <a id=CIELAB></a>
 ### CIELAB
 
-CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places white at the origin of the space.  In general, CIELAB color spaces differ in what they consider white.
+CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider white.
 
 A color in CIELAB consists of three components, in the following order:
 
@@ -628,7 +625,7 @@ A color in CIELAB consists of three components, in the following order:
 
 In the following pseudocode&mdash;
 - the `SRGBToLab` method converts a nonlinearized sRGB color to CIELAB, with white being the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
-- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIELAB, with white being the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
+- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIELAB, with white being the D50 white point, e.g., for interoperability with applications color-managed with ICC V2 or V4 profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
 - the `XYZToLab(xyz, wpoint)` method converts an XYZ color to CIELAB relative to the white point `wpoint` (a relative XYZ color),
  and the `LabToXYZ(lab, wpoint)` method does the opposite conversion.
 
@@ -726,13 +723,7 @@ than CIELAB.   CIELUV is similar to CIELAB, except that the three components
 are _L\*_, or _lightness_ of a color (which is the same as in CIELAB), _u\*_,
 and _v\*_, in that order.
 
-In the following pseudocode&mdash;
-- the `SRGBToLuv` method converts a nonlinearized sRGB color to CIELUV, with white being the D65 white point, and the `SRGBFromLuv` method does the opposite conversion,
-- the `SRGBToLuvD50` method converts a nonlinearized sRGB color to CIELUV, with white being the D50 white point, e.g., for interoperability with applications color-managed with ICC profiles, and the `SRGBFromLuvD50` method does the opposite conversion, and
-- the `XYZToLuv(xyz, wpoint)` method converts an XYZ color to CIELUV  relative to the white point `wpoint` (a relative XYZ color),
-and the `LuvToXYZ(luv, wpoint)` method does the opposite conversion.
-
-The pseudocode follows.
+In the following pseudocode, the `SRGBToLuv` , `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB).
 
     METHOD XYZToLuv(xyz, wpoint)
         lab=XYZToLab(xyz, wpoint)
@@ -815,7 +806,7 @@ format with the components separated out (still 0 or greater and 255 or less). T
 - the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [JPEG File Interchange Format](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-For all these variants, the transformation should be done using [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB).   For efficiency reasons, however, Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods given below.
+For all these variants, the transformation should be done using [_nonlinearized RGB_ colors](#sRGB_and_Linearized_RGB).<sup>[(17)](#Note17)</sup>
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminances
     // in the NTSC color space
@@ -874,9 +865,9 @@ For all these variants, the transformation should be done using [_nonlinearized 
     END METHOD
 
 **Notes:**
+- For efficiency reasons, Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods just given.
 - A thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
 the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
-- The BT.2020 standard defines a color model similar to Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> called _YcCbcCrc_, to which _linearized RGB colors_ rather than nonlinearized ones, can be converted.  However, _YcCbcCrc_ is not yet of practical interest to many programmers to discuss further.
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -914,7 +905,7 @@ points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
     - the RGB color space's "black point" has a relative luminance of 0, and
     - the RGB color space's white point has a relative luminance of 1.
 
-    Where a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
+    If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
     corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.  Further details on such
     adaptation are outside the scope of this document, but see the examples. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
 - Applying the formula just given to _nonlinearized RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(13)](#Note13)</sup>
@@ -922,12 +913,12 @@ points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
 Examples follow for sRGB:
 
 - **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y values of red/green/blue<sup>[(2)](#Note2)</sup>).
-- **sRGB with D50 white point**: `(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)` (for interoperability with applications color-managed with ICC profiles).
+- **sRGB with D50 white point**: `(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)` (for interoperability with applications color-managed with ICC V2 or V4 profiles).
 
 In the sections that follow, the method **[`Luminance(color)`](#Relative_Luminance_Grayscale)** returns the relative luminance of the color `color`.
 
 Applications of luminance include the following:
-- **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Relative Luminance(color), Luminance(color), Luminance(color)]`.
+- **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 - **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
 - **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  For example, if [`Luminance(color)`](#Relative_Luminance_Grayscale) is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.
     - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the relative luminance of a color, as defined in the guidelines<sup>[(4)](#Note4)</sup>; `brighter` is the color with higher `RelLum`; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
@@ -1035,7 +1026,7 @@ _Color difference_ algorithms are used to determine if two colors are similar.  
 In the pseudocode below:
 
 - The method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.
-- `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) between two colors, where the lower the number, the closer the two colors are.
+- `COLORDIFF(color1, color2)` is a function that calculates a [color difference](#Color_Difference_Methods) between two colors, where the lower the number, the closer the two colors are.
 - The method `NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
 
 The pseudocode follows.
@@ -1069,7 +1060,7 @@ Finding the nearest color in the list then proceeds as in the following example:
 <a id=Color_Difference_Methods></a>
 ### Color Difference Methods
 
-There are many ways to implement `COLORDIFF`, the color difference.
+There are many ways to implement `COLORDIFF`, the [_color difference_](https://en.wikipedia.org/wiki/Color_difference).
 
 **Euclidean distance.** One simple way is to use the Euclidean distance of the two colors, as shown in the following pseudocode.
 
@@ -1168,25 +1159,24 @@ This technique is independent of RGB color space, but see the [note from earlier
 
 There are several methods of finding the kind or kinds of colors that appear most prominently in a collection of colors (including a raster image).
 
-One simple way to do so (called _averaging_) is to&mdash;
+**Averaging.**  To find the dominant color using this technique&mdash;
 - add all the RGB colors (or a sample of them) in the collection of colors (for RGB colors, adding two colors means adding each of their components individually), then
 - divide the result by the number of pixels added this way.
 
 Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
-A second, more complicated technique is called [_color quantization_](https://en.wikipedia.org/wiki/Color_quantization), where the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
+**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linearized RGB colors_](#sRGB_and_Linearized_RGB).
 
-A third technique is called _histogram binning_.  To find the dominant colors using this technique (which is independent of color model):
+**Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
 - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of ["Web safe colors"](#RGB_Colors_and_the_0_1_Format).
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
 - For each color in the collection of colors, find the [nearest color](#Color_Difference_and_Nearest_Colors) in the color palette to that pixel's color, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.
 
-For all three techniques, in the case of a raster image, an implementation can resize that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
-
 **Notes:**
 
+- For all three techniques, in the case of a raster image, an implementation can resize that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 - Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)), or
     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
@@ -1205,6 +1195,8 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 - **Sequential color maps** for showing "ordered data that progress from low to high". Those found in _ColorBrewer 2.0_ use varying tints of the same hue or of two close hues.
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
+
+**Note:** Some of the [color maps](https://personal.sron.nl/~pault/) shown on P. Tol's site include a distinct shade of gray to indicate missing data on a land map.
 
 <a id=Named_Colors></a>
 ### Named Colors
@@ -1236,7 +1228,7 @@ In general, the more colors used, the harder it is to distinguish them from each
 color should not be ["the only visual means of conveying information"](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest [color difference](#Color_Difference_and_Nearest_Colors), or `COLORDIFF`,
+color space (that is, where the smallest [color difference](#Color_Difference_Methods), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
 should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
@@ -1389,7 +1381,7 @@ This section discusses miscellaneous topics related to colors.
 
 What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
-Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues) are harder to distinguish.
+Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
 
 However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
 
@@ -1440,7 +1432,7 @@ I acknowledge&mdash;
 
 <sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to `BT709(LinearFromsRGB3(From888(color)))`.  Note that the guidelines use a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.  `RelLum(color)` is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever conformance to the guidelines is not important.  The guidelines use "relative luminance" rather than "luminance" because "[Web content does not emit light itself](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)".  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)
 
-<sup id=Note5>(5)</sup> As an example of this point, the Fogra Research Institute for Media Technologies has [standardized](https://www.fogra.org/en/fogra-standardization/fogra-characterizationdata/a-icc-en.html) conversions of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.
+<sup id=Note5>(5)</sup> As an example of this point, the Fogra Research Institute for Media Technologies has [standardized](https://www.fogra.org/en/fogra-standardization/fogra-characterizationdata/a-icc-en.html) conversions of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as _characterization data_ or _characterization tables_.
 
 A very rough approximation of an RGB color (`color`) to a CMYK color involves generating `k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])`, then generating `[0, 0, 0, 1]` if `k` is 1, or `[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]` otherwise.  A very rough approximation of a CMYK color (`color`) to an RGB color involves generating `[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]`, where `ik = 1 - color[3]`.
 
@@ -1456,7 +1448,7 @@ A very rough approximation of an RGB color (`color`) to a CMYK color involves ge
 <sup id=Note9>(9)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
 
 - using the average (`(color[0]+color[1]+color[2])/3.0`), minimum, or maximum of the three color components (as shown on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example),
-- using the [HSL](#HSL) "lightness" (for the latter, see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)), and
+- using the [HSL](#HSL) "lightness" (see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)), and
 - using one of the three color components (also as seen on T. Helland's site).
 
 <sup id=Note10>(10)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the _RGBW color model_ describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.
@@ -1472,6 +1464,10 @@ A very rough approximation of an RGB color (`color`) to a CMYK color involves ge
 <sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [nonlinearized RGB colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
 
 <sup id=Note15>(15)</sup> The placement of the _a\*_ and _b\*_ axes is related to the two _opponent signals_ generated by the human visual system in response to a stimulus of light: red vs. green and yellow vs. blue, respectively. (The theory of opponent signals is largely associated with E. Hering's work in 1878.)
+
+<sup id=Note16>(16)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
+
+<sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linearized RGB_ colors, rather than nonlinearized ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of practical interest to many programmers to discuss further.
 
 </small>
 
