@@ -16,6 +16,8 @@ This document presents an overview of many common color topics that are of gener
 - how to find the dominant colors of an image, and
 - colors as spectral functions.
 
+[Sample Python code](https://peteroupc.github.io/colorutil.py) that implements many of the methods in this document is available.
+
 In general, topics that are specific to a programming language or application programming interface are out of the scope of this document.  Moreover, the following topics are beyond this page's scope:
 
 - Procedures to change or set the color used&mdash;
@@ -51,7 +53,7 @@ In general, topics that are specific to a programming language or application pr
     - [CIELAB](#CIELAB)
     - [CIELUV](#CIELUV)
     - [CMYK](#CMYK)
-    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_sub__B__sub_C_sub__R__sub)
+    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
@@ -87,7 +89,6 @@ In this document:
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 - `RNDNUMRANGE`, `RNDU01`, and `RNDINT` are as defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
 - The term _RGB_ means red-green-blue.
-- The abbreviation _ICC_ means the International Color Consortium.
 - The abbreviation _IEC_ means the International Electrotechnical Commission.
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
@@ -556,15 +557,15 @@ There are at least two conventions for XYZ colors:
 In the following pseudocode&mdash;
 
 - `XYZFromsRGB(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and `XYZTosRGB(xyz)` does the opposite conversion, and
-- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point, e.g., for interoperability with applications color-managed with ICC V2 or V4 profiles, and `XYZTosRGBD50(xyz)` does the opposite conversion (see note 3 later in this section).
+- `XYZFromsRGBD50(rgb)` converts a nonlinearized sRGB color (`rgb`) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point<sup>[(18)](#Note18)</sup>, and `XYZTosRGBD50(xyz)` does the opposite conversion (see note 3 later in this section).
 
 The pseudocode follows.
 
     // Applies a 3x3 matrix transformation
     METHOD Apply3x3Matrix(xyz, xyzmatrix)
-        r=x*xyzmatrix[0]+y*xyzmatrix[1]+z*xyzmatrix[2]
-        g=x*xyzmatrix[3]+y*xyzmatrix[4]+z*xyzmatrix[5]
-        b=x*xyzmatrix[6]+y*xyzmatrix[7]+z*xyzmatrix[8]
+        r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
+        g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
+        b=xyz[0]*xyzmatrix[6]+xyz[1]*xyzmatrix[7]+xyz[2]*xyzmatrix[8]
         return [r,g,b]
     END METHOD
 
@@ -613,7 +614,7 @@ the result is undefined.
 <a id=CIELAB></a>
 ### CIELAB
 
-CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider white.
+CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider pure white.
 
 A color in CIELAB consists of three components, in the following order:
 
@@ -625,7 +626,7 @@ A color in CIELAB consists of three components, in the following order:
 
 In the following pseudocode&mdash;
 - the `SRGBToLab` method converts a nonlinearized sRGB color to CIELAB, with white being the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
-- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIELAB, with white being the D50 white point, e.g., for interoperability with applications color-managed with ICC V2 or V4 profiles, and the `SRGBFromLabD50` method does the opposite conversion, and
+- the `SRGBToLabD50` method converts a nonlinearized sRGB color to CIELAB, with white being the D50 white point<sup>[(18)](#Note18)</sup>, and the `SRGBFromLabD50` method does the opposite conversion, and
 - the `XYZToLab(xyz, wpoint)` method converts an XYZ color to CIELAB relative to the white point `wpoint` (a relative XYZ color),
  and the `LabToXYZ(lab, wpoint)` method does the opposite conversion.
 
@@ -723,7 +724,7 @@ than CIELAB.   CIELUV is similar to CIELAB, except that the three components
 are _L\*_, or _lightness_ of a color (which is the same as in CIELAB), _u\*_,
 and _v\*_, in that order.
 
-In the following pseudocode, the `SRGBToLuv` , `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB).
+In the following pseudocode, the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB).
 
     METHOD XYZToLuv(xyz, wpoint)
         lab=XYZToLab(xyz, wpoint)
@@ -787,10 +788,11 @@ in the following pseudocode:
 ### CMYK
 
 CMYK is a color model describing the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to RGB, or vice versa, is not trivial, in part because&mdash;
+
 1. the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
 2. the meaning and conversion of CMYK colors can vary depending on the printing condition, including what inks and paper are used; for example, different inks have different light reflectances.<sup>[(5)](#Note5)</sup>
 
-<a id=Y_prime_C_sub__B__sub_C_sub__R__sub></a>
+<a id=Y_prime_C_B_C_R></a>
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>
 
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
@@ -913,7 +915,7 @@ points, respectively<sup>[(2)](#Note2)</sup><sup>[(9)](#Note9)</sup>,
 Examples follow for sRGB:
 
 - **ITU BT.709** (`BT709(color)`): `(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)` (sRGB Y values of red/green/blue<sup>[(2)](#Note2)</sup>).
-- **sRGB with D50 white point**: `(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)` (for interoperability with applications color-managed with ICC V2 or V4 profiles).
+- **sRGB with D50 white point**: `(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)`<sup>[(18)](#Note18)</sup>.
 
 In the sections that follow, the method **[`Luminance(color)`](#Relative_Luminance_Grayscale)** returns the relative luminance of the color `color`.
 
@@ -1463,11 +1465,16 @@ A very rough approximation of an RGB color (`color`) to a CMYK color involves ge
 
 <sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [nonlinearized RGB colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
 
-<sup id=Note15>(15)</sup> The placement of the _a\*_ and _b\*_ axes is related to the two _opponent signals_ generated by the human visual system in response to a stimulus of light: red vs. green and yellow vs. blue, respectively. (The theory of opponent signals is largely associated with E. Hering's work in 1878.)
+<sup id=Note15>(15)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the three _opponent signals_ generated by the human visual system in response to a stimulus of light: white vs. black, red vs. green, and yellow vs. blue, respectively. (The theory of opponent signals is largely associated with E. Hering's work in 1878.  See also the entry "[hue](http://eilv.cie.co.at/term/542)" in the CIE's International Lighting Vocabulary.)
 
 <sup id=Note16>(16)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 
-<sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linearized RGB_ colors, rather than nonlinearized ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of practical interest to many programmers to discuss further.
+<sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linearized RGB_ colors, rather than nonlinearized ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.
+
+<sup id=Note18>(18)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:
+
+- Treating the D50 white point as pure white can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
+- In certain industries, particularly print publishing, the CIELAB color space in use generally considers the D50 white point as pure white.
 
 </small>
 

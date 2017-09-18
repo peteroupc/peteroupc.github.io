@@ -1,5 +1,5 @@
 """
-Sample code for the article "Random Number Generation Methods"
+Sample code for the article "Random Number Generation and Sampling Methods"
 https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods
 
 Written by Peter O.
