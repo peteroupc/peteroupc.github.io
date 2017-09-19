@@ -93,8 +93,8 @@ In this document:
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _linearized_ refers to RGB colors with a linear relationship of emitted light (rather than perceived light).
 - The term _nonlinearized_ refers to RGB colors that are not linearized (generally with a more or less linear relationship of perceived light).<sup>[(3)](#Note3)</sup>
-- The term _D65 white point_ means the white point determined by the CIE's D65 illuminant, which approximates daylight at a correlated color temperature of 6500 kelvins, and the CIE 1931 color matching functions.
-- The term _D50 white point_ means the white point determined by the CIE's D50 illuminant, which approximates daylight at a correlated color temperature of 5000 kelvins, and the CIE 1931 color matching functions.
+- The term _D65 white point_ means the white point determined by the CIE's D65 illuminant and the CIE 1931 color matching functions.
+- The term _D50 white point_ means the white point determined by the CIE's D50 illuminant and the CIE 1931 color matching functions.
 
 <a id=Utility_Functions></a>
 ### Utility Functions
@@ -145,9 +145,9 @@ Detailing such interpolations is outside the scope of this document, but are des
 
 A _color model_ describes, in general terms, the relationship of colors in a theoretical space.  A _color space_ is a mapping from colors to numbers that follows a particular color model.
 
-The _red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to what are called the "additive primaries" red, green, and blue, and the "subtractive primaries" cyan, yellow, and magenta.
+The _red-green-blue (RGB) color model_ is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
 
-In general, _RGB color spaces_ differ in what they consider pure red, green, blue, and white.  Because human color perception is nonlinear, RGB color spaces also differ in their _transfer functions_ (also known as _companding_ conversions, conversions to and from linearized RGB).
+In general, _RGB color spaces_ differ in what they consider pure red, green, blue, and white.<sup>[(20)](#Note20)</sup>  Because human color perception is nonlinear, RGB color spaces also differ in their _transfer functions_ (also known as _companding_ conversions, conversions to and from linearized RGB).
 
 The following details concepts related to the RGB color model.
 
@@ -376,7 +376,7 @@ The following discusses several color models, other than RGB, that are of practi
 
 [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
 
-- _Hue_, or angle in the color wheel, is in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
+- _Hue_ is an angle in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
 - _Saturation_, the distance of the color from gray and white (but not necessarily from black),
   is 0 or greater and 1 or less.
 - A component variously called "value" or "brightness" is the distance of the color from black and is 0 or greater and 1 or less.
@@ -614,7 +614,7 @@ the result is undefined.
 <a id=CIELAB></a>
 ### CIELAB
 
-CIELAB (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider pure white.
+[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(11)](#Note11)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider pure white.
 
 A color in CIELAB consists of three components, in the following order:
 
@@ -697,7 +697,7 @@ the closer the color is to the "gray" line.
 A color's _hue_ (_h_, an angle in radians) can be derived from a CIELAB color
 with a method demonstrated in the following pseudocode. (Radians
 can be converted to degrees by multiplying by `180 / pi`.)  Hue is 0 or greater
-and less than 2&pi; (from red at roughly 0 to yellow to green to cyan to blue to magenta to red).
+and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).
 
     METHOD LabToHue(lab)
         h = atan2(lab[2], lab[1])
@@ -719,10 +719,9 @@ on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
 <a id=CIELUV></a>
 ### CIELUV
 
-CIELUV (also known as CIE _L\*u\*v\*_) is a second color model designed for color comparisons, but is probably less common
-than CIELAB.   CIELUV is similar to CIELAB, except that the three components
-are _L\*_, or _lightness_ of a color (which is the same as in CIELAB), _u\*_,
-and _v\*_, in that order.
+CIELUV (also known as CIE _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely,
+_L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_,
+and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially used when working with colors of light sources.
 
 In the following pseudocode, the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB).
 
@@ -932,13 +931,14 @@ Finding the **average relative luminance of an image** or collection of colors i
 <a id=Color_Schemes></a>
 ### Color Schemes
 
-The following techniques generate new colors that are related to existing colors.
+The following techniques generate new colors that are related to existing colors.  See also [B. MacEvoy's summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 
-- **Color harmonies** result by generating several related colors, such as with the idiom `HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))`, where X is the following for each color:
+- **Color harmonies**<sup>[(19)](#Note)</sup> result by generating several colors that differ in hue, such as with the idiom `HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))`, where X is the following for each color:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
     - **Triadic**: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.
+    - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
 - **Monochrome colors**: Colors with the same hue.  Examples of generating such colors include the following:
@@ -1339,14 +1339,12 @@ the one found in McCamy 1992.
 <a id=Color_Mixture></a>
 ## Color Mixture
 
-In general, mixing colors in a similar way to mixing paint is not as simple as
-averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors
-can be mixed this way by&mdash;
+In general, mixing colors in a similar way to mixing paint is not as simple as averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors can be mixed this way by&mdash;
 
 - finding the [_reflectance curves_](#Colors_as_Spectral_Functions) of the pigments or colors,
 - generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
-- converting the mixed reflectance curve to an RGB color.
+- converting the mixed reflectance curve to an RGB color.<sup>[(21)](#Note21)</sup>
 
 Finding a representative reflectance curve for an arbitrary RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/).
 
@@ -1438,6 +1436,8 @@ I acknowledge&mdash;
 
 A very rough approximation of an RGB color (`color`) to a CMYK color involves generating `k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])`, then generating `[0, 0, 0, 1]` if `k` is 1, or `[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]` otherwise.  A very rough approximation of a CMYK color (`color`) to an RGB color involves generating `[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]`, where `ik = 1 - color[3]`.
 
+Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are often proprietary and usually not of general interest to programmers.
+
 <sup id=Note6>(6)</sup> A [Working Draft](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
 
 - an 8-digit format, consisting of "#" followed by two base-16 digits each for the red, green, blue, and alpha components, respectively, and
@@ -1465,7 +1465,7 @@ A very rough approximation of an RGB color (`color`) to a CMYK color involves ge
 
 <sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [nonlinearized RGB colors](#sRGB_and_Linearized_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
 
-<sup id=Note15>(15)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the three _opponent signals_ generated by the human visual system in response to a stimulus of light: white vs. black, red vs. green, and yellow vs. blue, respectively. (The theory of opponent signals is largely associated with E. Hering's work in 1878.  See also the entry "[hue](http://eilv.cie.co.at/term/542)" in the CIE's International Lighting Vocabulary.)
+<sup id=Note15>(15)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light/dark contrast, the _opponent signal_ red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering's work in 1878.  See also the entry "[hue](http://eilv.cie.co.at/term/542)" in the CIE's International Lighting Vocabulary.)
 
 <sup id=Note16>(16)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 
@@ -1475,6 +1475,12 @@ A very rough approximation of an RGB color (`color`) to a CMYK color involves ge
 
 - Treating the D50 white point as pure white can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
 - In certain industries, particularly print publishing, the CIELAB color space in use generally considers the D50 white point as pure white.
+
+<sup id=Note19>(19)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
+
+<sup id=Note20>(20)</sup> Although most RGB color spaces in common use define pure red, green, and blue as colors we can see, this is not always the case.  For example, the [ACES color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary points for pure red, green, and blue. See also note 2.
+
+<sup id=Note21>(21)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color5.html#subprobs), other things affect the mixture of two paints besides their reflectance curves, including their "refractive index, particle size, crystal form, hiding power and tinting strength", as well as "the material attributes of the support [e.g., the paper or canvas] and the paint application methods", which are not dealt with in this method.
 
 </small>
 
