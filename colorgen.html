@@ -195,7 +195,7 @@ END
 
 <p>The <em>red-green-blue (RGB) color model</em> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
-<p>In general, <em>RGB color spaces</em> differ in what they consider pure red, green, blue, and white.<sup><a href="#Note20">(20)</a></sup>  Because human color perception is nonlinear, RGB color spaces also differ in their <em>transfer functions</em> (also known as <em>companding</em> conversions, conversions to and from linearized RGB).</p>
+<p>In general, <em>RGB color spaces</em> differ in what they define as their red, green, blue, and white points.<sup><a href="#Note20">(20)</a></sup>  Because human color perception is nonlinear, RGB color spaces also differ in their <em>transfer functions</em> (also known as <em>companding</em> conversions, conversions to and from linearized RGB).</p>
 
 <p>The following details concepts related to the RGB color model.</p>
 
@@ -447,7 +447,20 @@ END METHOD
 
 <h2>Other Color Models</h2>
 
-<p>The following discusses several color models, other than RGB, that are of practical interest.</p>
+<p>The following sections discuss several color models, other than RGB, that are of practical interest.  Here is
+an overview.</p>
+
+<ul>
+<li><a href="#HSV">HSV</a>, <a href="#HLS">HSL</a>, and <a href="#HWB">HWB</a> transform RGB colors to make their
+presentation more intutive, but are not perception-based.</li>
+<li>The <a href="#CIE_XYZ">XYZ color model</a>, <a href="#CIELAB">CIELAB</a>, and <a href="#CIELUV">CIELUV</a> are color models
+based on human color perception.
+
+<ul>
+<li><a href="#CMYK">CMYK</a> is especially used to describe ink proportions.</li>
+<li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a> is especially used in video encoding.</li>
+</ul></li>
+</ul>
 
 <p><a id=HSV></a></p>
 
@@ -728,7 +741,7 @@ the result is undefined.</li>
 
 <h3>CIELAB</h3>
 
-<p><a href="https://en.wikipedia.org/wiki/Lab_color_space">CIELAB</a> (also known as CIE <em>L*a*b*</em>) is a color model designed for color comparisons.<sup><a href="#Note11">(11)</a></sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in what they consider pure white.</p>
+<p><a href="https://en.wikipedia.org/wiki/Lab_color_space">CIELAB</a> (also known as CIE <em>L*a*b*</em>) is a color model designed for color comparisons.<sup><a href="#Note11">(11)</a></sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in their white points.</p>
 
 <p>A color in CIELAB consists of three components, in the following order:</p>
 
@@ -913,7 +926,7 @@ END METHOD
 
 <h3>CMYK</h3>
 
-<p>CMYK is a color model describing the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to RGB, or vice versa, is not trivial, in part because&mdash;</p>
+<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to RGB, or vice versa, is not trivial, in part because&mdash;</p>
 
 <ol>
 <li>the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), and</li>
@@ -1097,7 +1110,7 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <p>The following techniques generate new colors that are related to existing colors.  See also <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview">B. MacEvoy&#39;s summary of harmonious color relationships</a>.</p>
 
 <ul>
-<li><strong>Color harmonies</strong><sup><a href="#Note">(19)</a></sup> result by generating several colors that differ in hue, such as with the idiom <code>HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))</code>, where X is the following for each color:
+<li><strong>Color harmonies</strong><sup><a href="#Note19">(19)</a></sup> result by generating several colors that differ in hue, such as with the idiom <code>HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))</code>, where X is the following for each color:
 
 <ul>
 <li><strong>Analogous</strong>: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, <em>analogous colors</em> are colors spaced at equal hue intervals from a central color.</li>
@@ -1648,7 +1661,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <p>What is generally known as <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a> results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.</p>
 
-<p>Each human retina usually has three kinds of cones (L, M, and S), and eyes sense different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, <em>protanopia</em> and <em>deuteranopia</em>, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.</p>
+<p>Each human retina usually has three kinds of cones (L, M, and S), and the human visual system senses different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, <em>protanopia</em> and <em>deuteranopia</em>, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.</p>
 
 <p>However, &quot;effective luminance contrast [that is, <a href="#Relative_Luminance_Grayscale">color contrast</a>] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot; (see &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Understanding WCAG 2.0</a>&quot;).</p>
 
@@ -1757,15 +1770,15 @@ this page are welcome.</p>
 <p><sup id=Note18>(18)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:</p>
 
 <ul>
-<li>Treating the D50 white point as pure white can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.</li>
-<li>In certain industries, particularly print publishing, the CIELAB color space in use generally considers the D50 white point as pure white.</li>
+<li>Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.</li>
+<li>In certain industries, particularly print publishing, the CIELAB color space in use is generally based on the D50 white point.</li>
 </ul>
 
 <p><sup id=Note19>(19)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.</p>
 
-<p><sup id=Note20>(20)</sup> Although most RGB color spaces in common use define pure red, green, and blue as colors we can see, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary points for pure red, green, and blue. See also note 2.</p>
+<p><sup id=Note20>(20)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary red, green, and blue points. See also note 2.</p>
 
-<p><sup id=Note21>(21)</sup> As <a href="http://www.handprint.com/HP/WCL/color5.html#subprobs">B. MacEvoy explains</a>, other things affect the mixture of two paints besides their reflectance curves, including their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot;, as well as &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot;, which are not dealt with in this method.</p>
+<p><sup id=Note21>(21)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These effects on colorant mixture, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 
