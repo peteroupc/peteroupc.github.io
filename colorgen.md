@@ -373,11 +373,11 @@ The following sections discuss several color models, other than RGB, that are of
 an overview.
 
 - [HSV](#HSV), [HSL](#HLS), and [HWB](#HWB) transform RGB colors to make their
- presentation more intutive, but are not perception-based.
+ presentation more intuitive, but are not perception-based.
 - The [XYZ color model](#CIE_XYZ), [CIELAB](#CIELAB), and [CIELUV](#CIELUV) are color models
  based on human color perception.
- - [CMYK](#CMYK) is especially used to describe ink proportions.
- - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R) is especially used in video encoding.
+- [CMYK](#CMYK) is especially used to describe ink proportions.
+- [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R) is especially used in video encoding.
 
 <a id=HSV></a>
 ### HSV
@@ -626,8 +626,8 @@ the result is undefined.
 
 A color in CIELAB consists of three components, in the following order:
 
-- _L\*_, or _lightness_ of a color, ranges from 0 (black) to 100 (white).
-- _a\*_ is a coordinate of the red/green axis; the positive _a\*_ axis points to red
+- _L\*_, or _lightness_ of a color, is 0 or greater and 100 or less, where 0 is black and 100 is white.
+- _a\*_ is a coordinate of the red/green axis; the positive _a\*_ axis points to red (actually magenta)
  and the negative _a\*_ axis points to green.
 - _b\*_ is a coordinate of the yellow/blue axis; the positive _b\*_ axis points to yellow
  and the negative _b\*_ axis points to blue.<sup>[(15)](#Note15)</sup>
@@ -1257,10 +1257,11 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 ## Colors as Spectral Functions
 
 Colors can also be represented as functions that describe a distribution of radiation (such as light) across
-the visible spectrum.  There are two cases of objects that provoke a color sensation by light:
+the visible spectrum.  There are three cases of objects that provoke a color sensation by light:
 
 - **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  The light's color stimulus can be converted to three numbers (called _tristimulus values_) by multiplying that distribution by a set of three _color matching functions_ and then integrating the result (see note 3 in this section).
 - **Reflective objects.** Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding an object's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
+- **Light filters.** Finding the perceived color of the light that passes through a transmissive object, such as a light filter, is the same as for light reflected by reflective objects.
 
 In the pseudocode below:
 
@@ -1325,7 +1326,7 @@ Another choice for `LIGHT` is the formula for finding the spectral power of a bl
     END METHOD
 
 The following method (`XYZToCCT`) computes an approximate color temperature, in kelvins, from an
-[XYZ color](#CIE_XYZ). Because of the limited perceived color range of light emitted by blackbodies (namely red, orange, pale yellow, white, or sky blue), the color temperature found by
+[XYZ color](#CIE_XYZ). Because of the limited perceived color range of light emitted by blackbodies (namely red, orange, pale yellow, very pale green, or sky blue), the color temperature found by
 this formula is often called _correlated color temperature_ (CCT).  The formula given here is based on
 the one found in McCamy 1992.
 
@@ -1347,14 +1348,12 @@ the one found in McCamy 1992.
 <a id=Color_Mixture></a>
 ## Color Mixture
 
-In general, mixing colors in a similar way to mixing paint is not as simple as averaging two colors in an RGB color space or another color space.  In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that two pigments or colors can be mixed this way by&mdash;
+In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
 
-- finding the [_reflectance curves_](#Colors_as_Spectral_Functions) of the pigments or colors,
-- generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
+1. finding the [_reflectance curves_](#Colors_as_Spectral_Functions) of the pigments or colors,
+2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
-- converting the mixed reflectance curve to an RGB color.<sup>[(21)](#Note21)</sup>
-
-Finding a representative reflectance curve for an arbitrary RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/).
+3. converting the mixed reflectance curve to an RGB color.<sup>[(21)](#Note21)</sup>
 
 For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
@@ -1379,6 +1378,10 @@ For convenience, computing the weighted geometric mean of one or more numbers is
 When computing the weighted geometric mean of several reflectance curves, all the numbers
 passed at once to the `WGM` function just given must be from the same wavelength.
 
+**Notes:**
+- Finding a _representative_ reflectance curve for an arbitrary RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that a given RGB color can be the perceived color of [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
+- If the "reflectance curves" represent light passing through transmissive objects (such as light filters), rather than pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
+
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
 
@@ -1389,7 +1392,10 @@ This section discusses miscellaneous topics related to colors.
 
 What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
-Each human retina usually has three kinds of cones (L, M, and S), and the human visual system senses different colors by the relative degree to which all three kinds of cones respond to a stimulus of light.  Usually, at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
+Each human retina usually has three kinds of cones (L, M, and S),
+and color is sensed by the visual system from the relative degree
+to which all three kinds of cones respond to a stimulus of light.  Usually,
+at least two of these three kinds of cones will respond to light this way.  The most common forms of colorblindness, _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
 
 However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
 
@@ -1444,7 +1450,7 @@ I acknowledge&mdash;
 
 A very rough approximation of an RGB color (`color`) to a CMYK color involves generating `k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])`, then generating `[0, 0, 0, 1]` if `k` is 1, or `[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]` otherwise.  A very rough approximation of a CMYK color (`color`) to an RGB color involves generating `[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]`, where `ik = 1 - color[3]`.
 
-Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are often proprietary and usually not of general interest to programmers.
+Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are usually not of general interest to programmers.
 
 <sup id=Note6>(6)</sup> A [Working Draft](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
 
@@ -1486,9 +1492,9 @@ Printing systems that use mixtures of inks other than cyan, magenta, yellow, and
 
 <sup id=Note19>(19)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
 
-<sup id=Note20>(20)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the [ACES color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary red, green, and blue points. See also note 2.
+<sup id=Note20>(20)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the [ACES color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 2.
 
-<sup id=Note21>(21)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These effects on colorant mixture, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+<sup id=Note21>(21)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 </small>
 
