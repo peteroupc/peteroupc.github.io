@@ -63,7 +63,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#RGB_Colors_and_the_0_1_Format">RGB Colors and the 0-1 Format</a></li>
 <li><a href="#Integer_Component_Formats">Integer Component Formats</a></li>
 <li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
-<li><a href="#Linearized_and_Nonlinearized_RGB">Linearized and Nonlinearized RGB</a></li>
+<li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
 <li><a href="#sRGB">sRGB</a></li>
 </ul></li>
 <li><a href="#Other_Color_Models">Other Color Models</a>
@@ -116,8 +116,11 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Colorblindness">Colorblindness</a></li>
 <li><a href="#Terminal_Colors">Terminal Colors</a></li>
 </ul></li>
-<li><a href="#Conclusion">Conclusion</a></li>
+<li><a href="#Conclusion">Conclusion</a>
+
+<ul>
 <li><a href="#Questions_for_Clarification">Questions for Clarification</a></li>
+</ul></li>
 <li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
 </ul>
@@ -191,11 +194,10 @@ END
 
 <h2>RGB Color Model</h2>
 
-<p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space.  A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.</p>
+<p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space. The <strong>red-green-blue (RGB) color model</strong> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
-<p>The <em>red-green-blue (RGB) color model</em> is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note10">(10)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
-
-<p>In general, <em>RGB color spaces</em> differ in their red, green, blue, and white points<sup><a href="#Note20">(20)</a></sup> as well as in their <a href="#Linearized_and_Nonlinearized_RGB"><em>transfer functions</em></a>.</p>
+<p>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.
+In general, <strong>RGB color spaces</strong> differ in their red, green, blue, and white points<sup><a href="#Note20">(20)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
 
 <p>The following details concepts related to the RGB color model.</p>
 
@@ -408,23 +410,22 @@ METHOD HtmlToColor(colorString)
 END METHOD
 </pre>
 
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or the 3-digit format are (nonlinearized colors) in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a>.</p>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or the 3-digit format are in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
-<p><a id=Linearized_and_Nonlinearized_RGB></a></p>
+<p><a id=Linearized_and_Companded_RGB></a></p>
 
-<h3>Linearized and Nonlinearized RGB</h3>
+<h3>Linearized and Companded RGB</h3>
 
-<p>In a given RGB color space, an RGB color can be <em>linearized</em> or <em>nonlinearized</em>.</p>
+<p>In a given RGB color space, an RGB color can be <em>linearized</em> or <em>companded</em>.</p>
 
 <ul>
 <li>A <em>linearized</em> RGB color has a linear relationship of emitted light (as opposed to perceived light).</li>
-<li>A <em>nonlinearized</em> RGB color has been encoded using that color space&#39;s <em>transfer function</em>, also known as <em>companding</em> conversion (an example for sRGB is the <code>LinearTosRGB3</code> method defined later). For many RGB color spaces, nonlinearized RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup><a href="#Note3">(3)</a></sup></li>
+<li>A <em>companded</em> RGB color has been encoded using that color space&#39;s <em>transfer function</em>, also known as a <em>companding</em> conversion (an example for sRGB is the <code>LinearTosRGB3</code> method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup><a href="#Note3">(3)</a></sup></li>
 </ul>
 
-<p>In this document, RGB colors are in nonlinearized form unless noted otherwise.</p>
+<p>In this document, RGB colors are in companded form unless noted otherwise.</p>
 
-<p>For many RGB color spaces, the <em>transfer function</em> is a simple power function, such as <em>c</em><sup>1/&gamma;</sup>, where <em>c</em> is either the red, green, or blue component and &gamma; is a number.
-(In this case, the transfer function is also called <em>gamma encoding</em>.)</p>
+<p>For many RGB color spaces, the <em>transfer function</em> is a simple power function, such as <em>c</em><sup>1/&gamma;</sup>, where <em>c</em> is either the red, green, or blue component and &gamma; is a number. (In this case, the transfer function is also called <em>gamma encoding</em>.)</p>
 
 <p><a id=sRGB></a></p>
 
@@ -434,11 +435,11 @@ END METHOD
 
 <p>Unlike with many other RGB color spaces, sRGB&#39;s <em>transfer function</em> does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a similar formula.</p>
 
-<p>The following methods convert colors between linearized and nonlinearized sRGB.
+<p>The following methods convert colors between linearized and companded sRGB.
 (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard;
 the sRGB proposal has different values for this threshold.)</p>
 
-<pre>// Convert a color component from nonlinearized to linearized RGB
+<pre>// Convert a color component from companded to linearized RGB
 METHOD LinearFromsRGB(c)
  // NOTE: Threshold here would more properly be
  // 12.92 * 0.0031308 = 0.040449936, but I don&#39;t know
@@ -448,18 +449,18 @@ METHOD LinearFromsRGB(c)
   return pow((0.055 + c) / 1.055, 2.4)
 END METHOD
 
-// Convert a color component from linearized to nonlinearized sRGB
+// Convert a color component from linearized to companded sRGB
 METHOD LinearTosRGB(c)
   if c &lt;= 0.0031308: return 12.92 * c
   return pow(c, 1.0 / 2.4) * 1.055 - 0.055
 END METHOD
 
-// Convert a color from nonlinearized to linearized RGB
+// Convert a color from companded to linearized RGB
 METHOD LinearFromsRGB3(c)
    return [LinearFromsRGB(c[0]), LinearFromsRGB(c[1]), LinearFromsRGB(c[2])]
 END METHOD
 
-// Convert a color from linearized to nonlinearized sRGB
+// Convert a color from linearized to companded sRGB
 METHOD LinearTosRGB3(c)
    return [LinearTosRGB(c[0]), LinearTosRGB(c[1]), LinearTosRGB(c[2])]
 END METHOD
@@ -477,7 +478,7 @@ an overview.</p>
 presentation more intuitive, but are not perception-based.</li>
 <li>The <a href="#CIE_XYZ">XYZ color model</a>, <a href="#CIELAB">CIELAB</a>, and <a href="#CIELUV">CIELUV</a> are color models
 based on human color perception.</li>
-<li><a href="#CMYK">CMYK</a> is especially used to describe proportions of four specific ink kinds.</li>
+<li><a href="#CMYK">CMYK</a> is especially used to describe proportions of four specific kinds of ink.</li>
 <li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a> is especially used in video encoding.</li>
 </ul>
 
@@ -495,7 +496,7 @@ is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The following pseudocode converts colors between RGB and HSV. Each RGB color is in 0-1 format.
-The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a>.</p>
+The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsv(rgb)
     mx = max(max(rgb[0], rgb[1]), rgb[2])
@@ -565,7 +566,7 @@ black or white), which is 0 or greater and 1 or less.</li>
 of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black, 1 is white, and 0.5 is neither black nor white.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p>The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsl(rgb)
     vmax = max(max(rgb[0], rgb[1]), rgb[2])
@@ -666,7 +667,7 @@ END METHOD
 <p>The conversion is relatively simple given HSV conversion methods:</p>
 
 <ul>
-<li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]</code>. (The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a>.)</li>
+<li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]</code>. (The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.)</li>
 <li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[hwb[0], 0, 0]</code> otherwise.</li>
 </ul>
 
@@ -694,8 +695,8 @@ END METHOD
 <p>In the following pseudocode&mdash;</p>
 
 <ul>
-<li><code>XYZFromsRGB(rgb)</code> converts a nonlinearized sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and <code>XYZTosRGB(xyz)</code> does the opposite conversion, and</li>
-<li><code>XYZFromsRGBD50(rgb)</code> converts a nonlinearized sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point<sup><a href="#Note18">(18)</a></sup>, and <code>XYZTosRGBD50(xyz)</code> does the opposite conversion (see note 3 later in this section).</li>
+<li><code>XYZFromsRGB(rgb)</code> converts a companded sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D65 white point (as is usual for sRGB), and <code>XYZTosRGB(xyz)</code> does the opposite conversion, and</li>
+<li><code>XYZFromsRGBD50(rgb)</code> converts a companded sRGB color (<code>rgb</code>) to an XYZ color, where an XYZ color with Y = 1 is the D50 white point<sup><a href="#Note18">(18)</a></sup>, and <code>XYZTosRGBD50(xyz)</code> does the opposite conversion (see note 3 later in this section).</li>
 </ul>
 
 <p>The pseudocode follows.</p>
@@ -775,8 +776,8 @@ and the negative <em>b*</em> axis points to blue.<sup><a href="#Note15">(15)</a>
 <p>In the following pseudocode&mdash;</p>
 
 <ul>
-<li>the <code>SRGBToLab</code> method converts a nonlinearized sRGB color to CIELAB, with white being the D65 white point, and the <code>SRGBFromLab</code> method does the opposite conversion,</li>
-<li>the <code>SRGBToLabD50</code> method converts a nonlinearized sRGB color to CIELAB, with white being the D50 white point<sup><a href="#Note18">(18)</a></sup>, and the <code>SRGBFromLabD50</code> method does the opposite conversion, and</li>
+<li>the <code>SRGBToLab</code> method converts a companded sRGB color to CIELAB, with white being the D65 white point, and the <code>SRGBFromLab</code> method does the opposite conversion,</li>
+<li>the <code>SRGBToLabD50</code> method converts a companded sRGB color to CIELAB, with white being the D50 white point<sup><a href="#Note18">(18)</a></sup>, and the <code>SRGBFromLabD50</code> method does the opposite conversion, and</li>
 <li>the <code>XYZToLab(xyz, wpoint)</code> method converts an XYZ color to CIELAB relative to the white point <code>wpoint</code> (a relative XYZ color),
 and the <code>LabToXYZ(lab, wpoint)</code> method does the opposite conversion.</li>
 </ul>
@@ -973,7 +974,7 @@ format with the components separated out (still 0 or greater and 255 or less). T
 <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a> variant (with all three components 0 or greater and 255 or less), as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.</li>
 </ul>
 
-<p>For all these variants, the transformation should be done using <a href="#Linearized_and_Nonlinearized_RGB"><em>nonlinearized RGB</em> colors</a>.<sup><a href="#Note17">(17)</a></sup></p>
+<p>For all these variants, the transformation should be done using <a href="#Linearized_and_Companded_RGB"><em>companded RGB</em> colors</a>.<sup><a href="#Note17">(17)</a></sup></p>
 
 <pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminances
 // in the NTSC color space
@@ -1046,7 +1047,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <p>The following techniques show how existing colors can be modified to create new colors.</p>
 
-<p>Note that for best results, these techniques need to be carried out with <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a>, unless noted otherwise.</p>
+<p>Note that for best results, these techniques need to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, unless noted otherwise.</p>
 
 <p><a id=Shades_Tints_and_Tones></a></p>
 
@@ -1067,7 +1068,7 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative.</p></li>
-<li><strong>Lighten/Darken (CIELAB)</strong>: If <code>color</code> is a nonlinearized sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a darker version.</li>
+<li><strong>Lighten/Darken (CIELAB)</strong>: If <code>color</code> is a companded sRGB color, generate <code>lab = SRGBToLab(color)</code>, then generate <code>modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])</code>, where a positive <code>value</code> generates a lighter version of <code>color</code> and a negative <code>value</code>, a darker version.</li>
 <li><strong>Saturate/Desaturate</strong>: Generate <code>hsv = RgbToHsv(color)</code>, then generate <code>modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 </ul>
 
@@ -1078,7 +1079,7 @@ with gray).  The parameter <code>toning</code> is 0 or greater and 1 or less (0 
 <p>Relative luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>.</p>
 
 <ul>
-<li><p>For <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a>&mdash;</p>
+<li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>&mdash;</p>
 
 <ul>
 <li>relative luminance can be found by calculating <code>(color[0] * r + color[1] * g + color[2] * b)</code>,
@@ -1091,7 +1092,7 @@ points, respectively<sup><a href="#Note2">(2)</a></sup><sup><a href="#Note9">(9)
 <p>If a different white point than the RGB color space&#39;s usual white point should have a relative luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the
 corresponding relative luminances after <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another.  Further details on such
 adaptation are outside the scope of this document, but see the examples. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html">The Luminance of an sRGB Color</a>&quot;, 2013.)</p></li>
-<li>Applying the formula just given to <em>nonlinearized RGB</em> colors results in a value more properly called <em>luma</em>, not luminance.<sup><a href="#Note13">(13)</a></sup></li>
+<li>Applying the formula just given to <em>companded RGB</em> colors results in a value more properly called <em>luma</em>, not luminance.<sup><a href="#Note13">(13)</a></sup></li>
 </ul>
 
 <p>Examples follow for sRGB:</p>
@@ -1308,13 +1309,13 @@ END METHOD
 <li>the Euclidean distance can be used, for example, if the colors passed to <code>NearestColorIndex</code>&mdash;
 
 <ul>
-<li>are expressed in <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em></a>, or</li>
+<li>are expressed in <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em></a>, or</li>
 <li>are expressed in CIELAB or CIELUV (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and</li>
 </ul></li>
 <li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 
-<p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference to be applied to nonlinearized RGB colors in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
+<p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference to be applied to companded RGB colors in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
 
 <p><strong>CIEDE2000.</strong> The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or <em>&Delta;E*</em><sub>00</sub>, between two CIELAB colors.</p>
 
@@ -1368,7 +1369,7 @@ END METHOD
 
 <p>The following techniques can be used to generate random RGB colors.</p>
 
-<p>Note that for best results, these techniques need to use <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
+<p>Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
 
 <ul>
 <li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>. This technique is independent of RGB color space.</li>
@@ -1416,9 +1417,9 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>divide the result by the number of pixels added this way.</li>
 </ul>
 
-<p>Note that for best results, this technique needs to be carried out with <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB colors</em></a>.</p>
+<p>Note that for best results, this technique needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>.</p>
 
-<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB colors</em></a>.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
@@ -1446,7 +1447,7 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <h2>Color Maps</h2>
 
-<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors (which are usually related). All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Nonlinearized_RGB"><em>linearized RGB</em> colors</a> should be used rather than nonlinearized RGB colors.</p>
+<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors (which are usually related). All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a> should be used rather than companded RGB colors.</p>
 
 <p><a id=Kinds_of_Color_Maps></a></p>
 
@@ -1459,8 +1460,6 @@ maximum value of each color component, e.g., 0.5.</li>
 <li><strong>Diverging color maps</strong> for showing continuous data with a clearly defined midpoint (the &quot;critical value&quot;) and where the distinction between low and high is also visually important. Those found in <em>ColorBrewer 2.0</em> use varying tints of two &quot;contrasting hues&quot;, one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland <a href="http://www.kennethmoreland.com/color-advice/">recommends</a> &quot;limiting the color map to reasonably bright colors&quot;.</li>
 <li><strong>Qualitative color maps</strong> for showing discrete categories of data (see also &quot;<a href="#Visually_Distinct_Colors">Visually Distinct Colors</a>&quot;). Those found in <em>ColorBrewer 2.0</em> use varying hues.</li>
 </ul>
-
-<p><strong>Note:</strong> Some of the <a href="https://personal.sron.nl/%7Epault/">color maps</a> shown on P. Tol&#39;s site include a distinct shade of gray to indicate missing data on a land map.</p>
 
 <p><a id=Named_Colors></a></p>
 
@@ -1477,7 +1476,7 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <p>Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn&#39;t exist in the hash table.</p>
 
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are (nonlinearized colors) in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a>.</p>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
 <p><a id=Visually_Distinct_Colors></a></p>
 
@@ -1489,8 +1488,7 @@ use, many applications need to use colors that are easily distinguishable by hum
 <ul>
 <li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note7">(7)</a></sup>, the first nine of which
 were intended for readers with normal and defective color vision, and</li>
-<li>R. Boynton (1989) revealed a list of &quot;eleven colors that are almost never confused&quot;, namely,
-black, white, gray, magenta, pink, red, green, blue, yellow, orange, and brown.</li>
+<li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
 
 <p>In general, the more colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly&#39;s list) should use other visual means in addition to color
@@ -1517,7 +1515,7 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 </ul></li>
 <li>To extract a <strong>discrete color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>),
 generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
-<li>The <strong>grayscale color map</strong> consists of the nonlinearized sRGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</li>
+<li>The <strong>grayscale color map</strong> consists of the companded sRGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</li>
 </ul>
 
 <p><a id=Colors_as_Spectral_Functions></a></p>
@@ -1592,8 +1590,8 @@ END METHOD
 
 <ul>
 <li>the tristimulus values (e.g., from <code>SpectrumToTristim()</code>) will be an <a href="#CIE_XYZ">XYZ color</a> relative to the D65 white point,</li>
-<li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes, in nonlinearized sRGB, the perceived color of the light source or reflective object, and</li>
-<li>the idiom <code>XYZTosRGB(CMF(wavelength))</code> computes, in nonlinearized sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
+<li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes, in companded sRGB, the perceived color of the light source or reflective object, and</li>
+<li>the idiom <code>XYZTosRGB(CMF(wavelength))</code> computes, in companded sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
 </ul>
 
 <p><a id=Color_Temperature></a></p>
@@ -1670,7 +1668,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>Finding a <em>representative</em> reflectance curve for an arbitrary RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that a given RGB color can be the perceived color of <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a>.)</li>
+<li>Finding a <em>representative</em> reflectance curve for an arbitrary RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that a given RGB color can be the perceived color for <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a>.)</li>
 <li>If the &quot;reflectance curves&quot; represent light passing through transmissive objects (such as light filters), rather than pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
 </ul>
 
@@ -1738,7 +1736,7 @@ this page are welcome.</p>
 
 <p><a id=Questions_for_Clarification></a></p>
 
-<h2>Questions for Clarification</h2>
+<h3>Questions for Clarification</h3>
 
 <p>A question I would like to clarify:</p>
 
@@ -1755,9 +1753,9 @@ this page are welcome.</p>
 
 <p><sup id=Note2>(2)</sup> A thorough survey of working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html">RGB Working Space Information</a>&quot;, contains further information on RGB working spaces.</p>
 
-<p><sup id=Note3>(3)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>nonlinearized</em> RGB colors, respectively, in this document.</p>
+<p><sup id=Note3>(3)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>companded</em> RGB colors, respectively, in this document.</p>
 
-<p><sup id=Note4>(4)</sup> For nonlinearized sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)</p>
+<p><sup id=Note4>(4)</sup> For companded sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)</p>
 
 <p><sup id=Note5>(5)</sup> As an example of this point, the Fogra Research Institute for Media Technologies has <a href="https://www.fogra.org/en/fogra-standardization/fogra-characterizationdata/a-icc-en.html">standardized</a> conversions of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
@@ -1772,7 +1770,7 @@ this page are welcome.</p>
 <li>a 4-digit format, consisting of &quot;#&quot; followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</li>
 </ul>
 
-<p><sup id=Note7>(7)</sup> An approximation of the colors to nonlinearized sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
+<p><sup id=Note7>(7)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
 <p><sup id=Note8>(8)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB capital-Y values for the red, green, and blue points.</p>
 
@@ -1797,13 +1795,13 @@ this page are welcome.</p>
 
 <p><sup id=Note13>(13)</sup> See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
 
-<p><sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linearized_and_Nonlinearized_RGB">nonlinearized RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
+<p><sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linearized_and_Companded_RGB">companded RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
 
 <p><sup id=Note15>(15)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work in 1878.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</p>
 
 <p><sup id=Note16>(16)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.</p>
 
-<p><sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called <em>YcCbcCrc</em> for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>, <em>linearized RGB</em> colors, rather than nonlinearized ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.</p>
+<p><sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called <em>YcCbcCrc</em> for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>, <em>linearized RGB</em> colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.</p>
 
 <p><sup id=Note18>(18)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:</p>
 
