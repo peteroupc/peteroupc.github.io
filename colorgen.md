@@ -18,8 +18,9 @@ This document presents an overview of many common color topics that are of gener
 
 [Sample Python code](https://peteroupc.github.io/colorutil.py) that implements many of the methods in this document is available.
 
-In general, topics that are specific to a programming language or application programming interface are out of the scope of this document.  Moreover, the following topics are beyond this page's scope:
+The following topics are beyond this page's scope:
 
+- In general, topics that are specific to a programming language or application programming interface.
 - Procedures to change or set the color used&mdash;
     - in text, foregrounds, or backgrounds of user interface elements (such as buttons, text boxes, and windows),
     - in text or backgrounds of documents (such as HTML documents), or
@@ -62,8 +63,9 @@ In general, topics that are specific to a programming language or application pr
     - [Color Matrices](#Color_Matrices)
     - [Blending and Alpha Compositing](#Blending_and_Alpha_Compositing)
     - [Miscellaneous](#Miscellaneous)
-- [Color Difference and Nearest Colors](#Color_Difference_and_Nearest_Colors)
+- [Color Differences](#Color_Differences)
     - [Color Difference Methods](#Color_Difference_Methods)
+    - [Nearest Colors](#Nearest_Colors)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Maps](#Color_Maps)
@@ -79,7 +81,7 @@ In general, topics that are specific to a programming language or application pr
     - [Colorblindness](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
 - [Conclusion](#Conclusion)
-    - [Questions for Clarification](#Questions_for_Clarification)
+    - [Questions for This Document](#Questions_for_This_Document)
 - [Notes](#Notes)
 - [License](#License)
 
@@ -143,7 +145,7 @@ Detailing such interpolations is outside the scope of this document, but are des
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
-A _color model_ describes, in general terms, the relationship of colors in a theoretical space. The **red-green-blue (RGB) color model** is based, at least theoretically, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
+A _color model_ describes, in general terms, the relationship of colors in a theoretical space. The **red-green-blue (RGB) color model** is based, at least in theory, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup>[(10)](#Note10)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
 
 A _color space_ is a mapping from colors to numbers that follows a particular color model.
 In general, **RGB color spaces** differ in their red, green, blue, and white points<sup>[(20)](#Note20)</sup> as well as in their [_transfer functions_](#Linearized_and_Companded_RGB).
@@ -344,7 +346,7 @@ In a given RGB color space, an RGB color can be _linearized_ or _companded_.
 
 In this document, RGB colors are in companded form unless noted otherwise.
 
-For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a number. (In this case, the transfer function is also called _gamma encoding_.)
+For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is an arbitrary number. (In this case, the transfer function is also called _gamma encoding_.)
 
 <a id=sRGB></a>
 ### sRGB
@@ -893,7 +895,7 @@ For all these variants, the transformation should be done using [_companded RGB_
 **Notes:**
 - For efficiency reasons, Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods just given.
 - A thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
-the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
+the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -1045,16 +1047,89 @@ Examples of matrices include:
 
 **Note:** Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include [_chroma key_](https://en.wikipedia.org/wiki/Chroma_key), are largely out of the scope of this document.
 
-<a id=Color_Difference_and_Nearest_Colors></a>
-## Color Difference and Nearest Colors
+<a id=Color_Differences></a>
+## Color Differences
 
-_Color difference_ algorithms are used to determine if two colors are similar.  The _nearest color_ algorithm is used, for example, to categorize colors or to reduce the number of colors used by an image.
+_Color difference_ algorithms are used to determine if two colors are similar.
 
-In the pseudocode below:
+<a id=Color_Difference_Methods></a>
+### Color Difference Methods
 
-- The method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.
-- `COLORDIFF(color1, color2)` is a function that calculates a [color difference](#Color_Difference_Methods) between two colors, where the lower the number, the closer the two colors are.
-- The method `NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
+In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on how `COLORDIFF` is implemented, and is not interchangeable with other implementations.
+
+There are many ways to implement `COLORDIFF`, the color difference
+
+**Euclidean distance.** One simple way is to use the Euclidean distance of the two colors, as shown in the following pseudocode.
+
+    METHOD COLORDIFF(color1, color2)
+       d1=color2[0] - color1[0]
+       d2=color2[1] - color1[1]
+       d3=color2[2] - color1[2]
+       sqdist=d1*d1+d2*d2+d3*d3
+       return sqrt(sqdist)
+    END METHOD
+
+Note that&mdash;
+- the Euclidean distance can be used, for example, if the colors passed to `NearestColorIndex`&mdash;
+    - are expressed in [_linearized RGB_](#Linearized_and_Companded_RGB), or
+    - are expressed in CIELAB or CIELUV (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
+- if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
+
+**Riemersma's method.** T. Riemersma suggests an algorithm for color difference to be applied to companded RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
+
+**CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two [CIELAB](#CIELAB) colors.
+
+    METHOD COLORDIFF(lab1, lab2)
+        dl=lab2[0]-lab1[0]
+        hl=lab1[0]+dl*0.5
+        sqb1=lab1[2]*lab1[2]
+        sqb2=lab2[2]*lab2[2]
+        c1=sqrt(lab1[1]*lab1[1]+sqb1)
+        c2=sqrt(lab2[1]*lab2[1]+sqb2)
+        hc7=pow((c1+c2)*0.5,7)
+        trc=sqrt(hc7/(hc7+6103515625.0))
+        t2=1.5-trc*0.5
+        ap1=lab1[1]*t2
+        ap2=lab2[1]*t2
+        c1=sqrt(ap1*ap1+sqb1)
+        c2=sqrt(ap2*ap2+sqb2)
+        dc=c2-c1
+        hc=c1+dc*0.5
+        hc7=pow(hc,7)
+        trc=sqrt(hc7/(hc7+6103515625.0))
+        h1=atan2(lab1[2],ap1)
+        if h1<0: h1=h1+pi*2
+        h2=atan2(lab2[2],ap2)
+        if h2<0: h2=h2+pi*2
+        hdiff=h2-h1
+        hh=h1+h2
+        if abs(hdiff)>pi
+                hh=hh+pi*2
+                if h2<=h1: hdiff=hdiff+pi*2
+                else: hdiff=hdiff-pi*2
+        end
+        hh=hh*0.5
+        t2=1-0.17*cos(hh-pi/6)+0.24*cos(hh*2)
+        t2=t2+0.32*cos(hh*3+pi/30)
+        t2=t2-0.2*cos(hh*4-pi*63/180)
+        dh=2*sqrt(c1*c2)*sin(hdiff*0.5)
+        sqhl=(hl-50)*(hl-50)
+        fl=dl/(1+(0.015*sqhl/sqrt(20+sqhl)))
+        fc=dc/(hc*0.045+1)
+        fh=dh/(t2*hc*0.015+1)
+        dt=30*exp(-pow(36*hh-55*pi,2)/(25*pi*pi))
+        r=-2*trc*sin(2*dt*pi/180)
+        return sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
+    END METHOD
+
+<a id=Nearest_Colors></a>
+### Nearest Colors
+
+ The _nearest color_ algorithm is used, for example, to categorize colors or to reduce the number of colors used by an image.
+
+In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.  NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
+-
+- The method `
 
 The pseudocode follows.
 
@@ -1084,74 +1159,6 @@ Finding the nearest color in the list then proceeds as in the following example:
 - defining a list of _representative colors_ `repColors` (for example, representative colors for red, blue, black, white, and so on), then
 - for each color (`color`) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`).
 
-<a id=Color_Difference_Methods></a>
-### Color Difference Methods
-
-There are many ways to implement `COLORDIFF`, the [_color difference_](https://en.wikipedia.org/wiki/Color_difference).
-
-**Euclidean distance.** One simple way is to use the Euclidean distance of the two colors, as shown in the following pseudocode.
-
-    METHOD COLORDIFF(color1, color2)
-       d1=color2[0] - color1[0]
-       d2=color2[1] - color1[1]
-       d3=color2[2] - color1[2]
-       sqdist=d1*d1+d2*d2+d3*d3
-       return sqrt(sqdist)
-    END METHOD
-
-Note that&mdash;
-- the Euclidean distance can be used, for example, if the colors passed to `NearestColorIndex`&mdash;
-    - are expressed in [_linearized RGB_](#Linearized_and_Companded_RGB), or
-    - are expressed in CIELAB or CIELUV (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and
-- if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
-
-**Riemersma's method.** T. Riemersma suggests an algorithm for color difference to be applied to companded RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
-
-**CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two CIELAB colors.
-
-    METHOD COLORDIFF(lab1, lab2)
-        dl=lab2[0]-lab1[0]
-        hl=lab1[0]+dl*0.5
-        sqb1=lab1[2]*lab1[2]
-        sqb2=lab2[2]*lab2[2]
-        c1=sqrt(lab1[1]*lab1[1]+sqb1)
-        c2=sqrt(lab2[1]*lab2[1]+sqb2)
-        hc7=pow((c1+c2)*0.5,7)
-        trc=sqrt(hc7/(hc7+6103515625))
-        t2=1.5-trc*0.5
-        ap1=lab1[1]*t2
-        ap2=lab2[1]*t2
-        c1=sqrt(ap1*ap1+sqb1)
-        c2=sqrt(ap2*ap2+sqb2)
-        dc=c2-c1
-        hc=c1+dc*0.5
-        hc7=pow(hc,7)
-        trc=sqrt(hc7/(hc7+6103515625))
-        h1=atan2(lab1[2],ap1)
-        if h1<0: h1=h1+pi*2
-        h2=atan2(lab2[2],ap2)
-        if h2<0: h2=h2+pi*2
-        hdiff=h2-h1
-        hh=h1+h2
-        if abs(hdiff)>pi
-                hh=hh+pi*2
-                if h2<=h1: hdiff=hdiff+pi*2
-                else: hdiff=hdiff-pi*2
-        end
-        hh=hh*0.5
-        t2=1-0.17*cos(hh-pi/6)+0.24*cos(hh*2)
-        t2=t2+0.32*cos(hh*3+pi/30)
-        t2=t2-0.2*cos(hh*4-pi*63/180)
-        dh=2*sqrt(c1*c2)*sin(hdiff*0.5)
-        sqhl=(hl-50)*(hl-50)
-        fl=dl/(1+(0.015*sqhl/sqrt(20+sqhl)))
-        fc=dc/(hc*0.045+1)
-        fh=dh/(t2*hc*0.015+1)
-        dt=30*exp(-pow(36*hh-55*pi,2)/(25*pi*pi))
-        r=-2*trc*sin(2*dt*pi/180)
-        return sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
-    END METHOD
-
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
@@ -1176,7 +1183,7 @@ This technique is independent of RGB color space, but see the [note from earlier
 - To generate a **random tint** of a given color, generate `Lerp(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary hue.
 - **Random color sampling:** If colors are to be selected at random from a [color map](#Color_Maps), see [Choosing a Random Item from a List](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) and [Choosing Several Unique Items](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items), for example.
-- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Difference_and_Nearest_Colors)) is less than a predetermined threshold, where `color2` is the color to compare.  For example, if a reddish color is to be generated, `color2` would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.
+- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Difference_Methods)) is less than a predetermined threshold, where `color2` is the color to compare.  For example, if a reddish color is to be generated, `color2` would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.
 - **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a _hash function_ to convert the data to a _hash code_ (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that&mdash;
     - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input with the same output as that of a given input or to find an unknown input that leads to a given output.
@@ -1198,14 +1205,14 @@ Note that for best results, this technique needs to be carried out with [_linear
 
 - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of ["Web safe colors"](#RGB_Colors_and_the_0_1_Format).
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
-- For each color in the collection of colors, find the [nearest color](#Color_Difference_and_Nearest_Colors) in the color palette to that pixel's color, and add 1 to the nearest color's corresponding value in the histogram.
+- For each color in the collection of colors, find the [nearest color](#Nearest_Colors) in the color palette to that pixel's color, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.
 
 **Notes:**
 
 - For all three techniques, in the case of a raster image, an implementation can resize that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 - Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
-    - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Color_Difference_and_Nearest_Colors)), or
+    - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)
 
@@ -1230,7 +1237,7 @@ If each color in a color map has a name associated with it, the color map is als
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
-- finding the [nearest color](#Color_Difference_and_Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).
+- finding the [nearest color](#Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).
 
 Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn't exist in the hash table.
 
@@ -1362,14 +1369,16 @@ the one found in McCamy 1992.
 <a id=Color_Mixture></a>
 ## Color Mixture
 
-In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns (who uses the term _subtractive color mixture_ for this kind of mixing) indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
+In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
 
 1. finding the [_reflectance curves_](#Colors_as_Spectral_Functions) of the pigments or colors,
 2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
 3. converting the mixed reflectance curve to an RGB color.<sup>[(21)](#Note21)</sup>
 
-For convenience, computing the weighted geometric mean of one or more numbers is given below.
+ S. Burns uses the term _subtractive color mixture_ for this kind of mixing.
+
+ For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
     METHOD WGM(values, weights)
         if size(values)!=size(weights): return error
@@ -1449,11 +1458,12 @@ I acknowledge&mdash;
 - Elle Stone, and
 - Thomas Mansencal.
 
-<a id=Questions_for_Clarification></a>
-### Questions for Clarification
+<a id=Questions_for_This_Document></a>
+### Questions for This Document
 
-A question I would like to clarify:
+Questions for this document:
 
+- Are there color topics not covered by this document that should be covered?
 - Is the threshold for the sRGB inverse component transfer function, as specified in the latest version of the IEC standard, 0.04045 (truncated to five decimal places) or `12.92 * 0.0031308 = 0.040449936`?
 
 <a id=Notes></a>

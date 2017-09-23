@@ -2,19 +2,17 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 13, 2017.
+Begun on June 4, 2017; last updated on Sep. 23, 2017.
 
-Discusses many ways in which applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
+Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
 <a id=Introduction></a>
 ## Introduction
 
-This page discusses many ways applications can do random number generation and sampling from an underlying random number generator (RNG) and includes pseudocode for many of them.
-
-This methods described in this document can be categorized as follows:
-- Methods to generate uniformly distributed random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)).
-- Common tasks to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
-- Methods to generate non-uniformly distributed random numbers, including [weighted choice](#Discrete_Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other probability distributions](#Other_Non_Uniform_Distributions).
+This page discusses many ways applications can do random number generation and sampling from an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;
+- ways to generate uniform random numbers from an underlying RNG (such as the [core method, `RNDINT(N)`](#Core_Random_Generation_Method)),
+- ways to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
+- generating non-uniform random numbers, including [weighted choice](#Discrete_Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other probability distributions](#Other_Non_Uniform_Distributions).
 
 [Sample Python code](https://peteroupc.github.io/randomgen.py) that implements many of the methods in this document is available.
 
@@ -131,10 +129,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT(maxInclusive)` can be implemented for two kinds of underlying RNGs.
 
-**Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(7)](#Note7)</sup>  Note that:
-
-- If `MODULUS` is a power of 2, `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
-- All the variables in the pseudocode are unsigned integers.
+**Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(7)](#Note7)</sup>  Note that if `MODULUS` is a power of 2, `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
 
 **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
 
@@ -430,7 +425,7 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 <a id=RNDBITS_Random_N_Bit_Integers></a>
 ### `RNDBITS`: Random N-Bit Integers
 
-The idiom `RNDINT((1 << b) - 1)`, called **`RNDBITS(b)`** in this document, is a na&iuml;ve way of generating a **uniformly distributed random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
+The idiom `RNDINT((1 << b) - 1)`, called **`RNDBITS(b)`** in this document, is a na&iuml;ve way of generating a **uniform random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
 
 Although this idiom works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ [<sup>(1)</sup>](#Note1). For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
 
@@ -542,7 +537,7 @@ The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yat
        return list
     END METHOD
 
-An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).  It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
+An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).<sup>[(12)](#Note12)</sup>
 
 **Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;
 - one or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups), then
@@ -585,7 +580,7 @@ To generate a random string of characters (usually a random _alphanumeric string
 - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
 - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
 - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
-- Generating a random base-10 digit string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]` and `stringSize` is the desired size.
+- For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
 - Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(10)](#Note10)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
 
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
@@ -1583,8 +1578,7 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
         if v==0: return 0
         if v<0: return erf(-v)
         if v==infinity: return 1
-        // NOTE: For IEEE 64-bit IEEE 754 binary
-        // floating-point (Java `double`), the following
+        // NOTE: For Java `double`, the following
         // line can be added:
         // if v>=6: return 1
         i=1
@@ -1771,8 +1765,8 @@ Currently, the following are not covered in this document, but may be added base
 
 <a id=Notes></a>
 ## Notes
-
- <sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two' s-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
+<small>
+ <sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
 
  <sup id=Note2>(2)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
 
@@ -1787,9 +1781,10 @@ Currently, the following are not covered in this document, but may be added base
 - merely seek to generate number sequences likely to pass statistical tests of randomness,
 - are initialized automatically before use,
 - are initialized with an application-specified "seed",
-- use a deterministic algorithm for random number generation, and/or
+- use a deterministic algorithm for random number generation,
 - rely, at least primarily, on one or more nondeterministic sources for random number
-   generation (including by extracting uniformly distributed bits from two or more such sources).
+   generation (including by extracting uniformly distributed bits from two or more such sources), or
+- have a combination of the foregoing properties.
 
 If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Random Numbers from an Arbitrary Distribution](#Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.
 
@@ -1806,6 +1801,9 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 <sup id=Note10>(10)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
 
 <sup id=Note11>(11)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.
+
+<sup id=Note12>(12)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
+</small>
 
 <a id=License></a>
 ## License
