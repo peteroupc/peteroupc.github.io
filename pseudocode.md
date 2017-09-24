@@ -44,14 +44,14 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
 ## Functions
 
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
-* `asin(a)`, `acos(a)`, and `atan(a)` are the inverse sine, inverse cosine, and inverse tangent of `a`, respectively, in radians.
+* `asin(a)` and `acos(a)` are the inverse sine and inverse cosine of `a`, respectively, in radians.
 * `pow(a, b)` is the number `a` raised to the power `b`.
 * `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
-* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
+* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` and `b` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
 * `atan2(y, x)` is&mdash;
     - the inverse tangent of `y/x` if `x > 0`,
     - &pi; plus the inverse tangent of `y/x` if `y >= 0 and x < 0`,

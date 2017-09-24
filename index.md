@@ -11,8 +11,8 @@ Open-source articles on programming subjects.
 
 * [Pseudocode Conventions](./pseudocode.html)
 * [Random Number Generator Recommendations for Applications](./random.html)
-* [Random Number Generation Methods](./randomfunc.html)
-* [Color Generation and Conversion Methods](./colorgen.html)
+* [Random Number Generation and Sampling Methods](./randomfunc.html)
+* [Color Topics for Programmers](./colorgen.html)
 * [Generating Verifiable Random Numbers](./randomverif.html)
 * [Chi-Squared Test](./chisqtest.html)
 

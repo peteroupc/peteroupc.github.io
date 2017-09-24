@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 23, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 24, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -174,15 +174,14 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT(maxInclusive)</code> can be implemented for two kinds of underlying RNGs.</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs.</p>
 
-<p><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note7">(7)</a></sup>  Note that if <code>MODULUS</code> is a power of 2, <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</p>
+<ul>
+<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note7">(7)</a></sup>  Note that if <code>MODULUS</code> is a power of 2, <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</li>
+<li><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible from the underlying RNG.)</li>
+<li><p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</p>
 
-<p><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible from the underlying RNG.)</p>
-
-<p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.</p>
-
-<pre>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
+<p>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
     cx = floor(maxInclusive / MODULUS) + 1
     while true
        ret = cx * RNG()
@@ -193,9 +192,9 @@
        ret = ret + RNDINT(cx - 1)
        if ret &lt;= maxInclusive: return ret
     end
-END METHOD
+END METHOD</p>
 
-METHOD RndIntHelperPowerOfTwo(maxInclusive)
+<p>METHOD RndIntHelperPowerOfTwo(maxInclusive)
         // NOTE: Finds the number of bits minus 1 needed
         // to represent MODULUS. This will be a constant
         // here, though.
@@ -212,7 +211,7 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
                bitCount = bitCount + 1
         end
         while true
-               // Build a number with `bitCount` bits
+               // Build a number with <code>bitCount</code> bits
                 tempnumber = 0
                 while bitCount &gt; 0
                      wordBits = modBits
@@ -236,9 +235,9 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
                 // Accept the number if allowed
                 if tempnumber &lt;= maxInclusive: return tempnumber
          end
-END METHOD
+END METHOD</p>
 
-METHOD RNDINT(maxInclusive)
+<p>METHOD RNDINT(maxInclusive)
   // maxInclusive must be 0 or greater
   if maxInclusive &lt; 0: return error
   if maxInclusive == 0: return 0
@@ -277,8 +276,8 @@ METHOD RNDINT(maxInclusive)
                     if ret &lt; maxexc: return mod(ret, nPlusOne)
           end
   end
-END METHOD
-</pre>
+END METHOD</p></li>
+</ul>
 
 <p><strong>Notes:</strong></p>
 
@@ -1484,13 +1483,13 @@ end
 
 <p>A random integer that follows a <em>negative binomial distribution</em> expresses the number of failures that have happened after seeing a given number of successes (expressed as <code>successes</code> below), where the probability of a success in each case is <code>p</code> (where <code>p &lt;= 0</code> means never, <code>p &gt;= 1</code> means always, and <code>p = 0.5</code> means an equal chance of success or failure).</p>
 
-<pre>METHOD NegativeBinomialInt(successes, p)
+<pre>METHOD NegativeBinomial(successes, p)
     // Must be 0 or greater
     if successes &lt; 0: return error
     // No failures if no successes or if always succeeds
     if successes == 0 or p &gt;= 1.0: return 0
     // Always fails (NOTE: infinity can be the maximum possible
-    // integer value if NegativeBinomialInt is implemented to return
+    // integer value if NegativeBinomial is implemented to return
     // an integer)
     if p &lt;= 0.0: return infinity
     // NOTE: If &#39;successes&#39; can be an integer only,
@@ -1595,7 +1594,7 @@ which resembles a curve with a single peak, but with generally &quot;fatter&quot
                 beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
     end
     z=-tan(alpha*halfpi)*beta
-    ug=unif+atan(-z)/alpha
+    ug=unif+atan2(-z, 1)/alpha
     cpow=pow(c, -1.0 / alpha)
     return pow(1.0+z*z, 1.0 / (2*alpha))*
         (sin(alpha*ug)*cpow)*
@@ -1900,7 +1899,7 @@ are the two parameters of the Cauchy distribution.  This distribution is similar
 <li><strong>Exponential distribution</strong>: <code>-ln(RNDU01ZeroExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. The <code>lamda</code> is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
 This expresses a distribution of maximum values.</li>
-<li><strong>Geometric distribution</strong>: <code>NegativeBinomialInt(1, p)</code>, where <code>p</code> has the same meaning
+<li><strong>Geometric distribution</strong>: <code>NegativeBinomial(1, p)</code>, where <code>p</code> has the same meaning
 as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)</li>
 <li><strong>Gumbel distribution</strong>: <code>a + ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).
 This expresses a distribution of minimum values.</li>

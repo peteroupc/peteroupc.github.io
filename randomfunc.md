@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 23, 2017.
+Begun on June 4, 2017; last updated on Sep. 24, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -127,13 +127,11 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT(maxInclusive)` can be implemented for two kinds of underlying RNGs.
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs.
 
-**Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(7)](#Note7)</sup>  Note that if `MODULUS` is a power of 2, `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
-
-**Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
-
-**Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of an RNG that is in wide use and outputs numbers of a kind other than already described in this section should send me a comment.
+- **Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(7)](#Note7)</sup>  Note that if `MODULUS` is a power of 2, `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+- **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
+- **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -1246,13 +1244,13 @@ Extended versions of the gamma distribution:
 
 A random integer that follows a _negative binomial distribution_ expresses the number of failures that have happened after seeing a given number of successes (expressed as `successes` below), where the probability of a success in each case is `p` (where `p <= 0` means never, `p >= 1` means always, and `p = 0.5` means an equal chance of success or failure).
 
-    METHOD NegativeBinomialInt(successes, p)
+    METHOD NegativeBinomial(successes, p)
         // Must be 0 or greater
         if successes < 0: return error
         // No failures if no successes or if always succeeds
         if successes == 0 or p >= 1.0: return 0
         // Always fails (NOTE: infinity can be the maximum possible
-        // integer value if NegativeBinomialInt is implemented to return
+        // integer value if NegativeBinomial is implemented to return
         // an integer)
         if p <= 0.0: return infinity
         // NOTE: If 'successes' can be an integer only,
@@ -1349,7 +1347,7 @@ which resembles a curve with a single peak, but with generally "fatter" tails th
                     beta * ln(halfpi*expo*c/(unif*beta+halfpi)))/pi
         end
         z=-tan(alpha*halfpi)*beta
-        ug=unif+atan(-z)/alpha
+        ug=unif+atan2(-z, 1)/alpha
         cpow=pow(c, -1.0 / alpha)
         return pow(1.0+z*z, 1.0 / (2*alpha))*
             (sin(alpha*ug)*cpow)*
@@ -1631,7 +1629,7 @@ are the two parameters of the Cauchy distribution.  This distribution is similar
 - **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
-- **Geometric distribution**: `NegativeBinomialInt(1, p)`, where `p` has the same meaning
+- **Geometric distribution**: `NegativeBinomial(1, p)`, where `p` has the same meaning
  as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)
 - **Gumbel distribution**: `a + ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of minimum values.
