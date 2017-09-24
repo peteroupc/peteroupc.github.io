@@ -1125,13 +1125,9 @@ Note that&mdash;
 <a id=Nearest_Colors></a>
 ### Nearest Colors
 
- The _nearest color_ algorithm is used, for example, to categorize colors or to reduce the number of colors used by an image.
+The _nearest color_ algorithm is used, for example, to categorize colors or to reduce the number of colors used by an image.
 
-In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.  NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
--
-- The method `
-
-The pseudocode follows.
+In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.  `NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
 
     METHOD NearestColorIndex(color, list)
        if size(list) == 0: return error
