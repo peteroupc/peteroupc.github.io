@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 24, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 25, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -142,7 +142,7 @@
 <li>(<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;.</li>
 <li>[<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
 </ul></li>
-<li>The term <em>random number generator</em>, or <em>RNG</em>, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup><a href="#Note6">(6)</a></sup></li>
+<li>The term <em>random number generator</em>, or <em>RNG</em>, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup><a href="#Note1">(1)</a></sup></li>
 <li>The <em>norm</em> of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
 <li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s radix (number base) raised to the power of the format&#39;s precision (the maximum number of significant radix digits that the format can represent without loss). For example&mdash;
 
@@ -177,7 +177,7 @@
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs.</p>
 
 <ul>
-<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note7">(7)</a></sup>  Note that if <code>MODULUS</code> is a power of 2, <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</li>
+<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2">(2)</a></sup>  Note that if <code>MODULUS</code> is a power of 2, <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</li>
 <li><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible from the underlying RNG.)</li>
 <li><p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</p>
 
@@ -413,7 +413,7 @@ END
 <h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
 
 <p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random number in the interval [0, <code>maxExclusive</code>)</strong>,
-can be implemented as follows<sup><a href="#Note8">(8)</a></sup>:</p>
+can be implemented as follows<sup><a href="#Note3">(3)</a></sup>:</p>
 
 <pre> METHOD RNDINTEXC(maxExclusive)
     if maxExclusive &lt;= 0: return error
@@ -425,7 +425,7 @@ can be implemented as follows<sup><a href="#Note8">(8)</a></sup>:</p>
 
 <ul>
 <li><code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.</li>
-<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5">(5)</a></sup>)</li>
+<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note4">(4)</a></sup>)</li>
 </ul>
 
 <p>These approaches, though, are recommended only if the programming language&mdash;</p>
@@ -640,7 +640,7 @@ the following idioms in an <code>if</code> condition:</p>
 END METHOD
 </pre>
 
-<p>An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.<sup><a href="#Note12">(12)</a></sup></p>
+<p>An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.<sup><a href="#Note5">(5)</a></sup></p>
 
 <p><strong>Note:</strong> In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;</p>
 
@@ -698,7 +698,7 @@ END METHOD
 <li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating a random hexadecimal string is equivalent to generating <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
 <li>For generating a random base-10 digit string, the list of characters passed to <code>RandomString</code> consists of the basic digits only.</li>
-<li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note10">(10)</a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
+<li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note6">(6)</a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
 </ul>
 
 <p><a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a></p>
@@ -1108,7 +1108,7 @@ END METHOD
 
 <ul>
 <li>add <code>Normal(0, sigma)</code> to the chosen number, where <code>sigma</code> is the <em>bandwidth</em> (which should be as small as allows the estimated distribution to fit the data and remain smooth), or</li>
-<li>add a separately generated <code>Normal(0, sigma)</code> to each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note4">(4)</a></sup>.</li>
+<li>add a separately generated <code>Normal(0, sigma)</code> to each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note7">(7)</a></sup>.</li>
 </ul></li>
 </ul>
 
@@ -1183,7 +1183,7 @@ if index==0: number = Normal(1, 1)
 // Else index 1 was chosen, sample from the mean -1 normal
 else: number = Normal(-1, 1)
 </pre></li>
-<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle">triangles</a>, and a mixture of those triangles can be sampled.<sup><a href="#Note11">(11)</a></sup></p></li>
+<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle">triangles</a>, and a mixture of those triangles can be sampled.<sup><a href="#Note8">(8)</a></sup></p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
 <ul>
@@ -1276,7 +1276,7 @@ END METHOD
 
 <p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
-<p>In the pseudocode below, which uses the polar method <sup><a href="#Note2">(2)</a></sup> to generate two normally-distributed random numbers:</p>
+<p>In the pseudocode below, which uses the polar method <sup><a href="#Note10">(10)</a></sup> to generate two normally-distributed random numbers:</p>
 
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or the peak of the distribution&#39;s &quot;bell curve&quot;.</li>
@@ -2007,7 +2007,7 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
-<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note3">(3)</a></sup> until their <a href="#Notation_and_Definitions"><em>norm</em></a> is R or less,</li>
+<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note11">(11)</a></sup> until their <a href="#Notation_and_Definitions"><em>norm</em></a> is R or less,</li>
 </ul>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html">MathWorld article</a>, which was the inspiration for the two methods given here.</p>
@@ -2055,17 +2055,7 @@ from random number generators.</p>
 <h2>Notes</h2>
 
 <p><small>
- <sup id=Note1>(1)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
-
-<p><sup id=Note2>(2)</sup> The method that formerly appeared here is the <em>Box-Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</p>
-
-<p><sup id=Note3>(3)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</p>
-
-<p><sup id=Note4>(4)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>. The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</p>
-
-<p><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
-
-<p><sup id=Note6>(6)</sup> This definition includes RNGs that&mdash;</p>
+<sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;</p>
 
 <ul>
 <li>seek to generate random numbers that are at least cost-prohibitive (but not necessarily <em>impossible</em>) to predict,</li>
@@ -2080,11 +2070,21 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p>If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution&#39;s <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><em>cumulative distribution function</em></a> (CDF) to each generated number (see also &quot;<a href="#Random_Numbers_from_an_Arbitrary_Distribution">Random Numbers from an Arbitrary Distribution</a>&quot;).  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.</p>
 
-<p><sup id=Note7>(7)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/">blog post by Johnny Chan</a>.</p>
+<p><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/">blog post by Johnny Chan</a>.</p>
 
-<p><sup id=Note8>(8)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
+<p><sup id=Note3>(3)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
 
-<p><sup id=Note9>(9)</sup>The &quot;Dice&quot; section used the following sources:</p>
+<p><sup id=Note4>(4)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
+
+<p><sup id=Note5>(5)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</p>
+
+<p><sup id=Note6>(6)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><em>Markov chains</em></a>, which are outside this page&#39;s scope.</p>
+
+<p><sup id=Note7>(7)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>. The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</p>
+
+<p><sup id=Note8>(8)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</p>
+
+<p><sup id=Note9>(9)</sup> The &quot;Dice&quot; section used the following sources:</p>
 
 <ul>
 <li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html">&quot;Probability and Games: Dice Rolls&quot;</a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
@@ -2092,11 +2092,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</li>
 </ul>
 
-<p><sup id=Note10>(10)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><em>Markov chains</em></a>, which are outside this page&#39;s scope.</p>
+<p><sup id=Note10>(10)</sup> The method that formerly appeared here is the <em>Box-Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</p>
 
-<p><sup id=Note11>(11)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</p>
-
-<p><sup id=Note12>(12)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
+<p><sup id=Note11>(11)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.
 </small></p>
 
 <p><a id=License></a></p>
