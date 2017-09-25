@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 24, 2017.
+Begun on Mar. 5, 2016; last updated on Sep. 25, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -75,7 +75,7 @@ The following table summarizes the kinds of RNGs covered in this document.
 
 The following definitions are helpful in better understanding this document.
 
-- **Random number generator (RNG).** A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(4)](#Note4)</sup>.
+- **Random number generator (RNG).** A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(1)](#Note1)</sup>.
 - **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time) and without making explicit use of nondeterminism.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
@@ -156,7 +156,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data not known _a priori_ by the implementation, such as random bits from an unpredictable-random implementation,
 - must not contain, in whole or in part, the RNG's own output,
 - must not be a fixed value, a nearly fixed value, or a user-entered value,
-- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>[(1)](#Note1)</sup>, and
+- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>[(2)](#Note2)</sup>, and
 - must be at least the same size as the PRNG's _state length_.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
@@ -272,7 +272,7 @@ If the noise implementation implements [cellular noise](https://en.wikipedia.org
 
 The [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) technique combines several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.
 
-If the noise implementation implements other kinds of noise, such as white noise, pink noise, or other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise)<sup>[(2)](#Note2)</sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.
+If the noise implementation implements other kinds of noise, such as white noise, pink noise, or other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise)<sup>[(4)](#Note4)</sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
@@ -435,13 +435,15 @@ Comments on any aspect of the document are welcome, but answers to the following
 <a id=Notes></a>
 ## Notes
 
-<sup id=Note1>(1)</sup> For colored noise, this statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
+<small>
+<sup id=Note1>(1)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.
 
-<sup id=Note2>(2)</sup> This is because usual implementations of colored noise don't sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.
+<sup id=Note2>(2)</sup> For colored noise, this statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
 
 <sup id=Note3>(3)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.
 
-<sup id=Note4>(4)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.
+<sup id=Note4>(4)</sup> This is because usual implementations of colored noise don't sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.
+</small>
 
 <a id=License></a>
 ## License

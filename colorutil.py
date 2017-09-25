@@ -144,7 +144,7 @@ def xyzToLab(xyzval,wpoint):
         500 * (xyz[0] - xyz[1]),\
         200 * (xyz[1] - xyz[2])]
 
-def labToXYZ(xyz,wpx,wpz):
+def labToXYZ(lab,wpoint):
     fy=(lab[0]+16)/116.0
     fx=fy+lab[1]/500.0
     fz=fy-lab[2]/200.0
@@ -160,8 +160,9 @@ def labToXYZ(xyz,wpx,wpz):
             xyz[1]=math.pow(((lab[0]+16)/116.0), 3.0)
     else:
             xyz[1]=lab[0]*27/24389.0 # See BruceLindbloom.com
-    xyz[0]=xyz[0]*wpx
-    xyz[2]=xyz[2]*wpz
+    xyz[0]=xyz[0]*wpoint[0]
+    xyz[1]=xyz[1]*wpoint[1]
+    xyz[2]=xyz[2]*wpoint[2]
     return xyz
 
 def labToChroma(lab):
@@ -211,7 +212,7 @@ def ciede2000(lab1, lab2):
     hdiff=h2-h1
     hh=h1+h2
     if abs(hdiff)>math.pi:
-            hh=hh+pi*2
+            hh=hh+math.pi*2
             if h2<=h1:
                hdiff=hdiff+math.pi*2
             else:
