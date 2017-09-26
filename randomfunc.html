@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 25, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 26, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -307,7 +307,7 @@ let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> i
  END METHOD
 </pre>
 
-<p>The na&iuml;ve approach won&#39;t work as well, though, for signed integer formats if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the highest possible integer for the format.  For fixed-length signed integer formats <a href="#Note1"><sup>(1)</sup></a>, such random integers can be generated using the following pseudocode.  In the pseudocode below, <code>INT_MAX</code> is the highest possible integer in the integer format.</p>
+<p>The na&iuml;ve approach won&#39;t work as well, though, for signed integer formats if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the highest possible integer for the format.  For fixed-length signed integer formats <sup>[(12)]</sup>(#Note12), such random integers can be generated using the following pseudocode.  In the pseudocode below, <code>INT_MAX</code> is the highest possible integer in the integer format.</p>
 
 <pre>METHOD RNDINTRANGE(minInclusive, maxInclusive)
    // minInclusive must not be greater than maxInclusive
@@ -2054,8 +2054,9 @@ from random number generators.</p>
 
 <h2>Notes</h2>
 
-<p><small>
-<sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;</p>
+<p><small></p>
+
+<p><sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;</p>
 
 <ul>
 <li>seek to generate random numbers that are at least cost-prohibitive (but not necessarily <em>impossible</em>) to predict,</li>
@@ -2094,8 +2095,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><sup id=Note10>(10)</sup> The method that formerly appeared here is the <em>Box-Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution">&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</p>
 
-<p><sup id=Note11>(11)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.
-</small></p>
+<p><sup id=Note11>(11)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</p>
+
+<p></small></p>
 
 <p><a id=License></a></p>
 
