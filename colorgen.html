@@ -413,7 +413,7 @@ METHOD HtmlToColor(colorString)
 END METHOD
 </pre>
 
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or the 3-digit format are in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a> (as companded colors).</p>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or the 3-digit format are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
 <p><a id=Linearized_and_Companded_RGB></a></p>
 
@@ -492,75 +492,68 @@ based on human color perception.</li>
 <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSV</a>  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:</p>
 
 <ul>
-<li><em>Hue</em> is an angle in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).<sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</li>
+<li><em>Hue</em> is an angle in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).</li>
+<li><em>Saturation</em>, the distance of the color from gray and white (but not necessarily from black),
+is 0 or greater and 1 or less.</li>
+<li>A component variously called &quot;value&quot; or &quot;brightness&quot; is the distance of the color from black and is 0 or greater and 1 or less.</li>
 </ul>
 
-<p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 2.</p>
+<p>The following pseudocode converts colors between RGB and HSV. Each RGB color is in 0-1 format.
+The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
-<p><sup id=Note3>(3)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</p>
+<pre>METHOD RgbToHsv(rgb)
+    mx = max(max(rgb[0], rgb[1]), rgb[2])
+    mn = min(min(rgb[0], rgb[1]), rgb[2])
+    if mx==mn: return [0,0,mx]
+    s=(mx-mn)/mx
+    h=0
+    if rgb[0]==mx
+            h=(rgb[1]-rgb[2])/(mx-mn)
+    else if rgb[1]==mx
+            h=2+(rgb[2]-rgb[0])/(mx-mn)
+    else
+            h=4+(rgb[0]-rgb[1])/(mx-mn)
+    end
+    if h &lt; 6: h = 6 - mod(-h, 6)
+    if h &gt;= 6: h = mod(h, 6)
+    return [h * (pi / 3), s, mx]
+END METHOD
 
-<p><sup id=Note4>(4)</sup> A <a href="http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation">Working Draft</a> of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;</p>
+METHOD HsvToRgb(hsv)
+    hue=hsv[0]
+    sat=hsv[1]
+    val=hsv[2]
+    if hue &lt; 0: hue = pi * 2 - mod(-hue, pi * 2)
+    if hue &gt;= pi * 2: hue = mod(hue, pi * 2)
+    hue60 = hue * 3 / pi
+    hi = floor(hue60)
+    f = hue60 - hi
+    c = val * (1 - sat)
+    a = val * (1 - sat * f)
+    e = val * (1 - sat * (1 - f))
+    if hi == 0: return [val, e, c]
+    if hi == 1: return [a, val, c]
+    if hi == 2: return [c, val, e]
+    if hi == 3: return [c, a, val]
+    if hi == 4: return [e, c, val]
+    return [val, c, a]
+END METHOD
+</pre>
+
+<p>In the rest of this document&mdash;</p>
 
 <ul>
-<li>an 8-digit format, consisting of &quot;#&quot; followed by two base-16 digits each for the red, green, blue, and alpha components, respectively, and</li>
-<li>a 4-digit format, consisting of &quot;#&quot; followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</li>
+<li><strong><code>HSVHue(color)</code></strong> is the HSV &quot;hue&quot; component of a color, that is, <code>RgbToHsv(color)[0]</code>,</li>
+<li><strong><code>HSVSat(color)</code></strong> is the HSV saturation component of a color, that is, <code>RgbToHsv(color)[1]</code>, and</li>
+<li><strong><code>HSVVal(color)</code></strong> is the HSV brightness or &quot;value&quot; component of a color, that is, <code>RgbToHsv(color)[2]</code>.</li>
 </ul>
 
-<p><sup id=Note5>(5)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>companded</em> RGB colors, respectively, in this document.</p>
-
-<p><sup id=Note6>(6)</sup> A thorough survey of working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html">RGB Working Space Information</a>&quot;, contains further information on RGB working spaces.</p>
-
-<p><sup id=Note7>(7)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:</p>
+<p><strong>Notes:</strong></p>
 
 <ul>
-<li>Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.</li>
-<li>In certain industries, particularly print publishing, the CIELAB color space in use is generally based on the D50 white point.</li>
+<li>In most applications, hue is in degrees and is 0 or greater and less than 360.</li>
+<li>The HSV color model is not perception-based, as acknowledged in (Smith and Lyons 1996).</li>
 </ul>
-
-<p><sup id=Note8>(8)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.</p>
-
-<p><sup id=Note9>(9)</sup> Although the CIELAB color model is also often called &quot;perceptually uniform&quot;&mdash;</p>
-
-<ul>
-<li>CIELAB &quot;was not designed to have the perceptual qualities needed for gamut mapping&quot;, according to <a href="http://www.brucelindbloom.com/index.html?UPLab.html">B. Lindbloom</a>, and</li>
-<li>such a claim &quot;is really only the case for very low spatial frequencies&quot;, according to P. Kovesi (P. Kovesi, &quot;Good Colour Maps: How to Design Them&quot;, arXiv:1509.03700 [cs.GR], 2015).</li>
-</ul>
-
-<p><sup id=Note10>(10)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work in 1878.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</p>
-
-<p><sup id=Note11>(11)</sup> Radians can be converted to degrees by multiplying by <code>180 / pi</code>.</p>
-
-<p><sup id=Note12>(12)</sup> As an example of this point, the Fogra Research Institute for Media Technologies has <a href="https://www.fogra.org/en/fogra-standardization/fogra-characterizationdata/a-icc-en.html">standardized</a> conversions of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
-
-<p>A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
-
-<p>Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are usually not of general interest to programmers.</p>
-
-<p><sup id=Note13>(13)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linearized_and_Companded_RGB">companded RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
-
-<p><sup id=Note14>(14)</sup> The BT.2020 standard defines a color model called <em>YcCbcCrc</em> for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>, <em>linearized RGB</em> colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.</p>
-
-<p><sup id=Note15>(15)</sup> Other methods that have been used for approximating relative luminance (and which don&#39;t really yield &quot;relative luminance&quot; as used here) include&mdash;</p>
-
-<ul>
-<li>using the average (<code>(color[0]+color[1]+color[2])/3.0</code>), minimum, or maximum of the three color components (as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example),</li>
-<li>using the <a href="#HSL">HSL</a> &quot;lightness&quot; (see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>), and</li>
-<li>using one of the three color components (also as seen on T. Helland&#39;s site).</li>
-</ul>
-
-<p><sup id=Note16>(16)</sup> See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
-
-<p><sup id=Note17>(17)</sup> For companded sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)</p>
-
-<p><sup id=Note18>(18)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.</p>
-
-<p><sup id=Note19>(19)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB capital-Y values for the red, green, and blue points.</p>
-
-<p><sup id=Note20>(20)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
-
-<p><sup id=Note21>(21)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
-
-<p><sup id=Note22>(22)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p><a id=HSL></a></p>
 
@@ -1500,7 +1493,7 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <p>Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn&#39;t exist in the hash table.</p>
 
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are in the <a href="#sRGB_and_Linearized_RGB"><em>sRGB color space</em></a> (as companded colors).</p>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
 <p><a id=Visually_Distinct_Colors></a></p>
 
@@ -1558,7 +1551,7 @@ the visible spectrum.  There are three cases of objects that provoke a color sen
 <p>In the pseudocode below:</p>
 
 <ul>
-<li><code>SpectrumToTristim</code> computes the <em>tristimulus values</em> of the perceived color stimulus of the light source or reflective object.</li>
+<li><code>SpectrumToTristim</code> computes the <em>tristimulus values</em> of the perceived color stimulus.</li>
 <li><code>REFL(wavelength)</code> is an arbitrary function returning&mdash;
 
 <ul>
@@ -1610,11 +1603,25 @@ END METHOD
 
 <h3>Light Source and Color Matching Functions</h3>
 
-<p>There are various choices for the <code>LIGHT</code> and <code>CMF</code> functions.  Popular choices include the D65 illuminant and the CIE 1931 (2-degree) standard observer, respectively.  Both are used in the <a href="#sRGB_and_Linearized_RGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.  For such choices of <code>LIGHT</code> and <code>CMF</code>&mdash;</p>
+<p>Some possibilities for the <code>LIGHT</code> function (light source) include&mdash;</p>
+
+<ul>
+<li>the D65 illuminant, which approximates 6500-kelvin daylight (daylight with a correlated color temperature of 6500 kelvins), and</li>
+<li>the D50 illuminant, which approximates 5000-kelvin daylight.</li>
+</ul>
+
+<p>Some possibilities for the <code>CMF</code> function (color matching functions) include&mdash;</p>
+
+<ul>
+<li>the CIE 1931 (2-degree) standard observer, which is used to generate XYZ colors based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the CIE 1964 (10-degree) standard observer, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+</ul>
+
+<p>Both the D65 illuminant and the CIE 1931 standard observer are used in the <a href="#sRGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.  For such choices of <code>LIGHT</code> and <code>CMF</code>&mdash;</p>
 
 <ul>
 <li>the tristimulus values (e.g., from <code>SpectrumToTristim()</code>) will be an <a href="#CIE_XYZ">XYZ color</a> relative to the D65 white point,</li>
-<li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes, in companded sRGB, the perceived color of the light source or reflective object, and</li>
+<li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes, in companded sRGB, the perceived color of the stimulus, and</li>
 <li>the idiom <code>XYZTosRGB(CMF(wavelength))</code> computes, in companded sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
 </ul>
 
@@ -1775,8 +1782,9 @@ this page are welcome.</p>
 
 <h2>Notes</h2>
 
-<p><small>
-<sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</p>
+<p><small></p>
+
+<p><sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</p>
 
 <p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 2.</p>
 
@@ -1813,7 +1821,7 @@ this page are welcome.</p>
 
 <p><sup id=Note11>(11)</sup> Radians can be converted to degrees by multiplying by <code>180 / pi</code>.</p>
 
-<p><sup id=Note12>(12)</sup> As an example of this point, the Fogra Research Institute for Media Technologies has <a href="https://www.fogra.org/en/fogra-standardization/fogra-characterizationdata/a-icc-en.html">standardized</a> conversions of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
+<p><sup id=Note12>(12)</sup> As an example of this point, the ICC maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
 <p>A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
 
@@ -1843,8 +1851,9 @@ this page are welcome.</p>
 
 <p><sup id=Note21>(21)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note22>(22)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.
-</small></p>
+<p><sup id=Note22>(22)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+
+<p></small></p>
 
 <p><a id=License></a></p>
 

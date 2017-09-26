@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 25, 2017.
+Begun on June 4, 2017; last updated on Sep. 26, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -251,7 +251,7 @@ The na&iuml;ve way of generating a **random integer in the interval [`minInclusi
        return minInclusive + RNDINT(maxInclusive - minInclusive)
      END METHOD
 
-The na&iuml;ve approach won't work as well, though, for signed integer formats if the difference between `maxInclusive` and `minInclusive` exceeds the highest possible integer for the format.  For fixed-length signed integer formats [<sup>(1)</sup>](#Note1), such random integers can be generated using the following pseudocode.  In the pseudocode below, `INT_MAX` is the highest possible integer in the integer format.
+The na&iuml;ve approach won't work as well, though, for signed integer formats if the difference between `maxInclusive` and `minInclusive` exceeds the highest possible integer for the format.  For fixed-length signed integer formats <sup>[(12)]</sup>(#Note12), such random integers can be generated using the following pseudocode.  In the pseudocode below, `INT_MAX` is the highest possible integer in the integer format.
 
     METHOD RNDINTRANGE(minInclusive, maxInclusive)
        // minInclusive must not be greater than maxInclusive
@@ -1765,6 +1765,7 @@ Currently, the following are not covered in this document, but may be added base
 ## Notes
 
 <small>
+
 <sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
 - seek to generate random numbers that are at least cost-prohibitive (but not necessarily _impossible_) to predict,
 - merely seek to generate number sequences likely to pass statistical tests of randomness,
@@ -1800,6 +1801,7 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 <sup id=Note10>(10)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
 
 <sup id=Note11>(11)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.
+
 </small>
 
 <a id=License></a>
