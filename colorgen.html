@@ -108,7 +108,6 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Spectral_Color_Functions">Spectral Color Functions</a>
 
 <ul>
-<li><a href="#Light_Source_and_Color_Matching_Functions">Light Source and Color Matching Functions</a></li>
 <li><a href="#Color_Temperature">Color Temperature</a></li>
 </ul></li>
 <li><a href="#Color_Mixture">Color Mixture</a></li>
@@ -140,8 +139,8 @@ programming interface, document format, or plotting or charting technology.</p><
 <li>The abbreviation <em>IEC</em> means the International Electrotechnical Commission.</li>
 <li>The abbreviation <em>ISO</em> means the International Organization for Standardization.</li>
 <li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
-<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 color matching functions.</li>
-<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 color matching functions.</li>
+<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
+<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
 </ul>
 
 <p><a id=Utility_Functions></a></p>
@@ -692,7 +691,7 @@ END METHOD
 
 <ul>
 <li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a reference white point and &quot;black point&quot;, such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the &quot;black point&quot;, then divided by the absolute-Y difference between the white point and the &quot;black point&quot;, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the &quot;black point&quot; is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code>, that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code>, that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
 <p>In the following pseudocode&mdash;</p>
@@ -759,7 +758,7 @@ The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are exampl
 <li>A color can be converted between XYZ and &quot;xyY&quot; form (where &quot;x&quot; and &quot;y&quot; are <em>chromaticity coordinates</em> and &quot;Y&quot; is <em>luminance</em>) as follows:
 
 <ul>
-<li><strong>XYZ (<code>xyz</code>) to xyY</strong>: Generate <code>xyy = [xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]</code>.  (Note that if the sum of the XYZ components is 0, the result is undefined.)  The small-&quot;z&quot; coordinate is then <code>1 - xyy[0] - xyy[1]</code>.</li>
+<li><strong>XYZ (<code>xyz</code>) to xyY</strong>: Generate <code>xyy = [xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]</code>.  (Note that if the sum of the XYZ components is 0, the result is undefined.)  The small-&quot;z&quot; chromaticity coordinate is then <code>1 - xyy[0] - xyy[1]</code>.</li>
 <li><strong>xyY (<code>xyy</code>) to XYZ</strong>: Generate <code>xyz = [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]</code>.  Note that if the small-&quot;y&quot; component is 0,
 the result is undefined.</li>
 </ul></li>
@@ -1543,33 +1542,45 @@ generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
 the visible spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  The light&#39;s color stimulus can be converted to three numbers (called <em>tristimulus values</em>) by multiplying that distribution by a set of three <em>color matching functions</em> and then integrating the result (see note 3 in this section).</li>
+<li><strong>Light sources.</strong> A source of light is described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.  With three <a href="#Light_Source_and_Color_Matching_Functions"><em>color matching functions</em></a>, that &quot;curve&quot; can be converted to three numbers (called <em>tristimulus values</em>) that uniquely identify the light&#39;s perceived color.</li>
 <li><strong>Reflective objects.</strong> Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a <em>reflectance curve</em>, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding an object&#39;s perceived color requires knowing its reflectance curve, the light source&#39;s spectral power distribution, and the color matching functions in use.</li>
-<li><strong>Light filters.</strong> Finding the perceived color of the light that passes through a transmissive object, such as a light filter, is the same as for light reflected by reflective objects.</li>
+<li><strong>Transmissive objects.</strong> The fraction of light that passes through a transmissive object, such as a light filter, can be described by a <em>transmittance curve</em>, which is the same as a reflectance curve for the purposes of finding that light&#39;s perceived color.</li>
 </ul>
 
 <p>In the pseudocode below:</p>
 
 <ul>
-<li><code>SpectrumToTristim</code> computes the <em>tristimulus values</em> of the perceived color stimulus.</li>
-<li><code>REFL(wavelength)</code> is an arbitrary function returning&mdash;
+<li>the <code>SpectrumToTristim</code> method computes the <em>tristimulus values</em> of the perceived color stimulus.</li>
+<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions describing the <strong>reflectance or transmittance curve</strong>, the <strong>light source</strong>&#39;s spectral curve, or the <strong>color matching functions</strong>, respectively.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding
+values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.</li>
+<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. Values on the curve are 0 or greater and, with the exception of reflective fluorescent objects, 1 or less.  <code>REFL</code> can always return 1 to model a <em>perfect reflecting</em> or <em>perfect transmitting diffuser</em>, e.g., if the purpose is to get the perceived color of the light source itself. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>.</li>
+<li><p><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>.  Choices for <code>LIGHT</code> include&mdash;</p>
 
 <ul>
-<li>the <strong>object&#39;s reflectance</strong> at <code>wavelength</code> (the reflectance is 0 or greater and, with the exception of fluorescent objects, 1 or less), or</li>
-<li>the number 1 at every wavelength, if a reflective object is not being modeled.</li>
-</ul></li>
-<li><code>LIGHT(wavelength)</code> is an arbitrary function returning the <strong>relative spectral power of the light source</strong> at <code>wavelength</code>.</li>
-<li><code>CMF(wavelength)</code> is an arbitrary function returning the values of the <strong>color matching functions</strong> at <code>wavelength</code>, in the form of a three-item list. <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. (For example, if <code>CMF</code> implements the CIE 1931 color matching functions, <code>SpectrumToTristim</code> will return an <a href="#CIE_XYZ">XYZ color</a>.)</li>
-<li><code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> take a wavelength in nanometers (nm).</li>
+<li>the D65 illuminant<sup><a href="#Note22">(22)</a></sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),</li>
+<li>the D50 illuminant, which approximates 5000-kelvin daylight, and</li>
+<li>the blackbody spectral formula, given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
+</ul>
+
+<p><code>LIGHT</code> returns the light source&#39;s relative spectral power at the wavelength <code>wl</code>.</p></li>
+<li><p><code>CMF(wl)</code> (three <strong>color matching functions</strong>) is used to convert a color stimulus to three <em>tristimulus values</em> of a kind that depends on <code>CMF</code>. (Each <em>color matching function</em> describes the contribution of each wavelength to the corresponding tristimulus value.) Choices for <code>CMF</code> include&mdash;</p>
+
+<ul>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note22">(22)</a></sup><sup><a href="#Note23">(23)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note22">(22)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+</ul>
+
+<p><code>CMF</code> returns a three-item list of the color matching functions&#39; values at the wavelength <code>wl</code>.</p></li>
 </ul>
 
 <hr>
 
 <pre>METHOD SpectrumToTristim()
-    i = 360 # Start of visible spectrum
+    i = 360 // Start of relevant part of spectrum
     xyz=[0,0,0]
     weight = 0
-    while i &lt;= 830 # End of visible spectrum
+    // Sample at 5 nm intervals
+    while i &lt;= 830 // End of relevant part of spectrum
              cmf=CMF(i)
              refl=REFL(i)
              spec=LIGHT(i)
@@ -1593,33 +1604,16 @@ END METHOD
 
 <p><strong>Notes:</strong></p>
 
-<ol>
-<li>For purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.</li>
+<ul>
+<li>The choices of <code>LIGHT</code> and <code>CMF</code> determine the <em>adopted white point</em>.</li>
 <li>In general, wavelengths in this section mean wavelengths in air. (See the entry &quot;<a href="http://eilv.cie.co.at/term/1426">wavelength</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</li>
-<li>Although spectral power distributions and color matching functions are continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the <code>SpectrumToTristim</code> method.</li>
-</ol>
-
-<p><a id=Light_Source_and_Color_Matching_Functions></a></p>
-
-<h3>Light Source and Color Matching Functions</h3>
-
-<p>Some possibilities for the <code>LIGHT</code> function (light source) include&mdash;</p>
-
-<ul>
-<li>the D65 illuminant, which approximates 6500-kelvin daylight (daylight with a correlated color temperature of 6500 kelvins), and</li>
-<li>the D50 illuminant, which approximates 5000-kelvin daylight.</li>
+<li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the <code>SpectrumToTristim</code> method.</li>
 </ul>
 
-<p>Some possibilities for the <code>CMF</code> function (color matching functions) include&mdash;</p>
+<p><strong>Example:</strong> If <code>LIGHT</code> and <code>CMF</code> are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the <a href="#sRGB">sRGB color space</a>)&mdash;</p>
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer, which is used to generate XYZ colors based on color stimuli seen at a 2-degree field of view, and</li>
-<li>the CIE 1964 (10-degree) standard observer, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
-</ul>
-
-<p>Both the D65 illuminant and the CIE 1931 standard observer are used in the <a href="#sRGB">sRGB color space</a>, and for both, the CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> at its Web site.  The CIE 1931 standard observer can also be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.  For such choices of <code>LIGHT</code> and <code>CMF</code>&mdash;</p>
-
-<ul>
+<li>the adopted white point is the D65 white point,</li>
 <li>the tristimulus values (e.g., from <code>SpectrumToTristim()</code>) will be an <a href="#CIE_XYZ">XYZ color</a> relative to the D65 white point,</li>
 <li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes, in companded sRGB, the perceived color of the stimulus, and</li>
 <li>the idiom <code>XYZTosRGB(CMF(wavelength))</code> computes, in companded sRGB, the perceived color of a light source that emits light only at the wavelength <code>wavelength</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
@@ -1629,7 +1623,9 @@ END METHOD
 
 <h3>Color Temperature</h3>
 
-<p>Another choice for <code>LIGHT</code> is the formula for finding the spectral power of a blackbody (an idealized object that emits light based only on its temperature).  Such a formula is useful for converting <strong>color temperature</strong> to RGB colors.  The formula follows, where <code>TEMP</code> is the blackbody&#39;s temperature in kelvins (source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;):</p>
+<p>A <em>blackbody</em> is an idealized object that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired <strong>color temperature</strong>, shown as <code>TEMP</code> below). If the following formula is used as the <code>LIGHT</code> function, <code>SpectrumToTristim()</code>&#39;s return value will be close to the perceived color of the blackbody&#39;s emitted light.</p>
+
+<p>Source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
 
 <pre>METHOD LIGHT(wavelength)
     meters = wavelength*pow(10, -9)
@@ -1669,7 +1665,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note22">(22)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note24">(24)</a></sup></li>
 </ol>
 
 <p>S. Burns uses the term <em>subtractive color mixture</em> for this kind of mixing.</p>
@@ -1821,7 +1817,7 @@ this page are welcome.</p>
 
 <p><sup id=Note11>(11)</sup> Radians can be converted to degrees by multiplying by <code>180 / pi</code>.</p>
 
-<p><sup id=Note12>(12)</sup> As an example of this point, the ICC maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
+<p><sup id=Note12>(12)</sup> As an example of this point, the International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
 <p>A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
 
@@ -1851,7 +1847,11 @@ this page are welcome.</p>
 
 <p><sup id=Note21>(21)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note22>(22)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p><sup id=Note22>(22)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+
+<p><sup id=Note23>(23)</sup> The CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+
+<p><sup id=Note24>(24)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 
