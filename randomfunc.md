@@ -425,7 +425,7 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 
 The idiom `RNDINT((1 << b) - 1)`, called **`RNDBITS(b)`** in this document, is a na&iuml;ve way of generating a **uniform random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
 
-Although this idiom works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ [<sup>(1)</sup>](#Note1). For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
+Although this idiom works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ <sup>[(5)](#Note5)</sup>. For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
 
     METHOD RNDBITS(bits)
          if bits<0 or bits > BITCOUNT: return error
@@ -535,7 +535,7 @@ The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yat
        return list
     END METHOD
 
-An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).<sup>[(5)](#Note5)</sup>
+An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).<sup>[(6)](#Note6)</sup>
 
 **Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;
 - one or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups), then
@@ -579,7 +579,7 @@ To generate a random string of characters (usually a random _alphanumeric string
 - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
 - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
 - For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
-- Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(6)](#Note6)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
+- Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(7)](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
 
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 ### Sampling With Replacement: Choosing a Random Item from a List
@@ -932,7 +932,7 @@ To generate a random number (or data point) based on the distribution of a list 
 - choose one of the numbers or points at random (see, for example, [Choosing a Random Item from a List](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)), and
 - add a randomized "jitter" to the chosen number or point; for example&mdash;
     - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as small as allows the estimated distribution to fit the data and remain smooth), or
-    - add a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_<sup>[(7)](#Note7)</sup>.
+    - add a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_<sup>[(8)](#Note8)</sup>.
 
 A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized "jitter" (whose distribution is formally called a _kernel_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the Wikipedia articles on [single-variable](https://en.wikipedia.org/wiki/Kernel_density_estimation) and [multiple-variable](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation) estimation, or a [blog post by M. Kay](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
 
@@ -990,7 +990,7 @@ To generate random content from a mixture&mdash;
         // Else index 1 was chosen, sample from the mean -1 normal
         else: number = Normal(-1, 1)
 
-- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(8)](#Note8)</sup>
+- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
 - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1024,7 +1024,7 @@ This section contains information on some of the most common non-uniform samplin
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[(9)](#Note9)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[(10)](#Note10)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1065,7 +1065,7 @@ As examples, the result of rolling&mdash;
 
 The [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-In the pseudocode below, which uses the polar method <sup>[(10)](#Note10)</sup> to generate two normally-distributed random numbers:
+In the pseudocode below, which uses the polar method <sup>[(11)](#Note11)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1728,7 +1728,7 @@ This problem is equivalent to generating a random unit vector (vector with lengt
 To generate an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(11)](#Note11)</sup> until their [_norm_](#Notation_and_Definitions) is R or less,
+- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(12)](#Note12)</sup> until their [_norm_](#Notation_and_Definitions) is R or less,
 
 although the former method "may ... be slower" "in practice", according to a [MathWorld article](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
@@ -1784,23 +1784,26 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 
 <sup id=Note4>(4)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.
 
-<sup id=Note5>(5)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
+<sup id=Note5>(5)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
+-
 
-<sup id=Note6>(6)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
+<sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
 
-<sup id=Note7>(7)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
+<sup id=Note7>(7)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
 
-<sup id=Note8>(8)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.
+<sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
 
-<sup id=Note9>(9)</sup> The "Dice" section used the following sources:
+<sup id=Note9>(9)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.
+
+<sup id=Note10>(10)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, ["Probability and Games: Dice Rolls"](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [MathWorld article "Dice"](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
 
-<sup id=Note10>(10)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
+<sup id=Note11>(11)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
 
-<sup id=Note11>(11)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.
+<sup id=Note12>(12)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.
 
 </small>
 
