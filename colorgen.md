@@ -57,14 +57,12 @@ The following topics are beyond this page's scope:
     - [CMYK](#CMYK)
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
-    - [Shades, Tints, and Tones](#Shades_Tints_and_Tones)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
     - [Color Schemes](#Color_Schemes)
     - [Color Matrices](#Color_Matrices)
     - [Blending and Alpha Compositing](#Blending_and_Alpha_Compositing)
     - [Miscellaneous](#Miscellaneous)
 - [Color Differences](#Color_Differences)
-    - [Color Difference Methods](#Color_Difference_Methods)
     - [Nearest Colors](#Nearest_Colors)
 - [Generating a Random Color](#Generating_a_Random_Color)
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
@@ -75,7 +73,7 @@ The following topics are beyond this page's scope:
     - [Idioms](#Idioms)
 - [Spectral Color Functions](#Spectral_Color_Functions)
     - [Color Temperature](#Color_Temperature)
-- [Color Mixture](#Color_Mixture)
+    - [Color Mixture](#Color_Mixture)
 - [Other Color Topics](#Other_Color_Topics)
     - ["Colorblindness"](#Colorblindness)
     - [Terminal Colors](#Terminal_Colors)
@@ -342,11 +340,11 @@ characters) to and from the HTML color format or the 3-digit format.
 In a given RGB color space, an RGB color can be _linearized_ or _companded_.
 
 - A _linearized_ RGB color has a linear relationship of emitted light (as opposed to perceived light).
-- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as a _companding_ conversion (an example for sRGB is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>
-
-In this document, RGB colors are in companded form unless noted otherwise.
+- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as a _companding_ conversion (an example for sRGB is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
 For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a positive number. (In this case, the transfer function is also called _gamma encoding_.)
+
+In this document, all techniques involving RGB colors apply to such colors in linearized or companded form, unless noted otherwise.
 
 <a id=sRGB></a>
 ### sRGB
@@ -560,9 +558,9 @@ In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was pu
 - _Whiteness_ is the amount of white in the color.
 - _Blackness_ is the amount of black in the color.
 
-The conversion is relatively simple given HSV conversion methods:
+The conversions given below are independent of RGB color space, but should be done using [_linearized RGB_ colors](#Linearized_and_Companded_RGB).
 
-- To convert an RGB color `color` to HWB, generate `[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`. (The transformation is independent of RGB color space, but should be done using [_linearized RGB_ colors](#Linearized_and_Companded_RGB).)
+- To convert an RGB color `color` to HWB, generate `[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`.
 - To convert an HWB color `hwb` to RGB, generate `HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])` if `hwb[2] < 1`, or `[hwb[0], 0, 0]` otherwise.
 
 **Note:** The HWB color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
@@ -808,7 +806,7 @@ In the following pseudocode, the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SR
     END METHOD
 
 Hue and chroma can be derived from a
-CIELUV color in a similar way as from a CIELAB, color, with
+CIELUV color in a similar way as from a CIELAB color, with
 _u\*_ and _v\*_ used instead of _a\*_ and _b\*_, respectively.
 The `LabToHue`, `LabToChroma`,
 `LabToChromaHueDifference`, and
@@ -826,9 +824,9 @@ in the following pseudocode:
 <a id=CMYK></a>
 ### CMYK
 
-CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to RGB, or vice versa, is not trivial, in part because&mdash;
+CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to an RGB color space, or vice versa, is not trivial, in part because&mdash;
 
-1. the conversion to RGB deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
+1. the conversion to an RGB color space deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
 2. the meaning and conversion of CMYK colors can vary depending on the printing condition, including what inks and paper are used; for example, different inks have different light reflectances.<sup>[(12)](#Note12)</sup>
 
 <a id=Y_prime_C_B_C_R></a>
@@ -917,23 +915,6 @@ The following techniques show how existing colors can be modified to create new 
 
 Note that for best results, these techniques need to be carried out with [_linearized RGB_ colors](#Linearized_and_Companded_RGB), unless noted otherwise.
 
-<a id=Shades_Tints_and_Tones></a>
-### Shades, Tints, and Tones
-
-- **Shades**: The idiom `Lerp3(color, [0, 0, 0], shading)` generates a _shade_ of the given `color` (a mixing of `color`
-  with black).  The parameter `shading` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to black); the greater the parameter, the darker the resulting color.
-- **Tints**: The idiom `Lerp3(color, [1, 1, 1], tinting)` generates a _tint_ of the given `color` (a mixing of `color`
-  with white).  The parameter `tinting` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to white); the greater the parameter, the lighter the resulting color.
-- **Tones**: The idiom `Lerp3(color, [0.5, 0.5, 0.5], toning)` generates a _tone_ of the given `color` (a mixing of `color`
-  with gray).  The parameter `toning` is 0 or greater and 1 or less (0 means equal to `color` and 1 means equal to gray); the greater the parameter, the less saturated the resulting color.
-- **Lighten/Darken**: A choice of&mdash;
-    - `Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])`, or
-    - `HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`,
-
-    generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative.
-- **Lighten/Darken (CIELAB)**: If `color` is a companded sRGB color, generate `lab = SRGBToLab(color)`, then generate `modifiedColor = SRGBFromLab(Clamp(lab[0] + value, 0, 100), lab[1], lab[2])`, where a positive `value` generates a lighter version of `color` and a negative `value`, a darker version.
-- **Saturate/Desaturate**: Generate `hsv = RgbToHsv(color)`, then generate `modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)
-
 <a id=Relative_Luminance_Grayscale></a>
 ### Relative Luminance (Grayscale)
 
@@ -1012,8 +993,9 @@ Examples of matrices include:
 ### Blending and Alpha Compositing
 
 **General alpha blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
-- Shading is equivalent to alpha blending one color with black `[0, 0, 0]`.
-- Tinting is equivalent to alpha blending one color with white `[1, 1, 1]`.
+- Generating a **shade** of a color (mixing with black) is equivalent to alpha blending that color with black `[0, 0, 0]`.
+- Generating a **tint** of a color (mixing with white) is equivalent to alpha blending that color with white `[1, 1, 1]`.
+- Generating a **tone** of a color (mixing with gray) is equivalent to alpha blending that color with gray `[0.5, 0.5, 0.5]`.
 - Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
 - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
 - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
@@ -1049,6 +1031,13 @@ Examples of matrices include:
 ### Miscellaneous
 
 - **Invert (negative)**: Generate `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`, where `color` is the given color.<sup>[(20)](#Note20)</sup>
+- **Lighten/Darken**: A choice of&mdash;
+    - `Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])`,
+    - `HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`, or
+    - `SRGBFromLab(Clamp(lab[0] + (value * 100), 0, 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (CIELAB),
+
+    generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative, where `value` is 0 or greater and 1 or less.
+- **Saturate/Desaturate**: Generate `hsv = RgbToHsv(color)`, then generate `modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)
 - **Colorize**: Given a desired `color` and a source color `srcColor`, generate
  `[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]`.
 - **Swap blue and red channels**: Generate `[color[2], color[1], color[0]]`.
@@ -1064,9 +1053,6 @@ Examples of matrices include:
 ## Color Differences
 
 _Color difference_ algorithms are used to determine if two colors are similar.
-
-<a id=Color_Difference_Methods></a>
-### Color Difference Methods
 
 In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on how `COLORDIFF` is implemented, and is not interchangeable with other implementations.
 
@@ -1175,9 +1161,8 @@ The following techniques can be used to generate random RGB colors.
 
 Note that for best results, these techniques need to use [_linearized RGB colors_](#Linearized_and_Companded_RGB), unless noted otherwise.
 
-- Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`. This technique is independent of RGB color space.
-- Generating a random string in the **HTML color format** is equivalent to generating a [random hexadecimal string](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
-This technique is independent of RGB color space, but see the [note from earlier](#HTML_Color_Format).
+- Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`.
+- Generating a random string in the **HTML color format** is equivalent to generating a [random hexadecimal string](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string. But see the [note from earlier](#HTML_Color_Format).
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
 - To generate a random **dark color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Relative_Luminance_Grayscale) is less than a given threshold, e.g., 0.5, or
@@ -1192,8 +1177,8 @@ This technique is independent of RGB color space, but see the [note from earlier
 - To generate a **random tint** of a given color, generate `Lerp(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary hue.
 - **Random color sampling:** If colors are to be selected at random from a [color map](#Color_Maps), see [Choosing a Random Item from a List](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) and [Choosing Several Unique Items](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items), for example.
-- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Difference_Methods)) is less than a predetermined threshold, where `color2` is the color to compare.  For example, if a reddish color is to be generated, `color2` would have the linearized sRGB value (1.0, 0.0, 0.0), among other possibilities.
-- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a _hash function_ to convert the data to a _hash code_ (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 RGB color.  Any such hash function should be designed such that&mdash;
+- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare,
+- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a _hash function_ to convert the data to a _hash code_ (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 color.  Any such hash function should be designed such that&mdash;
     - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
     - if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.
 
@@ -1203,7 +1188,7 @@ This technique is independent of RGB color space, but see the [note from earlier
 There are several methods of finding the kind or kinds of colors that appear most prominently in a collection of colors (including a raster image).
 
 **Averaging.**  To find the dominant color using this technique&mdash;
-- add all the RGB colors (or a sample of them) in the collection of colors (for RGB colors, adding two colors means adding each of their components individually), then
+- add all the colors (or a sample of them) in the collection of colors (for RGB colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of pixels added this way.
 
 Note that for best results, this technique needs to be carried out with [_linearized RGB colors_](#Linearized_and_Companded_RGB).
@@ -1244,7 +1229,7 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 <a id=Named_Colors></a>
 ### Named Colors
 
-If each color in a color map has a name associated with it, the color map is also called a _named color list_.  Examples of names are "red", "blue", and "orange".  It's outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).  Although names are usually associated with RGB colors, the colors can be in any color space.
+If each color in a color map has a name associated with it, the color map is also called a _named color list_.  Examples of names are "red", "blue", and "orange".  It's outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
@@ -1270,7 +1255,7 @@ In general, the more colors used, the harder it is to distinguish them from each
 color should not be ["the only visual means of conveying information"](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest [color difference](#Color_Difference_Methods), or `COLORDIFF`,
+color space (that is, where the smallest [color difference](#Color_Differences), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
 should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
@@ -1289,18 +1274,18 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 ## Spectral Color Functions
 
 A color stimulus can be represented as a function that describes a distribution of radiation (such as light) across
-the visible spectrum.  There are three cases of objects that provoke a color sensation by light:
+the visible spectrum.  There are three cases of materials that provoke a color sensation by light:
 
-- **Light sources.** A source of light is described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  With three [_color matching functions_](#Light_Source_and_Color_Matching_Functions), that "curve" can be converted to three numbers (called _tristimulus values_) that uniquely identify the light's perceived color.
-- **Reflective objects.** Most objects in nature merely reflect light, rather than being sources of light themselves.  The light they reflect can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding an object's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
-- **Transmissive objects.** The fraction of light that passes through a transmissive object, such as a light filter, can be described by a _transmittance curve_, which is the same as a reflectance curve for the purposes of finding that light's perceived color.
+- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  With three [_color matching functions_](#Light_Source_and_Color_Matching_Functions), that "curve" can be converted to three numbers (called _tristimulus values_) that uniquely identify the light's perceived color.
+- **Reflective materials.** The light reflected by a reflective (opaque) material can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding a material's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
+- **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_, which is the same as a reflectance curve for the purposes of finding that light's perceived color.
 
 In the pseudocode below:
 
 - the `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color stimulus.
 - `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding
- values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.
-- `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of reflective fluorescent objects, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
+ values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice. (See also note 3 later in this section.)
+- `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of reflective fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_.  Choices for `LIGHT` include&mdash;
     - the D65 illuminant<sup>[(22)](#Note22)</sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),
     - the D50 illuminant, which approximates 5000-kelvin daylight, and
@@ -1343,9 +1328,9 @@ In the pseudocode below:
 
 **Notes:**
 
-- The choices of `LIGHT` and `CMF` determine the _adopted white point_.
-- In general, wavelengths in this section mean wavelengths in air. (See the entry "[wavelength](http://eilv.cie.co.at/term/1426)" in the CIE's International Lighting Vocabulary.)
-- Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the `SpectrumToTristim` method.
+1. The choices of `LIGHT` and `CMF` determine the _adopted white point_.
+2. In general, wavelengths in this section mean wavelengths in air. (See the entry "[wavelength](http://eilv.cie.co.at/term/1426)" in the CIE's International Lighting Vocabulary.)
+3. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the `SpectrumToTristim` method.
 
 **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 - the adopted white point is the D65 white point,
@@ -1356,7 +1341,7 @@ In the pseudocode below:
 <a id=Color_Temperature></a>
 ### Color Temperature
 
-A _blackbody_ is an idealized object that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired **color temperature**, shown as `TEMP` below). If the following formula is used as the `LIGHT` function, `SpectrumToTristim()`'s return value will be close to the perceived color of the blackbody's emitted light.
+A _blackbody_ is an idealized material that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired **color temperature**, shown as `TEMP` below). The following formula can be the `LIGHT` function for `SpectrumToTristim()`.
 
 Source: J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)".
 
@@ -1367,7 +1352,7 @@ Source: J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/docume
     END METHOD
 
 The following method (`XYZToCCT`) computes an approximate color temperature, in kelvins, from an
-[XYZ color](#CIE_XYZ). Because of the limited perceived color range of light emitted by blackbodies (namely red, orange, pale yellow, very pale green, or sky blue), the color temperature found by
+[XYZ color](#CIE_XYZ). Because of the limited perceived color range of light emitted by blackbodies (namely red, orange, pale yellow, white, or sky blue), the color temperature found by
 this formula is often called _correlated color temperature_ (CCT).  The formula given here is based on
 the one found in McCamy 1992.
 
@@ -1387,16 +1372,14 @@ the one found in McCamy 1992.
     END METHOD
 
 <a id=Color_Mixture></a>
-## Color Mixture
+### Color Mixture
 
-In a [Web article](http://scottburns.us/subtractive-color-mixture/), Scott A. Burns indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
+In "[Subtractive Color Mixture Computation](http://scottburns.us/subtractive-color-mixture/)", Scott A. Burns indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
 
 1. finding the [_reflectance curves_](#Spectral_Color_Functions) of the pigments or colors,
 2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
 3. converting the mixed reflectance curve to an RGB color.<sup>[(24)](#Note24)</sup>
-
-S. Burns uses the term _subtractive color mixture_ for this kind of mixing.
 
 For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
@@ -1422,8 +1405,8 @@ When computing the weighted geometric mean of several reflectance curves, all th
 passed at once to the `WGM` function just given must be from the same wavelength.
 
 **Notes:**
-- Finding a _representative_ reflectance curve for an arbitrary RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that a given RGB color can be the perceived color for [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
-- If the "reflectance curves" represent light passing through transmissive objects (such as light filters), rather than pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
+- Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that a given RGB color can be the perceived color for [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
+- If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
 
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
@@ -1462,7 +1445,7 @@ Some command-line shells support coloring the background or foreground of text. 
 - "9" followed by color number: Brighter foreground color.
 - "10" followed by color number: Brighter background color.
 
-The _color number_ is one of the following, whose exact RGB color value can vary with the implementation: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here.
+The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Conclusion></a>
 ## Conclusion
@@ -1504,12 +1487,12 @@ Questions for this document:
 
 <sup id=Note5>(5)</sup> J. Novak, in "[What every coder should know about gamma](http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/)", uses the terms _physically linear_ and _perceptually linear_ to refer to what are called _linearized_ and _companded_ RGB colors, respectively, in this document.
 
-<sup id=Note6>(6)</sup> A thorough survey of working spaces other than sRGB (such as Adobe RGB and NTSC), as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on RGB working spaces.
+<sup id=Note6>(6)</sup> A thorough survey of working spaces other than sRGB, such as eciRGB and NTSC, as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on RGB working spaces.
 
 <sup id=Note7>(7)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:
 
 - Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
-- In certain industries, particularly print publishing, the CIELAB color space in use is generally based on the D50 white point.
+- In the printing industry, the D50 white point is in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.
 
 <sup id=Note8>(8)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 
