@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Sep. 26, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Sep. 29, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -177,11 +177,14 @@
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs.</p>
 
 <ul>
-<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2">(2)</a></sup>  Note that if <code>MODULUS</code> is a power of 2, <code>RNDINT</code> may result in unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</li>
+<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [0, positive <code>MODULUS</code>)</strong> (for example, less than 1,000,000 or less than 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2">(2)</a></sup></li>
 <li><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible from the underlying RNG.)</li>
-<li><p><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</p>
+<li><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</li>
+</ul>
 
-<p>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
+<hr>
+
+<pre>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
     cx = floor(maxInclusive / MODULUS) + 1
     while true
        ret = cx * RNG()
@@ -192,9 +195,9 @@
        ret = ret + RNDINT(cx - 1)
        if ret &lt;= maxInclusive: return ret
     end
-END METHOD</p>
+END METHOD
 
-<p>METHOD RndIntHelperPowerOfTwo(maxInclusive)
+METHOD RndIntHelperPowerOfTwo(maxInclusive)
         // NOTE: Finds the number of bits minus 1 needed
         // to represent MODULUS. This will be a constant
         // here, though.
@@ -211,7 +214,7 @@ END METHOD</p>
                bitCount = bitCount + 1
         end
         while true
-               // Build a number with <code>bitCount</code> bits
+               // Build a number with `bitCount` bits
                 tempnumber = 0
                 while bitCount &gt; 0
                      wordBits = modBits
@@ -235,9 +238,9 @@ END METHOD</p>
                 // Accept the number if allowed
                 if tempnumber &lt;= maxInclusive: return tempnumber
          end
-END METHOD</p>
+END METHOD
 
-<p>METHOD RNDINT(maxInclusive)
+METHOD RNDINT(maxInclusive)
   // maxInclusive must be 0 or greater
   if maxInclusive &lt; 0: return error
   if maxInclusive == 0: return 0
@@ -276,8 +279,8 @@ END METHOD</p>
                     if ret &lt; maxexc: return mod(ret, nPlusOne)
           end
   end
-END METHOD</p></li>
-</ul>
+END METHOD
+</pre>
 
 <p><strong>Notes:</strong></p>
 
@@ -2073,11 +2076,13 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/">blog post by Johnny Chan</a>.</p>
 
+<p>Note that if <code>MODULUS</code> is a power of 2 (for example, 256 or 2<sup>32</sup>), the <code>RNDINT</code> implementation given may leave unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</p>
+
 <p><sup id=Note3>(3)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
 
 <p><sup id=Note4>(4)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
 
-<h2><sup id=Note5>(5)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</h2>
+<p><sup id=Note5>(5)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
 <p><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</p>
 
