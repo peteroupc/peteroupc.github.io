@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 26, 2017.
+Begun on June 4, 2017; last updated on Sep. 29, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -129,9 +129,11 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs.
 
-- **Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(2)](#Note2)</sup>  Note that if `MODULUS` is a power of 2, `RNDINT` may result in unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+- **Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(2)](#Note2)</sup>
 - **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
 - **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
+
+----
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -1780,12 +1782,13 @@ If a number generator uses a nonuniform distribution, but otherwise meets this d
 
 <sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
+Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+
 <sup id=Note3>(3)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.
 
 <sup id=Note4>(4)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.
 
 <sup id=Note5>(5)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
--
 
 <sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
 

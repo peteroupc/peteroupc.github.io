@@ -213,7 +213,7 @@ In general, <strong>RGB color spaces</strong> differ in their red, green, blue, 
 <li><code>color[2]</code> is the color&#39;s blue component,</li>
 </ul>
 
-<p>and each component is 0 or greater and 1 or less, where brighter colors have higher-valued components in general. (The term <strong>0-1 format</strong> will be used in this document to describe this format.  All RGB colors in this document are in the 0-1 format unless noted otherwise.)</p>
+<p>and each component is 0 or greater and 1 or less, where lighter colors have higher-valued components in general. (The term <strong>0-1 format</strong> will be used in this document to describe this format.  All RGB colors in this document are in the 0-1 format unless noted otherwise.)</p>
 
 <p>Some RGB colors also contain an alpha component, expressed as <code>color[3]</code> (the fourth item in <code>color</code>) and being 0 or greater and 1 or less, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
 
@@ -660,8 +660,8 @@ END METHOD
 
 <ul>
 <li><em>Hue</em> is the same as in <a href="#HSV">HSV</a>.</li>
-<li><em>Whiteness</em> is the amount of white in the color.</li>
-<li><em>Blackness</em> is the amount of black in the color.</li>
+<li><em>Whiteness</em>, the amount of white in the color, is 0 or greater and 1 or less.</li>
+<li><em>Blackness</em>, the amount of black in the color, is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
@@ -958,10 +958,10 @@ END METHOD
 
 <h3>CMYK</h3>
 
-<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to an RGB color space, or vice versa, is not trivial, in part because&mdash;</p>
+<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to a color space modeled on light mixtures (such as an RGB color space), or vice versa, is not trivial, in part because&mdash;</p>
 
 <ol>
-<li>the conversion to an RGB color space deals with color mixture of inks, which is not as simple as mixing abstract colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), and</li>
+<li>such a conversion deals with color mixture of inks, which is not as simple as mixing abstract colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), and</li>
 <li>the meaning and conversion of CMYK colors can vary depending on the printing condition, including what inks and paper are used; for example, different inks have different light reflectances.<sup><a href="#Note12">(12)</a></sup></li>
 </ol>
 
@@ -1216,8 +1216,10 @@ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and
 
 <h3>Miscellaneous</h3>
 
+<p>In the following formulas, <code>color</code> is the source color in 0-1 format.</p>
+
 <ul>
-<li><strong>Invert (negative)</strong>: Generate <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>, where <code>color</code> is the given color.<sup><a href="#Note20">(20)</a></sup></li>
+<li><strong>Invert (negative)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note20">(20)</a></sup></li>
 <li><p><strong>Lighten/Darken</strong>: A choice of&mdash;</p>
 
 <ul>
@@ -1227,15 +1229,15 @@ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative, where <code>value</code> is 0 or greater and 1 or less.</p></li>
-<li><strong>Saturate/Desaturate</strong>: Generate <code>hsv = RgbToHsv(color)</code>, then generate <code>modifiedColor = HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
+<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 <li><strong>Colorize</strong>: Given a desired <code>color</code> and a source color <code>srcColor</code>, generate
 <code>[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]</code>.</li>
-<li><strong>Swap blue and red channels</strong>: Generate <code>[color[2], color[1], color[0]]</code>.</li>
-<li><strong>Red channel</strong>: Generate <code>[color[0], color[0], color[0]]</code>.</li>
-<li><strong>Green channel</strong>: Generate <code>[color[1], color[1], color[1]]</code>.</li>
-<li><strong>Blue channel</strong>: Generate <code>[color[2], color[2], color[2]]</code>.</li>
-<li><strong>Maximum</strong>: Generate <code>[c, c, c]</code>, where <code>c</code> is <code>max(max(color[0], color[1]), color[2])</code>.</li>
-<li><strong>Minimum</strong>: Generate <code>[c, c, c]</code>, where <code>c</code> is <code>min(min(color[0], color[1]), color[2])</code>.</li>
+<li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
+<li><strong>Red channel</strong>: <code>[color[0], color[0], color[0]]</code>.</li>
+<li><strong>Green channel</strong>: <code>[color[1], color[1], color[1]]</code>.</li>
+<li><strong>Blue channel</strong>: <code>[color[2], color[2], color[2]]</code>.</li>
+<li><strong>Maximum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>max(max(color[0], color[1]), color[2])</code>.</li>
+<li><strong>Minimum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>min(min(color[0], color[1]), color[2])</code>.</li>
 </ul>
 
 <p><strong>Note:</strong> Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include <a href="https://en.wikipedia.org/wiki/Chroma_key"><em>chroma key</em></a>, are largely out of the scope of this document.</p>
@@ -1246,7 +1248,7 @@ a saturation factor (0 for totally saturated and 1 for totally unsaturated), and
 
 <p><em>Color difference</em> algorithms are used to determine if two colors are similar.</p>
 
-<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on how <code>COLORDIFF</code> is implemented, and is not interchangeable with other implementations.</p>
+<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on the color space of the two colors and how <code>COLORDIFF</code> is implemented.</p>
 
 <p>There are many ways to implement <code>COLORDIFF</code>, the color difference.</p>
 
@@ -1264,12 +1266,9 @@ END METHOD
 <p>Note that&mdash;</p>
 
 <ul>
-<li>the Euclidean distance can be used, for example, if the colors passed to <code>NearestColorIndex</code>&mdash;
-
-<ul>
-<li>are expressed in <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em></a>, or</li>
-<li>are expressed in CIELAB or CIELUV (rather than in RGB), in which case the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]), and</li>
-</ul></li>
+<li>the Euclidean distance is independent of color model; however, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>,
+rather than companded RGB colors, should be used;</li>
+<li>for CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]); and</li>
 <li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 
@@ -1456,13 +1455,13 @@ maximum value of each color component, e.g., 0.5.</li>
 <li><strong>Qualitative color maps</strong> for showing discrete categories of data (see also &quot;<a href="#Visually_Distinct_Colors">Visually Distinct Colors</a>&quot;). Those found in <em>ColorBrewer 2.0</em> use varying hues.</li>
 </ul>
 
-<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot; and/or &quot;<a href="#Colorblindness">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note21">(21)</a></sup> and/or &quot;<a href="#Colorblindness">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 
 <p><a id=Named_Colors></a></p>
 
 <h3>Named Colors</h3>
 
-<p>If each color in a color map has a name associated with it, the color map is also called a <em>named color list</em>.  Examples of names are &quot;red&quot;, &quot;blue&quot;, and &quot;orange&quot;.  It&#39;s outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
+<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>named color list</em>.  Examples of names are &quot;red&quot;, &quot;blue&quot;, and &quot;orange&quot;.  It&#39;s outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
 
 <p>Converting a color (such as an RGB color) to a color name is equivalent to&mdash;</p>
 
@@ -1483,7 +1482,7 @@ maximum value of each color component, e.g., 0.5.</li>
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
-<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note21">(21)</a></sup>, the first nine of which
+<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note22">(22)</a></sup>, the first nine of which
 were intended for readers with normal and defective color vision, and</li>
 <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
@@ -1538,7 +1537,7 @@ values at that wavelength. But for purposes of color reproduction, only waveleng
 <li><p><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>.  Choices for <code>LIGHT</code> include&mdash;</p>
 
 <ul>
-<li>the D65 illuminant<sup><a href="#Note22">(22)</a></sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),</li>
+<li>the D65 illuminant<sup><a href="#Note23">(23)</a></sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),</li>
 <li>the D50 illuminant, which approximates 5000-kelvin daylight, and</li>
 <li>the blackbody spectral formula, given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul>
@@ -1547,8 +1546,8 @@ values at that wavelength. But for purposes of color reproduction, only waveleng
 <li><p><code>CMF(wl)</code> (three <strong>color matching functions</strong>) is used to convert a color stimulus to three <em>tristimulus values</em> of a kind that depends on <code>CMF</code>. (Each <em>color matching function</em> describes the contribution of each wavelength to the corresponding tristimulus value.) Choices for <code>CMF</code> include&mdash;</p>
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note22">(22)</a></sup><sup><a href="#Note23">(23)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
-<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note22">(22)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note23">(23)</a></sup><sup><a href="#Note24">(24)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note23">(23)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul>
 
 <p><code>CMF</code> returns a three-item list of the color matching functions&#39; values at the wavelength <code>wl</code>.</p></li>
@@ -1646,7 +1645,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note24">(24)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note25">(25)</a></sup></li>
 </ol>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
@@ -1761,7 +1760,7 @@ this page are welcome.</p>
 
 <p><sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</p>
 
-<p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 2.</p>
+<p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 6.</p>
 
 <p><sup id=Note3>(3)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</p>
 
@@ -1824,13 +1823,15 @@ this page are welcome.</p>
 
 <p><sup id=Note20>(20)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK">CMYK</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</p>
 
-<p><sup id=Note21>(21)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
+<p><sup id=Note21>(21)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent (<em>gamut</em>) of colors that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK">CMYK</a>&quot; and Note 12).</p>
 
-<p><sup id=Note22>(22)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+<p><sup id=Note22>(22)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note23>(23)</sup> The CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+<p><sup id=Note23>(23)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
 
-<p><sup id=Note24>(24)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p><sup id=Note24>(24)</sup> The CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+
+<p><sup id=Note25>(25)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 
