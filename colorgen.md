@@ -52,10 +52,11 @@ The following topics are beyond this page's scope:
     - [HSL](#HSL)
     - [HWB](#HWB)
     - [CIE XYZ](#CIE_XYZ)
+        - [Chromaticity Coordinates](#Chromaticity_Coordinates)
     - [CIELAB](#CIELAB)
     - [CIELUV](#CIELUV)
-    - [CMYK](#CMYK)
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
+    - [CMYK](#CMYK)
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
     - [Color Schemes](#Color_Schemes)
@@ -636,15 +637,45 @@ a [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) f
 needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
 The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(8)](#Note8)</sup>
 4. The `XYZTosRGB` and `XYZTosRGBD50` methods clamp components less than 0 or greater than 1 to be 0 or 1, respectively.
-5. A color can be converted between XYZ and "xyY" form (where "x" and "y" are _chromaticity coordinates_ and "Y" is _luminance_) as follows:
-    - **XYZ (`xyz`) to xyY**: Generate `xyy = [xyz[0]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]/(xyz[0]+xyz[1]+xyz[2]), xyz[1]]`.  (Note that if the sum of the XYZ components is 0, the result is undefined.)  The small-"z" chromaticity coordinate is then `1 - xyy[0] - xyy[1]`.
-    - **xyY (`xyy`) to XYZ**: Generate `xyz = [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]`.  Note that if the small-"y" component is 0,
-the result is undefined.
+
+<a id=Chromaticity_Coordinates></a>
+#### Chromaticity Coordinates
+
+_Chromaticity_ is the aspect of a color apart from its luminance, or, in other words, its "colorful" aspect.  There are two kinds of _chromaticity coordinates_.
+
+- **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are the ratios of each component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color.
+- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(9)](#Note9)</sup> "uvY" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.
+
+In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "uvY" form, respectively.
+
+        METHOD XYZToxyY(xyz)
+                // NOTE: Results undefined if sum==0
+                sum=xyz[0]+xyz[1]+xyz[2]
+                return [xyz[0]/sum, xyz[1]/sum, xyz[1]]
+        END METHOD
+
+        METHOD XYZFromxyY(xyy)
+                // NOTE: Results undefined if xyy[1]==0
+                return [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]
+        END METHOD
+
+        METHOD XYZTouvY(xyz)
+                // NOTE: Results undefined if sum==0
+                sum=xyz[0]+xyz[1]*15+xyz[2]*3
+                return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
+        END METHOD
+
+        METHOD XYZFromuvY(uvy)
+                // NOTE: Results undefined if uvy[1]==0
+                x=(9*uvy[0]*uvy[2])/(4*uvy[1])
+                z=-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
+                return [x,uvy[1],z]
+        END METHOD
 
 <a id=CIELAB></a>
 ### CIELAB
 
-[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(9)](#Note9)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in their white points.
+[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(10)](#Note10)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in their white points.
 
 A color in CIELAB consists of three components, in the following order:
 
@@ -652,13 +683,18 @@ A color in CIELAB consists of three components, in the following order:
 - _a\*_ is a coordinate of the red/green axis; the positive _a\*_ axis points to red (actually magenta)
  and the negative _a\*_ axis points to green.
 - _b\*_ is a coordinate of the yellow/blue axis; the positive _b\*_ axis points to yellow
- and the negative _b\*_ axis points to blue.<sup>[(10)](#Note10)</sup>
+ and the negative _b\*_ axis points to blue.<sup>[(11)](#Note11)</sup>
 
-In the following pseudocode&mdash;
-- the `SRGBToLab` method converts a companded sRGB color to CIELAB, with white being the D65 white point, and the `SRGBFromLab` method does the opposite conversion,
-- the `SRGBToLabD50` method converts a companded sRGB color to CIELAB, with white being the D50 white point<sup>[(7)](#Note7)</sup>, and the `SRGBFromLabD50` method does the opposite conversion, and
-- the `XYZToLab(xyz, wpoint)` method converts an XYZ color to CIELAB relative to the white point `wpoint` (a relative XYZ color),
+In the following pseudocode:
+- The `SRGBToLab` method converts a companded sRGB color to CIELAB, with white being the D65 white point, and the `SRGBFromLab` method does the opposite conversion.
+- The `SRGBToLabD50` method converts a companded sRGB color to CIELAB, with white being the D50 white point<sup>[(7)](#Note7)</sup>, and the `SRGBFromLabD50` method does the opposite conversion.
+- The `XYZToLab(xyz, wpoint)` method converts an XYZ color to CIELAB relative to the white point `wpoint` (which is a relative XYZ color),
  and the `LabToXYZ(lab, wpoint)` method does the opposite conversion.
+- `LabToChroma(lab)` finds a CIELAB color's _chroma_ (_C\*_, relative colorfulness), or distance of that color from the "gray" line.<sup>[(12)](#Note12)</sup>
+- `LabToHue(lab)` finds a CIELAB color's _hue_ (_h_, an angle in radians<sup>[(13)](#Note13)</sup>). Hue is 0 or greater
+and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).
+- `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue, in that order.
+- `LabToChromaHueDifference(lab1, lab2)` finds the _chroma-hue difference_ between two CIELAB colors, as given, for example, in ISO 12646.
 
 The pseudocode follows.
 
@@ -715,18 +751,11 @@ The pseudocode follows.
         return XYZTosRGBD50(LabToXYZ(lab, [0.9642957, 1, 0.8251046]))
     END METHOD
 
-The following formulas provide information about a CIELAB color:
+       // -- Derived values from CIELAB colors
 
-- A CIELAB color's _chroma_ (_C\*_, relative colorfulness).  The closer chroma
-is to 0 &mdash; or the closer the point (_a\*_, _b\*_) is to the origin (0, 0) &mdash;
-the closer the color is to the "gray" line.
-
-        METHOD LabToChroma(lab)
-                return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
-        END METHOD
-
-- A CIELAB color's _hue_ (_h_, an angle in radians<sup>[(11)](#Note11)</sup>). Hue is 0 or greater
-and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).
+    METHOD LabToChroma(lab)
+            return sqrt(lab[1]*lab[1] + lab[2]*lab[2])
+    END METHOD
 
         METHOD LabToHue(lab)
                 h = atan2(lab[2], lab[1])
@@ -734,18 +763,10 @@ and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan
                 return h
         END METHOD
 
-- The following method converts lightness, chroma, and hue to a
-CIELAB color.  It takes a list of those three elements in that order.
-
         METHOD LchToLab(lch)
                 // NOTE: Assumes hue is in radians, not degrees
                 return [lch[0], lch[1] * cos(lch[2]), lch[1] * sin(lch[2])]
         END METHOD
-
-- CIELAB has no formal saturation formula (see the Wikipedia article
-on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
-
-- The _chroma-hue difference_ between two CIELAB colors, as given, for example, in ISO 12646:
 
         METHOD LabToChromaHueDifference(lab1, lab2)
                 da=lab1[1]-lab2[1]
@@ -821,20 +842,12 @@ in the following pseudocode:
         return sqrt(luv[1]*luv[1]+luv[2]*luv[2])/luv[0]
     END METHOD
 
-<a id=CMYK></a>
-### CMYK
-
-CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, a proper conversion of a CMYK color to a color space modeled on light mixtures (such as an RGB color space), or vice versa, is not trivial, in part because&mdash;
-
-1. such a conversion deals with color mixture of inks, which is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), and
-2. the meaning and conversion of CMYK colors can vary depending on the printing condition, including what inks and paper are used; for example, different inks have different light reflectances.<sup>[(12)](#Note12)</sup>
-
 <a id=Y_prime_C_B_C_R></a>
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>
 
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
 
-- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[(13)](#Note13)</sup>
+- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[(14)](#Note14)</sup>
 - C<sub>_B_</sub>, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
 - C<sub>_R_</sub>, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
 
@@ -845,7 +858,7 @@ format with the components separated out (still 0 or greater and 255 or less). T
 - the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [JPEG File Interchange Format](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-For all these variants, the transformation should be done using [_companded RGB_ colors](#Linearized_and_Companded_RGB).<sup>[(14)](#Note14)</sup>
+For all these variants, the transformation should be done using [_companded RGB_ colors](#Linearized_and_Companded_RGB).<sup>[(15)](#Note15)</sup>
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminances
     // in the NTSC color space
@@ -908,6 +921,11 @@ For all these variants, the transformation should be done using [_companded RGB_
 - A thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
 the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
 
+<a id=CMYK></a>
+### CMYK
+
+CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, since color mixture of inks is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), a proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(16)](#Note16)</sup>
+
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
 
@@ -923,14 +941,14 @@ Relative luminance is a single number, being 0 or greater and 1 or less, that in
 - For [_linearized RGB_ colors](#Linearized_and_Companded_RGB)&mdash;
     - relative luminance can be found by calculating `(color[0] * r + color[1] * g + color[2] * b)`,
 where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue
-points, respectively<sup>[(6)](#Note6)</sup><sup>[(15)](#Note15)</sup>,
+points, respectively<sup>[(6)](#Note6)</sup><sup>[(17)](#Note17)</sup>,
     - the RGB color space's "black point" has a relative luminance of 0, and
     - the RGB color space's white point has a relative luminance of 1.
 
     If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
     corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.  Further details on such
     adaptation are outside the scope of this document, but see the examples. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)
-- Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(16)](#Note16)</sup>
+- Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(18)](#Note18)</sup>
 
 Examples follow for sRGB:
 
@@ -943,7 +961,7 @@ Applications of luminance include the following:
 - **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 - **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
 - **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  For example, if [`Luminance(color)`](#Relative_Luminance_Grayscale) is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.
-    - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the relative luminance of a color, as defined in the guidelines<sup>[(17)](#Note17)</sup>; `brighter` is the color with higher `RelLum`; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
+    - **Note:** In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the relative luminance of a color, as defined in the guidelines<sup>[(19)](#Note19)</sup>; `brighter` is the color with higher `RelLum`; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 (or 7) or greater.
 
 Finding the **average relative luminance of an image** or collection of colors is often equivalent to&mdash;
 - adding all the relative luminances (`Luminance(color)`) of the colors in the image or collection, then
@@ -954,7 +972,7 @@ Finding the **average relative luminance of an image** or collection of colors i
 
 The following techniques generate new colors that are related to existing colors.  See also [B. MacEvoy's summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 
-- **Color harmonies**<sup>[(18)](#Note18)</sup> result by generating several colors that differ in hue, such as with the idiom `HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))`, where X is the following for each color:
+- **Color harmonies**<sup>[(20)](#Note20)</sup> result by generating several colors that differ in hue, such as with the idiom `HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))`, where X is the following for each color:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
@@ -986,8 +1004,8 @@ Examples of matrices include:
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
  a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"
- (the source recommends different values for `r`, `g`, and `b` <sup>[(19)](#Note19)</sup>).
-- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(19)](#Note19)</sup>
+ (the source recommends different values for `r`, `g`, and `b` <sup>[(21)](#Note21)</sup>).
+- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(21)](#Note21)</sup>
 
 <a id=Blending_and_Alpha_Compositing></a>
 ### Blending and Alpha Compositing
@@ -1032,7 +1050,7 @@ Examples of matrices include:
 
 In the following formulas, `color` is the source color in 0-1 format.
 
-- **Invert (negative)**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(20)](#Note20)</sup>
+- **Invert (negative)**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(22)](#Note22)</sup>
 - **Lighten/Darken**: A choice of&mdash;
     - `Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])`,
     - `HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))`, or
@@ -1056,9 +1074,7 @@ In the following formulas, `color` is the source color in 0-1 format.
 
 _Color difference_ algorithms are used to determine if two colors are similar.
 
-In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on the color space of the two colors and how `COLORDIFF` is implemented.
-
-There are many ways to implement `COLORDIFF`, the color difference.
+In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on the color space of the two colors and how `COLORDIFF` is implemented.  Some ways to implement `COLORDIFF` are given in this section.
 
 **Euclidean distance.** One simple way is to use the Euclidean distance of the two colors, as shown in the following pseudocode.
 
@@ -1226,7 +1242,7 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(21)](#Note21)</sup> and/or "[color blind friendly](#Colorblindness)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(23)](#Note23)</sup> and/or "[color blind friendly](#Colorblindness)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Named_Colors></a>
 ### Named Colors
@@ -1247,7 +1263,7 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 Color maps can list colors used to identify different items. Because of this
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
-- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(22)](#Note22)</sup>, the first nine of which
+- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(24)](#Note24)</sup>, the first nine of which
   were intended for readers with normal and defective color vision, and
 - B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.
 
@@ -1270,7 +1286,7 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
     - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
 - To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
    generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
-- The **grayscale color map** consists of the companded sRGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
+- The **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
@@ -1278,7 +1294,7 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 A color stimulus can be represented as a function that describes a distribution of radiation (such as light) across
 the visible spectrum.  There are three cases of materials that provoke a color sensation by light:
 
-- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  With three [_color matching functions_](#Light_Source_and_Color_Matching_Functions), that "curve" can be converted to three numbers (called _tristimulus values_) that uniquely identify the light's perceived color.
+- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  With three [_color matching functions_](#Light_Source_and_Color_Matching_Functions) (which model the viewer's visual response to the light source), that "curve" can be converted to three numbers (called _tristimulus values_) that uniquely identify the light's perceived color.
 - **Reflective materials.** The light reflected by a reflective (opaque) material can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding a material's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
 - **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_, which is the same as a reflectance curve for the purposes of finding that light's perceived color.
 
@@ -1287,16 +1303,16 @@ In the pseudocode below:
 - the `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color stimulus.
 - `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding
  values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice. (See also note 3 later in this section.)
-- `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of reflective fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
+- `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_.  Choices for `LIGHT` include&mdash;
-    - the D65 illuminant<sup>[(23)](#Note23)</sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),
+    - the D65 illuminant<sup>[(25)](#Note25)</sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),
     - the D50 illuminant, which approximates 5000-kelvin daylight, and
     - the blackbody spectral formula, given in "[Color Temperature](#Color_Temperature)".
 
     `LIGHT` returns the light source's relative spectral power at the wavelength `wl`.
 - `CMF(wl)` (three **color matching functions**) is used to convert a color stimulus to three _tristimulus values_ of a kind that depends on `CMF`. (Each _color matching function_ describes the contribution of each wavelength to the corresponding tristimulus value.) Choices for `CMF` include&mdash;
-    - the CIE 1931 (2-degree) standard observer<sup>[(23)](#Note23)</sup><sup>[(24)](#Note24)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
-    - the  CIE 1964 (10-degree) standard observer<sup>[(23)](#Note23)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
+    - the CIE 1931 (2-degree) standard observer<sup>[(25)](#Note25)</sup><sup>[(26)](#Note26)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
+    - the  CIE 1964 (10-degree) standard observer<sup>[(25)](#Note25)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
 
     `CMF` returns a three-item list of the color matching functions' values at the wavelength `wl`.
 
@@ -1381,7 +1397,7 @@ In "[Subtractive Color Mixture Computation](http://scottburns.us/subtractive-col
 1. finding the [_reflectance curves_](#Spectral_Color_Functions) of the pigments or colors,
 2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
-3. converting the mixed reflectance curve to an RGB color.<sup>[(25)](#Note25)</sup>
+3. converting the mixed reflectance curve to an RGB color.<sup>[(27)](#Note27)</sup>
 
 For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
@@ -1498,49 +1514,54 @@ Questions for this document:
 
 <sup id=Note8>(8)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 
-<sup id=Note9>(9)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
+<sup id=Note9>(9)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=951) says the chromaticity difference should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
+
+<sup id=Note10>(10)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and
 - such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "Good Colour Maps: How to Design Them", arXiv:1509.03700 [cs.GR], 2015).
 
-<sup id=Note10>(10)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light/dark contrast, the _opponent signal_ red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering's work in 1878.  See also the entry "[hue](http://eilv.cie.co.at/term/542)" in the CIE's International Lighting Vocabulary.)
+<sup id=Note11>(11)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light/dark contrast, the _opponent signal_ red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering's work in 1878.  See also the entry "[hue](http://eilv.cie.co.at/term/542)" in the CIE's International Lighting Vocabulary.)
 
-<sup id=Note11>(11)</sup> Radians can be converted to degrees by multiplying by `180 / pi`.
+<sup id=Note12>(12)</sup> Note that CIELAB has no formal saturation formula (see the Wikipedia article
+on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
 
-<sup id=Note12>(12)</sup> As an example of this point, the International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as _characterization data_ or _characterization tables_.
+<sup id=Note13>(13)</sup> Radians can be converted to degrees by multiplying by `180 / pi`.
+
+<sup id=Note14>(14)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [companded RGB colors](#Linearized_and_Companded_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
+
+<sup id=Note15>(15)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linearized RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.
+
+<sup id=Note16>(16)</sup> As an example of this point, the International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as _characterization data_ or _characterization tables_.
 
 A very rough approximation of an RGB color (`color`) to a CMYK color involves generating `k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])`, then generating `[0, 0, 0, 1]` if `k` is 1, or `[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]` otherwise.  A very rough approximation of a CMYK color (`color`) to an RGB color involves generating `[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]`, where `ik = 1 - color[3]`.
 
 Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are usually not of general interest to programmers.
 
-<sup id=Note13>(13)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [companded RGB colors](#Linearized_and_Companded_RGB), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
-
-<sup id=Note14>(14)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linearized RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.
-
-<sup id=Note15>(15)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
+<sup id=Note17>(17)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
 
 - using the average (`(color[0]+color[1]+color[2])/3.0`), minimum, or maximum of the three color components (as shown on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example),
 - using the [HSL](#HSL) "lightness" (see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)), and
 - using one of the three color components (also as seen on T. Helland's site).
 
-<sup id=Note16>(16)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
+<sup id=Note18>(18)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).
 
-<sup id=Note17>(17)</sup> For companded sRGB 8/8/8 colors this is effectively equivalent to `BT709(LinearFromsRGB3(From888(color)))`.  Note that the guidelines use a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.  `RelLum(color)` is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever conformance to the guidelines is not important.  The guidelines use "relative luminance" rather than "luminance" because "[Web content does not emit light itself](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)".  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)
+<sup id=Note19>(19)</sup> For companded sRGB 8/8/8 colors this is effectively equivalent to `BT709(LinearFromsRGB3(From888(color)))`.  Note that the guidelines use a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.  `RelLum(color)` is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever conformance to the guidelines is not important.  The guidelines use "relative luminance" rather than "luminance" because "[Web content does not emit light itself](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)".  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)
 
-<sup id=Note18>(18)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
+<sup id=Note20>(20)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
 
-<sup id=Note19>(19)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue points.
+<sup id=Note21>(21)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue points.
 
-<sup id=Note20>(20)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+<sup id=Note22>(22)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
-<sup id=Note21>(21)</sup> In general, a color can be considered "print friendly" if it lies within the extent (_gamut_) of colors that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)" and Note 12).
+<sup id=Note23>(23)</sup> In general, a color can be considered "print friendly" if it lies within the extent (_gamut_) of colors that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)" and Note 12).
 
-<sup id=Note22>(22)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
+<sup id=Note24>(24)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
-<sup id=Note23>(23)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
+<sup id=Note25>(25)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
 
-<sup id=Note24>(24)</sup> The CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+<sup id=Note26>(26)</sup> The CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
 
-<sup id=Note25>(25)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+<sup id=Note27>(27)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 </small>
 
