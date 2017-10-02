@@ -341,7 +341,7 @@ characters) to and from the HTML color format or the 3-digit format.
 In a given RGB color space, an RGB color can be _linearized_ or _companded_.
 
 - A _linearized_ RGB color has a linear relationship of emitted light (as opposed to perceived light).
-- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as a _companding_ conversion (an example for sRGB is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
+- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as a _companding_ conversion (one example is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
 For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a positive number. (In this case, the transfer function is also called _gamma encoding_.)
 
@@ -644,9 +644,9 @@ The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.
 _Chromaticity_ is the aspect of a color apart from its luminance, or, in other words, its "colorful" aspect.  There are two kinds of _chromaticity coordinates_.
 
 - **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are the ratios of each component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color.
-- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(9)](#Note9)</sup> "uvY" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.
+- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(9)](#Note9)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.
 
-In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "uvY" form, respectively.
+In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
         METHOD XYZToxyY(xyz)
                 // NOTE: Results undefined if sum==0
@@ -924,7 +924,7 @@ the scope of this document; in general, such encodings take into account the hum
 <a id=CMYK></a>
 ### CMYK
 
-CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, since color mixture of inks is not as simple as mixing abstract colors (see "[Color Mixture](#Color_Mixture)", later), a proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(16)](#Note16)</sup>
+CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, since color mixture of inks is not as simple as mixing visual colors (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(16)](#Note16)</sup>
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -1549,11 +1549,11 @@ Printing systems that use mixtures of inks other than cyan, magenta, yellow, and
 
 <sup id=Note20>(20)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
 
-<sup id=Note21>(21)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB capital-Y values for the red, green, and blue points.
+<sup id=Note21>(21)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.
 
 <sup id=Note22>(22)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
-<sup id=Note23>(23)</sup> In general, a color can be considered "print friendly" if it lies within the extent (_gamut_) of colors that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)" and Note 12).
+<sup id=Note23>(23)</sup> In general, a color can be considered "print friendly" if it lies within the extent (_gamut_) of colors that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)").
 
 <sup id=Note24>(24)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
