@@ -1,5 +1,6 @@
 """
 Sample code for the article "Color Topics for Programmers"
+https://www.codeproject.com/Articles/1202772/Color-Topics-for-Programmers
 
 Written by Peter O.
 Any copyright is released to the Public Domain.
@@ -184,6 +185,26 @@ def euclideanDist(color1,color2):
    d3=color2[2] - color1[2]
    sqdist=d1*d1+d2*d2+d3*d3
    return math.sqrt(sqdist)
+
+def xyzToxyY(xyz):
+                # NOTE: Results undefined if sum==0
+                sum=xyz[0]+xyz[1]+xyz[2]
+                return [xyz[0]/sum, xyz[1]/sum, xyz[1]]
+
+def xyzFromxyY(xyy):
+                # NOTE: Results undefined if xyy[1]==0
+                return [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]
+
+def xyzTouvY(xyz):
+                # NOTE: Results undefined if sum==0
+                sum=xyz[0]+xyz[1]*15+xyz[2]*3
+                return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
+
+def xyzFromuvY(uvy):
+                # NOTE: Results undefined if uvy[1]==0
+                x=(9*uvy[0]*uvy[2])/(4*uvy[1])
+                z=-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
+                return [x,uvy[1],z]
 
 def ciede2000(lab1, lab2):
     dl=lab2[0]-lab1[0]
