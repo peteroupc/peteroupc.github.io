@@ -643,8 +643,8 @@ The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.
 
 _Chromaticity_ is the aspect of a color apart from its luminance, or, in other words, its "colorful" aspect.  There are two kinds of _chromaticity coordinates_.
 
-- **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are the ratios of each component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color.
-- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(9)](#Note9)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.
+- **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are the ratios of each component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
+- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(9)](#Note9)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
 
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
@@ -694,7 +694,7 @@ In the following pseudocode:
 - `LabToHue(lab)` finds a CIELAB color's _hue_ (_h_, an angle in radians<sup>[(13)](#Note13)</sup>). Hue is 0 or greater
 and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue, in that order.
-- `LabToChromaHueDifference(lab1, lab2)` finds the _chroma-hue difference_ between two CIELAB colors, as given, for example, in ISO 12646.
+- `LabChromaHueDifference(lab1, lab2)` finds the _chroma-hue difference_ between two CIELAB colors, as given, for example, in ISO 12646.
 
 The pseudocode follows.
 
@@ -768,7 +768,7 @@ The pseudocode follows.
                 return [lch[0], lch[1] * cos(lch[2]), lch[1] * sin(lch[2])]
         END METHOD
 
-        METHOD LabToChromaHueDifference(lab1, lab2)
+        METHOD LabChromaHueDifference(lab1, lab2)
                 da=lab1[1]-lab2[1]
                 db=lab1[2]-lab2[2]
                 return sqrt(da*da+db*db)
@@ -830,7 +830,7 @@ Hue and chroma can be derived from a
 CIELUV color in a similar way as from a CIELAB color, with
 _u\*_ and _v\*_ used instead of _a\*_ and _b\*_, respectively.
 The `LabToHue`, `LabToChroma`,
-`LabToChromaHueDifference`, and
+`LabChromaHueDifference`, and
 `LchToLab` methods from the previous section work with
 CIELUV colors analogously to CIELAB colors.
 A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness)
@@ -1094,6 +1094,62 @@ Note that&mdash;
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference to be applied to companded RGB colors in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
 
+**CMC.** The following pseudocode implements the color difference formula published by the Color Measuring Committee. Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test). Here, `LPARAM` is usually either 2 or 1 and `CPARAM` is usually 1.
+
+    METHOD COLORDIFF(lab1, lab2)
+        c1=LabToChroma(lab1)
+        c2=LabToChroma(lab2)
+        h1=LabToHue(lab1)
+        dl=0.511
+        if lab1[0]>=16: dl=0.040975*lab1[0]/(1+0.01765*lab1[0])
+        dc=0.0638+(0.0638*c1/(0.0131*c1+1))
+        f4=pow(c1,4)
+        f4=sqrt(f4/(f4+1900))
+        dt=0
+        if h1>=41*pi/45 and h1<=23*pi/12
+           dt=0.56+abs(0.2*cos(h1+14*pi/15))
+        else
+           dt=0.36+abs(0.4*cos(h1+7*pi/36))
+        end
+        dh=(dt*f4+1-f4)*dc
+        dl=dl*LPARAM
+        dc=dc*CPARAM
+        da=lab2[1]-lab1[1]
+        db=lab2[2]-lab1[2]
+        dchr=c2-c1
+        // 'dhue' is the hue difference metric Delta H*
+        dhue=sqrt(max(0,da*da+db*db-dchr*dchr))
+        dl=((lab2[0]-lab1[0])/dl)
+        dc=(dchr/dc)
+        dh=(dhue/dh)
+        return sqrt(dl*dl+dc*dc+dh*dh)
+    END METHOD
+
+**CIEDE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIEDE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.
+Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
+
+    METHOD COLORDIFF(lab1, lab2)
+        c1=LabToChroma(lab1)
+        c2=LabToChroma(lab2)
+        dl=1
+        dc=1+0.045*c1
+        dh=1+0.015*c1
+        if TEXTILES
+                dl=2
+                dc=1+0.048*c1
+                dh=1+0.014*c1
+        end
+        da=lab2[1]-lab1[1]
+        db=lab2[2]-lab1[2]
+        dchr=c2-c1
+        // 'dhue' is the hue difference metric Delta H*
+        dhue=sqrt(max(0,da*da+db*db-dchr*dchr))
+        dl=((lab2[0]-lab1[0])/dl)
+        dc=(dchr/dc)
+        dh=(dhue/dh)
+        return sqrt(dl*dl+dc*dc+dh*dh)
+    END METHOD
+
 **CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two [CIELAB](#CIELAB) colors.
 
     METHOD COLORDIFF(lab1, lab2)
@@ -1153,7 +1209,7 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
        best = -1
        bestIndex = 0
        while i < size(list)
-           dist = COLORDIFF(color, list[i])
+           dist = COLORDIFF(color,list[i])
            if i == 0 or dist < best
               best = dist
               bestIndex = i
@@ -1291,30 +1347,26 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
 
-A color stimulus can be represented as a function that describes a distribution of radiation (such as light) across
-the visible spectrum.  There are three cases of materials that provoke a color sensation by light:
+A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the visible spectrum.  There are three cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.  With three [_color matching functions_](#Light_Source_and_Color_Matching_Functions) (which model the viewer's visual response to the light source), that "curve" can be converted to three numbers (called _tristimulus values_) that uniquely identify the light's perceived color.
-- **Reflective materials.** The light reflected by a reflective (opaque) material can be described by a _reflectance curve_, which describes the fraction of light reflected at each wavelength of the visible spectrum.  Finding a material's perceived color requires knowing its reflectance curve, the light source's spectral power distribution, and the color matching functions in use.
-- **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_, which is the same as a reflectance curve for the purposes of finding that light's perceived color.
+- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.
+- **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a _reflectance curve_.
+- **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_.
+
+A material's perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three _color matching functions_).  That curve, as well as the light source's spectral curve and the color matching functions, are used to convert a color stimulus to three numbers (called _tristimulus values_) that uniquely identify the material's perceived color.
 
 In the pseudocode below:
 
-- the `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color stimulus.
-- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding
- values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice. (See also note 3 later in this section.)
+- The `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color.
+- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice. (See also note 3 later in this section.)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
-- `LIGHT(wl)` models a **light source**'s _spectral power distribution_.  Choices for `LIGHT` include&mdash;
-    - the D65 illuminant<sup>[(25)](#Note25)</sup>, which approximates 6500-kelvin daylight (daylight having a correlated color temperature of about 6500 kelvins),
-    - the D50 illuminant, which approximates 5000-kelvin daylight, and
+- `LIGHT(wl)` models a **light source**'s _spectral power distribution_; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
+    - the D65 illuminant<sup>[(25)](#Note25)</sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),
+    - the D50 illuminant, which approximates 5003-kelvin daylight, and
     - the blackbody spectral formula, given in "[Color Temperature](#Color_Temperature)".
-
-    `LIGHT` returns the light source's relative spectral power at the wavelength `wl`.
-- `CMF(wl)` (three **color matching functions**) is used to convert a color stimulus to three _tristimulus values_ of a kind that depends on `CMF`. (Each _color matching function_ describes the contribution of each wavelength to the corresponding tristimulus value.) Choices for `CMF` include&mdash;
+- `CMF(wl)` models three **color matching functions** and returns a list of those functions' values at the wavelength `wl`. Those three functions are used to convert a color stimulus to tristimulus values; the kind of tristimulus values depends on `CMF`. Choices for `CMF` include&mdash;
     - the CIE 1931 (2-degree) standard observer<sup>[(25)](#Note25)</sup><sup>[(26)](#Note26)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
     - the  CIE 1964 (10-degree) standard observer<sup>[(25)](#Note25)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
-
-    `CMF` returns a three-item list of the color matching functions' values at the wavelength `wl`.
 
 ----
 
@@ -1338,6 +1390,9 @@ In the pseudocode below:
         // color matching function set and light source together,
         // so that `weight` can be precomputed if they will
         // not change.
+        // NOTE: If `weight` is 1/683, `CMF` outputs XYZ
+        // values, and `REFL` always returns 1, then SpectrumToTristim
+        // will output XYZ values in lumens per watt.
         xyz[0] = xyz[0] / weight
         xyz[1] = xyz[1] / weight
         xyz[2] = xyz[2] / weight
@@ -1349,6 +1404,9 @@ In the pseudocode below:
 1. The choices of `LIGHT` and `CMF` determine the _adopted white point_.
 2. In general, wavelengths in this section mean wavelengths in air. (See the entry "[wavelength](http://eilv.cie.co.at/term/1426)" in the CIE's International Lighting Vocabulary.)
 3. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the `SpectrumToTristim` method.
+4. In applications where color matching is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
+    - two different curves can match the same color (and be _metamers_) or match different colors, whereas
+    - two identical curves match the same color (but are not called metamers).
 
 **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 - the adopted white point is the D65 white point,
@@ -1380,11 +1438,6 @@ the one found in McCamy 1992.
         if sum == 0: sum = 0.00001
         x = xyz[0] / sum
         y = xyz[1] / sum
-        // NOTE: `x` and `y` (and optionally `z = 1 - x - y`)
-        // define the _chromaticity_ of an XYZ color
-        // (`x=y=z=0` actually has undefined chromaticity,
-        // but in such a case, the sum is changed to nonzero
-        // here for convenience).
         c = (x - 0.3320) / (0.1858 - y)
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
@@ -1479,6 +1532,10 @@ I acknowledge&mdash;
 - Elle Stone, and
 - Thomas Mansencal.
 
+The following topics on color may be added based on reader interest:
+
+- The Hunter Lab color space, which is not covered because it sees considerably less use than CIELAB.
+
 <a id=Questions_for_This_Document></a>
 ### Questions for This Document
 
@@ -1559,7 +1616,7 @@ Printing systems that use mixtures of inks other than cyan, magenta, yellow, and
 
 <sup id=Note25>(25)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
 
-<sup id=Note26>(26)</sup> The CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+<sup id=Note26>(26)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
 
 <sup id=Note27>(27)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
