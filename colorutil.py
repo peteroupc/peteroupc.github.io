@@ -52,7 +52,6 @@ def rgbToHsv(rgb):
             h=2+(rgb[2]-rgb[0])*1.0/(mx-mn)
     if rgb[2]==mx:
             h=4+(rgb[0]-rgb[1])*1.0/(mx-mn)
-    end
     if h < 6:
         h = 6 - ((-h)% 6)
     if h >= 6:
@@ -84,6 +83,81 @@ def hsvToRgb(hsv):
     if hi == 4:
       return [e, c, val]
     return [val, c, a]
+
+def rgbToHsl(rgb):
+        vmax = max(max(rgb[0], rgb[1]), rgb[2])
+        vmin = min(min(rgb[0], rgb[1]), rgb[2])
+        vadd = vmax + vmin
+        # NOTE: "Lightness" is the midpoint between
+        # the greatest and least RGB component
+        lt = vadd / 2.0
+        if vmax==vmin:
+             return [0, 0, lt]
+        vd = vmax - vmin
+        divisor = vadd
+        if lt > 0.5: divisor = 2.0 - vadd
+        s = vd / divisor
+        h = 0
+        hvd = vd / 2.0
+        deg60 = math.pi / 3
+        if rgb[0]==vmax:
+                h=((vmax-rgb[2])*deg60 + hvd) / vd
+                h = h - ((vmax-rgb[1])*deg60+hvd) / vd
+        if rgb[2]==vmax:
+                h=math.pi * 4 / 3 + ((vmax-rgb[1])*deg60 + hvd) / vd
+                h = h - ((vmax-rgb[0])*deg60+hvd) / vd
+        if rgb[1]==vmax:
+                h=math.pi * 2 / 3 + ((vmax-rgb[0])*deg60 + hvd) / vd
+                h = h - ((vmax-rgb[2])*deg60+hvd) / vd
+        if h < 0:
+          h = math.pi * 2 - (-h)%(math.pi * 2)
+        if h >= math.pi * 2:
+           h = (h)%(math.pi * 2)
+        return [h, s, lt]
+
+def hslToRgb(hsl):
+        if hsl[1]==0: return [hsl[2],hsl[2],hsl[2]]
+        lum = hsl[2]
+        sat = hsl[1]
+        if lum <= 0.5: bb = lum * (1.0 + sat)
+        if lum > 0.5: bb= lum + sat - (lum * sat)
+        a = lum * 2 - bb
+        r = a
+        g = a
+        b = a
+        hueval = hsl[0]
+        if hueval < 0:
+                hueval = math.pi * 2 - (-hueval)%(math.pi * 2)
+        if hueval >= math.pi * 2:
+                hueval = (hueval)%(math.pi * 2)
+        hue = hueval + math.pi * 2 / 3
+        deg60 = math.pi / 3
+        deg240 = math.pi * 4 / 3
+        if hue >= math.pi * 2:
+                hue = hue - math.pi * 2
+        if hue < deg60:
+                r = a + (bb - a) * hue / deg60
+        if hue < math.pi and hue >= deg60:
+                r = bb
+        if hue < deg240 and hue >= math.pi:
+                r = a + (bb - a) * (deg240 - hue) / deg60
+        hue = hueval
+        if hue < deg60:
+                g = a + (bb - a) * hue / deg60
+        if hue < math.pi and hue >= deg60:
+                g = bb
+        if hue < deg240 and hue >= math.pi:
+                g = a + (bb - a) * (deg240 - hue) / deg60
+        hue = hueval - math.pi * 2 / 3
+        if hue < 0:
+                hue = hue + math.pi * 2
+        if hue < deg60:
+                b = a + (bb - a) * hue / deg60
+        if hue < math.pi and hue >= deg60:
+                b = bb
+        if hue < deg240 and hue >= math.pi:
+                b = a + (bb - a) * (deg240 - hue) / deg60
+        return [r, g, b]
 
 def hsvHue(rgb):
   return rgbToHsv(rgb)[0]
@@ -277,3 +351,15 @@ def sRGBToLabD50(rgb):
 
 def sRGBFromLabD50(lab):
     return xyzTosRGBD50(labToXYZ(lab, [0.9642957, 1, 0.8251046]))
+
+def labHueDifference(lab1,lab2):
+    cmul=labToChroma(lab1)*labToChroma(lab2)
+    h2=labToHue(lab2)
+    h1=labToHue(lab1)
+    hdiff=h2-h1
+    if abs(hdiff)>math.pi:
+            if h2<=h1:
+               hdiff=hdiff+math.pi*2
+            else:
+               hdiff=hdiff-math.pi*2
+    return math.sqrt(cmul)*math.sin(hdiff*0.5)*2

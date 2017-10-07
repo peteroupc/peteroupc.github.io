@@ -61,13 +61,6 @@
 <ul>
 <li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, respectively, where <code>a</code> is in radians.</li>
 <li><code>asin(a)</code> and <code>acos(a)</code> are the inverse sine and inverse cosine of <code>a</code>, respectively, in radians.</li>
-<li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
-<li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
-<li><code>sqrt(a)</code> is the square root of <code>a</code>, and is equivalent to <code>pow(a, 0.5)</code>.</li>
-<li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
-<li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
-<li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
-<li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>, where <code>a</code> and <code>b</code> must be 0 or greater, and is equivalent to <code>a - floor(a / b) * b</code>.</li>
 <li><code>atan2(y, x)</code> is&mdash;
 
 <ul>
@@ -78,6 +71,13 @@
 <li><code>pi / 2</code> if <code>y &gt; 0 and x == 0</code>, and</li>
 <li>0 if <code>y == 0 and x == 0</code>.</li>
 </ul></li>
+<li><code>pow(a, b)</code> is the number <code>a</code> raised to the power <code>b</code>.</li>
+<li><code>abs(a)</code> is the absolute value of <code>a</code>.</li>
+<li><code>sqrt(a)</code> is the square root of <code>a</code>, and is equivalent to <code>pow(a, 0.5)</code>.</li>
+<li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
+<li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
+<li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
+<li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>, where <code>a</code> and <code>b</code> must be 0 or greater, and is equivalent to <code>a - floor(a / b) * b</code>.</li>
 <li><code>min(a, b)</code> is the smaller of <code>a</code> and <code>b</code>.</li>
 <li><code>max(a, b)</code> is the larger of <code>a</code> and <code>b</code>.</li>
 </ul>
@@ -90,7 +90,7 @@
 
 <ul>
 <li>Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.</li>
-<li>The pseudocode shown doesn&#39;t cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.</li>
+<li>The pseudocode shown is not guaranteed to cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow, out-of-bounds memory access, division by zero, and unexpected infinity values.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.</li>
 </ul>
 
 <p><a id=License></a></p>
