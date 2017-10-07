@@ -23,7 +23,7 @@
 <li>spectral color functions.</li>
 </ul>
 
-<p><a href="https://peteroupc.github.io/colorutil.py">Sample Python code</a> that implements many of the methods in this document is available.</p>
+<p><a href="https://peteroupc.github.io/colorutil.py">Sample Python code</a> that implements many of the methods in this document is available.  <a href="https://peteroupc.github.io/suppcolor.html">Supplemental topics</a> are listed in another open-source page.</p>
 
 <p>The following topics are beyond this page&#39;s scope:</p>
 
@@ -501,7 +501,7 @@ is 0 or greater and 1 or less.</li>
 <li>A component variously called &quot;value&quot; or &quot;brightness&quot; is the distance of the color from black and is 0 or greater and 1 or less.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and HSV. Each RGB color is in 0-1 format.
+<p>The following pseudocode converts colors between RGB and HSV.
 The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsv(rgb)
@@ -548,7 +548,7 @@ END METHOD
 <ul>
 <li><strong><code>HSVHue(color)</code></strong> is the HSV &quot;hue&quot; component of a color, that is, <code>RgbToHsv(color)[0]</code>,</li>
 <li><strong><code>HSVSat(color)</code></strong> is the HSV saturation component of a color, that is, <code>RgbToHsv(color)[1]</code>, and</li>
-<li><strong><code>HSVVal(color)</code></strong> is the HSV brightness or &quot;value&quot; component of a color, that is, <code>RgbToHsv(color)[2]</code>.</li>
+<li><strong><code>HSVVal(color)</code></strong> is the HSV &quot;brightness&quot; or &quot;value&quot; component of a color, that is, <code>RgbToHsv(color)[2]</code>.</li>
 </ul>
 
 <p><strong>Notes:</strong></p>
@@ -565,14 +565,14 @@ END METHOD
 <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV">HSL</a> (also known as HLS), like HSV, is a color model that transforms RGB colors to ease intuition.  An HSL color consists of three components, in the following order:</p>
 
 <ul>
-<li><em>Hue</em>, which is the same for a given RGB color as in HSV.</li>
+<li><em>Hue</em> is the same for a given RGB color as in HSV.</li>
 <li>A component called &quot;saturation&quot; is the distance of the color from gray (but not necessarily from
 black or white), which is 0 or greater and 1 or less.</li>
 <li>A component variously called &quot;lightness&quot;, &quot;luminance&quot;, or &quot;luminosity&quot;, is roughly the amount
 of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black, 1 is white, and 0.5 is neither black nor white.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and HSL. Each RGB color is in 0-1 format.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p>The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsl(rgb)
     vmax = max(max(rgb[0], rgb[1]), rgb[2])
@@ -608,38 +608,31 @@ METHOD HslToRgb(hsl)
     if hsl[1]==0: return [hsl[2],hsl[2],hsl[2]]
     lum = hsl[2]
     sat = hsl[1]
+    bb = 0
     if lum &lt;= 0.5: bb = lum * (1.0 + sat)
     if lum &gt; 0.5: bb= lum + sat - (lum * sat)
     a = lum * 2 - bb
-    r = a
-    g = a
-    b = a
     hueval = hsl[0]
     if hueval &lt; 0: hueval = pi * 2 - mod(-hueval, pi * 2)
     if hueval &gt;= pi * 2: hueval = mod(hueval, pi * 2)
-    hue = hueval + pi * 2 / 3
     deg60 = pi / 3
     deg240 = pi * 4 / 3
+    hue = hueval + pi * 2 / 3
     if hue &gt;= pi * 2: hue = hue - pi * 2
-    if hue &lt; deg60: r = a + (bb - a) * hue / deg60
-    else if hue &lt; pi: r = bb
-    else if hue &lt; deg240
-            r = a + (bb - a) * (deg240 - hue) / deg60
+    hue2 = hueval - pi * 2 / 3
+    if hues2 &lt; 0: hues2 = hues2 + pi * 2
+    rgb = [a, a, a]
+    hues = [hue, hueval, hue2]
+    i = 0
+    while i &lt; 3
+       if hues[i] &lt; deg60: rgb[i] = a + (bb - a) * hues[i] / deg60
+       else if hues[i] &lt; pi: rgb[i] = bb
+       else if hues[i] &lt; deg240
+            rgb[i] = a + (bb - a) * (deg240 - hues[i]) / deg60
+       end
+       i = i + 1
     end
-    hue = hueval
-    if hue &lt; deg60: g = a + (bb - a) * hue / deg60
-    else if hue &lt; pi: g = bb
-    else if hue &lt; deg240
-            g = a + (bb - a) * (deg240 - hue) / deg60
-    end
-    hue = hueval - pi * 2 / 3
-    if hue &lt; 0: hue = hue + pi * 2
-    if hue &lt; deg60: b = a + (bb - a) * hue / deg60
-    else if hue &lt; pi: b = bb
-    else if hue &lt; deg240
-            b = a + (bb - a) * (deg240 - hue) / deg60
-    end
-    return [r, g, b]
+    return rgb
 END METHOD
 </pre>
 
@@ -767,7 +760,7 @@ The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are exampl
 <p><em>Chromaticity</em> is the aspect of a color apart from its luminance. There are two kinds of <em>chromaticity coordinates</em>.</p>
 
 <ul>
-<li><strong><em>xy</em> chromaticity.</strong> The chromaticity coordinates <em>x</em>, <em>y</em>, and <em>z</em> are the ratios of each component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  &quot;xyY&quot; form consists of <em>x</em> then <em>y</em> then the Y component of an XYZ color. &quot;Yxy&quot; form consists of the Y component then <em>x</em> then <em>y</em> of an XYZ color.</li>
+<li><strong><em>xy</em> chromaticity.</strong> The chromaticity coordinates <em>x</em>, <em>y</em>, and <em>z</em> are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  &quot;xyY&quot; form consists of <em>x</em> then <em>y</em> then the Y component of an XYZ color. &quot;Yxy&quot; form consists of the Y component then <em>x</em> then <em>y</em> of an XYZ color.</li>
 <li><strong><em>u&prime;v&prime;</em> chromaticity.</strong>  <em>u&prime;</em> and <em>v&prime;</em> describe what are considered uniform chromaticity coordinates for light sources.<sup><a href="#Note8">(8)</a></sup> &quot;u&prime;v&prime;Y&quot; form consists of <em>u&prime;</em> then <em>v&prime;</em>  then  the Y component of an XYZ color.  &quot;Yu&prime;v&prime;&quot; form consists of the Y component then <em>u&prime;</em> then <em>v&prime;</em> of an XYZ color.</li>
 </ul>
 
@@ -825,6 +818,7 @@ and the <code>LabToXYZ(lab, wpoint)</code> method does the opposite conversion.<
 <li><code>LabToHue(lab)</code> finds a CIELAB color&#39;s <em>hue</em> (<em>h</em>, an angle in radians<sup><a href="#Note13">(13)</a></sup>). Hue is 0 or greater
 and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).</li>
 <li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue, in that order.</li>
+<li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>&Delta;H*</em>) between two CIELAB colors.</li>
 <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chroma-hue difference</em> between two CIELAB colors, as given, for example, in ISO 12646.</li>
 </ul>
 
@@ -900,7 +894,19 @@ END METHOD
             return [lch[0], lch[1] * cos(lch[2]), lch[1] * sin(lch[2])]
     END METHOD
 
-    METHOD LabChromaHueDifference(lab1, lab2)
+METHOD LabHueDifference(lab1, lab2)
+  cmul=LabToChroma(lab1)*LabToChroma(lab2)
+  h2=LabToHue(lab2)
+  h1=LabToHue(lab1)
+  hdiff=h2-h1
+  if abs(hdiff)&gt;pi
+        if h2&lt;=h1: hdiff=hdiff+math.pi*2
+        else: hdiff=hdiff-math.pi*2
+  end
+  return sqrt(cmul)*sin(hdiff*0.5)*2
+END METHOD
+
+METHOD LabChromaHueDifference(lab1, lab2)
             da=lab1[1]-lab2[1]
             db=lab1[2]-lab2[2]
             return sqrt(da*da+db*db)
@@ -964,7 +970,7 @@ END METHOD
 <p>Hue and chroma can be derived from a
 CIELUV color in a similar way as from a CIELAB color, with
 <em>u*</em> and <em>v*</em> used instead of <em>a*</em> and <em>b*</em>, respectively.
-The <code>LabToHue</code>, <code>LabToChroma</code>,
+The <code>LabToHue</code>, <code>LabToChroma</code>, <code>LabHueDifference</code>,
 <code>LabChromaHueDifference</code>, and
 <code>LchToLab</code> methods from the previous section work with
 CIELUV colors analogously to CIELAB colors.
@@ -991,7 +997,7 @@ END METHOD
 </ul>
 
 <p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8
-format with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
+format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
 
 <ul>
 <li>the ITU-R BT.601 variant (for digital standard-definition video), as the <code>YCbCrToRgb</code> and <code>RgbToYCbCr</code> methods (the prime symbol is left out of those and other names in the pseudocode below for convenience only),</li>
@@ -1090,9 +1096,9 @@ the scope of this document; in general, such encodings take into account the hum
 <li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>&mdash;</p>
 
 <ul>
-<li>relative luminance can be found by calculating <code>(color[0] * r + color[1] * g + color[2] * b)</code>,
+<li>relative luminance is <code>(color[0] * r + color[1] * g + color[2] * b)</code>,
 where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (relative luminances) of the RGB color space&#39;s red, green, and blue
-points, respectively<sup><a href="#Note6">(6)</a></sup><sup><a href="#Note17">(17)</a></sup> and,</li>
+points, respectively<sup><a href="#Note6">(6)</a></sup><sup><a href="#Note17">(17)</a></sup>, and</li>
 <li>relative luminance ranges from 0 for the RGB color space&#39;s &quot;black point&quot; to 1 for its white point.</li>
 </ul>
 
@@ -1109,18 +1115,14 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code><sup><a href="#Note11">(11)</a></sup>.</li>
 </ul>
 
-<p>In the sections that follow, the method <strong><a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a></strong> returns the relative luminance of the color <code>color</code>.</p>
+<p>In the rest of this document, the method <strong><code>Luminance(color)</code></strong> returns the relative luminance of the color <code>color</code>.</p>
 
-<p>Applications of luminance include the following:</p>
+<p>Applications of relative luminance include the following:</p>
 
 <ul>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
 <li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.
-
-<ul>
-<li><strong>Note:</strong> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the relative luminance of a color, as defined in the guidelines<sup><a href="#Note19">(19)</a></sup>; <code>brighter</code> is the color with higher <code>RelLum</code>; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 (or 7) or greater.</li>
-</ul></li>
+<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.<sup><a href="#Note19">(19)</a></sup></li>
 </ul>
 
 <p>Finding the <strong>average relative luminance of an image</strong> or collection of colors is often equivalent to&mdash;</p>
@@ -1151,10 +1153,10 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <li><strong>Monochrome colors</strong>: Colors with the same hue.  Examples of generating such colors include the following:
 
 <ul>
-<li><strong>Arbitrary monochrome colors</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), S, V)</code>, where <code>S</code> is an arbitrary HSV saturation and <code>V</code> is an arbitrary HSV brightness.</li>
+<li><strong>Arbitrary monochrome colors</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), S, V)</code>, where <code>S</code> is an arbitrary HSV saturation and <code>V</code> is an arbitrary HSV &quot;brightness&quot;.</li>
 <li><strong>HSL &quot;Lightness&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSVHue(color), HSLSat(color), L)</code>, where <code>L</code> is an arbitrary HSL &quot;lightness&quot; (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).</li>
 <li><strong>HSL &quot;Saturation&quot; Adjustments</strong>: Generate one or more <code>HslToRgb(HSVHue(color), S, HSLLgt(color))</code>, where <code>S</code> is an arbitrary  HSL &quot;saturation&quot;.</li>
-<li><strong>HSV Brightness Adjustments</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), HSVSat(color), V)</code>, where <code>V</code> is an arbitrary  HSV brightness.</li>
+<li><strong>HSV &quot;brightness&quot; Adjustments</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), HSVSat(color), V)</code>, where <code>V</code> is an arbitrary  HSV &quot;brightness&quot;.</li>
 <li><strong>HSV Saturation Adjustments</strong>: Generate one or more <code>HsvToRgb(HSVHue(color), S, HSVVal(color))</code>, where <code>S</code> is an arbitrary  HSV saturation.</li>
 </ul></li>
 </ul>
@@ -1288,7 +1290,7 @@ rather than companded RGB colors, should be used;</li>
 <li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 
-<p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference to be applied to companded RGB colors in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
+<p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
 
 <p><strong>CMC.</strong> The following pseudocode implements the color difference formula (Color Measuring Committee) published in 1984. Note that in this formula, the order of the two <a href="#CIELAB">CIELAB</a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where <code>LPARAM</code> is usually either 2 or 1 and <code>CPARAM</code> is usually 1.</p>
 
@@ -1812,12 +1814,6 @@ this page are welcome.</p>
 <li>Thomas Mansencal.</li>
 </ul>
 
-<p>The following topics on color may be added based on reader interest:</p>
-
-<ul>
-<li>The Hunter Lab color space, which is not covered because it sees considerably less use than CIELAB.</li>
-</ul>
-
 <p><a id=Questions_for_This_Document></a></p>
 
 <h3>Questions for This Document</h3>
@@ -1863,7 +1859,7 @@ this page are welcome.</p>
 <li>such a claim &quot;is really only the case for very low spatial frequencies&quot;, according to P. Kovesi (P. Kovesi, &quot;Good Colour Maps: How to Design Them&quot;, arXiv:1509.03700 [cs.GR], 2015).</li>
 </ul>
 
-<p><sup id=Note10>(10)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work in 1878.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</p>
+<p><sup id=Note10>(10)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</p>
 
 <p><sup id=Note11>(11)</sup> Conversions and formulas relative to the D50 white point are provided because the following circumstances, among others, can make such a white point more convenient than the D65 white point, which is otherwise usual for sRGB:</p>
 
@@ -1897,7 +1893,9 @@ on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
 
 <p><sup id=Note18>(18)</sup> See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
 
-<p><sup id=Note19>(19)</sup> For companded sRGB 8/8/8 colors this is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>.  Note that the guidelines use a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because &quot;<a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">Web content does not emit light itself</a>&quot;.  (In fact, relative luminance, as used in this document, is ultimately relative to a reference white point, rather than being expressed in absolute units such as candelas per square meter.)</p>
+<p><sup id=Note19>(19)</sup> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the &quot;relative luminance&quot; of a color as defined in the guidelines, <code>brighter</code> is the color with higher <code>RelLum</code>; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).</p>
+
+<p>For companded sRGB 8/8/8 colors, <code>RelLum(color)</code> is effectively equivalent to <code>BT709(LinearFromsRGB3(From888(color)))</code>, with the guidelines using a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.  The guidelines use &quot;relative luminance&quot; rather than &quot;luminance&quot; because <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">&quot;Web content does not emit light itself&quot;</a>.</p>
 
 <p><sup id=Note20>(20)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.</p>
 

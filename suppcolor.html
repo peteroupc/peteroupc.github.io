@@ -1,0 +1,216 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Color Topics for Programmers</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Supplemental Color Topics for Programmers</h1>
+
+<p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
+
+<p><a id=Introduction></a></p>
+
+<h2>Introduction</h2>
+
+<p>This document presents supplemental topics about color.</p>
+
+<p><a id=Contents></a></p>
+
+<h2>Contents</h2>
+
+<ul>
+<li><a href="#Introduction">Introduction</a></li>
+<li><a href="#Contents">Contents</a></li>
+<li><a href="#Notation_and_Definitions">Notation and Definitions</a>
+
+<ul>
+<li><a href="#Utility_Functions">Utility Functions</a></li>
+</ul></li>
+<li><a href="#RGB_Color_Model">RGB Color Model</a>
+
+<ul>
+<li><a href="#RGB_Colors_and_the_0_1_Format">RGB Colors and the 0-1 Format</a></li>
+<li><a href="#Integer_Component_Formats">Integer Component Formats</a></li>
+<li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
+<li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
+<li><a href="#sRGB">sRGB</a></li>
+</ul></li>
+<li><a href="#Other_Color_Models">Other Color Models</a>
+
+<ul>
+<li><a href="#HSV">HSV</a></li>
+<li><a href="#HSL">HSL</a></li>
+<li><a href="#HWB">HWB</a></li>
+<li><a href="#CIE_XYZ">CIE XYZ</a>
+
+<ul>
+<li><a href="#Chromaticity_Coordinates">Chromaticity Coordinates</a></li>
+</ul></li>
+<li><a href="#CIELAB">CIELAB</a></li>
+<li><a href="#CIELUV">CIELUV</a></li>
+<li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a></li>
+<li><a href="#CMYK">CMYK</a></li>
+</ul></li>
+<li><a href="#Modifying_Existing_Colors">Modifying Existing Colors</a>
+
+<ul>
+<li><a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a></li>
+<li><a href="#Color_Schemes">Color Schemes</a></li>
+<li><a href="#Color_Matrices">Color Matrices</a></li>
+<li><a href="#Blending_and_Alpha_Compositing">Blending and Alpha Compositing</a></li>
+<li><a href="#Miscellaneous">Miscellaneous</a></li>
+</ul></li>
+<li><a href="#Color_Differences">Color Differences</a>
+
+<ul>
+<li><a href="#Nearest_Colors">Nearest Colors</a></li>
+</ul></li>
+<li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
+<li><a href="#Dominant_Colors_of_an_Image">Dominant Colors of an Image</a></li>
+<li><a href="#Color_Maps">Color Maps</a>
+
+<ul>
+<li><a href="#Kinds_of_Color_Maps">Kinds of Color Maps</a></li>
+<li><a href="#Named_Colors">Named Colors</a></li>
+<li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
+<li><a href="#Idioms">Idioms</a></li>
+</ul></li>
+<li><a href="#Spectral_Color_Functions">Spectral Color Functions</a>
+
+<ul>
+<li><a href="#Color_Temperature">Color Temperature</a></li>
+<li><a href="#Color_Mixture">Color Mixture</a></li>
+</ul></li>
+<li><a href="#Other_Color_Topics">Other Color Topics</a>
+
+<ul>
+<li><a href="#Colorblindness">&quot;Colorblindness&quot;</a></li>
+<li><a href="#Terminal_Colors">Terminal Colors</a></li>
+</ul></li>
+<li><a href="#Conclusion">Conclusion</a>
+
+<ul>
+<li><a href="#Questions_for_This_Document">Questions for This Document</a></li>
+</ul></li>
+<li><a href="#Notes">Notes</a></li>
+<li><a href="#License">License</a></li>
+</ul>
+
+<p><a id=Notation_and_Definitions></a></p>
+
+<h2>Notation and Definitions</h2>
+
+<p>In this document:</p>
+
+<ul>
+<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
+<li>The term <em>RGB</em> means red-green-blue.</li>
+<li>The abbreviation <em>IEC</em> means the International Electrotechnical Commission.</li>
+<li>The abbreviation <em>ISO</em> means the International Organization for Standardization.</li>
+<li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
+<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
+<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
+</ul>
+
+<h2>Additional Color Models</h2>
+
+<h3>HSI</h3>
+
+<p>A color following the HSI color model consists of three components, in the following order:</p>
+
+<ul>
+<li><em>Hue</em> has the same general meaning as HSV hue, but is calculated differently.</li>
+<li>A component called &quot;saturation&quot; is 0 or greater and 1 or less.</li>
+<li>A component called &quot;intensity&quot;, the average of the red, green, and blue components, is 0 or greater and 1 or less.</li>
+</ul>
+
+<p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+
+<pre>METHOD RgbToHsi(rgb)
+sum=rgb[0]+rgb[1]+rgb[2]
+if sum==0: return [0,0,0]
+r=rgb[0]*1.0/sum
+g=rgb[1]*1.0/sum
+b=rgb[2]*1.0/sum
+hue=acos((2*r-g-b)/(2*sqrt((b-g)*(b-r)+(g-r)*(g-r))))
+if b&gt;g: hue=2*pi-hue
+return [hue, 1-min(r,g,b)*3, sum/3.0]
+END METHOD
+
+METHOD HsiToRgb(hsi)
+h=hsi[0]
+if h &lt; 0: h = pi * 2 - mod(-h, pi * 2)
+if h &gt;= pi * 2: h = mod(h, pi * 2)
+deg120=2*pi/3
+hmod=mod(h, deg120)
+a=hsi[2]*(1-hsi[1])
+b=(hsi[1]*cos(hmod)/sin(hmod+pi/6)+1)*hsi[2]
+c=3*hsi[2]-a-b
+if h&gt;=deg120 and h &lt; deg120*2: return [a,b,c]
+if h&gt;=deg120*2: return [c,a,b]
+return [b,c,a]
+END METHOD
+</pre>
+
+<h3>Hunter Lab</h3>
+
+<p>The conversions between RGB and Hunter Lab colors, as given below, are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+
+<pre>METHOD HunterLabFromXYZ(xyz, wpoint)
+    x=xyz[0]/wpoint[0]
+    y=xyz[1]/wpoint[1]
+    z=xyz[2]/wpoint[2]
+    l=100*sqrt(y)
+    if l==0: return [0,0,0]
+    a=(7*sqrt(102)*sqrt(wpoint[0]/y)*(x-wpoint[0]*y))/(4*wpoint[0])
+    b=(77*sqrt(70)*sqrt(wpoint[2]/y)*(wpoint[2]*y-z))/(100*wpoint[2])
+    return [l,a,b]
+END METHOD
+
+METHOD HunterLabToXYZ(lab, wpoint)
+    y=lab[0]*lab[0]/10000.0
+    if y==0: return [0,0,0]
+    x=2*sqrt(102)*lab[1]*wpoint[0]/(357*sqrt(wpoint[0]/y))+wpoint[0]*y
+    z=-10*sqrt(70)*lab[1]*wpoint[2]/(539*sqrt(wpoint[2]/y))+wpoint[2]*y
+    return [x,y/wpoint[1],z]
+END METHOD
+</pre>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>This page is licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/">Creative Commons Zero</a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><fb:like send="true" width="300" show_faces="true"></fb:like></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+}
+</script>
+</body></html>

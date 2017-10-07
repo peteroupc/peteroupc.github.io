@@ -45,13 +45,6 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
 
 * `sin(a)`, `cos(a)`, and `tan(a)` are the sine, cosine, and tangent of the angle `a`, respectively, where `a` is in radians.
 * `asin(a)` and `acos(a)` are the inverse sine and inverse cosine of `a`, respectively, in radians.
-* `pow(a, b)` is the number `a` raised to the power `b`.
-* `abs(a)` is the absolute value of `a`.
-* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
-* `floor(a)` is the highest integer that is less than or equal to `a`.
-* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
-* `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
-* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` and `b` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
 * `atan2(y, x)` is&mdash;
     - the inverse tangent of `y/x` if `x > 0`,
     - &pi; plus the inverse tangent of `y/x` if `y >= 0 and x < 0`,
@@ -59,6 +52,13 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
     - `-pi / 2` if `y < 0 and x == 0`,
     - `pi / 2` if `y > 0 and x == 0`, and
     - 0 if `y == 0 and x == 0`.
+* `pow(a, b)` is the number `a` raised to the power `b`.
+* `abs(a)` is the absolute value of `a`.
+* `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
+* `floor(a)` is the highest integer that is less than or equal to `a`.
+* `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
+* `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
+* `mod(a, b)` is the remainder when `a` is divided by `b`, where `a` and `b` must be 0 or greater, and is equivalent to `a - floor(a / b) * b`.
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
 
@@ -68,7 +68,7 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
 In the pseudocode:
 
 * Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.
-* The pseudocode shown doesn't cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow checking, bounds checking, division by zero, and checks for infinity.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
+* The pseudocode shown is not guaranteed to cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow, out-of-bounds memory access, division by zero, and unexpected infinity values.  Neither is the pseudocode guaranteed to yield high performance in a particular implementation, either in time or memory.
 
 <a id=License></a>
 ## License
