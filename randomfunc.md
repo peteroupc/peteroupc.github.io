@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 29, 2017.
+Begun on June 4, 2017; last updated on Oct. 12, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -464,14 +464,14 @@ Although this idiom works well for arbitrary-precision integers, it won't work w
 
 In certain programming environments it's often impractical to implement the uniform random number generation methods just described without recurring to other programming languages.  These include the following:
 
-- Microsoft Windows batch files (newer versions of which, at least, include a `%RANDOM%` variable which returns a random 16-bit integer).
-- `bash` and other shell scripts (some of which include a `$RANDOM` variable which returns a random 16-bit integer).
+- Microsoft Windows batch files (newer versions of which, at least, include a `%RANDOM%` variable which returns a random integer in the interval \[0, 65535\]).
+- `bash` and other shell scripts (some of which include a `$RANDOM` variable which returns a random integer in the interval \[0, 65535\]).
 - SQL dialects, such as&mdash;
     - MySQL (which has a `RAND()` akin to `RNDU01OneExc()`),
     - T-SQL (which also has a `RAND()` akin to `RNDU01OneExc()`),
     - PL/SQL (which often has `DBMS_RANDOM.VALUE` akin to either `RNDU01OneExc()` or `RNDNUMEXCRANGE`),
     - PostgreSQL (which has `RANDOM()`), and
-    - SQLite (which sometimes has `RANDOM()` which returns an integer in the interval [2<sup>-63</sup>, 2<sup>63</sup>)),
+    - SQLite (which sometimes has `RANDOM()` which returns a random integer in the interval [-2<sup>63</sup>, 2<sup>63</sup>)),
 
     especially within a single query.
 
@@ -1314,7 +1314,9 @@ The algorithm below is the Best&ndash;Fisher algorithm from 1979 (as described i
             if y*(2 - y) - v >=0 or ln(y / v) + 1 - y >= 0
                if angle<-1: angle=-1
                if angle>1: angle=1
-               angle = acos(w)
+               // NOTE: Inverse cosine replaced here
+               // with `atan2` equivalent
+               angle = atan2(sqrt(1-w*w),w)
                if u < 0: angle = -angle
                return mean + angle
             end
@@ -1659,7 +1661,7 @@ Miscellaneous:
 - **Binormal distribution**: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5) * 2)`, where `df` is the number of degrees of
   freedom.
-- **Cosine distribution**: `min + (max - min) * asin(RNDNUMRANGE(-1, 1)) / pi`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17).
+- **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDNUMRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: `GammaDist(shape) / rate`, where `shape` and `rate` are the two parameters of the Erlang distribution.
 - **Generalized extreme value (Fisher&ndash;Tippett) distribution**: `a - (pow(-ln(RNDU01ZeroExc()), -c) - 1) * b / c` if `c != 0`, or `a - ln(-ln(RNDU01ZeroOneExc())) * b` otherwise, where `b` is the scale, `a` is the location of the distribution's curve peak (mode), and `c` is a shape parameter.
@@ -1742,11 +1744,11 @@ If the ball is hollow, that is, only points within a range of distances from the
 To generate a random latitude and longitude on a sphere (in radians with west and south coordinates negative) such that the resulting point is (practically) uniformly distributed on the surface of a sphere&mdash;
 
 - generate the longitude `RNDNUMEXCRANGE(-pi, pi)`, where the longitude ranges from -&pi; to &pi;, and
-- generate the latitude&mdash;
-    - `acos(RNDNUMRANGE(-1, 1)) - pi / 2`, where the latitude ranges from -&pi;/2 to &pi;/2 (the range includes the poles, which have many equivalent forms), or
-    - `acos(2 * RNDU01ZeroOneExc() - 1) - pi / 2`, where the latitude ranges from -&pi;/2 to &pi;/2 (the range excludes the poles).
+- generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where&mdash;
+    - `x = RNDNUMRANGE(-1, 1)` and the latitude ranges from -&pi;/2 to &pi;/2 (the range includes the poles, which have many equivalent forms), or
+    - `x = 2 * RNDU01ZeroOneExc() - 1` and the latitude ranges from -&pi;/2 to &pi;/2 (the range excludes the poles).
 
-Reference: ["Sphere Point Picking"](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld.
+Reference: ["Sphere Point Picking"](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).
 
 <a id=Conclusion></a>
 ## Conclusion

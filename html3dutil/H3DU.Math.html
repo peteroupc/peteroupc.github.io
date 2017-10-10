@@ -68,9 +68,9 @@ Use <a href="H3DU.Math.html#H3DU.Math.GlobalYawRollPitch">H3DU.Math.GlobalYawRol
 <li><a href="#H3DU.Math.boxCenter">boxCenter</a><br>Finds the center of a 3D bounding box.</li>
 <li><a href="#H3DU.Math.boxDimensions">boxDimensions</a><br>Finds the dimensions of a 3D bounding box.</li>
 <li><a href="#H3DU.Math.boxIsEmpty">boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.</li>
-<li><a href="#H3DU.Math.colorToLinear">colorToLinear</a><br>Converts a color from nonlinearized to linearized sRGB using the sRGB transfer function, and returns
+<li><a href="#H3DU.Math.colorToLinear">colorToLinear</a><br>Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
 a new vector with the result.</li>
-<li><a href="#H3DU.Math.colorTosRGB">colorTosRGB</a><br>Converts a color from linearized to nonlinearized sRGB using the sRGB transfer function, and returns
+<li><a href="#H3DU.Math.colorTosRGB">colorTosRGB</a><br>Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.</li>
 <li><a href="#H3DU.Math.frustumHasBox">frustumHasBox</a><br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.</li>
@@ -583,7 +583,7 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 
 <h3>(static) H3DU.Math.colorToLinear(srgb)</h3>
 
-<p>Converts a color from nonlinearized to linearized sRGB using the sRGB transfer function, and returns
+<p>Converts a color from companded to linearized sRGB using the sRGB transfer function, and returns
 a new vector with the result.</p>
 
 <p>Linearized RGB is linear because of its linear relationship of light emitted
@@ -606,7 +606,7 @@ in the &quot;srgb&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.Math.colorTosRGB(lin)</h3>
 
-<p>Converts a color from linearized to nonlinearized sRGB using the sRGB transfer function, and returns
+<p>Converts a color from linearized to companded sRGB using the sRGB transfer function, and returns
 a new vector with the result.</p>
 
 <p>Linearized RGB is linear because of its linear relationship of light emitted
@@ -622,7 +622,7 @@ by a surface of the given color.</p>
 
 <p>lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
-in nonlinearized sRGB. The alpha component will be as specified
+in companded sRGB. The alpha component will be as specified
 in the &quot;lin&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Math.frustumHasBox'></a></p>
