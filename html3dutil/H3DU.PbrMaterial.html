@@ -16,7 +16,7 @@ scatters or reflects light.</p>
 
 <p>NOTE: The default shader program assumes that all colors, as well as the albedo,
 specular, and emission maps, specified in this object are in
-<a href="H3DU.Math.html#H3DU.Math.colorTosRGB">nonlinearized sRGB</a>.</p>
+<a href="H3DU.Math.html#H3DU.Math.colorTosRGB">companded sRGB</a>.</p>
 
 <h4>Parameters</h4>
 
@@ -52,7 +52,7 @@ as specified in the texture&#39;s green channel.</li>
 <li><a href="#H3DU.PbrMaterial_specular">specular</a><br>Specular reflectivity of this material.</li>
 <li><a href="#H3DU.PbrMaterial_specularMap">specularMap</a><br>A texture where each pixel identifies the &quot;specular&quot; property of that
 part of the texture, as specified in the texture&#39;s red, green, and blue channels
-(in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">nonlinearized sRGB</a>).</li>
+(in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">companded sRGB</a>).</li>
 <li><a href="#H3DU.PbrMaterial_workflow">workflow</a><br>Specifies which workflow to use when interpreting values for this
 material.</li>
 </ul>
@@ -88,7 +88,7 @@ object and returns that object.</li>
 <p>Albedo (or base color) of this material.</p>
 
 <p>This value is a 3- or 4-element array giving the red, green, blue, and
-alpha components of the albedo (in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">nonlinearized sRGB</a>). (0,0,0,1) means an
+alpha components of the albedo (in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">companded sRGB</a>). (0,0,0,1) means an
 albedo value of black, and (1,1,1,1) means an albedo value of white.</p>
 
 <p>In the <b>metallic workflow</b>, this color specifies the amount
@@ -322,7 +322,7 @@ this is a very light version of the surface&#39;s color.</p>
 
 <p>A texture where each pixel identifies the &quot;specular&quot; property of that
 part of the texture, as specified in the texture&#39;s red, green, and blue channels
-(in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">nonlinearized sRGB</a>).</p>
+(in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">companded sRGB</a>).</p>
 
 <p>This value is only used in the <b>specular workflow</b>.</p>
 

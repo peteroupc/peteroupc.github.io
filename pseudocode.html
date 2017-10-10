@@ -60,7 +60,6 @@
 
 <ul>
 <li><code>sin(a)</code>, <code>cos(a)</code>, and <code>tan(a)</code> are the sine, cosine, and tangent of the angle <code>a</code>, respectively, where <code>a</code> is in radians.</li>
-<li><code>asin(a)</code> and <code>acos(a)</code> are the inverse sine and inverse cosine of <code>a</code>, respectively, in radians.</li>
 <li><code>atan2(y, x)</code> is&mdash;
 
 <ul>
@@ -77,9 +76,16 @@
 <li><code>floor(a)</code> is the highest integer that is less than or equal to <code>a</code>.</li>
 <li><code>ln(a)</code> is the natural logarithm of <code>a</code>.  It corresponds to the <code>Math.log</code> method in Java and JavaScript.</li>
 <li><code>exp(a)</code> is the number <em>e</em> (base of natural logarithms) raised to the power <code>a</code>.</li>
-<li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code>, where <code>a</code> and <code>b</code> must be 0 or greater, and is equivalent to <code>a - floor(a / b) * b</code>.</li>
+<li><code>mod(a, b)</code> is the remainder when <code>a</code> is divided by <code>b</code> (where <code>b</code> must be greater than 0), and is equivalent to <code>a - floor(a / b) * b</code>.</li>
 <li><code>min(a, b)</code> is the smaller of <code>a</code> and <code>b</code>.</li>
 <li><code>max(a, b)</code> is the larger of <code>a</code> and <code>b</code>.</li>
+</ul>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>The inverse sine of <code>a</code> is equivalent to <code>atan2(a, sqrt(1.0 - a * a))</code>.</li>
+<li>The inverse cosine of <code>a</code> is equivalent to <code>atan2(sqrt(1.0 - a * a), a)</code>.</li>
 </ul>
 
 <p><a id=Pseudocode_Notes></a></p>

@@ -116,7 +116,8 @@ def rgbToHsl(rgb):
         return [h, s, lt]
 
 def hslToRgb(hsl):
-        if hsl[1]==0: return [hsl[2],hsl[2],hsl[2]]
+        if hsl[1]==0:
+           return [hsl[2],hsl[2],hsl[2]]
         lum = hsl[2]
         sat = hsl[1]
         if lum <= 0.5: bb = lum * (1.0 + sat)
@@ -125,39 +126,32 @@ def hslToRgb(hsl):
         r = a
         g = a
         b = a
-        hueval = hsl[0]
-        if hueval < 0:
-                hueval = math.pi * 2 - (-hueval)%(math.pi * 2)
-        if hueval >= math.pi * 2:
-                hueval = (hueval)%(math.pi * 2)
-        hue = hueval + math.pi * 2 / 3
         deg60 = math.pi / 3
         deg240 = math.pi * 4 / 3
-        if hue >= math.pi * 2:
-                hue = hue - math.pi * 2
-        if hue < deg60:
-                r = a + (bb - a) * hue / deg60
-        if hue < math.pi and hue >= deg60:
-                r = bb
-        if hue < deg240 and hue >= math.pi:
-                r = a + (bb - a) * (deg240 - hue) / deg60
-        hue = hueval
-        if hue < deg60:
-                g = a + (bb - a) * hue / deg60
-        if hue < math.pi and hue >= deg60:
-                g = bb
-        if hue < deg240 and hue >= math.pi:
-                g = a + (bb - a) * (deg240 - hue) / deg60
-        hue = hueval - math.pi * 2 / 3
-        if hue < 0:
-                hue = hue + math.pi * 2
-        if hue < deg60:
-                b = a + (bb - a) * hue / deg60
-        if hue < math.pi and hue >= deg60:
-                b = bb
-        if hue < deg240 and hue >= math.pi:
-                b = a + (bb - a) * (deg240 - hue) / deg60
-        return [r, g, b]
+        if hueval < 0:
+          hueval = math.pi * 2 - (-hueval)%(math.pi * 2)
+        if hueval >= math.pi * 2:
+          hueval = (hueval)%(math.pi * 2)
+        deg60 = pi / 3
+        deg240 = pi * 4 / 3
+        hue = hueval + pi * 2 / 3
+        hue2 = hueval - pi * 2 / 3
+        if hue >= pi * 2:
+            hue = hue - pi * 2
+        if hues2 < 0:
+            hues2 = hues2 + pi * 2
+        rgb = [a, a, a]
+        hues = [hue, hueval, hue2]
+        i = 0
+        while i < 3
+           if hues[i] < deg60:
+                 rgb[i] = a + (bb - a) * hues[i] / deg60
+           if hues[i] >= deg60 and hues[i] < pi:
+              rgb[i] = bb
+           if hues[i] >= pi and hues[i] < deg240:
+               rgb[i] = a + (bb - a) * (deg240 - hues[i]) / deg60
+           i = i + 1
+        return rgb
 
 def hsvHue(rgb):
   return rgbToHsv(rgb)[0]
@@ -248,6 +242,18 @@ def labToHue(lab):
   if h<0:
     h=h+math.pi*2
   return h
+
+def labHueDifference(lab1,lab2):
+    cmul=labToChroma(lab1)*labToChroma(lab2)
+    h2=labToHue(lab2)
+    h1=labToHue(lab1)
+    hdiff=h2-h1
+    if abs(hdiff)>math.pi:
+            if h2<=h1:
+               hdiff=hdiff+math.pi*2
+            else:
+               hdiff=hdiff-math.pi*2
+    return math.sqrt(cmul)*math.sin(hdiff*0.5)*2
 
 def lchToLab(lch):
   # NOTE: Assumes hue is in radians, not degrees
@@ -351,15 +357,3 @@ def sRGBToLabD50(rgb):
 
 def sRGBFromLabD50(lab):
     return xyzTosRGBD50(labToXYZ(lab, [0.9642957, 1, 0.8251046]))
-
-def labHueDifference(lab1,lab2):
-    cmul=labToChroma(lab1)*labToChroma(lab2)
-    h2=labToHue(lab2)
-    h1=labToHue(lab1)
-    hdiff=h2-h1
-    if abs(hdiff)>math.pi:
-            if h2<=h1:
-               hdiff=hdiff+math.pi*2
-            else:
-               hdiff=hdiff-math.pi*2
-    return math.sqrt(cmul)*math.sin(hdiff*0.5)*2

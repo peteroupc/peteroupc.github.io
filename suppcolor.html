@@ -19,78 +19,13 @@
 <ul>
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Contents">Contents</a></li>
-<li><a href="#Notation_and_Definitions">Notation and Definitions</a>
+<li><a href="#Notation_and_Definitions">Notation and Definitions</a></li>
+<li><a href="#Additional_Color_Models">Additional Color Models</a>
 
 <ul>
-<li><a href="#Utility_Functions">Utility Functions</a></li>
+<li><a href="#HSI">HSI</a></li>
+<li><a href="#Hunter_Lab">Hunter Lab</a></li>
 </ul></li>
-<li><a href="#RGB_Color_Model">RGB Color Model</a>
-
-<ul>
-<li><a href="#RGB_Colors_and_the_0_1_Format">RGB Colors and the 0-1 Format</a></li>
-<li><a href="#Integer_Component_Formats">Integer Component Formats</a></li>
-<li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
-<li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
-<li><a href="#sRGB">sRGB</a></li>
-</ul></li>
-<li><a href="#Other_Color_Models">Other Color Models</a>
-
-<ul>
-<li><a href="#HSV">HSV</a></li>
-<li><a href="#HSL">HSL</a></li>
-<li><a href="#HWB">HWB</a></li>
-<li><a href="#CIE_XYZ">CIE XYZ</a>
-
-<ul>
-<li><a href="#Chromaticity_Coordinates">Chromaticity Coordinates</a></li>
-</ul></li>
-<li><a href="#CIELAB">CIELAB</a></li>
-<li><a href="#CIELUV">CIELUV</a></li>
-<li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a></li>
-<li><a href="#CMYK">CMYK</a></li>
-</ul></li>
-<li><a href="#Modifying_Existing_Colors">Modifying Existing Colors</a>
-
-<ul>
-<li><a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a></li>
-<li><a href="#Color_Schemes">Color Schemes</a></li>
-<li><a href="#Color_Matrices">Color Matrices</a></li>
-<li><a href="#Blending_and_Alpha_Compositing">Blending and Alpha Compositing</a></li>
-<li><a href="#Miscellaneous">Miscellaneous</a></li>
-</ul></li>
-<li><a href="#Color_Differences">Color Differences</a>
-
-<ul>
-<li><a href="#Nearest_Colors">Nearest Colors</a></li>
-</ul></li>
-<li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
-<li><a href="#Dominant_Colors_of_an_Image">Dominant Colors of an Image</a></li>
-<li><a href="#Color_Maps">Color Maps</a>
-
-<ul>
-<li><a href="#Kinds_of_Color_Maps">Kinds of Color Maps</a></li>
-<li><a href="#Named_Colors">Named Colors</a></li>
-<li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
-<li><a href="#Idioms">Idioms</a></li>
-</ul></li>
-<li><a href="#Spectral_Color_Functions">Spectral Color Functions</a>
-
-<ul>
-<li><a href="#Color_Temperature">Color Temperature</a></li>
-<li><a href="#Color_Mixture">Color Mixture</a></li>
-</ul></li>
-<li><a href="#Other_Color_Topics">Other Color Topics</a>
-
-<ul>
-<li><a href="#Colorblindness">&quot;Colorblindness&quot;</a></li>
-<li><a href="#Terminal_Colors">Terminal Colors</a></li>
-</ul></li>
-<li><a href="#Conclusion">Conclusion</a>
-
-<ul>
-<li><a href="#Questions_for_This_Document">Questions for This Document</a></li>
-</ul></li>
-<li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
 </ul>
 
@@ -110,7 +45,11 @@
 <li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
 </ul>
 
+<p><a id=Additional_Color_Models></a></p>
+
 <h2>Additional Color Models</h2>
+
+<p><a id=HSI></a></p>
 
 <h3>HSI</h3>
 
@@ -125,54 +64,56 @@
 <p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsi(rgb)
-sum=rgb[0]+rgb[1]+rgb[2]
-if sum==0: return [0,0,0]
-r=rgb[0]*1.0/sum
-g=rgb[1]*1.0/sum
-b=rgb[2]*1.0/sum
-hue=acos((2*r-g-b)/(2*sqrt((b-g)*(b-r)+(g-r)*(g-r))))
-if b&gt;g: hue=2*pi-hue
-return [hue, 1-min(r,g,b)*3, sum/3.0]
+    sum=rgb[0]+rgb[1]+rgb[2]
+    if sum==0: return [0,0,0]
+    r=rgb[0]*1.0/sum
+    g=rgb[1]*1.0/sum
+    b=rgb[2]*1.0/sum
+    coshue=(2*r-g-b)/(2*sqrt((b-g)*(b-r)+(g-r)*(g-r)))
+    hue=atan2(sqrt(1-coshue*coshue),coshue)
+    if b&gt;g: hue=2*pi-hue
+    return [hue, 1-min(r,g,b)*3, sum/3.0]
 END METHOD
 
 METHOD HsiToRgb(hsi)
-h=hsi[0]
-if h &lt; 0: h = pi * 2 - mod(-h, pi * 2)
-if h &gt;= pi * 2: h = mod(h, pi * 2)
-deg120=2*pi/3
-hmod=mod(h, deg120)
-a=hsi[2]*(1-hsi[1])
-b=(hsi[1]*cos(hmod)/sin(hmod+pi/6)+1)*hsi[2]
-c=3*hsi[2]-a-b
-if h&gt;=deg120 and h &lt; deg120*2: return [a,b,c]
-if h&gt;=deg120*2: return [c,a,b]
-return [b,c,a]
+   h=hsi[0]
+   if h &lt; 0: h = pi * 2 - mod(-h, pi * 2)
+   if h &gt;= pi * 2: h = mod(h, pi * 2)
+   deg120=2*pi/3
+   hmod=mod(h, deg120)
+   a=hsi[2]*(1-hsi[1])
+   b=(hsi[1]*cos(hmod)/sin(hmod+pi/6)+1)*hsi[2]
+   c=3*hsi[2]-a-b
+   if h&gt;=deg120 and h &lt; deg120*2: return [a,b,c]
+   if h&gt;=deg120*2: return [c,a,b]
+   return [b,c,a]
 END METHOD
 </pre>
+
+<p><a id=Hunter_Lab></a></p>
 
 <h3>Hunter Lab</h3>
 
 <p>The conversions between RGB and Hunter Lab colors, as given below, are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
-<pre>METHOD HunterLabFromXYZ(xyz, wpoint)
+<p>METHOD HunterLabFromXYZ(xyz, wpoint)
     x=xyz[0]/wpoint[0]
     y=xyz[1]/wpoint[1]
     z=xyz[2]/wpoint[2]
-    l=100*sqrt(y)
+    l=100<em>sqrt(y)
     if l==0: return [0,0,0]
-    a=(7*sqrt(102)*sqrt(wpoint[0]/y)*(x-wpoint[0]*y))/(4*wpoint[0])
-    b=(77*sqrt(70)*sqrt(wpoint[2]/y)*(wpoint[2]*y-z))/(100*wpoint[2])
+    a=(7</em>sqrt(102)<em>sqrt(wpoint[0]/y)</em>(x-wpoint[0]<em>y))/(4</em>wpoint[0])
+    b=(77<em>sqrt(70)</em>sqrt(wpoint[2]/y)<em>(wpoint[2]</em>y-z))/(100*wpoint[2])
     return [l,a,b]
-END METHOD
+  END METHOD</p>
 
-METHOD HunterLabToXYZ(lab, wpoint)
-    y=lab[0]*lab[0]/10000.0
+<p>METHOD HunterLabToXYZ(lab, wpoint)
+    y=lab[0]<em>lab[0]/10000.0
     if y==0: return [0,0,0]
-    x=2*sqrt(102)*lab[1]*wpoint[0]/(357*sqrt(wpoint[0]/y))+wpoint[0]*y
-    z=-10*sqrt(70)*lab[1]*wpoint[2]/(539*sqrt(wpoint[2]/y))+wpoint[2]*y
+    x=2</em>sqrt(102)<em>lab[1]</em>wpoint[0]/(357<em>sqrt(wpoint[0]/y))+wpoint[0]</em>y
+    z=-10<em>sqrt(70)</em>lab[1]<em>wpoint[2]/(539</em>sqrt(wpoint[2]/y))+wpoint[2]*y
     return [x,y/wpoint[1],z]
-END METHOD
-</pre>
+  END METHOD</p>
 
 <p><a id=License></a></p>
 

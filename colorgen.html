@@ -200,10 +200,9 @@ END
 
 <h2>RGB Color Model</h2>
 
-<p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space. The <strong>red-green-blue (RGB) color model</strong> is based, at least in theory, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display.<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
+<p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space. The <strong>red-green-blue (RGB) color model</strong> is based, at least in theory, on the intensity that a set of tiny red, green, and blue light-emitting dots should have in order to reproduce a given color on an electronic display (if possible).<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
-<p>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.
-In general, <strong>RGB color spaces</strong> differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
+<p>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model. In general, <strong>RGB color spaces</strong> differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
 
 <p>The following details concepts related to the RGB color model.</p>
 
@@ -618,8 +617,8 @@ METHOD HslToRgb(hsl)
     deg60 = pi / 3
     deg240 = pi * 4 / 3
     hue = hueval + pi * 2 / 3
-    if hue &gt;= pi * 2: hue = hue - pi * 2
     hue2 = hueval - pi * 2 / 3
+    if hue &gt;= pi * 2: hue = hue - pi * 2
     if hues2 &lt; 0: hues2 = hues2 + pi * 2
     rgb = [a, a, a]
     hues = [hue, hueval, hue2]
@@ -817,8 +816,8 @@ and the <code>LabToXYZ(lab, wpoint)</code> method does the opposite conversion.<
 <li><code>LabToChroma(lab)</code> finds a CIELAB color&#39;s <em>chroma</em> (<em>C*</em>, relative colorfulness), or distance of that color from the &quot;gray&quot; line.<sup><a href="#Note12">(12)</a></sup></li>
 <li><code>LabToHue(lab)</code> finds a CIELAB color&#39;s <em>hue</em> (<em>h</em>, an angle in radians<sup><a href="#Note13">(13)</a></sup>). Hue is 0 or greater
 and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).</li>
-<li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue, in that order.</li>
-<li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>&Delta;H*</em>) between two CIELAB colors.</li>
+<li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue (<em>L*C*h</em>), in that order.</li>
+<li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>&Delta;H*</em>) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.</li>
 <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chroma-hue difference</em> between two CIELAB colors, as given, for example, in ISO 12646.</li>
 </ul>
 
@@ -913,13 +912,13 @@ METHOD LabChromaHueDifference(lab1, lab2)
     END METHOD
 </pre>
 
+<p><strong>Note:</strong> The difference in lightness, <em>a*</em>, <em>b*</em>, or chroma (<em>&Delta;L*</em>, <em>&Delta;a*</em>, <em>&Delta;b*</em>, or <em>&Delta;C*</em>, respectively), between two CIELAB colors is simply the difference between the corresponding value of the second CIELAB color and that of the first.</p>
+
 <p><a id=CIELUV></a></p>
 
 <h3>CIELUV</h3>
 
-<p>CIELUV (also known as CIE <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely,
-<em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>,
-and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV">B. MacEvoy explains</a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially used when working with colors of light sources.</p>
+<p>CIELUV (also known as CIE <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, <em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>, and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV">B. MacEvoy explains</a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially used when working with colors of light sources.</p>
 
 <p>In the following pseudocode, the <code>SRGBToLuv</code>, <code>SRGBFromLuv</code>, <code>SRGBToLuvD50</code>, <code>SRGBFromLuvD50</code>, <code>XYZToLuv</code>, and <code>LuvToXYZ</code> methods perform conversions involving CIELUV colors analogously to the similarly named methods for <a href="#CIELAB">CIELAB</a>.</p>
 
@@ -984,6 +983,8 @@ in the following pseudocode:</p>
 END METHOD
 </pre>
 
+<p><strong>Note:</strong> The difference in lightness, <em>u*</em>, <em>v*</em>, or chroma (<em>&Delta;L*</em>, <em>&Delta;u*</em>, <em>&Delta;v*</em>, or <em>&Delta;C*</em>, respectively), between two CIELUV colors is simply the difference between the corresponding value of the second CIELUV color and that of the first.</p>
+
 <p><a id=Y_prime_C_B_C_R></a></p>
 
 <h3>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></h3>
@@ -996,8 +997,7 @@ END METHOD
 <li>C<sub><em>R</em></sub>, or <em>red chroma</em>, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8
-format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
+<p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8 format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
 
 <ul>
 <li>the ITU-R BT.601 variant (for digital standard-definition video), as the <code>YCbCrToRgb</code> and <code>RgbToYCbCr</code> methods (the prime symbol is left out of those and other names in the pseudocode below for convenience only),</li>
@@ -1076,7 +1076,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <h3>CMYK</h3>
 
-<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper.  However, since color mixture of inks is not as simple as mixing visual colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup><a href="#Note16">(16)</a></sup></p>
+<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper (if possible).  However, since color mixture of inks is not as simple as mixing visual colors (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup><a href="#Note16">(16)</a></sup></p>
 
 <p><a id=Modifying_Existing_Colors></a></p>
 
@@ -1286,13 +1286,20 @@ END METHOD
 <ul>
 <li>the Euclidean distance is independent of color model; however, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>,
 rather than companded RGB colors, should be used;</li>
-<li>for CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994]); and</li>
+<li>for CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994])<sub><a href="#Note30">(30)</a></sub>; and</li>
 <li>if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 
 <p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article <a href="https://www.compuphase.com/cmetric.htm">&quot;Colour metric&quot;</a> (section &quot;A low-cost approximation&quot;).</p>
 
-<p><strong>CMC.</strong> The following pseudocode implements the color difference formula (Color Measuring Committee) published in 1984. Note that in this formula, the order of the two <a href="#CIELAB">CIELAB</a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where <code>LPARAM</code> is usually either 2 or 1 and <code>CPARAM</code> is usually 1.</p>
+<p><strong>CMC.</strong> The following pseudocode implements the color difference formula (Color Measuring Committee) published in 1984. Note that in this formula, the order of the two <a href="#CIELAB">CIELAB</a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where&mdash;</p>
+
+<ul>
+<li><code>LPARAM</code> is a lightness tolerance and is usually either 2 or 1, and</li>
+<li><code>CPARAM</code> is a chroma tolerance and is usually 1.</li>
+</ul>
+
+<hr>
 
 <pre>METHOD COLORDIFF(lab1, lab2)
     c1=LabToChroma(lab1)
@@ -1436,9 +1443,7 @@ END METHOD
 
 <h2>Generating a Random Color</h2>
 
-<p>The following techniques can be used to generate random RGB colors.</p>
-
-<p>Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
+<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
 
 <ul>
 <li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
@@ -1596,7 +1601,7 @@ generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
 <p>A color stimulus can be represented as a function (&quot;curve&quot;) that describes a distribution of radiation (such as light) across the visible spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A source of light can be described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.</li>
+<li><strong>Light sources.</strong> A source of light can be described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the visible spectrum.<sup><a href="#Note25">(25)</a></sup></li>
 <li><strong>Reflective materials.</strong> The fraction of light reflected by a reflective (opaque) material can be described by a <em>reflectance curve</em>.</li>
 <li><strong>Transmissive materials.</strong> The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a <em>transmittance curve</em>.</li>
 </ul>
@@ -1612,15 +1617,15 @@ generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
 <li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
-<li>the D65 illuminant<sup><a href="#Note25">(25)</a></sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),</li>
+<li>the D65 illuminant<sup><a href="#Note26">(26)</a></sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),</li>
 <li>the D50 illuminant, which approximates 5003-kelvin daylight, and</li>
 <li>the blackbody spectral formula, given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul></li>
 <li><code>CMF(wl)</code> models three <strong>color matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note25">(25)</a></sup><sup><a href="#Note26">(26)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
-<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note25">(25)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note26">(26)</a></sup><sup><a href="#Note27">(27)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note26">(26)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul></li>
 </ul>
 
@@ -1683,7 +1688,7 @@ END METHOD
 
 <h3>Color Temperature</h3>
 
-<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired <strong>color temperature</strong>, shown as <code>TEMP</code> below). The following formula can be the <code>LIGHT</code> function for <code>SpectrumToTristim()</code>.<sup><a href="#Note27">(27)</a></sup></p>
+<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired <strong>color temperature</strong>, shown as <code>TEMP</code> below). The following formula can be the <code>LIGHT</code> function for <code>SpectrumToTristim()</code>.<sup><a href="#Note28">(28)</a></sup></p>
 
 <pre>METHOD LIGHT(wavelength)
     meters = wavelength*pow(10, -9)
@@ -1718,7 +1723,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note28">(28)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note29">(29)</a></sup></li>
 </ol>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
@@ -1831,9 +1836,9 @@ this page are welcome.</p>
 
 <p><small></p>
 
-<p><sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays are likely to use four dots per pixel (red, green, blue, and white, or RGBW), and color spaces following the <em>RGBW color model</em> describe, at least in theory, the intensity those four dots should have in order to reproduce a given color.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</p>
+<p><sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and LEDs are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the <em>RGBW color model</em>, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.</p>
 
-<p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as colors that can be seen, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 6.</p>
+<p><sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 6.</p>
 
 <p><sup id=Note3>(3)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</p>
 
@@ -1865,11 +1870,10 @@ this page are welcome.</p>
 
 <ul>
 <li>Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.</li>
-<li>In the printing industry, the D50 white point is in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.</li>
+<li>In the printing industry, the D50 illuminant and D50 white point are in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.</li>
 </ul>
 
-<p><sup id=Note12>(12)</sup> Note that CIELAB has no formal saturation formula (see the Wikipedia article
-on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
+<p><sup id=Note12>(12)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are absolute: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue content (<em>colorfulness</em>) compared to other colors of the same hue and brightness. (See also the CIE&#39;s International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
 
 <p><sup id=Note13>(13)</sup> Radians can be converted to degrees by multiplying by <code>180 / pi</code>.</p>
 
@@ -1907,13 +1911,15 @@ on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
 
 <p><sup id=Note24>(24)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note25>(25)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+<p><sup id=Note25>(25)</sup> In this document, <em>light sources</em> include those that physically exist as well as theoretical forms (with mathematical spectral distributions) often called <em>illuminants</em>.</p>
 
-<p><sup id=Note26>(26)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+<p><sup id=Note26>(26)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
 
-<p><sup id=Note27>(27)</sup> Source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
+<p><sup id=Note27>(27)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
-<p><sup id=Note28>(28)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p><sup id=Note28>(28)</sup> Source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
+
+<p><sup id=Note29>(29)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; also affect how paints mix.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 
