@@ -9,12 +9,15 @@
 <pre>public interface IReader extends IByteReader
 </pre>
 
+<p>A generic interface for reading bytes of data from a data source.</p>
+
 <h2>Methods</h2>
 
 <ul>
 <li><code>int Read(byte[] bytes,
 int offset,
-int length)</code><br></li>
+int length)</code><br>
+Reads a portion of a byte array from the data source.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -24,10 +27,68 @@ int length)</code><br></li>
 <pre>int Read(byte[] bytes, int offset, int length)
 </pre>
 
+<p>Reads a portion of a byte array from the data source.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array which will contain the data that was read from the
+data source.</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
+(but not more than <code>bytes</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes read from the data source. Can be less than
+&quot;length&quot; if the end of the stream was reached.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - Should be thrown if the parameter
+&quot;bytes&quot; is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Should be thrown if either &quot;offset&quot; or
+&quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot;
+&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+</ul>
+
 <h3>Read</h3>
 
 <pre>int Read(byte[] bytes, int offset, int length)
 </pre>
+
+<p>Reads a portion of a byte array from the data source.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bytes</code> - A byte array which will contain the data that was read from the
+data source.</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>bytes</code> begins.</p></li>
+<li><p><code>length</code> - The number of elements in the desired portion of <code>bytes</code>
+(but not more than <code>bytes</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes read from the data source. Can be less than
+&quot;length&quot; if the end of the stream was reached.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - Should be thrown if the parameter
+&quot;bytes&quot; is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Should be thrown if either &quot;offset&quot; or
+&quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot;
+&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+</ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
 </div><nav id="navigation"><ul>

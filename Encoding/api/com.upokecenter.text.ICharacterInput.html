@@ -9,13 +9,17 @@
 <pre>public interface ICharacterInput
 </pre>
 
+<p>An interface for reading Unicode code points from a data source.</p>
+
 <h2>Methods</h2>
 
 <ul>
 <li><code>int Read(int[] chars,
 int index,
-int length)</code><br></li>
-<li><code>int ReadChar()</code><br></li>
+int length)</code><br>
+Reads a sequence of Unicode code points from a data source.</li>
+<li><code>int ReadChar()</code><br>
+Reads a Unicode code point from a data source.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -25,10 +29,43 @@ int length)</code><br></li>
 <pre>int ReadChar()
 </pre>
 
+<p>Reads a Unicode code point from a data source.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+0x10ffff), or the value -1 indicating the end of the source.</li>
+</ul>
+
 <h3>Read</h3>
 
 <pre>int Read(int[] chars, int index, int length)
 </pre>
+
+<p>Reads a sequence of Unicode code points from a data source.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - Output buffer.</p></li>
+<li><p><code>index</code> - A zero-based index showing where the desired portion of <code>chars</code> begins.</p></li>
+<li><p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
+(but not more than <code>chars</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+0x10ffff), or the value -1 indicating the end of the source.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - Should be thrown if &quot;chars&quot; is null.</li>
+</ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
 </div><nav id="navigation"><ul>
