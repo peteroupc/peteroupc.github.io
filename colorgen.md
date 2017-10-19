@@ -404,7 +404,7 @@ an overview.
 [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
 
 - _Hue_ is an angle in radians and is 0 or greater and less than 2&pi; (from red at 0 to yellow to green to cyan to blue to magenta to red).
-- _Saturation_, the distance of the color from gray and white (but not necessarily from black),
+- A component called "saturation", the distance of the color from gray and white (but not necessarily from black),
   is 0 or greater and 1 or less.
 - A component variously called "value" or "brightness" is the distance of the color from black and is 0 or greater and 1 or less.
 
@@ -452,7 +452,7 @@ The transformation is independent of RGB color space, but should be done using [
 In the rest of this document&mdash;
 
 - **`HSVHue(color)`** is the HSV "hue" component of a color, that is, `RgbToHsv(color)[0]`,
-- **`HSVSat(color)`** is the HSV saturation component of a color, that is, `RgbToHsv(color)[1]`, and
+- **`HSVSat(color)`** is the HSV "saturation" component of a color, that is, `RgbToHsv(color)[1]`, and
 - **`HSVVal(color)`** is the HSV "brightness" or "value" component of a color, that is, `RgbToHsv(color)[2]`.
 
 **Notes:**
@@ -668,7 +668,7 @@ In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to a
 <a id=CIELAB></a>
 ### CIELAB
 
-[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(9)](#Note9)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in their white points.
+[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_ or CIE 1976 _L\*a\*b\*_) is a color model designed for color comparisons.<sup>[(9)](#Note9)</sup>  It arranges colors in three-dimensional space such that colors that appear similar will generally be close in space, and places black at the origin of the space.  In general, CIELAB color spaces differ in their white points.
 
 A color in CIELAB consists of three components, in the following order:
 
@@ -688,7 +688,7 @@ In the following pseudocode:
 and less than 2&pi; (from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta).
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order.
 - `LabHueDifference(lab1, lab2)` finds the _metric hue difference_ (_&Delta;H\*_) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.
-- `LabChromaHueDifference(lab1, lab2)` finds the _chroma-hue difference_ between two CIELAB colors, as given, for example, in ISO 12646.
+- `LabChromaHueDifference(lab1, lab2)` finds the _chromaticness difference_ (&Delta;_C_<sub>h</sub>) between two CIELAB colors, as given, for example, in ISO 13655.
 
 The pseudocode follows.
 
@@ -722,7 +722,7 @@ The pseudocode follows.
         if lab[0] > 8 // See BruceLindbloom.com
                 xyz[1]=pow(((lab[0]+16)/116.0), 3.0)
         else
-                xyz[1]=lab[0]*27/24389.0 // See BruceLindbloom.com
+                xyz[1]=lab[0]*27.0/24389 // See BruceLindbloom.com
         end
         xyz[0]=xyz[0]*wpx
         xyz[2]=xyz[2]*wpz
@@ -785,7 +785,7 @@ The pseudocode follows.
 <a id=CIELUV></a>
 ### CIELUV
 
-CIELUV (also known as CIE _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially used when working with colors of light sources.
+CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially used when working with colors of light sources.
 
 In the following pseudocode, the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB).
 
@@ -931,7 +931,7 @@ the scope of this document; in general, such encodings take into account the hum
 <a id=CMYK></a>
 ### CMYK
 
-CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper (if possible).  However, since color mixture of inks is not as simple as mixing visual colors (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(16)](#Note16)</sup>
+CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper (if possible).  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(16)](#Note16)</sup>
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -945,11 +945,11 @@ Note that for best results, these techniques need to be carried out with [_linea
 
 Relative luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the [XYZ color model](#CIE_XYZ).
 
-- For [_linearized RGB_ colors](#Linearized_and_Companded_RGB)&mdash;
-    - relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`,
+- For [_linearized RGB_ colors](#Linearized_and_Companded_RGB), relative luminance&mdash;
+    - is `(color[0] * r + color[1] * g + color[2] * b)`,
 where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue
 points, respectively<sup>[(6)](#Note6)</sup><sup>[(17)](#Note17)</sup>, and
-    - relative luminance ranges from 0 for the RGB color space's "black point" to 1 for its white point.
+    - ranges from 0 for the RGB color space's "black point" to 1 for its white point.
 
     If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the
     corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.  Further details on such
@@ -975,9 +975,9 @@ Finding the **average relative luminance of an image** or collection of colors i
 <a id=Color_Schemes></a>
 ### Color Schemes
 
-The following techniques generate new colors that are related to existing colors.  See also [B. MacEvoy's summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
+The following techniques generate new colors that are related to existing colors.
 
-- **Color harmonies**<sup>[(20)](#Note20)</sup> result by generating several colors that differ in hue, such as with the idiom `HslToRgb(HSVHue(color) + X, HSLSat(color), HSLLgt(color))`, where X is the following for each color:
+- **Color harmonies**<sup>[(20)](#Note20)</sup> result by generating several colors that differ in hue.  For each color harmony given below, the following numbers are added to a hue in radians (0 or greater, less than 2&pi) to generate the hues for the colors that make up that harmony:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
@@ -985,12 +985,7 @@ The following techniques generate new colors that are related to existing colors
     - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
-- **Monochrome colors**: Colors with the same hue.  Examples of generating such colors include the following:
-    - **Arbitrary monochrome colors**: Generate one or more `HsvToRgb(HSVHue(color), S, V)`, where `S` is an arbitrary HSV saturation and `V` is an arbitrary HSV "brightness".
-    - **HSL "Lightness" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), HSLSat(color), L)`, where `L` is an arbitrary HSL "lightness" (less than 0.5 results in a color closer to black, and greater than 0.5 results in a color closer to white).
-    - **HSL "Saturation" Adjustments**: Generate one or more `HslToRgb(HSVHue(color), S, HSLLgt(color))`, where `S` is an arbitrary  HSL "saturation".
-    - **HSV "brightness" Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), HSVSat(color), V)`, where `V` is an arbitrary  HSV "brightness".
-    - **HSV Saturation Adjustments**: Generate one or more `HsvToRgb(HSVHue(color), S, HSVVal(color))`, where `S` is an arbitrary  HSV saturation.
+- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Blending_and_Alpha_Compositing) of a given color are monochrome colors.
 
 <a id=Color_Matrices></a>
 ### Color Matrices
@@ -1007,8 +1002,8 @@ is transformed with a color matrix (`matrix`) as follows:
 Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
-- **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` is
- a saturation factor (0 for totally saturated and 1 for totally unsaturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"
+- **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"
  (the source recommends different values for `r`, `g`, and `b` <sup>[(21)](#Note21)</sup>).
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle in radians.<sup>[(21)](#Note21)</sup>
 
@@ -1099,7 +1094,7 @@ Note that&mdash;
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
 
-**CMC.** The following pseudocode implements the color difference formula (Color Measuring Committee) published in 1984. Note that in this formula, the order of the two [CIELAB](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
+**CMC.** The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two [CIELAB](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
 
 - `LPARAM` is a lightness tolerance and is usually either 2 or 1, and
 - `CPARAM` is a chroma tolerance and is usually 1.
@@ -1134,7 +1129,7 @@ Note that&mdash;
         return sqrt(dl*dl+dc*dc+dh*dh)
     END METHOD
 
-**CIEDE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIEDE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.
+**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.
 Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
 
     METHOD COLORDIFF(lab1, lab2)
@@ -1357,7 +1352,7 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the visible spectrum.  There are three cases of objects that provoke a color sensation by light:
 
 - **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.<sup>[(25)](#Note25)</sup>
-- **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a _reflectance curve_.
+- **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a (_spectral_) _reflectance curve_.
 - **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_.
 
 A material's perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three _color matching functions_).  That curve, the light source's spectral curve, and the color matching functions, are used to convert a color stimulus to three numbers (called _tristimulus values_) that uniquely identify the material's perceived color.
@@ -1365,7 +1360,7 @@ A material's perceived color depends on its reflectance or transmittance curve, 
 In the pseudocode below:
 
 - The `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color.
-- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice. (See also note 3 later in this section.)
+- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m), as well as a 5 nm interval in all three functions (according to CIE Publication 15), are relevant in practice. (See also note 3 later in this section.)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
     - the D65 illuminant<sup>[(26)](#Note26)</sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),
@@ -1447,6 +1442,8 @@ the one found in McCamy 1992.
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
+**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a division which admits of much variation.
+
 <a id=Color_Mixture></a>
 ### Color Mixture
 
@@ -1492,12 +1489,12 @@ This section discusses miscellaneous topics related to colors.
 <a id=Colorblindness></a>
 ### "Colorblindness"
 
-What is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness) results from a lack of one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males. ("Colorblindness" is part of the broader concept of [_defective color vision_](http://eilv.cie.co.at/term/287).)
+[Defective color vision](http://eilv.cie.co.at/term/287), including what is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
 Each human retina usually has three kinds of cones (L, M, and S),
-and color is sensed by the visual system from the relative degree
+and the visual system senses color by from the relative degree
 to which all three kinds of cones respond to a stimulus of light.  Usually,
-at least two of these three kinds of cones will respond to light this way.  The most common forms of "colorblindness", _protanopia_ and _deuteranopia_, result from a lack of the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
+at least two of these three kinds of cones will respond to light this way.  The most common forms of "colorblindness", _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
 
 However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
 
@@ -1580,7 +1577,7 @@ Questions for this document:
 - Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
 - In the printing industry, the D50 illuminant and D50 white point are in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.
 
-<sup id=Note12>(12)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are absolute: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue content (_colorfulness_) compared to other colors of the same hue and brightness. (See also the CIE's International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
+<sup id=Note12>(12)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are absolute rather than relative: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue content (_colorfulness_) compared to other colors of the same hue and brightness. (See also the CIE's International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
 
 <sup id=Note13>(13)</sup> Radians can be converted to degrees by multiplying by `180 / pi`.
 
@@ -1606,7 +1603,7 @@ Printing systems that use mixtures of inks other than cyan, magenta, yellow, and
 
 For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `BT709(LinearFromsRGB3(From888(color)))`, with the guidelines using a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.  `RelLum(color)` is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever conformance to the guidelines is not important.  The guidelines use "relative luminance" rather than "luminance" because ["Web content does not emit light itself"](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html).
 
-<sup id=Note20>(20)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).
+<sup id=Note20>(20)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 
 <sup id=Note21>(21)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.
 
@@ -1616,7 +1613,7 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note24>(24)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
-<sup id=Note25>(25)</sup> In this document, _light sources_ include those that physically exist as well as theoretical forms (with mathematical spectral distributions) often called _illuminants_.
+<sup id=Note25>(25)</sup> In this document, a _light source_ means a _primary light source_ or an _illuminant_ (theoretical light with a mathematical spectral distribution), both terms defined in the CIE's International Lighting Vocabulary.
 
 <sup id=Note26>(26)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
 
@@ -1624,7 +1621,7 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note28>(28)</sup> Source: J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)".
 
-<sup id=Note29>(29)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" also affect how paints mix.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+<sup id=Note29>(29)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 </small>
 

@@ -216,7 +216,8 @@ Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
 <li><code>static EFloat FromSingle(float flt)</code><br>
 Creates a binary float from a 32-bit floating-point number.</li>
 <li><code>static EFloat FromString(String str)</code><br>
-Not documented yet.</li>
+Creates a binary float from a text string that represents a number, using an
+unlimited precision context.</li>
 <li><code>static EFloat FromString(String str,
       EContext ctx)</code><br>
 Creates a binary float from a text string that represents a number.</li>
@@ -471,7 +472,7 @@ Truncates this number&#39;s value to an integer and returns the
 least-significant bits of its two&#39;s-complement form as a byte (from 0
 to 255).</li>
 <li><code>double ToDouble()</code><br>
-Not documented yet.</li>
+Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this value to an arbitrary-precision decimal number.</li>
 <li><code>EInteger ToEInteger()</code><br>
@@ -860,7 +861,8 @@ do so.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -899,7 +901,7 @@ do so.</p></li>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>ctx</code> - An EContext object specifying the precision, rounding, and
+<li><p><code>ctx</code> - A precision context specifying the precision, rounding, and
 exponent range (in bits) to apply to the parsed number. Can be null.</p></li>
 </ul>
 
@@ -923,18 +925,20 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <pre>public static EFloat FromString(String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a binary float from a text string that represents a number, using an
+ unlimited precision context. For more information, see the
+ <code>FromString(String, int, int, EContext)</code> method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A text string to convert to a binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EFloat object.</li>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -943,13 +947,14 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
- information, see the FromString(String, int, int, EContext) method.</p>
+ information, see the <code>FromString(String, int, int, EContext)</code>
+ method.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>ctx</code> - An EContext object specifying the precision, rounding, and
+<li><p><code>str</code> - A text string to convert to a binary float.</p></li>
+<li><p><code>ctx</code> - A precision context specifying the precision, rounding, and
 exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
@@ -3574,12 +3579,12 @@ null.</li>
 <pre>public double ToDouble()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this value to a 64-bit floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 64-bit floating-point number.</li>
+<li>This number, converted to a 64-bit floating-point number.</li>
 </ul>
 
 <h3>ToEDecimal</h3>
@@ -3592,7 +3597,7 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number.</li>
+<li>This number, converted to an arbitrary-precision decimal number.</li>
 </ul>
 
 <h3>ToEInteger</h3>
@@ -3753,9 +3758,9 @@ after the decimal point, or if the number&#39;s exponent is greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The closest 32-bit floating-point number to this value. The return
-value can be positive infinity or negative infinity if this value
-exceeds the range of a 32-bit floating point number.</li>
+<li>The closest 32-bit binary floating-point number to this value. The
+return value can be positive infinity or negative infinity if this
+value exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>toString</h3>

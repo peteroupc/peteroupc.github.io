@@ -81,9 +81,9 @@ Converts a string to an arbitrary-precision integer.</li>
          int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer.</li>
 <li><code>EInteger Gcd(EInteger bigintSecond)</code><br>
-Returns the greatest common divisor of two integers.</li>
+Returns the greatest common divisor of this integer and the given integer.</li>
 <li><code>int GetDigitCount()</code><br>
-Not documented yet.</li>
+Returns the number of decimal digits used by this integer.</li>
 <li><code>int GetLowBit()</code><br>
 Gets the lowest set bit in this number&#39;s absolute value.</li>
 <li><code>EInteger GetLowBitAsEInteger()</code><br>
@@ -107,7 +107,7 @@ absolute value.</li>
 Finds the minimum number of bits needed to represent this number&#39;s
 absolute value.</li>
 <li><code>static EInteger getZero()</code><br>
-Gets a value not documented yet.</li>
+Gets the number zero as an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
 <li><code>boolean isEven()</code><br>
@@ -121,7 +121,7 @@ Finds the modulus remainder that results when this instance is divided by
 the value of an arbitrary-precision integer.</li>
 <li><code>EInteger ModPow(EInteger pow,
   EInteger mod)</code><br>
-Calculates the remainder when an arbitrary-precision integer raised to a
+Calculates the remainder when this arbitrary-precision integer raised to a
 certain power is divided by another arbitrary-precision integer.</li>
 <li><code>EInteger Multiply(EInteger bigintMult)</code><br>
 Multiplies this instance by the value of an arbitrary-precision integer
@@ -214,12 +214,12 @@ Converts this object to a text string in base 10.</li>
 <pre>public static EInteger getZero()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets the number zero as an arbitrary-precision integer.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li>The number zero as an arbitrary-precision integer.</li>
 </ul>
 
 <h3>isEven</h3>
@@ -655,7 +655,7 @@ through 9223372036854775807; otherwise, <code>false</code>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - The integer to compare to this value.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -758,8 +758,9 @@ quotient, and the second is the remainder.</li>
 <pre>public EInteger Gcd(EInteger bigintSecond)
 </pre>
 
-<p>Returns the greatest common divisor of two integers. The greatest common
- divisor (GCD) is also known as the greatest common factor (GCF).</p>
+<p>Returns the greatest common divisor of this integer and the given integer.
+ The greatest common divisor (GCD) is also known as the greatest
+ common factor (GCF).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -785,12 +786,13 @@ null.</li>
 <pre>public int GetDigitCount()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the number of decimal digits used by this integer.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>The number of digits in the decimal form of this integer. Returns 1
+if this number is 0.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -968,20 +970,20 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 <pre>public EInteger ModPow(EInteger pow, EInteger mod)
 </pre>
 
-<p>Calculates the remainder when an arbitrary-precision integer raised to a
+<p>Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>pow</code> - Another arbitrary-precision integer.</p></li>
-<li><p><code>mod</code> - An arbitrary-precision integer. (3).</p></li>
+<li><p><code>pow</code> - The power to raise this integer by.</p></li>
+<li><p><code>mod</code> - The integer to divide the raised number by.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer.</li>
+<li>The value (<code>this</code> ^ <code>pow</code>)% <code>mod</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1126,8 +1128,8 @@ than 0.</li>
 
 <ul>
 <li><code>numberBits</code> - The number of bits to shift. Can be negative, in which
-case this is the same as shiftRight with the absolute value of
-numberBits.</li>
+case this is the same as shiftRight with the absolute value of this
+parameter.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

@@ -105,7 +105,7 @@ In this document:
     - [`a`, `b`] means "`a` or greater and `b` or less".
 * The term _random number generator_, or _RNG_, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup>[(1)](#Note1)</sup>
 * The _norm_ of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
-* The term _significand permutations_, with respect to a floating-point format, means the format's radix (number base) raised to the power of the format's precision (the maximum number of significant radix digits that the format can represent without loss). For example&mdash;
+* The term _significand permutations_, with respect to a floating-point format, means the format's floating-point base raised to the power of the format's precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
     - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations,

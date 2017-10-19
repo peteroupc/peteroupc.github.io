@@ -56,7 +56,8 @@ unavailable in version 1.0.</li>
 
 <ul>
 <li><code>ERational Abs()</code><br>
-Not documented yet.</li>
+Returns the absolute value of this rational number, that is, a number with
+the same value as this one but as a nonnegative number.</li>
 <li><code>ERational Add(ERational otherValue)</code><br>
 Adds two rational numbers.</li>
 <li><code>int compareTo(ERational other)</code><br>
@@ -103,7 +104,7 @@ Converts a 64-bit floating-point number to a rational number.</li>
 <li><code>static ERational FromEDecimal(EDecimal ef)</code><br>
 Converts an arbitrary-precision decimal number to a rational number.</li>
 <li><code>static ERational FromEFloat(EFloat ef)</code><br>
-Not documented yet.</li>
+Converts an arbitrary-precision binary float to a rational number.</li>
 <li><code>static ERational FromEInteger(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to a rational number.</li>
 <li><code>static ERational FromExtendedDecimal(EDecimal ef)</code><br>
@@ -121,7 +122,7 @@ Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromInt64(long inputInt64)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromSingle(float flt)</code><br>
-Converts a 32-bit floating-point number to a rational number.</li>
+Converts a 32-bit binary floating-point number to a rational number.</li>
 <li><code>static ERational FromString(String str)</code><br>
 Creates a rational number from a text string that represents a number.</li>
 <li><code>static ERational FromString(String str,
@@ -162,7 +163,8 @@ Gets a value indicating whether this object&#39;s value equals 0.</li>
 Multiplies this instance by the value of an arbitrary-precision rational
 number.</li>
 <li><code>ERational Negate()</code><br>
-Returns a rational number with the sign reversed.</li>
+Returns a rational number with the same value as this one but with the sign
+reversed.</li>
 <li><code>ERational Remainder(ERational otherValue)</code><br>
 Finds the remainder that results when this instance is divided by the value
 of an arbitrary-precision rational number.</li>
@@ -267,7 +269,7 @@ Truncates this number&#39;s value to an integer and returns the
 least-significant bits of its two&#39;s-complement form as a 64-bit
 signed integer.</li>
 <li><code>float ToSingle()</code><br>
-Converts this value to a 32-bit floating-point number.</li>
+Converts this value to a 32-bit binary floating-point number.</li>
 <li><code>String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
@@ -570,7 +572,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - An arbitrary-precision decimal number.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -595,7 +597,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - An arbitrary-precision binary float.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -620,7 +622,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - An arbitrary-precision decimal number.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -640,12 +642,12 @@ object. If none is needed, should be zero.</p></li>
 <pre>public static ERational FromEFloat(EFloat ef)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts an arbitrary-precision binary float to a rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - An arbitrary-precision binary float.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -670,7 +672,7 @@ object. If none is needed, should be zero.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigint</code> - An arbitrary-precision integer.</li>
+<li><code>bigint</code> - The number to convert as an arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -684,15 +686,16 @@ object. If none is needed, should be zero.</p></li>
 <pre>public static ERational FromSingle(float flt)
 </pre>
 
-<p>Converts a 32-bit floating-point number to a rational number. This method
- computes the exact value of the floating point number, not an
+<p>Converts a 32-bit binary floating-point number to a rational number. This
+ method computes the exact value of the floating point number, not an
  approximation, as is often the case by converting the number to a
  string.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit floating-point number.</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -840,7 +843,8 @@ object is less than the other value, or 1 if this object is greater.</li>
 <pre>public ERational Abs()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns the absolute value of this rational number, that is, a number with
+ the same value as this one but as a nonnegative number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1034,7 +1038,7 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision rational number to compare to.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1179,7 +1183,8 @@ null.</li>
 <pre>public ERational Negate()
 </pre>
 
-<p>Returns a rational number with the sign reversed.</p>
+<p>Returns a rational number with the same value as this one but with the sign
+ reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1604,15 +1609,15 @@ exact because it has a nonterminating binary expansion.</li>
 <pre>public float ToSingle()
 </pre>
 
-<p>Converts this value to a 32-bit floating-point number. The half-even
+<p>Converts this value to a 32-bit binary floating-point number. The half-even
  rounding mode is used.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The closest 32-bit floating-point number to this value. The return
-value can be positive infinity or negative infinity if this value
-exceeds the range of a 32-bit floating point number.</li>
+<li>The closest 32-bit binary floating-point number to this value. The
+return value can be positive infinity or negative infinity if this
+value exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>toString</h3>
