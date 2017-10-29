@@ -9,7 +9,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 import math
 
-# Convert a color component from nonlinearized to linearized RGB
+# Convert a color component from companded to linearized RGB
 def linearFromsRGB(c):
   if c <= 0.04045:
     return c / 12.92
@@ -25,17 +25,17 @@ def clamp3(v,mn,mx):
 
 def linearTosRGB(c):
   """
-Converts a color component from linearized to nonlinearized sRGB.
+Converts a color component from linearized to companded sRGB.
   """
   if c <= 0.0031308:
     return 12.92 * c
   return math.pow(c, 1.0 / 2.4) * 1.055 - 0.055
 
-# Convert a color from nonlinearized to linearized RGB
+# Convert a color from companded to linearized RGB
 def linearFromsRGB3(c):
    return [linearFromsRGB(c[0]), linearFromsRGB(c[1]), linearFromsRGB(c[2])]
 
-# Convert a color from linearized to nonlinearized sRGB
+# Convert a color from linearized to companded sRGB
 def linearTosRGB3(c):
    return [linearTosRGB(c[0]), linearTosRGB(c[1]), linearTosRGB(c[2])]
 
@@ -337,7 +337,7 @@ def sRGBLuminance(x):
 
 def sRGBContrastRatio(color1,color2):
   """
-  Finds the contrast ratio for two nonlinearized sRGB colors.
+  Finds the contrast ratio for two companded sRGB colors.
   NOTE: This calculation is not strict because the notes
   for relative luminance in WCAG 2.0 define sRGB relative
   luminance slightly differently.

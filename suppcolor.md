@@ -74,9 +74,9 @@ The conversions given below are independent of RGB color space, but should be do
 <a id=Hunter_Lab></a>
 ### Hunter Lab
 
-The conversions between RGB and Hunter Lab colors, as given below, are independent of RGB color space, but should be done using [_linearized RGB_ colors](#Linearized_and_Companded_RGB).
+The conversion between XYZ and Hunter Lab colors is as given below.
 
-  METHOD HunterLabFromXYZ(xyz, wpoint)
+    METHOD HunterLabFromXYZ(xyz, wpoint)
     x=xyz[0]/wpoint[0]
     y=xyz[1]/wpoint[1]
     z=xyz[2]/wpoint[2]
@@ -85,15 +85,15 @@ The conversions between RGB and Hunter Lab colors, as given below, are independe
     a=(7*sqrt(102)*sqrt(wpoint[0]/y)*(x-wpoint[0]*y))/(4*wpoint[0])
     b=(77*sqrt(70)*sqrt(wpoint[2]/y)*(wpoint[2]*y-z))/(100*wpoint[2])
     return [l,a,b]
-  END METHOD
+    END METHOD
 
-  METHOD HunterLabToXYZ(lab, wpoint)
+    METHOD HunterLabToXYZ(lab, wpoint)
     y=lab[0]*lab[0]/10000.0
     if y==0: return [0,0,0]
     x=2*sqrt(102)*lab[1]*wpoint[0]/(357*sqrt(wpoint[0]/y))+wpoint[0]*y
     z=-10*sqrt(70)*lab[1]*wpoint[2]/(539*sqrt(wpoint[2]/y))+wpoint[2]*y
     return [x,y/wpoint[1],z]
-  END METHOD
+    END METHOD
 
 <a id=License></a>
 ## License

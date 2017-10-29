@@ -76,7 +76,7 @@ The following topics are beyond this page's scope:
     - [Color Temperature](#Color_Temperature)
     - [Color Mixture](#Color_Mixture)
 - [Other Color Topics](#Other_Color_Topics)
-    - ["Colorblindness"](#Colorblindness)
+    - [Defective Color Vision](#Defective_Color_Vision)
     - [Terminal Colors](#Terminal_Colors)
 - [Conclusion](#Conclusion)
     - [Questions for This Document](#Questions_for_This_Document)
@@ -351,13 +351,13 @@ In this document, all techniques involving RGB colors apply to such colors in li
 <a id=sRGB></a>
 ### sRGB
 
-Among RGB color spaces, one of the most popular is the sRGB color space. The _sRGB color space_ is a "working space" for describing red-green-blue colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(6)](#Note6)</sup>
+Among RGB color spaces, one of the most popular is the sRGB color space. The _sRGB color space_ is a "working space" for describing RGB colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(6)](#Note6)</sup>
 
-Unlike with many other RGB color spaces, sRGB's _transfer function_ does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a similar formula.
+Unlike with many other RGB color spaces, sRGB's _transfer function_ does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a formula with a similar conversion curve.  The sRGB proposal recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
 The following methods convert colors between linearized and companded sRGB.
 (Note that the threshold `0.0031308` is that of IEC 61966-2-1, the official sRGB standard;
-the sRGB proposal has different values for this threshold.)
+the sRGB proposal has a different value for this threshold.)
 
     // Convert a color component from companded to linearized RGB
     METHOD LinearFromsRGB(c)
@@ -634,10 +634,12 @@ The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
 
-_Chromaticity_ is the aspect of a color apart from its luminance. There are two kinds of _chromaticity coordinates_.
+_Chromaticity_ is the aspect of a color apart from its luminance. Some kinds of _chromaticity coordinates_ follow.
 
 - **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
 - **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(8)](#Note8)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
+- **_rg_ chromaticity** (_r_, _g_, _b_) involves RGB colors rather than XYZ colors
+and is calculated analogously to _xy_ chromaticity.
 
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
@@ -977,7 +979,7 @@ Finding the **average relative luminance of an image** or collection of colors i
 
 The following techniques generate new colors that are related to existing colors.
 
-- **Color harmonies**<sup>[(20)](#Note20)</sup> result by generating several colors that differ in hue.  For each color harmony given below, the following numbers are added to a hue in radians (0 or greater, less than 2&pi;) to generate the hues for the colors that make up that harmony:
+- **Color harmonies**<sup>[(20)](#Note20)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue in radians (0 or greater, less than 2&pi;) to generate the hues for the colors that make up that harmony:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
@@ -1300,12 +1302,12 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(23)](#Note23)</sup> and/or "[color blind friendly](#Colorblindness)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(23)](#Note23)</sup> and/or "[color blind friendly](#Defective_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Named_Colors></a>
 ### Named Colors
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _named color list_.  Examples of names are "red", "blue", and "orange".  It's outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _named color list_.  Examples of names are "red", "vivid green", and "orange".  It's outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
@@ -1333,7 +1335,8 @@ color should not be ["the only visual means of conveying information"](http://ww
 In general, any method that seeks to choose colors that are maximally distant in a particular
 color space (that is, where the smallest [color difference](#Color_Differences), or `COLORDIFF`,
 between them is maximized as much as feasible) can be used to select visually
-distinct colors. Such colors can be pregenerated or generated at runtime. Here, the color difference method
+distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
+can be limited to those in a particular _color gamut_. Here, the color difference method
 should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
 
 <a id=Idioms></a>
@@ -1486,8 +1489,8 @@ passed at once to the `WGM` function just given must be from the same wavelength
 
 This section discusses miscellaneous topics related to colors.
 
-<a id=Colorblindness></a>
-### "Colorblindness"
+<a id=Defective_Color_Vision></a>
+### Defective Color Vision
 
 [Defective color vision](http://eilv.cie.co.at/term/287), including what is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.
 
@@ -1547,9 +1550,9 @@ Questions for this document:
 
 <small>
 
-<sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and LEDs are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the _RGBW color model_, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs and electronic displays.
+<sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the _RGBW color model_, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs, luminaires, or electronic displays.
 
-<sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all visible colors but has imaginary green and blue points. See also note 6.
+<sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points. See also note 6.
 
 <sup id=Note3>(3)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.
 
@@ -1577,7 +1580,7 @@ Questions for this document:
 - Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
 - In the printing industry, the D50 illuminant and D50 white point are in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.
 
-<sup id=Note12>(12)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are absolute rather than relative: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue content (_colorfulness_) compared to other colors of the same hue and brightness. (See also the CIE's International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
+<sup id=Note12>(12)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are absolute rather than relative: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) compared to other colors of the same hue and brightness. (See also the CIE's International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).
 
 <sup id=Note13>(13)</sup> Radians can be converted to degrees by multiplying by `180 / pi`.
 
@@ -1609,7 +1612,7 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note22>(22)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
-<sup id=Note23>(23)</sup> In general, a color can be considered "print friendly" if it lies within the extent (_gamut_) of colors that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)").
+<sup id=Note23>(23)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)").
 
 <sup id=Note24>(24)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
