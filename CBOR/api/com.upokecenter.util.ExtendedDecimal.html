@@ -45,7 +45,7 @@ Use EDecimal from PeterO.Numbers/com.upokecenter.numbers.</li>
 
 <ul>
 <li><code>int compareTo(ExtendedDecimal other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Compares this extended decimal to another.</li>
 <li><code>static ExtendedDecimal Create(BigInteger mantissa,
   BigInteger exponent)</code><br>
 Deprecated.  Creates a number with the value exponent*10^mantissa.</li>
@@ -438,7 +438,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Less than 0 if this value is less than, 0 if equal to, or greater
+than 0 if greater than the other extended decimal.</li>
 </ul>
 
 <h3>signum</h3>
