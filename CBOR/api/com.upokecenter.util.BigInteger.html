@@ -30,7 +30,7 @@ Use EInteger from PeterO.Numbers/com.upokecenter.numbers.</li>
 Deprecated.  Finds the minimum number of bits needed to represent this object&#39;s
 value, except for its sign.</li>
 <li><code>int compareTo(BigInteger other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Compares this value to another.</li>
 <li><code>boolean equals(Object obj)</code><br>
 Deprecated.  Determines whether this object and another object are equal.</li>
 <li><code>static BigInteger fromBytes(byte[] bytes,
@@ -339,13 +339,14 @@ digits 0 to 9 (U + 0030 to U + 0039).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is a BigInteger object.</li>
+<li><code>other</code> - The parameter <code>other</code> is an arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Less than 0 if this value is less than, 0 if equal to, or greater
+than 0 if greater than the other value.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

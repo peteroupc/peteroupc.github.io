@@ -52,7 +52,7 @@ class.</li>
 
 <ul>
 <li><code>int compareTo(ExtendedRational other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Compares this value to another.</li>
 <li><code>static ExtendedRational Create(BigInteger numerator,
   BigInteger denominator)</code><br>
 Deprecated.  Creates a rational number with the given numerator and denominator.</li>
@@ -60,9 +60,9 @@ Deprecated.  Creates a rational number with the given numerator and denominator.
   int denominatorSmall)</code><br>
 Deprecated.  Creates a rational number with the given numerator and denominator.</li>
 <li><code>boolean equals(ExtendedRational other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Checks whether this and another value are equal.</li>
 <li><code>boolean equals(Object obj)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Checks whether this and another value are equal.</li>
 <li><code>BigInteger getDenominator()</code><br>
 Deprecated.  Gets this object&#39;s denominator.</li>
 <li><code>BigInteger getNumerator()</code><br>
@@ -338,7 +338,8 @@ number of the following form: [-]numerator/denominator.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Less than 0 if this value is less than, 0 if equal to, or greater
+than 0 if greater than the other value.</li>
 </ul>
 
 <h3>equals</h3>
@@ -357,7 +358,7 @@ number of the following form: [-]numerator/denominator.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>either <code>true</code> or <code>false</code>.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>equals</h3>
@@ -382,7 +383,7 @@ number of the following form: [-]numerator/denominator.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>either <code>true</code> or <code>false</code>.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>hashCode</h3>

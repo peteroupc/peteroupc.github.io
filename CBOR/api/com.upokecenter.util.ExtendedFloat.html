@@ -49,7 +49,7 @@ Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 
 <ul>
 <li><code>int compareTo(ExtendedFloat other)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Compares this extended float to another.</li>
 <li><code>static ExtendedFloat Create(BigInteger mantissa,
   BigInteger exponent)</code><br>
 Deprecated.  Creates a number with the value exponent*2^mantissa.</li>
@@ -69,7 +69,7 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat FromString(String str)</code><br>
-Deprecated.  Not documented yet.</li>
+Deprecated.  Creates a binary float from a text string that represents a number.</li>
 <li><code>static ExtendedFloat FromString(String str,
       int offset,
       int length,
@@ -405,13 +405,13 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A text string containing the number to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
 </ul>
 
 <h3>toString</h3>
@@ -552,7 +552,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Less than 0 if this value is less than, 0 if equal to, or greater
+than 0 if greater than the other value.</li>
 </ul>
 
 <h3>signum</h3>
