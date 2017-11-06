@@ -20,11 +20,12 @@
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Contents">Contents</a></li>
 <li><a href="#Notation_and_Definitions">Notation and Definitions</a></li>
+<li><a href="#Kinds_of_Color_Spaces">Kinds of Color Spaces</a></li>
 <li><a href="#Additional_Color_Models">Additional Color Models</a>
 
 <ul>
 <li><a href="#HSI">HSI</a></li>
-<li><a href="#Hunter_Lab">Hunter Lab</a></li>
+<li><a href="#Hunter_L_a_b">Hunter L,a,b</a></li>
 </ul></li>
 <li><a href="#License">License</a></li>
 </ul>
@@ -44,6 +45,21 @@
 <li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
 <li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
 </ul>
+
+<p><a id=Kinds_of_Color_Spaces></a></p>
+
+<h2>Kinds of Color Spaces</h2>
+
+<p><strong>Device-dependent</strong> color spaces are based on how devices display or record color.  Such color spaces include&mdash;</p>
+
+<ul>
+<li><strong>light-mixture color spaces</strong>, based on mixtures of colored lights (such as RGB, red-green-blue), and</li>
+<li><strong>colorant-mixture color spaces</strong>, based on mixtures of colored inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).</li>
+</ul>
+
+<p>A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.</p>
+
+<p><strong>Device-independent</strong> color spaces are based on how humans perceive color.  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.</p>
 
 <p><a id=Additional_Color_Models></a></p>
 
@@ -90,11 +106,11 @@ METHOD HsiToRgb(hsi)
 END METHOD
 </pre>
 
-<p><a id=Hunter_Lab></a></p>
+<p><a id=Hunter_L_a_b></a></p>
 
-<h3>Hunter Lab</h3>
+<h3>Hunter L,a,b</h3>
 
-<p>The conversion between XYZ and Hunter Lab colors is as given below.</p>
+<p>The conversion between XYZ and Hunter L,a,b colors is as given below.</p>
 
 <pre>METHOD HunterLabFromXYZ(xyz, wpoint)
 x=xyz[0]/wpoint[0]
