@@ -1352,9 +1352,9 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
 
-A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the visible spectrum.  There are three cases of objects that provoke a color sensation by light:
+A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the visible spectrum.<sup>[(25)](#Note25)</sup>
+- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the spectrum.<sup>[(25)](#Note25)</sup>
 - **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a (_spectral_) _reflectance curve_.
 - **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_.
 
@@ -1567,7 +1567,7 @@ Questions for this document:
 
 <sup id=Note7>(7)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.
 
-<sup id=Note8>(8)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=951) says the chromaticity difference should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
+<sup id=Note8>(8)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=951) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
 <sup id=Note9>(9)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and
