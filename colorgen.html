@@ -246,9 +246,9 @@ of the formats described below, and <code>color</code> is an RGB color in <a hre
 <li><strong>RN/GN/BN format:</strong> As integers that are (RN + GN + BN) bits long, where&mdash;
 
 <ul>
-<li>the red component is RN bits long and calculated as follows: <code>floor(color[0] * (pow(2, RN) - 1) + 0.5)</code>,</li>
-<li>the green component is GN bits long and calculated as follows: <code>floor(color[1] * (pow(2, GN) - 1) + 0.5)</code>,</li>
-<li>the blue component is BN bits long and calculated as follows: <code>floor(color[2] * (pow(2, BN) - 1)+ 0.5)</code>, and</li>
+<li>the red component is RN bits long and calculated as follows: <code>round(color[0] * (pow(2, RN) - 1))</code>,</li>
+<li>the green component is GN bits long and calculated as follows: <code>round(color[1] * (pow(2, GN) - 1))</code>,</li>
+<li>the blue component is BN bits long and calculated as follows: <code>round(color[2] * (pow(2, BN) - 1))</code>, and</li>
 <li>the components are converted to 0-1 format as follows:
 <code>[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1)]</code>,</li>
 </ul></li>
@@ -256,7 +256,7 @@ of the formats described below, and <code>color</code> is an RGB color in <a hre
 
 <ul>
 <li>the red, green, and blue components are RN, GN, and BN bits long, respectively, and are calculated the same way as in the <em>RN/GN/BN format</em>,</li>
-<li>the alpha component is AN bits long and calculated as follows: <code>floor(color[3] *( pow(2, AN)- 1) + 0.5)</code>, and</li>
+<li>the alpha component is AN bits long and calculated as follows: <code>round(color[3] *( pow(2, AN)- 1))</code>, and</li>
 <li>the components are converted to 0-1 format as follows:
 <code>[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1), alpha/(pow(2, AN) - 1)]</code>,</li>
 </ul></li>
@@ -288,15 +288,11 @@ other possibilities, they can be packed in any of the following orders from lowe
 
 <p>The following pseudocode contains methods for converting RGB colors to and from different color formats (where the red component is stored in the low bits of each RGB color number):</p>
 
-<pre>METHOD Upscale(v, c)
-   return floor(c * v + 0.5)
-END METHOD
-
-// Converts 0-1 format to N/N/N format as an integer
+<pre>// Converts 0-1 format to N/N/N format as an integer
 METHOD ToNNN(rgb, scale)
    sm1 = scale - 1
-   return Upscale(rgb[2], sm1) * scale * scale + Upscale(rgb[1], sm1) * scale +
-         Upscale(rgb[0], sm1)
+   return round(rgb[2]*sm1) * scale * scale + round(rgb[1]*sm1) * scale +
+         round(rgb[0]*sm1)
 END METHOD
 
 // Converts N/N/N integer format to 0-1 format
@@ -318,8 +314,8 @@ METHOD From888(rgb): return FromNNN(rgb, 256)
 METHOD From161616(rgb): return FromNNN(rgb, 65536)
 
 METHOD To565(rgb, scale)
-   return Upscale(rgb[2], 31) * 32 * 64 + Upscale(rgb[1], 63) * 32 +
-         Upscale(rgb[0], 31)
+   return round(rgb[2] * 31) * 32 * 64 + round(rgb[1] * 63) * 32 +
+         round(rgb[0] * 31)
 END METHOD
 
 METHOD From565(rgb, scale)
@@ -375,11 +371,9 @@ METHOD HexToNum(x)
 END METHOD
 
 METHOD ColorToHtml(rgb)
-   // NOTE: Upscale method is given earlier in &quot;Integer
-   // Component Formats&quot;
-   r = Upscale(rgb[0], 255)
-   g = Upscale(rgb[1], 255)
-   b = Upscale(rgb[2], 255)
+   r = round(rgb[0]) * (255)
+   g = round(rgb[1]) * (255)
+   b = round(rgb[2]) * (255)
    return [&quot;#&quot;,
      NumToHex(mod(floor(r/16),16)), NumToHex(mod(r, 16)),
      NumToHex(mod(floor(g/16),16)), NumToHex(mod(g, 16)),
@@ -1585,7 +1579,7 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 <li>generate <code>color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)</code>.</li>
 </ul></li>
 <li>To extract a <strong>discrete color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>),
-generate <code>color = colormap[floor(value * (N - 1) + 0.5)]</code>.</li>
+generate <code>color = colormap[round(value * (N - 1))]</code>.</li>
 <li>The <strong>grayscale color map</strong> consists of the companded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</li>
 </ul>
 

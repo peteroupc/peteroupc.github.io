@@ -1043,7 +1043,7 @@ The following method generates a random result of rolling virtual dice.<sup>[(10
             sigma = sqrt(dice * (sides * sides - 1) / 12)
             ret = -1
             while ret < dice or ret > dice * sides
-                ret = floor(Normal(mean, sigma) + 0.5)
+                ret = round(Normal(mean, sigma))
             end
          else
              i = 0
@@ -1135,7 +1135,7 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
              countval = -1
              // "countval
              while countval < 0 or countval > trials
-                  countval = floor(Normal(tp, tp) + 0.5)
+                  countval = round(Normal(tp, tp))
              end
              return countval
         end
@@ -1184,7 +1184,7 @@ The method given here is based on Knuth's method from 1969.
         // generation of probability distributions", 2000, p. 49
         if mean > 9
             p = -1.0
-            while p < 0: p = floor(Normal(mean, mean) + 0.5)
+            while p < 0: p = round(Normal(mean, mean))
             return p
         end
         pn = exp(-mean)

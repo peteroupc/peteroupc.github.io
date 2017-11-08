@@ -250,7 +250,7 @@ class RandomGen:
       countval=-1
       while countval<0 or countval > trials:
         countval=self.normal(tp,tp)
-      return int(countval+0.5)
+      return round(countval)
     while i < trials:
       if self.rndu01oneexc() < p:
         count+=1
@@ -284,7 +284,7 @@ class RandomGen:
       p=-1.0
       while p<0:
         p=self.normal(mean,mean)
-      return int(p+0.5)
+      return round(p)
     pn=math.exp(-mean)
     count=0
     while True:
