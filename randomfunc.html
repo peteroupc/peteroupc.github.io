@@ -1250,7 +1250,7 @@ else: number = Normal(-1, 1)
         sigma = sqrt(dice * (sides * sides - 1) / 12)
         ret = -1
         while ret &lt; dice or ret &gt; dice * sides
-            ret = floor(Normal(mean, sigma) + 0.5)
+            ret = round(Normal(mean, sigma))
         end
      else
          i = 0
@@ -1359,7 +1359,7 @@ as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and 
          countval = -1
          // &quot;countval
          while countval &lt; 0 or countval &gt; trials
-              countval = floor(Normal(tp, tp) + 0.5)
+              countval = round(Normal(tp, tp))
          end
          return countval
     end
@@ -1418,7 +1418,7 @@ END METHOD
     // generation of probability distributions&quot;, 2000, p. 49
     if mean &gt; 9
         p = -1.0
-        while p &lt; 0: p = floor(Normal(mean, mean) + 0.5)
+        while p &lt; 0: p = round(Normal(mean, mean))
         return p
     end
     pn = exp(-mean)

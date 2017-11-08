@@ -180,14 +180,14 @@ In the pseudocode below, `red`, `green`, `blue`, and `alpha` are the correspondi
 of the formats described below, and `color` is an RGB color in [0-1 format](#0_1_Format).
 
 - **RN/GN/BN format:** As integers that are (RN + GN + BN) bits long, where&mdash;
-    - the red component is RN bits long and calculated as follows: `floor(color[0] * (pow(2, RN) - 1) + 0.5)`,
-    - the green component is GN bits long and calculated as follows: `floor(color[1] * (pow(2, GN) - 1) + 0.5)`,
-    - the blue component is BN bits long and calculated as follows: `floor(color[2] * (pow(2, BN) - 1)+ 0.5)`, and
+    - the red component is RN bits long and calculated as follows: `round(color[0] * (pow(2, RN) - 1))`,
+    - the green component is GN bits long and calculated as follows: `round(color[1] * (pow(2, GN) - 1))`,
+    - the blue component is BN bits long and calculated as follows: `round(color[2] * (pow(2, BN) - 1))`, and
     - the components are converted to 0-1 format as follows:
         `[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1)]`,
 - **RN/GN/BN/AN format:** As integers that are (RN + GN + BN + AN) bits long, where&mdash;
     - the red, green, and blue components are RN, GN, and BN bits long, respectively, and are calculated the same way as in the _RN/GN/BN format_,
-    - the alpha component is AN bits long and calculated as follows: `floor(color[3] *( pow(2, AN)- 1) + 0.5)`, and
+    - the alpha component is AN bits long and calculated as follows: `round(color[3] *( pow(2, AN)- 1))`, and
     - the components are converted to 0-1 format as follows:
         `[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1), alpha/(pow(2, AN) - 1)]`,
 
@@ -212,15 +212,11 @@ other possibilities, they can be packed in any of the following orders from lowe
 
 The following pseudocode contains methods for converting RGB colors to and from different color formats (where the red component is stored in the low bits of each RGB color number):
 
-    METHOD Upscale(v, c)
-       return floor(c * v + 0.5)
-    END METHOD
-
     // Converts 0-1 format to N/N/N format as an integer
     METHOD ToNNN(rgb, scale)
        sm1 = scale - 1
-       return Upscale(rgb[2], sm1) * scale * scale + Upscale(rgb[1], sm1) * scale +
-             Upscale(rgb[0], sm1)
+       return round(rgb[2]*sm1) * scale * scale + round(rgb[1]*sm1) * scale +
+             round(rgb[0]*sm1)
     END METHOD
 
     // Converts N/N/N integer format to 0-1 format
@@ -242,8 +238,8 @@ The following pseudocode contains methods for converting RGB colors to and from 
     METHOD From161616(rgb): return FromNNN(rgb, 65536)
 
     METHOD To565(rgb, scale)
-       return Upscale(rgb[2], 31) * 32 * 64 + Upscale(rgb[1], 63) * 32 +
-             Upscale(rgb[0], 31)
+       return round(rgb[2] * 31) * 32 * 64 + round(rgb[1] * 63) * 32 +
+             round(rgb[0] * 31)
     END METHOD
 
     METHOD From565(rgb, scale)
@@ -295,11 +291,9 @@ characters) to and from the HTML color format or the 3-digit format.
     END METHOD
 
     METHOD ColorToHtml(rgb)
-       // NOTE: Upscale method is given earlier in "Integer
-       // Component Formats"
-       r = Upscale(rgb[0], 255)
-       g = Upscale(rgb[1], 255)
-       b = Upscale(rgb[2], 255)
+       r = round(rgb[0]) * (255)
+       g = round(rgb[1]) * (255)
+       b = round(rgb[2]) * (255)
        return ["#",
          NumToHex(mod(floor(r/16),16)), NumToHex(mod(r, 16)),
          NumToHex(mod(floor(g/16),16)), NumToHex(mod(g, 16)),
@@ -1346,7 +1340,7 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
     - generate `index = (value * (N - 1)) - floor(value * (N - 1))`, then
     - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
 - To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
-   generate `color = colormap[floor(value * (N - 1) + 0.5)]`.
+   generate `color = colormap[round(value * (N - 1))]`.
 - The **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
 
 <a id=Spectral_Color_Functions></a>
