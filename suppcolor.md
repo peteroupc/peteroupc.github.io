@@ -26,7 +26,6 @@ In this document:
 
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 - The term _RGB_ means red-green-blue.
-- The abbreviation _IEC_ means the International Electrotechnical Commission.
 - The abbreviation _ISO_ means the International Organization for Standardization.
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _D65 white point_ means the white point determined by the CIE's D65 illuminant and the CIE 1931 standard observer.
@@ -38,7 +37,7 @@ In this document:
 **Device-dependent** color spaces are based on how devices display or record color.  Such color spaces include&mdash;
 
 - **light-mixture color spaces**, based on mixtures of colored lights (such as RGB, red-green-blue), and
-- **colorant-mixture color spaces**, based on mixtures of colored inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).
+- **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).
 
 A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
 
@@ -90,23 +89,30 @@ The conversions given below are independent of RGB color space, but should be do
 The conversion between XYZ and Hunter L,a,b colors is as given below.
 
     METHOD HunterLabFromXYZ(xyz, wpoint)
-    x=xyz[0]/wpoint[0]
-    y=xyz[1]/wpoint[1]
-    z=xyz[2]/wpoint[2]
-    l=100*sqrt(y)
-    if l==0: return [0,0,0]
-    a=(7*sqrt(102)*sqrt(wpoint[0]/y)*(x-wpoint[0]*y))/(4*wpoint[0])
-    b=(77*sqrt(70)*sqrt(wpoint[2]/y)*(wpoint[2]*y-z))/(100*wpoint[2])
-    return [l,a,b]
+        x=xyz[0]/wpoint[0]
+        y=xyz[1]/wpoint[1]
+        z=xyz[2]/wpoint[2]
+        l=100*sqrt(y)
+        if l==0: return [0,0,0]
+        a=(7*sqrt(102)*sqrt(wpoint[0]/y)*(x-wpoint[0]*y))/(4*wpoint[0])
+        b=(77*sqrt(70)*sqrt(wpoint[2]/y)*(wpoint[2]*y-z))/(100*wpoint[2])
+        return [l,a,b]
     END METHOD
 
     METHOD HunterLabToXYZ(lab, wpoint)
-    y=lab[0]*lab[0]/10000.0
-    if y==0: return [0,0,0]
-    x=2*sqrt(102)*lab[1]*wpoint[0]/(357*sqrt(wpoint[0]/y))+wpoint[0]*y
-    z=-10*sqrt(70)*lab[1]*wpoint[2]/(539*sqrt(wpoint[2]/y))+wpoint[2]*y
-    return [x,y/wpoint[1],z]
+        y=lab[0]*lab[0]/10000.0
+        if y==0: return [0,0,0]
+        x=2*sqrt(102)*lab[1]*wpoint[0]/(357*sqrt(wpoint[0]/y))+wpoint[0]*y
+        z=-10*sqrt(70)*lab[1]*wpoint[2]/(539*sqrt(wpoint[2]/y))+wpoint[2]*y
+        return [x,y/wpoint[1],z]
     END METHOD
+
+The `LabToHue`, `LabToChroma`, `LabHueDifference`,
+`LabChromaHueDifference`, and
+`LchToLab` methods from the [discussion on CIELAB colors](colorgen.html#CIELAB) work with
+Hunter L, a, b colors analogously to CIELAB colors.
+
+The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delta;b_, or _&Delta;C_, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.
 
 <a id=License></a>
 ## License
