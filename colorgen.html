@@ -371,9 +371,9 @@ METHOD HexToNum(x)
 END METHOD
 
 METHOD ColorToHtml(rgb)
-   r = round(rgb[0]) * (255)
-   g = round(rgb[1]) * (255)
-   b = round(rgb[2]) * (255)
+   r = round(rgb[0] * 255)
+   g = round(rgb[1] * 255)
+   b = round(rgb[2] * 255)
    return [&quot;#&quot;,
      NumToHex(mod(floor(r/16),16)), NumToHex(mod(r, 16)),
      NumToHex(mod(floor(g/16),16)), NumToHex(mod(g, 16)),
@@ -1606,8 +1606,8 @@ generate <code>color = colormap[round(value * (N - 1))]</code>.</li>
 <li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
-<li>the D65 illuminant<sup><a href="#Note26">(26)</a></sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),</li>
-<li>the D50 illuminant, which approximates 5003-kelvin daylight, and</li>
+<li>the D65 illuminant<sup><a href="#Note26">(26)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
+<li>the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and</li>
 <li>the blackbody spectral formula, given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul></li>
 <li><code>CMF(wl)</code> models three <strong>color matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;

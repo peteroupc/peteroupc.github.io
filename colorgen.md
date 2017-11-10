@@ -291,9 +291,9 @@ characters) to and from the HTML color format or the 3-digit format.
     END METHOD
 
     METHOD ColorToHtml(rgb)
-       r = round(rgb[0]) * (255)
-       g = round(rgb[1]) * (255)
-       b = round(rgb[2]) * (255)
+       r = round(rgb[0] * 255)
+       g = round(rgb[1] * 255)
+       b = round(rgb[2] * 255)
        return ["#",
          NumToHex(mod(floor(r/16),16)), NumToHex(mod(r, 16)),
          NumToHex(mod(floor(g/16),16)), NumToHex(mod(g, 16)),
@@ -1360,8 +1360,8 @@ In the pseudocode below:
 - `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m), as well as a 5 nm interval in all three functions (according to CIE Publication 15), are relevant in practice. (See also note 3 later in this section.)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
-    - the D65 illuminant<sup>[(26)](#Note26)</sup>, which approximates 6504-kelvin daylight (daylight having a correlated color temperature of about 6504 kelvins),
-    - the D50 illuminant, which approximates 5003-kelvin daylight, and
+    - the D65 illuminant<sup>[(26)](#Note26)</sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),
+    - the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and
     - the blackbody spectral formula, given in "[Color Temperature](#Color_Temperature)".
 - `CMF(wl)` models three **color matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;
     - the CIE 1931 (2-degree) standard observer<sup>[(26)](#Note26)</sup><sup>[(27)](#Note27)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
