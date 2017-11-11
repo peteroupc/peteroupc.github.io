@@ -889,30 +889,30 @@ For all these variants, the transformation should be done using [_companded RGB_
         return [y, cb, cr]
     END METHOD
 
-    METHOD YCbCrToRgb(YCbCr)
-        cb = YCbCr[1] - 128
-        cr = YCbCr[2] - 128
-        yp = 1.1643836 * (YCbCr[0] - 16)
+    METHOD YCbCrToRgb(yCbCr)
+        cb = yCbCr[1] - 128
+        cr = yCbCr[2] - 128
+        yp = 1.1643836 * (yCbCr[0] - 16)
         r = yp + 1.5960268 * cr
         g = yp - 0.39176229 * cb - 0.81296765 * cr
         b = yp + 2.0172321 * cb
         return Clamp3([r, g, b], [0,0,0],[255,255,255])
     END METHOD
 
-    METHOD YCbCrToRgb709(YCbCr)
-        cb = YCbCr[1] - 128
-        cr = YCbCr[2] - 128
-        yp = 1.1643836 * (YCbCr[0] - 16)
+    METHOD YCbCrToRgb709(yCbCr)
+        cb = yCbCr[1] - 128
+        cr = yCbCr[2] - 128
+        yp = 1.1643836 * (yCbCr[0] - 16)
         r = yp + 1.7927411 * cr
         g = yp - 0.21324861 * cb - 0.53290933 * cr
         b = yp + 2.1124018 * cb
         return Clamp3([r, g, b], [0,0,0],[255,255,255])
     END METHOD
 
-    METHOD YCbCrToRgbJpeg(YCbCr)
-        cb = YCbCr[1] - 128
-        cr = YCbCr[2] - 128
-        yp = YCbCr[0]
+    METHOD YCbCrToRgbJpeg(yCbCr)
+        cb = yCbCr[1] - 128
+        cr = yCbCr[2] - 128
+        yp = yCbCr[0]
         r = yp + 1.402 * cr
         g = yp - 0.34413629 * cb - 0.71413629 * cr
         b = yp + 1.772 * cb
