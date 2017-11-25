@@ -680,7 +680,7 @@ END METHOD
 <p>There are at least two conventions for XYZ colors:</p>
 
 <ul>
-<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
+<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>, informally known as &quot;nits&quot;).</li>
 <li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;), that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
@@ -1938,7 +1938,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
 <script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
 <span><g:plusone size="medium"></g:plusone></span><br/>
-<span><a href="//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpeteroupc.github.io%2Fcolorgen.html">Share via Facebook</a></span>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
 </p>
 </div>
 </nav><script>
@@ -1949,5 +1949,7 @@ if(document.location.href.indexOf("file://")!=0){
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 }
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
 </script>
 </body></html>

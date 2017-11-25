@@ -4039,7 +4039,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
 <script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
 <span><g:plusone size="medium"></g:plusone></span><br/>
-<span><a href="//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpeteroupc.github.io%2Fcolorgen.html">Share via Facebook</a></span>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
 </p>
 </div>
 <h3>Navigation</h3>
@@ -4122,5 +4122,7 @@ if(document.location.href.indexOf("file://")!=0){
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 }
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
 </script>
 </body></html>
