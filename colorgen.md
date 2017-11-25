@@ -560,7 +560,7 @@ The conversions given below are independent of RGB color space, but should be do
 The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a distribution of light into a point in three-dimensional space, as further explained in "[Spectral Color Functions](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
 
 - X is a component without special meaning.
-- Y indicates the _luminance_ of the color.
+- Y indicates the [_luminance_](http://6degreesoffreedom.co/luminance-vs-illuminance/) of the color.
 - Z is a component without special meaning.
 
 There are at least two conventions for XYZ colors:
@@ -1441,7 +1441,7 @@ the one found in McCamy 1992.
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
-**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a division which admits of much variation.
+**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.
 
 <a id=Color_Mixture></a>
 ### Color Mixture
