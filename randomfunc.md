@@ -1331,7 +1331,7 @@ together, their distribution tends to a [_stable distribution_](https://en.wikip
 which resembles a curve with a single peak, but with generally "fatter" tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The `Stable` method, implemented below, takes two parameters:
 
 - `alpha` is a stability index in the interval (0, 2].
-- `beta` is a skewness in the interval [-1, 1]); if `beta` is 0, the curve is symmetric.
+- `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
 
 ----
 
