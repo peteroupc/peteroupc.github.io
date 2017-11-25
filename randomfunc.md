@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 12, 2017.
+Begun on June 4, 2017; last updated on Nov. 25, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -86,7 +86,7 @@ In general, the following are outside the scope of this document:
 - [Geometric Sampling](#Geometric_Sampling)
     - [Random Point Inside a Triangle](#Random_Point_Inside_a_Triangle)
     - [Random Points on the Surface of a Hypersphere](#Random_Points_on_the_Surface_of_a_Hypersphere)
-    - [Random Points Inside a Ball](#Random_Points_Inside_a_Ball)
+    - [Random Points Inside a Ball or Shell](#Random_Points_Inside_a_Ball_or_Shell)
     - [Random Latitude and Longitude](#Random_Latitude_and_Longitude)
 - [Conclusion](#Conclusion)
 - [Notes](#Notes)
@@ -726,7 +726,7 @@ Alternatively, random numbers can be generated (using any method and where the n
 ### Rejection Sampling
 
 _Rejection sampling_ is a simple and flexible technique for generating random content that
-meets certain requirements.  To implement rejection sampling&mdash;
+meets certain requirements.  To implement rejection sampling:
 
 1. Generate the random content (such as a random number) by any method and with any distribution and range.
 2. If the content doesn't meet predetermined criteria, go to step 1.
@@ -992,7 +992,7 @@ To generate random content from a mixture&mdash;
         // Else index 1 was chosen, sample from the mean -1 normal
         else: number = Normal(-1, 1)
 
-- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
+- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
 - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1694,7 +1694,7 @@ This section contains various geometric sampling techniques.
 ### Random Point Inside a Triangle
 
 The following pseudocode, which
-generates a uniformly random point inside a 2-dimensional triangle,
+generates, uniformly at random, a point inside a 2-dimensional triangle,
 takes three parameters, `p0`, `p1`, and `p2`, each of which is a 2-item list containing the X and Y
 coordinates, respectively, of one vertex of the triangle.
 
@@ -1722,26 +1722,29 @@ coordinates, respectively, of one vertex of the triangle.
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
 
-To generate an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N `Normal(0, 1)` random numbers, then divide them by `R / X`, where `X` is those numbers' [_norm_](#Notation_and_Definitions) (if `X` is 0, the process should repeat). A hypersphere's surface is formed by all points lying 1 unit away from a common point in N-dimensional space. Based on a technique described in [MathWorld](http://mathworld.wolfram.com/HyperspherePointPicking.html).
+To generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N `Normal(0, 1)` random numbers, then multiply them by `R / X`, where `X` is those numbers' [_norm_](#Notation_and_Definitions) (if `X` is 0, the process should repeat). A hypersphere's surface is formed by all points lying R units away from a common point in N-dimensional space. Based on a technique described in [MathWorld](http://mathworld.wolfram.com/HyperspherePointPicking.html).
 
 This problem is equivalent to generating a random unit vector (vector with length 1) in N-dimensional space.
 
-<a id=Random_Points_Inside_a_Ball></a>
-### Random Points Inside a Ball
+<a id=Random_Points_Inside_a_Ball_or_Shell></a>
+### Random Points Inside a Ball or Shell
 
-To generate an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
+To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
 - generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(12)](#Note12)</sup> until their [_norm_](#Notation_and_Definitions) is R or less,
 
 although the former method "may ... be slower" "in practice", according to a [MathWorld article](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
-If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the [_norm_](#Notation_and_Definitions) of the numbers making up that point is within the desired range of distances.
+To generate a random point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
+- generate a random point for a ball of radius B until the [_norm_](#Notation_and_Definitions) of the numbers making up that point is A or greater;
+- for 2 dimensions, generate a random point on the surface of a circle with radius equal to `sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)` (Dupree and Fraley 2004); or
+- for 3 dimensions, generate a random point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)` (Dupree and Fraley 2004).
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
 
-To generate a random latitude and longitude on a sphere (in radians with west and south coordinates negative) such that the resulting point is (practically) uniformly distributed on the surface of a sphere&mdash;
+To generate, uniformly at random, a point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;
 
 - generate the longitude `RNDNUMEXCRANGE(-pi, pi)`, where the longitude ranges from -&pi; to &pi;, and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where&mdash;

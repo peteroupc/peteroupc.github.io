@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Oct. 12, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 25, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -118,7 +118,7 @@
 <ul>
 <li><a href="#Random_Point_Inside_a_Triangle">Random Point Inside a Triangle</a></li>
 <li><a href="#Random_Points_on_the_Surface_of_a_Hypersphere">Random Points on the Surface of a Hypersphere</a></li>
-<li><a href="#Random_Points_Inside_a_Ball">Random Points Inside a Ball</a></li>
+<li><a href="#Random_Points_Inside_a_Ball_or_Shell">Random Points Inside a Ball or Shell</a></li>
 <li><a href="#Random_Latitude_and_Longitude">Random Latitude and Longitude</a></li>
 </ul></li>
 <li><a href="#Conclusion">Conclusion</a></li>
@@ -880,7 +880,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</p>
 <h3>Rejection Sampling</h3>
 
 <p><em>Rejection sampling</em> is a simple and flexible technique for generating random content that
-meets certain requirements.  To implement rejection sampling&mdash;</p>
+meets certain requirements.  To implement rejection sampling:</p>
 
 <ol>
 <li>Generate the random content (such as a random number) by any method and with any distribution and range.</li>
@@ -1186,7 +1186,7 @@ if index==0: number = Normal(1, 1)
 // Else index 1 was chosen, sample from the mean -1 normal
 else: number = Normal(-1, 1)
 </pre></li>
-<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the area of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle">triangles</a>, and a mixture of those triangles can be sampled.<sup><a href="#Note9">(9)</a></sup></p></li>
+<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><em>triangulated</em></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle">triangles</a>, and a mixture of those triangles can be sampled.<sup><a href="#Note9">(9)</a></sup></p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
 <ul>
@@ -1970,7 +1970,7 @@ the same meaning as in the normal distribution, and <code>alpha</code> is a shap
 <h3>Random Point Inside a Triangle</h3>
 
 <p>The following pseudocode, which
-generates a uniformly random point inside a 2-dimensional triangle,
+generates, uniformly at random, a point inside a 2-dimensional triangle,
 takes three parameters, <code>p0</code>, <code>p1</code>, and <code>p2</code>, each of which is a 2-item list containing the X and Y
 coordinates, respectively, of one vertex of the triangle.</p>
 
@@ -2000,15 +2000,15 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <h3>Random Points on the Surface of a Hypersphere</h3>
 
-<p>To generate an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N <code>Normal(0, 1)</code> random numbers, then divide them by <code>R / X</code>, where <code>X</code> is those numbers&#39; <a href="#Notation_and_Definitions"><em>norm</em></a> (if <code>X</code> is 0, the process should repeat). A hypersphere&#39;s surface is formed by all points lying 1 unit away from a common point in N-dimensional space. Based on a technique described in <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">MathWorld</a>.</p>
+<p>To generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N <code>Normal(0, 1)</code> random numbers, then multiply them by <code>R / X</code>, where <code>X</code> is those numbers&#39; <a href="#Notation_and_Definitions"><em>norm</em></a> (if <code>X</code> is 0, the process should repeat). A hypersphere&#39;s surface is formed by all points lying R units away from a common point in N-dimensional space. Based on a technique described in <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">MathWorld</a>.</p>
 
 <p>This problem is equivalent to generating a random unit vector (vector with length 1) in N-dimensional space.</p>
 
-<p><a id=Random_Points_Inside_a_Ball></a></p>
+<p><a id=Random_Points_Inside_a_Ball_or_Shell></a></p>
 
-<h3>Random Points Inside a Ball</h3>
+<h3>Random Points Inside a Ball or Shell</h3>
 
-<p>To generate an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;</p>
+<p>To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;</p>
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
@@ -2017,13 +2017,19 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html">MathWorld article</a>, which was the inspiration for the two methods given here.</p>
 
-<p>If the ball is hollow, that is, only points within a range of distances from the center of the ball are allowed, then use either method given earlier to generate a random point for a ball of radius equal to the maximum allowed distance, until the <a href="#Notation_and_Definitions"><em>norm</em></a> of the numbers making up that point is within the desired range of distances.</p>
+<p>To generate a random point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
+
+<ul>
+<li>generate a random point for a ball of radius B until the <a href="#Notation_and_Definitions"><em>norm</em></a> of the numbers making up that point is A or greater;</li>
+<li>for 2 dimensions, generate a random point on the surface of a circle with radius equal to <code>sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)</code> (Dupree and Fraley 2004); or</li>
+<li>for 3 dimensions, generate a random point on the surface of a sphere with radius equal to <code>pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)</code> (Dupree and Fraley 2004).</li>
+</ul>
 
 <p><a id=Random_Latitude_and_Longitude></a></p>
 
 <h3>Random Latitude and Longitude</h3>
 
-<p>To generate a random latitude and longitude on a sphere (in radians with west and south coordinates negative) such that the resulting point is (practically) uniformly distributed on the surface of a sphere&mdash;</p>
+<p>To generate, uniformly at random, a point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;</p>
 
 <ul>
 <li>generate the longitude <code>RNDNUMEXCRANGE(-pi, pi)</code>, where the longitude ranges from -&pi; to &pi;, and</li>
@@ -2128,7 +2134,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
 <script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
 <span><g:plusone size="medium"></g:plusone></span><br/>
-<span><a href="//www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpeteroupc.github.io%2Fcolorgen.html">Share via Facebook</a></span>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
 </p>
 </div>
 </nav><script>
@@ -2139,5 +2145,7 @@ if(document.location.href.indexOf("file://")!=0){
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 }
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
 </script>
 </body></html>
