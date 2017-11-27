@@ -14,6 +14,7 @@ This document presents supplemental topics about color.
 - [Contents](#Contents)
 - [Notation and Definitions](#Notation_and_Definitions)
 - [Kinds of Color Spaces](#Kinds_of_Color_Spaces)
+- [Calculating the Mean Hue Angle](#Calculating_the_Mean_Hue_Angle)
 - [Additional Color Models](#Additional_Color_Models)
     - [HSI](#HSI)
     - [Hunter L,a,b](#Hunter_L_a_b)
@@ -42,6 +43,26 @@ In this document:
 A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
 
 **Device-independent** color spaces are based on how humans perceive color.  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.
+
+<a id=Calculating_the_Mean_Hue_Angle></a>
+## Calculating the Mean Hue Angle
+
+The `MeanAngle` method, as given in the pseudocode below, finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models such as HSL, HSV, and CIE _L\*C\*h_, which contain hue components that are angles).
+
+    METHOD MeanAngle(angles)
+        if size(angles)==0: return 0
+        xm=0
+        ym=0
+        i=0
+        while i < size(angles)
+            c = cos(angles[i])
+            s = sin(angles[i])
+            i = i + 1
+            xm = xm + (c - xm) / i
+            ym = ym + (s - ym) / i
+        end
+        return atan2(ym, xm)
+    END
 
 <a id=Additional_Color_Models></a>
 ## Additional Color Models
