@@ -149,52 +149,31 @@ programming interface, document format, or plotting or charting technology.</p><
 
 <h3>Utility Functions</h3>
 
-<p>In the pseudocode below, the utility function&mdash;</p>
+<p>In the pseudocode below:</p>
 
 <ul>
-<li><code>Lerp3</code> returns a blended form of two lists of three numbers (<code>list1</code> and <code>list2</code>); here, <code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>, and <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language);</li>
-<li><code>Clamp</code> returns <code>minimum</code> if the given value is less than <code>minimum</code>, <code>maximum</code> if greater than <code>maximum</code>,
-or <code>value</code> otherwise, and is equivalent to <code>clamp</code> in GLSL;</li>
-<li><code>Clamp3</code> applies the <code>Clamp</code> function separately to each item of a three-element list; here, <code>value</code>, <code>minimum</code>,
-and <code>maximum</code> are each three-element lists; and</li>
-<li><code>MeanAngle</code> finds the average of one or more angles expressed in radians (which is important when averaging colors in hue-based color models, which contain hue components that are angles).</li>
-</ul>
+<li><code>Lerp3</code> returns a blended form of two lists of three numbers.  <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language). In this function:
 
-<p><strong>Note:</strong> For <code>Lerp3</code>, making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
+<ul>
+<li><code>list1</code> and <code>list2</code> are the two lists.</li>
+<li><code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>. Making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
 where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.
-Detailing such interpolations is outside the scope of this document, but are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</p>
+Detailing such interpolations is outside the scope of this document, but are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</li>
+</ul></li>
+<li><p><code>Clamp3</code> returns a three-element list which is the same as <code>elements</code>, except that each item is not less than <code>minimum</code> or greater than <code>maximum</code>.</p>
 
-<pre>METHOD Lerp3(a, b, fac)
-    return [a[0]+(b[0]-a[0])*fac, a[1]+(b[1]-a[1])*fac, a[2]+(b[2]-a[2])*fac]
-END METHOD
+<p>METHOD Lerp3(list1, list2, fac)
+    return [list1[0]+(list2[0]-list1[0])<em>fac, list1[1]+(list2[1]-list1[1])</em>fac,
+        list1[2]+(list2[2]-list1[2])*fac]
+END METHOD</p>
 
-METHOD Clamp(value, minimum, maximum)
-    if value &lt; minimum: return minimum
-    if value &gt; maximum: return maximum
-    return value
-END METHOD
-
-METHOD Clamp3(value, minimum, maximum)
-    return [Clamp(value[0],minimum[0], maximum[0]),
-      Clamp(value[1],minimum[1], maximum[1]),
-      Clamp(value[2],minimum[2], maximum[2])]
-END METHOD
-
-METHOD MeanAngle(angles)
-    if size(angles)==0: return 0
-    xm=0
-    ym=0
-    i=0
-    while i &lt; size(angles)
-        c = cos(angles[i])
-        s = sin(angles[i])
-        i = i + 1
-        xm = xm + (c - xm) / i
-        ym = ym + (s - ym) / i
-    end
-    return atan2(ym, xm)
-END
-</pre>
+<p>METHOD Clamp3(elements, minimum, maximum)
+    // NOTE: Equivalent to GLSL&#39;s <code>clamp</code> for 3-element vectors.
+    return [min(max(elements[0],minimum[0]), maximum[0]),
+      min(max(elements[1],minimum[1]), maximum[1]),
+      min(max(elements[2],minimum[2]), maximum[2])]
+END METHOD</p></li>
+</ul>
 
 <p><a id=RGB_Color_Model></a></p>
 
@@ -430,7 +409,7 @@ END METHOD
 
 <h3>sRGB</h3>
 
-<p>Among RGB color spaces, one of the most popular is the sRGB color space. The <em>sRGB color space</em> is a &quot;working space&quot; for describing RGB colors and is based on the color output of cathode-ray-tube monitors.  (For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB">sRGB proposal</a>.)<sup><a href="#Note6">(6)</a></sup></p>
+<p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>. sRGB, a &quot;working space&quot; for describing RGB colors, is based on the color output of cathode-ray-tube monitors.  (For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB">sRGB proposal</a>.)<sup><a href="#Note6">(6)</a></sup></p>
 
 <p>Unlike with many other RGB color spaces, sRGB&#39;s <em>transfer function</em> does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a formula with a similar conversion curve.  The sRGB proposal recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
 
@@ -562,7 +541,7 @@ END METHOD
 <li>A component called &quot;saturation&quot; is the distance of the color from gray (but not necessarily from
 black or white), which is 0 or greater and 1 or less.</li>
 <li>A component variously called &quot;lightness&quot;, &quot;luminance&quot;, or &quot;luminosity&quot;, is roughly the amount
-of black or white mixed with the color and which is 0 or greater and 1 or less, where 0 is black, 1 is white, closer to 0 means closer to black, and closer to 1 means closer to white.</li>
+of black or white mixed with the color and is 0 or greater and 1 or less, where 0 is black, 1 is white, closer to 0 means closer to black, and closer to 1 means closer to white.</li>
 </ul>
 
 <p>The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
@@ -652,8 +631,8 @@ END METHOD
 
 <ul>
 <li><em>Hue</em> is the same as in <a href="#HSV">HSV</a>.</li>
-<li><em>Whiteness</em>, the amount of white in the color, is 0 or greater and 1 or less.</li>
-<li><em>Blackness</em>, the amount of black in the color, is 0 or greater and 1 or less.</li>
+<li><em>Whiteness</em>, the amount of white mixed to the color, is 0 or greater and 1 or less.</li>
+<li><em>Blackness</em>, the amount of black mixed to the color, is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
@@ -795,7 +774,7 @@ and is calculated analogously to <em>xy</em> chromaticity.</li>
 <p>A color in CIELAB consists of three components, in the following order:</p>
 
 <ul>
-<li><em>L*</em>, or <em>lightness</em> of a color, is 0 or greater and 100 or less, where 0 is black and 100 is white.</li>
+<li><em>L*</em>, or <em>lightness</em> of a color (how bright that color appears in comparison to white), is 0 or greater and 100 or less, where 0 is black and 100 is white.</li>
 <li><em>a*</em> is a coordinate of the red/green axis; the positive <em>a*</em> axis points to red (actually magenta)
 and the negative <em>a*</em> axis points to green.</li>
 <li><em>b*</em> is a coordinate of the yellow/blue axis; the positive <em>b*</em> axis points to yellow
@@ -1086,7 +1065,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <h3>Relative Luminance (Grayscale)</h3>
 
-<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light is seen when that color is viewed, as compared to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>, and is 0 or greater and 1 or less.</p>
+<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light is seen when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>, and is 0 or greater and 1 or less.</p>
 
 <ul>
 <li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, relative luminance&mdash;</p>
@@ -1230,12 +1209,12 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <ul>
 <li><code>Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])</code>,</li>
-<li><code>HslToRgb(HSVHue(color), HSLSat(color), Clamp(HSLLgt(color) + value, 0, 1))</code>, or</li>
-<li><code>SRGBFromLab(Clamp(lab[0] + (value * 100), 0, 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (CIELAB),</li>
+<li><code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>, or</li>
+<li><code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (CIELAB),</li>
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative, where <code>value</code> is 0 or greater and 1 or less.</p></li>
-<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], Clamp(hsv[1] + color, 0, 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
+<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 <li><strong>Colorize</strong>: Given a desired <code>color</code> and a source color <code>srcColor</code>, generate
 <code>[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]</code>.</li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
@@ -1451,10 +1430,10 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than 0.75 and less than 0.9.</li>
-<li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp(color1, color2, RNDU01())</code>.</li>
-<li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))</code>.</li>
-<li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
-<li>To generate a <strong>random tone</strong> of a given color, generate <code>Lerp(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDU01())</code>.</li>
+<li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))</code>.</li>
+<li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random tone</strong> of a given color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))</code>.</li>
 <li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary <a href="#HSV">hue</a>.</li>
 <li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare,</li>
@@ -1874,7 +1853,7 @@ this page are welcome.</p>
 
 <p><sup id=Note16>(16)</sup> As an example of this point, the International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
-<p>A very rough approximation of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximation of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
+<p>A very rough approximate conversion of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = Min(1.0 - color[0], 1.0 - color[1], 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximate conversion of a CMYK color (<code>color</code>) to an RGB color involves generating <code>[(1 - color[0]) * ik, (1 - color[1]) * ik, (1 - color[2]) * ik]</code>, where <code>ik = 1 - color[3]</code>.</p>
 
 <p>Printing systems that use mixtures of inks other than cyan, magenta, yellow, and black are usually not of general interest to programmers.</p>
 
