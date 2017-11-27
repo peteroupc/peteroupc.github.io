@@ -55,7 +55,7 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
 * `abs(a)` is the absolute value of `a`.
 * `sqrt(a)` is the square root of `a`, and is equivalent to `pow(a, 0.5)`.
 * `floor(a)` is the highest integer that is less than or equal to `a`.
-* `round(a)` is the closest integer to `a` or, if two integers are equally close to `a`, the integer among them that is farther from 0.
+* `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
 * `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
 * `mod(a, b)` is the remainder when `a` is divided by `b` (where `b` must be greater than 0), and is equivalent to `a - floor(a / b) * b`.

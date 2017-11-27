@@ -1086,7 +1086,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <h3>Relative Luminance (Grayscale)</h3>
 
-<p>Relative luminance is a single number, being 0 or greater and 1 or less, that indicates how light or dark a color is; relative luminance is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>.</p>
+<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light is seen when that color is viewed, as compared to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>, and is 0 or greater and 1 or less.</p>
 
 <ul>
 <li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, relative luminance&mdash;</p>
@@ -1101,7 +1101,7 @@ points, respectively<sup><a href="#Note6">(6)</a></sup><sup><a href="#Note17">(1
 <p>If a different white point than the RGB color space&#39;s usual white point should have a relative luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the
 corresponding relative luminances after <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another.  Further details on such
 adaptation are outside the scope of this document, but see the examples. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html">The Luminance of an sRGB Color</a>&quot;, 2013.)</p></li>
-<li>Applying the formula just given to <em>companded RGB</em> colors results in a value more properly called <em>luma</em>, not luminance.<sup><a href="#Note18">(18)</a></sup></li>
+<li>Applying the formula just given to <em>companded RGB</em> colors results in a value more properly called <em>luma</em>, not (relative) luminance.<sup><a href="#Note18">(18)</a></sup></li>
 </ul>
 
 <p>Examples follow for sRGB:</p>
@@ -1110,8 +1110,6 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <li><strong>ITU BT.709</strong> (<code>BT709(color)</code>): <code>(color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722)</code> (sRGB Y values of red/green/blue<sup><a href="#Note6">(6)</a></sup>).</li>
 <li><strong>sRGB with D50 white point</strong>: <code>(color[0] * 0.2225 + color[1] * 0.7169 + color[2] * 0.0606)</code><sup><a href="#Note11">(11)</a></sup>.</li>
 </ul>
-
-<p>In the rest of this document, the method <strong><code>Luminance(color)</code></strong> returns the relative luminance of the color <code>color</code>.</p>
 
 <p>Applications of relative luminance include the following:</p>
 
