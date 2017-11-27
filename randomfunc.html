@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 25, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 26, 2017.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -895,7 +895,7 @@ meets certain requirements.  To implement rejection sampling:</p>
 <li>whether a random number is not among recently chosen random numbers,</li>
 <li>whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
 <li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or</li>
-<li>whether that number is not included in a &quot;blacklist&quot; of numbers.</li>
+<li>whether a random number is not included in a &quot;blacklist&quot; of numbers.</li>
 </ul>
 
 <p>(KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)</p>
@@ -1218,7 +1218,7 @@ else: number = Normal(-1, 1)
 
 <ul>
 <li>generate two independent and identically distributed random variables <code>x</code> and <code>y</code> (for example, two <code>Normal(0, 1)</code> variables or two <code>RNDU01()</code> variables), and</li>
-<li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a <em>correlation coefficient</em> in the interval <a href="if%20%60rho%60%20is%200,%20the%20variables%20are%20uncorrelated">-1, 1</a>.</li>
+<li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
 </ul>
 
 <p>Another way to generate correlated random numbers is explained in the section &quot;<a href="#Gaussian_Copula">Gaussian Copula</a>&quot;.</p>
@@ -1846,7 +1846,7 @@ END METHOD
 
 <pre>METHOD erf(v)
     if v==0: return 0
-    if v&lt;0: return erf(-v)
+    if v&lt;0: return -erf(-v)
     if v==infinity: return 1
     // NOTE: For Java `double`, the following
     // line can be added:
@@ -2002,7 +2002,7 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <p>To generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N <code>Normal(0, 1)</code> random numbers, then multiply them by <code>R / X</code>, where <code>X</code> is those numbers&#39; <a href="#Notation_and_Definitions"><em>norm</em></a> (if <code>X</code> is 0, the process should repeat). A hypersphere&#39;s surface is formed by all points lying R units away from a common point in N-dimensional space. Based on a technique described in <a href="http://mathworld.wolfram.com/HyperspherePointPicking.html">MathWorld</a>.</p>
 
-<p>This problem is equivalent to generating a random unit vector (vector with length 1) in N-dimensional space.</p>
+<p>This problem is equivalent to generating, uniformly at random, a unit vector (vector with length 1) in N-dimensional space.</p>
 
 <p><a id=Random_Points_Inside_a_Ball_or_Shell></a></p>
 
@@ -2017,12 +2017,12 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html">MathWorld article</a>, which was the inspiration for the two methods given here.</p>
 
-<p>To generate a random point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
+<p>To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
 
 <ul>
-<li>generate a random point for a ball of radius B until the <a href="#Notation_and_Definitions"><em>norm</em></a> of the numbers making up that point is A or greater;</li>
-<li>for 2 dimensions, generate a random point on the surface of a circle with radius equal to <code>sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)</code> (Dupree and Fraley 2004); or</li>
-<li>for 3 dimensions, generate a random point on the surface of a sphere with radius equal to <code>pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)</code> (Dupree and Fraley 2004).</li>
+<li>generate, uniformly at random, a point for a ball of radius B until the <a href="#Notation_and_Definitions"><em>norm</em></a> of the numbers making up that point is A or greater;</li>
+<li>for 2 dimensions, generate, uniformly at random, a point on the surface of a circle with radius equal to <code>sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)</code> (Dupree and Fraley 2004); or</li>
+<li>for 3 dimensions, generate, uniformly at random, a point on the surface of a sphere with radius equal to <code>pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)</code> (Dupree and Fraley 2004).</li>
 </ul>
 
 <p><a id=Random_Latitude_and_Longitude></a></p>

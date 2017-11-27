@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 25, 2017.
+Begun on June 4, 2017; last updated on Nov. 26, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -737,7 +737,7 @@ Example criteria include checking&mdash;
 - whether a random number is not among recently chosen random numbers,
 - whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or
-- whether that number is not included in a "blacklist" of numbers.
+- whether a random number is not included in a "blacklist" of numbers.
 
 (KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)
 
@@ -1014,7 +1014,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 According to (Saucier 2000), sec. 3.8, to generate two correlated (dependent) random variables&mdash;
 
 - generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
-- calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ in the interval [-1, 1] (if `rho` is 0, the variables are uncorrelated).
+- calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
 
 Another way to generate correlated random numbers is explained in the section "[Gaussian Copula](#Gaussian_Copula)".
 
@@ -1578,7 +1578,7 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
 
     METHOD erf(v)
         if v==0: return 0
-        if v<0: return erf(-v)
+        if v<0: return -erf(-v)
         if v==infinity: return 1
         // NOTE: For Java `double`, the following
         // line can be added:
@@ -1724,7 +1724,7 @@ coordinates, respectively, of one vertex of the triangle.
 
 To generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N `Normal(0, 1)` random numbers, then multiply them by `R / X`, where `X` is those numbers' [_norm_](#Notation_and_Definitions) (if `X` is 0, the process should repeat). A hypersphere's surface is formed by all points lying R units away from a common point in N-dimensional space. Based on a technique described in [MathWorld](http://mathworld.wolfram.com/HyperspherePointPicking.html).
 
-This problem is equivalent to generating a random unit vector (vector with length 1) in N-dimensional space.
+This problem is equivalent to generating, uniformly at random, a unit vector (vector with length 1) in N-dimensional space.
 
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
@@ -1736,10 +1736,10 @@ To generate, uniformly at random, an N-dimensional point inside an N-dimensional
 
 although the former method "may ... be slower" "in practice", according to a [MathWorld article](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
-To generate a random point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
-- generate a random point for a ball of radius B until the [_norm_](#Notation_and_Definitions) of the numbers making up that point is A or greater;
-- for 2 dimensions, generate a random point on the surface of a circle with radius equal to `sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)` (Dupree and Fraley 2004); or
-- for 3 dimensions, generate a random point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)` (Dupree and Fraley 2004).
+To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
+- generate, uniformly at random, a point for a ball of radius B until the [_norm_](#Notation_and_Definitions) of the numbers making up that point is A or greater;
+- for 2 dimensions, generate, uniformly at random, a point on the surface of a circle with radius equal to `sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)` (Dupree and Fraley 2004); or
+- for 3 dimensions, generate, uniformly at random, a point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)` (Dupree and Fraley 2004).
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
