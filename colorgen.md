@@ -102,12 +102,14 @@ In this document:
 
 In the pseudocode below:
 
-- `Lerp3` returns a blended form of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
+- `Lerp3` returns a linear interpolation (blending) of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
     - `list1` and `list2` are the two lists.
     - `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`. Making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.
 Detailing such interpolations is outside the scope of this document, but are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 - `Clamp3` returns a three-element list which is the same as `elements`, except that each item is not less than `minimum` or greater than `maximum`.
+
+----
 
     METHOD Lerp3(list1, list2, fac)
         return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
@@ -239,7 +241,7 @@ A color string in the _HTML color format_ (also known as "hex" format), which ex
 
 For example, the HTML color `#003F86` expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).<sup>[(4)](#Note4)</sup>
 
-The [CSS Color Module Level 3](https://www.w3.org/TR/css3-color/#rgb-color), which specifies the HTML color format, also mentions a 3-digit format, consisting of "#" followed by one base-16 digit each for the red, green, and blue components, respectively. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
+The [CSS Color Module Level 3](https://www.w3.org/TR/css3-color/#rgb-color), which specifies the HTML color format, also mentions a 3-digit format, consisting of "#" followed by one base-16 digit each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
 
 An 8-digit variant used in the Android operating system consists of "#" followed by two base-16 digits each for the alpha, red, green, and blue components, respectively.  This variant thus describes 8/8/8/8 RGBA colors.
 
@@ -314,7 +316,7 @@ characters) to and from the HTML color format or the 3-digit format.
 In a given RGB color space, an RGB color can be _linearized_ or _companded_.
 
 - A _linearized_ RGB color has a linear relationship of emitted light (as opposed to perceived light).
-- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as a _companding_ conversion (one example is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors generally have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
+- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as _companding_ (one example is the `LinearTosRGB3` method defined later). For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
 For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a positive number. (In this case, the transfer function is also called _gamma encoding_.)
 
@@ -813,7 +815,7 @@ The `LabToHue`, `LabToChroma`, `LabHueDifference`,
 `LabChromaHueDifference`, and
 `LchToLab` methods from the previous section work with
 CIELUV colors analogously to CIELAB colors.
-A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness)
+A color's [_saturation_](https://en.wikipedia.org/wiki/Colorfulness) (_s_<sub>uv</sub>)
 can be derived from a CIELUV color with a method demonstrated
 in the following pseudocode:
 
@@ -822,7 +824,7 @@ in the following pseudocode:
         return sqrt(luv[1]*luv[1]+luv[2]*luv[2])/luv[0]
     END METHOD
 
-**Note:** The difference in lightness, _u\*_, _v\*_, or chroma (_&Delta;L\*_, _&Delta;u\*_, _&Delta;v\*_, or _&Delta;C\*_, respectively), between two CIELUV colors is simply the difference between the corresponding value of the second CIELUV color and that of the first.
+**Note:** The difference in lightness, _u\*_, _v\*_, chroma, or saturation (_&Delta;L\*_, _&Delta;u\*_, _&Delta;v\*_,  _&Delta;C\*_<sub>uv</sub>, or _&Delta;s_<sub>uv</sub>, respectively), between two CIELUV colors is simply the difference between the corresponding value of the second CIELUV color and that of the first.
 
 <a id=Y_prime_C_B_C_R></a>
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>
@@ -917,7 +919,7 @@ Note that for best results, these techniques need to be carried out with [_linea
 <a id=Relative_Luminance_Grayscale></a>
 ### Relative Luminance (Grayscale)
 
-Relative luminance is a single number indicating a color's luminance relative to white &mdash; that is, how much light is seen when that color is viewed, in comparison to white. Relative luminance, called **`Luminance(color)`** in this document, is equivalent to the Y-axis in the [XYZ color model](#CIE_XYZ), and is 0 or greater and 1 or less.
+Relative luminance is a single number indicating a color's luminance relative to white &mdash; that is, how much light is detected when that color is viewed, in comparison to white. Relative luminance, called **`Luminance(color)`** in this document, is equivalent to the Y-axis in the [XYZ color model](#CIE_XYZ), and is 0 or greater and 1 or less.
 
 - For [_linearized RGB_ colors](#Linearized_and_Companded_RGB), relative luminance&mdash;
     - is `(color[0] * r + color[1] * g + color[2] * b)`,
@@ -1327,7 +1329,7 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:
 
 - **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the spectrum.<sup>[(26)](#Note26)</sup>
-- **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a (_spectral_) _reflectance curve_.
+- **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a _(spectral) reflectance curve_.
 - **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_.
 
 A material's perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three _color matching functions_).  That curve, the light source's spectral curve, and the color matching functions, are used to convert a color stimulus to three numbers (called _tristimulus values_) that uniquely identify the material's perceived color.
@@ -1389,7 +1391,7 @@ In the pseudocode below:
 - the adopted white point is the D65 white point,
 - the tristimulus values (e.g., from `SpectrumToTristim()`) will be a relative [XYZ color](#CIE_XYZ) such that Y ranges from 0 for "absolute black" to 1 for the D65 white point,
 - the idiom `XYZTosRGB(SpectrumToTristim())` computes, in companded sRGB, the perceived color of the stimulus, and
-- the idiom `XYZTosRGB(CMF(wavelength))` computes, in companded sRGB, the perceived color of a light source that emits light only at the wavelength `wavelength` (a _monochromatic stimulus_), where the wavelength is expressed in nm.
+- the idiom `XYZTosRGB(CMF(wl))` computes, in companded sRGB, the perceived color of a light source that emits light only at the wavelength `wl` (a _monochromatic stimulus_), where the wavelength is expressed in nm.
 
 <a id=Color_Temperature></a>
 ### Color Temperature
