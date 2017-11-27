@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 26, 2017.
+Begun on June 4, 2017; last updated on Nov. 27, 2017.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -127,7 +127,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs.
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.
 
 - **Method 1**: If `RNG()` outputs **integers in the interval \[0, positive `MODULUS`\)** (for example, less than 1,000,000 or less than 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(2)](#Note2)</sup>
 - **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
