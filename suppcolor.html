@@ -34,6 +34,8 @@
 <li><a href="#HSI">HSI</a></li>
 <li><a href="#Hunter_L_a_b">Hunter L,a,b</a></li>
 </ul></li>
+<li><a href="#Irrelevant_Topics">Irrelevant Topics</a></li>
+<li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
 </ul>
 
@@ -47,8 +49,6 @@
 <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
 <li>The term <em>RGB</em> means red-green-blue.</li>
 <li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
-<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
-<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
 </ul>
 
 <p><a id=Overview_of_Color_Vision></a></p>
@@ -67,7 +67,7 @@
 
 <p>The three things that together make color possible &mdash; light, object, and observer &mdash; can be modeled by curves that span the <em>visible spectrum</em> (the part of the spectrum in which the eye senses light), as described in &quot;<a href="https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions">Spectral Color Functions</a>&quot;.</p>
 
-<p>The retina of the human eye contains three kinds of cones (L, M, and S), and the visual system senses color by the relative degree to which all three kinds of cones respond to a stimulus of light.  The cone responses can be described by three overlapping &quot;curves&quot; that peak at different wavelengths of the visible spectrum -- where the M and L curves span the entire visible spectrum.  As a result, at least two of the three kinds of cones will respond to light, not just one by itself.</p>
+<p>The retina of the human eye contains three kinds of cones (L, M, and S), and the visual system senses color by the relative degree to which all three kinds of cones respond to a stimulus of light.  The cone responses can be described by three overlapping &quot;curves&quot; that peak at different wavelengths of the visible spectrum &mdash; where the M and L curves span the entire visible spectrum.  As a result, at least two of the three kinds of cones will respond to light, not just one by itself.</p>
 
 <p>Because there are three kinds of cones, three numbers are enough to uniquely identify a color humans can see &mdash; which is why many color models are 3-dimensional, such as RGB or CIE XYZ.</p>
 
@@ -75,9 +75,9 @@
 
 <h3>Defective and Animal Color Vision</h3>
 
-<p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including so-called <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a>, results from defects in one or more kinds of cones and affects a small portion of people, usually males. Two forms of defective color vision, <em>protanopia</em> and <em>deuteranopia</em>, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.  Even among people with normal color vision, though, there is <a href="http://www.handprint.com/HP/WCL/color2.html#individualdiffs">wide variation</a> in color vision among individuals.</p>
+<p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including so-called <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a>, results from defects in one or more kinds of cones and affects a small portion of people, usually males. Two forms of defective color vision, <em>protanopia</em> and <em>deuteranopia</em>, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.  Even among people with normal color vision, though, there is <a href="http://www.handprint.com/HP/WCL/color2.html#individualdiffs">wide variation</a> in color vision among individuals &mdash; such that they are not guaranteed to agree on how to identify any particular color.</p>
 
-<p>In addition to humans, many animals possess color vision to a greater or lesser extent.  As an extreme example, the <a href="https://en.wikipedia.org/wiki/Mantis_shrimp">mantis shrimp</a> has 16 different cone types, making its color vision considerably sharper than humans&#39;.</p>
+<p>In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the <a href="https://en.wikipedia.org/wiki/Mantis_shrimp">mantis shrimp</a> has 16 different cone types, making its color vision considerably sharper than humans&#39;.</p>
 
 <p><a id=Opponent_Signals></a></p>
 
@@ -86,27 +86,33 @@
 <p>The human visual system compares the cone responses it receives and converts them to three kinds of signals, namely&mdash;</p>
 
 <ul>
-<li>a light-dark signal, which is the sum of the three cone responses,</li>
+<li>a light-dark signal, which is roughly the sum of the three cone responses,</li>
 <li>a red/green <em>opponent signal</em>, and</li>
 <li>a blue/yellow <em>opponent signal</em>.</li>
 </ul>
 
-<p>It&#39;s these signals, and not the cone responses, that are passed to the brain.  The theory of opponent signals is largely due to E. Hering&#39;s work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</p>
+<p>It&#39;s these signals, and not the cone responses, that are passed to the brain.  The theory of opponent colors is largely due to E. Hering&#39;s work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</p>
 
 <p><a id=Kinds_of_Color_Spaces></a></p>
 
 <h2>Kinds of Color Spaces</h2>
 
-<p><strong>Device-dependent</strong> color spaces are based on how devices display or record color.  Such color spaces include&mdash;</p>
+<p>Color spaces can also be categorized as any of the following:</p>
+
+<ul>
+<li><p><strong>Device-dependent</strong> color spaces are based on how devices display or record color.  Such color spaces include&mdash;</p>
 
 <ul>
 <li><strong>light-mixture color spaces</strong>, based on mixtures of colored lights (such as RGB, red-green-blue), and</li>
-<li><strong>colorant-mixture color spaces</strong>, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).</li>
+<li><strong>colorant-mixture color spaces</strong>, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup><a href="#Note1">(1)</a></sup></li>
 </ul>
 
-<p>A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.</p>
-
-<p><strong>Device-independent</strong> color spaces are based on how humans perceive color.  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.</p>
+<p>A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.</p></li>
+<li><strong>Device-independent</strong> color spaces are based on how humans perceive color.  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.</li>
+<li><strong>Lightness-based</strong> color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are <em>chromaticity</em> dimensions.  Examples include HSL, CIE <em>L*C*h</em>, CIE XYZ, and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.</li>
+<li><strong>Hue-based</strong> color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE <em>L*C*h</em>.</li>
+<li><strong>Opponent</strong> color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup><a href="#Note2">(2)</a></sup></li>
+</ul>
 
 <p><a id=Calculating_the_Mean_Hue_Angle></a></p>
 
@@ -207,6 +213,30 @@ END METHOD
 Hunter L, a, b colors analogously to CIELAB colors.</p>
 
 <p>The difference in lightness, <em>a</em>, <em>b</em>, or chroma (<em>&Delta;L</em>, <em>&Delta;a</em>, <em>&Delta;b</em>, or <em>&Delta;C</em>, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.</p>
+
+<p><a id=Irrelevant_Topics></a></p>
+
+<h2>Irrelevant Topics</h2>
+
+<p>The following topics on color are rarely relevant to programmers:</p>
+
+<ul>
+<li>The &quot;meaning&quot; or symbolism of colors, since they vary from culture to culture and can change over time, even within the same culture.</li>
+<li>Language differences in color lexicons, for the same reason.</li>
+<li>&quot;Color forecasting&quot;, or predicting which colors will be in high demand, especially in the fashion and design realms.</li>
+</ul>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<p><small></p>
+
+<p><sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called &quot;primary colors&quot;; it&#39;s only in the context of light-mixture, colorant-mixture, or opponent color spaces that &quot;primary colors&quot; are normally relevant to programming.  Note that some light-mixture color spaces, such as the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 RGB color space</a>, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.</p>
+
+<p><sup id=Note2>(2)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the &quot;unique hues&quot;, and those colors, with or without white and black, can be called &quot;primary colors&quot;.  Here, such &quot;primary colors&quot; serve more to anchor the location of a particular color in the color space than to &quot;mix all colors&quot; or represent colored lights or colorants.</p>
+
+<p></small></p>
 
 <p><a id=License></a></p>
 
