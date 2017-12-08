@@ -40,7 +40,7 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
       if x==0: return infinity
       if x<0: return error
       // Computes gamma(x/2) assuming `x` is an integer
-      return doublefac(x-2)*sqrt(pi)/pow(2,(x-1)*0.5)
+      return DoubleFactorial(x-2)*sqrt(pi)/pow(2,(x-1)*0.5)
     END METHOD
 
     METHOD GammaRegQ(a,b)
@@ -53,7 +53,7 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
       // by 1/2.  For general `a`, replace `GammaOfHalfInteger(a * 2)`
       // with a call to the full-fledged gamma function like
       // `gamma(a)`.
-      mul/=GammaOfHalfInteger(a * 2)
+      mul = mul / GammaOfHalfInteger(a * 2)
       // NOTE: Continued fraction calculation technique
       // described in Thompson and Barnett, "Coulomb and
       // Bessel functions of complex arguments and order",

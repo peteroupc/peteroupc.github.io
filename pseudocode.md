@@ -26,6 +26,8 @@ In addition to the familiar `+`, `-`, `*` (multiplication), and `/` (division) o
 * `pi` is the constant &pi;, the ratio of a circle's circumference to its diameter.
 * `nothing` indicates the absence of a value.  It corresponds to `null` in Java, C#, and JavaScript, `nil` in Ruby, and `None` in Python.
 * `true` and `false` are the two Boolean values.
+* `==` means "is equal to".
+* `!=` means "is not equal to".
 * The `<<` operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup>_n_</sup>, where _n_ is the right-hand side.
 * The `|` operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.
 
