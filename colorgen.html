@@ -1068,7 +1068,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <h3>Relative Luminance (Grayscale)</h3>
 
-<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light is detected when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>, and is 0 or greater and 1 or less.</p>
+<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light is &quot;seen&quot; when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y-axis in the <a href="#CIE_XYZ">XYZ color model</a>, and is 0 or greater and 1 or less.</p>
 
 <ul>
 <li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, relative luminance&mdash;</p>
@@ -1236,7 +1236,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <p><em>Color difference</em> algorithms are used to determine if two colors are similar.</p>
 
-<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on the color space of the two colors and how <code>COLORDIFF</code> is implemented.  Some ways to implement <code>COLORDIFF</code> are given in this section.</p>
+<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  However, the meaning of the color difference depends on the color space of the two colors and how <code>COLORDIFF</code> is implemented; in general, color differences calculated using different color spaces or implementations cannot be converted to each other.  Some ways to implement <code>COLORDIFF</code> are given in this section.</p>
 
 <p><strong>Euclidean distance.</strong> One simple way is to use the Euclidean distance of the two colors, as shown in the following pseudocode.</p>
 
@@ -1740,7 +1740,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <h3>Defective Color Vision</h3>
 
-<p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including what is generally known as <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a>, results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, usually males.</p>
+<p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including what is generally known as <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a>, results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, mostly males.</p>
 
 <p>Each human retina usually has three kinds of cones (L, M, and S),
 and the visual system senses color by the relative degree
