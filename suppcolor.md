@@ -64,8 +64,8 @@ In addition to humans, many other animals possess color vision to a greater or l
 The human visual system compares the cone responses it receives and converts them to three kinds of signals, namely&mdash;
 
 - a light-dark signal, which is roughly the sum of the three cone responses,
-- a red/green _opponent signal_, and
-- a blue/yellow _opponent signal_.
+- a red/green _opponent signal_, which is roughly the M response minus the L response, and
+- a blue/yellow _opponent signal_, which is roughly the sum of the M and L responses minus the S response.
 
 It's these signals, and not the cone responses, that are passed to the brain.  The theory of opponent colors is largely due to E. Hering's work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).
 
