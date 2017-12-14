@@ -62,7 +62,7 @@ programming interface, document format, or plotting or charting technology.</p><
 
 <ul>
 <li><a href="#RGB_Colors_and_the_0_1_Format">RGB Colors and the 0-1 Format</a></li>
-<li><a href="#Integer_Component_Formats">Integer Component Formats</a></li>
+<li><a href="#RGB_Integer_Formats">RGB Integer Formats</a></li>
 <li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
 <li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
 <li><a href="#sRGB">sRGB</a></li>
@@ -199,9 +199,9 @@ END METHOD
 <li>a <code>blue</code> component,</li>
 </ul>
 
-<p>and each component is 0 or greater and 1 or less. (The term <strong>0-1 format</strong> will be used in this document to describe this format.  All RGB colors in this document are in the 0-1 format unless noted otherwise.)</p>
+<p>and each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
 
-<p>Some RGB colors also contain a fourth component, called the <em>alpha</em> component, which is 0 greater and 1 or less, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
+<p><strong>RGBA Colors:</strong> Some RGB colors also contain a fourth component, called the <em>alpha</em> component, which is 0 greater and 1 or less, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
 
 <p><strong>Note:</strong> An RGB color&mdash;</p>
 
@@ -212,36 +212,18 @@ END METHOD
 
 <p>A collection of RGB colors (including a raster image) is achromatic or &quot;Web safe&quot; if all its RGB colors are achromatic or &quot;Web safe&quot;, respectively.</p>
 
-<p><a id=Integer_Component_Formats></a></p>
+<p><a id=RGB_Integer_Formats></a></p>
 
-<h3>Integer Component Formats</h3>
+<h3>RGB Integer Formats</h3>
 
-<p>RGB and RGBA colors are often expressed by packing their red, green, and blue components
-(or those three components as well as alpha) as integers.</p>
-
-<p>In this document, there are two general categories for such formats, described below.
-In the pseudocode below, <code>red</code>, <code>green</code>, <code>blue</code>, and <code>alpha</code> are the corresponding components
-of the formats described below, and <code>color</code> is an RGB color in <a href="#0_1_Format">0-1 format</a>.</p>
+<p>RGB and RGBA colors are often expressed by packing their components as integers. In this document, there are two general categories of RGB integer formats:</p>
 
 <ul>
-<li><strong>RN/GN/BN format:</strong> As integers that are (RN + GN + BN) bits long, where&mdash;
-
-<ul>
-<li>the red component is RN bits long and calculated as follows: <code>round(color[0] * (pow(2, RN) - 1))</code>,</li>
-<li>the green component is GN bits long and calculated as follows: <code>round(color[1] * (pow(2, GN) - 1))</code>,</li>
-<li>the blue component is BN bits long and calculated as follows: <code>round(color[2] * (pow(2, BN) - 1))</code>, and</li>
-<li>the components are converted to 0-1 format as follows:
-<code>[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1)]</code>,</li>
-</ul></li>
-<li><strong>RN/GN/BN/AN format:</strong> As integers that are (RN + GN + BN + AN) bits long, where&mdash;
-
-<ul>
-<li>the red, green, and blue components are RN, GN, and BN bits long, respectively, and are calculated the same way as in the <em>RN/GN/BN format</em>,</li>
-<li>the alpha component is AN bits long and calculated as follows: <code>round(color[3] *( pow(2, AN)- 1))</code>, and</li>
-<li>the components are converted to 0-1 format as follows:
-<code>[red/pow(2, RN) - 1, green/(pow(2, GN) - 1), blue/(pow(2, BN) - 1), alpha/(pow(2, AN) - 1)]</code>,</li>
-</ul></li>
+<li><strong>RN/GN/BN format:</strong> With an RN-bit red component, a GN-bit green, and a BN-bit blue, resulting in an integer that&#39;s (RN + GN + BN) bits long.</li>
+<li><strong>RN/GN/BN/AN format:</strong> With an RN-bit red component, a GN-bit green, a BN-bit blue, and an AN-bit alpha, resulting in an integer that&#39;s (RN + GN + BN + AN) bits long.</li>
 </ul>
+
+<p>For both format categories, the lowest value of each component is 0, and its highest value is 2<sup>B</sup> - 1, where B is that component&#39;s size in bits.</p>
 
 <p>Special cases of these formats include the following:</p>
 
@@ -253,23 +235,11 @@ of the formats described below, and <code>color</code> is an RGB color in <a hre
 <li><strong>16/16/16 format:</strong> As 48-bit integers (16 bits per component).</li>
 </ul>
 
-<p>How the RGB or RGBA color&#39;s components are packed into an integer varies considerably.  Among
-other possibilities, they can be packed in any of the following orders from lowest to highest bits:</p>
+<p>There are many ways to store RGB and RGBA colors in either format as integers or as a series of bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; byte order, or RN/GN/BN colors can be packed red/green/blue, in that order from lowest to highest bits.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
 
-<ul>
-<li><em>RN/GN/BN format</em>: Red, green, blue.</li>
-<li><em>RN/GN/BN format</em>: Blue, green, red.</li>
-<li><em>RN/GN/BN/AN format</em>: Red, green, blue, alpha.</li>
-<li><em>RN/GN/BN/AN format</em>: Alpha, red, green, blue.</li>
-<li><em>RN/GN/BN/AN format</em>: Blue, green, red, alpha.</li>
-<li><em>RN/GN/BN/AN format</em>: Alpha, blue, green, red.</li>
-</ul>
+<p>The following pseudocode contains methods for converting RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):</p>
 
-<p>(Little-endian/big-endian issues and other considerations when storing colors as a series of bytes are outside the scope of this document, and so is a thorough survey of the integer color formats in common use.)</p>
-
-<p>The following pseudocode contains methods for converting RGB colors to and from different color formats (where the red component is stored in the low bits of each RGB color number):</p>
-
-<pre>// Converts 0-1 format to N/N/N format as an integer
+<pre>// Converts 0-1 format to N/N/N format as an integer.
 METHOD ToNNN(rgb, scale)
    sm1 = scale - 1
    return round(rgb[2]*sm1) * scale * scale + round(rgb[1]*sm1) * scale +
@@ -311,20 +281,21 @@ END METHOD
 
 <h3>HTML-Related Color Formats</h3>
 
-<p>A color string in the <em>HTML color format</em> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as a string, consists of&mdash;</p>
+<p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as a string, consists of&mdash;</p>
 
 <ul>
-<li>the character &quot;#&quot;,</li>
-<li>followed by the two base-16 (hexadecimal) digits<sup><a href="#Note3">(3)</a></sup> of the red component,</li>
-<li>followed by the two base-16 digits of the green component,</li>
-<li>followed by the two base-16 digits of the blue component.</li>
+<li>the character &quot;#&quot;, followed by</li>
+<li>six base-16 (hexadecimal) digits<sup><a href="#Note3">(3)</a></sup>, two each for the red, green, and blue components, in that order.</li>
 </ul>
 
 <p>For example, the HTML color <code>#003F86</code> expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).<sup><a href="#Note4">(4)</a></sup></p>
 
-<p>The <a href="https://www.w3.org/TR/css3-color/#rgb-color">CSS Color Module Level 3</a>, which specifies the HTML color format, also mentions a 3-digit format, consisting of &quot;#&quot; followed by one base-16 digit each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</p>
+<p>Other variants of the HTML color format:</p>
 
-<p>An 8-digit variant used in the Android operating system consists of &quot;#&quot; followed by two base-16 digits each for the alpha, red, green, and blue components, respectively.  This variant thus describes 8/8/8/8 RGBA colors.</p>
+<ul>
+<li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color">CSS Color Module Level 3</a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
+<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.</li>
+</ul>
 
 <p>The following pseudocode presents methods to convert RGB colors (actually lists of text
 characters) to and from the HTML color format or the 3-digit format.</p>
@@ -390,7 +361,7 @@ METHOD HtmlToColor(colorString)
 END METHOD
 </pre>
 
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or the 3-digit format are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
 <p><a id=Linearized_and_Companded_RGB></a></p>
 
@@ -660,7 +631,7 @@ END METHOD
 <p>There are at least two conventions for XYZ colors:</p>
 
 <ul>
-<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>, informally known as &quot;nits&quot;).</li>
+<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
 <li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;), that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
 </ul>
 
@@ -1234,7 +1205,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <h2>Color Differences</h2>
 
-<p><em>Color difference</em> algorithms are used to determine if two colors are similar.</p>
+<p>Color difference algorithms are used to determine if two colors are similar.</p>
 
 <p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or <code>COLORDIFF</code> implementations cannot be converted to each other.  Some ways to implement <code>COLORDIFF</code> are given in this section.</p>
 
@@ -1375,7 +1346,7 @@ END METHOD
 
 <h3>Nearest Colors</h3>
 
-<p>The <em>nearest color</em> algorithm is used, for example, to categorize colors or to reduce the number of colors used by an image.</p>
+<p>The <strong>nearest color algorithm</strong> is used, for example, to categorize colors or to reduce the number of colors used by an image.</p>
 
 <p>In the pseudocode below,the method <code>NearestColorIndex</code> finds, for a given color (<code>color</code>), the index of the color nearest it in a given list (<code>list</code>) of colors.  <code>NearestColorIndex</code> is independent of color model; however, both <code>color</code> and each color in <code>list</code> must be in the same color space.</p>
 
@@ -1404,7 +1375,7 @@ END METHOD
 <li>Sorting colors into <strong>color categories</strong> is equivalent to&mdash;
 
 <ul>
-<li>defining a list of <em>representative colors</em> <code>repColors</code> (for example, representative colors for red, blue, black, white, and so on), then</li>
+<li>defining a list of <strong>representative colors</strong> <code>repColors</code> (for example, representative colors for red, blue, black, white, and so on), then</li>
 <li>for each color (<code>color</code>) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling <code>NearestColorIndex(color, repColors)</code>).</li>
 </ul></li>
 </ol>
@@ -1413,7 +1384,7 @@ END METHOD
 
 <h2>Generating a Random Color</h2>
 
-<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>, unless noted otherwise.</p>
+<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, unless noted otherwise.</p>
 
 <ul>
 <li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
@@ -1463,7 +1434,7 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <p>Note that for best results, this technique needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>.</p>
 
-<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
@@ -1659,12 +1630,17 @@ END METHOD
 
 <h3>Color Temperature</h3>
 
-<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The following pseudocode finds the spectral power distribution of a blackbody with a known temperature in kelvins (the desired <strong>color temperature</strong>, shown as <code>TEMP</code> below). The following formula can be the <code>LIGHT</code> function for <code>SpectrumToTristim()</code>.<sup><a href="#Note32">(32)</a></sup></p>
+<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note32">(32)</a></sup></p>
 
-<pre>METHOD LIGHT(wavelength)
+<pre>METHOD Planckian(wavelength, temp)
     meters = wavelength*pow(10, -9)
     num = 3.74183*pow(10, -16)*pow(meters, -5)
-    return num / (exp(0.014388/(meters*TEMP)) - 1)
+    return num / (exp(0.014388/(meters*temp)) - 1)
+END METHOD
+
+METHOD LIGHT(wavelength)
+    return Planckian(wavelength, TEMP) * 100.0 /
+        Planckian(wavelength, 560)
 END METHOD
 </pre>
 
@@ -1727,7 +1703,8 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <ul>
 <li>Finding a <em>representative</em> reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that a given RGB color can be the perceived color for <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a>.)</li>
-<li>If the &quot;reflectance curves&quot; represent light passing through transmissive materials (such as light filters), rather than pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
+<li>If the &quot;reflectance curves&quot; represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
+<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.   One way to implement this color formulation method is described in a 1985 thesis by E. Walowit.</li>
 </ul>
 
 <p><a id=Other_Color_Topics></a></p>
@@ -1818,8 +1795,8 @@ this page are welcome.</p>
 <p><sup id=Note4>(4)</sup> A <a href="http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation">Working Draft</a> of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;</p>
 
 <ul>
-<li>an 8-digit format, consisting of &quot;#&quot; followed by two base-16 digits each for the red, green, blue, and alpha components, respectively, and</li>
-<li>a 4-digit format, consisting of &quot;#&quot; followed by one base-16 digit each for the red, green, blue, and alpha components, respectively (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</li>
+<li>an 8-digit format, consisting of &quot;#&quot; followed by eight base-16 digits, two each for the red, green, blue, and alpha components, in that order, and</li>
+<li>a 4-digit format, consisting of &quot;#&quot; followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</li>
 </ul>
 
 <p><sup id=Note5>(5)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>companded</em> RGB colors, respectively, in this document.</p>
@@ -1839,7 +1816,7 @@ this page are welcome.</p>
 
 <p><sup id=Note10>(10)</sup> Further details on chromatic adaptation or on finding the inverse of a matrix are outside the scope of this document.</p>
 
-<p><sup id=Note11>(11)</sup> <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=951">CIE Technical Note 001:2014</a> says the chromaticity difference (<em>&Delta;<sub>u&prime;v&prime;</sub></em>) should be calculated as the <a href="#Color_Differences">Euclidean distance</a> between two <em>u&prime;v&prime;</em> pairs and that a chromaticity difference of 0.0013 is just noticeable &quot;at 50% probability&quot;.</p>
+<p><sup id=Note11>(11)</sup> <a href="http://www.cie.co.at/publications/technical-notes">CIE Technical Note 001:2014</a> says the chromaticity difference (<em>&Delta;<sub>u&prime;v&prime;</sub></em>) should be calculated as the <a href="#Color_Differences">Euclidean distance</a> between two <em>u&prime;v&prime;</em> pairs and that a chromaticity difference of 0.0013 is just noticeable &quot;at 50% probability&quot;.</p>
 
 <p><sup id=Note12>(12)</sup> Although the CIELAB color model is also often called &quot;perceptually uniform&quot;&mdash;</p>
 
@@ -1894,11 +1871,11 @@ this page are welcome.</p>
 
 <p><sup id=Note29>(29)</sup> In this document, a <em>light source</em> means a <em>primary light source</em> or an <em>illuminant</em> (usually a theoretical source), both terms defined in the CIE&#39;s International Lighting Vocabulary.</p>
 
-<p><sup id=Note30>(30)</sup> The CIE publishes <a href="http://www.cie.co.at/index.php/LEFTMENUE/index.php?i_ca_id=298">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+<p><sup id=Note30>(30)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
 
 <p><sup id=Note31>(31)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
-<p><sup id=Note32>(32)</sup> Source: J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
+<p><sup id=Note32>(32)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
 
 <p><sup id=Note33>(33)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
