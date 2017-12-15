@@ -143,7 +143,7 @@ def hslToRgb(hsl):
         rgb = [a, a, a]
         hues = [hue, hueval, hue2]
         i = 0
-        while i < 3
+        while i < 3:
            if hues[i] < deg60:
                  rgb[i] = a + (bb - a) * hues[i] / deg60
            if hues[i] >= deg60 and hues[i] < pi:
@@ -357,3 +357,35 @@ def sRGBToLabD50(rgb):
 
 def sRGBFromLabD50(lab):
     return xyzTosRGBD50(labToXYZ(lab, [0.9642957, 1, 0.8251046]))
+
+###############
+
+""" Kubelka-Munk color mixture functions. """
+
+def kubelkaMunkReflectanceToKS(reflList):
+  """  Calculates K/S ratios from a list of reflectances (0-1). """
+  # NOTE: Here, divisions by 0 are avoided
+  return [((1.0-refl1)**2)/(2.0*max(0.00001,refl)) for refl in reflList]
+
+def kubelkaMunkKSToReflectance(ksList):
+  """  Calculates reflectances from a list of K/S ratios (0-1). """
+  return [ks+1.0-math.sqrt(ks*(ks+2.0)) for ks in ksList]
+
+def kubelkaMunkMix(colorantsKS):
+  """
+  Generates a mixed K/S curve from the list of colorants.
+  Each colorant is a hash with the following keys:
+  ks - list of K/S ratios
+  strength - fraction from 0 to 1 in the total mixture, or
+     1 for the "base" color.
+  Example:
+  >>> kubelkaMunkMix([ \
+  >>>    {"strength":0.5, "ks":[0.3, ...]}, \
+  >>>    {"strength":0.5, "ks":[0.2, ...]}, \
+  >>>    {"strength":1.0, "ks":[0.4, ...]}  \ # base
+  >>>  ])
+  """
+  size=len(colorantsKS[0]["ks"])
+  return [ \
+      sum([cks["strength"]*cks["ks"][i] for cks in colorantsKS]) \
+      for i in range(size)]

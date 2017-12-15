@@ -69,7 +69,7 @@ The following topics are beyond this page's scope:
 - [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
 - [Color Maps](#Color_Maps)
     - [Kinds of Color Maps](#Kinds_of_Color_Maps)
-    - [Named Colors](#Named_Colors)
+    - [Color Collections](#Color_Collections)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
     - [Idioms](#Idioms)
 - [Spectral Color Functions](#Spectral_Color_Functions)
@@ -140,7 +140,7 @@ In an RGB color space, an _RGB color_ consists of three components in the follow
 
 and each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
 
-**RGBA Colors:** Some RGB colors also contain a fourth component, called the _alpha_ component, which is 0 greater and 1 or less, where 0 means fully transparent and 1 means fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).
+**RGBA Colors:** Some RGB colors also contain a fourth component, called the _alpha_ component, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).
 
 **Note:** An RGB color&mdash;
 - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
@@ -158,14 +158,14 @@ RGB and RGBA colors are often expressed by packing their components as integers.
 
 For both format categories, the lowest value of each component is 0, and its highest value is 2<sup>B</sup> - 1, where B is that component's size in bits.
 
-Special cases of these formats include the following:
+The following are examples of these formats:
 - **5/5/5 format:** As 15-bit integers (5 bits per component).
 - **5/6/5 format:** As 16-bit integers (5 bits each for red and blue, and 6 bits for green).
 - **8/8/8 format:** As 24-bit integers (8 bits per component).
 - **8/8/8/8 format:** As 32-bit integers (8 bits each for red, green, blue, and alpha).
 - **16/16/16 format:** As 48-bit integers (16 bits per component).
 
-There are many ways to store RGB and RGBA colors in either format as integers or as a series of bytes.  For example, the RGB color's components can be in "little endian" or "big endian" byte order, or RN/GN/BN colors can be packed red/green/blue, in that order from lowest to highest bits.  A thorough survey of the integer color formats in common use is outside the scope of this document.
+There are many ways to store RGB and RGBA colors in these formats as integers or as a series of bytes.  For example, the RGB color's components can be in "little endian" or "big endian" byte order, or RN/GN/BN colors can be packed red/green/blue, in that order from lowest to highest bits, or in a different order of those components.  A thorough survey of the integer color formats in common use is outside the scope of this document.
 
 The following pseudocode contains methods for converting RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
 
@@ -1249,10 +1249,10 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 
 **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(27)](#Note27)</sup> and/or "[color blind friendly](#Defective_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
-<a id=Named_Colors></a>
-### Named Colors
+<a id=Color_Collections></a>
+### Color Collections
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _named color list_.  Examples of names are "red", "vivid green", and "orange".  It's outside the scope of this document to provide a survey of named color lists, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", and "orange".  It's outside the scope of this document to provide a survey of color collections, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
@@ -1433,7 +1433,7 @@ passed at once to the `WGM` function just given must be from the same wavelength
 **Notes:**
 - Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that a given RGB color can be the perceived color for [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
 - If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
-- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.   One way to implement this color formulation method is described in a 1985 thesis by E. Walowit.
+- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.
 
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
@@ -1501,7 +1501,7 @@ Questions for this document:
 
 <small>
 
-<sup id=Note1>(1)</sup> Although most electronic color displays used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the _RGBW color model_, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs, luminaires, or electronic displays.
+<sup id=Note1>(1)</sup> Although most electronic color displays in the past used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the _RGBW color model_, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs, luminaires, or electronic displays.
 
 <sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points. See also note 6.
 
