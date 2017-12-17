@@ -29,16 +29,13 @@
 
 <ul>
 <li>In general, topics that are specific to a programming language or application programming interface.</li>
-<li><p>Procedures to change or set the color used&mdash;</p>
+<li>Procedures to change or set the color used&mdash;
 
 <ul>
 <li>in text, foregrounds, or backgrounds of user interface elements (such as buttons, text boxes, and windows),</li>
 <li>in text or backgrounds of documents (such as HTML documents), or</li>
-<li>when generating graphics (such as plots and charts),</li>
-</ul>
-
-<p>are beyond the scope of this document because they generally vary depending on the specific application
-programming interface, document format, or plotting or charting technology.</p></li>
+<li>when generating graphics (such as plots and charts).</li>
+</ul></li>
 <li>Determining which colors are used, or used by default, in user interface elements or documents.</li>
 <li>Color pickers, including how to choose colors with them.</li>
 <li>Specifics on retrieving colors (including pixel and palette colors) from images or screenshots (besides finding dominant colors).</li>
@@ -56,7 +53,7 @@ programming interface, document format, or plotting or charting technology.</p><
 <li><a href="#Notation_and_Definitions">Notation and Definitions</a>
 
 <ul>
-<li><a href="#Utility_Functions">Utility Functions</a></li>
+<li><a href="#Utility_Function">Utility Function</a></li>
 </ul></li>
 <li><a href="#RGB_Color_Model">RGB Color Model</a>
 
@@ -145,35 +142,20 @@ programming interface, document format, or plotting or charting technology.</p><
 <li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
 </ul>
 
-<p><a id=Utility_Functions></a></p>
+<p><a id=Utility_Function></a></p>
 
-<h3>Utility Functions</h3>
+<h3>Utility Function</h3>
 
-<p>In the pseudocode below:</p>
-
-<ul>
-<li><code>Lerp3</code> returns a linear interpolation (blending) of two lists of three numbers.  <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language). In this function:
-
-<ul>
-<li><code>list1</code> and <code>list2</code> are the two lists.</li>
-<li><code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>. Making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
-where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</li>
-</ul></li>
-<li><code>Clamp3</code> returns a three-element list which is the same as <code>elements</code>, except that each item is not less than <code>minimum</code> or greater than <code>maximum</code>.</li>
-</ul>
+<p>In the pseudocode below, <code>Lerp3</code> returns a linear interpolation (blending) of two lists of three numbers.  <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language). In this function:
+    - <code>list1</code> and <code>list2</code> are the two lists.
+    - <code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>. Making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
+where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</p>
 
 <hr>
 
 <pre>METHOD Lerp3(list1, list2, fac)
     return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
         list1[2]+(list2[2]-list1[2])*fac]
-END METHOD
-
-METHOD Clamp3(elements, minimum, maximum)
-    // NOTE: Equivalent to GLSL&#39;s `clamp` for 3-element vectors.
-    return [min(max(elements[0],minimum[0]), maximum[0]),
-      min(max(elements[1],minimum[1]), maximum[1]),
-      min(max(elements[2],minimum[2]), maximum[2])]
 END METHOD
 </pre>
 
@@ -644,7 +626,13 @@ END METHOD
 
 <hr>
 
-<pre>// Applies a 3x3 matrix transformation
+<pre>METHOD Clamp01(elements)
+    return [min(max(elements[0],0), 1),
+      min(max(elements[1],0), 1),
+      min(max(elements[2],0), 1)]
+END METHOD
+
+// Applies a 3x3 matrix transformation
 METHOD Apply3x3Matrix(xyz, xyzmatrix)
     r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
     g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
@@ -660,12 +648,12 @@ METHOD XYZFromsRGBD50(rgb)
 END METHOD
 
 // NOTE: Clamps outlying components in the result.  If that&#39;s not
-// desired, omit the use of Clamp3 in the method below.
+// desired, omit the use of Clamp01 in the method below.
 METHOD XYZTosRGBD50(xyz)
     rgb=Apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
              -0.9787955, 1.916254, 0.03344287, 0.07195539,
              -0.2289768, 1.405386])
-    return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return Clamp01(LinearTosRGB3(rgb))
 END METHOD
 
 METHOD XYZFromsRGB(rgb)
@@ -677,12 +665,12 @@ METHOD XYZFromsRGB(rgb)
 END METHOD
 
 // NOTE: Clamps outlying components in the result.  If that&#39;s not
-// desired, omit the use of Clamp3 in the method below.
+// desired, omit the use of Clamp01 in the method below.
 METHOD XYZTosRGB(xyz)
     rgb=Apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
             -0.9692436, 1.875968, 0.04155506, 0.05563008,
             -0.2039770, 1.056972])
-    return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return Clamp01(LinearTosRGB3(rgb))
 END METHOD
 </pre>
 
@@ -989,7 +977,7 @@ METHOD YCbCrToRgb(yCbCr)
     r = yp + 1.5960268 * cr
     g = yp - 0.39176229 * cb - 0.81296765 * cr
     b = yp + 2.0172321 * cb
-    return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
 END METHOD
 
 METHOD YCbCrToRgb709(yCbCr)
@@ -999,7 +987,7 @@ METHOD YCbCrToRgb709(yCbCr)
     r = yp + 1.7927411 * cr
     g = yp - 0.21324861 * cb - 0.53290933 * cr
     b = yp + 2.1124018 * cb
-    return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
 END METHOD
 
 METHOD YCbCrToRgbJpeg(yCbCr)
@@ -1009,7 +997,7 @@ METHOD YCbCrToRgbJpeg(yCbCr)
     r = yp + 1.402 * cr
     g = yp - 0.34413629 * cb - 0.71413629 * cr
     b = yp + 1.772 * cb
-    return Clamp3([r, g, b], [0,0,0],[255,255,255])
+    return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
 END METHOD
 </pre>
 
@@ -1107,11 +1095,11 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <p>A <em>color matrix</em> is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (<code>color</code>)
 is transformed with a color matrix (<code>matrix</code>) as follows:</p>
 
-<pre>newColor = Clamp3([
-   color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],
-   color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],
-   color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8]
-], [0,0,0], [1,1,1])
+<pre>newColor = [
+   min(max(color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],0),1),
+   min(max(color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],0),1),
+   min(max(color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8],0),1),
+]
 </pre>
 
 <p>Examples of matrices include:</p>
@@ -1119,8 +1107,7 @@ is transformed with a color matrix (<code>matrix</code>) as follows:</p>
 <ul>
 <li><strong>Sepia</strong>: <code>[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]</code>.</li>
 <li><strong>Saturate</strong>: <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> ranges
-from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;
-(the source recommends different values for <code>r</code>, <code>g</code>, and <code>b</code> <sup><a href="#Note23">(23)</a></sup>).</li>
+from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;<sup><a href="#Note23">(23)</a></sup>.</li>
 <li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note24">(24)</a></sup><sup><a href="#Note23">(23)</a></sup></li>
 </ul>
 
@@ -1182,7 +1169,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li><p><strong>Lighten/Darken</strong>: A choice of&mdash;</p>
 
 <ul>
-<li><code>Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])</code>,</li>
+<li><code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>,</li>
 <li><code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>, or</li>
 <li><code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (CIELAB),</li>
 </ul>
@@ -1456,6 +1443,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)</li>
+<li>For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from calibrated <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (which are &quot;estimates&quot; of a scene&#39;s colors).  JPEG, PNG, and many other image formats store sRGB image data by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> (<em>display-referred</em>) color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors).  Calibration techniques for real-world color matching are outside this page&#39;s scope.</li>
 </ul>
 
 <p><a id=Color_Maps></a></p>
@@ -1702,9 +1690,9 @@ passed at once to the <code>WGM</code> function just given must be from the same
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>Finding a <em>representative</em> reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that a given RGB color can be the perceived color for <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a>.)</li>
+<li>Finding a <em>representative</em> reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a> can match the same RGB color.)</li>
 <li>If the &quot;reflectance curves&quot; represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
-<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.</li>
+<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
 </ul>
 
 <p><a id=Other_Color_Topics></a></p>
@@ -1857,7 +1845,7 @@ this page are welcome.</p>
 
 <p><sup id=Note22>(22)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.  See also his <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview">summary of harmonious color relationships</a>.</p>
 
-<p><sup id=Note23>(23)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB relative luminances for the red, green, and blue points.</p>
+<p><sup id=Note23>(23)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.</p>
 
 <p><sup id=Note24>(24)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by <code>pi / 180</code>.</p>
 
