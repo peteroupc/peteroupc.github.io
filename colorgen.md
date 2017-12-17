@@ -24,10 +24,7 @@ The following topics are beyond this page's scope:
 - Procedures to change or set the color used&mdash;
     - in text, foregrounds, or backgrounds of user interface elements (such as buttons, text boxes, and windows),
     - in text or backgrounds of documents (such as HTML documents), or
-    - when generating graphics (such as plots and charts),
-
-   are beyond the scope of this document because they generally vary depending on the specific application
-   programming interface, document format, or plotting or charting technology.
+    - when generating graphics (such as plots and charts).
 - Determining which colors are used, or used by default, in user interface elements or documents.
 - Color pickers, including how to choose colors with them.
 - Specifics on retrieving colors (including pixel and palette colors) from images or screenshots (besides finding dominant colors).
@@ -40,7 +37,7 @@ The following topics are beyond this page's scope:
 - [Introduction](#Introduction)
 - [Contents](#Contents)
 - [Notation and Definitions](#Notation_and_Definitions)
-    - [Utility Functions](#Utility_Functions)
+    - [Utility Function](#Utility_Function)
 - [RGB Color Model](#RGB_Color_Model)
     - [RGB Colors and the 0-1 Format](#RGB_Colors_and_the_0_1_Format)
     - [RGB Integer Formats](#RGB_Integer_Formats)
@@ -97,29 +94,19 @@ In this document:
 - The term _D65 white point_ means the white point determined by the CIE's D65 illuminant and the CIE 1931 standard observer.
 - The term _D50 white point_ means the white point determined by the CIE's D50 illuminant and the CIE 1931 standard observer.
 
-<a id=Utility_Functions></a>
-### Utility Functions
+<a id=Utility_Function></a>
+### Utility Function
 
-In the pseudocode below:
-
-- `Lerp3` returns a linear interpolation (blending) of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
+In the pseudocode below, `Lerp3` returns a linear interpolation (blending) of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
     - `list1` and `list2` are the two lists.
     - `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`. Making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
-- `Clamp3` returns a three-element list which is the same as `elements`, except that each item is not less than `minimum` or greater than `maximum`.
 
 ----
 
     METHOD Lerp3(list1, list2, fac)
         return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
             list1[2]+(list2[2]-list1[2])*fac]
-    END METHOD
-
-    METHOD Clamp3(elements, minimum, maximum)
-        // NOTE: Equivalent to GLSL's `clamp` for 3-element vectors.
-        return [min(max(elements[0],minimum[0]), maximum[0]),
-          min(max(elements[1],minimum[1]), maximum[1]),
-          min(max(elements[2],minimum[2]), maximum[2])]
     END METHOD
 
 <a id=RGB_Color_Model></a>
@@ -529,6 +516,12 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
 
 ----
 
+    METHOD Clamp01(elements)
+        return [min(max(elements[0],0), 1),
+          min(max(elements[1],0), 1),
+          min(max(elements[2],0), 1)]
+    END METHOD
+
     // Applies a 3x3 matrix transformation
     METHOD Apply3x3Matrix(xyz, xyzmatrix)
         r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
@@ -545,12 +538,12 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
     END METHOD
 
     // NOTE: Clamps outlying components in the result.  If that's not
-    // desired, omit the use of Clamp3 in the method below.
+    // desired, omit the use of Clamp01 in the method below.
     METHOD XYZTosRGBD50(xyz)
         rgb=Apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
                  -0.9787955, 1.916254, 0.03344287, 0.07195539,
                  -0.2289768, 1.405386])
-        return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+        return Clamp01(LinearTosRGB3(rgb))
     END METHOD
 
     METHOD XYZFromsRGB(rgb)
@@ -562,12 +555,12 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
     END METHOD
 
     // NOTE: Clamps outlying components in the result.  If that's not
-    // desired, omit the use of Clamp3 in the method below.
+    // desired, omit the use of Clamp01 in the method below.
     METHOD XYZTosRGB(xyz)
         rgb=Apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
                 -0.9692436, 1.875968, 0.04155506, 0.05563008,
                 -0.2039770, 1.056972])
-        return Clamp3(LinearTosRGB3(rgb), [0,0,0],[1,1,1])
+        return Clamp01(LinearTosRGB3(rgb))
     END METHOD
 
 **Notes:**
@@ -849,7 +842,7 @@ For all these variants, the transformation should be done using [_companded RGB_
         r = yp + 1.5960268 * cr
         g = yp - 0.39176229 * cb - 0.81296765 * cr
         b = yp + 2.0172321 * cb
-        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+        return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
     END METHOD
 
     METHOD YCbCrToRgb709(yCbCr)
@@ -859,7 +852,7 @@ For all these variants, the transformation should be done using [_companded RGB_
         r = yp + 1.7927411 * cr
         g = yp - 0.21324861 * cb - 0.53290933 * cr
         b = yp + 2.1124018 * cb
-        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+        return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
     END METHOD
 
     METHOD YCbCrToRgbJpeg(yCbCr)
@@ -869,7 +862,7 @@ For all these variants, the transformation should be done using [_companded RGB_
         r = yp + 1.402 * cr
         g = yp - 0.34413629 * cb - 0.71413629 * cr
         b = yp + 1.772 * cb
-        return Clamp3([r, g, b], [0,0,0],[255,255,255])
+        return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
     END METHOD
 
 **Notes:**
@@ -940,18 +933,17 @@ The following techniques generate new colors that are related to existing colors
 A _color matrix_ is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (`color`)
 is transformed with a color matrix (`matrix`) as follows:
 
-    newColor = Clamp3([
-       color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],
-       color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],
-       color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8]
-    ], [0,0,0], [1,1,1])
+    newColor = [
+       min(max(color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],0),1),
+       min(max(color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],0),1),
+       min(max(color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8],0),1),
+    ]
 
 Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"
- (the source recommends different values for `r`, `g`, and `b` <sup>[(23)](#Note23)</sup>).
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(23)](#Note23)</sup>.
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(24)](#Note24)</sup><sup>[(23)](#Note23)</sup>
 
 <a id=Blending_and_Alpha_Compositing></a>
@@ -999,7 +991,7 @@ In the following formulas, `color` is the source color in 0-1 format.
 
 - **Invert (negative)**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(25)](#Note25)</sup>
 - **Lighten/Darken**: A choice of&mdash;
-    - `Clamp3([color[0]+value, color[1]+value, color[2]+value], [0, 0, 0], [1, 1, 1])`,
+    - `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`,
     - `HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))`, or
     - `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (CIELAB),
 
@@ -1232,6 +1224,7 @@ Note that for best results, this technique needs to be carried out with [_linear
     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)
+- For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from calibrated [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (which are "estimates" of a scene's colors).  JPEG, PNG, and many other image formats store sRGB image data by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) (_display-referred_) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors).  Calibration techniques for real-world color matching are outside this page's scope.
 
 <a id=Color_Maps></a>
 ## Color Maps
@@ -1431,9 +1424,9 @@ When computing the weighted geometric mean of several reflectance curves, all th
 passed at once to the `WGM` function just given must be from the same wavelength.
 
 **Notes:**
-- Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that a given RGB color can be the perceived color for [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
+- Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38) can match the same RGB color.)
 - If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
-- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.
+- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
@@ -1563,7 +1556,7 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note22>(22)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 
-<sup id=Note23>(23)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.
+<sup id=Note23>(23)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.
 
 <sup id=Note24>(24)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.
 

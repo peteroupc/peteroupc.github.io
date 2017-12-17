@@ -365,7 +365,7 @@ def sRGBFromLabD50(lab):
 def kubelkaMunkReflectanceToKS(reflList):
   """  Calculates K/S ratios from a list of reflectances (0-1). """
   # NOTE: Here, divisions by 0 are avoided
-  return [((1.0-refl1)**2)/(2.0*max(0.00001,refl)) for refl in reflList]
+  return [((1.0-refl)**2)/(2.0*max(0.00001,refl)) for refl in reflList]
 
 def kubelkaMunkKSToReflectance(ksList):
   """  Calculates reflectances from a list of K/S ratios (0-1). """
