@@ -37,7 +37,6 @@ The following topics are beyond this page's scope:
 - [Introduction](#Introduction)
 - [Contents](#Contents)
 - [Notation and Definitions](#Notation_and_Definitions)
-    - [Utility Function](#Utility_Function)
 - [RGB Color Model](#RGB_Color_Model)
     - [RGB Colors and the 0-1 Format](#RGB_Colors_and_the_0_1_Format)
     - [RGB Integer Formats](#RGB_Integer_Formats)
@@ -68,7 +67,7 @@ The following topics are beyond this page's scope:
     - [Kinds of Color Maps](#Kinds_of_Color_Maps)
     - [Color Collections](#Color_Collections)
     - [Visually Distinct Colors](#Visually_Distinct_Colors)
-    - [Idioms](#Idioms)
+    - [Idioms and Pseudocode](#Idioms_and_Pseudocode)
 - [Spectral Color Functions](#Spectral_Color_Functions)
     - [Color Temperature](#Color_Temperature)
     - [Color Mixture](#Color_Mixture)
@@ -93,21 +92,6 @@ In this document:
 - The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
 - The term _D65 white point_ means the white point determined by the CIE's D65 illuminant and the CIE 1931 standard observer.
 - The term _D50 white point_ means the white point determined by the CIE's D50 illuminant and the CIE 1931 standard observer.
-
-<a id=Utility_Function></a>
-### Utility Function
-
-In the pseudocode below, `Lerp3` returns a linear interpolation (blending) of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
-- `list1` and `list2` are the two lists.
-- `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`. Making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
-where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
-
-----
-
-    METHOD Lerp3(list1, list2, fac)
-        return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
-            list1[2]+(list2[2]-list1[2])*fac]
-    END METHOD
 
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
@@ -949,13 +933,20 @@ from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b`
 <a id=Blending_and_Alpha_Compositing></a>
 ### Blending and Alpha Compositing
 
-**General alpha blend**: To get a blend of two colors, generate `Lerp3(color1, color2, alpha)`, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).
+**General alpha blend**: The `Lerp3` function below gets an "alpha blend" of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(25)](#Note25)</sup>
 - Generating a **shade** of a color (mixing with black) is equivalent to alpha blending that color with black `[0, 0, 0]`.
 - Generating a **tint** of a color (mixing with white) is equivalent to alpha blending that color with white `[1, 1, 1]`.
 - Generating a **tone** of a color (mixing with gray) is equivalent to alpha blending that color with gray `[0.5, 0.5, 0.5]`.
 - Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
 - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
 - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
+
+----
+
+    METHOD Lerp3(color1, color2, alpha)
+        return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
+            color1[2]+(color2[2]-color1[2])*alpha]
+    END METHOD
 
 **Porter&ndash;Duff Formulas**: Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors. In the formulas below, it is assumed that the two colors are in the 0-1 format and have been premultiplied (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
 - **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
@@ -989,7 +980,7 @@ from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b`
 
 In the following formulas, `color` is the source color in 0-1 format.
 
-- **Invert (negative)**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(25)](#Note25)</sup>
+- **Invert (negative)**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(26)](#Note26)</sup>
 - **Lighten/Darken**: A choice of&mdash;
     - `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`,
     - `HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))`, or
@@ -1030,7 +1021,7 @@ Note that&mdash;
  rather than companded RGB colors, should be used;
 - for CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub>
 color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable
-[Mahy et al., 1994])<sup>[(26)](#Note26)</sup>; and
+[Mahy et al., 1994])<sup>[(27)](#Note27)</sup>; and
 - if Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1240,7 +1231,7 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(27)](#Note27)</sup> and/or "[color blind friendly](#Defective_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(28)](#Note28)</sup> and/or "[color blind friendly](#Defective_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Color_Collections></a>
 ### Color Collections
@@ -1261,7 +1252,7 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 Color maps can list colors used to identify different items. Because of this
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
-- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(28)](#Note28)</sup>, the first nine of which
+- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(29)](#Note29)</sup>, the first nine of which
   were intended for readers with normal and defective color vision, and
 - B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.
 
@@ -1277,12 +1268,22 @@ distinct colors. Such colors can be pregenerated or generated at runtime, and su
 can be limited to those in a particular _color gamut_. Here, the color difference method
 should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
 
-<a id=Idioms></a>
-### Idioms
+<a id=Idioms_and_Pseudocode></a>
+### Idioms and Pseudocode
 
-- To extract a **continuous color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`)&mdash;
-    - generate `index = (value * (N - 1)) - floor(value * (N - 1))`, then
-    - generate `color = Lerp3(colormap[index], colormap[index+1], (value * (N - 1)) - index)`.
+- The following pseudocode extracts a **continuous color** from a color map (`colormap`) given a number 0 or greater and 1 or less (`value`):
+
+        METHOD ColorMapGet(colormap, value)
+            nm1 = size(colormap) - 1
+            index = (value * nm1) - floor(value * nm1)
+            if index >= nm1: return colormap[index]
+            fac = (value * nm1) - index)
+            list1 = colormap[index]
+            list2 = colormap[index + 1]
+            return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
+                list1[2]+(list2[2]-list1[2])*fac]
+        END METHOD
+
 - To extract a **discrete color** from an `N`-color color map given a number 0 or greater and 1 or less (`value`),
    generate `color = colormap[round(value * (N - 1))]`.
 - The **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
@@ -1292,24 +1293,23 @@ should be _&Delta;E\*_<sub>ab</sub> or another color difference method that take
 
 A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the spectrum.<sup>[(29)](#Note29)</sup>
+- **Light sources.** A source of light can be described by a _spectral power distribution_, a "curve" which describes the intensity of the source at each wavelength of the spectrum.<sup>[(30)](#Note30)</sup>
 - **Reflective materials.** The fraction of light reflected by a reflective (opaque) material can be described by a _(spectral) reflectance curve_.
 - **Transmissive materials.** The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a _transmittance curve_.
 
-A material's perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three _color matching functions_).  That curve, the light source's spectral curve, and the color matching functions, are used to convert a color stimulus to three numbers (called _tristimulus values_) that uniquely identify the material's perceived color.
+A material's perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three _color matching functions_).  That curve, the light source's spectral curve, and the color matching functions, are converted to three numbers (called _tristimulus values_) that uniquely identify the material's perceived color.
 
-In the pseudocode below:
+The pseudocode below includes a `SpectrumToTristim` method for computing tristimulus values.  Also:
 
-- The `SpectrumToTristim` method computes the perceived color's _tristimulus values_.
 - `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 3 later in this section._)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
-    - the D65 illuminant<sup>[(30)](#Note30)</sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),
+    - the D65 illuminant<sup>[(31)](#Note31)</sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),
     - the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and
     - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)".
 - `CMF(wl)` models three **color matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;
-    - the CIE 1931 (2-degree) standard observer<sup>[(30)](#Note30)</sup><sup>[(31)](#Note31)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
-    - the  CIE 1964 (10-degree) standard observer<sup>[(30)](#Note30)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
+    - the CIE 1931 (2-degree) standard observer<sup>[(31)](#Note31)</sup><sup>[(32)](#Note32)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
+    - the  CIE 1964 (10-degree) standard observer<sup>[(31)](#Note31)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
 
 ----
 
@@ -1360,7 +1360,7 @@ In the pseudocode below:
 <a id=Color_Temperature></a>
 ### Color Temperature
 
-A _blackbody_ is an idealized material that emits light based only on its temperature.  The `Planckian` method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(32)](#Note32)</sup>
+A _blackbody_ is an idealized material that emits light based only on its temperature.  The `Planckian` method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(33)](#Note33)</sup>
 
     METHOD Planckian(wavelength, temp)
         num = pow(wavelength, -5)
@@ -1387,7 +1387,7 @@ the one found in McCamy 1992.
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
-**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  In the context of light sources, however, the lower the light's CCT, the _warmer_ the light appears, and the higher the CCT, the _cooler_.
+**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  In the context of light sources, however, the lower the light's CCT, the "warmer" the light appears, and the higher the CCT, the "cooler".
 
 <a id=Color_Mixture></a>
 ### Color Mixture
@@ -1397,7 +1397,7 @@ In "[Subtractive Color Mixture Computation](http://scottburns.us/subtractive-col
 1. finding the [_reflectance curves_](#Spectral_Color_Functions) of the pigments or colors,
 2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
   takes into account the relative proportions of the colors or pigments in the mixture, and
-3. converting the mixed reflectance curve to an RGB color.<sup>[(33)](#Note33)</sup>
+3. converting the mixed reflectance curve to an RGB color.<sup>[(34)](#Note34)</sup>
 
 For convenience, computing the weighted geometric mean of one or more numbers is given below.
 
@@ -1559,23 +1559,26 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note24>(24)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.
 
-<sup id=Note25>(25)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+<sup id=Note25>(25)</sup> `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
+where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
-<sup id=Note26>(26)</sup> The "E" here stands for the German word _Empfindung_.
+<sup id=Note26>(26)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
-<sup id=Note27>(27)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)").
+<sup id=Note27>(27)</sup> The "E" here stands for the German word _Empfindung_.
 
-<sup id=Note28>(28)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
+<sup id=Note28>(28)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[CMYK](#CMYK)").
 
-<sup id=Note29>(29)</sup> In this document, a _light source_ means a _primary light source_ or an _illuminant_ (usually a theoretical source), both terms defined in the CIE's International Lighting Vocabulary.
+<sup id=Note29>(29)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.
 
-<sup id=Note30>(30)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
+<sup id=Note30>(30)</sup> In this document, a _light source_ means a _primary light source_ or an _illuminant_ (usually a theoretical source), both terms defined in the CIE's International Lighting Vocabulary.
 
-<sup id=Note31>(31)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
+<sup id=Note31>(31)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.
 
-<sup id=Note32>(32)</sup> See also J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)".
+<sup id=Note32>(32)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).
 
-<sup id=Note33>(33)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
+<sup id=Note33>(33)</sup> See also J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)".
+
+<sup id=Note34>(34)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.
 
 </small>
 
