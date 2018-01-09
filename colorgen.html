@@ -1544,15 +1544,15 @@ generate <code>color = colormap[round(value * (N - 1))]</code>.</li>
 <p>In the pseudocode below:</p>
 
 <ul>
-<li>The <code>SpectrumToTristim</code> method computes the <em>tristimulus values</em> of the perceived color.</li>
-<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions describing the <strong>reflectance or transmittance curve</strong>, the <strong>light source</strong>&#39;s spectral curve, or the <strong>color matching functions</strong>, respectively.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m), as well as a 5 nm interval in all three functions (according to CIE Publication 15), are relevant in practice. (See also note 3 later in this section.)</li>
+<li>The <code>SpectrumToTristim</code> method computes the perceived color&#39;s <em>tristimulus values</em>.</li>
+<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions describing the <strong>reflectance or transmittance curve</strong>, the <strong>light source</strong>&#39;s spectral curve, or the <strong>color matching functions</strong>, respectively.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 3 later in this section.</em>)</li>
 <li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  <code>REFL</code> can always return 1 to model a <em>perfect reflecting</em> or <em>perfect transmitting diffuser</em>, e.g., if the purpose is to get the perceived color of the light source itself. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>.</li>
 <li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
 <li>the D65 illuminant<sup><a href="#Note30">(30)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
 <li>the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and</li>
-<li>the blackbody spectral formula, given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
+<li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul></li>
 <li><code>CMF(wl)</code> models three <strong>color matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
@@ -1599,7 +1599,7 @@ END METHOD
 <ol>
 <li>The choices of <code>LIGHT</code> and <code>CMF</code> determine the <em>adopted white point</em>.</li>
 <li>In general, wavelengths in this section mean wavelengths in air. (See the entry &quot;<a href="http://eilv.cie.co.at/term/1426">wavelength</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</li>
-<li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the <code>SpectrumToTristim</code> method.</li>
+<li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.</li>
 <li>In applications where color matching is important, reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&mdash;
 
 <ul>
@@ -1623,12 +1623,12 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note32">(32)</a></sup></p>
 
-<pre>METHOD Planckian(wavelength, temp) # NOTE: Relative only
+<pre>METHOD Planckian(wavelength, temp)
     num = pow(wavelength, -5)
     return num / (exp(0.014387863/(wavelength*pow(10, -9)*temp)) - 1)
 END METHOD
 
-METHOD LIGHT(wavelength)
+METHOD LIGHT(wavelength) # NOTE: Relative only
     return Planckian(wavelength, TEMP) * 100.0 /
         Planckian(wavelength, 560)
 END METHOD
@@ -1650,7 +1650,7 @@ the one found in McCamy 1992.</p>
 END METHOD
 </pre>
 
-<p><strong>Note:</strong> Color temperature, as used here, is not to be confused with the division of colors into <em>warm</em> (usually red, yellow, and orange) and <em>cool</em> (usually blue and blue green) categories, a subjective division which admits of much variation.</p>
+<p><strong>Note:</strong> Color temperature, as used here, is not to be confused with the division of colors into <em>warm</em> (usually red, yellow, and orange) and <em>cool</em> (usually blue and blue green) categories, a subjective division which admits of much variation.  In the context of light sources, however, the lower the light&#39;s CCT, the <em>warmer</em> the light appears, and the higher the CCT, the <em>cooler</em>.</p>
 
 <p><a id=Color_Mixture></a></p>
 
