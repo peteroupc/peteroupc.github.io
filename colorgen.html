@@ -146,10 +146,13 @@
 
 <h3>Utility Function</h3>
 
-<p>In the pseudocode below, <code>Lerp3</code> returns a linear interpolation (blending) of two lists of three numbers.  <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language). In this function:
-    - <code>list1</code> and <code>list2</code> are the two lists.
-    - <code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>. Making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
-where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</p>
+<p>In the pseudocode below, <code>Lerp3</code> returns a linear interpolation (blending) of two lists of three numbers.  <code>Lerp3</code> is equivalent to <code>mix</code> in GLSL (OpenGL Shading Language). In this function:</p>
+
+<ul>
+<li><code>list1</code> and <code>list2</code> are the two lists.</li>
+<li><code>fac</code> is 0 or greater and 1 or less, where 0 means equal to <code>list1</code> and 1 means equal to <code>list2</code>. Making <code>fac</code> the output of a function (for example, <code>Lerp3(list1, list2, FUNC(...))</code>,
+where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</li>
+</ul>
 
 <hr>
 
@@ -263,7 +266,7 @@ END METHOD
 
 <h3>HTML-Related Color Formats</h3>
 
-<p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as a string, consists of&mdash;</p>
+<p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as text strings, consists of&mdash;</p>
 
 <ul>
 <li>the character &quot;#&quot;, followed by</li>
@@ -1443,14 +1446,14 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)</li>
-<li>For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from calibrated <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (which are &quot;estimates&quot; of a scene&#39;s colors).  JPEG, PNG, and many other image formats store sRGB image data by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> (<em>display-referred</em>) color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors).  Calibration techniques for real-world color matching are outside this page&#39;s scope.</li>
+<li>For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera) whose colors have been corrected by calibration.  JPEG, PNG, and many other image formats store <a href="#sRGB">sRGB</a> image data by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color matching without more.  Calibration techniques for such matching are outside this page&#39;s scope.</li>
 </ul>
 
 <p><a id=Color_Maps></a></p>
 
 <h2>Color Maps</h2>
 
-<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors (which are usually related). All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a> should be used rather than companded RGB colors.</p>
+<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a> should be used rather than companded RGB colors.</p>
 
 <p><a id=Kinds_of_Color_Maps></a></p>
 
@@ -1620,10 +1623,9 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note32">(32)</a></sup></p>
 
-<pre>METHOD Planckian(wavelength, temp)
-    meters = wavelength*pow(10, -9)
-    num = 3.74183*pow(10, -16)*pow(meters, -5)
-    return num / (exp(0.014388/(meters*temp)) - 1)
+<pre>METHOD Planckian(wavelength, temp) # NOTE: Relative only
+    num = pow(wavelength, -5)
+    return num / (exp(0.014387863/(wavelength*pow(10, -9)*temp)) - 1)
 END METHOD
 
 METHOD LIGHT(wavelength)
@@ -1692,7 +1694,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 <ul>
 <li>Finding a <em>representative</em> reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="http://scottburns.us/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a> can match the same RGB color.)</li>
 <li>If the &quot;reflectance curves&quot; represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
-<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
+<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
 </ul>
 
 <p><a id=Other_Color_Topics></a></p>
@@ -1707,7 +1709,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <p><a href="http://eilv.cie.co.at/term/287">Defective color vision</a>, including what is generally known as <a href="https://en.wikipedia.org/wiki/Color_blindness">&quot;colorblindness&quot;</a>, results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, mostly males.</p>
 
-<p>Each human retina usually has three kinds of cones (L, M, and S),
+<p>Each human retina normally has three kinds of cones (L, M, and S),
 and the visual system senses color by the relative degree
 to which all three kinds of cones respond to a stimulus of light.  Usually,
 at least two of these three kinds of cones will respond to light this way.  The most common forms of &quot;colorblindness&quot;, <em>protanopia</em> and <em>deuteranopia</em>, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.</p>

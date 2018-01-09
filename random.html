@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 26, 2017.</p>
+<p>Begun on Mar. 5, 2016; last updated on Dec. 18, 2017.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -306,7 +306,7 @@ generation is outside the scope of this document.</p>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><code>java.util.Random</code></a> is stable,</li>
 <li>the C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><code>rand</code> method</a> is not stable (because the algorithm it uses is unspecified),</li>
 <li>C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><code>std::uniform_int_distribution</code></a>, are not stable (because the algorithms they use are implementation-defined according to the specification), and</li>
-<li>.NET&#39;s <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx"><code>System.Random</code></a> is not stable (because its generation behavior may change in the future).</li>
+<li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><code>System.Random</code></a> is not stable (because its generation behavior may change in the future).</li>
 </ul>
 
 <p><a id=Seedable_PRNG_Recommendations></a></p>
@@ -643,7 +643,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <li>specify few and weak requirements on RNGs (such as C&#39;s <code>rand</code>),</li>
 <li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
 <li>implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
-<li>seed RNGs with a timestamp by default (such as the <a href="https://msdn.microsoft.com/en-us/library/h343ddh9.aspx">.NET Framework implementation of <code>System.Random</code></a>), and/or</li>
+<li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random">.NET Framework implementation of <code>System.Random</code></a>), and/or</li>
 <li>leave the default seeding fixed (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand">C&#39;s <code>rand</code></a>).</li>
 </ul>
 
