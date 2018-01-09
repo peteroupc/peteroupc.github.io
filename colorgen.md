@@ -1300,13 +1300,13 @@ A material's perceived color depends on its reflectance or transmittance curve, 
 
 In the pseudocode below:
 
-- The `SpectrumToTristim` method computes the _tristimulus values_ of the perceived color.
-- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. But for purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m), as well as a 5 nm interval in all three functions (according to CIE Publication 15), are relevant in practice. (See also note 3 later in this section.)
+- The `SpectrumToTristim` method computes the perceived color's _tristimulus values_.
+- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions describing the **reflectance or transmittance curve**, the **light source**'s spectral curve, or the **color matching functions**, respectively.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 3 later in this section._)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source**'s _spectral power distribution_; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
     - the D65 illuminant<sup>[(30)](#Note30)</sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),
     - the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and
-    - the blackbody spectral formula, given in "[Color Temperature](#Color_Temperature)".
+    - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)".
 - `CMF(wl)` models three **color matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;
     - the CIE 1931 (2-degree) standard observer<sup>[(30)](#Note30)</sup><sup>[(31)](#Note31)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
     - the  CIE 1964 (10-degree) standard observer<sup>[(30)](#Note30)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
@@ -1346,7 +1346,7 @@ In the pseudocode below:
 
 1. The choices of `LIGHT` and `CMF` determine the _adopted white point_.
 2. In general, wavelengths in this section mean wavelengths in air. (See the entry "[wavelength](http://eilv.cie.co.at/term/1426)" in the CIE's International Lighting Vocabulary.)
-3. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths, as illustrated by the `SpectrumToTristim` method.
+3. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.
 4. In applications where color matching is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
     - two different curves can match the same color (and be _metamers_) or match different colors, whereas
     - two identical curves match the same color (but are not called metamers).
@@ -1362,12 +1362,12 @@ In the pseudocode below:
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  The `Planckian` method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(32)](#Note32)</sup>
 
-    METHOD Planckian(wavelength, temp) # NOTE: Relative only
+    METHOD Planckian(wavelength, temp)
         num = pow(wavelength, -5)
         return num / (exp(0.014387863/(wavelength*pow(10, -9)*temp)) - 1)
     END METHOD
 
-    METHOD LIGHT(wavelength)
+    METHOD LIGHT(wavelength) # NOTE: Relative only
         return Planckian(wavelength, TEMP) * 100.0 /
             Planckian(wavelength, 560)
     END METHOD
@@ -1387,7 +1387,7 @@ the one found in McCamy 1992.
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
-**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.
+**Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  In the context of light sources, however, the lower the light's CCT, the _warmer_ the light appears, and the higher the CCT, the _cooler_.
 
 <a id=Color_Mixture></a>
 ### Color Mixture

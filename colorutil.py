@@ -286,6 +286,16 @@ def xyzFromuvY(uvy):
                 z=-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
                 return [x,uvy[1],z]
 
+def xyzToCCT(xyz):
+        sum = xyz[0] + xyz[1] + xyz[2]
+        # Adjust sum to avoid division by 0
+        if sum == 0:
+              sum = 0.00001
+        x = xyz[0] / sum
+        y = xyz[1] / sum
+        c = (x - 0.3320) / (0.1858 - y)
+        return ((449*c+3525)*c+6823.3)*c+5520.33
+
 def ciede2000(lab1, lab2):
     dl=lab2[0]-lab1[0]
     hl=lab1[0]+dl*0.5
