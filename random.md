@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 26, 2017.
+Begun on Mar. 5, 2016; last updated on Dec. 18, 2017.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -207,7 +207,7 @@ As used here, a random number generation method is _stable_ if it uses a determi
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
 - the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified),
 - C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification), and
-- .NET's [`System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx) is not stable (because its generation behavior may change in the future).
+- .NET's [`System.Random`](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior may change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -403,7 +403,7 @@ What has motivated me to write a more rigorous definition of random number gener
 - specify few and weak requirements on RNGs (such as C's `rand`),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
-- seed RNGs with a timestamp by default (such as the [.NET Framework implementation of `System.Random`](https://msdn.microsoft.com/en-us/library/h343ddh9.aspx)), and/or
+- seed RNGs with a timestamp by default (such as the [.NET Framework implementation of `System.Random`](https://docs.microsoft.com/dotnet/api/system.random)), and/or
 - leave the default seeding fixed (such as [C's `rand`](http://en.cppreference.com/w/cpp/numeric/random/rand)).
 
 <a id=Conclusion></a>

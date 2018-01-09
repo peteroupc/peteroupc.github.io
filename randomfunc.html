@@ -310,7 +310,7 @@ let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> i
  END METHOD
 </pre>
 
-<p>The na&iuml;ve approach won&#39;t work as well, though, for signed integer formats if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the highest possible integer for the format.  For fixed-length signed integer formats <sup>[(12)]</sup>(#Note12), such random integers can be generated using the following pseudocode.  In the pseudocode below, <code>INT_MAX</code> is the highest possible integer in the integer format.</p>
+<p>The na&iuml;ve approach won&#39;t work as well, though, for signed integer formats if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the highest possible integer for the format.  For fixed-length signed integer formats <sup><a href="#Note3">(3)</a></sup>, such random integers can be generated using the following pseudocode.  In the pseudocode below, <code>INT_MAX</code> is the highest possible integer in the integer format.</p>
 
 <pre>METHOD RNDINTRANGE(minInclusive, maxInclusive)
    // minInclusive must not be greater than maxInclusive
@@ -416,7 +416,7 @@ END
 <h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
 
 <p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random number in the interval [0, <code>maxExclusive</code>)</strong>,
-can be implemented as follows<sup><a href="#Note3">(3)</a></sup>:</p>
+can be implemented as follows<sup><a href="#Note4">(4)</a></sup>:</p>
 
 <pre> METHOD RNDINTEXC(maxExclusive)
     if maxExclusive &lt;= 0: return error
@@ -428,7 +428,7 @@ can be implemented as follows<sup><a href="#Note3">(3)</a></sup>:</p>
 
 <ul>
 <li><code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.</li>
-<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note4">(4)</a></sup>)</li>
+<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5">(5)</a></sup>)</li>
 </ul>
 
 <p>These approaches, though, are recommended only if the programming language&mdash;</p>
@@ -517,7 +517,7 @@ END METHOD
 
 <p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code>, called <strong><code>RNDBITS(b)</code></strong> in this document, is a na&iuml;ve way of generating a <strong>uniform random <code>N</code>-bit integer</strong> (with maximum 2<sup><code>b</code> - 1</sup>).</p>
 
-<p>Although this idiom works well for arbitrary-precision integers, it won&#39;t work well for the much more popular integer types called <em>fixed-length two&#39;s-complement signed integers</em> <sup><a href="#Note5">(5)</a></sup>. For such signed integers as well as fixed-length unsigned integers, <code>RNDBITS(bits)</code> can be implemented using the pseudocode below.  In the pseudocode below, <code>BITCOUNT</code> is the number of bits used in the format.  Note that for such signed integers, <code>RNDBITS(bits)</code> can return a sequence of bits that resolves to a negative number.</p>
+<p>Although this idiom works well for arbitrary-precision integers, it won&#39;t work well for the much more popular integer types called <em>fixed-length two&#39;s-complement signed integers</em> <sup><a href="#Note3">(3)</a></sup>. For such signed integers as well as fixed-length unsigned integers, <code>RNDBITS(bits)</code> can be implemented using the pseudocode below.  In the pseudocode below, <code>BITCOUNT</code> is the number of bits used in the format.  Note that for such signed integers, <code>RNDBITS(bits)</code> can return a sequence of bits that resolves to a negative number.</p>
 
 <pre>METHOD RNDBITS(bits)
      if bits&lt;0 or bits &gt; BITCOUNT: return error
@@ -2086,11 +2086,11 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p>Note that if <code>MODULUS</code> is a power of 2 (for example, 256 or 2<sup>32</sup>), the <code>RNDINT</code> implementation given may leave unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</p>
 
-<p><sup id=Note3>(3)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
+<p><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
 
-<p><sup id=Note4>(4)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
+<p><sup id=Note4>(4)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
 
-<p><sup id=Note5>(5)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</p>
+<p><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>, where <code>min(a,b)</code> is the smaller of <code>a</code> and <code>b</code>, returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</p>
 
 <p><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</p>
 

@@ -18,6 +18,7 @@ This document presents supplemental topics about color.
     - [Opponent Signals](#Opponent_Signals)
 - [Kinds of Color Spaces](#Kinds_of_Color_Spaces)
 - [Calculating the Mean Hue Angle](#Calculating_the_Mean_Hue_Angle)
+- [Additional Color Formats](#Additional_Color_Formats)
 - [Additional Color Models](#Additional_Color_Models)
     - [HSI](#HSI)
     - [Hunter L,a,b](#Hunter_L_a_b)
@@ -103,6 +104,16 @@ The `MeanAngle` method, as given in the pseudocode below, finds the average of o
         end
         return atan2(ym, xm)
     END
+
+<a id=Additional_Color_Formats></a>
+## Additional Color Formats
+
+The following color formats express RGB colors in [8/8/8 format](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
+
+- **Delphi** format: Consists of "$00" followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.
+- **Visual Basic** format: Consists of "&H" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
+- **C++** format: Consists of "0x00" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
+- **PowerBuilder** format: Consists of the integer form of the 8/8/8 format color, packed red/green/blue, in that order from lowest to highest bits.
 
 <a id=Additional_Color_Models></a>
 ## Additional Color Models

@@ -98,8 +98,8 @@ In this document:
 ### Utility Function
 
 In the pseudocode below, `Lerp3` returns a linear interpolation (blending) of two lists of three numbers.  `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language). In this function:
-    - `list1` and `list2` are the two lists.
-    - `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`. Making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
+- `list1` and `list2` are the two lists.
+- `fac` is 0 or greater and 1 or less, where 0 means equal to `list1` and 1 means equal to `list2`. Making `fac` the output of a function (for example, `Lerp3(list1, list2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear interpolations.  Such interpolations are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
 ----
@@ -196,7 +196,7 @@ The following pseudocode contains methods for converting RGB colors to and from 
 <a id=HTML_Related_Color_Formats></a>
 ### HTML-Related Color Formats
 
-A color string in the **HTML color format** (also known as "hex" format), which expresses RGB colors in 8/8/8 format as a string, consists of&mdash;
+A color string in the **HTML color format** (also known as "hex" format), which expresses RGB colors in 8/8/8 format as text strings, consists of&mdash;
 
 - the character "#", followed by
 - six base-16 (hexadecimal) digits<sup>[(3)](#Note3)</sup>, two each for the red, green, and blue components, in that order.
@@ -1224,12 +1224,12 @@ Note that for best results, this technique needs to be carried out with [_linear
     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)
-- For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from calibrated [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (which are "estimates" of a scene's colors).  JPEG, PNG, and many other image formats store sRGB image data by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) (_display-referred_) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors).  Calibration techniques for real-world color matching are outside this page's scope.
+- For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera) whose colors have been corrected by calibration.  JPEG, PNG, and many other image formats store [sRGB](#sRGB) image data by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color matching without more.  Calibration techniques for such matching are outside this page's scope.
 
 <a id=Color_Maps></a>
 ## Color Maps
 
-A _color map_ (or _color palette_) is a list of colors (which are usually related). All the colors in a color map can be in any color space, but unless noted otherwise, [_linearized RGB_ colors](#Linearized_and_Companded_RGB) should be used rather than companded RGB colors.
+A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, [_linearized RGB_ colors](#Linearized_and_Companded_RGB) should be used rather than companded RGB colors.
 
 <a id=Kinds_of_Color_Maps></a>
 ### Kinds of Color Maps
@@ -1362,10 +1362,9 @@ In the pseudocode below:
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  The `Planckian` method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(32)](#Note32)</sup>
 
-    METHOD Planckian(wavelength, temp)
-        meters = wavelength*pow(10, -9)
-        num = 3.74183*pow(10, -16)*pow(meters, -5)
-        return num / (exp(0.014388/(meters*temp)) - 1)
+    METHOD Planckian(wavelength, temp) # NOTE: Relative only
+        num = pow(wavelength, -5)
+        return num / (exp(0.014387863/(wavelength*pow(10, -9)*temp)) - 1)
     END METHOD
 
     METHOD LIGHT(wavelength)
@@ -1426,7 +1425,7 @@ passed at once to the `WGM` function just given must be from the same wavelength
 **Notes:**
 - Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38) can match the same RGB color.)
 - If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
-- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
+- An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
 <a id=Other_Color_Topics></a>
 ## Other Color Topics
@@ -1438,7 +1437,7 @@ This section discusses miscellaneous topics related to colors.
 
 [Defective color vision](http://eilv.cie.co.at/term/287), including what is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, mostly males.
 
-Each human retina usually has three kinds of cones (L, M, and S),
+Each human retina normally has three kinds of cones (L, M, and S),
 and the visual system senses color by the relative degree
 to which all three kinds of cones respond to a stimulus of light.  Usually,
 at least two of these three kinds of cones will respond to light this way.  The most common forms of "colorblindness", _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
