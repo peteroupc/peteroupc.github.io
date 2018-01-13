@@ -10,25 +10,21 @@
 
 <h2>Introduction</h2>
 
-<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.   Many of the topics contain pseudocode that shows their implementation. In particular, this document discusses&mdash;</p>
+<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.   Many of the topics contain pseudocode that shows their implementation. <strong><a href="https://peteroupc.github.io/colorutil.py">Sample Python code</a> that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html">Supplemental topics</a> are listed in another open-source page.</p>
+
+<p><strong>Topics this document covers include:</strong></p>
 
 <ul>
-<li>popular formats for red-green-blue (RGB) colors,</li>
-<li>several color models of practical interest, including conversion methods,</li>
-<li>how to generate colors with certain properties,</li>
-<li>color differences,</li>
-<li>color mixing,</li>
-<li>color maps,</li>
-<li>how to find the dominant colors of an image, and</li>
-<li>spectral color functions.</li>
+<li>Red-green-blue (RGB) and other color models of practical interest.</li>
+<li>How to generate colors with certain properties.</li>
+<li>Color differences, color maps, and color mixing.</li>
+<li>Dominant colors of an image.</li>
+<li>Colors as spectral data.</li>
 </ul>
 
-<p><a href="https://peteroupc.github.io/colorutil.py">Sample Python code</a> that implements many of the methods in this document is available.  <a href="https://peteroupc.github.io/suppcolor.html">Supplemental topics</a> are listed in another open-source page.</p>
-
-<p>The following topics are beyond this page&#39;s scope:</p>
+<p><strong>This document does not cover:</strong></p>
 
 <ul>
-<li>In general, topics that are specific to a programming language or application programming interface.</li>
 <li>Procedures to change or set the color used&mdash;
 
 <ul>
@@ -41,6 +37,7 @@
 <li>Specifics on retrieving colors (including pixel and palette colors) from images or screenshots (besides finding dominant colors).</li>
 <li>Setting colors (including pixel colors) on images.</li>
 <li>Colorization of command line outputs (or terminal or shell outputs) beyond describing the ANSI color codes.</li>
+<li>In general, topics that are specific to a programming language or application programming interface.</li>
 </ul>
 
 <p><a id=Contents></a></p>
@@ -51,10 +48,10 @@
 <li><a href="#Introduction">Introduction</a></li>
 <li><a href="#Contents">Contents</a></li>
 <li><a href="#Notation_and_Definitions">Notation and Definitions</a></li>
+<li><a href="#Specifying_Colors">Specifying Colors</a></li>
 <li><a href="#RGB_Color_Model">RGB Color Model</a>
 
 <ul>
-<li><a href="#RGB_Colors_and_the_0_1_Format">RGB Colors and the 0-1 Format</a></li>
 <li><a href="#RGB_Integer_Formats">RGB Integer Formats</a></li>
 <li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
 <li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
@@ -98,7 +95,7 @@
 <li><a href="#Kinds_of_Color_Maps">Kinds of Color Maps</a></li>
 <li><a href="#Color_Collections">Color Collections</a></li>
 <li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
-<li><a href="#Idioms_and_Pseudocode">Idioms and Pseudocode</a></li>
+<li><a href="#Pseudocode">Pseudocode</a></li>
 </ul></li>
 <li><a href="#Spectral_Color_Functions">Spectral Color Functions</a>
 
@@ -134,25 +131,44 @@
 <li>The abbreviation <em>IEC</em> means the International Electrotechnical Commission.</li>
 <li>The abbreviation <em>ISO</em> means the International Organization for Standardization.</li>
 <li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
+<li>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space.</li>
+<li>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.</li>
 <li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
 <li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
+</ul>
+
+<p><a id=Specifying_Colors></a></p>
+
+<h2>Specifying Colors</h2>
+
+<p>A color can be specified in one of two ways:</p>
+
+<ul>
+<li><strong>As a point in space</strong>, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
+
+<ul>
+<li><a href="#RGB_Color_Model">RGB</a> color spaces describe proportions of red, green, and blue dots of light.</li>
+<li><a href="#HSV">HSV</a>, <a href="#HSL">HSL</a>, and <a href="#HWB">HWB</a> color spaces transform RGB colors to make their
+presentation more intuitive, but are not perception-based.
+
+<ul>
+<li><a href="#CIE_XYZ">XYZ</a>, <a href="#CIELAB">CIELAB</a>, and <a href="#CIELUV">CIELUV</a> color spaces are based on human color perception.</li>
+<li><a href="#CMYK">CMYK</a> color spaces are especially used to describe proportions of four specific kinds of ink.</li>
+<li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a> color spaces are especially used in video encoding.</li>
+</ul></li>
+</ul></li>
+<li><strong>As a spectral curve</strong>, which gives the behavior of light across the spectrum (see &quot;<a href="#Spectral_Color_Functions">Spectral Color Functions</a>&quot;).  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.</li>
 </ul>
 
 <p><a id=RGB_Color_Model></a></p>
 
 <h2>RGB Color Model</h2>
 
-<p>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space. The <strong>red-green-blue (RGB) color model</strong> is based, at least in theory, on the intensity that a set of tiny red, green, and blue dots of light should have in order to reproduce a given color on an electronic display (if possible).<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
+<p>The <strong>red-green-blue (RGB) color model</strong> is based, at least in theory, on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
-<p>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model. In general, <strong>RGB color spaces</strong> differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
+<p><strong>RGB color spaces</strong> generally differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
 
-<p>The following details concepts related to the RGB color model.</p>
-
-<p><a id=RGB_Colors_and_the_0_1_Format></a></p>
-
-<h3>RGB Colors and the 0-1 Format</h3>
-
-<p>In an RGB color space, an <em>RGB color</em> consists of three components in the following order, namely&mdash;</p>
+<p>An <strong>RGB color</strong> (in a given RGB color space) consists of&mdash;</p>
 
 <ul>
 <li>a <code>red</code> component,</li>
@@ -160,7 +176,7 @@
 <li>a <code>blue</code> component,</li>
 </ul>
 
-<p>and each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
+<p>in that order, and each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
 
 <p><strong>RGBA Colors:</strong> Some RGB colors also contain a fourth component, called the <em>alpha</em> component, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
 
@@ -177,7 +193,7 @@
 
 <h3>RGB Integer Formats</h3>
 
-<p>RGB and RGBA colors are often expressed by packing their components as integers. In this document, there are two general categories of RGB integer formats:</p>
+<p>RGB and RGBA colors are often expressed by packing their components as integers. This document recognizes two general categories of RGB integer formats:</p>
 
 <ul>
 <li><strong>RN/GN/BN format:</strong> With an RN-bit red component, a GN-bit green, and a BN-bit blue, resulting in an integer that&#39;s (RN + GN + BN) bits long.</li>
@@ -244,10 +260,10 @@ END METHOD
 
 <p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses RGB colors in 8/8/8 format as text strings, consists of&mdash;</p>
 
-<ul>
+<ol>
 <li>the character &quot;#&quot;, followed by</li>
 <li>six base-16 (hexadecimal) digits<sup><a href="#Note3">(3)</a></sup>, two each for the red, green, and blue components, in that order.</li>
-</ul>
+</ol>
 
 <p>For example, the HTML color <code>#003F86</code> expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).<sup><a href="#Note4">(4)</a></sup></p>
 
@@ -258,8 +274,7 @@ END METHOD
 <li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.</li>
 </ul>
 
-<p>The following pseudocode presents methods to convert RGB colors (actually lists of text
-characters) to and from the HTML color format or the 3-digit format.</p>
+<p>The following pseudocode presents methods to convert RGB colors to and from the HTML color format or the 3-digit variant.</p>
 
 <pre>METHOD NumToHex(x)
     if hex &lt; 0 or hex &gt;= 16: return error
@@ -382,17 +397,7 @@ END METHOD
 
 <h2>Other Color Models</h2>
 
-<p>The following sections discuss several color models, other than RGB, that are of practical interest.  Here is
-an overview.</p>
-
-<ul>
-<li><a href="#HSV">HSV</a>, <a href="#HSL">HSL</a>, and <a href="#HWB">HWB</a> transform RGB colors to make their
-presentation more intuitive, but are not perception-based.</li>
-<li>The <a href="#CIE_XYZ">XYZ color model</a>, <a href="#CIELAB">CIELAB</a>, and <a href="#CIELUV">CIELUV</a> are color models
-based on human color perception.</li>
-<li><a href="#CMYK">CMYK</a> is especially used to describe proportions of four specific kinds of ink.</li>
-<li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a> is especially used in video encoding.</li>
-</ul>
+<p>The following sections discuss several color models, other than RGB, that are of practical interest.</p>
 
 <p><a id=HSV></a></p>
 
@@ -603,7 +608,7 @@ END METHOD
 <li><code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code> treat a Y of 1 as the D50 white point (see note 2 later in this section)<sup><a href="#Note9">(9)</a></sup>.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD Clamp01(elements)
     return [min(max(elements[0],0), 1),
@@ -626,7 +631,8 @@ METHOD XYZFromsRGBD50(rgb)
             0.09708132, 0.7140994])
 END METHOD
 
-// NOTE: Clamps outlying components in the result.  If that&#39;s not
+// NOTE: Clamps components less than 0 or greater than 1 to be 0 or 1,
+// respectively.  If that&#39;s not
 // desired, omit the use of Clamp01 in the method below.
 METHOD XYZTosRGBD50(xyz)
     rgb=Apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
@@ -643,7 +649,8 @@ METHOD XYZFromsRGB(rgb)
             0.1191948, 0.9505322])
 END METHOD
 
-// NOTE: Clamps outlying components in the result.  If that&#39;s not
+// NOTE: Clamps components less than 0 or greater than 1 to be 0 or 1,
+// respectively.  If that&#39;s not
 // desired, omit the use of Clamp01 in the method below.
 METHOD XYZTosRGB(xyz)
     rgb=Apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
@@ -656,12 +663,10 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the inverse of the matrix shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note10">(10)</a></sup></li>
+<li>In the pseudocode just given, 3x3 matrices are used to transform a linearized RGB color to or from XYZ form. The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions">inverse of the matrix</a> shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note10">(10)</a></sup></li>
 <li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point,
 a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation</em></a> from one white point to another (such as a linear Bradford transformation)
-needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the inverse of the adapted matrix.
-The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.<sup><a href="#Note10">(10)</a></sup></li>
-<li>The <code>XYZTosRGB</code> and <code>XYZTosRGBD50</code> methods clamp components less than 0 or greater than 1 to be 0 or 1, respectively.</li>
+needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions">inverse</a> of the adapted matrix. The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.<sup><a href="#Note10">(10)</a></sup></li>
 </ol>
 
 <p><a id=Chromaticity_Coordinates></a></p>
@@ -737,7 +742,7 @@ and the negative <em>b*</em> axis points to blue.<sup><a href="#Note13">(13)</a>
 <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chromaticness difference</em> (&Delta;<em>C</em><sub>h</sub>) between two CIELAB colors, as given, for example, in ISO 13655.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD XYZToLab(xyzval, wpoint)
     xyz=[xyzval[0]/wpoint[0],xyzval[1]/wpoint[1],xyzval[2]/wpoint[2]]
@@ -916,7 +921,7 @@ END METHOD
 <p>The following pseudocode converts colors between RGB and Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>.  Each RGB color is in 8/8/8 format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;</p>
 
 <ul>
-<li>the ITU-R BT.601 variant (for digital standard-definition video), as the <code>YCbCrToRgb</code> and <code>RgbToYCbCr</code> methods,</li>
+<li>the ITU-R BT.601 variant (for standard-definition digital video), as the <code>YCbCrToRgb</code> and <code>RgbToYCbCr</code> methods,</li>
 <li>the ITU-R BT.709 variant (for high-definition video), as the <code>YCbCrToRgb709</code> and <code>RgbToYCbCr709</code> methods, and</li>
 <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a> variant (with all three components 0 or greater and 255 or less), as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.<sup><a href="#Note16">(16)</a></sup></li>
 </ul>
@@ -980,19 +985,14 @@ METHOD YCbCrToRgbJpeg(yCbCr)
 END METHOD
 </pre>
 
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>For efficiency reasons, Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> conversion is sometimes done using a series of lookup tables, rather than directly applying the conversion methods just given.</li>
-<li>A thorough survey of the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> data has been encoded is outside
-the scope of this document; in general, such encodings take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</li>
-</ul>
+<p><strong>Note:</strong> A thorough survey of the various ways in which Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> data has been encoded is outside
+the scope of this document; in general, such encodings take into account the human eye&#39;s normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub><em>B</em></sub>, C<sub><em>R</em></sub>).</p>
 
 <p><a id=CMYK></a></p>
 
 <h3>CMYK</h3>
 
-<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce a given color on paper (if possible).  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup><a href="#Note18">(18)</a></sup></p>
+<p>CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup><a href="#Note18">(18)</a></sup></p>
 
 <p><a id=Modifying_Existing_Colors></a></p>
 
@@ -1006,7 +1006,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <h3>Relative Luminance (Grayscale)</h3>
 
-<p>Relative luminance is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light reaches the eyes when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y component of an <a href="#CIE_XYZ">XYZ color</a>, and is 0 or greater and 1 or less.</p>
+<p><em>Relative luminance</em> is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light reaches the eyes when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y component of an <a href="#CIE_XYZ">XYZ color</a>, and is 0 or greater and 1 or less.</p>
 
 <ul>
 <li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, relative luminance&mdash;</p>
@@ -1039,10 +1039,10 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.<sup><a href="#Note21">(21)</a></sup></li>
 </ul>
 
-<p>Finding the <strong>average relative luminance of an image</strong> or collection of colors is often equivalent to&mdash;</p>
+<p>Finding the <strong>average relative luminance</strong> of a collection of colors (including a raster image) is often equivalent to&mdash;</p>
 
 <ul>
-<li>adding all the relative luminances (<code>Luminance(color)</code>) of the colors in the image or collection, then</li>
+<li>adding all the relative luminances (<code>Luminance(color)</code>) of the colors in the collection, then</li>
 <li>dividing the result by the number of such colors.</li>
 </ul>
 
@@ -1105,7 +1105,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li>Converting an RGBA color to an RGB color over <code>color2</code>, another RGB color, is equivalent to <code>Lerp3([color[0], color[1], color[2]], color2, color[3])</code>.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD Lerp3(color1, color2, alpha)
     return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
@@ -1152,7 +1152,7 @@ END METHOD
 <p>In the following formulas, <code>color</code> is the source color in 0-1 format.</p>
 
 <ul>
-<li><strong>Invert (negative)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note26">(26)</a></sup></li>
+<li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note26">(26)</a></sup></li>
 <li><p><strong>Lighten/Darken</strong>: A choice of&mdash;</p>
 
 <ul>
@@ -1214,7 +1214,7 @@ color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> m
 <li><code>CPARAM</code> is a chroma tolerance and is usually 1.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD COLORDIFF(lab1, lab2)
     c1=LabToChroma(lab1)
@@ -1429,8 +1429,14 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>applying a &quot;nearest neighbor&quot; approach (replacing that image&#39;s colors with their <a href="#Nearest_Colors">nearest dominant colors</a>), or</li>
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
-<li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way. (How to implement hash tables is beyond the scope of this page.)</li>
-<li>For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera) whose colors have been corrected by calibration.  JPEG, PNG, and many other image formats store <a href="#sRGB">sRGB</a> image data by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color matching without more.  Calibration techniques for such matching are outside this page&#39;s scope.</li>
+<li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note28">(28)</a></sup></li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors
+must be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image
+data</a> (such as a raw image from a digital camera) whose colors have
+been corrected by calibration.  JPEG, PNG, and many other image formats store <a href="#sRGB">sRGB</a> image
+data by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not
+a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images
+unsuitable for real-world color matching without more.  Calibration techniques for such matching are outside this page&#39;s scope.</li>
 </ul>
 
 <p><a id=Color_Maps></a></p>
@@ -1438,6 +1444,8 @@ maximum value of each color component, e.g., 0.5.</li>
 <h2>Color Maps</h2>
 
 <p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a> should be used rather than companded RGB colors.</p>
+
+<p><strong>Example:</strong> A <strong>grayscale color map</strong> consists of the companded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</p>
 
 <p><a id=Kinds_of_Color_Maps></a></p>
 
@@ -1451,7 +1459,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li><strong>Qualitative color maps</strong> for showing discrete categories of data (see also &quot;<a href="#Visually_Distinct_Colors">Visually Distinct Colors</a>&quot;). Those found in <em>ColorBrewer 2.0</em> use varying hues.</li>
 </ul>
 
-<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note28">(28)</a></sup> and/or &quot;<a href="#Defective_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note29">(29)</a></sup> and/or &quot;<a href="#Defective_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 
 <p><a id=Color_Collections></a></p>
 
@@ -1463,10 +1471,10 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <ul>
 <li>retrieving the name keyed to that color in a hash table, or returning an error if that color doesn&#39;t exist in the hash table, or</li>
-<li>finding the <a href="#Nearest_Colors">nearest color</a> to that color among the named colors, and returning the color found this way (and/or that color&#39;s name).</li>
+<li>finding the <a href="#Nearest_Colors">nearest color</a> to that color among the named colors, and returning the color found this way (and/or that color&#39;s name).<sup><a href="#Note28">(28)</a></sup></li>
 </ul>
 
-<p>Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn&#39;t exist in the hash table.</p>
+<p>Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn&#39;t exist in the hash table.<sup><a href="#Note28">(28)</a></sup></p>
 
 <p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
@@ -1478,7 +1486,7 @@ maximum value of each color component, e.g., 0.5.</li>
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
-<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note29">(29)</a></sup>, the first nine of which
+<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note30">(30)</a></sup>, the first nine of which
 were intended for readers with normal and defective color vision, and</li>
 <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
@@ -1495,28 +1503,34 @@ distinct colors. Such colors can be pregenerated or generated at runtime, and su
 can be limited to those in a particular <em>color gamut</em>. Here, the color difference method
 should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html">Color Distribution Methodology</a>&quot;.)</p>
 
-<p><a id=Idioms_and_Pseudocode></a></p>
+<p><a id=Pseudocode></a></p>
 
-<h3>Idioms and Pseudocode</h3>
+<h3>Pseudocode</h3>
+
+<p>In the following pseudocode&mdash;</p>
 
 <ul>
-<li><p>The following pseudocode extracts a <strong>continuous color</strong> from a color map (<code>colormap</code>) given a number 0 or greater and 1 or less (<code>value</code>):</p>
-
-<pre>METHOD ColorMapGet(colormap, value)
-    nm1 = size(colormap) - 1
-    index = (value * nm1) - floor(value * nm1)
-    if index &gt;= nm1: return colormap[index]
-    fac = (value * nm1) - index)
-    list1 = colormap[index]
-    list2 = colormap[index + 1]
-    return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
-        list1[2]+(list2[2]-list1[2])*fac]
-END METHOD
-</pre></li>
-<li><p>To extract a <strong>discrete color</strong> from an <code>N</code>-color color map given a number 0 or greater and 1 or less (<code>value</code>),
-generate <code>color = colormap[round(value * (N - 1))]</code>.</p></li>
-<li>The <strong>grayscale color map</strong> consists of the companded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</li>
+<li><code>ColorMapContinuous</code> extracts a <strong>continuous color</strong> (blended color) from a color map (<code>colormap</code>), and</li>
+<li><code>ColorMapDiscrete</code> extracts a <strong>discrete color</strong> (nearest color) from a color map (<code>colormap</code>),</li>
 </ul>
+
+<p>where <code>value</code> is a number 0 or greater and 1 or less.</p>
+
+<pre>    METHOD ColorMapContinuous(colormap, value)
+        nm1 = size(colormap) - 1
+        index = (value * nm1) - floor(value * nm1)
+        if index &gt;= nm1: return colormap[index]
+        fac = (value * nm1) - index)
+        list1 = colormap[index]
+        list2 = colormap[index + 1]
+        return [list1[0]+(list2[0]-list1[0])*fac, list1[1]+(list2[1]-list1[1])*fac,
+            list1[2]+(list2[2]-list1[2])*fac]
+    END METHOD
+
+    METHOD ColorMapDiscrete(colormap, value)
+       return colormap[round(value * (N - 1))]
+    END METHOD
+</pre>
 
 <p><a id=Spectral_Color_Functions></a></p>
 
@@ -1525,34 +1539,36 @@ generate <code>color = colormap[round(value * (N - 1))]</code>.</p></li>
 <p>A color stimulus can be represented as a function (&quot;curve&quot;) that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A source of light can be described by a <em>spectral power distribution</em>, a &quot;curve&quot; which describes the intensity of the source at each wavelength of the spectrum.<sup><a href="#Note30">(30)</a></sup></li>
-<li><strong>Reflective materials.</strong> The fraction of light reflected by a reflective (opaque) material can be described by a <em>(spectral) reflectance curve</em>.</li>
-<li><strong>Transmissive materials.</strong> The fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter, can be described by a <em>transmittance curve</em>.</li>
+<li><strong>Light sources.</strong> A <em>spectral power distribution</em> describes the intensity of a light source at each wavelength of the spectrum.<sup><a href="#Note31">(31)</a></sup></li>
+<li><strong>Reflective materials.</strong> A <em>(spectral) reflectance curve</em> describes the fraction of light reflected by a reflective (opaque) material.</li>
+<li><strong>Transmissive materials.</strong> A <em>transmittance curve</em> describes the fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter.</li>
 </ul>
 
-<p>A material&#39;s perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three <em>color matching functions</em>).  That curve, the light source&#39;s spectral curve, and the color matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify the material&#39;s perceived color.</p>
+<p>A material&#39;s perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three <em>color matching functions</em>).  That curve, the light source&#39;s spectral curve, and the color matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify that color.</p>
 
-<p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  Also:</p>
+<p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  In the method:</p>
 
 <ul>
-<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions describing the <strong>reflectance or transmittance curve</strong>, the <strong>light source</strong>&#39;s spectral curve, or the <strong>color matching functions</strong>, respectively.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 3 later in this section.</em>)</li>
+<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions further described later.  All three take a
+wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength.
+(<em>See also note 3 later in this section.</em>)</li>
 <li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  <code>REFL</code> can always return 1 to model a <em>perfect reflecting</em> or <em>perfect transmitting diffuser</em>, e.g., if the purpose is to get the perceived color of the light source itself. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>.</li>
-<li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s <em>spectral power distribution</em>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
+<li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s spectral power distribution; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
-<li>the D65 illuminant<sup><a href="#Note31">(31)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
+<li>the D65 illuminant<sup><a href="#Note32">(32)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
 <li>the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and</li>
 <li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul></li>
 <li><code>CMF(wl)</code> models three <strong>color matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note31">(31)</a></sup><sup><a href="#Note32">(32)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
-<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note31">(31)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note32">(32)</a></sup><sup><a href="#Note33">(33)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note32">(32)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul></li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD SpectrumToTristim()
     i = 360 // Start of relevant part of spectrum
@@ -1588,9 +1604,11 @@ END METHOD
 
 <ol>
 <li>The choices of <code>LIGHT</code> and <code>CMF</code> determine the <em>adopted white point</em>.</li>
-<li>In general, wavelengths in this section mean wavelengths in air. (See the entry &quot;<a href="http://eilv.cie.co.at/term/1426">wavelength</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</li>
+<li>In general, wavelengths in this document mean wavelengths in air. (See the entry &quot;<a href="http://eilv.cie.co.at/term/1426">wavelength</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</li>
 <li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For purposes of color reproduction, only wavelengths within the range 360-830 nm (0.36-0.83 &mu;m) are relevant in practice.</li>
-<li>In applications where color matching is important, reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&mdash;
+<li>In applications where matching colors from the real world is important, reflectance and transmittance curves (<code>REFL</code>) can
+be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given
+combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&mdash;
 
 <ul>
 <li>two different curves can match the same color (and be <em>metamers</em>) or match different colors, whereas</li>
@@ -1611,7 +1629,7 @@ END METHOD
 
 <h3>Color Temperature</h3>
 
-<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note33">(33)</a></sup></p>
+<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note34">(34)</a></sup></p>
 
 <pre>METHOD Planckian(wavelength, temp)
     num = pow(wavelength, -5)
@@ -1630,12 +1648,8 @@ this formula is often called <em>correlated color temperature</em> (CCT).  The f
 the one found in McCamy 1992.</p>
 
 <pre>METHOD XYZToCCT(xyz)
-    sum = xyz[0] + xyz[1] + xyz[2]
-    // Adjust sum to avoid division by 0
-    if sum == 0: sum = 0.00001
-    x = xyz[0] / sum
-    y = xyz[1] / sum
-    c = (x - 0.3320) / (0.1858 - y)
+    xyy = XYZToxyY(xyz)
+    c = (xyy[0] - 0.3320) / (0.1858 - xyy[1])
     return ((449*c+3525)*c+6823.3)*c+5520.33
 END METHOD
 </pre>
@@ -1652,7 +1666,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note34">(34)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note35">(35)</a></sup></li>
 </ol>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
@@ -1848,19 +1862,21 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><sup id=Note27>(27)</sup> The &quot;E&quot; here stands for the German word <em>Empfindung</em>.</p>
 
-<p><sup id=Note28>(28)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK">CMYK</a>&quot;).</p>
+<p><sup id=Note28>(28)</sup> How to implement hash tables is outside the scope of this document.</p>
 
-<p><sup id=Note29>(29)</sup> An approximation of the colors to companded sRGB, in order, is (in HTML color format): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
+<p><sup id=Note29>(29)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK">CMYK</a>&quot;).</p>
 
-<p><sup id=Note30>(30)</sup> In this document, a <em>light source</em> means a <em>primary light source</em> or an <em>illuminant</em> (usually a theoretical source), both terms defined in the CIE&#39;s International Lighting Vocabulary.</p>
+<p><sup id=Note30>(30)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note31>(31)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+<p><sup id=Note31>(31)</sup> In this document, a <em>light source</em> means a <em>primary light source</em> or an <em>illuminant</em> (usually a theoretical source), both terms defined in the CIE&#39;s International Lighting Vocabulary.</p>
 
-<p><sup id=Note32>(32)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+<p><sup id=Note32>(32)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
 
-<p><sup id=Note33>(33)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
+<p><sup id=Note33>(33)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
-<p><sup id=Note34>(34)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p><sup id=Note34>(34)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
+
+<p><sup id=Note35>(35)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 

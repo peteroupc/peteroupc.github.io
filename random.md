@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 18, 2017.
+Begun on Mar. 5, 2016; last updated on Jan. 11, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -191,7 +191,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - is hard-coded,
     - was entered by the user,
     - is known to the application and was generated using a statistical-random or unpredictable-random implementation (as defined earlier),
-    - is a verifiable random number (as defined later), or
+    - is a [verifiable random number](#Verifiable_Random_Numbers) (as defined later), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application might need to generate the same "random" result multiple times,
 3. the application either&mdash;
@@ -387,10 +387,10 @@ The PRNG in question should&mdash;
 <a id=GPU_Programming_Environments></a>
 ## GPU Programming Environments
 
-Because GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
+Because, in general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
 - have limited access to some system resources compared with other programming environments,
-- are often designed for parallel execution, and
-- do not generally store state,
+- are designed for parallel execution, and
+- do not store state,
 
 random number generators for such environments are often designed as hash functions, because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
 
