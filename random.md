@@ -351,7 +351,7 @@ The second consideration is present if the application uses PRNGs for shuffling.
 
 The number of distinct permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [factorial](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
 - _n_!, if the list consists of _n_ different items, and
-- (_nm_)! / _m_!<sup>_n_</sup>, if the list is formed from _m_ identical lists each with _n_ different items.
+- (_np_)! / _p_!<sup>_n_</sup>, if the list is formed from _p_ identical lists each with _n_ different items.
 
 In general, a PRNG with state length _k_ bits, as shown in the table below, can't choose from among all the distinct permutations of a list with more items than the given maximum list size _n_ (_k_ is the base-2 logarithm of _n_!, rounded up to an integer). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't choose from among more than 2<sup>_k_</sup> permutations.)
 
@@ -364,9 +364,9 @@ In general, a PRNG with state length _k_ bits, as shown in the table below, can'
 | 512 | 98 |
 | 525 | 100 |
 
-A PRNG with state length less than the number of bits given below (_k_) can't choose from among all the distinct permutations of a list formed from _m_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_nm_)! / _m_!<sup>_n_</sup>), rounded up to an integer).
+A PRNG with state length less than the number of bits given below (_k_) can't choose from among all the distinct permutations of a list formed from _p_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_np_)! / _p_!<sup>_n_</sup>), rounded up to an integer).
 
-| Number of lists (_m_) | Items per list (_n_) | Minimum state length (_k_) |
+| Number of lists (_p_) | Items per list (_n_) | Minimum state length (_k_) |
 | -----------------|----------|------------- |
 | 1 | 20 | 62 |
 | 2 | 20 | 140 |

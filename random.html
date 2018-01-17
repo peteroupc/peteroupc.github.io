@@ -527,7 +527,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 
 <ul>
 <li><em>n</em>!, if the list consists of <em>n</em> different items, and</li>
-<li>(<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>, if the list is formed from <em>m</em> identical lists each with <em>n</em> different items.</li>
+<li>(<em>np</em>)! / <em>p</em>!<sup><em>n</em></sup>, if the list is formed from <em>p</em> identical lists each with <em>n</em> different items.</li>
 </ul>
 
 <p>In general, a PRNG with state length <em>k</em> bits, as shown in the table below, can&#39;t choose from among all the distinct permutations of a list with more items than the given maximum list size <em>n</em> (<em>k</em> is the base-2 logarithm of <em>n</em>!, rounded up to an integer). (Note that a PRNG with state length <em>k</em> bits can&#39;t have a period greater than 2<sup><em>k</em></sup>, so can&#39;t choose from among more than 2<sup><em>k</em></sup> permutations.)</p>
@@ -564,11 +564,11 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 </tr>
 </tbody></table>
 
-<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t choose from among all the distinct permutations of a list formed from <em>m</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> is the base-2 logarithm of ((<em>nm</em>)! / <em>m</em>!<sup><em>n</em></sup>), rounded up to an integer).</p>
+<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t choose from among all the distinct permutations of a list formed from <em>p</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> is the base-2 logarithm of ((<em>np</em>)! / <em>p</em>!<sup><em>n</em></sup>), rounded up to an integer).</p>
 
 <table><thead>
 <tr>
-<th>Number of lists (<em>m</em>)</th>
+<th>Number of lists (<em>p</em>)</th>
 <th>Items per list (<em>n</em>)</th>
 <th>Minimum state length (<em>k</em>)</th>
 </tr>
