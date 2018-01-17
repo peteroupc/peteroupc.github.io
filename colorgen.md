@@ -99,12 +99,11 @@ A color can be specified in one of two ways:
 
 * **As a point in space**, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
     - [RGB](#RGB_Color_Model) color spaces describe proportions of red, green, and blue dots of light.
-    - [HSV](#HSV), [HSL](#HSL), and [HWB](#HWB) color spaces transform RGB colors to make their
- presentation more intuitive, but are not perception-based.
+    - [HSV](#HSV), [HSL](#HSL), and [HWB](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
     - [XYZ](#CIE_XYZ), [CIELAB](#CIELAB), and [CIELUV](#CIELUV) color spaces are based on human color perception.
     - [CMYK](#CMYK) color spaces are especially used to describe proportions of four specific kinds of ink.
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R) color spaces are especially used in video encoding.
-* **As a spectral curve**, which gives the behavior of light across the spectrum (see "[Spectral Color Functions](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
+* **As a _spectral curve_**, which gives the behavior of light across the spectrum (see "[Spectral Color Functions](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
 
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
@@ -1248,7 +1247,7 @@ Converting a color (such as an RGB color) to a color name is equivalent to&mdash
 - retrieving the name keyed to that color in a hash table, or returning an error if that color doesn't exist in the hash table, or
 - finding the [nearest color](#Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).<sup>[(28)](#Note28)</sup>
 
-Converting a color name to a color is equivalent to retrieving the color keyed to that name in a hash table, or returning an error if that name (or optionally, its lower-cased form) doesn't exist in the hash table.<sup>[(28)](#Note28)</sup>
+Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[(28)](#Note28)</sup>
 
 **Note:** As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [_sRGB color space_](#sRGB) (as companded colors).
 
@@ -1268,7 +1267,7 @@ In general, the more colors used, the harder it is to distinguish them from each
 color should not be ["the only visual means of conveying information"](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest [color difference](#Color_Differences), or `COLORDIFF`,
+color space (that is, where the smallest [color difference](#Color_Differences) [`COLORDIFF`]
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
 can be limited to those in a particular _color gamut_. Here, the color difference method
@@ -1281,7 +1280,7 @@ In the following pseudocode&mdash;
 - `ColorMapContinuous` extracts a **continuous color** (blended color) from a color map (`colormap`), and
 - `ColorMapDiscrete` extracts a **discrete color** (nearest color) from a color map (`colormap`),
 
-where `value` is a number 0 or greater and 1 or less.
+where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and end of the color map, respectively).
 
         METHOD ColorMapContinuous(colormap, value)
             nm1 = size(colormap) - 1

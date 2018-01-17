@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 27, 2017.
+Begun on June 4, 2017; last updated on Jan. 13, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -24,7 +24,7 @@ All the random number methods presented on this page&mdash;
 
 In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 
-In general, the following are outside the scope of this document:
+**In general, this document does not cover:**
 - Techniques that are specific to an application programming interface.
 - Techniques that are specific to certain kinds of RNGs.
 - Generating sequences of unique integers using specific kinds of deterministic RNGs.
@@ -133,7 +133,7 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
 - **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
 - **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
 
-----
+&nbsp;
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -578,7 +578,7 @@ To generate a random string of characters (usually a random _alphanumeric string
 
 - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
-- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
+- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
 - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
 - For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
 - Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(7)](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
@@ -879,7 +879,7 @@ The pseudocode below takes two lists as follows:
 - `list` is a list of numbers (which need not be integers). If the numbers are arranged in ascending order, which they should, the first number in this list can be returned exactly, but not the last number.
 - `weights` is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number's weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.
 
-----
+&nbsp;
 
     METHOD ContinuousWeightedChoice(list, weights)
         if size(list) <= 0 or size(weights) < size(list): return error
@@ -1072,7 +1072,7 @@ In the pseudocode below, which uses the polar method <sup>[(11)](#Note11)</sup> 
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
 
-----
+&nbsp;
 
     METHOD Normal2(mu, sigma)
       while true
@@ -1117,7 +1117,7 @@ The following method generates a random integer that follows a binomial distribu
 - is also known as  [_Hamming distance_](https://en.wikipedia.org/wiki/Hamming_distance), if each trial is treated
 as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 
-----
+&nbsp;
 
     METHOD Binomial(trials, p)
         if trials < 0: return error
@@ -1333,7 +1333,7 @@ which resembles a curve with a single peak, but with generally "fatter" tails th
 - `alpha` is a stability index in the interval (0, 2].
 - `beta` is a skewness in the interval [-1, 1]; if `beta` is 0, the curve is symmetric.
 
-----
+&nbsp;
 
     METHOD Stable(alpha, beta)
          if alpha <=0 or alpha > 2: return error
@@ -1406,7 +1406,7 @@ The following pseudocode calculates a random point in space that follows a [mult
 - A list, `mu`, which indicates the means
 to add to each component of the random point. `mu` can be `nothing`, in which case each
 component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point.)
+- A list of lists `cov`, that specifies a _covariance matrix_ (a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).
 
 For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=Y to Z; [Statements] ; end` is shorthand for `X = Y; while X <= Z; [Statements]; X = X + 1; end`.
 
@@ -1494,7 +1494,7 @@ The following pseudocode shows how to generate random integers with a given posi
 - the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`, and
 - `Sort(list)` sorts the items in `list` in ascending order (note that details on sort algorithms are outside the scope of this document).
 
-----
+&nbsp;
 
     METHOD NonzeroIntegersWithSum(n, total)
         if n <= 0 or total <=0: return error

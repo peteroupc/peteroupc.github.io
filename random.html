@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Jan. 11, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jan. 17, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -368,14 +368,17 @@ generation is outside the scope of this document.</p>
 
 <h4>Noise</h4>
 
-<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html">&quot;Noise Functions and Map Generation&quot;</a>).</p>
+<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html">&quot;Noise Functions and Map Generation&quot;</a>)<sup><a href="#Note3">(3)</a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
 
-<p>If the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a>, <a href="https://en.wikipedia.org/wiki/Value_noise">value noise</a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), then different considerations apply depending on the implementation:</p>
+<p>However, special care should be taken if the noise implementation&mdash;</p>
 
 <ul>
-<li>If the implementation <strong>uses an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point), then the same RNG recommendations apply to the implementation as they do to most other cases.  This kind of approach is recommended wherever feasible, especially where computer and information security are involved in the noise generation.</li>
-<li>A noise implementation that <strong>uses a table of pregenerated gradients or hash values</strong> should be used only if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation (treating the implementation as using a &quot;hard-coded&quot; seed).</li>
-<li>If the noise function <strong>incorporates a hash function</strong> (including a PRNG that takes the input as a seed and outputs a random number<sup><a href="#Note3">(3)</a></sup>)&mdash;
+<li>implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a>, <a href="https://en.wikipedia.org/wiki/Value_noise">value noise</a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), and</li>
+<li>uses one of the following techniques:
+
+<ul>
+<li>The implementation should use a <strong>table of &quot;hard-coded&quot; gradients or hash values</strong> only if the noise generation meets the <a href="#Seeding_Recommendations">seeding recommendations</a> (treating the table as the seed).</li>
+<li>If the noise implementation <strong>incorporates a hash function</strong> (including a PRNG that takes the input as a seed and outputs a random number<sup><a href="#Note4">(4)</a></sup>)&mdash;
 
 <ul>
 <li>that hash function should&mdash;
@@ -388,11 +391,10 @@ generation is outside the scope of this document.</p>
 </ul></li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
 </ul></li>
+</ul></li>
 </ul>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> technique combines several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  The same considerations apply to fractional Brownian motion as they do to the underlying noise implementation.</p>
-
-<p>If the noise implementation implements other kinds of noise, such as white noise, pink noise, or other <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a><sup><a href="#Note4">(4)</a></sup>, then the same RNG recommendations apply to the implementation as they do to most other cases.</p>
+<p>Wherever feasible, a cellular, value, or gradient noise implementation should <strong>use an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point).</p>
 
 <p><a id=Programming_Language_APIs></a></p>
 
@@ -640,11 +642,11 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <p>What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today&mdash;</p>
 
 <ul>
-<li>specify few and weak requirements on RNGs (such as C&#39;s <code>rand</code>),</li>
+<li>specify few and weak requirements on RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand">C&#39;s <code>rand</code></a>),</li>
 <li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
 <li>implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
 <li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random">.NET Framework implementation of <code>System.Random</code></a>), and/or</li>
-<li>leave the default seeding fixed (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand">C&#39;s <code>rand</code></a>).</li>
+<li>leave the default seeding fixed.</li>
 </ul>
 
 <p><a id=Conclusion></a></p>
@@ -693,9 +695,9 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 
 <p><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</p>
 
-<p><sup id=Note3>(3)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</p>
+<p><sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, white noise, pink noise, and other <a href="https://en.wikipedia.org/wiki/Colors_of_noise">colored noise</a>. A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion">fractional Brownian motion</a> to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  Note that usual implementations of colored noise don&#39;t sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for some kinds of colored noise, a filter is applied to the samples.</p>
 
-<p><sup id=Note4>(4)</sup> This is because usual implementations of colored noise don&#39;t sample each point of the sample space more than once; rather, all the samples are generated, then, for some kinds of colored noise, a filter is applied to the samples.</p>
+<p><sup id=Note4>(4)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</p>
 
 <p></small></p>
 

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 27, 2017.</p>
+<p>Begun on June 4, 2017; last updated on Jan. 13, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -34,7 +34,7 @@
 
 <p>In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
 
-<p>In general, the following are outside the scope of this document:</p>
+<p><strong>In general, this document does not cover:</strong></p>
 
 <ul>
 <li>Techniques that are specific to an application programming interface.</li>
@@ -182,7 +182,7 @@
 <li><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
     cx = floor(maxInclusive / MODULUS) + 1
@@ -698,7 +698,7 @@ END METHOD
 <ul>
 <li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
 <li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.</li>
-<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against the list (or table).  Random number generators alone should not be relied on to deliver unique results.  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
+<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating a random hexadecimal string is equivalent to generating <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
 <li>For generating a random base-10 digit string, the list of characters passed to <code>RandomString</code> consists of the basic digits only.</li>
 <li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note7">(7)</a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
@@ -1051,7 +1051,7 @@ number = RNDNUMEXCRANGE(list[index], list[index + 1])
 <li><code>weights</code> is a list of weights for the given numbers (where each number and its weight have the same index in both lists).   The greater a number&#39;s weight, the more likely it is that a number close to that number will be chosen.  Each weight should be 0 or greater.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD ContinuousWeightedChoice(list, weights)
     if size(list) &lt;= 0 or size(weights) &lt; size(list): return error
@@ -1287,7 +1287,7 @@ END METHOD
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD Normal2(mu, sigma)
   while true
@@ -1341,7 +1341,7 @@ END METHOD
 as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and if <code>p</code> is 0.5.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD Binomial(trials, p)
     if trials &lt; 0: return error
@@ -1581,7 +1581,7 @@ which resembles a curve with a single peak, but with generally &quot;fatter&quot
 <li><code>beta</code> is a skewness in the interval [-1, 1]; if <code>beta</code> is 0, the curve is symmetric.</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD Stable(alpha, beta)
      if alpha &lt;=0 or alpha &gt; 2: return error
@@ -1661,7 +1661,7 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 <li>A list, <code>mu</code>, which indicates the means
 to add to each component of the random point. <code>mu</code> can be <code>nothing</code>, in which case each
 component will have a mean of zero.</li>
-<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point.)</li>
+<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).</li>
 </ul>
 
 <p>For conciseness, the following pseudocode uses <code>for</code> loops, defined as follows. <code>for X=Y to Z; [Statements] ; end</code> is shorthand for <code>X = Y; while X &lt;= Z; [Statements]; X = X + 1; end</code>.</p>
@@ -1754,7 +1754,7 @@ end
 <li><code>Sort(list)</code> sorts the items in <code>list</code> in ascending order (note that details on sort algorithms are outside the scope of this document).</li>
 </ul>
 
-<hr>
+<p>&nbsp;</p>
 
 <pre>METHOD NonzeroIntegersWithSum(n, total)
     if n &lt;= 0 or total &lt;=0: return error
