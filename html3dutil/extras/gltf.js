@@ -263,11 +263,7 @@ GltfUtil.parseArrayMin1 = function(value) {
   if(!(value instanceof Array) || value.length === 0)throw new Error("parse error");
   return value;
 };
-/**
- * TODO: Not documented yet.
- * @param {*} value
- * @returns {*} Return value.
- */
+/** @ignore */
 GltfUtil.parseArrayUniqueMin1 = function(value) {
   if(typeof value === "undefined")return [];
   if(!(value instanceof Array) || value.length === 0 ||
@@ -596,7 +592,6 @@ GltfState1.prototype.readTechnique = function(techniqueName) {
         unif[uniformKey] = unifValue;
       }
       if(typeof param.semantic !== "undefined" && param.semantic !== null) {
-        // LATER: Semantic + param.node
         var sem = 0;
         if(param.semantic === "MODEL" && param.type === 35676) {
           sem = H3DU.Semantic.MODEL;
