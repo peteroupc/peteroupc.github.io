@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 17, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 20, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -80,6 +80,7 @@ The following definitions are helpful in better understanding this document.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
 - **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
+- **Stable.** An algorithm is stable if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
 
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
@@ -190,20 +191,20 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 1. the initial state (the seed) which the "random" result will be generated from&mdash;
     - is hard-coded,
     - was entered by the user,
-    - is known to the application and was generated using a statistical-random or unpredictable-random implementation (as defined earlier),
+    - is known to the application and was generated using an [unpredictable-random](#Unpredictable_Random_Generators) or [statistical-random](#Statistical_Random_Generators) implementation (as defined earlier),
     - is a [verifiable random number](#Verifiable_Random_Numbers) (as defined later), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
 2. the application might need to generate the same "random" result multiple times,
 3. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
-    - finds it impractical to store or distribute the "random" results or the random numbers (rather than the seed) for later use, such as&mdash;
+    - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
         - by saving the result to a file,
         - by storing the random numbers for the feature generating the result to "replay" later, or
         - by distributing the results or the random numbers to networked users as they are generated,
-4. the random number generation method will remain _stable_ for as long as the relevant feature is still in use by the application, and
+4. the PRNG's algorithm will remain _stable_ (see ["Definitions"](#Definitions) and examples below) for as long as the relevant feature is still in use by the application, and
 5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-As used here, a random number generation method is _stable_ if it uses a deterministic algorithm, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;
+Examples of the definition of _stable_ PRNGs:
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
 - the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified),
 - C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification), and
@@ -264,11 +265,7 @@ However, special care should be taken if the noise implementation&mdash;
 - uses one of the following techniques:
     - The implementation should use a **table of "hard-coded" gradients or hash values** only if the noise generation meets the [seeding recommendations](#Seeding_Recommendations) (treating the table as the seed).
     - If the noise implementation **incorporates a hash function** (including a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>)&mdash;
-        - that hash function should&mdash;
-            - be reasonably fast,
-            - use a deterministic algorithm,
-            - have no unspecified or implementation-dependent behavior or behavior that may change in the future, and
-            - be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
+        - that hash function should be reasonably fast, be _stable_ (see ["Definitions"](#Definitions)), and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
         - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
 
 Wherever feasible, a cellular, value, or gradient noise implementation should **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).
@@ -342,7 +339,7 @@ There are special considerations in play when applications use RNGs to shuffle a
 <a id=Shuffling_Method></a>
 ### Shuffling Method
 
-The first consideration touches on the shuffling method.  The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+The first consideration touches on the shuffling method.  The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are substantially equally likely to occur, assuming the RNG it uses can choose from among all those permutations.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Choosing_from_Among_All_Permutations></a>
 ### Choosing from Among All Permutations
