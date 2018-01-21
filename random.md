@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 20, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 21, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -149,7 +149,7 @@ A statistical-random implementation generates random bits, each of which is unif
 <a id=Seeding_and_Reseeding_2></a>
 ### Seeding and Reseeding
 
-If statistical-random implementation uses a PRNG, the following requirements apply.
+If a statistical-random implementation uses a PRNG, the following requirements apply.
 
 The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.
 
@@ -200,11 +200,11 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
         - by saving the result to a file,
         - by storing the random numbers for the feature generating the result to "replay" later, or
-        - by distributing the results or the random numbers to networked users as they are generated,
-4. the PRNG's algorithm will remain _stable_ (see ["Definitions"](#Definitions) and examples below) for as long as the relevant feature is still in use by the application, and
-5. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
+        - by distributing the results or the random numbers to networked users as they are generated, and
+4. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-Examples of the definition of _stable_ PRNGs:
+Meeting recommendation 4 is easier by using _stable_ PRNGs; see ["Definitions"](#Definitions) and the following examples:
+
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
 - the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified),
 - C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification), and
@@ -242,10 +242,16 @@ In general, such a game should use a PRNG with a custom seed for such purposes o
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
+Suppose a game generates a map with random terrain and shows the player a "code" to generate that map.  Under recommendation 4, the game&mdash;
+
+- may change the algorithm it uses to generate random maps, but
+- should use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
+- should continue to generate the same random map using old "codes" when the user enters them, even after the change to a new algorithm.
+
 <a id=Unit_Testing></a>
 #### Unit Testing
 
-A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 5).
+A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 4).
 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers

@@ -81,9 +81,9 @@ Color spaces can be categorized as any of the following:
 
     A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
 - **Device-independent** color spaces are other than device dependent (including color spaces based on how humans perceive color).  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.
-- **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are _chromaticity_ dimensions.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.
+- **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are _chromaticity_ dimensions.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
+    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[(2)](#Note2)</sup>
 - **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
-- **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[(2)](#Note2)</sup>
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
 ## Calculating the Mean Hue Angle
@@ -112,7 +112,7 @@ The following color formats express RGB colors in [8/8/8 format](https://peterou
 
 - **Delphi** format: Consists of "$00" followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.
 - **Visual Basic** format: Consists of "&H" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
-- **C++** format: Consists of "0x00" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
+- **C++** format: Consists of "0x00" followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows `COLORREF` color, the three components are blue, green, and red, in that order.
 - **PowerBuilder** format: Consists of the integer form of the 8/8/8 format color, packed red/green/blue, in that order from lowest to highest bits.
 
 <a id=Additional_Color_Models></a>
