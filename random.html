@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Jan. 17, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jan. 20, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -133,6 +133,7 @@ generation is outside the scope of this document.</p>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
 <li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup><code>L</code></sup> where <code>L</code> is the PRNG&#39;s <em>state length</em>.</li>
+<li><strong>Stable.</strong> An algorithm is stable if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.</li>
 </ul>
 
 <p><a id=Unpredictable_Random_Generators></a></p>
@@ -279,7 +280,7 @@ generation is outside the scope of this document.</p>
 <ul>
 <li>is hard-coded,</li>
 <li>was entered by the user,</li>
-<li>is known to the application and was generated using a statistical-random or unpredictable-random implementation (as defined earlier),</li>
+<li>is known to the application and was generated using an <a href="#Unpredictable_Random_Generators">unpredictable-random</a> or <a href="#Statistical_Random_Generators">statistical-random</a> implementation (as defined earlier),</li>
 <li>is a <a href="#Verifiable_Random_Numbers">verifiable random number</a> (as defined later), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
@@ -288,7 +289,7 @@ generation is outside the scope of this document.</p>
 
 <ul>
 <li>makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed) accessible to the user, or</li>
-<li>finds it impractical to store or distribute the &quot;random&quot; results or the random numbers (rather than the seed) for later use, such as&mdash;
+<li>finds it impractical to store or distribute the &quot;random&quot; numbers or results (rather than the seed) for later use, such as&mdash;
 
 <ul>
 <li>by saving the result to a file,</li>
@@ -296,11 +297,11 @@ generation is outside the scope of this document.</p>
 <li>by distributing the results or the random numbers to networked users as they are generated,</li>
 </ul></li>
 </ul></li>
-<li>the random number generation method will remain <em>stable</em> for as long as the relevant feature is still in use by the application, and</li>
+<li>the PRNG&#39;s algorithm will remain <em>stable</em> (see <a href="#Definitions">&quot;Definitions&quot;</a> and examples below) for as long as the relevant feature is still in use by the application, and</li>
 <li>any feature using that random number generation method to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
 </ol>
 
-<p>As used here, a random number generation method is <em>stable</em> if it uses a deterministic algorithm, outputs the same random sequence given the same seed, and has no random-number generation behavior that is unspecified, that is implementation-dependent, or that may change in the future.  For example&mdash;</p>
+<p>Examples of the definition of <em>stable</em> PRNGs:</p>
 
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><code>java.util.Random</code></a> is stable,</li>
@@ -381,14 +382,7 @@ generation is outside the scope of this document.</p>
 <li>If the noise implementation <strong>incorporates a hash function</strong> (including a PRNG that takes the input as a seed and outputs a random number<sup><a href="#Note4">(4)</a></sup>)&mdash;
 
 <ul>
-<li>that hash function should&mdash;
-
-<ul>
-<li>be reasonably fast,</li>
-<li>use a deterministic algorithm,</li>
-<li>have no unspecified or implementation-dependent behavior or behavior that may change in the future, and</li>
-<li>be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
-</ul></li>
+<li>that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions">&quot;Definitions&quot;</a>), and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
 </ul></li>
 </ul></li>
@@ -515,7 +509,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 
 <h3>Shuffling Method</h3>
 
-<p>The first consideration touches on the shuffling method.  The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher&ndash;Yates shuffle method</a> shuffles a list such that all permutations of that list are equally likely to occur, assuming the RNG it uses produces uniformly random numbers and can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
+<p>The first consideration touches on the shuffling method.  The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher&ndash;Yates shuffle method</a> shuffles a list such that all permutations of that list are substantially equally likely to occur, assuming the RNG it uses can choose from among all those permutations.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/">The danger of na&iuml;vet&eacute;</a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html">another document</a>.</p>
 
 <p><a id=Choosing_from_Among_All_Permutations></a></p>
 
