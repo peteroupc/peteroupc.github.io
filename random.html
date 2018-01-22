@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Jan. 21, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jan. 22, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -21,22 +21,23 @@
 <li><em>unpredictable-random generators</em>, which seek to generate numbers that are cost-prohibitive to predict.</li>
 </ul>
 
-<p>This page will discuss these two kinds of RNG, and make recommendations on their use and properties.</p>
+<p><strong>This document covers:</strong></p>
 
-<p>In addition, other applications require numbers that &quot;seem&quot; random but are based on an initial state, or &quot;seed&quot;.  This page will discuss when applications should specify their own seeds.</p>
+<ul>
+<li>Statistical-random and unpredictable-random generators, as well as recommendations on their use and properties.</li>
+<li>A discussion on when an application that requires numbers that &quot;seem&quot; random should specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
+<li>An explanation of what programming language APIs implement statistical-random and unpredictable-random generators, as well as advice on implementing them in programming languages.</li>
+<li>Issues on shuffling with an RNG.</li>
+</ul>
 
-<p>Then, this page will explain what programming language APIs implement statistical-random and unpredictable-random generators and give advice on implementing them in programming languages.</p>
+<p><strong>This document does not cover:</strong></p>
 
-<p>Finally, this page will discuss issues on shuffling with an RNG.</p>
+<ul>
+<li>Testing an RNG implementation for adequate random number generation.</li>
+<li>Applications for which the selection of RNGs is constrained by legal or regulatory requirements.</li>
+</ul>
 
-<p>Note that a discussion on how to test an RNG implementation for adequate random number
-generation is outside the scope of this document.</p>
-
-<p><a id=Summary></a></p>
-
-<h3>Summary</h3>
-
-<p>The following table summarizes the kinds of RNGs covered in this document.</p>
+<p><strong>The following table summarizes the kinds of RNGs covered in this document:</strong></p>
 
 <table><thead>
 <tr>
@@ -67,11 +68,7 @@ generation is outside the scope of this document.</p>
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Introduction_and_Summary">Introduction and Summary</a>
-
-<ul>
-<li><a href="#Summary">Summary</a></li>
-</ul></li>
+<li><a href="#Introduction_and_Summary">Introduction and Summary</a></li>
 <li><a href="#Contents">Contents</a></li>
 <li><a href="#Definitions">Definitions</a></li>
 <li><a href="#Unpredictable_Random_Generators">Unpredictable-Random Generators</a>
@@ -159,7 +156,7 @@ generation is outside the scope of this document.</p>
 
 <h3>Quality</h3>
 
-<p>An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see &quot;Seeding and Reseeding&quot;.)</p>
+<p>An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see &quot;Seeding and Reseeding&quot;.)</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 
@@ -248,7 +245,7 @@ generation is outside the scope of this document.</p>
 <ul>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
-<li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed &mdash; but see warning in the <a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c">source code</a> about the lowest bit of the PRNG&#39;s outputs).</li>
+<li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed &mdash; but see note in the <a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c">source code</a> about the lowest bit of the PRNG&#39;s outputs).</li>
 <li><code>Lehmer128</code> (state length 128 bits).</li>
 <li><code>JKISS</code> on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><code>std::ranlux48</code> engine</a> (state length 577 bits; nonzero seed).</li>
@@ -661,7 +658,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <p>I acknowledge&mdash;</p>
 
 <ul>
-<li>the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including &quot;Cryptonite&quot; and member 3027120, and</li>
+<li>the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including &quot;Cryptonite&quot; and member 3027120, and</li>
 <li>Lee Daniel Crocker, who reviewed this document and gave comments.</li>
 </ul>
 

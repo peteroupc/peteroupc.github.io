@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 21, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 22, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -13,21 +13,19 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 - _statistical-random generators_, which seek to generate numbers that follow a uniform random distribution, and
 - _unpredictable-random generators_, which seek to generate numbers that are cost-prohibitive to predict.
 
-This page will discuss these two kinds of RNG, and make recommendations on their use and properties.
+**This document covers:**
 
-In addition, other applications require numbers that "seem" random but are based on an initial state, or "seed".  This page will discuss when applications should specify their own seeds.
+- Statistical-random and unpredictable-random generators, as well as recommendations on their use and properties.
+- A discussion on when an application that requires numbers that "seem" random should specify their own "seed" (the initial state that the numbers are based on).
+- An explanation of what programming language APIs implement statistical-random and unpredictable-random generators, as well as advice on implementing them in programming languages.
+- Issues on shuffling with an RNG.
 
-Then, this page will explain what programming language APIs implement statistical-random and unpredictable-random generators and give advice on implementing them in programming languages.
+**This document does not cover:**
 
-Finally, this page will discuss issues on shuffling with an RNG.
+- Testing an RNG implementation for adequate random number generation.
+- Applications for which the selection of RNGs is constrained by legal or regulatory requirements.
 
-Note that a discussion on how to test an RNG implementation for adequate random number
-generation is outside the scope of this document.
-
-<a id=Summary></a>
-### Summary
-
-The following table summarizes the kinds of RNGs covered in this document.
+**The following table summarizes the kinds of RNGs covered in this document:**
 
 | Kind of RNG   | When to Use This RNG  | Examples |
  --------|--------|------|
@@ -39,7 +37,6 @@ The following table summarizes the kinds of RNGs covered in this document.
 ## Contents
 
 - [Introduction and Summary](#Introduction_and_Summary)
-    - [Summary](#Summary)
 - [Contents](#Contents)
 - [Definitions](#Definitions)
 - [Unpredictable-Random Generators](#Unpredictable_Random_Generators)
@@ -101,7 +98,7 @@ An unpredictable-random implementation ultimately relies on one or more _nondete
 <a id=Quality></a>
 ### Quality
 
-An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; see "Seeding and Reseeding".)
+An unpredictable-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see "Seeding and Reseeding".)
 
 <a id=Seeding_and_Reseeding></a>
 ### Seeding and Reseeding
@@ -168,7 +165,7 @@ The implementation is encouraged to reseed itself from time to time (using a new
 Examples of statistical-random generators include the following:
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see warning in the [source code](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
+- `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see note in the [source code](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
 - `Lehmer128` (state length 128 bits).
 - `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
 - C++'s [`std::ranlux48` engine](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
@@ -416,7 +413,7 @@ In conclusion, most applications that require random numbers usually want either
 In addition, this document recommends using unpredictable-random implementations in many cases, especially in computer and information security contexts, and recommends easier programming interfaces for both unpredictable-random and statistical-random implementations in new programming languages.
 
 I acknowledge&mdash;
-- the commenters to the CodeProject version of this page (as well as a similar article article of mine on CodeProject), including "Cryptonite" and member 3027120, and
+- the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120, and
 - Lee Daniel Crocker, who reviewed this document and gave comments.
 
 <a id=Request_for_Comments></a>
