@@ -79,8 +79,8 @@ The following definitions are helpful in better understanding this document.
 - **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time) and without making explicit use of nondeterminism.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
 - **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
-- **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>`L`</sup> where `L` is the PRNG's _state length_.
-- **Stable.** An algorithm is stable if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
+- **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>_L_</sup> where _L_ is the PRNG's _state length_.
+- **Stable.** A programming interface is _stable_ if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
 
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
@@ -203,11 +203,11 @@ An application should use a PRNG with a seed it specifies (rather than an automa
         - by distributing the results or the random numbers to networked users as they are generated, and
 4. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-Meeting recommendation 4 is easier by using _stable_ PRNGs; see ["Definitions"](#Definitions) and the following examples:
+Meeting recommendation 4 is aided by using _stable_ PRNGs; see ["Definitions"](#Definitions) and the following examples:
 
-- [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable,
-- the C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified),
-- C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification), and
+- [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable.
+- The C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified).
+- C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
 - .NET's [`System.Random`](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior may change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
@@ -242,11 +242,11 @@ In general, such a game should use a PRNG with a custom seed for such purposes o
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
-Suppose a game generates a map with random terrain and shows the player a "code" to generate that map.  Under recommendation 4, the game&mdash;
+Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. Under recommendation 4, the game&mdash;
 
 - may change the algorithm it uses to generate random maps, but
 - should use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
-- should continue to generate the same random map using old "codes" when the user enters them, even after the change to a new algorithm.
+- should continue to generate the same random map using an old "code" when the user enters it, even after the change to a new algorithm.
 
 <a id=Unit_Testing></a>
 #### Unit Testing
