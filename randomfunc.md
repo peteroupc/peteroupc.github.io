@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Jan. 13, 2018.
+Begun on June 4, 2017; last updated on Jan. 23, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -617,7 +617,7 @@ There are several techniques for choosing `k` unique items or values uniformly a
 - **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
     - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red-black trees, and in retrieving data from them, are outside the scope of this document.
+- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -933,7 +933,7 @@ To generate a random number (or data point) based on the distribution of a list 
 
 - choose one of the numbers or points at random (see, for example, [Choosing a Random Item from a List](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)), and
 - add a randomized "jitter" to the chosen number or point; for example&mdash;
-    - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as small as allows the estimated distribution to fit the data and remain smooth), or
+    - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as low or as high as allows the estimated distribution to fit the data and remain smooth), or
     - add a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_<sup>[(8)](#Note8)</sup>.
 
 A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized "jitter" (whose distribution is formally called a _kernel_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the Wikipedia articles on [single-variable](https://en.wikipedia.org/wiki/Kernel_density_estimation) and [multiple-variable](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation) estimation, or a [blog post by M. Kay](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
@@ -966,7 +966,7 @@ If both **a PDF and a uniform random variable in the interval [0, 1) (`randomVar
 1. Do the same process as method 1, given earlier, except&mdash;
     - divide the weights in the `weights` list by the sum of all weights, and
     - use a modified version of [`ContinuousWeightedChoice`](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
-2. Generate`ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+2. Generate `ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
 
 If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
 
@@ -1618,7 +1618,7 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
 
 Each of the resulting uniform variables will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by one of the methods given in "[Random Numbers from an Arbitrary Distribution](#Random_Numbers_from_an_Arbitrary_Distribution)". (See also Cario and Nelson 1997.)
 
-**Example**: To generate two correlated uniform variables by this method, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [_rank correlation_](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a bivariate normal distribution, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
+**Example**: To generate two correlated uniform variables by this method, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [_rank correlation_](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, if a 2x2 covariance matrix is used, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions

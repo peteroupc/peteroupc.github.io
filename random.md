@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 22, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 23, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -17,7 +17,7 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 
 - Statistical-random and unpredictable-random generators, as well as recommendations on their use and properties.
 - A discussion on when an application that requires numbers that "seem" random should specify their own "seed" (the initial state that the numbers are based on).
-- An explanation of what programming language APIs implement statistical-random and unpredictable-random generators, as well as advice on implementing them in programming languages.
+- An explanation of what programming language interfaces implement statistical-random and unpredictable-random generators, as well as advice on implementing them in programming languages.
 - Issues on shuffling with an RNG.
 
 **This document does not cover:**
@@ -205,7 +205,7 @@ Meeting recommendation 4 is aided by using _stable_ PRNGs; see ["Definitions"](#
 - [`java.util.Random`](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable.
 - The C [`rand` method](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified).
 - C++'s random number distribution classes, such as [`std::uniform_int_distribution`](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
-- .NET's [`System.Random`](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior may change in the future).
+- .NET's [`System.Random`](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
 <a id=Seedable_PRNG_Recommendations></a>
 ### Seedable PRNG Recommendations
@@ -235,7 +235,7 @@ where the game might need to generate the same content of that kind multiple tim
 In general, such a game should use a PRNG with a custom seed for such purposes only if&mdash;
 
 1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or
-2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to generate the level or state repeatedly (see recommendations 2 and 3).
+2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to generate the content repeatedly (see recommendations 2 and 3).
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
@@ -243,7 +243,7 @@ Suppose a game generates a map with random terrain and shows the player a "code"
 
 - may change the algorithm it uses to generate random maps, but
 - should use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
-- should continue to generate the same random map using an old "code" when the user enters it, even after the change to a new algorithm.
+- should continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
 
 <a id=Unit_Testing></a>
 #### Unit Testing
@@ -253,7 +253,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information required to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information required to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information necessary to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
 
 One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
@@ -276,13 +276,13 @@ Wherever feasible, a cellular, value, or gradient noise implementation should **
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
 
-The following table lists techniques, methods, and functions that implement
+The following table lists application programming interfaces (APIs) implementing
 unpredictable-random and statistical-random RNGs for popular programming languages. Note the following:
 
 - In single-threaded applications, for each kind of RNG, it's encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.
 - In multithreaded applications, for each kind of RNG, it's encouraged to either&mdash;
     - create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or
-    - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this may not always be ideal for unpredictable-random RNGs).
+    - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this might not always be ideal for unpredictable-random RNGs).
 - Methods and libraries mentioned in the "Statistical-random" column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the "Unpredictable-random" column).
 - The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.
@@ -296,7 +296,7 @@ of that library, or imply a preference of that library over others. The list is 
 | Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (floating-point) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses entropy) |
 
 (A) Default general RNG implements the [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
-meet the statistical-random requirements, strictly speaking, but may be adequate for many applications due to its extremely long period.
+meet the statistical-random requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.
 
 (B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers at the time of writing; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
@@ -329,8 +329,8 @@ Unpredictable-random and statistical-random implementations&mdash;
 - should be safe for concurrent use by multiple threads, whenever convenient.
 
 My document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) includes details on
-eleven uniform random number methods; in my opinion, a new programming language's standard library should include
-those eleven methods separately for unpredictable-random generators and for statistical RNGs. That document also
+eleven uniform random number methods; in my opinion, a new programming language's standard library ought to include
+those eleven methods separately for unpredictable-random and for statistical-random generators. That document also
 discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
 as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.
 
@@ -419,7 +419,7 @@ I acknowledge&mdash;
 <a id=Request_for_Comments></a>
 ### Request for Comments
 
-Feel free to send comments. They may help improve this page.
+Feel free to send comments. They could help improve this page.
 
 Comments on any aspect of the document are welcome, but answers to the following would be particularly appreciated.
 
