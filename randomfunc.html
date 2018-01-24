@@ -1036,7 +1036,7 @@ index = DiscreteWeightedChoice(weights)
 number = RNDNUMEXCRANGE(list[index], list[index + 1])
 </pre>
 
-<p>The code above implements the distribution <em>with replacement</em>.  Implementing the distribution <em>without replacement</em> is similar to implementing discrete weighted choice without replacement; the only change is to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, RNDNUMEXCRANGE(list[index], list[index + 1]))</code> in the pseudocode.</p>
+<p>The code above implements the distribution <em>with replacement</em>.  Implementing the distribution <em>without replacement</em> is similar to implementing <a href="#Weighted_Choice_Without_Replacement">discrete weighted choice without replacement</a>; the only change is to replace <code>AddItem(items, list[index])</code> with <code>AddItem(items, RNDNUMEXCRANGE(list[index], list[index + 1]))</code> in the pseudocode.</p>
 
 <p><a id=Continuous_Weighted_Choice></a></p>
 
@@ -1131,7 +1131,7 @@ END METHOD
 <p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.</p>
 
 <ol>
-<li>Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally generate <code>ContinuousWeightedChoice(list, weights)</code> to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn&#39;t 1. <strong>OR</strong></li>
+<li>Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally generate <a href="#Continuous_Weighted_Choice"><code>ContinuousWeightedChoice(list, weights)</code></a> to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn&#39;t 1. <strong>OR</strong></li>
 <li>Use <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><em>inverse transform sampling</em></a>. Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>, or inverse of the CDF) assuming the area under the PDF is 1. <strong>OR</strong></li>
 <li><p>Use <em>rejection sampling</em>.  Choose the lowest and highest random number to generate (<code>minValue</code> and <code>maxValue</code>, respectively) and find the maximum value of the PDF at or between those points (<code>maxDensity</code>).  The rejection sampling approach is then illustrated with the following pseudocode, where <code>PDF(X)</code> is the distribution&#39;s PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn&#39;t 1.</p>
 
@@ -1265,7 +1265,7 @@ else: number = Normal(-1, 1)
 END METHOD
 </pre>
 
-<p>As examples, the result of rolling&mdash;</p>
+<p><strong>Examples:</strong> The result of rolling&mdash;</p>
 
 <ul>
 <li>four six-sided virtual dice (&quot;4d6&quot;) is <code>DiceRoll(4,6,0)</code>,</li>
@@ -1277,7 +1277,7 @@ END METHOD
 
 <h3>Normal (Gaussian) Distribution</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a> (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><em>normal distribution</em></a> (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.</p>
 
 <p>In the pseudocode below, which uses the polar method <sup><a href="#Note11">(11)</a></sup> to generate two normally-distributed random numbers:</p>
 
@@ -1331,7 +1331,7 @@ END METHOD
 
 <h3>Binomial Distribution</h3>
 
-<p>The following method generates a random integer that follows a binomial distribution.  This number&mdash;</p>
+<p>A random integer that follows a <em>binomial distribution</em>&mdash;</p>
 
 <ul>
 <li>expresses the number of successes that have happened after a given number of independently performed trials
@@ -1436,7 +1436,7 @@ END METHOD
 
 <h3>Gamma Distribution</h3>
 
-<p>The gamma distribution models expected lifetimes. The following method, which generates a random number that follows a gamma distribution, is based on Marsaglia and Tsang&#39;s method from 2000.</p>
+<p>The <em>gamma distribution</em> models expected lifetimes. The following method, which generates a random number that follows a gamma distribution, is based on Marsaglia and Tsang&#39;s method from 2000.</p>
 
 <pre>METHOD GammaDist(meanLifetime)
     // Must be greater than 0
@@ -1617,7 +1617,7 @@ END METHOD
 
 <h3>Hypergeometric Distribution</h3>
 
-<p>The following method generates a random integer that follows a hypergeometric distribution.
+<p>The following method generates a random integer that follows a <em>hypergeometric distribution</em>.
 When a given number of items are drawn at random without replacement from a collection of items
 each labeled either <code>1</code> or <code>0</code>,  the random integer expresses the number of items drawn
 this way that are labeled <code>1</code>.  In the method below, <code>trials</code> is the number of items
@@ -1654,7 +1654,7 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 
 <h3>Multivariate Normal Distribution</h3>
 
-<p>The following pseudocode calculates a random point in space that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
+<p>The following pseudocode calculates a random point in space that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><em>multivariate normal distribution</em></a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
 
 <ul>
 <li>A list, <code>mu</code>, which indicates the means
