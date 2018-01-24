@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Jan. 23, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Jan. 24, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -40,7 +40,7 @@
 <li>Techniques that are specific to an application programming interface.</li>
 <li>Techniques that are specific to certain kinds of RNGs.</li>
 <li>Generating sequences of unique integers using specific kinds of deterministic RNGs.</li>
-<li>Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).</li>
+<li>Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its &quot;seed&quot;), then that RNG is generally within the scope of this document.</li>
 </ul>
 
 <p><a id=Contents></a></p>
@@ -328,7 +328,7 @@ let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> i
      if RNDINT(1) == 0: ret = -1 - ret
      // NOTE: If the signed integer format uses sign-magnitude
      // form (such as .NET&#39;s `System.Decimal`) or one&#39;s-complement
-     // form,  use the following three lines instead of the preceding line;
+     // form, use the following three lines instead of the preceding line;
      // here, zero will be rejected at a 50% chance because zero occurs
      // twice in both forms.
      // negative = RNDINT(1) == 0
@@ -887,14 +887,14 @@ meets certain requirements.  To implement rejection sampling:</p>
 <li>If the content doesn&#39;t meet predetermined criteria, go to step 1.</li>
 </ol>
 
-<p>Example criteria include checking&mdash;</p>
+<p>Example criteria include checking any one or more of&mdash;</p>
 
 <ul>
 <li>whether a random number is prime,</li>
 <li>whether a random number is divisible or not by certain numbers,</li>
 <li>whether a random number is not among recently chosen random numbers,</li>
 <li>whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
-<li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and/or</li>
+<li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and</li>
 <li>whether a random number is not included in a &quot;blacklist&quot; of numbers.</li>
 </ul>
 
@@ -1298,7 +1298,7 @@ probability that a normally-distributed random number will be within one standar
     c = a * a + b * b
     if c != 0 and c &lt;= 1
        c = sqrt(-2 * ln(c) / c)
-       return [c * a, c * b]
+       return [a * mu * c + sigma, b * mu * c + sigma]
     end
   end
 END METHOD
@@ -1309,7 +1309,7 @@ END METHOD
 <p>Alternatively, or in addition, the following method (implementing a ratio-of-uniforms technique) can be used to generate normally distributed random numbers.</p>
 
 <pre>METHOD Normal(mu, sigma)
-    bmp = 0.8577638849607068 // sqrt(2/exp(1))
+    bmp = sqrt(2.0/exp(1.0)) // about 0.8577638849607068
     while true
         a=RNDU01ZeroExc()
         b=RNDNUMRANGE(-bmp,bmp)
@@ -1357,7 +1357,6 @@ as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and 
     tp = trials * p
     if tp &gt; 25 or (tp &gt; 5 and p &gt; 0.1 and p &lt; 0.9)
          countval = -1
-         // &quot;countval
          while countval &lt; 0 or countval &gt; trials
               countval = round(Normal(tp, tp))
          end
@@ -2077,7 +2076,7 @@ from random number generators.</p>
 <li>use a deterministic algorithm for random number generation,</li>
 <li>rely, at least primarily, on one or more nondeterministic sources for random number
 generation (including by extracting uniformly distributed bits from two or more such sources), or</li>
-<li>have a combination of the foregoing properties.</li>
+<li>have two or more of the foregoing properties.</li>
 </ul>
 
 <p>If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution&#39;s <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><em>cumulative distribution function</em></a> (CDF) to each generated number (see also &quot;<a href="#Random_Numbers_from_an_Arbitrary_Distribution">Random Numbers from an Arbitrary Distribution</a>&quot;).  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.</p>
