@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 23, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 26, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -61,6 +61,7 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
     - [Shuffling Method](#Shuffling_Method)
     - [Choosing from Among All Permutations](#Choosing_from_Among_All_Permutations)
 - [GPU Programming Environments](#GPU_Programming_Environments)
+- [Hash Functions](#Hash_Functions)
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
@@ -120,7 +121,7 @@ Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `CryptGenRandom` method on Windows.
-- Two-source extractors, multiple-source extractors, or cryptographic hash functions that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
+- Two-source extractors, multiple-source extractors, or cryptographic [hash functions](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
     - disk access timings,
     - keystroke timings,
     - thermal noise, and
@@ -267,8 +268,8 @@ However, special care should be taken if the noise implementation&mdash;
 - implements [cellular noise](https://en.wikipedia.org/wiki/Cellular_noise), [value noise](https://en.wikipedia.org/wiki/Value_noise), or [gradient noise](https://en.wikipedia.org/wiki/Gradient_noise) (such as [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise)), and
 - uses one of the following techniques:
     - The implementation should use a **table of "hard-coded" gradients or hash values** only if the noise generation meets the [seeding recommendations](#Seeding_Recommendations) (treating the table as the seed).
-    - If the noise implementation **incorporates a hash function** (including a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>)&mdash;
-        - that hash function should be reasonably fast, be _stable_ (see ["Definitions"](#Definitions)), and be designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
+    - If the noise implementation **incorporates a [hash function](#Hash_Functions)**&mdash;
+        - that hash function should be reasonably fast, be _stable_ (see ["Definitions"](#Definitions)), and have the so-called _avalanche property_, and
         - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [seeding recommendations](#Seeding_Recommendations) apply to the noise generation.
 
 Wherever feasible, a cellular, value, or gradient noise implementation should **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).
@@ -391,7 +392,22 @@ Because, in general, GL Shading Language (GLSL) and other programming environmen
 - are designed for parallel execution, and
 - do not store state,
 
-random number generators for such environments are often designed as hash functions, because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+random number generators for such environments are often designed as [hash functions](#Hash_Functions), because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+
+<a id=Hash_Functions></a>
+## Hash Functions
+
+A seemingly random number can be generated from arbitrary data using a _hash function_.
+
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits and with no obvious connection to the input. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>.)
+
+A hash code can be used as follows:
+- The hash code can serve as a seed for a PRNG, and the desired random numbers generated from that PRNG.  (See my document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) for techniques.)
+- If a number of random bits is needed, and the hash code has at least that many bits, then that many bits may instead be taken directly from the hash code.
+
+Any hash function used to generate seemingly random numbers this way should be designed such that&mdash;
+- every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_), and
+- if the hashing implicates computer or information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.
 
 <a id=Motivation></a>
 ## Motivation

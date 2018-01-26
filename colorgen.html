@@ -1529,12 +1529,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary <a href="#HSV">hue</a>.</li>
 <li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare,</li>
-<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 color.  Any such hash function should be designed such that&mdash;
-
-<ul>
-<li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
-<li>if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.</li>
-</ul></li>
+<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data using a <a href="https://peteroupc.github.io/random.html#Hash_Functions">hash function</a>.</li>
 </ul>
 
 <p><a id=Spectral_Color_Functions></a></p>
