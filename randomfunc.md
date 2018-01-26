@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Jan. 24, 2018.
+Begun on June 4, 2017; last updated on Jan. 26, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -28,7 +28,7 @@ In general, security, performance, quality, and other considerations will determ
 - Techniques that are specific to an application programming interface.
 - Techniques that are specific to certain kinds of RNGs.
 - Generating sequences of unique integers using specific kinds of deterministic RNGs.
-- Seemingly random numbers that are specifically generated using hash functions or similar pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its "seed"), then that RNG is generally within the scope of this document.
+- Seemingly random numbers that are specifically generated using [hash functions](https://peteroupc.github.io/random.html#Hash_Functions) or similar pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its "seed"), then that RNG is generally within the scope of this document.
 
 <a id=Contents></a>
 ## Contents

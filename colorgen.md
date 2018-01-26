@@ -1300,9 +1300,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [hue](#HSV).
 - **Random color sampling:** If colors are to be selected at random from a [color map](#Color_Maps), see [Choosing a Random Item from a List](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) and [Choosing Several Unique Items](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items), for example.
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare,
-- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a _hash function_ to convert the data to a _hash code_ (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 color.  Any such hash function should be designed such that&mdash;
-    - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called "avalanche" property), and
-    - if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.
+- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [hash function](https://peteroupc.github.io/random.html#Hash_Functions).
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
