@@ -54,7 +54,7 @@
 <ul>
 <li><a href="#RGB_Integer_Formats">RGB Integer Formats</a></li>
 <li><a href="#HTML_Related_Color_Formats">HTML-Related Color Formats</a></li>
-<li><a href="#Linearized_and_Companded_RGB">Linearized and Companded RGB</a></li>
+<li><a href="#Linearized_RGB_and_Companded_RGB">Linearized RGB and Companded RGB</a></li>
 <li><a href="#sRGB">sRGB</a></li>
 </ul></li>
 <li><a href="#Other_Color_Models">Other Color Models</a>
@@ -87,7 +87,6 @@
 <ul>
 <li><a href="#Nearest_Colors">Nearest Colors</a></li>
 </ul></li>
-<li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
 <li><a href="#Dominant_Colors_of_an_Image">Dominant Colors of an Image</a></li>
 <li><a href="#Color_Maps">Color Maps</a>
 
@@ -97,6 +96,7 @@
 <li><a href="#Visually_Distinct_Colors">Visually Distinct Colors</a></li>
 <li><a href="#Pseudocode">Pseudocode</a></li>
 </ul></li>
+<li><a href="#Generating_a_Random_Color">Generating a Random Color</a></li>
 <li><a href="#Spectral_Color_Functions">Spectral Color Functions</a>
 
 <ul>
@@ -125,16 +125,19 @@
 <p>In this document:</p>
 
 <ul>
-<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-<li><code>RNDNUMRANGE</code>, <code>RNDU01</code>, and <code>RNDINT</code> are as defined in my article on <a href="https://peteroupc.github.io/randomfunc.html">random number generation methods</a>.</li>
-<li>The term <em>RGB</em> means red-green-blue.</li>
-<li>The abbreviation <em>IEC</em> means the International Electrotechnical Commission.</li>
-<li>The abbreviation <em>ISO</em> means the International Organization for Standardization.</li>
-<li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
-<li>A <em>color model</em> describes, in general terms, the relationship of colors in a theoretical space.</li>
-<li>A <em>color space</em> is a mapping from colors to numbers that follows a particular color model.</li>
-<li>The term <em>D65 white point</em> means the white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
-<li>The term <em>D50 white point</em> means the white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
+<li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.
+methods](<a href="https://peteroupc.github.io/randomfunc.html">https://peteroupc.github.io/randomfunc.html</a>).</li>
+<li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
+<li><strong>Color model.</strong> Describes, in general terms, the relationship of colors in a theoretical space.</li>
+<li><strong>Color space.</strong> A mapping from colors to numbers that follows a particular color model.</li>
+<li><strong>D65 white point.</strong> The white point determined by the CIE&#39;s D65 illuminant and the CIE 1931 standard observer.</li>
+<li><strong>D50 white point.</strong> The white point determined by the CIE&#39;s D50 illuminant and the CIE 1931 standard observer.</li>
+<li><strong>IEC.</strong> International Electrotechnical Commission.</li>
+<li><strong>ISO.</strong> International Organization for Standardization.</li>
+<li><strong>Light source.</strong> Means a <a href="http://eilv.cie.co.at/term/982"><em>primary light source</em></a> or an <a href="http://eilv.cie.co.at/term/554"><em>illuminant</em></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
+<li><strong>RGB.</strong> Red-green-blue.</li>
+<li><strong><code>RNDNUMRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>.</strong> These methods are defined in my article on <a href="https://peteroupc.github.io/randomfunc.html">random number generation methods</a>.</li>
+<li><strong>SPD.</strong> Spectral power distribution.</li>
 </ul>
 
 <p><a id=Specifying_Colors></a></p>
@@ -162,7 +165,7 @@
 
 <p>The <strong>red-green-blue (RGB) color model</strong> is based, at least in theory, on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
-<p><strong>RGB color spaces</strong> generally differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linearized_and_Companded_RGB"><em>transfer functions</em></a>.</p>
+<p><strong>RGB color spaces</strong> generally differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linear_RGB_and_Companded_RGB"><em>transfer functions</em></a>.</p>
 
 <p>An <strong>RGB color</strong> (in a given RGB color space) consists of&mdash;</p>
 
@@ -335,20 +338,20 @@ END METHOD
 
 <p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
 
-<p><a id=Linearized_and_Companded_RGB></a></p>
+<p><a id=Linearized_RGB_and_Companded_RGB></a></p>
 
-<h3>Linearized and Companded RGB</h3>
+<h3>Linearized RGB and Companded RGB</h3>
 
-<p>In a given RGB color space, an RGB color can be <em>linearized</em> or <em>companded</em>.</p>
+<p>In a given RGB color space:</p>
 
 <ul>
-<li>A <em>linearized</em> RGB color has a linear relationship of emitted light (as opposed to perceived light).</li>
-<li>A <em>companded</em> RGB color has been encoded using that color space&#39;s <em>transfer function</em>, also known as <em>companding</em> (one example is the <code>LinearTosRGB3</code> method defined later). For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup><a href="#Note5">(5)</a></sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.</li>
+<li>A <em>linear</em> RGB color has a linear relationship of emitted light (as opposed to perceived light).</li>
+<li>A <em>companded</em> RGB color has been encoded using that color space&#39;s <em>transfer function</em>, also known as <em>companding</em> (one example is the <code>LinearTosRGB3</code> method <a href="#sRGB">defined later</a>). For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup><a href="#Note5">(5)</a></sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.</li>
 </ul>
 
 <p>For many RGB color spaces, the <em>transfer function</em> is a simple power function, such as <em>c</em><sup>1/&gamma;</sup>, where <em>c</em> is either the red, green, or blue component and &gamma; is a positive number. (In this case, the transfer function is also called <em>gamma encoding</em>.)</p>
 
-<p>In this document, all techniques involving RGB colors apply to such colors in linearized or companded form, unless noted otherwise.</p>
+<p>In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.</p>
 
 <p><a id=sRGB></a></p>
 
@@ -358,7 +361,7 @@ END METHOD
 
 <p>Unlike with many other RGB color spaces, sRGB&#39;s <em>transfer function</em> does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a formula with a similar conversion curve.  The sRGB proposal recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
 
-<p>The following methods convert colors between linearized and companded sRGB.
+<p>The following methods convert colors between linear and companded sRGB.
 (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard;
 the sRGB proposal has a different value for this threshold.)</p>
 
@@ -372,7 +375,7 @@ METHOD LinearFromsRGB(c)
   return pow((0.055 + c) / 1.055, 2.4)
 END METHOD
 
-// Convert a color component from linearized to companded sRGB
+// Convert a color component from linear to companded sRGB
 METHOD LinearTosRGB(c)
   if c &lt;= 0.0031308: return 12.92 * c
   return pow(c, 1.0 / 2.4) * 1.055 - 0.055
@@ -383,7 +386,7 @@ METHOD LinearFromsRGB3(c)
    return [LinearFromsRGB(c[0]), LinearFromsRGB(c[1]), LinearFromsRGB(c[2])]
 END METHOD
 
-// Convert a color from linearized to companded sRGB
+// Convert a color from linear to companded sRGB
 METHOD LinearTosRGB3(c)
    return [LinearTosRGB(c[0]), LinearTosRGB(c[1]), LinearTosRGB(c[2])]
 END METHOD
@@ -409,7 +412,7 @@ is 0 or greater and 1 or less.</li>
 </ul>
 
 <p>The following pseudocode converts colors between RGB and HSV.
-The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+The transformation is independent of RGB color space, but should be done using <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsv(rgb)
     mx = max(max(rgb[0], rgb[1]), rgb[2])
@@ -479,7 +482,7 @@ black or white), which is 0 or greater and 1 or less.</li>
 of black or white mixed with the color and is 0 or greater and 1 or less, where 0 is black, 1 is white, closer to 0 means closer to black, and closer to 1 means closer to white.</li>
 </ul>
 
-<p>The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p>The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsl(rgb)
     vmax = max(max(rgb[0], rgb[1]), rgb[2])
@@ -569,7 +572,7 @@ END METHOD
 <li><em>Blackness</em>, the amount of black mixed to the color, is 0 or greater and 1 or less.</li>
 </ul>
 
-<p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <ul>
 <li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]</code>.</li>
@@ -922,7 +925,7 @@ END METHOD
 <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a> variant (with all three components 0 or greater and 255 or less), as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.<sup><a href="#Note16">(16)</a></sup></li>
 </ul>
 
-<p>For all these variants, the transformation should be done using <a href="#Linearized_and_Companded_RGB"><em>companded RGB</em> colors</a>.<sup><a href="#Note17">(17)</a></sup></p>
+<p>For all these variants, the transformation should be done using <a href="#Linear_RGB_and_Companded_RGB"><em>companded RGB</em> colors</a>.<sup><a href="#Note17">(17)</a></sup></p>
 
 <pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminances
 // in the NTSC color space
@@ -996,7 +999,7 @@ the scope of this document; in general, such encodings take into account the hum
 
 <p>The following techniques show how existing colors can be modified to create new colors.</p>
 
-<p>Note that for best results, these techniques need to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, unless noted otherwise.</p>
+<p>Note that for best results, these techniques need to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, unless noted otherwise.</p>
 
 <p><a id=Relative_Luminance_Grayscale></a></p>
 
@@ -1005,7 +1008,7 @@ the scope of this document; in general, such encodings take into account the hum
 <p><em>Relative luminance</em> is a single number indicating a color&#39;s luminance relative to white &mdash; that is, how much light reaches the eyes when that color is viewed, in comparison to white. Relative luminance, called <strong><code>Luminance(color)</code></strong> in this document, is equivalent to the Y component of an <a href="#CIE_XYZ">XYZ color</a>, and is 0 or greater and 1 or less.</p>
 
 <ul>
-<li><p>For <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, relative luminance&mdash;</p>
+<li><p>For <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, relative luminance&mdash;</p>
 
 <ul>
 <li>is <code>(color[0] * r + color[1] * g + color[2] * b)</code>,
@@ -1193,7 +1196,7 @@ END METHOD
 <p>Note that&mdash;</p>
 
 <ul>
-<li>the Euclidean distance is independent of color model; however, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>,
+<li>the Euclidean distance is independent of color model; however, <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>,
 rather than companded RGB colors, should be used;</li>
 <li>for CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub>
 color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable
@@ -1350,45 +1353,6 @@ END METHOD
 </ul></li>
 </ol>
 
-<p><a id=Generating_a_Random_Color></a></p>
-
-<h2>Generating a Random Color</h2>
-
-<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>, unless noted otherwise.</p>
-
-<ul>
-<li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
-<li>Generating a random string in the <strong>HTML color format</strong> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String">random hexadecimal string</a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string. But see the <a href="#HTML_Color_Format">note from earlier</a>.</li>
-<li>Generating a random color in the <strong>0-1 format</strong> is equivalent to generating <code>[RNDU01(), RNDU01(), RNDU01()]</code>.</li>
-<li>To generate a random <strong>dark color</strong>, either&mdash;
-
-<ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is less than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]</code>, where <code>maxComp</code> is the
-maximum value of each color component, e.g., 0.5.</li>
-</ul></li>
-<li>To generate a random <strong>light color</strong>, either&mdash;
-
-<ul>
-<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
-</ul></li>
-<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than 0.75 and less than 0.9.</li>
-<li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDU01())</code>.</li>
-<li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))</code>.</li>
-<li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
-<li>To generate a <strong>random tone</strong> of a given color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))</code>.</li>
-<li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary <a href="#HSV">hue</a>.</li>
-<li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
-<li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare,</li>
-<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 color.  Any such hash function should be designed such that&mdash;
-
-<ul>
-<li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
-<li>if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.</li>
-</ul></li>
-</ul>
-
 <p><a id=Dominant_Colors_of_an_Image></a></p>
 
 <h2>Dominant Colors of an Image</h2>
@@ -1402,9 +1366,9 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>divide the result by the number of colors (not necessarily unique colors) added this way.</li>
 </ul>
 
-<p>Note that for best results, this technique needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB colors</em></a>.</p>
+<p>Note that for best results, this technique needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB colors</em></a>.</p>
 
-<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the collection of colors is reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
@@ -1439,7 +1403,7 @@ unsuitable for real-world color matching without more.  Calibration techniques f
 
 <h2>Color Maps</h2>
 
-<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a> should be used rather than companded RGB colors.</p>
+<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a> should be used rather than companded RGB colors.</p>
 
 <p><strong>Example:</strong> A <strong>grayscale color map</strong> consists of the companded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</p>
 
@@ -1528,6 +1492,45 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
     END METHOD
 </pre>
 
+<p><a id=Generating_a_Random_Color></a></p>
+
+<h2>Generating a Random Color</h2>
+
+<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, unless noted otherwise.</p>
+
+<ul>
+<li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
+<li>Generating a random string in the <strong>HTML color format</strong> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String">random hexadecimal string</a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string. But see the <a href="#HTML_Color_Format">note from earlier</a>.</li>
+<li>Generating a random color in the <strong>0-1 format</strong> is equivalent to generating <code>[RNDU01(), RNDU01(), RNDU01()]</code>.</li>
+<li>To generate a random <strong>dark color</strong>, either&mdash;
+
+<ul>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]</code>, where <code>maxComp</code> is the
+maximum value of each color component, e.g., 0.5.</li>
+</ul></li>
+<li>To generate a random <strong>light color</strong>, either&mdash;
+
+<ul>
+<li>generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
+</ul></li>
+<li>One way to generate a random <strong>pastel color</strong> is to generate <code>color = [RNDU01(), RNDU01(), RNDU01()]</code> until <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is greater than 0.75 and less than 0.9.</li>
+<li>To generate a <strong>random color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDU01())</code>.</li>
+<li>To generate a <strong>random shade</strong> of a given color, generate <code>Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))</code>.</li>
+<li>To generate a <strong>random tint</strong> of a given color, generate <code>Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random tone</strong> of a given color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random monochrome color</strong>, generate <code>HslToRgb(H, RNDU01(),RNDU01())</code>, where <code>H</code> is an arbitrary <a href="#HSV">hue</a>.</li>
+<li><strong>Random color sampling:</strong> If colors are to be selected at random from a <a href="#Color_Maps">color map</a>, see <a href="https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List">Choosing a Random Item from a List</a> and <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items">Choosing Several Unique Items</a>, for example.</li>
+<li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences">earlier</a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare,</li>
+<li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data (such as a sequence of bytes or a sequence of characters).  This can involve using a <em>hash function</em> to convert the data to a <em>hash code</em> (with at least 24 bits), then taking the lowest 24 bits of the hash code as an 8/8/8 color.  Any such hash function should be designed such that&mdash;
+
+<ul>
+<li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called &quot;avalanche&quot; property), and</li>
+<li>if the hashing implicates computer or information security, it is cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.</li>
+</ul></li>
+</ul>
+
 <p><a id=Spectral_Color_Functions></a></p>
 
 <h2>Spectral Color Functions</h2>
@@ -1535,12 +1538,12 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 <p>A color stimulus can be represented as a function (&quot;curve&quot;) that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A <em>spectral power distribution</em> describes the intensity of a light source at each wavelength of the spectrum.<sup><a href="#Note31">(31)</a></sup></li>
+<li><strong>Light sources.</strong> A <em>spectral power distribution</em> (SPD) describes the intensity of a light source at each wavelength of the spectrum.</li>
 <li><strong>Reflective materials.</strong> A <em>(spectral) reflectance curve</em> describes the fraction of light reflected by a reflective (opaque) material.</li>
 <li><strong>Transmissive materials.</strong> A <em>transmittance curve</em> describes the fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter.</li>
 </ul>
 
-<p>A material&#39;s perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three <em>color matching functions</em>).  That curve, the light source&#39;s spectral curve, and the color matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify that color.</p>
+<p>A material&#39;s perceived color depends on its reflectance or transmittance curve, the light source, and the viewer (whose visual response is modeled by three <em>color matching functions</em>).  That curve, the light source&#39;s SPD, and the color matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify that color.</p>
 
 <p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  In the method:</p>
 
@@ -1549,18 +1552,18 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength.
 (<em>See also note 3 later in this section.</em>)</li>
 <li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  <code>REFL</code> can always return 1 to model a <em>perfect reflecting</em> or <em>perfect transmitting diffuser</em>, e.g., if the purpose is to get the perceived color of the light source itself. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>.</li>
-<li><code>LIGHT(wl)</code> models a <strong>light source</strong>&#39;s spectral power distribution; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
+<li><code>LIGHT(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>.  Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
-<li>the D65 illuminant<sup><a href="#Note32">(32)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
+<li>the D65 illuminant<sup><a href="#Note31">(31)</a></sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),</li>
 <li>the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and</li>
 <li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;.</li>
 </ul></li>
 <li><code>CMF(wl)</code> models three <strong>color matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note32">(32)</a></sup><sup><a href="#Note33">(33)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
-<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note32">(32)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note31">(31)</a></sup><sup><a href="#Note32">(32)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note31">(31)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul></li>
 </ul>
 
@@ -1625,7 +1628,7 @@ combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&m
 
 <h3>Color Temperature</h3>
 
-<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the spectral power distribution of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note34">(34)</a></sup></p>
+<p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  The <code>Planckian</code> method shown below finds the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note33">(33)</a></sup></p>
 
 <pre>METHOD Planckian(wavelength, temp)
     num = pow(wavelength, -5)
@@ -1662,7 +1665,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the colors or pigments in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note35">(35)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note34">(34)</a></sup></li>
 </ol>
 
 <p>For convenience, computing the weighted geometric mean of one or more numbers is given below.</p>
@@ -1789,7 +1792,7 @@ this page are welcome.</p>
 <li>a 4-digit format, consisting of &quot;#&quot; followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</li>
 </ul>
 
-<p><sup id=Note5>(5)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linearized</em> and <em>companded</em> RGB colors, respectively, in this document.</p>
+<p><sup id=Note5>(5)</sup> J. Novak, in &quot;<a href="http://blog.johnnovak.net/2016/09/21/what-every-coder-should-know-about-gamma/">What every coder should know about gamma</a>&quot;, uses the terms <em>physically linear</em> and <em>perceptually linear</em> to refer to what are called <em>linear</em> and <em>companded</em> RGB colors, respectively, in this document.</p>
 
 <p><sup id=Note6>(6)</sup> A thorough survey of working spaces other than sRGB, such as eciRGB and NTSC, as well as how to convert between RGB working spaces, are not discussed in detail in this document.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html">RGB Working Space Information</a>&quot;, contains further information on RGB working spaces.</p>
 
@@ -1817,13 +1820,13 @@ this page are welcome.</p>
 
 <p><sup id=Note13>(13)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</p>
 
-<p><sup id=Note14>(14)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are absolute rather than relative: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) compared to other colors of the same hue and brightness. (See also the CIE&#39;s International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
+<p><sup id=Note14>(14)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are subjective terms: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) compared to other colors of the same hue and brightness. (See also the CIE&#39;s International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</p>
 
-<p><sup id=Note15>(15)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linearized_and_Companded_RGB">companded RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
+<p><sup id=Note15>(15)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linear_RGB_and_Companded_RGB">companded RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</p>
 
 <p><sup id=Note16>(16)</sup> The prime symbol is left out in function names and other names in the pseudocode for convenience only.</p>
 
-<p><sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called <em>YcCbcCrc</em> for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>, <em>linearized RGB</em> colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.</p>
+<p><sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called <em>YcCbcCrc</em> for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub>, <em>linear RGB</em> colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of such practical interest to many programmers to discuss further.</p>
 
 <p><sup id=Note18>(18)</sup> As an example of this point, the International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK colors, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such standardized conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
@@ -1864,15 +1867,13 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><sup id=Note30>(30)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</p>
 
-<p><sup id=Note31>(31)</sup> In this document, a <em>light source</em> means a <em>primary light source</em> or an <em>illuminant</em> (usually a theoretical source), both terms defined in the CIE&#39;s International Lighting Vocabulary.</p>
+<p><sup id=Note31>(31)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
 
-<p><sup id=Note32>(32)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</p>
+<p><sup id=Note32>(32)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
 
-<p><sup id=Note33>(33)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</p>
+<p><sup id=Note33>(33)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
 
-<p><sup id=Note34>(34)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</p>
-
-<p><sup id=Note35>(35)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
+<p><sup id=Note34>(34)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</p>
 
 <p></small></p>
 
