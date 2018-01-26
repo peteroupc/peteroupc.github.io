@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.   Many of the topics contain pseudocode that shows their implementation. **[Sample Python code](https://peteroupc.github.io/colorutil.py) that implements many of the methods in this document is available.**  [Supplemental topics](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. **[Sample Python code](https://peteroupc.github.io/colorutil.py) that implements many of the methods in this document is available.**  [Supplemental topics](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -53,8 +53,10 @@ This document presents an overview of many common color topics that are of gener
 - [Modifying Existing Colors](#Modifying_Existing_Colors)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
     - [Color Schemes](#Color_Schemes)
+    - [Alpha Blending](#Alpha_Blending)
+    - [Porter&ndash;Duff Formulas](#Porter_ndash_Duff_Formulas)
+    - [Blend Modes](#Blend_Modes)
     - [Color Matrices](#Color_Matrices)
-    - [Blending and Alpha Compositing](#Blending_and_Alpha_Compositing)
     - [Miscellaneous](#Miscellaneous)
 - [Color Differences](#Color_Differences)
     - [Nearest Colors](#Nearest_Colors)
@@ -79,10 +81,7 @@ This document presents an overview of many common color topics that are of gener
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
 
-In this document:
-
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-methods](https://peteroupc.github.io/randomfunc.html).
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
@@ -111,7 +110,7 @@ A color can be specified in one of two ways:
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
-The **red-green-blue (RGB) color model** is based, at least in theory, on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(1)](#Note1)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
+The **red-green-blue (RGB) color model** is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(1)](#Note1)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
 
 **RGB color spaces** generally differ in their red, green, blue, and white points<sup>[(2)](#Note2)</sup> as well as in their [_transfer functions_](#Linear_RGB_and_Companded_RGB).
 
@@ -128,7 +127,7 @@ in that order, and each component is 0 or greater and 1 or less. (In this docume
 - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
 - is a ["Web safe" color](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
 
-A collection of RGB colors (including a raster image) is achromatic or "Web safe" if all its RGB colors are achromatic or "Web safe", respectively.
+A collection of colors (including a raster image) is achromatic or "Web safe" if all those colors are achromatic or "Web safe", respectively.
 
 <a id=RGB_Integer_Formats></a>
 ### RGB Integer Formats
@@ -196,9 +195,9 @@ A color string in the **HTML color format** (also known as "hex" format), which 
 1. the character "#", followed by
 2. six base-16 (hexadecimal) digits<sup>[(3)](#Note3)</sup>, two each for the red, green, and blue components, in that order.
 
-For example, the HTML color `#003F86` expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).<sup>[(4)](#Note4)</sup>
+For example, the HTML color `#003F86` expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).
 
-Other variants of the HTML color format:
+Other variants of the HTML color format<sup>[(4)](#Note4)</sup>:
 
 * The [CSS Color Module Level 3](https://www.w3.org/TR/css3-color/#rgb-color), which specifies this format, also mentions a **3-digit variant**, consisting of "#" followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
 * An **8-digit variant** used in the Android operating system consists of "#" followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.
@@ -784,8 +783,8 @@ in the following pseudocode:
 [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
 
 - Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[(15)](#Note15)</sup>
-- C<sub>_B_</sub>, or _blue chroma_, is, theoretically, the scaled difference between blue and luma and is an integer 16 or greater and 240 or less.
-- C<sub>_R_</sub>, or _red chroma_, is, theoretically, the scaled difference between red and luma and is an integer 16 or greater and 240 or less.
+- C<sub>_B_</sub>, or _blue chroma_, is based on the difference between blue and luma and is an integer 16 or greater and 240 or less.
+- C<sub>_R_</sub>, or _red chroma_, is, based on the difference between red and luma and is an integer 16 or greater and 240 or less.
 
 The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color is in 8/8/8 format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;
 
@@ -851,13 +850,12 @@ For all these variants, the transformation should be done using [_companded RGB_
         return [min(max(r,0),255),min(max(g,0),255),min(max(b,0),255)]
     END METHOD
 
-**Note:** A thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside
-the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
+**Note:** A thorough survey of the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> data has been encoded is outside the scope of this document; in general, such encodings take into account the human eye's normally greater spatial sensitivity to luminance (Y, as approximated by Y&prime;, luma) than chromatic sensitivity (C<sub>_B_</sub>, C<sub>_R_</sub>).
 
 <a id=CMYK></a>
 ### CMYK
 
-CMYK is a color model describing, at least in theory, the amount and proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(18)](#Note18)</sup>
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.<sup>[(18)](#Note18)</sup>
 
 <a id=Modifying_Existing_Colors></a>
 ## Modifying Existing Colors
@@ -909,7 +907,58 @@ The following techniques generate new colors that are related to existing colors
     - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
-- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Blending_and_Alpha_Compositing) of a given color are monochrome colors.
+- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Alpha_Blending) of a given color are monochrome colors.
+
+<a id=Alpha_Blending></a>
+### Alpha Blending
+
+The `Lerp3` function below gets an "alpha blend" of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(23)](#Note23)</sup>
+- Generating a **shade** of a color (mixing with black) is equivalent to alpha blending that color with black `[0, 0, 0]`.
+- Generating a **tint** of a color (mixing with white) is equivalent to alpha blending that color with white `[1, 1, 1]`.
+- Generating a **tone** of a color (mixing with gray) is equivalent to alpha blending that color with gray `[0.5, 0.5, 0.5]`.
+- Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
+- Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
+- Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
+
+&nbsp;
+
+    METHOD Lerp3(color1, color2, alpha)
+        return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
+            color1[2]+(color2[2]-color1[2])*alpha]
+    END METHOD
+
+<a id=Porter_ndash_Duff_Formulas></a>
+### Porter&ndash;Duff Formulas
+
+Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors. In the formulas below, it is assumed that the two colors are in the 0-1 format and have been _premultiplied_ (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
+- **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
+- **Source In**: `[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]`.
+- **Source Held Out**: `[src[0]*(1 - dst[3]), src[1]*(1 - dst[3]), src[2]*(1 - dst[3]), src[3]*(1 - dst[3])]`.
+- **Source Atop**: `[dst[0]*src[3] - src[0]*(dst[3] - 1), dst[1]*src[3] - src[1]*(dst[3] - 1), dst[2]*src[3] - src[2]*(dst[3] - 1), src[3]]`.
+- **Destination Over**: `[dst[0] - src[0]*(dst[3] - 1), dst[1] - src[1]*(dst[3] - 1), dst[2] - src[2]*(dst[3] - 1), dst[3] - src[3]*(dst[3] - 1)]`.
+- **Destination In**: `[dst[0]*src[3], dst[1]*src[3], dst[2]*src[3], dst[3]*src[3]]`.  Uses the destination color/alpha with the source alpha as the "mask".
+- **Destination Held Out**: `[dst[0]*(1 - src[3]), dst[1]*(1 - src[3]), dst[2]*(1 - src[3]), dst[3]*(1 - src[3])]`.
+- **Destination Atop**: `[dst[3]*src[0] - dst[0]*(src[3] - 1), dst[3]*src[1] - dst[1]*(src[3] - 1), dst[3]*src[2] - dst[2]*(src[3] - 1), dst[3]]`.
+- **Source**: `src`.
+- **Destination**: `dst`.
+- **Clear**: `[0, 0, 0, 0]`.
+- **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
+
+<a id=Blend_Modes></a>
+### Blend Modes
+
+[Blend modes](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
+
+- **Normal**: `src`.
+- **Lighten**: `max(src, dst)`.
+- **Darken**: `min(src, dst)`.
+- **Add**: `min(1.0, src + dst)`.
+- **Subtract**: `max(0.0, src - dst)`.
+- **Multiply**: `(src + dst)`.
+- **Screen**: `1 - (1 - dst) * (1 - src)`.
+- **Average**: `(src + dst) * 0.5`.
+- **Difference**: `abs(src - dst)`.
+- **Exclusion**: `src - 2 * src * dst + dst`.
 
 <a id=Color_Matrices></a>
 ### Color Matrices
@@ -927,53 +976,8 @@ Examples of matrices include:
 
 - **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
 - **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(23)](#Note23)</sup>.
-- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(24)](#Note24)</sup><sup>[(23)](#Note23)</sup>
-
-<a id=Blending_and_Alpha_Compositing></a>
-### Blending and Alpha Compositing
-
-**General alpha blend**: The `Lerp3` function below gets an "alpha blend" of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(25)](#Note25)</sup>
-- Generating a **shade** of a color (mixing with black) is equivalent to alpha blending that color with black `[0, 0, 0]`.
-- Generating a **tint** of a color (mixing with white) is equivalent to alpha blending that color with white `[1, 1, 1]`.
-- Generating a **tone** of a color (mixing with gray) is equivalent to alpha blending that color with gray `[0.5, 0.5, 0.5]`.
-- Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
-- Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
-- Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
-
-&nbsp;
-
-    METHOD Lerp3(color1, color2, alpha)
-        return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
-            color1[2]+(color2[2]-color1[2])*alpha]
-    END METHOD
-
-**Porter&ndash;Duff Formulas**: Porter and Duff (1984) define twelve formulas for combining (compositing) two RGBA colors. In the formulas below, it is assumed that the two colors are in the 0-1 format and have been premultiplied (that is, their red, green, and blue components have been multiplied beforehand by their alpha component).  Given `src`, the source RGBA color, and `dst`, the destination RGBA color, the Porter&ndash;Duff formulas are as follows.
-- **Source Over**: `[src[0]-dst[0]*(src[3] - 1), src[1]-dst[1]*(src[3] - 1), src[2]-dst[2]*(src[3] - 1), src[3]-dst[3]*(src[3] - 1)]`.
-- **Source In**: `[dst[3]*src[0], dst[3]*src[1], dst[3]*src[2], dst[3]*src[3]]`.
-- **Source Held Out**: `[src[0]*(1 - dst[3]), src[1]*(1 - dst[3]), src[2]*(1 - dst[3]), src[3]*(1 - dst[3])]`.
-- **Source Atop**: `[dst[0]*src[3] - src[0]*(dst[3] - 1), dst[1]*src[3] - src[1]*(dst[3] - 1), dst[2]*src[3] - src[2]*(dst[3] - 1), src[3]]`.
-- **Destination Over**: `[dst[0] - src[0]*(dst[3] - 1), dst[1] - src[1]*(dst[3] - 1), dst[2] - src[2]*(dst[3] - 1), dst[3] - src[3]*(dst[3] - 1)]`.
-- **Destination In**: `[dst[0]*src[3], dst[1]*src[3], dst[2]*src[3], dst[3]*src[3]]`.  Uses the destination color/alpha with the source alpha as the "mask".
-- **Destination Held Out**: `[dst[0]*(1 - src[3]), dst[1]*(1 - src[3]), dst[2]*(1 - src[3]), dst[3]*(1 - src[3])]`.
-- **Destination Atop**: `[dst[3]*src[0] - dst[0]*(src[3] - 1), dst[3]*src[1] - dst[1]*(src[3] - 1), dst[3]*src[2] - dst[2]*(src[3] - 1), dst[3]]`.
-- **Source**: `src`.
-- **Destination**: `dst`.
-- **Clear**: `[0, 0, 0, 0]`.
-- **Xor**: `[-dst[3]*src[0] - dst[0]*src[3] + dst[0] + src[0], -dst[3]*src[1] - dst[1]*src[3] + dst[1] + src[1], -dst[3]*src[2] - dst[2]*src[3] + dst[2] + src[2], -2*dst[3]*src[3] + dst[3] + src[3]]`.
-
-**Blend Modes**: [Blend modes](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
-
-- **Normal**: `src`.
-- **Lighten**: `max(src, dst)`.
-- **Darken**: `min(src, dst)`.
-- **Add**: `min(1.0, src + dst)`.
-- **Subtract**: `max(0.0, src - dst)`.
-- **Multiply**: `(src + dst)`.
-- **Screen**: `1 - (1 - dst) * (1 - src)`.
-- **Average**: `(src + dst) * 0.5`.
-- **Difference**: `abs(src - dst)`.
-- **Exclusion**: `src - 2 * src * dst + dst`.
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(24)](#Note24)</sup>.
+- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(25)](#Note25)</sup><sup>[(24)](#Note24)</sup>
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
@@ -1505,7 +1509,7 @@ Questions for this document:
 
 <small>
 
-<sup id=Note1>(1)</sup> Although most electronic color displays in the past used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and color spaces following the _RGBW color model_, or similar color models, describe, at least in theory, the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs, luminaires, or electronic displays.
+<sup id=Note1>(1)</sup> Although most electronic color displays in the past used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce a given color (if possible).  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for LEDs, luminaires, or electronic displays.
 
 <sup id=Note2>(2)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points. See also note 6.
 
@@ -1567,14 +1571,14 @@ For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `B
 
 <sup id=Note22>(22)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 
-<sup id=Note23>(23)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.
-
-<sup id=Note24>(24)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.
-
-<sup id=Note25>(25)</sup> `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
+<sup id=Note23>(23)</sup> `Lerp3` is equivalent to `mix` in GLSL (OpenGL Shading Language).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).
 
-<sup id=Note26>(26)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
+<sup id=Note24>(24)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.
+
+<sup id=Note25>(25)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.
+
+<sup id=Note26>(26)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[CMYK](#CMYK)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.
 
 <sup id=Note27>(27)</sup> The "E" here stands for the German word _Empfindung_.
 
