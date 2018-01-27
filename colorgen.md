@@ -70,9 +70,7 @@ This document presents an overview of many common color topics that are of gener
 - [Spectral Color Functions](#Spectral_Color_Functions)
     - [Color Temperature](#Color_Temperature)
     - [Color Mixture](#Color_Mixture)
-- [Other Color Topics](#Other_Color_Topics)
-    - [Defective Color Vision](#Defective_Color_Vision)
-    - [Terminal Colors](#Terminal_Colors)
+- [Terminal Colors](#Terminal_Colors)
 - [Conclusion](#Conclusion)
     - [Questions for This Document](#Questions_for_This_Document)
 - [Notes](#Notes)
@@ -91,7 +89,7 @@ This document presents an overview of many common color topics that are of gener
 - **ISO.** International Organization for Standardization.
 - **Light source.** Means a [_primary light source_](http://eilv.cie.co.at/term/982) or an [_illuminant_](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
-- **`RNDNUMRANGE`, `RNDU01`, `RNDINT`.** These methods are defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
+- **`RNDNUMRANGE`, `RNDU01`, `RNDINT`, `RNDINTEXC`.** These methods are defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
 - **SPD.** Spectral power distribution.
 
 <a id=Specifying_Colors></a>
@@ -110,9 +108,11 @@ A color can be specified in one of two ways:
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
-The **red-green-blue (RGB) color model** is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(1)](#Note1)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
+The **red-green-blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.
 
-**RGB color spaces** generally differ in their red, green, blue, and white points<sup>[(2)](#Note2)</sup> as well as in their [_transfer functions_](#Linear_RGB_and_Companded_RGB).
+The RGB model is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(1)](#Note1)</sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.
+
+**RGB color spaces** generally differ in their red, green, blue, and white points<sup>[(2)](#Note2)</sup> as well as in their [_color component transfer functions_](#Linear_RGB_and_Companded_RGB).
 
 An **RGB color** (in a given RGB color space) consists of&mdash;
 - a `red` component,
@@ -272,24 +272,24 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 In a given RGB color space:
 
 - A _linear_ RGB color has a linear relationship of emitted light (as opposed to perceived light).
-- A _companded_ RGB color has been encoded using that color space's _transfer function_, also known as _companding_ (one example is the `LinearTosRGB3` method [defined later](#sRGB)). For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
+- A _companded_ RGB color has been encoded using that color space's _color component transfer function_, also known as _companding_ (one example is the `LinearTosRGB3` method [defined later](#sRGB)). For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.<sup>[(5)](#Note5)</sup>  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
-For many RGB color spaces, the _transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a positive number. (In this case, the transfer function is also called _gamma encoding_.)
+For many RGB color spaces, the _color component transfer function_ is a simple power function, such as _c_<sup>1/&gamma;</sup>, where _c_ is either the red, green, or blue component and &gamma; is a positive number. (In this case, that function is also called _gamma encoding_.)
 
 In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.
 
 <a id=sRGB></a>
 ### sRGB
 
-Among RGB color spaces, one of the most popular is the _sRGB color space_. sRGB, a "working space" for describing RGB colors, is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(6)](#Note6)</sup>
-
-Unlike with many other RGB color spaces, sRGB's _transfer function_ does not use gamma encoding; the function is not the same as applying the exponent 1/2.2, but rather uses a formula with a similar conversion curve.  The sRGB proposal recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
+Among RGB color spaces, one of the most popular is the _sRGB color space_. sRGB, a "working space" for describing RGB colors, is based on the color output of cathode-ray-tube monitors.  (For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB).)<sup>[(6)](#Note6)</sup> The sRGB proposal recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
 The following methods convert colors between linear and companded sRGB.
 (Note that the threshold `0.0031308` is that of IEC 61966-2-1, the official sRGB standard;
 the sRGB proposal has a different value for this threshold.)
 
     // Convert a color component from companded to linearized RGB
+    // NOTE: This is not gamma decoding; it's similar to, but
+    // not exactly, c^2.2.
     METHOD LinearFromsRGB(c)
      // NOTE: Threshold here would more properly be
      // 12.92 * 0.0031308 = 0.040449936, but I don't know
@@ -300,6 +300,8 @@ the sRGB proposal has a different value for this threshold.)
     END METHOD
 
     // Convert a color component from linear to companded sRGB
+    // NOTE: This is not gamma encoding; it's similar to, but
+    // not exactly, c^(1/2.2).
     METHOD LinearTosRGB(c)
       if c <= 0.0031308: return 12.92 * c
       return pow(c, 1.0 / 2.4) * 1.055 - 0.055
@@ -1205,7 +1207,8 @@ Note that for best results, this technique needs to be carried out with [_linear
 
 A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB) should be used rather than companded RGB colors.
 
-**Example:** A **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
+**Example:**
+- A **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
 
 <a id=Kinds_of_Color_Maps></a>
 ### Kinds of Color Maps
@@ -1216,7 +1219,7 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 - **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
 - **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(29)](#Note29)</sup> and/or "[color blind friendly](#Defective_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+**Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(29)](#Note29)</sup> and/or "[color blind friendly](https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Color_Collections></a>
 ### Color Collections
@@ -1238,7 +1241,7 @@ Color maps can list colors used to identify different items. Because of this
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
 - K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(30)](#Note30)</sup>, the first nine of which
-  were intended for readers with normal and defective color vision, and
+  were intended for readers with normal and [defective](https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision) color vision, and
 - B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.
 
 In general, the more colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color
@@ -1298,8 +1301,11 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
 - To generate a **random tone** of a given color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))`.
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [hue](#HSV).
-- **Random color sampling:** If colors are to be selected at random from a [color map](#Color_Maps), see [Choosing a Random Item from a List](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) and [Choosing Several Unique Items](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items), for example.
-- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare,
+- **Random color sampling:**
+    - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDU01())`.
+    - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also ["Choosing a Random Item from a List"](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
+    - To select several random colors from a color map: See ["Choosing Several Unique Items"](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
+- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
 - **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [_hash function_](https://peteroupc.github.io/random.html#Hash_Functions).
 
 <a id=Spectral_Color_Functions></a>
@@ -1441,29 +1447,10 @@ passed at once to the `WGM` function just given must be from the same wavelength
 - If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
 - An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
-<a id=Other_Color_Topics></a>
-## Other Color Topics
-
-This section discusses miscellaneous topics related to colors.
-
-<a id=Defective_Color_Vision></a>
-### Defective Color Vision
-
-[Defective color vision](http://eilv.cie.co.at/term/287), including what is generally known as ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones in the retina of each eye and affects a small portion of people, mostly males.
-
-Each human retina normally has three kinds of cones (L, M, and S),
-and the visual system senses color by the relative degree
-to which all three kinds of cones respond to a stimulus of light.  Usually,
-at least two of these three kinds of cones will respond to light this way.  The most common forms of "colorblindness", _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.
-
-However, "effective luminance contrast [that is, [color contrast](#Relative_Luminance_Grayscale)] can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia" (see "[Understanding WCAG 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)").
-
-For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
-
 <a id=Terminal_Colors></a>
-### Terminal Colors
+## Terminal Colors
 
-Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence:
+Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
 - "1": Set the following text in bold.
@@ -1566,6 +1553,8 @@ Printing systems that use mixtures of inks other than cyan, magenta, yellow, and
 <sup id=Note21>(21)</sup> In the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), the _contrast ratio_ of two colors is `(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)`, where `RelLum(color)` is the "relative luminance" of a color as defined in the guidelines, `brighter` is the color with higher `RelLum`; and `darker` is the other color.  In general, under those guidelines, a _contrasting color_ is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).
 
 For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `BT709(LinearFromsRGB3(From888(color)))`, with the guidelines using a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.  `RelLum(color)` is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever conformance to the guidelines is not important.  The guidelines use "relative luminance" rather than "luminance" because ["Web content does not emit light itself"](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html).
+
+A small percentage of people have [defective color vision](https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision) and so may find certain colors harder to distinguish.  However, according to ["Understanding WCAG 2.0"](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective [luminance contrast](#Relative_Luminance_Grayscale) can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
 
 <sup id=Note22>(22)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).
 

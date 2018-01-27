@@ -277,7 +277,7 @@
 
 <ul>
 <li>is hard-coded,</li>
-<li>was entered by the user,</li>
+<li>was based on user-entered data,</li>
 <li>is known to the application and was generated using an <a href="#Unpredictable_Random_Generators">unpredictable-random</a> or <a href="#Statistical_Random_Generators">statistical-random</a> implementation (as defined earlier),</li>
 <li>is a <a href="#Verifiable_Random_Numbers">verifiable random number</a> (as defined later), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
@@ -647,7 +647,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <li>do not store state,</li>
 </ul>
 
-<p>random number generators for such environments are often designed as <a href="#Hash_Functions">hash functions</a>, because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
+<p>random number generators for such environments are often designed as <a href="#Hash_Functions">hash functions</a>, because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
 
 <p><a id=Motivation></a></p>
 

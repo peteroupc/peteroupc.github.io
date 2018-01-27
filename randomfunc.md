@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Jan. 26, 2018.
+Begun on June 4, 2017; last updated on Jan. 27, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -98,14 +98,14 @@ In general, security, performance, quality, and other considerations will determ
 In this document:
 
 * The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-* **Intervals**: The following notation is used for intervals:
+* **Intervals.** The following notation is used for intervals:
     - [`a`, `b`) means "`a` or greater, but less than `b`".
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-* The term _random number generator_, or _RNG_, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup>[(1)](#Note1)</sup>
-* The _norm_ of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
-* The term _significand permutations_, with respect to a floating-point format, means the format's floating-point base raised to the power of the format's precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
+- **Random number generator (RNG).** A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(1)](#Note1)</sup>.
+* **Norm.** The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
+* **Significand permutations.** A floating-point format's floating-point base raised to the power of the format's precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
     - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations,
@@ -1170,7 +1170,7 @@ In the following method, which generates a random integer that follows a _Poisso
 
 - `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer, and
 - the method's return value&mdash;
-    - gives a random number of such events during one such unit, and
+    - gives a random number of such events within one such unit, and
     - is such that the average of the return values approaches `mean` when this method is repeatedly given the same value for `mean`.
 
 The method given here is based on Knuth's method from 1969.
