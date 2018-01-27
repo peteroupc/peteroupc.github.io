@@ -1300,7 +1300,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [hue](#HSV).
 - **Random color sampling:** If colors are to be selected at random from a [color map](#Color_Maps), see [Choosing a Random Item from a List](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) and [Choosing Several Unique Items](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items), for example.
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare,
-- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [hash function](https://peteroupc.github.io/random.html#Hash_Functions).
+- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [_hash function_](https://peteroupc.github.io/random.html#Hash_Functions).
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
