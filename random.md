@@ -60,8 +60,8 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 - [Shuffling](#Shuffling)
     - [Shuffling Method](#Shuffling_Method)
     - [Choosing from Among All Permutations](#Choosing_from_Among_All_Permutations)
-- [GPU Programming Environments](#GPU_Programming_Environments)
 - [Hash Functions](#Hash_Functions)
+- [GPU Programming Environments](#GPU_Programming_Environments)
 - [Motivation](#Motivation)
 - [Conclusion](#Conclusion)
     - [Request for Comments](#Request_for_Comments)
@@ -256,7 +256,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 
 _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information necessary to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
 
-One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of hash algorithms stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
+One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [hash functions](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
 <a id=Noise></a>
 #### Noise
@@ -384,6 +384,21 @@ The PRNG in question should&mdash;
 - meet or exceed the quality requirements of a statistical-random implementation, and
 - have been initialized automatically with an _unpredictable seed_ before use.
 
+<a id=Hash_Functions></a>
+## Hash Functions
+
+A seemingly random number can be generated from arbitrary data using a _hash function_.
+
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>.)
+
+A hash code can be used as follows:
+- The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) for techniques.)
+- If a number of random bits is needed, and the hash code has at least that many bits, then that many bits may instead be taken directly from the hash code.
+
+Any hash function used to generate seemingly random numbers this way should be designed such that&mdash;
+- every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_), and
+- if the hash function's use implicates computer or information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.
+
 <a id=GPU_Programming_Environments></a>
 ## GPU Programming Environments
 
@@ -393,21 +408,6 @@ Because, in general, GL Shading Language (GLSL) and other programming environmen
 - do not store state,
 
 random number generators for such environments are often designed as [hash functions](#Hash_Functions), because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
-
-<a id=Hash_Functions></a>
-## Hash Functions
-
-A seemingly random number can be generated from arbitrary data using a _hash function_.
-
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits and with no obvious connection to the input. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>.)
-
-A hash code can be used as follows:
-- The hash code can serve as a seed for a PRNG, and the desired random numbers generated from that PRNG.  (See my document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) for techniques.)
-- If a number of random bits is needed, and the hash code has at least that many bits, then that many bits may instead be taken directly from the hash code.
-
-Any hash function used to generate seemingly random numbers this way should be designed such that&mdash;
-- every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_), and
-- if the hashing implicates computer or information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.
 
 <a id=Motivation></a>
 ## Motivation
