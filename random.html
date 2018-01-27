@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Jan. 26, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jan. 27, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -376,11 +376,7 @@
 
 <p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html">&quot;Noise Functions and Map Generation&quot;</a>)<sup><a href="#Note3">(3)</a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
 
-<p>However, special care should be taken if the noise implementation&mdash;</p>
-
-<ul>
-<li>implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a>, <a href="https://en.wikipedia.org/wiki/Value_noise">value noise</a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>), and</li>
-<li>uses one of the following techniques:
+<p>However, special care should be taken if the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise">cellular noise</a>, <a href="https://en.wikipedia.org/wiki/Value_noise">value noise</a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise">gradient noise</a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin noise</a>) and uses one of the following techniques:</p>
 
 <ul>
 <li>The implementation should use a <strong>table of &quot;hard-coded&quot; gradients or hash values</strong> only if the noise generation meets the <a href="#Seeding_Recommendations">seeding recommendations</a> (treating the table as the seed).</li>
@@ -389,7 +385,6 @@
 <ul>
 <li>that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions">&quot;Definitions&quot;</a>), and have the so-called <em>avalanche property</em>, and</li>
 <li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations">seeding recommendations</a> apply to the noise generation.</li>
-</ul></li>
 </ul></li>
 </ul>
 
@@ -637,7 +632,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 
 <ul>
 <li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>), and</li>
-<li>if the hash function&#39;s use implicates computer or information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input or to find an unknown input that leads to a given output.</li>
+<li>if the hash function&#39;s use implicates computer or information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input, and at least cost-prohibitive to find an unknown input that leads to a given output.</li>
 </ul>
 
 <p><a id=GPU_Programming_Environments></a></p>
