@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Jan. 26, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Jan. 27, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -134,7 +134,7 @@
 
 <ul>
 <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-<li><strong>Intervals</strong>: The following notation is used for intervals:
+<li><strong>Intervals.</strong> The following notation is used for intervals:
 
 <ul>
 <li>[<code>a</code>, <code>b</code>) means &quot;<code>a</code> or greater, but less than <code>b</code>&quot;.</li>
@@ -142,9 +142,9 @@
 <li>(<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;.</li>
 <li>[<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
 </ul></li>
-<li>The term <em>random number generator</em>, or <em>RNG</em>, means a number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed.<sup><a href="#Note1">(1)</a></sup></li>
-<li>The <em>norm</em> of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
-<li>The term <em>significand permutations</em>, with respect to a floating-point format, means the format&#39;s floating-point base raised to the power of the format&#39;s precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
+<li><strong>Random number generator (RNG).</strong> A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note1">(1)</a></sup>.</li>
+<li><strong>Norm.</strong> The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
+<li><strong>Significand permutations.</strong> A floating-point format&#39;s floating-point base raised to the power of the format&#39;s precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
 
 <ul>
 <li>the 64-bit IEEE 754 binary floating-point format (e.g., Java <code>double</code>) has 2<sup>53</sup> (9007199254740992) significand permutations,</li>
@@ -1402,7 +1402,7 @@ END METHOD
 <li>the method&#39;s return value&mdash;
 
 <ul>
-<li>gives a random number of such events during one such unit, and</li>
+<li>gives a random number of such events within one such unit, and</li>
 <li>is such that the average of the return values approaches <code>mean</code> when this method is repeatedly given the same value for <code>mean</code>.</li>
 </ul></li>
 </ul>

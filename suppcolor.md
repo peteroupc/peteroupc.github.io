@@ -55,7 +55,7 @@ Because there are three kinds of cones, three numbers are enough to uniquely ide
 <a id=Defective_and_Animal_Color_Vision></a>
 ### Defective and Animal Color Vision
 
-[Defective color vision](http://eilv.cie.co.at/term/287), including so-called ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones and affects a small portion of people, mostly males. Two forms of defective color vision, _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.  Even among people with normal color vision, though, there is [wide variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) in color vision among individuals &mdash; such that they are not guaranteed to agree on how to identify any particular color.
+[Defective color vision](http://eilv.cie.co.at/term/287), including so-called ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defects in one or more kinds of cones and affects a small portion of people, mostly males. Two forms of defective color vision, _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, color stimuli resulting in a similar response of the S and M or S and L cones, respectively (usually from magenta-red and green-cyan hues), are harder to distinguish.<sup>[(1)](#Note1)</sup>  Even among people with normal color vision, though, there is [wide variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) in color vision among individuals &mdash; such that they are not guaranteed to agree on how to identify any particular color.
 
 In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the [mantis shrimp](https://en.wikipedia.org/wiki/Mantis_shrimp) has 16 different cone types, making its color vision considerably sharper than humans'.
 
@@ -77,12 +77,12 @@ Color spaces can be categorized as any of the following:
 
 - **Device-dependent** color spaces are based on how devices display or record color.  Such color spaces include&mdash;
     - **light-mixture color spaces**, based on mixtures of colored lights (such as RGB, red-green-blue), and
-    - **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup>[(1)](#Note1)</sup>
+    - **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup>[(2)](#Note2)</sup>
 
     A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
 - **Device-independent** color spaces are other than device dependent (including color spaces based on how humans perceive color).  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.
 - **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are _chromaticity_ dimensions.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
-    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[(2)](#Note2)</sup>
+    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[(3)](#Note3)</sup>
 - **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
@@ -200,9 +200,11 @@ The following topics on color are rarely relevant to programmers:
 
 <small>
 
-<sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion, "additive mixture" and "subtractive mixture" are inferior terms to light mixture and colorant mixture, respectively.
+<sup id=Note1>(1)</sup> For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
-<sup id=Note2>(2)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific colored lights or colorants.
+<sup id=Note2>(2)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion, "additive mixture" and "subtractive mixture" are inferior terms to light mixture and colorant mixture, respectively.
+
+<sup id=Note3>(3)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific colored lights or colorants.
 
 </small>
 

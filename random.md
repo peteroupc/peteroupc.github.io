@@ -188,7 +188,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 
 1. the initial state (the seed) which the "random" result will be generated from&mdash;
     - is hard-coded,
-    - was entered by the user,
+    - was based on user-entered data,
     - is known to the application and was generated using an [unpredictable-random](#Unpredictable_Random_Generators) or [statistical-random](#Statistical_Random_Generators) implementation (as defined earlier),
     - is a [verifiable random number](#Verifiable_Random_Numbers) (as defined later), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
@@ -404,7 +404,7 @@ Because, in general, GL Shading Language (GLSL) and other programming environmen
 - are designed for parallel execution, and
 - do not store state,
 
-random number generators for such environments are often designed as [hash functions](#Hash_Functions), because their output is determined solely by the input rather than both the input and state.  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+random number generators for such environments are often designed as [hash functions](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
 
 <a id=Motivation></a>
 ## Motivation
