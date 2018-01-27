@@ -35,6 +35,7 @@
 <li><a href="#HSI">HSI</a></li>
 <li><a href="#Hunter_L_a_b">Hunter L,a,b</a></li>
 </ul></li>
+<li><a href="#Terminal_Graphics">Terminal Graphics</a></li>
 <li><a href="#Irrelevant_Topics">Irrelevant Topics</a></li>
 <li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
@@ -230,6 +231,29 @@ END METHOD
 Hunter L, a, b colors analogously to CIELAB colors.</p>
 
 <p>The difference in lightness, <em>a</em>, <em>b</em>, or chroma (<em>&Delta;L</em>, <em>&Delta;a</em>, <em>&Delta;b</em>, or <em>&Delta;C</em>, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.</p>
+
+<p><a id=Terminal_Graphics></a></p>
+
+<h2>Terminal Graphics</h2>
+
+<p>Some command-line shells support coloring the background or foreground of text.  In shells that support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI color codes</a> (generally in the category &quot;select graphic rendition&quot;, or SGR), the sequence U+001B (escape character) followed by &quot;[&quot; followed by a semicolon-separated sequence of numbers (given below) followed by &quot;m&quot; is a graphic control sequence (see also Ecma-048, sec. 8.3.117):</p>
+
+<ul>
+<li>&quot;0&quot;: Reset the foreground and background color and other graphic properties to default.  (U+001B followed by &quot;[m&quot; has the same effect.)</li>
+<li>&quot;1&quot;: Set the following text in bold.</li>
+<li>&quot;2&quot;: Use a slightly dimmer foreground color than usual.</li>
+<li>&quot;3&quot;: Set the following text in italics.</li>
+<li>&quot;4&quot;: Underline the following text.</li>
+<li>&quot;7&quot;: Reverse the meaning of &quot;foreground&quot; and &quot;background&quot; in the following text.</li>
+<li>&quot;8&quot;: Hide text while still taking up space.</li>
+<li>&quot;21&quot;, &quot;22&quot;, &quot;23&quot;, &quot;24&quot;, &quot;27&quot;, &quot;28&quot;: Turns off the feature mentioned earlier in &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;7&quot;, or &quot;8&quot;, respectively.</li>
+<li>&quot;3&quot; followed by one of the <em>color numbers</em> below: Dimmer foreground color.</li>
+<li>&quot;4&quot; followed by color number: Dimmer background color.</li>
+<li>&quot;9&quot; followed by color number: Brighter foreground color.</li>
+<li>&quot;10&quot; followed by color number: Brighter background color.</li>
+</ul>
+
+<p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
 
 <p><a id=Irrelevant_Topics></a></p>
 

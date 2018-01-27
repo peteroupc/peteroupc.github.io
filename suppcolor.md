@@ -22,6 +22,7 @@ This document presents supplemental topics about color.
 - [Additional Color Models](#Additional_Color_Models)
     - [HSI](#HSI)
     - [Hunter L,a,b](#Hunter_L_a_b)
+- [Terminal Graphics](#Terminal_Graphics)
 - [Irrelevant Topics](#Irrelevant_Topics)
 - [Notes](#Notes)
 - [License](#License)
@@ -185,6 +186,26 @@ The `LabToHue`, `LabToChroma`, `LabHueDifference`,
 Hunter L, a, b colors analogously to CIELAB colors.
 
 The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delta;b_, or _&Delta;C_, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.
+
+<a id=Terminal_Graphics></a>
+## Terminal Graphics
+
+Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
+
+- "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
+- "1": Set the following text in bold.
+- "2": Use a slightly dimmer foreground color than usual.
+- "3": Set the following text in italics.
+- "4": Underline the following text.
+- "7": Reverse the meaning of "foreground" and "background" in the following text.
+- "8": Hide text while still taking up space.
+- "21", "22", "23", "24", "27", "28": Turns off the feature mentioned earlier in "1", "2", "3", "4", "7", or "8", respectively.
+- "3" followed by one of the _color numbers_ below: Dimmer foreground color.
+- "4" followed by color number: Dimmer background color.
+- "9" followed by color number: Brighter foreground color.
+- "10" followed by color number: Brighter background color.
+
+The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Irrelevant_Topics></a>
 ## Irrelevant Topics

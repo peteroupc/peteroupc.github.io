@@ -25,7 +25,7 @@ This document presents an overview of many common color topics that are of gener
 - Color pickers, including how to choose colors with them.
 - Specifics on retrieving colors (including pixel and palette colors) from images or screenshots (besides finding dominant colors).
 - Setting colors (including pixel colors) on images.
-- Colorization of command line outputs (or terminal or shell outputs) beyond describing the ANSI color codes.
+- Colorization of command line outputs, or terminal or shell outputs. [ANSI graphic codes](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.
 - In general, topics that are specific to a programming language or application programming interface.
 
 <a id=Contents></a>
@@ -70,7 +70,6 @@ This document presents an overview of many common color topics that are of gener
 - [Spectral Color Functions](#Spectral_Color_Functions)
     - [Color Temperature](#Color_Temperature)
     - [Color Mixture](#Color_Mixture)
-- [Terminal Colors](#Terminal_Colors)
 - [Conclusion](#Conclusion)
     - [Questions for This Document](#Questions_for_This_Document)
 - [Notes](#Notes)
@@ -1446,26 +1445,6 @@ passed at once to the `WGM` function just given must be from the same wavelength
 - Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38) can match the same RGB color.)
 - If the "reflectance curves" represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
 - An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
-
-<a id=Terminal_Colors></a>
-## Terminal Colors
-
-Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
-
-- "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
-- "1": Set the following text in bold.
-- "2": Use a slightly dimmer foreground color than usual.
-- "3": Set the following text in italics.
-- "4": Underline the following text.
-- "7": Reverse the meaning of "foreground" and "background" in the following text.
-- "8": Hide text while still taking up space.
-- "21", "22", "23", "24", "27", "28": Turns off the feature mentioned earlier in "1", "2", "3", "4", "7", or "8", respectively.
-- "3" followed by one of the _color numbers_ below: Dimmer foreground color.
-- "4" followed by color number: Dimmer background color.
-- "9" followed by color number: Brighter foreground color.
-- "10" followed by color number: Brighter background color.
-
-The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Conclusion></a>
 ## Conclusion
