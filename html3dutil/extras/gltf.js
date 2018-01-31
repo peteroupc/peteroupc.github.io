@@ -1189,7 +1189,720 @@ GltfState1.readGltf = function(gltf, path) {
     });
 };
 
-/* global GltfState2, H3DU, Promise */
+/* global H3DU, Promise, Uint16Array, Uint32Array */
+/*
+ Any copyright to this file is released to the Public Domain.
+ http://creativecommons.org/publicdomain/zero/1.0/
+ If you like this, you should donate
+ to Peter O. (original author of
+ the Public Domain HTML 3D Library) at:
+ http://peteroupc.github.io/
+*/
+var GltfParsers = {};
+// --BEGIN PARSERS
+/** @ignore */
+GltfParsers.parseSkin = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.joints === "undefined" || property.joints === null)) {
+    throw new Error("Skin");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "inverseBindMatrices":GltfUtil.parseNonnegativeInteger(property.inverseBindMatrices),
+    "joints":GltfUtil.parseArrayUniqueMin1(property.joints),
+    "skeleton":GltfUtil.parseNonnegativeInteger(property.skeleton)
+  });
+};
+/** @ignore */
+GltfParsers.parseNode = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Node");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "camera":GltfUtil.parseNonnegativeInteger(property.camera),
+    "children":GltfUtil.parseArrayUniqueMin1(property.children),
+    "matrix":GltfUtil.parseArrayFixedLength(property.matrix, 16, [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]),
+    "mesh":GltfUtil.parseNonnegativeInteger(property.mesh),
+    "rotation":GltfUtil.parseArrayFixedLength(property.rotation, 4, [0.0, 0.0, 0.0, 1.0]),
+    "scale":GltfUtil.parseArrayFixedLength(property.scale, 3, [1.0, 1.0, 1.0]),
+    "skin":GltfUtil.parseNonnegativeInteger(property.skin),
+    "translation":GltfUtil.parseArrayFixedLength(property.translation, 3, [0.0, 0.0, 0.0]),
+    "weights":GltfUtil.parseArrayMin1(property.weights)
+  });
+};
+/** @ignore */
+GltfParsers.parseImage = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Image");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "bufferView":GltfUtil.parseNonnegativeInteger(property.bufferView),
+    "mimeType":GltfUtil.parseEnum(property.mimeType, ["image/jpeg", "image/png"], 0),
+    "uri":GltfUtil.parseString(property.uri)
+  });
+};
+/** @ignore */
+GltfParsers.parseAccessor = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.componentType === "undefined" || property.componentType === null) || typeof property.count !== "number" || (typeof property.type === "undefined" || property.type === null)) {
+    throw new Error("Accessor");
+  }
+  if (Math.floor(property.count) !== property.count || property.count < 1) {
+    throw new Error("Count");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "bufferView":GltfUtil.parseNonnegativeInteger(property.bufferView),
+    "byteOffset":GltfUtil.parseNonnegativeIntegerDefault(property.byteOffset, 0),
+    "componentType":GltfUtil.parseEnum(property.componentType, [5120, 5121, 5122, 5123, 5125, 5126], 0),
+    "count":property.count,
+    "max":GltfUtil.parseArrayMin1(property.max),
+    "min":GltfUtil.parseArrayMin1(property.min),
+    "normalized":GltfUtil.parseBoolean(property.normalized, false),
+    "type":GltfUtil.parseEnum(property.type, ["MAT2", "MAT3", "MAT4", "SCALAR", "VEC2", "VEC3", "VEC4"], 0)
+  });
+};
+/** @ignore */
+GltfParsers.parseScene = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Scene");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {"nodes":GltfUtil.parseArrayUniqueMin1(property.nodes)});
+};
+/** @ignore */
+GltfParsers.parseGlTF = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.asset === "undefined" || property.asset === null)) {
+    throw new Error("GlTF");
+  }
+  var propScene = GltfUtil.parseNonnegativeInteger(property.scene);
+  return GltfUtil.addExtensionsExtras(property, {
+    "accessors":GltfUtil.parseArrayMin1(property.accessors),
+    "animations":GltfUtil.parseArrayMin1(property.animations),
+    "asset":GltfParsers.parseAsset(property.asset),
+    "bufferViews":GltfUtil.parseArrayMin1(property.bufferViews),
+    "buffers":GltfUtil.parseArrayMin1(property.buffers),
+    "cameras":GltfUtil.parseArrayMin1(property.cameras),
+    "extensionsRequired":GltfUtil.parseArrayUniqueMin1(property.extensionsRequired),
+    "extensionsUsed":GltfUtil.parseArrayUniqueMin1(property.extensionsUsed),
+    "images":GltfUtil.parseArrayMin1(property.images),
+    "materials":GltfUtil.parseArrayMin1(property.materials),
+    "meshes":GltfUtil.parseArrayMin1(property.meshes),
+    "nodes":GltfUtil.parseArrayMin1(property.nodes),
+    "samplers":GltfUtil.parseArrayMin1(property.samplers),
+    "scene":propScene,
+    "scenes":GltfUtil.parseArrayMin1(property.scenes),
+    "skins":GltfUtil.parseArrayMin1(property.skins),
+    "textures":GltfUtil.parseArrayMin1(property.textures)
+  });
+};
+/** @ignore */
+GltfParsers.parseMaterial = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Material");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "alphaCutoff":GltfUtil.parseNonnegativeNumberDefault(property.alphaCutoff, 0.5),
+    "alphaMode":GltfUtil.parseEnum(property.alphaMode, ["BLEND", "MASK", "OPAQUE"], "OPAQUE"),
+    "doubleSided":GltfUtil.parseBoolean(property.doubleSided, false),
+    "emissiveFactor":GltfUtil.parseArrayFixedLength(property.emissiveFactor, 3, [0.0, 0.0, 0.0]),
+    "emissiveTexture":typeof property.emissiveTexture !== "undefined" && property.emissiveTexture !== null ?
+GltfParsers.parseTextureInfo(property.emissiveTexture) : null,
+    "normalTexture":typeof property.normalTexture !== "undefined" && property.normalTexture !== null ?
+GltfParsers.parseMaterialNormalTextureInfo(property.normalTexture) : null,
+    "occlusionTexture":typeof property.occlusionTexture !== "undefined" && property.occlusionTexture !== null ?
+GltfParsers.parseMaterialOcclusionTextureInfo(property.occlusionTexture) : null,
+    "pbrMetallicRoughness":typeof property.pbrMetallicRoughness !== "undefined" && property.pbrMetallicRoughness !== null ?
+GltfParsers.parseMaterialPBRMetallicRoughness(property.pbrMetallicRoughness) : null
+  });
+};
+/** @ignore */
+GltfParsers.parseTextureInfo = function(property) {
+  if(typeof property === "undefined" || property === null || typeof property.index !== "number") {
+    throw new Error("TextureInfo");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "index":GltfUtil.parseNonnegativeInteger(property.index),
+    "texCoord":GltfUtil.parseNonnegativeIntegerDefault(property.texCoord, 0)
+  });
+};
+/** @ignore */
+GltfParsers.parseMeshPrimitive = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.attributes === "undefined" || property.attributes === null)) {
+    throw new Error("MeshPrimitive");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "attributes":property.attributes,
+    "indices":GltfUtil.parseNonnegativeInteger(property.indices),
+    "material":GltfUtil.parseNonnegativeInteger(property.material),
+    "mode":GltfUtil.parseEnum(property.mode, [0, 1, 2, 3, 4, 5, 6], 4),
+    "targets":GltfUtil.parseArrayMin1(property.targets)
+  });
+};
+/** @ignore */
+GltfParsers.parseTexture = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Texture");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "sampler":GltfUtil.parseNonnegativeInteger(property.sampler),
+    "source":GltfUtil.parseNonnegativeInteger(property.source)
+  });
+};
+/** @ignore */
+GltfParsers.parseBuffer = function(property) {
+  if(typeof property === "undefined" || property === null || typeof property.byteLength !== "number") {
+    throw new Error("Buffer");
+  }
+  if (Math.floor(property.byteLength) !== property.byteLength || property.byteLength < 1) {
+    throw new Error("ByteLength");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "byteLength":property.byteLength,
+    "uri":GltfUtil.parseString(property.uri)
+  });
+};
+/** @ignore */
+GltfParsers.parseAsset = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.version === "undefined" || property.version === null)) {
+    throw new Error("Asset");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "copyright":GltfUtil.parseString(property.copyright),
+    "generator":GltfUtil.parseString(property.generator),
+    "minVersion":GltfUtil.parseString(property.minVersion),
+    "version":GltfUtil.parseString(property.version)
+  });
+};
+/** @ignore */
+GltfParsers.parseMaterialPBRMetallicRoughness = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("MaterialPBRMetallicRoughness");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "baseColorFactor":GltfUtil.parseArrayFixedLength(property.baseColorFactor, 4, [1.0, 1.0, 1.0, 1.0]),
+    "baseColorTexture":typeof property.baseColorTexture !== "undefined" && property.baseColorTexture !== null ?
+GltfParsers.parseTextureInfo(property.baseColorTexture) : null,
+    "metallicFactor":GltfUtil.parseRangedNumber(property.metallicFactor, 0.0, 1.0, 1.0),
+    "metallicRoughnessTexture":typeof property.metallicRoughnessTexture !== "undefined" && property.metallicRoughnessTexture !== null ?
+GltfParsers.parseTextureInfo(property.metallicRoughnessTexture) : null,
+    "roughnessFactor":GltfUtil.parseRangedNumber(property.roughnessFactor, 0.0, 1.0, 1.0)
+  });
+};
+/** @ignore */
+GltfParsers.parseMaterialOcclusionTextureInfo = function(property) {
+  if(typeof property === "undefined" || property === null || typeof property.index !== "number") {
+    throw new Error("MaterialOcclusionTextureInfo");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "index":GltfUtil.parseNonnegativeInteger(property.index),
+    "strength":GltfUtil.parseRangedNumber(property.strength, 0.0, 1.0, 1.0),
+    "texCoord":GltfUtil.parseNonnegativeIntegerDefault(property.texCoord, 0)
+  });
+};
+/** @ignore */
+GltfParsers.parseSampler = function(property) {
+  if(typeof property === "undefined" || property === null) {
+    throw new Error("Sampler");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "magFilter":GltfUtil.parseEnum(property.magFilter, [9728, 9729], 0),
+    "minFilter":GltfUtil.parseEnum(property.minFilter, [9728, 9729, 9984, 9985, 9986, 9987], 0),
+    "wrapS":GltfUtil.parseEnum(property.wrapS, [10497, 33071, 33648], 10497),
+    "wrapT":GltfUtil.parseEnum(property.wrapT, [10497, 33071, 33648], 10497)
+  });
+};
+/** @ignore */
+GltfParsers.parseMaterialNormalTextureInfo = function(property) {
+  if(typeof property === "undefined" || property === null || typeof property.index !== "number") {
+    throw new Error("MaterialNormalTextureInfo");
+  }
+  var propScale = typeof property.scale !== "undefined" && property.scale !== null ? property.scale : 1.0;
+  if (typeof propScale !== "number") {
+    throw new Error("Scale");
+  }
+  return GltfUtil.addExtensionsExtras(property, {
+    "index":GltfUtil.parseNonnegativeInteger(property.index),
+    "scale":propScale,
+    "texCoord":GltfUtil.parseNonnegativeIntegerDefault(property.texCoord, 0)
+  });
+};
+/** @ignore */
+GltfParsers.parseBufferView = function(property) {
+  if(typeof property === "undefined" || property === null || typeof property.buffer !== "number" || typeof property.byteLength !== "number") {
+    throw new Error("BufferView");
+  }
+  if (Math.floor(property.byteLength) !== property.byteLength || property.byteLength < 1) {
+    throw new Error("ByteLength");
+  }
+  var propByteStrideIsKey = typeof property.byteStride !== "undefined" && property.byteStride !== null;
+  var propByteStride = propByteStrideIsKey ?
+ property.byteStride : 0;
+  propByteStride = typeof propByteStride === "number" ? Math.floor(propByteStride) : propByteStride;
+  if (typeof propByteStride !== "number" || propByteStrideIsKey && (propByteStride < 4 || propByteStride > 252)) {
+    throw new Error("ByteStride");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "buffer":GltfUtil.parseNonnegativeInteger(property.buffer),
+    "byteLength":property.byteLength,
+    "byteOffset":GltfUtil.parseNonnegativeIntegerDefault(property.byteOffset, 0),
+    "byteStride":propByteStride,
+    "target":GltfUtil.parseEnum(property.target, [34962, 34963], 0)
+  });
+};
+/** @ignore */
+GltfParsers.parseMesh = function(property) {
+  if(typeof property === "undefined" || property === null || (typeof property.primitives === "undefined" || property.primitives === null)) {
+    throw new Error("Mesh");
+  }
+  return GltfUtil.addExtensionsExtrasName(property, {
+    "primitives":GltfUtil.parseArrayMin1(property.primitives),
+    "weights":GltfUtil.parseArrayMin1(property.weights)
+  });
+};
+// --END PARSERS
+
+/** @ignore */
+function GltfState2(gltf, path, promiseResults, promiseKinds, promiseNames) {
+  this.buffers = {};
+  this.shaders = {};
+  this.meshes = {};
+  this.materials = {};
+  this.techniques = {};
+  this.nodeShapes = {};
+  this.error = "";
+  this.gltf = GltfParsers.parseGlTF(gltf);
+  this.path = path;
+  this.animChannels = [];
+  for(var i = 0; i < promiseKinds.length; i++) {
+    if(promiseKinds[i] === 0) {
+      this.buffers[promiseNames[i]] = promiseResults[i].data;
+    } else if(promiseKinds[i] === 1) {
+      this.shaders[promiseNames[i]] = promiseResults[i].data;
+    }
+  }
+  if(this.gltf.asset.version !== "2.0") {
+    this.error = "Unsupported version for this class";
+  }
+  this.batch = new H3DU.ShapeGroup();
+  this.imageUris = [];
+  for(var vIndex = 0; vIndex < this.gltf.images.length; vIndex++) {
+    var v = this.gltf.images[vIndex];
+    if(typeof v.uri === "undefined" || v.uri === null) {
+      this.error = "No image URI given";
+      break;
+    } else {
+      var uri = v.uri;
+      uri = GltfUtil._resolvePath(this.path, uri);
+      this.imageUris.push(uri);
+    }
+  }
+}
+/** @ignore */
+GltfState2.prototype.readTexture = function(texture) {
+  if(typeof texture === "undefined" || texture === null) {
+    this.error = "No texture";
+    return null;
+  }
+  var sampler = {};
+  if(texture.sampler < 0) {
+    sampler = {
+      "magFilter":9729,
+      "minFilter":9987,
+      "wrapS":10497,
+      "wrapT":10497
+    };
+  } else {
+    sampler = GltfParsers.parseSampler(this.gltf.samplers[texture.sampler]);
+  }
+  if(texture.source < 0) {
+    this.error = "No texture source";
+    return null;
+  }
+  var image = GltfParsers.parseImage(this.gltf.images[texture.source]);
+  // TODO: Support image.bufferView
+  var uri = GltfUtil._resolvePath(this.path, image.uri);
+  var parameters = {
+    "magFilter": sampler.magFilter <= 0 ? 9729 : sampler.magFilter,
+    "minFilter": sampler.minFilter <= 0 ? 9987 : sampler.minFilter,
+    "wrapS": typeof sampler.wrapS === "undefined" || sampler.wrapS === null ? 10497 : sampler.wrapS,
+    "wrapT": typeof sampler.wrapT === "undefined" || sampler.wrapT === null ? 10497 : sampler.wrapT,
+    "format":6408,
+    "topDown":true,
+    "internalFormat":6408,
+    "uri":uri
+  };
+  return new H3DU.TextureInfo(parameters);
+};
+/** @ignore */
+GltfState2.prototype.arrayFromAccessor = function(accessor) {
+  var bufferViewName = accessor.bufferView;
+  var byteOffset = accessor.byteOffset;
+  var componentType = accessor.componentType;
+  var componentSize = GltfUtil._bytesPerElement(componentType);
+  if(componentSize === 0) {
+    this.error = "Unsupported component type";
+    return null;
+  }
+  var byteStride = componentSize;
+  var bufferView = null;
+  if(bufferViewName >= 0) {
+    bufferView = GltfParsers.parseBufferView(this.gltf.bufferViews[bufferViewName]);
+    byteStride = bufferView.byteStride;
+    if(byteStride !== 0) {
+      if(byteStride < 0) {
+        this.error = "Byte stride less than 0 is not supported";
+        return null;
+      }
+      if(byteStride % componentSize !== 0) {
+        this.error = "Byte stride not divisible by component size is not yet supported";
+        return null;
+      }
+    }
+  } else {
+    throw new Error("Don't know what to do with absent bufferView");
+  }
+  var count = accessor.count;
+  var type = accessor.type;
+  var bufferViewBuffer = bufferView.buffer;
+  var bufferData = this.buffers[bufferViewBuffer];
+  var viewByteOffset = bufferView.byteOffset;
+  var viewByteLength = bufferView.byteLength;
+  var itemSize = GltfUtil._elementsPerValue(type);
+  var bytesPerElement = GltfUtil._bytesPerElement(componentType);
+  if(itemSize === 0) {
+    return null;
+  }
+  var bufferOffset = viewByteOffset + byteOffset;
+  var bufferLength = viewByteLength - byteOffset;
+  var elementCount = itemSize * count;
+  if(elementCount < 0) {
+    return null;
+  }
+  if(elementCount * bytesPerElement > bufferLength) {
+    this.error = "Buffer can't fit given number of values";
+    return null;
+  }
+  var array = GltfUtil._makeArray(componentType, bufferData, bufferOffset, elementCount);
+  if(!array) {
+    return null;
+  }
+  return new GltfArray(array, count, type, componentSize,
+    byteStride);
+};
+
+var GltfSampler$1 = function(input, output, interpolation) {
+  this.input = input.toValueArray();
+  this.output = output.toValueArray();
+  this.interpolation = interpolation === "LINEAR" ? 0 : -1;
+  if(interpolation === "STEP") {
+    this.interpolation = 1;
+  }
+};
+/** @ignore */
+GltfState2.prototype.readSampler = function(sampler) {
+  if(typeof sampler === "undefined" || sampler === null) {
+    return null;
+  }
+  if(typeof sampler.input === "undefined" || sampler.input === null) {
+    return null;
+  }
+  var input = sampler.input;
+  if(typeof sampler.output === "undefined" || sampler.output === null) {
+    return null;
+  }
+  var output = sampler.output;
+  var interp = typeof sampler.interpolation === "undefined" || sampler.interpolation === null ? "LINEAR" : sampler.interpolation;
+  if(interp !== "STEP" && interp !== "LINEAR") {
+    this.error = "Unsupported interpolation: " + interp;
+    return null;
+  }
+  if(typeof this.gltf.accessors === "undefined" || this.gltf.accessors === null) {
+    return null;
+  }
+  if(typeof this.gltf.accessors[input] === "undefined" || this.gltf.accessors[input] === null) {
+    return null;
+  }
+  var accessorInput = this.gltf.accessors[input];
+  if(typeof this.gltf.accessors[output] === "undefined" || this.gltf.accessors[output] === null) {
+    return null;
+  }
+  var accessorOutput = this.gltf.accessors[output];
+  accessorInput = GltfParsers.parseAccessor(accessorInput);
+  accessorOutput = GltfParsers.parseAccessor(accessorOutput);
+  var inputBuffer = this.arrayFromAccessor(accessorInput);
+  var outputBuffer = this.arrayFromAccessor(accessorOutput);
+  if(!(typeof accessorInput.componentType !== "undefined" && accessorInput.componentType !== null) || accessorInput.componentType !== 5126) {
+    this.error = "Input's component type is not FLOAT";
+    return null;
+  }
+  if(typeof inputBuffer === "undefined" || inputBuffer === null || (typeof outputBuffer === "undefined" || outputBuffer === null)) {
+    this.error = "Can't read input or output from sampler";
+    return null;
+  }
+  return new GltfSampler$1(inputBuffer, outputBuffer, interp);
+};
+/** @ignore */
+GltfState2.prototype.readAnimations = function() {
+  // TODO
+  return this;
+};
+
+/** @ignore */
+GltfState2.prototype.readNode = function(node, nodeName, parent) {
+  var orignode = node;
+  node = GltfParsers.parseNode(this.gltf.nodes[nodeName]);
+  if(typeof node === "undefined" || node === null)return null;
+  var nodeShapeGroup = new H3DU.ShapeGroup();
+  this.nodeShapes[nodeName] = nodeShapeGroup;
+  if(node.mesh >= 0) {
+    var mesh = GltfParsers.parseMesh(this.gltf.meshes[node.mesh]);
+    if(this.meshes[node.mesh]) {
+      nodeShapeGroup.addShape(this.meshes[node.mesh].copy());
+    } else {
+      var firstShape = null;
+      var shapeGroup = new H3DU.ShapeGroup();
+      var prims = mesh.primitives;
+      for(var p = 0; p < prims.length; p++) {
+        var prim = prims[p];
+        prim = GltfParsers.parsePrimitive(prim);
+        var meshBuffer = new H3DU.MeshBuffer();
+        var array;
+        var maxCount = 0;
+        var primMode = typeof prim.mode === "undefined" || prim.mode === null ? 4 : prim.mode;
+        var triangleFan = primMode === 6;
+        var triangleStrip = primMode === 5;
+        var lineStrip = primMode === 2;
+        var lineLoop = primMode === 3;
+        if(primMode > 6 || primMode < 0) {
+          this.error = "Primitive mode " + primMode + " is invalid";
+          return null;
+        }
+        if(primMode === 0) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.POINTS);
+        }
+        if(primMode === 4 || triangleFan || triangleStrip) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.TRIANGLES);
+        }
+        if(primMode === 1 || lineStrip || lineLoop) {
+          meshBuffer.setPrimitiveType(H3DU.Mesh.LINES);
+        }
+        for(var semantic in prim.attributes)
+          if(Object.prototype.hasOwnProperty.call(prim.attributes, semantic)) {
+            var attr = prim.attributes[semantic];
+            var attrAcc = GltfParsers.parseAccessor(this.gltf.accessors[attr]);
+            array = this.arrayFromAccessor(attrAcc);
+            if(!array) {
+              if(!this.error)this.error = "Invalid accessor array";
+              return null;
+            }
+            maxCount = Math.max(maxCount, array.valueCount);
+            meshBuffer.setAttribute(semantic, array.array,
+              array.elementsPerValue, 0, array.elementStride());
+          }
+        var indexArray = null;
+        if(typeof prim.indices !== "undefined" && prim.indices !== null && prim.indices >= 0) {
+          var indexAccessor = GltfParsers.parseAccessor(this.gltf.accessors[prim.indices]);
+          if(indexAccessor.componentType !== 5121 &&
+      indexAccessor.componentType !== 5123 &&
+      indexAccessor.componentType !== 5125) {
+            this.error = "invalid component type for indices"; return null;
+          }
+          array = this.arrayFromAccessor(indexAccessor);
+          if(!array) {
+            if(!this.error)this.error = "Invalid accessor array";
+            return null;
+          }
+          if(array.elementsPerValue !== 1 ||
+      array.byteStride !== 0 && array.byteStride !== array.valueByteSize() ||
+      array.elementByteSize !== 1 && array.elementByteSize !== 2 && array.elementByteSize !== 4) {
+            this.error = "invalid array for indices"; return null;
+          }
+          indexArray = array.array;
+        } else {
+          // Synthesize a list of indices
+          var indexList = [];
+          for(var k = 0; k < maxCount; k++) {
+            indexList.push(k);
+          }
+          indexArray = maxCount - 1 < 65536 ? new Uint16Array(indexList) :
+            new Uint32Array(indexList);
+        }
+        if(triangleFan)indexArray = GltfUtil.triangleFanToTriangles(indexArray);
+        if(triangleStrip)indexArray = GltfUtil.triangleStripToTriangles(indexArray);
+        if(lineStrip)indexArray = GltfUtil.lineStripToLines(indexArray);
+        if(lineLoop)indexArray = GltfUtil.lineLoopToLines(indexArray);
+        meshBuffer.setIndices(indexArray);
+        // If normals are absent, flat normals should be calculated
+        if(!meshBuffer.getAttribute(H3DU.Semantic.NORMAL)) {
+          meshBuffer.recalcNormals(true);
+        }
+        var shape = new H3DU.Shape(meshBuffer);
+        shape.getMaterial().setParams({
+          "albedo":[0, 0, 0],
+          "emission":[0.5, 0.5, 0.5],
+          "metalness":0.0,
+          "roughness":1.0
+        });
+        if(typeof this.materials[prim.material] !== "undefined" && this.materials[prim.material] !== null) {
+          shape.setMaterial(this.materials[prim.material]);
+        } else if(prim.material >= 0) {
+          var material = GltfParsers.parseMaterial(this.gltf.materials[prim.material]);
+          var materialObj = new H3DU.Material();
+          var texture;
+          if( typeof material.pbrMetallicRoughness !== "undefined" && material.pbrMetallicRoughness !== null) {
+            var pbr = material.pbrMetallicRoughness;
+            if(typeof pbr.baseColorFactor === "undefined" || pbr.baseColorFactor === null) {
+              return null;
+            }
+            var baseColor = pbr.baseColorFactor;
+            var metal = pbr.metallicFactor;
+            var rough = pbr.roughnessFactor;
+            materialObj = new H3DU.PbrMaterial({
+              "albedo":baseColor,
+              "metalness":metal,
+              "roughness":rough
+            });
+            texture = pbr.baseColorTexture;
+            if(typeof texture !== "undefined" && texture !== null) {
+              var tex = GltfParsers.parseTexture(this.gltf.textures[texture.index]);
+              tex = this.readTexture(tex);
+              if(!tex) {
+                this.error = "Bad texture"; return null;
+              }
+              materialObj.setParams({"texture":tex});
+            }
+            texture = pbr.metallicRoughnessTexture;
+            if(typeof texture !== "undefined" && texture !== null) {
+              tex = GltfParsers.parseTexture(this.gltf.textures[texture.index]);
+              tex = this.readTexture(tex);
+              if(!tex) {
+                this.error = "Bad texture"; return null;
+              }
+              materialObj.setParams({
+                "metalnessMap":tex,
+                "roughnessMap":tex
+              });
+            }
+          }
+          texture = material.occlusionTexture;
+          if(typeof texture !== "undefined" && texture !== null) {
+            tex = GltfParsers.parseTexture(this.gltf.textures[texture.index]);
+            tex = this.readTexture(tex);
+            if(!tex) {
+              this.error = "Bad texture"; return null;
+            }
+            materialObj.setParams({"occlusionMap":tex});
+          }
+          texture = material.normalTexture;
+          if(typeof texture !== "undefined" && texture !== null) {
+            tex = GltfParsers.parseTexture(this.gltf.textures[texture.index]);
+            tex = this.readTexture(tex);
+            if(!tex) {
+              this.error = "Bad texture"; return null;
+            }
+            materialObj.setParams({"normalMap":tex});
+          }
+          texture = material.emissiveTexture;
+          if(typeof texture !== "undefined" && texture !== null) {
+            tex = GltfParsers.parseTexture(this.gltf.textures[texture.index]);
+            tex = this.readTexture(tex);
+            if(!tex) {
+              this.error = "Bad texture"; return null;
+            }
+            materialObj.setParams({"emissionMap":tex});
+          }
+          shape.setMaterial(materialObj);
+          this.materials[prim.material] = materialObj;
+        }
+        shapeGroup.addShape(shape);
+        if(p === 0)firstShape = shape;
+      }
+      var meshShape = prims.length === 1 ? firstShape : shapeGroup;
+      this.meshes[node.mesh] = meshShape;
+      nodeShapeGroup.addShape(meshShape);
+    }
+    if(typeof orignode.matrix !== "undefined" && orignode.matrix !== null) {
+      nodeShapeGroup.getTransform().setMatrix(node.matrix);
+    } else {
+      var tr = node.translation;
+      nodeShapeGroup.getTransform().setPosition(tr[0], tr[1], tr[2]);
+      tr = node.rotation;
+      nodeShapeGroup.getTransform().setQuaternion(node.rotation);
+      tr = node.scale;
+      nodeShapeGroup.getTransform().setScale(tr[0], tr[1], tr[2]);
+    }
+  }
+  if(typeof node.children !== "undefined" && node.children !== null) {
+    for(var i = 0; i < node.children.length; i++) {
+      var child = node.children[i];
+      var childNode = this.gltf.nodes[child];
+      if(!this.readNode(childNode, child, nodeShapeGroup)) {
+        if(!this.error)this.error = "Can't read node";
+        return null;
+      }
+    }
+  }
+  parent.addShape(nodeShapeGroup);
+  return this;
+};
+
+/** @ignore */
+GltfState2.prototype.readScenes = function() {
+// Get the default scene
+  var defaultScene = null;
+  if(this.gltf.scene === -1 && this.gltf.scenes.length === 1) {
+    defaultScene = this.gltf.scenes[0];
+  } else {
+    defaultScene = this.gltf.scenes[this.gltf.scene];
+    if(typeof defaultScene === "undefined" || defaultScene === null)return null;
+  }
+  defaultScene = GltfParsers.parseScene(defaultScene);
+  // Read the default scene's nodes
+  for(var nodeIndexIndex = 0; nodeIndexIndex < defaultScene.nodes.length; nodeIndexIndex++) {
+    var nodeIndex = defaultScene.nodes[nodeIndexIndex];
+    if(!this.readNode(this.gltf.nodes[nodeIndex], nodeIndex, this.batch)) {
+      return null;
+    }
+  }
+  return this;
+};
+/** @ignore */
+GltfState2.prototype.toGltf = function() {
+  var ret = new GltfInfo();
+  ret.batch = this.batch;
+  ret.animChannels = this.animChannels;
+  ret.imageUris = this.imageUris;
+  ret.maxEndTimeSecs = 0;
+  for(var i = 0; i < ret.animChannels.length; i++) {
+    var input = ret.animChannels[i].sampler.input;
+    ret.maxEndTimeSecs = Math.max(
+      ret.maxEndTimeSecs,
+      input[input.length - 1]);
+  }
+  return ret;
+};
+/** @ignore */
+GltfState2.readGltf = function(gltf, path) {
+  var promises = [];
+  var promiseKinds = [];
+  var promiseNames = [];
+  var gltfBuffers = GltfUtil.parseArrayMin1(gltf.buffers);
+  for(var bufferName = 0; bufferName < gltfBuffers.length; bufferName++) {
+    var bufferValue = gltfBuffers[bufferName];
+    bufferValue = GltfParsers.parseBuffer(bufferValue);
+    var uri = GltfUtil._resolvePath(path, bufferValue.uri);
+    promises.push(H3DU.loadFileFromUrl(uri, "arraybuffer"));
+    promiseNames.push(bufferName);
+    promiseKinds.push(0);
+  }
+  return H3DU.getPromiseResultsAll(promises)
+    .then(function(promiseResults) {
+      var state = new GltfState2(gltf, path, promiseResults, promiseKinds, promiseNames);
+      var retState = state.readScenes();
+      if(!retState)return Promise.reject(state.error);
+      retState = state.readAnimations();
+      if(!retState)return Promise.reject(state.error);
+      return Promise.resolve(state.toGltf());
+    });
+};
+
+/* global H3DU, Promise */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -1199,7 +1912,6 @@ GltfState1.readGltf = function(gltf, path) {
  http://peteroupc.github.io/
 */
 
-// import {GltfState2} from "./gltf2";
 // LATER: Convert batches/shape groups to glTF
 
 /**

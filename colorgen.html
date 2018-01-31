@@ -25,7 +25,7 @@
 <p><strong>This document does not cover:</strong></p>
 
 <ul>
-<li>Procedures to change or set the color used&mdash;
+<li>Procedures to change or set colors used&mdash;
 
 <ul>
 <li>in text, foregrounds, or backgrounds of user interface elements (such as buttons, text boxes, and windows),</li>
@@ -158,7 +158,7 @@
 
 <p>The <strong>red-green-blue (RGB) color model</strong> is the most commonly seen color model in mainstream computer programming.</p>
 
-<p>The RGB model is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note1">(1)</a></sup> The RGB model is a three-dimensional cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
+<p>The RGB model is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note1">(1)</a></sup> The RGB model is a cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
 
 <p><strong>RGB color spaces</strong> generally differ in their red, green, blue, and white points<sup><a href="#Note2">(2)</a></sup> as well as in their <a href="#Linear_RGB_and_Companded_RGB"><em>color component transfer functions</em></a>.</p>
 
@@ -1069,9 +1069,9 @@ adaptation are outside the scope of this document, but see the examples. (See al
 <p>The <code>Lerp3</code> function below gets an &quot;alpha blend&quot; of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em> being 0 or greater and 1 or less (0 means equal to <code>color1</code> and 1 means equal to <code>color2</code>).<sup><a href="#Note23">(23)</a></sup></p>
 
 <ul>
-<li>Generating a <strong>shade</strong> of a color (mixing with black) is equivalent to alpha blending that color with black <code>[0, 0, 0]</code>.</li>
-<li>Generating a <strong>tint</strong> of a color (mixing with white) is equivalent to alpha blending that color with white <code>[1, 1, 1]</code>.</li>
-<li>Generating a <strong>tone</strong> of a color (mixing with gray) is equivalent to alpha blending that color with gray <code>[0.5, 0.5, 0.5]</code>.</li>
+<li>Generating a <strong>shade</strong> of a color (mixing with black) is equivalent to alpha blending that color with black (such as <code>[0, 0, 0]</code> in RGB).</li>
+<li>Generating a <strong>tint</strong> of a color (mixing with white) is equivalent to alpha blending that color with white (such as <code>[1, 1, 1]</code> in RGB).</li>
+<li>Generating a <strong>tone</strong> of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as <code>[0.5, 0.5, 0.5]</code> in RGB).</li>
 <li>Averaging two colors is equivalent to alpha blending with <code>alpha</code> set to 0.5.</li>
 <li>Converting an RGBA color to an RGB color on white is equivalent to <code>Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])</code>.</li>
 <li>Converting an RGBA color to an RGB color over <code>color2</code>, another RGB color, is equivalent to <code>Lerp3([color[0], color[1], color[2]], color2, color[3])</code>.</li>
@@ -1600,7 +1600,7 @@ wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding val
     // not change.
     // NOTE: If `weight` is 1/683, `CMF` outputs XYZ
     // values, and `REFL` always returns 1, then SpectrumToTristim
-    // will output XYZ values in lumens per watt.
+    // will output XYZ values where Y is a value in cd/m^2.
     xyz[0] = xyz[0] / weight
     xyz[1] = xyz[1] / weight
     xyz[2] = xyz[2] / weight
@@ -1646,18 +1646,18 @@ END METHOD
 
 METHOD LIGHT(wavelength) # NOTE: Relative only
     return Planckian(wavelength, TEMP) * 100.0 /
-        Planckian(wavelength, 560)
+        Planckian(560, wavelength)
 END METHOD
 </pre>
 
 <p>The following method (<code>XYZToCCT</code>) computes an approximate color temperature, in kelvins, from an
-<a href="#CIE_XYZ">XYZ color</a>. Because of the limited perceived color range of light emitted by blackbodies (namely red, orange, pale yellow, white, or sky blue), the color temperature found by
+<a href="#CIE_XYZ">XYZ color</a>. Because of the limited range of chromaticities of blackbody light (namely red, orange, pale yellow, or sky blue), the color temperature found by
 this formula is often called <em>correlated color temperature</em> (CCT).  The formula given here is based on
 the one found in McCamy 1992.</p>
 
 <pre>METHOD XYZToCCT(xyz)
     xyy = XYZToxyY(xyz)
-    c = (xyy[0] - 0.3320) / (0.1858 - xyy[1])
+    c = (xyy[0] - 0.332) / (0.1858 - xyy[1])
     return ((449*c+3525)*c+6823.3)*c+5520.33
 END METHOD
 </pre>
