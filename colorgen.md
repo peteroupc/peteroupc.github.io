@@ -1325,7 +1325,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
    (_See also note 3 later in this section._)
 - `REFL(wl)` models the **reflectance or transmittance curve**. Values on the curve are 0 or greater and, with the exception of fluorescent materials, 1 or less.  `REFL` can always return 1 to model a _perfect reflecting_ or _perfect transmitting diffuser_, e.g., if the purpose is to get the perceived color of the light source itself. `REFL` returns the value of the curve at the wavelength `wl`.
 - `LIGHT(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`.  Choices for `LIGHT` include&mdash;
-    - the D65 illuminant<sup>[(31)](#Note31)</sup>, which approximates 6504-kelvin (noon) daylight (with a correlated color temperature of about 6504 kelvins),
+    - the D65 illuminant<sup>[(31)](#Note31)</sup>, which approximates noon daylight with a correlated color temperature of about 6503 kelvins,
     - the D50 illuminant, which approximates 5003-kelvin (sunrise) daylight, and
     - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)".
 - `CMF(wl)` models three **color matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;

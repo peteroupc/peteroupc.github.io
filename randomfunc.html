@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Jan. 27, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 4, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -32,11 +32,10 @@
 <li>make no assumptions on the statistical quality or predictability of the underlying RNG.</li>
 </ul>
 
-<p>In general, security, performance, quality, and other considerations will determine what underlying RNG to use in a particular application; I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html">another document</a>.</p>
-
 <p><strong>In general, this document does not cover:</strong></p>
 
 <ul>
+<li>How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality. I have written more on RNG recommendations in <a href="https://peteroupc.github.io/random.html">another document</a>.</li>
 <li>Techniques that are specific to an application programming interface.</li>
 <li>Techniques that are specific to certain kinds of RNGs.</li>
 <li>Generating sequences of unique integers using specific kinds of deterministic RNGs.</li>
@@ -142,7 +141,7 @@
 <li>(<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;.</li>
 <li>[<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
 </ul></li>
-<li><strong>Random number generator (RNG).</strong> A number generator that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note1">(1)</a></sup>.</li>
+<li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note1">(1)</a></sup>.</li>
 <li><strong>Norm.</strong> The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, <code>sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)</code>.</li>
 <li><strong>Significand permutations.</strong> A floating-point format&#39;s floating-point base raised to the power of the format&#39;s precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
 
@@ -676,7 +675,7 @@ END METHOD
 </ul>
 
 <p>as found in the Basic Latin block of the Unicode Standard.</p></li>
-<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (Converting this list to a text string is programming-language-dependent, and the details of the conversion are outside the scope of this page.)</p>
+<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</p>
 
 <pre>METHOD RandomString(characterList, stringSize)
         i = 0
@@ -832,12 +831,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</p>
 <li>Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items &quot;good&quot; and &quot;bad&quot;, and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the <a href="#Weighted_Choice_Without_Replacement">weighted choice without replacement</a> technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.</li>
 </ul>
 
-<p>However, &quot;almost-random&quot; sampling techniques are not recommended&mdash;</p>
-
-<ul>
-<li>whenever computer or information security is involved, or</li>
-<li>in cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.</li>
-</ul>
+<p>However, &quot;almost-random&quot; sampling techniques are not recommended whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.</p>
 
 <p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The <a href="http://mathworld.wolfram.com/Variance.html">&quot;Variance&quot; MathWorld article</a> gives methods for calculating the estimate&#39;s variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 
@@ -1133,7 +1127,7 @@ END METHOD
 <ol>
 <li>Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally generate <a href="#Continuous_Weighted_Choice"><code>ContinuousWeightedChoice(list, weights)</code></a> to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn&#39;t 1. <strong>OR</strong></li>
 <li>Use <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><em>inverse transform sampling</em></a>. Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>, or inverse of the CDF) assuming the area under the PDF is 1. <strong>OR</strong></li>
-<li><p>Use <em>rejection sampling</em>.  Choose the lowest and highest random number to generate (<code>minValue</code> and <code>maxValue</code>, respectively) and find the maximum value of the PDF at or between those points (<code>maxDensity</code>).  The rejection sampling approach is then illustrated with the following pseudocode, where <code>PDF(X)</code> is the distribution&#39;s PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn&#39;t 1.</p>
+<li><p>Use <a href="#Rejection_Sampling"><em>rejection sampling</em></a>.  Choose the lowest and highest random number to generate (<code>minValue</code> and <code>maxValue</code>, respectively) and find the maximum value of the PDF at or between those points (<code>maxDensity</code>).  The rejection sampling approach is then illustrated with the following pseudocode, where <code>PDF(X)</code> is the distribution&#39;s PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn&#39;t 1.</p>
 
 <pre>METHOD ArbitraryDist(minValue, maxValue, maxDensity)
      if minValue &gt;= maxValue: return error
