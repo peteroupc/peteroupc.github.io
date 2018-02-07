@@ -30,11 +30,9 @@ This document presents supplemental topics about color.
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
 
-In this document:
-
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
-- The term _RGB_ means red-green-blue.
-- The abbreviation _CIE_ means the International Commission on Illumination (CIE, for its initials in French).
+- **CIE.** French initials for the International Commission on Illumination.
+- **RGB.** Red-green-blue.
 
 <a id=Overview_of_Color_Vision></a>
 ## Overview of Color Vision
@@ -190,7 +188,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 <a id=Terminal_Graphics></a>
 ## Terminal Graphics
 
-Some command-line shells support coloring the background or foreground of text.  In shells that support [ANSI color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
+Some command-line shells support coloring the background or foreground of text.  In shells that support ["ANSI" (American National Standards Institute) color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
 - "1": Set the following text in bold.
@@ -205,7 +203,7 @@ Some command-line shells support coloring the background or foreground of text. 
 - "9" followed by color number: Brighter foreground color.
 - "10" followed by color number: Brighter background color.
 
-The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
+The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
 
 <a id=Irrelevant_Topics></a>
 ## Irrelevant Topics
@@ -221,15 +219,15 @@ The following topics on color are rarely relevant to programmers:
 
 <small>
 
-<sup id=Note1>(1)</sup> It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.
+<sup id=Note1>(1)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.
 
-<sup id=Note2>(2)</sup> No note text yet.
+<sup id=Note2>(2)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.
 
 <sup id=Note3>(3)</sup> For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
 
 <sup id=Note4>(4)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion, "additive mixture" and "subtractive mixture" are inferior terms to light mixture and colorant mixture, respectively.
 
-<sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific colored lights or colorants.
+<sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific light sources or colorants.
 
 </small>
 

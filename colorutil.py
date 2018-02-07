@@ -220,11 +220,22 @@ class SPD:
        self.maxWavelength=maxWavelength
     self.interval=interval
 
-  def calc(self, wavelength):
+  def calcd(self, wavelength):
     if wavelength < self.minWavelength or wavelength > self.maxWavelength:
       return 0
     index=int(round((wavelength-self.minWavelength)*1.0/self.interval))
     return self.values[index]
+
+  def calc(self, wavelength):
+    if wavelength < self.minWavelength or wavelength > self.maxWavelength:
+      return 0
+    mm=wavelength%self.interval
+    s=self.calcd(wavelength-mm)
+    if mm==0:
+       return s
+    m=mm*1.0/self.interval
+    e=self.calcd((wavelength-mm)+self.interval)
+    return s+(e-s)*m
 
 #
 #  Illuminants and observers

@@ -45,12 +45,10 @@
 
 <h2>Notation and Definitions</h2>
 
-<p>In this document:</p>
-
 <ul>
 <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
-<li>The term <em>RGB</em> means red-green-blue.</li>
-<li>The abbreviation <em>CIE</em> means the International Commission on Illumination (CIE, for its initials in French).</li>
+<li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
+<li><strong>RGB.</strong> Red-green-blue.</li>
 </ul>
 
 <p><a id=Overview_of_Color_Vision></a></p>
@@ -236,7 +234,7 @@ Hunter L, a, b colors analogously to CIELAB colors.</p>
 
 <h2>Terminal Graphics</h2>
 
-<p>Some command-line shells support coloring the background or foreground of text.  In shells that support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI color codes</a> (generally in the category &quot;select graphic rendition&quot;, or SGR), the sequence U+001B (escape character) followed by &quot;[&quot; followed by a semicolon-separated sequence of numbers (given below) followed by &quot;m&quot; is a graphic control sequence (see also Ecma-048, sec. 8.3.117):</p>
+<p>Some command-line shells support coloring the background or foreground of text.  In shells that support <a href="https://en.wikipedia.org/wiki/ANSI_escape_code">&quot;ANSI&quot; (American National Standards Institute) color codes</a> (generally in the category &quot;select graphic rendition&quot;, or SGR), the sequence U+001B (escape character) followed by &quot;[&quot; followed by a semicolon-separated sequence of numbers (given below) followed by &quot;m&quot; is a graphic control sequence (see also Ecma-048, sec. 8.3.117):</p>
 
 <ul>
 <li>&quot;0&quot;: Reset the foreground and background color and other graphic properties to default.  (U+001B followed by &quot;[m&quot; has the same effect.)</li>
@@ -253,7 +251,7 @@ Hunter L, a, b colors analogously to CIELAB colors.</p>
 <li>&quot;10&quot; followed by color number: Brighter background color.</li>
 </ul>
 
-<p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the ANSI SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
+<p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
 
 <p><a id=Irrelevant_Topics></a></p>
 
@@ -273,15 +271,15 @@ Hunter L, a, b colors analogously to CIELAB colors.</p>
 
 <p><small></p>
 
-<p><sup id=Note1>(1)</sup> It&#39;s not quite accurate to speak of &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; cones, respectively.</p>
+<p><sup id=Note1>(1)</sup> It&#39;s not accurate to speak of &quot;red light&quot;, &quot;green light&quot;, &quot;blue light&quot;, &quot;white light&quot;, and so on.</p>
 
-<p><sup id=Note2>(2)</sup> No note text yet.</p>
+<p><sup id=Note2>(2)</sup> Standing for long, medium, and short wavelength, respectively.  It&#39;s not quite accurate to speak of &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; cones, respectively.</p>
 
 <p><sup id=Note3>(3)</sup> For information on how defective color vision can be simulated, see &quot;<a href="http://ixora.io/projects/colorblindness/color-blindness-simulation-research/">Color Blindness Simulation Research</a>&quot;, by &quot;Jim&quot;.</p>
 
 <p><sup id=Note4>(4)</sup> The colors that such lights or colorants are based on can be called &quot;primary colors&quot;; it&#39;s only in the context of light-mixture, colorant-mixture, or opponent color spaces that &quot;primary colors&quot; are normally relevant to programming.  Note that some light-mixture color spaces, such as the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 RGB color space</a>, include imaginary points for one or more &quot;primary colors&quot; in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion, &quot;additive mixture&quot; and &quot;subtractive mixture&quot; are inferior terms to light mixture and colorant mixture, respectively.</p>
 
-<p><sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the <em>unique hues</em>, and those colors, with or without white and black, can be called &quot;primary colors&quot;.  Here, such &quot;primary colors&quot; serve more to anchor the location of a particular color in the color space than to &quot;mix all colors&quot; or represent specific colored lights or colorants.</p>
+<p><sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the <em>unique hues</em>, and those colors, with or without white and black, can be called &quot;primary colors&quot;.  Here, such &quot;primary colors&quot; serve more to anchor the location of a particular color in the color space than to &quot;mix all colors&quot; or represent specific light sources or colorants.</p>
 
 <p></small></p>
 
