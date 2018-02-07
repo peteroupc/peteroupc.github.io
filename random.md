@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 4, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 6, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -88,7 +88,7 @@ Unpredictable-random implementations (also known as "cryptographically strong" o
 
 -  generating keying material, such as encryption keys,
 -  generating random passwords, nonces, or session identifiers,
--  generating "salts" to vary cryptographic hashes of the same password,
+-  generating "salts" to vary hash codes of the same password,
 -  use in communications between two networked computers,
 -  use in transfer, transport, messaging, and other communication protocols, and
 -  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
@@ -255,7 +255,9 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers, at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available.  In some cases, some of the information necessary to verify the numbers' generation is disclosed in the announcement that those numbers will be generated.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers&mdash;
+- at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and/or
+- some of it is disclosed in the announcement that those numbers will be generated.
 
 One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [hash functions](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
@@ -325,7 +327,7 @@ Wherever possible, existing libraries and techniques that already meet the requi
     and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and
 - a statistical-random implementation can use a PRNG algorithm mentioned as an example in the [statistical-random generator](#Statistical_Random_Generators) section.
 
-If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for unpredictable-random generators could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer must run in amortized linear time on the number of random bytes the API will generate.
+If existing solutions are inadequate, a programming language API could implement unpredictable-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for unpredictable-random generators could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer ought to run in amortized linear time on the number of random bytes the API will generate.
 
 Unpredictable-random and statistical-random implementations&mdash;
 - should be reasonably fast for most applications, and
@@ -345,7 +347,7 @@ There are special considerations in play when applications use RNGs to shuffle a
 <a id=Shuffling_Method></a>
 ### Shuffling Method
 
-The first consideration touches on the shuffling method.  The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list such that all permutations of that list are substantially equally likely to occur, assuming the RNG it uses can choose from among all those permutations.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
+The first consideration touches on the shuffling method.  The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[The danger of na&iuml;vet&eacute;](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [another document](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Choosing_from_Among_All_Permutations></a>
 ### Choosing from Among All Permutations
@@ -353,8 +355,9 @@ The first consideration touches on the shuffling method.  The [Fisher&ndash;Yate
 The second consideration is present if the application uses PRNGs for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
 The number of distinct permutations is the [multinomial coefficient](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [factorial](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
-- _n_!, if the list consists of _n_ different items, and
-- (_np_)! / _p_!<sup>_n_</sup>, if the list is formed from _p_ identical lists each with _n_ different items.
+- _n_!, if the list consists of _n_ different items,
+- (_np_)! / _p_!<sup>_n_</sup>, if the list is formed from _p_ identical lists each with _n_ different items, and
+- _n_! / (_q_! &times; (_n_ - _q_)!), if the list consists of _n_ different items and _q_ items are selected without replacement from that list (see RFC 3797, sec. 3.3).
 
 In general, a PRNG with state length _k_ bits, as shown in the table below, can't choose from among all the distinct permutations of a list with more items than the given maximum list size _n_ (_k_ is the base-2 logarithm of _n_!, rounded up to an integer). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't choose from among more than 2<sup>_k_</sup> permutations.)
 
@@ -391,7 +394,7 @@ The PRNG in question should&mdash;
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number<sup>[(4)](#Note4)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup>[(4)](#Note4)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -399,7 +402,9 @@ A hash code can be used as follows:
 
 For such purposes, applications should choose hash functions designed such that&mdash;
 - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_), and
-- if the hash function's use implicates information security, it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input, and at least cost-prohibitive to find an unknown input that leads to a given output.
+- if the hash function's use implicates information security, then&mdash;
+    - it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input (the _one-way property_), and
+    - it is at least cost-prohibitive to find an unknown input that leads to a given output (_collision resistance_).
 
 <a id=GPU_Programming_Environments></a>
 ## GPU Programming Environments
