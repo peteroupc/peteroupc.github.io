@@ -860,7 +860,7 @@ METHOD LabChromaHueDifference(lab1, lab2)
 
 <h3>CIELUV</h3>
 
-<p>CIELUV (also known as CIE <em>L*u*v*</em> or CIE 1976 <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, <em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>, and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV">B. MacEvoy explains</a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially used when working with colors of light sources.</p>
+<p>CIELUV (also known as CIE <em>L*u*v*</em> or CIE 1976 <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, <em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>, and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV">B. MacEvoy explains</a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially useful when working with colors of light sources.</p>
 
 <p>In the following pseudocode&mdash;</p>
 
@@ -1487,7 +1487,7 @@ END METHOD
 
 <ul>
 <li>As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, named colors defined in that module are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</li>
-<li>If the color names identify points in a color space (as in the &quot;5RP 5/6&quot; example), converting a color name with a similar format (e.g., &quot;5.6PB 3.1/5.5&quot;) to a color can be done by interpolating known colors closest to that name.  Details of such interpolation are beyond the scope of this page.</li>
+<li>If the color names identify points in a color space (as in the &quot;5RP 5/6&quot; example), converting a color name with a similar format (e.g., &quot;5.6PB 7.1/2.5&quot;) to a color can be done by interpolating known colors closest to that name.  Details of such interpolation are beyond the scope of this page.</li>
 </ul>
 </blockquote>
 
@@ -1855,7 +1855,7 @@ passed at once to the <code>WGM</code> function just given must be from the same
 
 <p>A very rough approximate conversion of an RGB color (<code>color</code>) to a CMYK color involves generating <code>k = min(min(1.0 - color[0], 1.0 - color[1]), 1.0 - color[2])</code>, then generating <code>[0, 0, 0, 1]</code> if <code>k</code> is 1, or <code>[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]</code> otherwise.  A very rough approximate conversion of a CMYK color (<code>cmyk</code>) to an RGB color involves generating <code>[(1 - cmyk[0]) * ik, (1 - cmyk[1]) * ik, (1 - cmyk[2]) * ik]</code>, where <code>ik = 1 - cmyk[3]</code>.</p>
 
-<p>Just as with CMYK, the interpretation of any recipe of inks depends on the printing condition.  However, printing systems that use mixtures of inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of six or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
+<p>Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of six or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
 
 <p><sup id=Note19>(19)</sup> Other methods that have been used for approximating relative luminance (and which don&#39;t really yield &quot;relative luminance&quot; as used here) include&mdash;</p>
 

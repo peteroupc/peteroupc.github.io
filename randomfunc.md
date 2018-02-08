@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 4, 2018.
+Begun on June 4, 2017; last updated on Feb. 8, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -231,15 +231,14 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
       end
     END METHOD
 
-**Notes:**
-
-- To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
-- To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`),
-let `X` be that integer, then generate `X - mod(X, DIV)` if `X >= 0`, or `X - (DIV - mod(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
-- A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
-     - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
-     - To convert a point `P` to its 2D coordinates, generate `[mod(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
-     - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
+> **Notes:**
+>
+> - To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
+> - To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - mod(X, DIV)` if `X >= 0`, or `X - (DIV - mod(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
+> - A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
+>      - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
+>      - To convert a point `P` to its 2D coordinates, generate `[mod(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
+>      - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
 
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTRANGE`: Random Integers in [N, M]
@@ -280,11 +279,10 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
        end
     END METHOD
 
-**Note:**
-
-- To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
-- Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
-- Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
+> **Notes:**
+> - To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
+> - Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
+> - Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 
 <a id=RNDU01_Random_Numbers_in_0_1></a>
 ### `RNDU01`: Random Numbers in [0, 1]
@@ -356,14 +354,14 @@ can be implemented as follows<sup>[(4)](#Note4)</sup>:
         return RNDINT(maxExclusive - 1)
      END METHOD
 
-**Note:** The following are alternative ways of generating a random integer in the interval [0, `maxExclusive`):
-- `floor(RNDNUMEXCRANGE(0, maxExclusive))`.
-- Generate `N = floor(RNDU01OneExc()*(maxExclusive))` until `N < maxExclusive`. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.<sup>[(5)](#Note5)</sup>)
-
-These approaches, though, are recommended only if the programming language&mdash;
-- supports floating-point number types and no other number types (an example is JavaScript),
-- is a dialect of SQL, or
-- doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
+> **Note:** The following are alternative ways of generating a random integer in the interval [0, `maxExclusive`):
+> - `floor(RNDNUMEXCRANGE(0, maxExclusive))`.
+> - Generate `N = floor(RNDU01OneExc()*(maxExclusive))` until `N < maxExclusive`. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in `maxExclusive` being returned in rare cases.<sup>[(5)](#Note5)</sup>)
+>
+> These approaches, though, are recommended only if the programming language&mdash;
+> - supports floating-point number types and no other number types (an example is JavaScript),
+> - is a dialect of SQL, or
+> - doesn't support an integer type that is big enough to fit the number `maxExclusive - 1`.
 
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
@@ -494,10 +492,11 @@ the following idioms in an `if` condition:
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
 - True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
 - True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU01OneExc() < X`.
-- **Examples:**
-    - True with probability 3/8: `RNDINTEXC(8) < 3`.
-    - True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
-    - True with 20% probability: `RNDINTEXC(100) < 20`.
+
+> **Examples:**
+> - True with probability 3/8: `RNDINTEXC(8) < 3`.
+> - True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
+> - True with 20% probability: `RNDINTEXC(100) < 20`.
 
 <a id=Shuffling></a>
 ### Shuffling
@@ -538,14 +537,14 @@ The [Fisher&ndash;Yates shuffle method](https://en.wikipedia.org/wiki/Fisher-Yat
 
 An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [RNG recommendation document on shuffling](https://peteroupc.github.io/random.html#Shuffling).<sup>[(6)](#Note6)</sup>
 
-**Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;
-- one or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups), then
-- multiple simulated datasets are generated, where each dataset is generated by&mdash;
-    - merging the groups,
-    - shuffling the merged dataset, and
-    - relabeling each item in order such that the number of items in each group for the simulated dataset is the same as for the original dataset, then
-- for each simulated dataset, the same statistics are calculated as for the original dataset, then
-- the statistics for the simulated datasets are compared with those of the original.
+> **Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;
+> - one or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups), then
+> - multiple simulated datasets are generated, where each dataset is generated by&mdash;
+>    - merging the groups,
+>    - shuffling the merged dataset, and
+>    - relabeling each item in order such that the number of items in each group for the simulated dataset is the same as for the original dataset, then
+> - for each simulated dataset, the same statistics are calculated as for the original dataset, then
+> - the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Creating_a_Random_Character_String></a>
 ### Creating a Random Character String
@@ -573,14 +572,14 @@ To generate a random string of characters (usually a random _alphanumeric string
                 return newString
         END METHOD
 
-**Notes:**
-
-- If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-- Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
-- Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
-- Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
-- For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
-- Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(7)](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
+> **Notes:**
+>
+> - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
+> - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
+> - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
+> - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
+> - For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
+> - Ways to generate "pronounceable" words or words similar to natural-language words<sup>[(7)](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
 
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 ### Sampling With Replacement: Choosing a Random Item from a List
@@ -592,12 +591,12 @@ To choose a random item from a list&mdash;
 
 Choosing an item this way is also known as _sampling with replacement_.
 
-**Notes:**
+> **Notes:**
 
-- Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
-    - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
-    - choosing a random item from the list generated this way.
-- [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+> - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
+>     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
+>     - choosing a random item from the list generated this way.
+> - [_Bootstrapping_](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -675,7 +674,7 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
               return ret
         END METHOD
 
-**Note:** Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
+> **Note:** Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
 
 <a id=Almost_Random_Sampling></a>
@@ -688,7 +687,7 @@ Some applications (particularly some games) may find it important to control whi
 
 However, "almost-random" sampling techniques are not recommended whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
 
-**Note:** [Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The ["Variance" MathWorld article](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [_low-discrepancy sequences_](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+> **Note:** [Monte Carlo integration](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The ["Variance" MathWorld article](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [_low-discrepancy sequences_](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=Choosing_a_Random_Date_Time></a>
 ### Choosing a Random Date/Time
@@ -967,7 +966,7 @@ If both **a PDF and a uniform random variable in the interval [0, 1) (`randomVar
 
 If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
 
-**Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
+> **Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -978,23 +977,23 @@ To generate random content from a mixture&mdash;
 1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
 2. based on the value of `index`, generate the random content from the corresponding distribution.
 
-**Examples:**
-
-- One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
-
-        index = DiscreteWeightedChoice([80, 20])
-        number = 0
-        // If index 0 was chosen, sample from the mean 1 normal
-        if index==0: number = Normal(1, 1)
-        // Else index 1 was chosen, sample from the mean -1 normal
-        else: number = Normal(-1, 1)
-
-- Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
-- For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
-    - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
-    - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
-
-    For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDNUMEXCRANGE(mn, mx)` instead.
+> **Examples:**
+>
+> - One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
+>
+>         index = DiscreteWeightedChoice([80, 20])
+>         number = 0
+>         // If index 0 was chosen, sample from the mean 1 normal
+>         if index==0: number = Normal(1, 1)
+>         // Else index 1 was chosen, sample from the mean -1 normal
+>         else: number = Normal(-1, 1)
+>
+> - Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
+> - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
+>     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
+>     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
+>
+>     For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDNUMEXCRANGE(mn, mx)` instead.
 
 <a id=Censored_and_Truncated_Distributions></a>
 ### Censored and Truncated Distributions
@@ -1054,10 +1053,10 @@ The following method generates a random result of rolling virtual dice.<sup>[(10
          return ret
     END METHOD
 
-**Examples:** The result of rolling&mdash;
-- four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
-- three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
-- two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
+> **Examples:** The result of rolling&mdash;
+> - four six-sided virtual dice ("4d6") is `DiceRoll(4,6,0)`,
+> - three ten-sided virtual dice, with 4 added ("3d10 + 4"), is `DiceRoll(3,10,4)`, and
+> - two six-sided virtual dice, with 2 subtracted ("2d6 - 2"), is `DiceRoll(2,6,-2)`.
 
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
@@ -1100,9 +1099,9 @@ Alternatively, or in addition, the following method (implementing a ratio-of-uni
         end
     END METHOD
 
-**Notes:**
-- In a _standard normal distribution_, `mu` = 0 and `sigma` = 1.
-- Note that if variance is given, rather than standard deviation, the standard deviation (`sigma`) is the variance's square root.
+> **Notes:**
+> - In a _standard normal distribution_, `mu` = 0 and `sigma` = 1.
+> - Note that if variance is given, rather than standard deviation, the standard deviation (`sigma`) is the variance's square root.
 
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
@@ -1155,10 +1154,10 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
         return count
     END METHOD
 
-**Examples:**
-- If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
-- The idiom `Binomial(N, 0.5) >= C` is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).
-- The idiom `Binomial(N, 1/S)` models the task "Roll N S-sided dice, then count the number of dice that show the number S."
+> **Examples:**
+> - If `p` is 0.5, the binomial distribution models the task "Flip N coins, then count the number of heads."
+> - The idiom `Binomial(N, 0.5) >= C` is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).
+> - The idiom `Binomial(N, 1/S)` models the task "Roll N S-sided dice, then count the number of dice that show the number S."
 
 <a id=Poisson_Distribution></a>
 ### Poisson Distribution
@@ -1280,7 +1279,7 @@ A random integer that follows a _negative binomial distribution_ expresses the n
         end
     END METHOD
 
-**Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
+> **Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
@@ -1389,7 +1388,7 @@ the number of items labeled `1` or `0` in that set.
         return successes
     END METHOD
 
-**Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
+> **Example:** In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
 cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number
 of face cards drawn this way follows a hypergeometric distribution where `trials` is 7, `ones` is
 12, and `count` is 52.
@@ -1531,11 +1530,11 @@ The following pseudocode shows how to generate random integers with a given posi
         return ret
     END METHOD
 
-**Notes:**
-
-- The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
-- Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
-- Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+> **Notes:**
+>
+> - The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
+> - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
+> - Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution

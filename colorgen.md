@@ -722,7 +722,7 @@ In the following pseudocode:
 <a id=CIELUV></a>
 ### CIELUV
 
-CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially used when working with colors of light sources.
+CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially useful when working with colors of light sources.
 
 In the following pseudocode&mdash;
 - the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB), and
@@ -1239,7 +1239,7 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 > **Notes:**
 >
 > - As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [_sRGB color space_](#sRGB) (as companded colors).
-> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 3.1/5.5") to a color can be done by interpolating known colors closest to that name.  Details of such interpolation are beyond the scope of this page.
+> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 7.1/2.5") to a color can be done by interpolating known colors closest to that name.  Details of such interpolation are beyond the scope of this page.
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
@@ -1532,7 +1532,7 @@ Questions for this document:
 
 A very rough approximate conversion of an RGB color (`color`) to a CMYK color involves generating `k = min(min(1.0 - color[0], 1.0 - color[1]), 1.0 - color[2])`, then generating `[0, 0, 0, 1]` if `k` is 1, or `[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]` otherwise.  A very rough approximate conversion of a CMYK color (`cmyk`) to an RGB color involves generating `[(1 - cmyk[0]) * ik, (1 - cmyk[1]) * ik, (1 - cmyk[2]) * ik]`, where `ik = 1 - cmyk[3]`.
 
-Just as with CMYK, the interpretation of any recipe of inks depends on the printing condition.  However, printing systems that use mixtures of inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of six or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.
+Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of six or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.
 
 <sup id=Note19>(19)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
 
