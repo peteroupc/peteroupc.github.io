@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 4, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 8, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -281,12 +281,12 @@ METHOD RNDINT(maxInclusive)
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Notes:</strong></p>
 
 <ul>
 <li>To generate a random number that&#39;s either -1 or 1, the following idiom can be used: <code>(RNDINT(1) * 2 - 1)</code>.</li>
-<li>To generate a random integer that&#39;s divisible by a positive integer (<code>DIV</code>), generate the integer with any method (such as <code>RNDINT</code>),
-let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> if <code>X &gt;= 0</code>, or <code>X - (DIV - mod(abs(X), DIV))</code> otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)</li>
+<li>To generate a random integer that&#39;s divisible by a positive integer (<code>DIV</code>), generate the integer with any method (such as <code>RNDINT</code>), let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> if <code>X &gt;= 0</code>, or <code>X - (DIV - mod(abs(X), DIV))</code> otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)</li>
 <li>A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
 
 <ul>
@@ -295,6 +295,7 @@ let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> i
 <li>To convert 2D coordinates <code>coord</code> to an NxM point, generate <code>P = coord[1] * N + coord[0]</code>.</li>
 </ul></li>
 </ul>
+</blockquote>
 
 <p><a id=RNDINTRANGE_Random_Integers_in_N_M></a></p>
 
@@ -338,13 +339,15 @@ let <code>X</code> be that integer, then generate <code>X - mod(X, DIV)</code> i
 END METHOD
 </pre>
 
-<p><strong>Note:</strong></p>
+<blockquote>
+<p><strong>Notes:</strong></p>
 
 <ul>
 <li>To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by <code>RNDINTRANGE(1, N)</code>.</li>
 <li>Generating a random integer with one base-10 digit is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.</li>
 <li>Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
 </ul>
+</blockquote>
 
 <p><a id=RNDU01_Random_Numbers_in_0_1></a></p>
 
@@ -423,6 +426,7 @@ can be implemented as follows<sup><a href="#Note4">(4)</a></sup>:</p>
  END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Note:</strong> The following are alternative ways of generating a random integer in the interval [0, <code>maxExclusive</code>):</p>
 
 <ul>
@@ -437,6 +441,7 @@ can be implemented as follows<sup><a href="#Note4">(4)</a></sup>:</p>
 <li>is a dialect of SQL, or</li>
 <li>doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</li>
 </ul>
+</blockquote>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a></p>
 
@@ -594,14 +599,17 @@ the following idioms in an <code>if</code> condition:</p>
 <li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
 <li>True with odds of X to Y: <code>RNDINTEXC(X + Y) &lt; X</code>.</li>
 <li>True with probability X, where X is from 0 through 1 (a <em>Bernoulli trial</em>): <code>RNDU01OneExc() &lt; X</code>.</li>
-<li><strong>Examples:</strong>
+</ul>
+
+<blockquote>
+<p><strong>Examples:</strong></p>
 
 <ul>
 <li>True with probability 3/8: <code>RNDINTEXC(8) &lt; 3</code>.</li>
 <li>True with odds of 100 to 1: <code>RNDINTEXC(101) &lt; 1</code>.</li>
 <li>True with 20% probability: <code>RNDINTEXC(100) &lt; 20</code>.</li>
-</ul></li>
 </ul>
+</blockquote>
 
 <p><a id=Shuffling></a></p>
 
@@ -644,6 +652,7 @@ END METHOD
 
 <p>An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my <a href="https://peteroupc.github.io/random.html#Shuffling">RNG recommendation document on shuffling</a>.<sup><a href="#Note6">(6)</a></sup></p>
 
+<blockquote>
 <p><strong>Note:</strong> In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;</p>
 
 <ul>
@@ -658,6 +667,7 @@ END METHOD
 <li>for each simulated dataset, the same statistics are calculated as for the original dataset, then</li>
 <li>the statistics for the simulated datasets are compared with those of the original.</li>
 </ul>
+</blockquote>
 
 <p><a id=Creating_a_Random_Character_String></a></p>
 
@@ -692,6 +702,7 @@ END METHOD
 </pre></li>
 </ol>
 
+<blockquote>
 <p><strong>Notes:</strong></p>
 
 <ul>
@@ -702,6 +713,7 @@ END METHOD
 <li>For generating a random base-10 digit string, the list of characters passed to <code>RandomString</code> consists of the basic digits only.</li>
 <li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note7">(7)</a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
 </ul>
+</blockquote>
 
 <p><a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a></p>
 
@@ -716,6 +728,7 @@ END METHOD
 
 <p>Choosing an item this way is also known as <em>sampling with replacement</em>.</p>
 
+<blockquote>
 <p><strong>Notes:</strong></p>
 
 <ul>
@@ -727,6 +740,7 @@ END METHOD
 </ul></li>
 <li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em></a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
 </ul>
+</blockquote>
 
 <p><a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a></p>
 
@@ -817,8 +831,10 @@ END METHOD
     END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Note:</strong> Removing <code>k</code> random items from a list of <code>n</code> items (<code>list</code>) is equivalent to generating a new
 list by <code>RandomKItemsInOrder(list, n - k)</code>.</p>
+</blockquote>
 
 <p><a id=Almost_Random_Sampling></a></p>
 
@@ -833,7 +849,9 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</p>
 
 <p>However, &quot;almost-random&quot; sampling techniques are not recommended whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.</p>
 
+<blockquote>
 <p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration">Monte Carlo integration</a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The <a href="http://mathworld.wolfram.com/Variance.html">&quot;Variance&quot; MathWorld article</a> gives methods for calculating the estimate&#39;s variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><em>low-discrepancy sequences</em></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+</blockquote>
 
 <p><a id=Choosing_a_Random_Date_Time></a></p>
 
@@ -1154,7 +1172,9 @@ END METHOD
 
 <p>If the distribution&#39;s <strong>CDF is known</strong>, generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse of that CDF.</p>
 
+<blockquote>
 <p><strong>Note:</strong> Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.</p>
+</blockquote>
 
 <p><a id=Mixtures_of_Distributions></a></p>
 
@@ -1168,6 +1188,7 @@ To generate random content from a mixture&mdash;</p>
 <li>based on the value of <code>index</code>, generate the random content from the corresponding distribution.</li>
 </ol>
 
+<blockquote>
 <p><strong>Examples:</strong></p>
 
 <ul>
@@ -1190,6 +1211,7 @@ else: number = Normal(-1, 1)
 
 <p>For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the number is sampled by <code>RNDNUMEXCRANGE(mn, mx)</code> instead.</p></li>
 </ul>
+</blockquote>
 
 <p><a id=Censored_and_Truncated_Distributions></a></p>
 
@@ -1259,6 +1281,7 @@ else: number = Normal(-1, 1)
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Examples:</strong> The result of rolling&mdash;</p>
 
 <ul>
@@ -1266,6 +1289,7 @@ END METHOD
 <li>three ten-sided virtual dice, with 4 added (&quot;3d10 + 4&quot;), is <code>DiceRoll(3,10,4)</code>, and</li>
 <li>two six-sided virtual dice, with 2 subtracted (&quot;2d6 - 2&quot;), is <code>DiceRoll(2,6,-2)</code>.</li>
 </ul>
+</blockquote>
 
 <p><a id=Normal_Gaussian_Distribution></a></p>
 
@@ -1314,12 +1338,14 @@ END METHOD
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Notes:</strong></p>
 
 <ul>
 <li>In a <em>standard normal distribution</em>, <code>mu</code> = 0 and <code>sigma</code> = 1.</li>
 <li>Note that if variance is given, rather than standard deviation, the standard deviation (<code>sigma</code>) is the variance&#39;s square root.</li>
 </ul>
+</blockquote>
 
 <p><a id=Binomial_Distribution></a></p>
 
@@ -1377,6 +1403,7 @@ as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and 
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Examples:</strong></p>
 
 <ul>
@@ -1384,6 +1411,7 @@ END METHOD
 <li>The idiom <code>Binomial(N, 0.5) &gt;= C</code> is true if at least C coins, among N coins flipped, show the successful outcome (for example, heads if heads is the successful outcome).</li>
 <li>The idiom <code>Binomial(N, 1/S)</code> models the task &quot;Roll N S-sided dice, then count the number of dice that show the number S.&quot;</li>
 </ul>
+</blockquote>
 
 <p><a id=Poisson_Distribution></a></p>
 
@@ -1518,7 +1546,9 @@ end
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Example:</strong> If <code>p</code> is 0.5 and <code>successes</code> is 1, the negative binomial distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;</p>
+</blockquote>
 
 <p><a id=von_Mises_Distribution></a></p>
 
@@ -1639,10 +1669,12 @@ the number of items labeled <code>1</code> or <code>0</code> in that set.</p>
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Example:</strong> In a 52-card deck of Anglo-American playing cards, 12 of the cards are face
 cards (jacks, queens, or kings).  After the deck is shuffled and seven cards are drawn, the number
 of face cards drawn this way follows a hypergeometric distribution where <code>trials</code> is 7, <code>ones</code> is
 12, and <code>count</code> is 52.</p>
+</blockquote>
 
 <p><a id=Multivariate_Normal_Distribution></a></p>
 
@@ -1789,6 +1821,7 @@ METHOD IntegersWithSum(n, total)
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Notes:</strong></p>
 
 <ul>
@@ -1796,6 +1829,7 @@ END METHOD
 <li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers with the sum <code>N * avg</code>.</li>
 <li>Generating <code>N</code> random numbers <code>min</code> or greater and with a given positive sum <code>sum</code> is equivalent to generating <code>N</code> random numbers with the sum <code>sum - n * min</code>, then adding <code>min</code> to each number generated this way.</li>
 </ul>
+</blockquote>
 
 <p><a id=Multinomial_Distribution></a></p>
 
