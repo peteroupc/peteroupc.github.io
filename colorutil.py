@@ -318,7 +318,7 @@ def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     i = 360
     xyz=[0,0,0]
     weight = 0
-    while i <= 830:
+    while i <= 780:
              cmfv=cmf(i)
              re=refl(i)
              spec=light(i)
