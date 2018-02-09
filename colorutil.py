@@ -243,9 +243,11 @@ class SPD:
 
 def planckian(temp, wavelength):
     """ Spectral distribution for blackbody (Planckian) radiation. """
+    if wavelength==560:
+       return 100.0
     num = wavelength**(-5)
     v=num / (math.exp(0.014387863/(wavelength*(10**(-9))*temp)) - 1)
-    v2=(560**(-5)) / (math.exp(0.014387863/(560*(10**(-9))*temp)) - 1)
+    v2=(560.0**(-5)) / (math.exp(0.014387863/(560.0*(10**(-9))*temp)) - 1)
     return v*100.0/v2
 
 def cie1931cmf(wavelength):
@@ -265,12 +267,7 @@ def dxy(temp):
    ex=2963/12500.0+(6187/25.0+(1901800.0-2006400000.0*invt)*invt)*invt
   return [ex,ex*(-3*ex+287*h)-11.0/40.0]
 
-def dseries(temp, wavelength):
-  """
-  Calculates a CIE D-series illuminant at the given
-  wavelength and color temperature (the latter
-  should not be less than 4000 K).
-  """
+def dseriesd(temp, wavelength):
   if wavelength < 300 or wavelength > 830:
     return 0
   index=int(round((wavelength-300)/5.0))*3
@@ -279,6 +276,22 @@ def dseries(temp, wavelength):
   t1=(-1.7703*d[0]+5.9114*d[1]-1.3515)*t*DSERIES[index+1]
   t2=(-31.4424*d[0]+30.0717*d[1]+0.03)*t*DSERIES[index+2]
   return t1+t2+DSERIES[index]
+
+def dseries(temp, wavelength):
+    """
+    Calculates a CIE D-series illuminant at the given
+    wavelength and color temperature (the latter
+    should not be less than 4000 K).
+    """
+    if wavelength < 300 or wavelength > 830:
+      return 0
+    mm=wavelength%5
+    s=dseriesd(temp, wavelength-mm)
+    if mm==0:
+       return s
+    m=mm*1.0/5
+    e=dseriesd(temp, (wavelength-mm)+5)
+    return s+(e-s)*m
 
 def referenceIllum(ct, wavelength):
   """
@@ -307,6 +320,10 @@ def brange(interval,mn,mx):
     r+=interval
     i+=1
   return ret
+
+""" CIE A Illuminant."""
+def aIllum(wavelength):
+    return planckian(2856, wavelength)
 
 """ CIE D50 Illuminant. """
 d50Illum=SPD([dseries(5003,i) for i in brange(5,300,830)],5,300).calc
