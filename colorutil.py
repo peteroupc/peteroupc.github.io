@@ -246,8 +246,8 @@ def planckian(temp, wavelength):
     if wavelength==560:
        return 100.0
     num = wavelength**(-5)
-    v=num / (math.exp(0.014387863/(wavelength*(10**(-9))*temp)) - 1)
-    v2=(560.0**(-5)) / (math.exp(0.014387863/(560.0*(10**(-9))*temp)) - 1)
+    v=num / (math.exp(0.0143877687750393/(wavelength*(10**(-9))*temp)) - 1)
+    v2=(560.0**(-5)) / (math.exp(0.0143877687750393/(560.0*(10**(-9))*temp)) - 1)
     return v*100.0/v2
 
 def cie1931cmf(wavelength):
