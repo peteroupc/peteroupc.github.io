@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 6, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 10, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -459,15 +459,15 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small>
 
-<sup id=Note1>(1)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.
+<small><small><small><sup id=Note1>(1)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.</small>
 
-<sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.
+<small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
-<sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, white noise, pink noise, and other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise). A noise implementation can use [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.  Note that usual implementations of colored noise don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for some kinds of colored noise, a filter is applied to the samples.
+<small><sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, white noise, pink noise, and other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), and noise following a Gaussian or other [probability distribution](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
 
-<sup id=Note4>(4)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.
+Note that usual implementations of noise (other than cellular, value, or gradient noise) don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for some kinds of colored noise, a filter is applied to the samples.</small>
 
-</small>
+<small><sup id=Note4>(4)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
 <a id=License></a>
 ## License
