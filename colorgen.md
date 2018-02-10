@@ -1204,28 +1204,28 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 There are several methods of finding the kind or kinds of colors that appear most prominently in a raster image (or other color content data).
 
 **Averaging.**  To find the dominant color using this technique&mdash;
-- add all the colors (or a sample of them) in the colors used in that image or data (for RGB colors, adding two or more colors means adding each of their components individually), then
+- add all the colors used in the image or data, or a sample of them (for RGB colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of colors (not necessarily unique colors) added this way.
 
 Note that for best results, this technique needs to be carried out with [_linear RGB colors_](#Linear_RGB_and_Companded_RGB).
 
-**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this more complicated technique, the colors used in that image or data are reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB).
+**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this more complicated technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB).
 
 **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
 - Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of ["Web safe colors"](#RGB_Colors_and_the_0_1_Format).
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
-- For each color used in that image or data, find its [nearest color](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
+- For each color used in the image or data, find its [nearest color](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.
 
 > **Notes:**
 >
-> - For all three techniques, in the case of a raster image, an implementation can resize that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
+> - For all three techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 > - Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
 >     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 > - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(27)](#Note27)</sup>
-> - **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors   must be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera) whose colors have been corrected by calibration.  JPEG, PNG, and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Calibration techniques for such matching are outside this page's scope.
+> - **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera) whose colors have been corrected after calibration.  JPEG, PNG, and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Calibration techniques for such matching are outside this page's scope.
 
 <a id=Color_Maps></a>
 ## Color Maps
@@ -1400,7 +1400,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. In applications where matching colors from the real world is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
+> 2. For applications where matching colors from the real world is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
 >     - two different curves can match the same color (and be _metamers_) or match different colors, whereas
 >     - two identical curves match the same color (but are not called metamers).
 
@@ -1426,7 +1426,7 @@ A _blackbody_ is an idealized material that emits light based only on its temper
             Planckian(560, wavelength)
     END METHOD
 
-> **Example:** If `TEMP` is 2856, the `LIGHT` function above is substantially equivalent to the CIE illuminant A.
+> **Note:** If `TEMP` is 2856, the `LIGHT` function above is substantially equivalent to the CIE illuminant A.
 
 The following method (`XYZToCCT`) computes an approximate color temperature, in kelvins, from an
 [XYZ color](#CIE_XYZ). Because of the limited range of chromaticities of blackbody light (namely red, orange, pale yellow, or sky blue), the color temperature found by this formula is often called [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT).  The formula given here is based on the one found in McCamy 1992.
