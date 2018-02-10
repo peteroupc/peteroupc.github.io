@@ -1429,20 +1429,20 @@ END METHOD
 <p><strong>Averaging.</strong>  To find the dominant color using this technique&mdash;</p>
 
 <ul>
-<li>add all the colors (or a sample of them) in the colors used in that image or data (for RGB colors, adding two or more colors means adding each of their components individually), then</li>
+<li>add all the colors used in the image or data, or a sample of them (for RGB colors, adding two or more colors means adding each of their components individually), then</li>
 <li>divide the result by the number of colors (not necessarily unique colors) added this way.</li>
 </ul>
 
 <p>Note that for best results, this technique needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB colors</em></a>.</p>
 
-<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the colors used in that image or data are reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  The quantization algorithm is too complicated to discuss in the document. Again, for best results, color quantization needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
 <ul>
 <li>Generate or furnish a list of colors that cover the space of colors well.  This is the <em>color palette</em>. A good example is the list of <a href="#RGB_Colors_and_the_0_1_Format">&quot;Web safe colors&quot;</a>.</li>
 <li>Create a list with as many zeros as the number of colors in the palette.  This is the <em>histogram</em>.</li>
-<li>For each color used in that image or data, find its <a href="#Nearest_Colors">nearest color</a> in the color palette, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
+<li>For each color used in the image or data, find its <a href="#Nearest_Colors">nearest color</a> in the color palette, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
 <li>Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors in the image.</li>
 </ul>
 
@@ -1450,7 +1450,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>For all three techniques, in the case of a raster image, an implementation can resize that image before proceeding to find its dominant colors.  Algorithms to resize or &quot;resample&quot; images are out of scope for this page, however.</li>
+<li>For all three techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or &quot;resample&quot; images are out of scope for this page, however.</li>
 <li>Reducing the number of colors in an image usually involves finding that image&#39;s dominant colors and either&mdash;
 
 <ul>
@@ -1458,7 +1458,7 @@ END METHOD
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note27">(27)</a></sup></li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors   must be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera) whose colors have been corrected by calibration.  JPEG, PNG, and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Calibration techniques for such matching are outside this page&#39;s scope.</li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera) whose colors have been corrected after calibration.  JPEG, PNG, and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Calibration techniques for such matching are outside this page&#39;s scope.</li>
 </ul>
 </blockquote>
 
@@ -1685,7 +1685,7 @@ END METHOD
 
 <ol>
 <li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>CMF</code> and <code>LIGHT</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
-<li>In applications where matching colors from the real world is important, reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&mdash;
+<li>For applications where matching colors from the real world is important, reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (<code>CMF</code>) and light source (<code>LIGHT</code>)&mdash;
 
 <ul>
 <li>two different curves can match the same color (and be <em>metamers</em>) or match different colors, whereas</li>
@@ -1722,7 +1722,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Example:</strong> If <code>TEMP</code> is 2856, the <code>LIGHT</code> function above is substantially equivalent to the CIE illuminant A.</p>
+<p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>LIGHT</code> function above is substantially equivalent to the CIE illuminant A.</p>
 </blockquote>
 
 <p>The following method (<code>XYZToCCT</code>) computes an approximate color temperature, in kelvins, from an
