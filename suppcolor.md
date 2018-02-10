@@ -221,19 +221,17 @@ The following topics on color are rarely relevant to programmers:
 
 <small>
 
-<sup id=Note1>(1)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.
+<small><small><small><sup id=Note1>(1)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
 
-<sup id=Note2>(2)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.
+<small><sup id=Note2>(2)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
 
-<sup id=Note3>(3)</sup> For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".
+<small><sup id=Note3>(3)</sup> For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
 
-<sup id=Note4>(4)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;
+<small><sup id=Note4>(4)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;
 - "additive mixture" is an inferior term to [_additive mixture of color stimuli_](http://eilv.cie.co.at/term/24) or light mixture, and
-- "subtractive mixture" is an inferior term to colorant mixture.
+- "subtractive mixture" is an inferior term to colorant mixture.</small>
 
-<sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific light sources or colorants.
-
-</small>
+<small><sup id=Note5>(5)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific light sources or colorants.</small>
 
 <a id=License></a>
 ## License

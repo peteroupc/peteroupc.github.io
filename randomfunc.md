@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 8, 2018.
+Begun on June 4, 2017; last updated on Feb. 10, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -940,7 +940,7 @@ A detailed discussion on how to calculate bandwidth or on other possible ways to
 Many probability distributions can be defined in terms of any of the following:
 
 * The [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)).  The CDF is also defined as the _integral_ of the PDF. Each value of the PDF must be 0 or greater.
+* The [_probability density function_](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights greater than 0, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[(9)](#Note9)</sup>
 
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
@@ -966,7 +966,7 @@ If both **a PDF and a uniform random variable in the interval [0, 1) (`randomVar
 
 If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
 
-> **Note:** Further details on inverse transform sampling or on how to find integrals or inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
+> **Note:** Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
@@ -988,7 +988,7 @@ To generate random content from a mixture&mdash;
 >         // Else index 1 was chosen, sample from the mean -1 normal
 >         else: number = Normal(-1, 1)
 >
-> - Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(9)](#Note9)</sup>
+> - Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(10)](#Note10)</sup>
 > - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1022,7 +1022,7 @@ This section contains information on some of the most common non-uniform samplin
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[(10)](#Note10)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[(11)](#Note11)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1063,7 +1063,7 @@ The following method generates a random result of rolling virtual dice.<sup>[(10
 
 The [_normal distribution_](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-In the pseudocode below, which uses the polar method <sup>[(11)](#Note11)</sup> to generate two normally-distributed random numbers:
+In the pseudocode below, which uses the polar method <sup>[(12)](#Note12)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1727,7 +1727,7 @@ This problem is equivalent to generating, uniformly at random, a unit vector (ve
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(12)](#Note12)</sup> until their [_norm_](#Notation_and_Definitions) is R or less,
+- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[(13)](#Note13)</sup> until their [_norm_](#Notation_and_Definitions) is R or less,
 
 although the former method "may ... be slower" "in practice", according to a [MathWorld article](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
@@ -1768,7 +1768,7 @@ Currently, the following are not covered in this document, but may be added base
 
 <small>
 
-<sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
+<small><small><small><sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
 - seek to generate random numbers that are at least cost-prohibitive (but not necessarily _impossible_) to predict,
 - merely seek to generate number sequences likely to pass statistical tests of randomness,
 - are initialized automatically before use,
@@ -1778,37 +1778,41 @@ Currently, the following are not covered in this document, but may be added base
    generation (including by extracting uniformly distributed bits from two or more such sources), or
 - have two or more of the foregoing properties.
 
-If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Random Numbers from an Arbitrary Distribution](#Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.
+If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [_cumulative distribution function_](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[Random Numbers from an Arbitrary Distribution](#Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.</small>
 
-<sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
+<small><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [blog post by Johnny Chan](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 
-Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.</small>
 
-<sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.
+<small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</small>
 
-<sup id=Note4>(4)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.
+<small><sup id=Note4>(4)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.</small>
 
-<sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.
+<small><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.</small>
 
-<sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)
+<small><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
 
-<sup id=Note7>(7)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.
+<small><sup id=Note7>(7)</sup> Such techniques usually involve [_Markov chains_](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
 
-<sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.
+<small><sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.</small>
 
-<sup id=Note9>(9)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.
+<small><sup id=Note9>(9)</sup> More formally&mdash;
+- the PDF is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
+- the CDF is also defined as the _integral_ of the PDF,
 
-<sup id=Note10>(10)</sup> The "Dice" section used the following sources:
+provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
+
+<small><sup id=Note10>(10)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
+
+<small><sup id=Note11>(11)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, ["Probability and Games: Dice Rolls"](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [MathWorld article "Dice"](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
-- S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.
+- S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<sup id=Note11>(11)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
+<small><sup id=Note12>(12)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also ["Irwin&ndash;Hall distribution" on Wikipedia](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
 
-<sup id=Note12>(12)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.
-
-</small>
+<small><sup id=Note13>(13)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
 <a id=License></a>
 ## License
