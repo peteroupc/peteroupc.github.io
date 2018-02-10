@@ -1768,7 +1768,7 @@ Currently, the following are not covered in this document, but may be added base
 
 <small>
 
-<small><small><small><sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
+<small><small><small><small><sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
 - seek to generate random numbers that are at least cost-prohibitive (but not necessarily _impossible_) to predict,
 - merely seek to generate number sequences likely to pass statistical tests of randomness,
 - are initialized automatically before use,
