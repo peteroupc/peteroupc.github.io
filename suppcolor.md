@@ -221,7 +221,7 @@ The following topics on color are rarely relevant to programmers:
 
 <small>
 
-<small><small><small><sup id=Note1>(1)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
+<small><small><small><small><sup id=Note1>(1)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
 
 <small><sup id=Note2>(2)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
 
