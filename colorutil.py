@@ -268,7 +268,7 @@ def dxy(temp):
    ex=2963/12500.0+(6187/25.0+(1901800.0-2006400000.0*invt)*invt)*invt
   return [ex,ex*(-3*ex+287*h)-11.0/40.0]
 
-def dseriesd(temp, wavelength):
+def _dseriesd(temp, wavelength):
   if wavelength < 300 or wavelength > 830:
     return 0
   index=int(round((wavelength-300)/5.0))*3
@@ -287,16 +287,16 @@ def dseries(temp, wavelength):
     Calculates a CIE D-series illuminant at the given
     wavelength and color temperature (the latter
     should not be less than 4000 K or greater
-    than 25000 K).
+    than 25,000 K).
     """
     if wavelength < 300 or wavelength > 830:
       return 0
     mm=wavelength%10
-    s=dseriesd(temp, wavelength-mm)
+    s=_dseriesd(temp, wavelength-mm)
     if mm==0:
        return s
     m=mm*0.1
-    e=dseriesd(temp, (wavelength-mm)+10)
+    e=_dseriesd(temp, (wavelength-mm)+10)
     return s+(e-s)*m
 
 def referenceIllum(ct, wavelength):
