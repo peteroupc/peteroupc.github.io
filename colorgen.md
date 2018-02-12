@@ -81,9 +81,9 @@ This document presents an overview of many common color topics that are of gener
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
-- **D50 illuminant.** CIE illuminant that approximates sunrise daylight (correlated color temperature about 5003 kelvins).
+- **D50 illuminant.** CIE illuminant that approximates sunrise daylight (correlated color temperature about 5000 kelvins).
 - **D50 white point.** The white point determined by the D50 illuminant and the CIE 1931 standard observer.
-- **D65 illuminant.** CIE illuminant that approximates noon daylight (correlated color temperature about 6503 kelvins).<sup>[(1)](#Note1)</sup>
+- **D65 illuminant.** CIE illuminant that approximates noon daylight (correlated color temperature about 6500 kelvins).<sup>[(1)](#Note1)</sup>
 - **D65 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **IEC.** International Electrotechnical Commission.
 - **ISO.** International Organization for Standardization.
@@ -623,7 +623,7 @@ In the following pseudocode:
     - `SRGBToLab` and `SRGBFromLab` treat white as the D65 white point.
     - `SRGBToLabD50` and `SRGBFromLabD50` treat white as the D50 white point.<sup>[(9)](#Note9)</sup>
 - `XYZToLab(xyz, wpoint)` and `LabToXYZ(lab, wpoint)` convert an XYZ color to or from CIELAB, respectively, treating `wpoint` (an XYZ color) as the white point.
-- `LabToChroma(lab)` finds a CIELAB color's _chroma_ (_C\*_, relative colorfulness), or distance of that color from the "gray" line.<sup>[(14)](#Note14)</sup>
+- `LabToChroma(lab)` finds a CIELAB color's _chroma_ (_C\*_), or distance of that color from the "gray" line.<sup>[(14)](#Note14)</sup>
 - `LabToHue(lab)` finds a CIELAB color's _hue_ (_h_, an angle)<sup>[(7)](#Note7)</sup>. Hue ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order.
 - `LabHueDifference(lab1, lab2)` finds the _metric hue difference_ (_&Delta;H\*_) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.
@@ -722,8 +722,9 @@ In the following pseudocode:
 > **Note:** The difference in lightness, _a\*_, _b\*_, or chroma (_&Delta;L\*_, _&Delta;a\*_, _&Delta;b\*_, or _&Delta;C\*_, respectively) between two CIELAB colors is simply the difference between the corresponding value of the second CIELAB color and that of the first.
 
 > **Examples:**
+>
 > 1. An application can consider a color **dark** if its lightness (_L\*_) is lower than some threshold, say, 30.
-> 2. An application can consider a color **light** if it's lightness (_L\*_) is greater than some threshold, say, 70.
+> 2. An application can consider a color **light** if its lightness (_L\*_) is greater than some threshold, say, 70.
 
 <a id=CIELUV></a>
 ### CIELUV
@@ -869,7 +870,7 @@ For all these variants, the transformation should be done using [_companded RGB_
 
 The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.
 
-**Characterization tables.** In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and measuring their [CIELAB](#CIELAB) colors (or [spectral reflectances](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
+**Characterization tables.** In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectances](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
 
 The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
 
@@ -1065,7 +1066,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
 
 > **Notes:**
 > - The Euclidean distance is independent of color model; however, [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), rather than companded RGB colors, should be used.
-> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy et al., 1994])<sup>[(26)](#Note26)</sup>.
+> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy and others 1994])<sup>[(26)](#Note26)</sup>.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1179,7 +1180,7 @@ Note that in this formula, the order of the two colors is important (the first c
 
 The **nearest color algorithm** is used, for example, to categorize colors or to reduce the number of colors used by an image.
 
-In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors.  `NearestColorIndex` is independent of color model; however, both `color` and each color in `list` must be in the same color space.
+In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors, all in the same color space as `color`.  `NearestColorIndex` is independent of color model.
 
     METHOD NearestColorIndex(color, list)
        if size(list) == 0: return error
@@ -1232,7 +1233,7 @@ Note that for best results, this technique needs to be carried out with [_linear
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
 >     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 > - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(27)](#Note27)</sup>
-> - **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors must be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera) whose colors have been corrected after calibration.  JPEG, PNG, and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Calibration techniques for such matching are outside this page's scope.
+> - **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567), such as a raw image from a digital camera after camera compensation.  PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.  Camera compensation techniques can involve the use of color calibration charts, but are not further discussed in this document.
 
 <a id=Color_Maps></a>
 ## Color Maps
@@ -1456,7 +1457,7 @@ In "[Subtractive Color Mixture Computation](http://scottburns.us/subtractive-col
   takes into account the relative proportions of the pigments or colors in the mixture, and
 3. converting the mixed reflectance curve to an RGB color.<sup>[(33)](#Note33)</sup>
 
-For convenience, computing the weighted geometric mean of one or more numbers is given below.
+For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where `values` is a list of values (for example, reflectances of several curves at the same wavelength), and `weights` is a list of those values' corresponding weights (for example, mixing proportions of those curves).
 
     METHOD WGM(values, weights)
         if size(values)!=size(weights): return error
@@ -1475,9 +1476,6 @@ For convenience, computing the weighted geometric mean of one or more numbers is
         end
         return ret
     END METHOD
-
-When computing the weighted geometric mean of several reflectance curves, all the numbers
-passed at once to the `WGM` function just given must be from the same wavelength.
 
 > **Notes:**
 > - Finding a _representative_ reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in [Smits 1999](http://www.cs.utah.edu/~bes/papers/color/) or the method described in [Burns 2015](http://scottburns.us/reflectance-curves-from-srgb/). (Note that [widely varying reflectance curves](http://www.handprint.com/HP/WCL/color18a.html#ctprin38) can match the same RGB color.)
@@ -1539,7 +1537,9 @@ Questions for this document:
 
 <small><sup id=Note10>(10)</sup> Further details on chromatic adaptation are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
-<small><sup id=Note11>(11)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".</small>
+<small><sup id=Note11>(11)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
+
+_uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_*2.0/3).</small>
 
 <small><sup id=Note12>(12)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and

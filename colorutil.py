@@ -258,6 +258,7 @@ def cie1931cmf(wavelength):
   return [CIE1931[index+i] for i in range(3)]
 
 def dxy(temp):
+  temp=temp*1.0005563282336578
   ex=0
   invt=1.0/temp
   h=0.01
@@ -273,24 +274,29 @@ def dseriesd(temp, wavelength):
   index=int(round((wavelength-300)/5.0))*3
   d=dxy(temp)
   t=10000.0/(2562*d[0]-7341*d[1]+241)
-  t1=(-1.7703*d[0]+5.9114*d[1]-1.3515)*t*DSERIES[index+1]
-  t2=(-31.4424*d[0]+30.0717*d[1]+0.03)*t*DSERIES[index+2]
+  t1=(-1.7703*d[0]+5.9114*d[1]-1.3515)*t
+  t1=round(t1*1000)/1000.0
+  t1=t1*DSERIES[index+1]
+  t2=(-31.4424*d[0]+30.0717*d[1]+0.03)*t
+  t2=round(t2*1000)/1000.0
+  t2=t2*DSERIES[index+2]
   return t1+t2+DSERIES[index]
 
 def dseries(temp, wavelength):
     """
     Calculates a CIE D-series illuminant at the given
     wavelength and color temperature (the latter
-    should not be less than 4000 K).
+    should not be less than 4000 K or greater
+    than 25000 K).
     """
     if wavelength < 300 or wavelength > 830:
       return 0
-    mm=wavelength%5
+    mm=wavelength%10
     s=dseriesd(temp, wavelength-mm)
     if mm==0:
        return s
-    m=mm*1.0/5
-    e=dseriesd(temp, (wavelength-mm)+5)
+    m=mm*0.1
+    e=dseriesd(temp, (wavelength-mm)+10)
     return s+(e-s)*m
 
 def referenceIllum(ct, wavelength):
@@ -326,10 +332,10 @@ def aIllum(wavelength):
     return planckian(2856, wavelength)
 
 """ CIE D50 Illuminant. """
-d50Illum=SPD([dseries(5003,i) for i in brange(5,300,830)],5,300).calc
+d50Illum=SPD([dseries(5000,i) for i in brange(5,300,830)],5,300).calc
 
 """ CIE D65 Illuminant. """
-d65Illum=SPD([dseries(6503,i) for i in brange(5,300,830)],5,300).calc
+d65Illum=SPD([dseries(6500,i) for i in brange(5,300,830)],5,300).calc
 
 def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     i = 360
