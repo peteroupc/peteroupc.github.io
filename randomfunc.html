@@ -843,8 +843,8 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</p>
 <p>Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of &quot;almost-random&quot; sampling, do one of the following:</p>
 
 <ul>
-<li>Generate a list of possible outcomes (for example, the list can contain 10 items labeled &quot;good&quot; and three labeled &quot;bad&quot;) and <a href="#Shuffling">shuffle</a> that list.  Each time an outcome must be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list and continue.</li>
-<li>Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items &quot;good&quot; and &quot;bad&quot;, and the other list can contain the weights 10 and 3, respectively).  Each time an outcome must be generated, choose one outcome using the <a href="#Weighted_Choice_Without_Replacement">weighted choice without replacement</a> technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.</li>
+<li>Generate a list of possible outcomes (for example, the list can contain 10 items labeled &quot;good&quot; and three labeled &quot;bad&quot;) and <a href="#Shuffling">shuffle</a> that list.  Each time an outcome has to be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list and continue.</li>
+<li>Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items &quot;good&quot; and &quot;bad&quot;, and the other list can contain the weights 10 and 3, respectively).  Each time an outcome has to be generated, choose one outcome using the <a href="#Weighted_Choice_Without_Replacement">weighted choice without replacement</a> technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.</li>
 </ul>
 
 <p>However, &quot;almost-random&quot; sampling techniques are not recommended whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.</p>
@@ -1137,7 +1137,7 @@ END METHOD
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><em>cumulative distribution function</em></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights greater than 0, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note9">(9)</a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><em>probability density function</em></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note9">(9)</a></sup></li>
 </ul>
 
 <p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.</p>
@@ -1461,7 +1461,7 @@ END METHOD
 <p>The <em>gamma distribution</em> models expected lifetimes. The following method, which generates a random number that follows a gamma distribution, is based on Marsaglia and Tsang&#39;s method from 2000.</p>
 
 <pre>METHOD GammaDist(meanLifetime)
-    // Must be greater than 0
+    // Needs to be greater than 0
     if meanLifetime &lt;= 0: return error
     // Exponential distribution special case if
     // `meanLifetime` is 1 (see also
@@ -1508,7 +1508,7 @@ end
 <p>A random integer that follows a <em>negative binomial distribution</em> expresses the number of failures that have happened after seeing a given number of successes (expressed as <code>successes</code> below), where the probability of a success in each case is <code>p</code> (where <code>p &lt;= 0</code> means never, <code>p &gt;= 1</code> means always, and <code>p = 0.5</code> means an equal chance of success or failure).</p>
 
 <pre>METHOD NegativeBinomial(successes, p)
-    // Must be 0 or greater
+    // Needs to be 0 or greater
     if successes &lt; 0: return error
     // No failures if no successes or if always succeeds
     if successes == 0 or p &gt;= 1.0: return 0
@@ -1975,7 +1975,7 @@ This expresses a distribution of maximum values.</li>
 <li><strong>Logistic distribution</strong>: <code>(ln(x/(1.0 - x)) * scale + mean</code>, where <code>x</code> is <code>RNDU01ZeroOneExc()</code> and <code>mean</code> and <code>scale</code> are the two parameters of the logistic distribution.</li>
 <li><strong>Maxwell distribution</strong>: <code>scale * sqrt(GammaDist(1.5) * 2)</code>, where <code>scale</code> is the scale.</li>
 <li><strong>Parabolic distribution</strong>: <code>min + (max - min) * BetaDist(2, 2)</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 30).</li>
-<li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> must be an integer.</li>
+<li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> is always an integer.</li>
 <li><strong>Pearson VI distribution</strong>: <code>GammaDist(v) / (GammaDist(w))</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Power distribution</strong>: <code>pow(RNDU01ZeroOneExc(), 1.0 / alpha)</code>, where <code>alpha</code>  is the shape.  Nominally in the interval (0, 1).</li>
 <li><strong>Power law distribution</strong>: <code>pow(pow(mn,n+1) + (pow(mx,n+1) - pow(mn,n+1)) * RNDU01(), 1.0 / (n+1))</code>, where <code>n</code>  is the exponent, <code>mn</code> is the minimum, and <code>mx</code> is the maximum.  <a href="http://mathworld.wolfram.com/RandomNumber.html">Reference</a>.</li>

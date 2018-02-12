@@ -461,9 +461,9 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
-<small><sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, white noise, pink noise, and other [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise), and noise following a Gaussian or other [probability distribution](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
+<small><sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, [colored noise](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), and noise following a Gaussian or other [probability distribution](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [fractional Brownian motion](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
 
-Note that usual implementations of noise (other than cellular, value, or gradient noise) don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for some kinds of colored noise, a filter is applied to the samples.</small>
+Note that usual implementations of noise (other than cellular, value, or gradient noise) don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for colored noise, a filter is applied to the samples.</small>
 
 <small><sup id=Note4>(4)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
