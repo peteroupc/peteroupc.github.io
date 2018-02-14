@@ -118,6 +118,38 @@ class RandomGen:
         i-=1
     return list
 
+  def partialshuffle(self, list, k):
+    ki = 0
+    if len(list) >= 2:
+      i = len(list) - 1
+      while i > 0 and ki < k:
+        k=self.rndintexc(i+1)
+        tmp=list[i]
+        list[i]=list[k]
+        list[k]=tmp
+        i-=1
+        k+=1
+    return list
+
+  def sample(self, list, k):
+    if k<0 or k>len(list): raise ValueError
+    n=len(list)
+    if n==k: return [x for x in list]
+    if n<200:
+      s=self.shuffle([x for x in list])
+      return s[0:k] # Choose first k items
+    if n/4>k and n<5000:
+      s=self.partialshuffle([x for x in list], k)
+      return s[n-k:n] # Choose last k items
+    ki=0
+    kh={}
+    while ki < k:
+       c=self.rndintexc(k)
+       if c not in kh:
+          kh[c]=True
+          ki+=1
+    return [list[i] for i in kh.keys()]
+
   def choice(self, list):
     return list[self.rndintexc(len(list))]
 

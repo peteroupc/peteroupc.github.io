@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 10, 2018.
+Begun on June 4, 2017; last updated on Feb. 13, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -25,8 +25,7 @@ All the random number methods presented on this page&mdash;
 **In general, this document does not cover:**
 - How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality. I have written more on RNG recommendations in [another document](https://peteroupc.github.io/random.html).
 - Techniques that are specific to an application programming interface.
-- Techniques that are specific to certain kinds of RNGs.
-- Generating sequences of unique integers using specific kinds of deterministic RNGs.
+- Techniques that are specific to certain kinds of RNGs.  This includes generating sequences of unique integers using specific kinds of deterministic RNGs.
 - Seemingly random numbers that are specifically generated using [hash functions](https://peteroupc.github.io/random.html#Hash_Functions), including pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its "seed"), then that RNG is generally within the scope of this document.
 
 <a id=Contents></a>
@@ -102,8 +101,8 @@ In this document:
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-- **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(1)](#Note1)</sup>.
 * **Norm.** The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
+- **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[(1)](#Note1)</sup>.
 * **Significand permutations.** A floating-point format's floating-point base raised to the power of the format's precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
@@ -603,19 +602,21 @@ Choosing an item this way is also known as _sampling with replacement_.
 
 There are several techniques for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on whether `n` is known, how big `n` and `k` are, and other considerations.
 
-- **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
-- **If items are to be chosen in order:**
+1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
+2. **If items are to be chosen in order:**
     - **If `n` is relatively small,** then the `RandomKItemsInOrder` method, in the pseudocode below, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).
     - **If `n` is relatively large,** see the item "If `n` is relatively large", later.
-- **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Do one of the following:
+3. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Do one of the following:
     - Store all the items in a list, [shuffle](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
-- **If `k` is much smaller than `n` and the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[Shuffling](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
-- **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
+4. **If `k` is much smaller than `n` and the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[Shuffling](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
+5. **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
     - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-- **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
+6. **If `n - k` is much smaller than `n`, the items are stored in a list whose order can be changed, and the order in which the items are sampled need not be random:** Proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+7. **If `n - k` is much smaller than `n`, `n` is not very large, and the order in which the items are sampled need not be random:** Proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
+8. **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [hash table](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [red&ndash;black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -934,6 +935,8 @@ To generate a random number (or data point) based on the distribution of a list 
 
 A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized "jitter" (whose distribution is formally called a _kernel_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the Wikipedia articles on [single-variable](https://en.wikipedia.org/wiki/Kernel_density_estimation) and [multiple-variable](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation) estimation, or a [blog post by M. Kay](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
 
+Alternatively, an application can fit a [mixture](#Mixtures_of_Distributions) of [Gaussian distributions](#Normal_Gaussian_Distribution) to the data points and sample a data point from that mixture.  This document doesn't cover how to fit such a mixture (a _Gaussian mixture model_), but see the Wikipedia article on [mixture models](https://en.wikipedia.org/wiki/Mixture_model).
+
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
 
@@ -1064,7 +1067,7 @@ The following method generates a random result of rolling virtual dice.<sup>[(11
 The [_normal distribution_](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
 In the pseudocode below, which uses the polar method <sup>[(12)](#Note12)</sup> to generate two normally-distributed random numbers:
-- `mu` (&mu;) is the mean (average), or the peak of the distribution's "bell curve".
+- `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
 
@@ -1398,10 +1401,10 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
 
 The following pseudocode calculates a random point in space that follows a [_multivariate normal distribution_](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
-- A list, `mu`, which indicates the means
+- A list, `mu` (&mu;), which indicates the means
 to add to each component of the random point. `mu` can be `nothing`, in which case each
 component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).
+- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).
 
 For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=Y to Z; [Statements] ; end` is shorthand for `X = Y; while X <= Z; [Statements]; X = X + 1; end`.
 
