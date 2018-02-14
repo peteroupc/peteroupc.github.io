@@ -617,8 +617,8 @@ def euclideanDist(color1,color2):
    return math.sqrt(sqdist)
 
 def xyzToxyY(xyz):
-                # NOTE: Results undefined if sum==0
                 sum=xyz[0]+xyz[1]+xyz[2]
+                if sum==0: return [0,0,0]
                 return [xyz[0]/sum, xyz[1]/sum, xyz[1]]
 
 def xyzFromxyY(xyy):
@@ -626,8 +626,8 @@ def xyzFromxyY(xyy):
                 return [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]
 
 def xyzTouvY(xyz):
-                # NOTE: Results undefined if sum==0
                 sum=xyz[0]+xyz[1]*15+xyz[2]*3
+                if sum==0: return [0,0,0]
                 return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
 
 def xyzFromuvY(uvy):

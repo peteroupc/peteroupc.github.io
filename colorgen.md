@@ -567,7 +567,7 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
 > **Notes:**
 >
 > 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [inverse of the matrix](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[(10)](#Note10)</sup>
-> 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [inverse](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(10)](#Note10)</sup>
+> 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [inverse](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(10)](#Note10)</sup>
 
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
@@ -582,8 +582,8 @@ and is calculated analogously to _xy_ chromaticity.
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
         METHOD XYZToxyY(xyz)
-                // NOTE: Results undefined if sum==0
                 sum=xyz[0]+xyz[1]+xyz[2]
+                if sum==0: return [0,0,0]
                 return [xyz[0]/sum, xyz[1]/sum, xyz[1]]
         END METHOD
 
@@ -593,8 +593,8 @@ In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to a
         END METHOD
 
         METHOD XYZTouvY(xyz)
-                // NOTE: Results undefined if sum==0
                 sum=xyz[0]+xyz[1]*15+xyz[2]*3
+                if sum==0: return [0,0,0]
                 return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
         END METHOD
 
@@ -901,16 +901,15 @@ Note that for best results, these techniques need to be carried out with [_linea
 <a id=Relative_Luminance_Grayscale></a>
 ### Relative Luminance (Grayscale)
 
-_Relative luminance_ is a single number indicating a color's luminance relative to white &mdash; that is, how much light reaches the eyes when that color is viewed, in comparison to white. Relative luminance, called **`Luminance(color)`** in this document, is equivalent to the Y component of an [XYZ color](#CIE_XYZ), and is 0 or greater and 1 or less.
+_Relative luminance_&mdash;
+- is called **`Luminance(color)`** in this document,
+- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
+- is equivalent to the Y component of an [XYZ color](#CIE_XYZ), and
+- ranges from 0 for "black" to 1 for "white".
 
-- For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance&mdash;
-    - is `(color[0] * r + color[1] * g + color[2] * b)`,
-where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue
-points, respectively<sup>[(6)](#Note6)</sup><sup>[(18)](#Note18)</sup>, and
-    - ranges from 0 for the RGB color space's "black point" to 1 for its white point.
+For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively<sup>[(6)](#Note6)</sup><sup>[(18)](#Note18)</sup>.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding relative luminances after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>)
 
-    If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding relative luminances after [_chromatic adaptation_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>
-- Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(19)](#Note19)</sup>
+Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(19)](#Note19)</sup>
 
 The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(6)](#Note6)</sup><sup>[(9)](#Note9)</sup>.
 
@@ -1202,9 +1201,11 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 > **Examples:**
 >
 > 1. To find the nearest color to `color` in a list of colors (`list`), generate `nearestColor = list[NearestColorIndex(color, list)]`.
-> 2. Sorting colors into **color categories** is equivalent to&mdash;
+> 2. Sorting colors into **color categories** can be done by&mdash;
 >     - defining a list of **representative colors** `repColors` (for example, representative colors for red, blue, black, white, and so on), then
->     - for each color (`color`) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`).
+>     - for each color (`color`) to be categorized, finding the nearest color to that color among the representative colors (for example, by calling `NearestColorIndex(color, repColors)`),
+>
+>    or by using the [_k_-means algorithm](http://aishack.in/tutorials/kmeans-clustering) starting with _k_ color points chosen at random or _k_ representative colors.
 
 <a id=Dominant_Colors_of_an_Image></a>
 ## Dominant Colors of an Image
@@ -1228,12 +1229,12 @@ Note that for best results, this technique needs to be carried out with [_linear
 
 > **Notes:**
 >
-> - For all three techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
-> - Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
+> 1. For all three techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
+> 2. Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
 >     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
-> - Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(27)](#Note27)</sup>
-> - **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
+> 3. Finding the number of _unique_ colors in an image is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(27)](#Note27)</sup>
+> 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
 ## Color Maps
@@ -1256,7 +1257,7 @@ The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for col
 <a id=Color_Collections></a>
 ### Color Collections
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", and "5RP 5/6"<sup>[(29)](#Note29)</sup>.  It's outside the scope of this document to provide a survey of color collections or color atlases, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", and "5RP 5/6"<sup>[(29)](#Note29)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table), or
@@ -1535,11 +1536,11 @@ Questions for this document:
 - Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
 - In the printing industry, the D50 illuminant and D50 white point are in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.</small>
 
-<small><sup id=Note10>(10)</sup> Further details on chromatic adaptation are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
+<small><sup id=Note10>(10)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
 <small><sup id=Note11>(11)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
-_uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_*2.0/3).</small>
+_uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).</small>
 
 <small><sup id=Note12>(12)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and
@@ -1555,7 +1556,7 @@ _uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is 
 
 <small><sup id=Note17>(17)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linear RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of general interest to programmers.</small>
 
-<small><sup id=Note18>(18)</sup> Other methods that have been used for approximating relative luminance (and which don't really yield "relative luminance" as used here) include&mdash;
+<small><sup id=Note18>(18)</sup> Other methods that have been used for approximating (but not quite yielding) relative luminance include&mdash;
 
 - using the average, minimum, or maximum of the three color components (as shown on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example),
 - using the [HSL](#HSL) "lightness" (see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)), and

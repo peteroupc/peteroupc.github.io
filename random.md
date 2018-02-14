@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 10, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 12, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -16,7 +16,7 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 **This document covers:**
 
 - Statistical-random and unpredictable-random generators, as well as recommendations on their use and properties.
-- A discussion on when an application that requires numbers that "seem" random should specify their own "seed" (the initial state that the numbers are based on).
+- A discussion on when an application that needs numbers that "seem" random should specify their own "seed" (the initial state that the numbers are based on).
 - An explanation of what programming language interfaces implement statistical-random and unpredictable-random generators, as well as advice on implementing them in programming languages.
 - Issues on shuffling with an RNG.
 
@@ -256,8 +256,8 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 #### Verifiable Random Numbers
 
 _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers&mdash;
-- at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and/or
-- some of it is disclosed in the announcement that those numbers will be generated.
+- at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and
+- some of it may be disclosed in the announcement that those numbers will be generated.
 
 One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [hash functions](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
