@@ -907,7 +907,7 @@ _Relative luminance_&mdash;
 - is equivalent to the Y component of an [XYZ color](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
 
-For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively<sup>[(6)](#Note6)</sup><sup>[(18)](#Note18)</sup>.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding relative luminances after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>)
+For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively<sup>[(6)](#Note6)</sup><sup>[(18)](#Note18)</sup>.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding components after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>)
 
 Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(19)](#Note19)</sup>
 
