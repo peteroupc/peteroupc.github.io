@@ -982,7 +982,7 @@ To generate random content from a mixture&mdash;
 
 > **Examples:**
 >
-> - One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
+> 1. One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
 >
 >         index = DiscreteWeightedChoice([80, 20])
 >         number = 0
@@ -991,8 +991,8 @@ To generate random content from a mixture&mdash;
 >         // Else index 1 was chosen, sample from the mean -1 normal
 >         else: number = Normal(-1, 1)
 >
-> - Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(10)](#Note10)</sup>
-> - For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
+> 2. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [_triangulated_](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [triangles](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[(10)](#Note10)</sup>
+> 3. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
 >
@@ -1404,7 +1404,7 @@ The following pseudocode calculates a random point in space that follows a [_mul
 - A list, `mu` (&mu;), which indicates the means
 to add to each component of the random point. `mu` can be `nothing`, in which case each
 component will have a mean of zero.
-- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).
+- A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).
 
 For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=Y to Z; [Statements] ; end` is shorthand for `X = Y; while X <= Z; [Statements]; X = X + 1; end`.
 
@@ -1590,7 +1590,7 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
             r=v*zval/den
             den=den+2
             ret=ret+r
-            // NOTE: EPSILON can be 10^14,
+            // NOTE: EPSILON can be pow(10,14),
             // for example.
             if abs(r)<EPSILON: break
             if i==1: zval=zp
@@ -1681,7 +1681,7 @@ This expresses a distribution of maximum values.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have
 the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
-- **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [truncated](#Truncation_and_Censoring) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
+- **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [truncated](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling

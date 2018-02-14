@@ -1194,7 +1194,7 @@ To generate random content from a mixture&mdash;</p>
 <blockquote>
 <p><strong>Examples:</strong></p>
 
-<ul>
+<ol>
 <li><p>One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:</p>
 
 <pre>index = DiscreteWeightedChoice([80, 20])
@@ -1213,7 +1213,7 @@ else: number = Normal(-1, 1)
 </ul>
 
 <p>For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the number is sampled by <code>RNDNUMEXCRANGE(mn, mx)</code> instead.</p></li>
-</ul>
+</ol>
 </blockquote>
 
 <p><a id=Censored_and_Truncated_Distributions></a></p>
@@ -1689,7 +1689,7 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 <li>A list, <code>mu</code> (&mu;), which indicates the means
 to add to each component of the random point. <code>mu</code> can be <code>nothing</code>, in which case each
 component will have a mean of zero.</li>
-<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix with as many rows and as many columns as components of the random point).</li>
+<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).</li>
 </ul>
 
 <p>For conciseness, the following pseudocode uses <code>for</code> loops, defined as follows. <code>for X=Y to Z; [Statements] ; end</code> is shorthand for <code>X = Y; while X &lt;= Z; [Statements]; X = X + 1; end</code>.</p>
@@ -1890,7 +1890,7 @@ END METHOD
         r=v*zval/den
         den=den+2
         ret=ret+r
-        // NOTE: EPSILON can be 10^14,
+        // NOTE: EPSILON can be pow(10,14),
         // for example.
         if abs(r)&lt;EPSILON: break
         if i==1: zval=zp
@@ -1986,7 +1986,7 @@ This expresses a distribution of maximum values.</li>
 <li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have
 the same meaning as in the normal distribution, and <code>alpha</code> is a shape parameter.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5) * n / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
-<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Truncation_and_Censoring">truncated</a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
+<li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation">truncated</a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
 <p><a id=Geometric_Sampling></a></p>
