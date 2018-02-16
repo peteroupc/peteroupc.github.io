@@ -870,7 +870,7 @@ For all these variants, the transformation should be done using [_companded RGB_
 
 The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.
 
-**Characterization tables.** In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectances](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
+**Characterization tables.** In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectance factors](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
 
 The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
 
@@ -1239,7 +1239,7 @@ Note that for best results, this technique needs to be carried out with [_linear
 <a id=Color_Maps></a>
 ## Color Maps
 
-A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB) should be used rather than companded RGB colors.
+A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB) should be used rather than companded RGB colors.
 
 > **Example:** A **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
 
@@ -1458,7 +1458,7 @@ In "[Subtractive Color Mixture Computation](http://scottburns.us/subtractive-col
   takes into account the relative proportions of the pigments or colors in the mixture, and
 3. converting the mixed reflectance curve to an RGB color.<sup>[(33)](#Note33)</sup>
 
-For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where `values` is a list of values (for example, reflectances of several curves at the same wavelength), and `weights` is a list of those values' corresponding weights (for example, mixing proportions of those curves).
+For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where `values` is a list of values (for example, reflectance factors of several curves at the same wavelength), and `weights` is a list of those values' corresponding weights (for example, mixing proportions of those curves).
 
     METHOD WGM(values, weights)
         if size(values)!=size(weights): return error

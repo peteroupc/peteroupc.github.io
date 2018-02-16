@@ -1027,7 +1027,7 @@ END METHOD
 
 <p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.</p>
 
-<p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a color measurement device to measure their <a href="#CIELAB">CIELAB</a> colors (or <a href="#Spectral_Color_Functions">spectral reflectances</a>) under standardized lighting and measurement conditions.</p>
+<p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a color measurement device to measure their <a href="#CIELAB">CIELAB</a> colors (or <a href="#Spectral_Color_Functions">spectral reflectance factors</a>) under standardized lighting and measurement conditions.</p>
 
 <p>The International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK color &quot;patches&quot;, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
@@ -1475,7 +1475,7 @@ END METHOD
 
 <h2>Color Maps</h2>
 
-<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any color space, but unless noted otherwise, <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a> should be used rather than companded RGB colors.</p>
+<p>A <em>color map</em> (or <em>color palette</em>) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a> should be used rather than companded RGB colors.</p>
 
 <blockquote>
 <p><strong>Example:</strong> A <strong>grayscale color map</strong> consists of the companded RGB colors <code>[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]</code>.</p>
@@ -1761,7 +1761,7 @@ takes into account the relative proportions of the pigments or colors in the mix
 <li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note33">(33)</a></sup></li>
 </ol>
 
-<p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where <code>values</code> is a list of values (for example, reflectances of several curves at the same wavelength), and <code>weights</code> is a list of those values&#39; corresponding weights (for example, mixing proportions of those curves).</p>
+<p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where <code>values</code> is a list of values (for example, reflectance factors of several curves at the same wavelength), and <code>weights</code> is a list of those values&#39; corresponding weights (for example, mixing proportions of those curves).</p>
 
 <pre>METHOD WGM(values, weights)
     if size(values)!=size(weights): return error
