@@ -257,7 +257,11 @@ def cie1931cmf(wavelength):
   index=int(round((wavelength-380)/5.0))*3
   return [CIE1931[index+i] for i in range(3)]
 
-def dxy(temp):
+def _dseriesd(temp, wavelength):
+  if wavelength < 300 or wavelength > 830:
+    return 0
+  index=int(round((wavelength-300)/5.0))*3
+  # Calculate the D-series illuminant's chromaticity
   temp=temp*1.0005563282336578
   ex=0
   invt=1.0/temp
@@ -266,13 +270,8 @@ def dxy(temp):
    ex=0.244063+(9911*h+(2967800.0-4607000000.0*invt)*invt)*invt
   else:
    ex=2963/12500.0+(6187/25.0+(1901800.0-2006400000.0*invt)*invt)*invt
-  return [ex,ex*(-3*ex+287*h)-11.0/40.0]
-
-def _dseriesd(temp, wavelength):
-  if wavelength < 300 or wavelength > 830:
-    return 0
-  index=int(round((wavelength-300)/5.0))*3
-  d=dxy(temp)
+  # 'd' holds the xy chromaticity of the D-series illuminant
+  d=[ex,ex*(-3*ex+287*h)-11.0/40.0]
   t=10000.0/(2562*d[0]-7341*d[1]+241)
   t1=(-1.7703*d[0]+5.9114*d[1]-1.3515)*t
   t1=round(t1*1000)/1000.0
@@ -356,6 +355,20 @@ def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     xyz[1] = xyz[1] / weight
     xyz[2] = xyz[2] / weight
     return xyz
+
+def bandpasscorrect(data):
+   """
+   Rectifies bandpass differences in a list
+   of raw spectral data using the Stearns &
+   Stearns algorithm.
+   """
+   ret=[x for x in data]
+   n=len(ret)
+   ret[0]=1.083*ret[0]-0.083*ret[1]
+   ret[n-1]=1.083*ret[n-1]-0.083*ret[n-2]
+   for k in range(1,n-1):
+      ret[k]=1.166*ret[k]-0.083*ret[k-1]-0.083*ret[k+1]
+   return ret
 
 ##################################################
 
