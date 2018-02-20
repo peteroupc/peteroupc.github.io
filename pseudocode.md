@@ -76,7 +76,9 @@ In the pseudocode:
 
 * Divisions do not round to an integer.  In programming languages in which division of two integers results in an integer, the right-hand side of the division must be converted to a floating-point number first.
 * The pseudocode shown is not guaranteed to cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow, out-of-bounds memory access, division by zero, and unexpected infinity values.
-* The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce substantially the same results as the pseudocode.
+* The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
+    - transcendental and trigonometric operations must be at least substantially close to accurate, and
+    - arithmetic and number conversion operations implemented in limited-precision number formats must be accurate within rounding error.
 
 <a id=License></a>
 ## License
