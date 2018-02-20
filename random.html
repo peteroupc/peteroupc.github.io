@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Feb. 12, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Feb. 20, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -49,7 +49,7 @@
 <tr>
 <td><a href="#Unpredictable_Random_Generators">Unpredictable-Random</a></td>
 <td>In information security cases, or when speed is not a concern.</td>
-<td><code>/dev/urandom</code>, <code>CryptGenRandom</code></td>
+<td><code>/dev/urandom</code>, <code>BCryptGenRandom</code></td>
 </tr>
 <tr>
 <td><a href="#Statistical_Random_Generators">Statistical-Random</a></td>
@@ -139,7 +139,7 @@
 
 <h2>Unpredictable-Random Generators</h2>
 
-<p>Unpredictable-random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in  information security contexts, such as&mdash;</p>
+<p>Unpredictable-random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in information security contexts, such as&mdash;</p>
 
 <ul>
 <li> generating keying material, such as encryption keys,</li>
@@ -175,7 +175,12 @@
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
-<p>The RNG should be reseeded from time to time (using a newly generated <em>unpredictable seed</em>) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so before it generates more than 2<sup>32</sup> bits without reseeding.</p>
+<p>The RNG should be reseeded from time to time (using a newly generated <em>unpredictable seed</em>) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so&mdash;</p>
+
+<ul>
+<li>before it generates more than 2<sup>32</sup> bits without reseeding, and</li>
+<li>not later than a set time span (e.g., one hour) after the RNG was last seeded or reseeded.</li>
+</ul>
 
 <p><a id=Examples></a></p>
 
@@ -186,8 +191,8 @@
 <ul>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
-<li>The <code>CryptGenRandom</code> method on Windows.</li>
-<li>Two-source extractors, multiple-source extractors, or cryptographic <a href="#Hash_Functions">hash functions</a> that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
+<li>The <code>BCryptGenRandom</code> method in recent Windows-based systems.</li>
+<li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions">hash functions</a> that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
 
 <ul>
 <li>disk access timings,</li>
@@ -487,7 +492,7 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 <ul>
 <li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
-<li>call the <code>CryptGenRandom</code> API in Windows-based systems,</li>
+<li>call the <code>BCryptGenRandom</code> API in recent Windows-based systems,</li>
 </ul>
 
 <p>and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and</p></li>

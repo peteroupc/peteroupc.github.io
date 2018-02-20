@@ -935,7 +935,7 @@ The following pseudocode implements `Luminance(color)` for companded sRGB colors
 >     - adding all the relative luminances (`Luminance(color)`) of the colors used in that image or data (which can be duplicates), then
 >     - dividing the result by the number of such colors.
 
-> **Note:** An application may also choose to use a [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color with the examples above, with `Luminance(color)` being that color's lightness (_L\*_) divided by 100.
+> **Note:** A value similar to relative luminance is a [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100.
 
 <a id=Color_Schemes></a>
 ### Color Schemes
@@ -1408,7 +1408,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 > **Notes:**
 >
-> 1. Although `REFL`, `LIGHT`, and `CMF` are nominally continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
+> 1. Although `REFL`, `LIGHT`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
 > 2. For applications where matching colors from the real world is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
 >     - two different curves can match the same color (and be _metamers_) or match different colors, whereas
 >     - two identical curves match the same color (but are not called metamers).

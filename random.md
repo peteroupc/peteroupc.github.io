@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 12, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 20, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -29,7 +29,7 @@ As I see it, there are two kinds of random number generators (RNGs) needed by mo
 
 | Kind of RNG   | When to Use This RNG  | Examples |
  --------|--------|------|
-| [Unpredictable-Random](#Unpredictable_Random_Generators)   | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `CryptGenRandom` |
+| [Unpredictable-Random](#Unpredictable_Random_Generators)   | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `BCryptGenRandom` |
 | [Statistical-Random](#Statistical_Random_Generators)   | When information security is not a concern, but speed is.  See also ["Shuffling"](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
 | [Seeded PRNG](#Seeded_Random_Generators)   | When generating reproducible results in a way not practical otherwise.   | Statistical-random quality PRNG with custom seed |
 
@@ -84,7 +84,7 @@ The following definitions are helpful in better understanding this document.
 <a id=Unpredictable_Random_Generators></a>
 ## Unpredictable-Random Generators
 
-Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in  information security contexts, such as&mdash;
+Unpredictable-random implementations (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in information security contexts, such as&mdash;
 
 -  generating keying material, such as encryption keys,
 -  generating random passwords, nonces, or session identifiers,
@@ -113,7 +113,9 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data which meets the quality requirement described earlier, which does not contain, in whole or in part, the PRNG's own output, and which ultimately derives from one or more nondeterministic sources (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and
 - must be at least the same size as the PRNG's _state length_.
 
-The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so before it generates more than 2<sup>32</sup> bits without reseeding.
+The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so&mdash;
+- before it generates more than 2<sup>32</sup> bits without reseeding, and
+- not later than a set time span (e.g., one hour) after the RNG was last seeded or reseeded.
 
 <a id=Examples></a>
 ### Examples
@@ -121,8 +123,8 @@ The RNG should be reseeded from time to time (using a newly generated _unpredict
 Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
-- The `CryptGenRandom` method on Windows.
-- Two-source extractors, multiple-source extractors, or cryptographic [hash functions](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
+- The `BCryptGenRandom` method in recent Windows-based systems.
+- Two-source extractors, multi-source extractors, or cryptographic [hash functions](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
     - disk access timings,
     - keystroke timings,
     - thermal noise, and
@@ -322,7 +324,7 @@ Wherever possible, existing libraries and techniques that already meet the requi
 - an unpredictable-random implementation can&mdash;
     - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
     - call the `getentropy` method on OpenBSD, or
-    - call the `CryptGenRandom` API in Windows-based systems,
+    - call the `BCryptGenRandom` API in recent Windows-based systems,
 
     and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and
 - a statistical-random implementation can use a PRNG algorithm mentioned as an example in the [statistical-random generator](#Statistical_Random_Generators) section.
