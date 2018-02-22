@@ -243,10 +243,15 @@ class SPD:
 
 def planckian(temp, wavelength):
     """ Spectral distribution for blackbody (Planckian) radiation. """
-    if wavelength==560:
-       return 100.0
+    if wavelength==560: return 100.0
+    if temp<60: return 0 # For simplicity, in very low temperature
     num = wavelength**(-5)
-    v=num / (math.exp(0.0143877687750393/(wavelength*(10**(-9))*temp)) - 1)
+    try:
+      v=num / (math.exp(0.0143877687750393/(wavelength*(10**(-9))*temp)) - 1)
+    except:
+      print(temp)
+      print(wavelength)
+      raise ValueError
     v2=(560.0**(-5)) / (math.exp(0.0143877687750393/(560.0*(10**(-9))*temp)) - 1)
     return v*100.0/v2
 
@@ -317,23 +322,26 @@ def perfectrefl(wavelength):
    return 1.0
 
 def brange(interval,mn,mx):
-  ret=[0 for i in range((mx-mn)/interval+1)]
+  ret=[0 for i in range(int((mx-mn)/interval))]
   r=mn
   i=0
   while r <= mx:
-    ret[i]=r
+    if i>=len(ret):
+     ret+=[r]
+    else:
+     ret[i]=r
     r+=interval
     i+=1
   return ret
 
-""" CIE A Illuminant."""
 def aIllum(wavelength):
+    """ CIE A Illuminant."""
     return planckian(2856, wavelength)
 
-""" CIE D50 Illuminant. """
+# CIE D50 Illuminant.
 d50Illum=SPD([dseries(5000,i) for i in brange(5,300,830)],5,300).calc
 
-""" CIE D65 Illuminant. """
+# CIE D65 Illuminant.
 d65Illum=SPD([dseries(6500,i) for i in brange(5,300,830)],5,300).calc
 
 def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
@@ -639,15 +647,16 @@ def xyzFromxyY(xyy):
                 return [xyy[0]*xyy[2]/xyy[1], xyy[2], xyy[2]*(1 - xyy[0] - xyy[1])/xyy[1]]
 
 def xyzTouvY(xyz):
-                sum=xyz[0]+xyz[1]*15+xyz[2]*3
-                if sum==0: return [0,0,0]
-                return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
+                su=xyz[0]+xyz[1]*15.0+xyz[2]*3.0
+                if su==0: return [0,0,0]
+                return [4.0*xyz[0]/su,9.0*xyz[1]/su,xyz[1]]
 
 def xyzFromuvY(uvy):
                 # NOTE: Results undefined if uvy[1]==0
-                x=(9*uvy[0]*uvy[2])/(4*uvy[1])
-                z=-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
-                return [x,uvy[1],z]
+                su=uvy[2]/(uvy[1]/9.0)
+                x=uvy[0]*su/4.0
+                z=(su/3.0)-(x/3.0)-5.0*uvy[2]
+                return [x,uvy[2],z]
 
 def xyzToCCT(xyz):
         sum = xyz[0] + xyz[1] + xyz[2]
@@ -658,6 +667,31 @@ def xyzToCCT(xyz):
         y = xyz[1] / sum
         c = (x - 0.332) / (0.1858 - y)
         return ((449*c+3525)*c+6823.3)*c+5520.33
+
+def blackbodyUV(temp):
+   """ Calculates the uv coordinates of the Planckian
+          locus at the given color temperature.  """
+   lam=lambda wl: planckian(temp, wl)
+   xyz=spectrumToTristim(perfectrefl, lam)
+   uvy=xyzTouvY(xyz)
+   return [uvy[0], uvy[1]*2.0/3]
+
+def xyzToDuv(xyz):
+   uvy=xyzTouvY(xyz)
+   uv=[uvy[0], uvy[1]*2.0/3]
+   cct=xyzToCCT(xyz)
+   bb=blackbodyUV(cct)
+   du=uv[0]-bb[0]
+   dv=uv[1]-bb[1]
+   dist=math.sqrt(du*du+dv*dv)
+   # NOTE: CCT calculation not useful if dist > 0.05
+   # NOTE: Duv sign determination is currently quite rough
+   duv=dist
+   if cct>6000 or (abs(dv)<abs(du) and cct<1000):
+     if du<0: duv=-duv
+   else:
+     if dv>0: duv=-duv
+   return duv
 
 def ciede2000(lab1, lab2):
     dl=lab2[0]-lab1[0]

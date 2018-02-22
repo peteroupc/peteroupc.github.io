@@ -151,7 +151,7 @@
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK</a> color spaces are especially used to describe proportions of four specific kinds of ink.</li>
 <li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a> color spaces are especially used in video encoding.</li>
 </ul></li>
-<li><strong>As a <em>spectral curve</em></strong>, which gives the behavior of light across the spectrum (see &quot;<a href="#Spectral_Color_Functions">Spectral Color Functions</a>&quot;).  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.</li>
+<li><strong>As a <em>spectral curve</em></strong>, which gives the behavior of light across the electromagnetic spectrum (see &quot;<a href="#Spectral_Color_Functions">Spectral Color Functions</a>&quot;).  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.</li>
 </ul>
 
 <p><a id=RGB_Color_Model></a></p>
@@ -717,16 +717,17 @@ and is calculated analogously to <em>xy</em> chromaticity.</li>
     END METHOD
 
     METHOD XYZTouvY(xyz)
-            sum=xyz[0]+xyz[1]*15+xyz[2]*3
+            sum=xyz[0]+xyz[1]*15.0+xyz[2]*3.0
             if sum==0: return [0,0,0]
-            return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
+            return [4.0*xyz[0]/sum,9.0*xyz[1]/sum,xyz[1]]
     END METHOD
 
     METHOD XYZFromuvY(uvy)
             // NOTE: Results undefined if uvy[1]==0
-            x=(9*uvy[0]*uvy[2])/(4*uvy[1])
-            z=0-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
-            return [x,uvy[1],z]
+            su=uvy[2]/(uvy[1]/9.0)
+            x=u*su/4.0
+            z=(su/3.0)-(x/3.0)-5.0*uvy[2]
+            return [x,uvy[2],z]
     END METHOD
 </pre>
 
@@ -1619,10 +1620,10 @@ maximum value of each color component, e.g., 0.5.</li>
 
 <h2>Spectral Color Functions</h2>
 
-<p>A color stimulus can be represented as a function (&quot;curve&quot;) that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
+<p>A color stimulus can be represented as a function (&quot;curve&quot;) that describes a distribution of radiation (such as light) across the electromagnetic spectrum.  There are three cases of objects that provoke a color sensation by light:</p>
 
 <ul>
-<li><strong>Light sources.</strong> A <em>spectral power distribution</em> (SPD) describes the intensity of a light source at each <a href="http://eilv.cie.co.at/term/1426">wavelength</a> of the spectrum.</li>
+<li><strong>Light sources.</strong> A <em>spectral power distribution</em> (SPD) describes the intensity of a light source at each <a href="http://eilv.cie.co.at/term/1426">wavelength</a> within the electromagnetic spectrum.</li>
 <li><strong>Reflective materials.</strong> A <em>(spectral) reflectance curve</em> describes the fraction of light reflected by a reflective (opaque) material.</li>
 <li><strong>Transmissive materials.</strong> A <em>transmittance curve</em> describes the fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter.</li>
 </ul>
@@ -1725,6 +1726,7 @@ END METHOD
 END METHOD
 
 METHOD LIGHT(wavelength) # NOTE: Relative only
+    if TEMP&lt;60: return 0 # For simplicity, in very low temperature
     return Planckian(wavelength, TEMP) * 100.0 /
         Planckian(560, wavelength)
 END METHOD
