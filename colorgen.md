@@ -104,7 +104,7 @@ A color can be specified in one of two ways:
     - [XYZ](#CIE_XYZ), [CIELAB](#CIELAB), and [CIELUV](#CIELUV) color spaces are based on human color perception.
     - [CMYK](#CMYK_and_Other_Ink_Mixture_Color_Models) color spaces are especially used to describe proportions of four specific kinds of ink.
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R) color spaces are especially used in video encoding.
-* **As a _spectral curve_**, which gives the behavior of light across the spectrum (see "[Spectral Color Functions](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
+* **As a _spectral curve_**, which gives the behavior of light across the electromagnetic spectrum (see "[Spectral Color Functions](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
 
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
@@ -593,16 +593,17 @@ In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to a
         END METHOD
 
         METHOD XYZTouvY(xyz)
-                sum=xyz[0]+xyz[1]*15+xyz[2]*3
+                sum=xyz[0]+xyz[1]*15.0+xyz[2]*3.0
                 if sum==0: return [0,0,0]
-                return [4*xyz[0]/sum,9*xyz[1]/sum,xyz[1]]
+                return [4.0*xyz[0]/sum,9.0*xyz[1]/sum,xyz[1]]
         END METHOD
 
         METHOD XYZFromuvY(uvy)
                 // NOTE: Results undefined if uvy[1]==0
-                x=(9*uvy[0]*uvy[2])/(4*uvy[1])
-                z=0-(x/3)-5*uvy[2]+(3*uvy[2]/uvy[1])
-                return [x,uvy[1],z]
+                su=uvy[2]/(uvy[1]/9.0)
+                x=u*su/4.0
+                z=(su/3.0)-(x/3.0)-5.0*uvy[2]
+                return [x,uvy[2],z]
         END METHOD
 
 <a id=CIELAB></a>
@@ -1347,9 +1348,9 @@ The following techniques can be used to generate random RGB colors. Note that fo
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
 
-A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the spectrum.  There are three cases of objects that provoke a color sensation by light:
+A color stimulus can be represented as a function ("curve") that describes a distribution of radiation (such as light) across the electromagnetic spectrum.  There are three cases of objects that provoke a color sensation by light:
 
-- **Light sources.** A _spectral power distribution_ (SPD) describes the intensity of a light source at each [wavelength](http://eilv.cie.co.at/term/1426) of the spectrum.
+- **Light sources.** A _spectral power distribution_ (SPD) describes the intensity of a light source at each [wavelength](http://eilv.cie.co.at/term/1426) within the electromagnetic spectrum.
 - **Reflective materials.** A _(spectral) reflectance curve_ describes the fraction of light reflected by a reflective (opaque) material.
 - **Transmissive materials.** A _transmittance curve_ describes the fraction of light that passes through a transmissive (translucent or transparent) material, such as a light filter.
 
@@ -1431,6 +1432,7 @@ A _blackbody_ is an idealized material that emits light based only on its temper
     END METHOD
 
     METHOD LIGHT(wavelength) # NOTE: Relative only
+        if TEMP<60: return 0 # For simplicity, in very low temperature
         return Planckian(wavelength, TEMP) * 100.0 /
             Planckian(560, wavelength)
     END METHOD
