@@ -15,7 +15,7 @@ import math
 
 # CIE 1931 Observer
 
-CIE1931=[
+_CIE1931=[
 0.001368,0.000039,0.006450,
 0.002236,0.000064,0.010550,
 0.004243,0.000120,0.020050,
@@ -100,7 +100,7 @@ CIE1931=[
 
 # D Series coefficients
 
-DSERIES = [
+_DSERIES = [
 0.04,0.02,0.00,
 3.02,2.26,1.00,
 6.00,4.50,2.00,
@@ -220,21 +220,25 @@ class SPD:
        self.maxWavelength=maxWavelength
     self.interval=interval
 
-  def calcd(self, wavelength):
+  def _calcd(self, wavelength):
     if wavelength < self.minWavelength or wavelength > self.maxWavelength:
       return 0
     index=int(round((wavelength-self.minWavelength)*1.0/self.interval))
     return self.values[index]
 
   def calc(self, wavelength):
+    """ Calculates the spectral value at the given wavelength.
+           Values beyond the wavelength range are set to 0.
+           Currently, this class linearly interpolates between
+           spectral values. `wavelength` is in nanometers. """
     if wavelength < self.minWavelength or wavelength > self.maxWavelength:
       return 0
     mm=wavelength%self.interval
-    s=self.calcd(wavelength-mm)
+    s=self._calcd(wavelength-mm)
     if mm==0:
        return s
     m=mm*1.0/self.interval
-    e=self.calcd((wavelength-mm)+self.interval)
+    e=self._calcd((wavelength-mm)+self.interval)
     return s+(e-s)*m
 
 #
@@ -242,9 +246,10 @@ class SPD:
 #
 
 def planckian(temp, wavelength):
-    """ Spectral distribution for blackbody (Planckian) radiation. """
+    """ Spectral distribution for blackbody (Planckian) radiation.
+          `temp` is in kelvins, and `wavelength` is in nanometers.  """
     if wavelength==560: return 100.0
-    if temp<60: return 0 # For simplicity, in very low temperature
+    if temp<60: temp=60 # For simplicity, in very low temperature
     num = wavelength**(-5)
     try:
       v=num / (math.exp(0.0143877687750393/(wavelength*(10**(-9))*temp)) - 1)
@@ -256,11 +261,12 @@ def planckian(temp, wavelength):
     return v*100.0/v2
 
 def cie1931cmf(wavelength):
-  """ CIE 1931 standard observer. """
+  """ CIE 1931 standard observer.
+          `wavelength` is in nanometers. """
   if wavelength < 380 or wavelength > 780:
     return [0, 0, 0]
   index=int(round((wavelength-380)/5.0))*3
-  return [CIE1931[index+i] for i in range(3)]
+  return [_CIE1931[index+i] for i in range(3)]
 
 def _dseriesd(temp, wavelength):
   if wavelength < 300 or wavelength > 830:
@@ -280,11 +286,11 @@ def _dseriesd(temp, wavelength):
   t=10000.0/(2562*d[0]-7341*d[1]+241)
   t1=(-1.7703*d[0]+5.9114*d[1]-1.3515)*t
   t1=round(t1*1000)/1000.0
-  t1=t1*DSERIES[index+1]
+  t1=t1*_DSERIES[index+1]
   t2=(-31.4424*d[0]+30.0717*d[1]+0.03)*t
   t2=round(t2*1000)/1000.0
-  t2=t2*DSERIES[index+2]
-  return t1+t2+DSERIES[index]
+  t2=t2*_DSERIES[index+2]
+  return t1+t2+_DSERIES[index]
 
 def dseries(temp, wavelength):
     """
@@ -292,6 +298,7 @@ def dseries(temp, wavelength):
     wavelength and color temperature (the latter
     should not be less than 4000 K or greater
     than 25,000 K).
+    `temp` is in kelvins, and `wavelength` is in nanometers.
     """
     if wavelength < 300 or wavelength > 830:
       return 0
@@ -303,10 +310,12 @@ def dseries(temp, wavelength):
     e=_dseriesd(temp, (wavelength-mm)+10)
     return s+(e-s)*m
 
-def referenceIllum(ct, wavelength):
+def referenceIllum(temp, wavelength):
   """
   Reference illuminant for a given color temperature.
+  `temp` is in kelvins, and `wavelength` is in nanometers.
   """
+  ct=temp
   if ct <= 0:
     return 0
   if ct < 4000:
@@ -318,7 +327,7 @@ def referenceIllum(ct, wavelength):
   return dseries(ct, wavelength)
 
 def perfectrefl(wavelength):
-   """ Perfect reflecting diffuser. """
+   """ Perfect reflecting diffuser. `wavelength` is in nanometers. """
    return 1.0
 
 def brange(interval,mn,mx):
@@ -335,14 +344,19 @@ def brange(interval,mn,mx):
   return ret
 
 def aIllum(wavelength):
-    """ CIE A Illuminant."""
+    """ CIE A Standard Illuminant. `wavelength` is in nanometers."""
     return planckian(2856, wavelength)
 
-# CIE D50 Illuminant.
-d50Illum=SPD([dseries(5000,i) for i in brange(5,300,830)],5,300).calc
+_d50Illum=SPD([dseries(5000,_) for _ in brange(5,300,830)],5,300)
+_d65Illum=SPD([dseries(6500,_) for _ in brange(5,300,830)],5,300)
 
-# CIE D65 Illuminant.
-d65Illum=SPD([dseries(6500,i) for i in brange(5,300,830)],5,300).calc
+def d50Illum(wavelength):
+    """ CIE D50 Illuminant. `wavelength` is in nanometers."""
+    return _d50Illum.calc(wavelength)
+
+def d65Illum(wavelength):
+    """ CIE D65 Standard Illuminant. `wavelength` is in nanometers."""
+    return _d65Illum.calc(wavelength)
 
 def spectrumToTristim(refl, light=d65Illum, cmf=cie1931cmf):
     i = 360
@@ -368,7 +382,9 @@ def bandpasscorrect(data):
    """
    Rectifies bandpass differences in a list
    of raw spectral data using the Stearns &
-   Stearns algorithm.
+   Stearns algorithm.  The spectral data should
+   indicate values at a constant wavelength interval
+   (bandwidth).
    """
    ret=[x for x in data]
    n=len(ret)
@@ -386,13 +402,13 @@ def linearFromsRGB(c):
     return c / 12.92
   return math.pow((0.055 + c) / 1.055, 2.4)
 
-def clamp(a,mn,mx):
+def _clamp(a,mn,mx):
   if a<mn:
     return mn
   return mx if a>mx else a
 
-def clamp3(v,mn,mx):
-  return [clamp(v[i],mn[i],mx[i]) for i in range(3)]
+def _clamp3(v,mn,mx):
+  return [_clamp(v[i],mn[i],mx[i]) for i in range(3)]
 
 def linearTosRGB(c):
   """
@@ -402,12 +418,12 @@ Converts a color component from linearized to companded sRGB.
     return 12.92 * c
   return math.pow(c, 1.0 / 2.4) * 1.055 - 0.055
 
-# Convert a color from companded to linearized RGB
 def linearFromsRGB3(c):
+   """ Convert a color from companded to linearized RGB.  """
    return [linearFromsRGB(c[0]), linearFromsRGB(c[1]), linearFromsRGB(c[2])]
 
-# Convert a color from linearized to companded sRGB
 def linearTosRGB3(c):
+   """ Convert a color from linearized to companded sRGB. """
    return [linearTosRGB(c[0]), linearTosRGB(c[1]), linearTosRGB(c[2])]
 
 def rgbToHsv(rgb):
@@ -539,7 +555,7 @@ def hwbToRgb(hwb):
     1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])
 
 # applies a 3x3 matrix transformation
-def apply3x3Matrix(xyz, xyzmatrix):
+def _apply3x3Matrix(xyz, xyzmatrix):
         r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
         g=xyz[0]*xyzmatrix[3]+xyz[1]*xyzmatrix[4]+xyz[2]*xyzmatrix[5]
         b=xyz[0]*xyzmatrix[6]+xyz[1]*xyzmatrix[7]+xyz[2]*xyzmatrix[8]
@@ -547,28 +563,28 @@ def apply3x3Matrix(xyz, xyzmatrix):
 
 def xyzFromsRGBD50(rgb):
     lin=linearFromsRGB3(rgb)
-    return apply3x3Matrix(lin, [0.4360657, 0.3851515, 0.1430784,
+    return _apply3x3Matrix(lin, [0.4360657, 0.3851515, 0.1430784,
             0.2224932, 0.7168870, 0.06061981, 0.01392392,
             0.09708132, 0.7140994])
 
 def xyzTosRGBD50(xyz):
-    rgb=apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
+    rgb=_apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
              -0.9787955, 1.916254, 0.03344287, 0.07195539,
              -0.2289768, 1.405386])
-    return clamp3(linearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return _clamp3(linearTosRGB3(rgb), [0,0,0],[1,1,1])
 
 def xyzFromsRGB(rgb):
     lin=linearFromsRGB3(rgb)
     # NOTE: Official matrix is rounded to nearest 1/10000
-    return apply3x3Matrix(lin, [0.4123908, 0.3575843, 0.1804808,
+    return _apply3x3Matrix(lin, [0.4123908, 0.3575843, 0.1804808,
             0.2126390, 0.7151687, 0.07219232, 0.01933082,
             0.1191948, 0.9505322])
 
 def xyzTosRGB(xyz):
-    rgb=apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
+    rgb=_apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
             -0.9692436, 1.875968, 0.04155506, 0.05563008,
             -0.2039770, 1.056972])
-    return clamp3(linearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return _clamp3(linearTosRGB3(rgb), [0,0,0],[1,1,1])
 
 def xyzToLab(xyzval,wpoint):
     xyz=[xyzval[0]/wpoint[0],xyzval[1]/wpoint[1],xyzval[2]/wpoint[2]]
@@ -670,7 +686,8 @@ def xyzToCCT(xyz):
 
 def blackbodyUV(temp):
    """ Calculates the uv coordinates of the Planckian
-          locus at the given color temperature.  """
+          locus at the given color temperature.
+          `wavelength` is in nanometers. """
    lam=lambda wl: planckian(temp, wl)
    xyz=spectrumToTristim(perfectrefl, lam)
    uvy=xyzTouvY(xyz)
@@ -687,13 +704,20 @@ def xyzToDuv(xyz):
    # NOTE: CCT calculation not useful if dist > 0.05
    # NOTE: Duv sign determination is currently quite rough
    duv=dist
-   if cct>6000 or (abs(dv)<abs(du) and cct<1000):
-     if du<0: duv=-duv
+   if cct<61:
+     if dv<0: duv=-duv
    else:
-     if dv>0: duv=-duv
+     if cct>25000:
+       if du>0 or uv[0]>0.185: duv=-duv
+     else:
+       bb2=blackbodyUV(cct-1)
+       bbtan=[bb2[0]-bb[0],bb2[1]-bb[1]]
+       cross=bbtan[0]*dv-du*bbtan[1]
+       if cross<0: duv=-duv
    return duv
 
 def ciede2000(lab1, lab2):
+    """ CIEDE2000 color difference formula. """
     dl=lab2[0]-lab1[0]
     hl=lab1[0]+dl*0.5
     sqb1=lab1[2]*lab1[2]
@@ -739,6 +763,11 @@ def ciede2000(lab1, lab2):
     return math.sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
 
 def sRGBLuminance(x):
+  """
+  Finds the relative color of a companded sRGB color, where
+  white is the D65 white point.
+  `x` -> 3-item list or tuple of a companded sRGB color.
+  """
   lin=linearFromsRGB3(x)
   return lin[0]*0.2126+lin[1]*0.7152+lin[2]*0.0722
 
@@ -754,15 +783,23 @@ def sRGBContrastRatio(color1,color2):
   return (max(l1,l2)+0.05)/(min(l1,l2)+0.05)
 
 def sRGBToLab(rgb):
+    """ Converts a companded sRGB color to CIELAB,
+           with white being the D65 white point.  """
     return xyzToLab(xyzFromsRGB(rgb), [0.9504559, 1, 1.089058])
 
 def sRGBFromLab(lab):
+    """ Converts a CIELAB color to companded sRGB,
+           with white being the D65 white point.  """
     return xyzTosRGB(labToXYZ(lab, [0.9504559, 1, 1.089058]))
 
 def sRGBToLabD50(rgb):
+    """ Converts a companded sRGB color to CIELAB,
+           with white being the D50 white point.  """
     return xyzToLab(xyzFromsRGBD50(rgb), [0.9642957, 1, 0.8251046])
 
 def sRGBFromLabD50(lab):
+    """ Converts a CIELAB color to companded sRGB,
+           with white being the D50 white point.  """
     return xyzTosRGBD50(labToXYZ(lab, [0.9642957, 1, 0.8251046]))
 
 ###############
@@ -780,17 +817,20 @@ def kubelkaMunkKSToReflectance(ksList):
 
 def kubelkaMunkMix(colorantsKS):
   """
-  Generates a mixed K/S curve from the list of colorants.
+  Generates a mixed K/S curve from the list of colorants (`colorantsKS`).
   Each colorant is a hash with the following keys:
+
   ks - list of K/S ratios
   strength - fraction from 0 to 1 in the total mixture, or
      1 for the "base" color.
+
   Example:
-  >>> kubelkaMunkMix([ \
-  >>>    {"strength":0.5, "ks":[0.3, ...]}, \
-  >>>    {"strength":0.5, "ks":[0.2, ...]}, \
-  >>>    {"strength":1.0, "ks":[0.4, ...]}  \ # base
-  >>>  ])
+
+    >>> kubelkaMunkMix([ \
+    ...    {"strength":0.5, "ks":[0.3, ...]}, \
+    ...    {"strength":0.5, "ks":[0.2, ...]}, \
+    ...    {"strength":1.0, "ks":[0.4, ...]}  \ # base
+    ...  ])
   """
   size=len(colorantsKS[0]["ks"])
   return [ \

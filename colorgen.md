@@ -869,9 +869,9 @@ For all these variants, the transformation should be done using [_companded RGB_
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the _printing condition_ (as defined in ISO 12647-1), including what inks and paper are used.
 
-**Characterization tables.** In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectance factors](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
+**Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectance factors](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
 
 The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
 
@@ -1432,8 +1432,9 @@ A _blackbody_ is an idealized material that emits light based only on its temper
     END METHOD
 
     METHOD LIGHT(wavelength) # NOTE: Relative only
-        if TEMP<60: return 0 # For simplicity, in very low temperature
-        return Planckian(wavelength, TEMP) * 100.0 /
+        t=TEMP
+        if t<60: t=60 # For simplicity, in very low temperature
+        return Planckian(wavelength, t) * 100.0 /
             Planckian(560, wavelength)
     END METHOD
 
