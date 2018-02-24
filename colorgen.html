@@ -1233,7 +1233,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 </ul>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative, where <code>value</code> is 0 or greater and 1 or less.</p></li>
-<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
+<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)  A color can also be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with its <a href="#Relative_Luminance_Grayscale">grayscale</a> version.</li>
 <li><strong>Colorize</strong>: Given a desired <code>color</code> and a source color <code>srcColor</code>, generate
 <code>[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]</code>.</li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
@@ -1443,9 +1443,9 @@ END METHOD
 <li>divide the result by the number of colors added this way.</li>
 </ul>
 
-<p>Note that for best results, this technique needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB colors</em></a>.</p>
+<p>Note that for best results, this technique needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em></a> rather than companded RGB colors.</p>
 
-<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this more complicated technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  There are several kinds of quantization algorithms, and they are too complicated to discuss in this document. Again, for best results, color quantization needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
+<p><strong><a href="https://en.wikipedia.org/wiki/Color_quantization">Color quantization</a>.</strong> In this technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  There are several kinds of quantization algorithms, including <a href="https://en.wikipedia.org/wiki/K-means_clustering"><em>k</em>-means clustering</a> (which is a randomized algorithm). Again, for best results, color quantization needs to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em></a> rather than companded RGB colors.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
