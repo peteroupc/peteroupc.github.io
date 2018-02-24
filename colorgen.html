@@ -1026,9 +1026,9 @@ END METHOD
 
 <h3>CMYK and Other Ink-Mixture Color Models</h3>
 
-<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the printing condition, including what inks and paper are used.</p>
+<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks and paper are used.</p>
 
-<p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition (combination of ink, paper, printer, and more) is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a color measurement device to measure their <a href="#CIELAB">CIELAB</a> colors (or <a href="#Spectral_Color_Functions">spectral reflectance factors</a>) under standardized lighting and measurement conditions.</p>
+<p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a color measurement device to measure their <a href="#CIELAB">CIELAB</a> colors (or <a href="#Spectral_Color_Functions">spectral reflectance factors</a>) under standardized lighting and measurement conditions.</p>
 
 <p>The International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter">list of standardized conversions</a> of CMYK color &quot;patches&quot;, usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
@@ -1726,8 +1726,9 @@ END METHOD
 END METHOD
 
 METHOD LIGHT(wavelength) # NOTE: Relative only
-    if TEMP&lt;60: return 0 # For simplicity, in very low temperature
-    return Planckian(wavelength, TEMP) * 100.0 /
+    t=TEMP
+    if t&lt;60: t=60 # For simplicity, in very low temperature
+    return Planckian(wavelength, t) * 100.0 /
         Planckian(560, wavelength)
 END METHOD
 </pre>
