@@ -1035,7 +1035,7 @@ In the following formulas, `color` is the source color in 0-1 format.
     - `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors),
 
     generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative, where `value` is 0 or greater and 1 or less.
-- **Saturate/Desaturate**: `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])`, where `hsv = RgbToHsv(color)`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)
+- **Saturate/Desaturate**: `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])`, where `hsv = RgbToHsv(color)`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)  A color can also be desaturated by [alpha blending](#Alpha_Blending) that color with its [grayscale](#Relative_Luminance_Grayscale) version.
 - **Colorize**: Given a desired `color` and a source color `srcColor`, generate
  `[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]`.
 - **Swap blue and red channels**: `[color[2], color[1], color[0]]`.
@@ -1217,9 +1217,9 @@ There are several methods of finding the kind or kinds of colors that appear mos
 - add all the colors used in the image or data, or a sample of them (for RGB colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of colors added this way.
 
-Note that for best results, this technique needs to be carried out with [_linear RGB colors_](#Linear_RGB_and_Companded_RGB).
+Note that for best results, this technique needs to be carried out with [_linear RGB_](#Linear_RGB_and_Companded_RGB) rather than companded RGB colors.
 
-**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this more complicated technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  There are several kinds of quantization algorithms, and they are too complicated to discuss in this document. Again, for best results, color quantization needs to be carried out with [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB).
+**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this technique, the colors used in the image or data are reduced to a small set of colors (for example, ten to twenty).  There are several kinds of quantization algorithms, including [_k_-means clustering](https://en.wikipedia.org/wiki/K-means_clustering) (which is a randomized algorithm). Again, for best results, color quantization needs to be carried out with [_linear RGB_](#Linear_RGB_and_Companded_RGB) rather than companded RGB colors.
 
 **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 

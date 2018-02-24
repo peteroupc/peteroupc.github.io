@@ -396,8 +396,8 @@ def bandpasscorrect(data):
 
 ##################################################
 
-# Convert a color component from companded to linearized RGB
 def linearFromsRGB(c):
+  """Convert a color component from companded to linearized RGB."""
   if c <= 0.04045:
     return c / 12.92
   return math.pow((0.055 + c) / 1.055, 2.4)
@@ -409,6 +409,9 @@ def _clamp(a,mn,mx):
 
 def _clamp3(v,mn,mx):
   return [_clamp(v[i],mn[i],mx[i]) for i in range(3)]
+
+def lerp3(c1,c2,factor):
+  return [c1[i]+(c2[i]-c1[i])*factor for i in range(3)]
 
 def linearTosRGB(c):
   """
@@ -770,6 +773,15 @@ def sRGBLuminance(x):
   """
   lin=linearFromsRGB3(x)
   return lin[0]*0.2126+lin[1]*0.7152+lin[2]*0.0722
+
+def sRGBGrayscale(x):
+  """
+  Finds the grayscale version of a companded sRGB color, where
+  white is the D65 white point.
+  `x` -> 3-item list or tuple of a companded sRGB color.
+  """
+  rellum=sRGBLuminance(x)
+  return [rellum,rellum,rellum]
 
 def sRGBContrastRatio(color1,color2):
   """
