@@ -1218,7 +1218,7 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 There are several methods of finding the kind or kinds of colors that appear most prominently in an [_image color list_](#Notation_and_Definitions).
 
 **Averaging.**  To find the dominant color using this technique&mdash;
-- add all the image color list's colors, or a sample of them (for RGB colors, adding two or more colors means adding each of their components individually), then
+- add all the image color list's colors, or a sample or subset of them (for RGB colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of colors added this way.
 
 Note that for best results, this technique needs to be carried out with [_linear RGB_](#Linear_RGB_and_Companded_RGB) rather than companded RGB colors.
