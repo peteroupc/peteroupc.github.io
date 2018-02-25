@@ -10,7 +10,7 @@
 
 <h2>Introduction</h2>
 
-<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. <strong><a href="https://peteroupc.github.io/colorutil.py">Sample Python code</a> that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html">Supplemental topics</a> are listed in another open-source page.</p>
+<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. <strong><a href="https://peteroupc.github.io/colorutil.zip">Sample Python code</a> that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html">Supplemental topics</a> are listed in another open-source page.</p>
 
 <p><strong>Topics this document covers include:</strong></p>
 
@@ -122,9 +122,9 @@
 <li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
 <li><strong>Color model.</strong> Describes, in general terms, the relationship of colors in a theoretical space.</li>
 <li><strong>Color space.</strong> A mapping from colors to numbers that follows a particular color model.</li>
-<li><strong>D50 illuminant.</strong> CIE illuminant that approximates sunrise daylight (correlated color temperature about 5000 kelvins).</li>
+<li><strong>D50 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature about 5000 kelvins.</li>
 <li><strong>D50 white point.</strong> The white point determined by the D50 illuminant and the CIE 1931 standard observer.</li>
-<li><strong>D65 illuminant.</strong> CIE illuminant that approximates noon daylight (correlated color temperature about 6500 kelvins).<sup><a href="#Note1">(1)</a></sup></li>
+<li><strong>D65 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature about 6500 kelvins.<sup><a href="#Note1">(1)</a></sup></li>
 <li><strong>D65 white point.</strong> The white point determined by the D65 illuminant and the CIE 1931 standard observer.</li>
 <li><strong>IEC.</strong> International Electrotechnical Commission.</li>
 <li><strong>Image color list.</strong> Means either&mdash;
@@ -1430,10 +1430,10 @@ END METHOD
 <li>defining a list (<code>repColors</code>) of <em>k</em> color points (which, for example, can be representative colors for red, blue, black, white, and so on, or can be colors chosen at random), then</li>
 <li>for each color (<code>color</code>) to be categorized, finding the nearest color to that color among the <em>k</em> color points (for example, by calling <code>NearestColorIndex(color, repColors)</code>), then</li>
 <li>replacing each color point in <code>repColors</code> with its new average color (based on the colors that point categorizes), then</li>
-<li>repeating steps ii and iii until the changes in all color points are negligible.</li>
+<li>repeating steps 2 and 3 until the changes in all color points are negligible.</li>
 </ol>
 
-<p>If representative colors were used, steps iii and iv, or step iv itself, can be omitted.  Otherwise, color points in <code>repColors</code> that end up categorizing no colors should be omitted.</p></li>
+<p>If representative colors were used, steps 3 and 4, or step 4 itself, can be omitted.  Otherwise, color points in <code>repColors</code> that end up categorizing no colors should be omitted.</p></li>
 </ul>
 </blockquote>
 
@@ -1475,7 +1475,7 @@ END METHOD
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note28">(28)</a></sup></li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be extracted from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculaed from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
 
@@ -1647,7 +1647,7 @@ wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding val
 <li><code>LIGHT(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>. Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
-<li>a CIE daylight illuminant such as the D65 or D50 illuminant (see the <a href="https://peteroupc.github.io/colorutil.py">Python sample code</a> for implementation),</li>
+<li>a CIE daylight illuminant such as the D65 or D50 illuminant (see the <a href="https://peteroupc.github.io/colorutil.zip">Python sample code</a> for implementation),</li>
 <li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;, and</li>
 <li>the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.</li>
 </ul></li>

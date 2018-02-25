@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 19, 2018.
+Begun on June 4, 2017; last updated on Feb. 25, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -14,7 +14,7 @@ This page discusses many ways applications can do random number generation and s
 - ways to generate randomized content and conditions, such as [Boolean conditions](#Boolean_Conditions), [shuffling](#Shuffling), and [sampling unique items from a list](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - generating non-uniform random numbers, including [weighted choice](#Discrete_Weighted_Choice), the [normal distribution](#Normal_Gaussian_Distribution), and [other probability distributions](#Other_Non_Uniform_Distributions).
 
-[Sample Python code](https://peteroupc.github.io/randomgen.py) that implements many of the methods in this document is available.
+[Sample Python code](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available.
 
 All the random number methods presented on this page&mdash;
 

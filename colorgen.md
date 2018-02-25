@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. **[Sample Python code](https://peteroupc.github.io/colorutil.py) that implements many of the methods in this document is available.**  [Supplemental topics](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. **[Sample Python code](https://peteroupc.github.io/colorutil.zip) that implements many of the methods in this document is available.**  [Supplemental topics](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -81,9 +81,9 @@ This document presents an overview of many common color topics that are of gener
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
-- **D50 illuminant.** CIE illuminant that approximates sunrise daylight (correlated color temperature about 5000 kelvins).
+- **D50 illuminant.** CIE illuminant that approximates daylight at a correlated color temperature about 5000 kelvins.
 - **D50 white point.** The white point determined by the D50 illuminant and the CIE 1931 standard observer.
-- **D65 illuminant.** CIE illuminant that approximates noon daylight (correlated color temperature about 6500 kelvins).<sup>[(1)](#Note1)</sup>
+- **D65 illuminant.** CIE illuminant that approximates daylight at a correlated color temperature about 6500 kelvins.<sup>[(1)](#Note1)</sup>
 - **D65 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **IEC.** International Electrotechnical Commission.
 - **Image color list.** Means either&mdash;
@@ -1208,9 +1208,9 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 >     1. defining a list (`repColors`) of _k_ color points (which, for example, can be representative colors for red, blue, black, white, and so on, or can be colors chosen at random), then
 >     2. for each color (`color`) to be categorized, finding the nearest color to that color among the _k_ color points (for example, by calling `NearestColorIndex(color, repColors)`), then
 >     3. replacing each color point in `repColors` with its new average color (based on the colors that point categorizes), then
->     4. repeating steps ii and iii until the changes in all color points are negligible.
+>     4. repeating steps 2 and 3 until the changes in all color points are negligible.
 >
->     If representative colors were used, steps iii and iv, or step iv itself, can be omitted.  Otherwise, color points in `repColors` that end up categorizing no colors should be omitted.
+>     If representative colors were used, steps 3 and 4, or step 4 itself, can be omitted.  Otherwise, color points in `repColors` that end up categorizing no colors should be omitted.
 
 <a id=Dominant_Colors_of_an_Image></a>
 ## Dominant Colors of an Image
@@ -1239,7 +1239,7 @@ Note that for best results, this technique needs to be carried out with [_linear
 >     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
 >     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
 > 3. Finding the number of _unique_ colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(28)](#Note28)</sup>
-> 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be extracted from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
+> 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculaed from [_scene-referred_ image data](http://eilv.cie.co.at/term/567) (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
 ## Color Maps
@@ -1367,7 +1367,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
    (_See also note 1 later in this section._)
 - `REFL(wl)` models the **reflectance or transmittance curve**. `REFL` returns the value of the curve at the wavelength `wl`; the value can be 0 or greater and, with the exception of fluorescent materials, 1 or less.  If `REFL` is `PerfectWhite` (below), then the tristimulus values calculated are the _adopted white_ (and are those of the light source itself).
 - `LIGHT(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`. Choices for `LIGHT` include&mdash;
-    - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [Python sample code](https://peteroupc.github.io/colorutil.py) for implementation),
+    - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [Python sample code](https://peteroupc.github.io/colorutil.zip) for implementation),
     - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)", and
     - the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.
 - `CMF(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;
