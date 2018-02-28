@@ -871,7 +871,7 @@ For all these variants, the transformation should be done using [_companded RGB_
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the _printing condition_ (as defined in ISO 12647-1), including what inks, paper, and printing methods are used.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the _printing condition_ (as defined in ISO 12647-1), including what inks and paper are used and how the inks are printed.
 
 **Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a color measurement device to measure their [CIELAB](#CIELAB) colors (or [spectral reflectance factors](#Spectral_Color_Functions)) under standardized lighting and measurement conditions.
 
@@ -879,7 +879,7 @@ The International Color Consortium maintains a [list of standardized conversions
 
 Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table's "patches".<sup>[(18)](#Note18)</sup>
 
-**Other ink mixtures.** Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of six or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.
+**Other ink mixtures.** Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of five or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.
 
 **Rough conversions.** The following pseudocode shows _very rough_ and _approximate_ conversions between an RGB color (`color`) and a CMYK color (`cmyk`):
 

@@ -1031,7 +1031,7 @@ END METHOD
 
 <h3>CMYK and Other Ink-Mixture Color Models</h3>
 
-<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks, paper, and printing methods are used.</p>
+<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture">Color Mixture</a>&quot;, later), the proper interpretation of CMYK colors depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks and paper are used and how the inks are printed.</p>
 
 <p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a color measurement device to measure their <a href="#CIELAB">CIELAB</a> colors (or <a href="#Spectral_Color_Functions">spectral reflectance factors</a>) under standardized lighting and measurement conditions.</p>
 
@@ -1039,7 +1039,7 @@ END METHOD
 
 <p>Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table&#39;s &quot;patches&quot;.<sup><a href="#Note18">(18)</a></sup></p>
 
-<p><strong>Other ink mixtures.</strong> Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of six or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
+<p><strong>Other ink mixtures.</strong> Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of five or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
 
 <p><strong>Rough conversions.</strong> The following pseudocode shows <em>very rough</em> and <em>approximate</em> conversions between an RGB color (<code>color</code>) and a CMYK color (<code>cmyk</code>):</p>
 
@@ -1649,7 +1649,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions further described later.  All three take a
 wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength.
 (<em>See also note 1 later in this section.</em>)</li>
-<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>; the value can be 0 or greater and, with the exception of fluorescent materials, 1 or less.  If <code>REFL</code> is <code>PerfectWhite</code> (below), then the tristimulus values calculated are the <em>adopted white</em> (and are those of the light source itself).</li>
+<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>; the value can be 0 or greater and, with the exception of fluorescent or optically brightened materials, 1 or less.  If <code>REFL</code> is <code>PerfectWhite</code> (below), then the tristimulus values calculated are the <em>adopted white</em> (and are those of the light source itself).</li>
 <li><code>LIGHT(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>. Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
