@@ -1111,12 +1111,12 @@ END METHOD
 </ul></li>
 </ol>
 
-<p><strong>Note:</strong> Values similar to relative luminance include&mdash;</p>
+<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:</p>
 
 <ul>
-<li>the average, minimum, or maximum of an RGB color&#39;s red, green, and blue components (as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example),</li>
-<li>the red, green, or blue component of an RGB color (also as seen on T. Helland&#39;s site), and</li>
-<li>a <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
+<li>The average, minimum, or maximum of an RGB color&#39;s red, green, and blue components (as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example).</li>
+<li>The red, green, or blue component of an RGB color (also as seen on T. Helland&#39;s site).</li>
+<li>A <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
 </ul>
 </blockquote>
 
@@ -1248,15 +1248,26 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li><strong>Colorize</strong>: Given a desired <code>color</code> and a source color <code>srcColor</code>, generate
 <code>[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]</code>.</li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
+<li><strong>Similar to grayscale</strong> (see <a href="#Relative_Luminance_Grayscale">&quot;Relative Luminance (Grayscale)&quot;</a>):
+
+<ul>
 <li><strong>Red channel</strong>: <code>[color[0], color[0], color[0]]</code>.</li>
 <li><strong>Green channel</strong>: <code>[color[1], color[1], color[1]]</code>.</li>
 <li><strong>Blue channel</strong>: <code>[color[2], color[2], color[2]]</code>.</li>
 <li><strong>Maximum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>max(max(color[0], color[1]), color[2])</code>.</li>
 <li><strong>Minimum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>min(min(color[0], color[1]), color[2])</code>.</li>
+</ul></li>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> Image processing techniques that replace one color with another color (or some modified version of the original color), but only if the color meets certain requirements, techniques that include <a href="https://en.wikipedia.org/wiki/Chroma_key"><em>chroma key</em></a>, are largely out of the scope of this document.</p>
+<p><strong>Note:</strong> Raster image processing techniques&mdash;</p>
+
+<ul>
+<li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including <a href="https://en.wikipedia.org/wiki/Chroma_key"><em>chroma key</em></a>), or</li>
+<li>that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),</li>
+</ul>
+
+<p>are largely out of the scope of this document.</p>
 </blockquote>
 
 <p><a id=Color_Differences></a></p>
@@ -1481,7 +1492,7 @@ END METHOD
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note27">(27)</a></sup></li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculaed from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a> (such as a raw image from a digital camera after camera compensation, but without color rendering).  PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculated from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a><sup><a href="#Note28">(28)</a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens  before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
 
@@ -1508,14 +1519,14 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note28">(28)</a></sup> and/or &quot;<a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note29">(29)</a></sup> and/or &quot;<a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 </blockquote>
 
 <p><a id=Color_Collections></a></p>
 
 <h3>Color Collections</h3>
 
-<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note29">(29)</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
+<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note30">(30)</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
 
 <p>Converting a color (such as an RGB color) to a color name is equivalent to&mdash;</p>
 
@@ -1543,7 +1554,7 @@ END METHOD
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
-<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note30">(30)</a></sup>, the first nine of which
+<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note31">(31)</a></sup>, the first nine of which
 were intended for readers with normal and <a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">defective</a> color vision, and</li>
 <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
@@ -1660,7 +1671,7 @@ wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding val
 <li><code>CMF(wl)</code> models three <strong>color-matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note31">(31)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note32">(32)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
 <li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note1">(1)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul></li>
 </ul>
@@ -1731,7 +1742,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody&#39;s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below finds the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note32">(32)</a></sup></p>
+<p>The <code>Planckian</code> method shown below finds the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note33">(33)</a></sup></p>
 
 <pre>METHOD Planckian(wavelength, temp)
     num = pow(wavelength, -5)
@@ -1777,7 +1788,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the pigments or colors in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note33">(33)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note34">(34)</a></sup></li>
 </ol>
 
 <p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where <code>values</code> is a list of values (for example, reflectance factors of several curves at the same wavelength), and <code>weights</code> is a list of those values&#39; corresponding weights (for example, mixing proportions of those curves).</p>
@@ -1926,17 +1937,19 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note27>(27)</sup> How to implement hash tables is outside the scope of this document.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).</small></p>
+<p><small><sup id=Note28>(28)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an image data transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> An example from a famous color system and color space from the early 20th century.</small></p>
+<p><small><sup id=Note29>(29)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).</small></p>
 
-<p><small><sup id=Note30>(30)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</small></p>
+<p><small><sup id=Note30>(30)</sup> An example from a famous color system and color space from the early 20th century.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</small></p>
+<p><small><sup id=Note31>(31)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</small></p>
+<p><small><sup id=Note32>(32)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
+<p><small><sup id=Note33>(33)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</small></p>
+
+<p><small><sup id=Note34>(34)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
 <p><a id=License></a></p>
 
