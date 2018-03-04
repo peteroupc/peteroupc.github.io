@@ -1070,17 +1070,15 @@ END METHOD
 <p><em>Relative luminance</em>&mdash;</p>
 
 <ul>
-<li>is called <strong><code>Luminance(color)</code></strong> in this document,</li>
 <li>is a single number indicating a color&#39;s luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,</li>
+<li>is called <strong><code>Luminance(color)</code></strong> in this document,</li>
 <li>is equivalent to the Y component of an <a href="#CIE_XYZ">XYZ color</a>, and</li>
 <li>ranges from 0 for &quot;black&quot; to 1 for &quot;white&quot;.</li>
 </ul>
 
-<p>For <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, relative luminance is <code>(color[0] * r + color[1] * g + color[2] * b)</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (relative luminances) of the RGB color space&#39;s red, green, and blue points, respectively<sup><a href="#Note6">(6)</a></sup>.  (If a different white point than the RGB color space&#39;s usual white point should have a relative luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the corresponding components after a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation transform</em></a> from one white point to another.<sup><a href="#Note10">(10)</a></sup>)</p>
+<p><strong>Linear RGB.</strong> For <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, relative luminance is <code>(color[0] * r + color[1] * g + color[2] * b)</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are the upper-case-Y components (relative luminances) of the RGB color space&#39;s red, green, and blue points, respectively<sup><a href="#Note6">(6)</a></sup>.  (If a different white point than the RGB color space&#39;s usual white point should have a relative luminance of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the corresponding components after a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><em>chromatic adaptation transform</em></a> from one white point to another.<sup><a href="#Note10">(10)</a></sup>)</p>
 
-<p>Applying the formula just given to <em>companded RGB</em> colors results in a value more properly called <em>luma</em>, not (relative) luminance.<sup><a href="#Note19">(19)</a></sup></p>
-
-<p>The following pseudocode implements <code>Luminance(color)</code> for companded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>)<sup><a href="#Note6">(6)</a></sup><sup><a href="#Note9">(9)</a></sup>.</p>
+<p><strong>Companded RGB.</strong> Applying the formula just given to <em>companded RGB</em> colors results in a value more properly called <em>luma</em>, not (relative) luminance.<sup><a href="#Note19">(19)</a></sup>  The following pseudocode implements <code>Luminance(color)</code> for companded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>)<sup><a href="#Note6">(6)</a></sup><sup><a href="#Note9">(9)</a></sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.</p>
 
 <pre>// Convert companded sRGB to relative luminance
 METHOD LuminanceSRGB(color)
@@ -1145,13 +1143,14 @@ END METHOD
 
 <h3>Alpha Blending</h3>
 
-<p>The <code>Lerp3</code> function below gets an &quot;alpha blend&quot; of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em> being 0 or greater and 1 or less (0 means equal to <code>color1</code> and 1 means equal to <code>color2</code>).<sup><a href="#Note22">(22)</a></sup></p>
+<p>The <code>Lerp3</code> function below gets an <em>alpha blend</em> of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em> being 0 or greater and 1 or less (0 means equal to <code>color1</code> and 1 means equal to <code>color2</code>).<sup><a href="#Note22">(22)</a></sup></p>
 
 <ul>
-<li>Generating a <strong>shade</strong> of a color (mixing with black) is equivalent to alpha blending that color with black (such as <code>[0, 0, 0]</code> in RGB).</li>
-<li>Generating a <strong>tint</strong> of a color (mixing with white) is equivalent to alpha blending that color with white (such as <code>[1, 1, 1]</code> in RGB).</li>
-<li>Generating a <strong>tone</strong> of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as <code>[0.5, 0.5, 0.5]</code> in RGB).</li>
-<li>Averaging two colors is equivalent to alpha blending with <code>alpha</code> set to 0.5.</li>
+<li><strong>Shade.</strong> Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as <code>[0, 0, 0]</code> in RGB).</li>
+<li><strong>Tint.</strong> Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as <code>[1, 1, 1]</code> in RGB).</li>
+<li><strong>Tone.</strong> Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as <code>[0.5, 0.5, 0.5]</code> in RGB).</li>
+<li><strong>Averaging.</strong> Averaging two colors is equivalent to alpha blending with <code>alpha</code> set to 0.5.</li>
+<li><strong>Colorize.</strong> <code>color1</code> is black, <code>color2</code> is the destination color, and <code>alpha</code> is <code>Luminance(srcColor)</code>, where <code>srcColor</code> is the source color.  RGB example: <code>Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))</code>.  The destination color is usually the same for each pixel in an image.</li>
 <li>Converting an RGBA color to an RGB color on white is equivalent to <code>Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])</code>.</li>
 <li>Converting an RGBA color to an RGB color over <code>color2</code>, another RGB color, is equivalent to <code>Lerp3([color[0], color[1], color[2]], color2, color[3])</code>.</li>
 </ul>
@@ -1245,8 +1244,6 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative, where <code>value</code> is 0 or greater and 1 or less.</p></li>
 <li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)  A color can also be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with its <a href="#Relative_Luminance_Grayscale">grayscale</a> version.</li>
-<li><strong>Colorize</strong>: Given a desired <code>color</code> and a source color <code>srcColor</code>, generate
-<code>[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]</code>.</li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
 <li><strong>Similar to grayscale</strong> (see <a href="#Relative_Luminance_Grayscale">&quot;Relative Luminance (Grayscale)&quot;</a>):
 
@@ -1763,7 +1760,7 @@ END METHOD
 <p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>LIGHT</code> function above is substantially equivalent to the CIE illuminant A.</p>
 </blockquote>
 
-<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><em>correlated color temperature</em></a> (CCT) as the temperature of the blackbody with the closest <em>uv</em> chromaticity<sup><a href="#Note11">(11)</a></sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two <em>uv</em> chromaticities is more than 0.05.</p>
+<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s (as with such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps), the CIE defines <a href="http://eilv.cie.co.at/term/258"><em>correlated color temperature</em></a> (CCT) as the temperature of the blackbody with the closest <em>uv</em> chromaticity<sup><a href="#Note11">(11)</a></sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two <em>uv</em> chromaticities is more than 0.05.</p>
 
 <p>The following method (<code>XYZToCCT</code>), which computes an approximate CCT from an <a href="#CIE_XYZ">XYZ color</a>, is based on the formula found in McCamy 1992.</p>
 
@@ -1775,7 +1772,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> Color temperature, as used here, is not to be confused with the division of colors into <em>warm</em> (usually red, yellow, and orange) and <em>cool</em> (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light&#39;s CCT, the &quot;warmer&quot; the light appears, and the higher the CCT, the &quot;cooler&quot;.</p>
+<p><strong>Note:</strong> Color temperature, as used here, is not to be confused with the division of colors into <em>warm</em> (usually red, yellow, and orange) and <em>cool</em> (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light&#39;s CCT, the &quot;warmer&quot; the light appears, and the higher the CCT, the &quot;cooler&quot;.  Note, however, that CCT (or any other single number associated with a light source) is generally inadequate by itself to describe how a light source renders colors.</p>
 </blockquote>
 
 <p><a id=Color_Mixture></a></p>

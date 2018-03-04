@@ -905,16 +905,14 @@ Note that for best results, these techniques need to be carried out with [_linea
 ### Relative Luminance (Grayscale)
 
 _Relative luminance_&mdash;
-- is called **`Luminance(color)`** in this document,
 - is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
+- is called **`Luminance(color)`** in this document,
 - is equivalent to the Y component of an [XYZ color](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
 
-For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively<sup>[(6)](#Note6)</sup>.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding components after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>)
+**Linear RGB.** For [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively<sup>[(6)](#Note6)</sup>.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding components after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(10)](#Note10)</sup>)
 
-Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(19)](#Note19)</sup>
-
-The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(6)](#Note6)</sup><sup>[(9)](#Note9)</sup>.
+**Companded RGB.** Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(19)](#Note19)</sup>  The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(6)](#Note6)</sup><sup>[(9)](#Note9)</sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.
 
     // Convert companded sRGB to relative luminance
     METHOD LuminanceSRGB(color)
@@ -962,11 +960,12 @@ The following techniques generate new colors that are related to existing colors
 <a id=Alpha_Blending></a>
 ### Alpha Blending
 
-The `Lerp3` function below gets an "alpha blend" of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(22)](#Note22)</sup>
-- Generating a **shade** of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
-- Generating a **tint** of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
-- Generating a **tone** of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
-- Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
+The `Lerp3` function below gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(22)](#Note22)</sup>
+- **Shade.** Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
+- **Tint.** Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
+- **Tone.** Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
+- **Averaging.** Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
+- **Colorize.** `color1` is black, `color2` is the destination color, and `alpha` is `Luminance(srcColor)`, where `srcColor` is the source color.  RGB example: `Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))`.  The destination color is usually the same for each pixel in an image.
 - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
 - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
 
@@ -1042,8 +1041,6 @@ In the following formulas, `color` is the source color in 0-1 format.
 
     generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative, where `value` is 0 or greater and 1 or less.
 - **Saturate/Desaturate**: `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])`, where `hsv = RgbToHsv(color)`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)  A color can also be desaturated by [alpha blending](#Alpha_Blending) that color with its [grayscale](#Relative_Luminance_Grayscale) version.
-- **Colorize**: Given a desired `color` and a source color `srcColor`, generate
- `[color[0]*Luminance(srcColor), color[1]*Luminance(srcColor), color[2]*Luminance(srcColor)]`.
 - **Swap blue and red channels**: `[color[2], color[1], color[0]]`.
 - **Similar to grayscale** (see ["Relative Luminance (Grayscale)"](#Relative_Luminance_Grayscale)):
     - **Red channel**: `[color[0], color[0], color[0]]`.
@@ -1423,10 +1420,8 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `REFL`, `LIGHT`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. For applications where matching colors from the real world is important, reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors), because for a given combination of viewer (`CMF`) and light source (`LIGHT`)&mdash;
->     - two different curves can match the same color (and be _metamers_) or match different colors, whereas
->     - two identical curves match the same color (but are not called metamers).
-
+> 2. **Metamerism** occurs when two materials match the same color for a given light source (`LIGHT`), viewing angle, and/or viewer (`CMF`) but not for another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
+>
 > **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 > - the tristimulus values (e.g., from `SpectrumToTristim()`) will be a relative [XYZ color](#CIE_XYZ) such that Y ranges from 0 for "absolute black" to 1 for the D65 white point,
 > - the idiom `XYZTosRGB(SpectrumToTristim())` computes the companded sRGB color of the stimulus, and
@@ -1455,7 +1450,7 @@ The `Planckian` method shown below finds the SPD of a blackbody with the given t
 
 > **Note:** If `TEMP` is 2856, the `LIGHT` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[(11)](#Note11)</sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's (as with such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps), the CIE defines [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[(11)](#Note11)</sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [XYZ color](#CIE_XYZ), is based on the formula found in McCamy 1992.
 
@@ -1465,7 +1460,7 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [XY
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
-> **Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light's CCT, the "warmer" the light appears, and the higher the CCT, the "cooler".
+> **Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light's CCT, the "warmer" the light appears, and the higher the CCT, the "cooler".  Note, however, that CCT (or any other single number associated with a light source) is generally inadequate by itself to describe how a light source renders colors.
 
 <a id=Color_Mixture></a>
 ### Color Mixture
