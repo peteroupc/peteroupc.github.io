@@ -574,7 +574,7 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
 
-In general, _chromaticity_ is the aspect of a color apart from its luminance. Some kinds of _chromaticity coordinates_ follow.
+Some kinds of _chromaticity coordinates_ follow.
 
 - **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
 - **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(11)](#Note11)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
@@ -1371,7 +1371,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 - `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions further described later.  All three take a
   wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength.
    (_See also note 1 later in this section._)
-- `REFL(wl)` models the **reflectance or transmittance curve**. `REFL` returns the value of the curve at the wavelength `wl`; the value can be 0 or greater and, with the exception of fluorescent or optically brightened materials, 1 or less.  If `REFL` is `PerfectWhite` (below), then the tristimulus values calculated are the _adopted white_ (and are those of the light source itself).
+- `REFL(wl)` models the **reflectance or transmittance curve**. `REFL` returns the value of the curve at the wavelength `wl`; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If `REFL` is `PerfectWhite` (below), then the tristimulus values calculated are the _adopted white_ (and are those of the light source itself).
 - `LIGHT(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`. Choices for `LIGHT` include&mdash;
     - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [Python sample code](https://peteroupc.github.io/colorutil.zip) for implementation),
     - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)", and
@@ -1420,7 +1420,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `REFL`, `LIGHT`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. **Metamerism** occurs when two materials match the same color for a given light source (`LIGHT`), viewing angle, and/or viewer (`CMF`) but not for another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
+> 2. **Metamerism** occurs when two materials match the same color for a given light source (`LIGHT`), viewer (`CMF`), and/or viewing angle, but not for another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
 >
 > **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 > - the tristimulus values (e.g., from `SpectrumToTristim()`) will be a relative [XYZ color](#CIE_XYZ) such that Y ranges from 0 for "absolute black" to 1 for the D65 white point,
@@ -1432,7 +1432,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown below finds the SPD of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(33)](#Note33)</sup>
+The `Planckian` method shown below finds the SPD of a blackbody with the given temperature in kelvins (its **color temperature**). The `LIGHT` function below (for `SpectrumToTristim()`) uses that formula (where `TEMP` is the desired color temperature).<sup>[(33)](#Note33)</sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wavelength, temp)
         num = pow(wavelength, -5)
@@ -1450,7 +1450,7 @@ The `Planckian` method shown below finds the SPD of a blackbody with the given t
 
 > **Note:** If `TEMP` is 2856, the `LIGHT` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's (as with such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps), the CIE defines [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[(11)](#Note11)</sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[(11)](#Note11)</sup> to that of the given color.  According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [XYZ color](#CIE_XYZ), is based on the formula found in McCamy 1992.
 
