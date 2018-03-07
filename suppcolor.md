@@ -58,7 +58,7 @@ Because there are three kinds of cones, three numbers are enough to uniquely ide
 
 Even among people with normal color vision, though, there is [wide variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) in color vision among individuals &mdash; such that they are not guaranteed to agree on how to identify any particular color.
 
-In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the [mantis shrimp](https://en.wikipedia.org/wiki/Mantis_shrimp) has 16 different cone types, making its color vision considerably sharper than humans'.
+In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the [mantis shrimp](https://en.wikipedia.org/wiki/Mantis_shrimp) has at least twelve different cone types, making its color vision considerably sharper than humans'.
 
 <a id=Opponent_Signals></a>
 ### Opponent Signals
