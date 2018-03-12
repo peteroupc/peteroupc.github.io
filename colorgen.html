@@ -72,7 +72,7 @@
 <li><a href="#Y_prime_C_B_C_R">Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></a></li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a></li>
 </ul></li>
-<li><a href="#Modifying_Existing_Colors">Modifying Existing Colors</a>
+<li><a href="#Color_Operations">Color Operations</a>
 
 <ul>
 <li><a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a></li>
@@ -81,6 +81,8 @@
 <li><a href="#Porter_ndash_Duff_Formulas">Porter&ndash;Duff Formulas</a></li>
 <li><a href="#Blend_Modes">Blend Modes</a></li>
 <li><a href="#Color_Matrices">Color Matrices</a></li>
+<li><a href="#Lighten_Darken">Lighten/Darken</a></li>
+<li><a href="#Saturate_Desaturate">Saturate/Desaturate</a></li>
 <li><a href="#Miscellaneous">Miscellaneous</a></li>
 </ul></li>
 <li><a href="#Color_Differences">Color Differences</a>
@@ -1055,13 +1057,11 @@ END METHOD
     color=[(1 - cmyk[0]) * ik, (1 - cmyk[1]) * ik, (1 - cmyk[2]) * ik]
 </pre>
 
-<p><a id=Modifying_Existing_Colors></a></p>
+<p><a id=Color_Operations></a></p>
 
-<h2>Modifying Existing Colors</h2>
+<h2>Color Operations</h2>
 
-<p>The following techniques show how existing colors can be modified to create new colors.</p>
-
-<p>Note that for best results, these techniques need to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, unless noted otherwise.</p>
+<p>This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, unless noted otherwise.</p>
 
 <p><a id=Relative_Luminance_Grayscale></a></p>
 
@@ -1226,24 +1226,39 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note24">(24)</a></sup><sup><a href="#Note23">(23)</a></sup></li>
 </ul>
 
+<p><a id=Lighten_Darken></a></p>
+
+<h3>Lighten/Darken</h3>
+
+<p>The following approaches can generate a lighter or darker version of a color. In the examples, <code>color</code> is an RGB color in 0-1 format, and <code>value</code> is positive to lighten a color, or negative to darken a color, and -1 or greater and 1 or less.</p>
+
+<ul>
+<li><strong>RGB additive.</strong> <code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>.</li>
+<li><strong>HSL &quot;lightness&quot; additive.</strong> <code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>.</li>
+<li><strong>CIELAB.</strong> <code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors).</li>
+<li><strong>Tints or shades.</strong> A &quot;tint&quot; is a lighter version, and a &quot;shade&quot; is a darker version.  See &quot;<a href="#Alpha_Blending">Alpha Blending</a>&quot;.</li>
+</ul>
+
+<p><a id=Saturate_Desaturate></a></p>
+
+<h3>Saturate/Desaturate</h3>
+
+<p>The following approaches can generate a lighter or darker version of a color. In the examples, <code>color</code> is an RGB color in 0-1 format, and <code>value</code> is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.</p>
+
+<ul>
+<li><strong>HSV &quot;saturation&quot; additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
+<li><strong>Tones, or mixtures of gray.</strong> A &quot;tone&quot; is a desaturated version.  A color can be saturated by <a href="#Alpha_Blending">alpha blending</a> that color with either its <a href="#Relative_Luminance_Grayscale">grayscale</a> version or an arbitrary shade of gray.</li>
+<li><strong>Saturate matrix.</strong>  See &quot;<a href="#Color%20Matrices">Color Matrices</a>&quot;.</li>
+</ul>
+
 <p><a id=Miscellaneous></a></p>
 
 <h3>Miscellaneous</h3>
 
-<p>In the following formulas, <code>color</code> is the source color in 0-1 format.</p>
+<p>In the following formulas, <code>color</code> is an RGB color in 0-1 format.</p>
 
 <ul>
 <li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note25">(25)</a></sup></li>
-<li><p><strong>Lighten/Darken</strong>: A choice of&mdash;</p>
-
-<ul>
-<li><code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>,</li>
-<li><code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>, or</li>
-<li><code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors),</li>
-</ul>
-
-<p>generates a lighter version of <code>color</code> if <code>value</code> is positive, and a darker version if <code>value</code> is negative, where <code>value</code> is 0 or greater and 1 or less.</p></li>
-<li><strong>Saturate/Desaturate</strong>: <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>; this procedure saturates <code>color</code> if <code>value</code> is positive, and desaturates that color if <code>value</code> is negative. (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)  A color can also be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with its <a href="#Relative_Luminance_Grayscale">grayscale</a> version.</li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
 <li><strong>Similar to grayscale</strong> (see <a href="#Relative_Luminance_Grayscale">&quot;Relative Luminance (Grayscale)&quot;</a>):
 
