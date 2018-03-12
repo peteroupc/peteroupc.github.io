@@ -49,13 +49,15 @@ This document presents an overview of many common color topics that are of gener
     - [CIELUV](#CIELUV)
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
     - [CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)
-- [Modifying Existing Colors](#Modifying_Existing_Colors)
+- [Color Operations](#Color_Operations)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
     - [Color Schemes](#Color_Schemes)
     - [Alpha Blending](#Alpha_Blending)
     - [Porter&ndash;Duff Formulas](#Porter_ndash_Duff_Formulas)
     - [Blend Modes](#Blend_Modes)
     - [Color Matrices](#Color_Matrices)
+    - [Lighten/Darken](#Lighten_Darken)
+    - [Saturate/Desaturate](#Saturate_Desaturate)
     - [Miscellaneous](#Miscellaneous)
 - [Color Differences](#Color_Differences)
     - [Nearest Colors](#Nearest_Colors)
@@ -894,12 +896,10 @@ Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to 
         ik = 1 - cmyk[3]
         color=[(1 - cmyk[0]) * ik, (1 - cmyk[1]) * ik, (1 - cmyk[2]) * ik]
 
-<a id=Modifying_Existing_Colors></a>
-## Modifying Existing Colors
+<a id=Color_Operations></a>
+## Color Operations
 
-The following techniques show how existing colors can be modified to create new colors.
-
-Note that for best results, these techniques need to be carried out with [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), unless noted otherwise.
+This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [_linear RGB_ colors](#Linear_RGB_and_Companded_RGB), unless noted otherwise.
 
 <a id=Relative_Luminance_Grayscale></a>
 ### Relative Luminance (Grayscale)
@@ -1028,19 +1028,31 @@ Examples of matrices include:
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(23)](#Note23)</sup>.
 - **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(24)](#Note24)</sup><sup>[(23)](#Note23)</sup>
 
+<a id=Lighten_Darken></a>
+### Lighten/Darken
+
+The following approaches can generate a lighter or darker version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to lighten a color, or negative to darken a color, and -1 or greater and 1 or less.
+
+- **RGB additive.** `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`.
+- **HSL "lightness" additive.** `HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))`.
+- **CIELAB.** `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors).
+- **Tints or shades.** A "tint" is a lighter version, and a "shade" is a darker version.  See "[Alpha Blending](#Alpha_Blending)".
+
+<a id=Saturate_Desaturate></a>
+### Saturate/Desaturate
+
+The following approaches can generate a lighter or darker version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
+
+- **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
+- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be saturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Relative_Luminance_Grayscale) version or an arbitrary shade of gray.
+- **Saturate matrix.**  See "[Color Matrices](#Color Matrices)".
+
 <a id=Miscellaneous></a>
 ### Miscellaneous
 
-In the following formulas, `color` is the source color in 0-1 format.
+In the following formulas, `color` is an RGB color in 0-1 format.
 
 - **Invert ("film negative")**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(25)](#Note25)</sup>
-- **Lighten/Darken**: A choice of&mdash;
-    - `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`,
-    - `HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))`, or
-    - `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors),
-
-    generates a lighter version of `color` if `value` is positive, and a darker version if `value` is negative, where `value` is 0 or greater and 1 or less.
-- **Saturate/Desaturate**: `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])`, where `hsv = RgbToHsv(color)`; this procedure saturates `color` if `value` is positive, and desaturates that color if `value` is negative. (Note that HSL's "saturation" is inferior here.)  A color can also be desaturated by [alpha blending](#Alpha_Blending) that color with its [grayscale](#Relative_Luminance_Grayscale) version.
 - **Swap blue and red channels**: `[color[2], color[1], color[0]]`.
 - **Similar to grayscale** (see ["Relative Luminance (Grayscale)"](#Relative_Luminance_Grayscale)):
     - **Red channel**: `[color[0], color[0], color[0]]`.
