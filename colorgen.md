@@ -519,12 +519,6 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
 
 &nbsp;
 
-    METHOD Clamp01(elements)
-        return [min(max(elements[0],0), 1),
-          min(max(elements[1],0), 1),
-          min(max(elements[2],0), 1)]
-    END METHOD
-
     // Applies a 3x3 matrix transformation
     METHOD Apply3x3Matrix(xyz, xyzmatrix)
         r=xyz[0]*xyzmatrix[0]+xyz[1]*xyzmatrix[1]+xyz[2]*xyzmatrix[2]
@@ -540,14 +534,11 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
                 0.09708132, 0.7140994])
     END METHOD
 
-    // NOTE: Clamps components less than 0 or greater than 1 to be 0 or 1,
-    // respectively.  If that's not
-    // desired, omit the use of Clamp01 in the method below.
     METHOD XYZTosRGBD50(xyz)
         rgb=Apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
                  -0.9787955, 1.916254, 0.03344287, 0.07195539,
                  -0.2289768, 1.405386])
-        return Clamp01(LinearTosRGB3(rgb))
+        return LinearTosRGB3(rgb)
     END METHOD
 
     METHOD XYZFromsRGB(rgb)
@@ -558,20 +549,18 @@ The following methods, in the pseudocode below, convert a companded sRGB color (
                 0.1191948, 0.9505322])
     END METHOD
 
-    // NOTE: Clamps components less than 0 or greater than 1 to be 0 or 1,
-    // respectively.  If that's not
-    // desired, omit the use of Clamp01 in the method below.
     METHOD XYZTosRGB(xyz)
         rgb=Apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
                 -0.9692436, 1.875968, 0.04155506, 0.05563008,
                 -0.2039770, 1.056972])
-        return Clamp01(LinearTosRGB3(rgb))
+        return LinearTosRGB3(rgb)
     END METHOD
 
 > **Notes:**
 >
 > 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [inverse of the matrix](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[(10)](#Note10)</sup>
 > 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [inverse](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(10)](#Note10)</sup>
+> 3. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
@@ -1072,7 +1061,7 @@ In the following formulas, `color` is an RGB color in 0-1 format.
 
 Color difference algorithms are used to determine if two colors are similar.
 
-In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or `COLORDIFF` implementations cannot be converted to each other.  Some ways to implement `COLORDIFF` are given in this section.
+In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or `COLORDIFF` implementations cannot be converted to each other.  This section gives some ways to implement `COLORDIFF`.
 
 **Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.
 
@@ -1611,7 +1600,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note29>(29)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
 
-<small><sup id=Note30>(30)</sup> An example from a famous color system and color space from the early 20th century.</small>
+<small><sup id=Note30>(30)</sup> Many color collections are represented by swatches of paper or fabric and/or found in paper "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
 
 <small><sup id=Note31>(31)</sup> An approximation of the colors to companded sRGB, in order, is (in [HTML color format](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.</small>
 
