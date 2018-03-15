@@ -944,6 +944,7 @@ The following techniques generate new colors that are related to existing colors
     - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
+    - **Tetradic**: Double complementary with Y = &pi/2.
 - **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Alpha_Blending) of a given color are monochrome colors.
 
 <a id=Alpha_Blending></a>
