@@ -76,8 +76,9 @@
 
 <ul>
 <li><a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a></li>
-<li><a href="#Color_Schemes">Color Schemes</a></li>
+<li><a href="#Color_Schemes_and_Harmonies">Color Schemes and Harmonies</a></li>
 <li><a href="#Alpha_Blending">Alpha Blending</a></li>
+<li><a href="#Contrast_Ratio">Contrast Ratio</a></li>
 <li><a href="#Porter_ndash_Duff_Formulas">Porter&ndash;Duff Formulas</a></li>
 <li><a href="#Blend_Modes">Blend Modes</a></li>
 <li><a href="#Color_Matrices">Color Matrices</a></li>
@@ -219,7 +220,7 @@
 <li><strong>16/16/16 format:</strong> As 48-bit integers (16 bits per component).</li>
 </ul>
 
-<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a series of bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; byte order, or RN/GN/BN colors can be packed red/green/blue, in that order from lowest to highest bits, or in a different order of those components.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
+<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a series of bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; byte order, or the order in which the color&#39;s components are packed into an integer can vary.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
 
 <p>The following pseudocode contains methods for converting RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):</p>
 
@@ -274,14 +275,7 @@ END METHOD
 
 <p>For example, the HTML color <code>#003F86</code> expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).</p>
 
-<p>Other variants of the HTML color format<sup><a href="#Note5">(5)</a></sup>:</p>
-
-<ul>
-<li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color">CSS Color Module Level 3</a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
-<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.</li>
-</ul>
-
-<p>The following pseudocode presents methods to convert RGB colors to and from the HTML color format or the 3-digit variant.</p>
+<p>The following pseudocode presents methods to convert RGB colors to and from the HTML color format or the 3-digit variant described in note 1 to this section.</p>
 
 <pre>METHOD NumToHex(x)
     if hex &lt; 0 or hex &gt;= 16: return error
@@ -345,7 +339,14 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Other variants of the HTML color format<sup><a href="#Note5">(5)</a></sup>:</li>
+<li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color">CSS Color Module Level 3</a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
+<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.</li>
+<li>As used in the <a href="http://www.w3.org/TR/css3-color/">CSS color module level 3</a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><em>sRGB color space</em></a> (as companded colors).</li>
+</ol>
 </blockquote>
 
 <p><a id=Linear_RGB_and_Companded_RGB></a></p>
@@ -626,7 +627,7 @@ END METHOD
 
 <ul>
 <li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  In this sense, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;), that is, one having a Y component (absolute luminance) of 0 cd/m<sup>2</sup>.</li>
+<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  Here, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;).</li>
 </ul>
 
 <p>The following methods, in the pseudocode below, convert a companded sRGB color (<code>rgb</code>) to and from a relative XYZ color, where a Y of 0 means &quot;absolute black&quot;:</p>
@@ -1089,7 +1090,7 @@ END METHOD
 <ol>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
 <li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  For example, if <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.<sup><a href="#Note20">(20)</a></sup></li>
+<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If <code>Luminance(color)</code> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.  See also &quot;<a href="#Contrast_Ratio">Contrast Ratio</a>&quot;, later.</li>
 <li>Finding the <strong>average relative luminance</strong> of an <a href="#Notation_and_Definitions"><em>image color list</em></a> is often equivalent to&mdash;
 
 <ul>
@@ -1107,14 +1108,14 @@ END METHOD
 </ul>
 </blockquote>
 
-<p><a id=Color_Schemes></a></p>
+<p><a id=Color_Schemes_and_Harmonies></a></p>
 
-<h3>Color Schemes</h3>
+<h3>Color Schemes and Harmonies</h3>
 
 <p>The following techniques generate new colors that are related to existing colors.</p>
 
 <ul>
-<li><strong>Color harmonies</strong><sup><a href="#Note21">(21)</a></sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup><a href="#Note7">(7)</a></sup> to generate the hues for the colors that make up that harmony:
+<li><strong>Color harmonies</strong><sup><a href="#Note20">(20)</a></sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup><a href="#Note7">(7)</a></sup> to generate the hues for the colors that make up that harmony:
 
 <ul>
 <li><strong>Analogous</strong>: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, <em>analogous colors</em> are colors spaced at equal hue intervals from a central color.</li>
@@ -1125,6 +1126,7 @@ END METHOD
 <li><strong>Two-tone</strong>: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.</li>
 <li><strong>Double complementary</strong>: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.</li>
 <li><strong>Tetradic</strong>: Double complementary with Y = &amp;pi/2.</li>
+<li><strong>N-color</strong>: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.</li>
 </ul></li>
 <li><strong>Monochrome colors</strong>: Colors with the same hue; for example, different <a href="#Alpha_Blending">shades, tints, and/or tones</a> of a given color are monochrome colors.</li>
 </ul>
@@ -1133,7 +1135,7 @@ END METHOD
 
 <h3>Alpha Blending</h3>
 
-<p>The <code>Lerp3</code> function below gets an <em>alpha blend</em> of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em> being 0 or greater and 1 or less (0 means equal to <code>color1</code> and 1 means equal to <code>color2</code>).<sup><a href="#Note22">(22)</a></sup></p>
+<p>The <code>Lerp3</code> function below gets an <em>alpha blend</em> of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em> being 0 or greater and 1 or less (0 means equal to <code>color1</code> and 1 means equal to <code>color2</code>).<sup><a href="#Note21">(21)</a></sup></p>
 
 <ul>
 <li><strong>Shade.</strong> Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as <code>[0, 0, 0]</code> in RGB).</li>
@@ -1152,6 +1154,35 @@ END METHOD
         color1[2]+(color2[2]-color1[2])*alpha]
 END METHOD
 </pre>
+
+<p><a id=Contrast_Ratio></a></p>
+
+<h3>Contrast Ratio</h3>
+
+<p>There are at least two definitions of contrast ratio.</p>
+
+<p><strong>WCAG Contrast Ratio.</strong> One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, <code>ContrastRatioWCAG</code> implements the contrast ratio formula described in the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0 (WCAG)</a>, where <code>RelLum(color)</code>&mdash;</p>
+
+<ul>
+<li>is the &quot;relative luminance&quot; of a color as defined in the WCAG, and</li>
+<li><p>is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever WCAG conformance is not important.</p>
+
+<p>METHOD ContrastRatioWCAG(color1, color2)
+    rl1=RelLum(color1)
+    rl2=RelLum(color2)
+    return (max(rl1,rl2)+0.05)/(min(rl1,rl2)+0.05)
+END METHOD</p></li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> For companded sRGB 8/8/8 colors, <code>RelLum(color)</code> is effectively equivalent to <code>LuminanceSRGB(color)</code>, but with the WCAG using a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.</p>
+</blockquote>
+
+<p>In general, under the WCAG, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).</p>
+
+<p>A small percentage of people have <a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">defective color vision</a> (which includes &quot;colorblindness&quot;) and so may find certain colors harder to distinguish.  However, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">&quot;Understanding WCAG 2.0&quot;</a>, &quot;effective luminance contrast can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</p>
+
+<p><strong>Opacity.</strong> In certain industries, a material&#39;s <em>contrast ratio</em> or <em>opacity</em> can be found by dividing the Y value of the material&#39;s <a href="#CIE_XYZ">XYZ color</a> measured over a black surface by the Y value of the material&#39;s XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.</p>
 
 <p><a id=Porter_ndash_Duff_Formulas></a></p>
 
@@ -1212,8 +1243,8 @@ is transformed with a color matrix (<code>matrix</code>) as follows:</p>
 <ul>
 <li><strong>Sepia</strong>: <code>[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]</code>.</li>
 <li><strong>Saturate</strong>: <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> ranges
-from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;<sup><a href="#Note23">(23)</a></sup>.</li>
-<li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note24">(24)</a></sup><sup><a href="#Note23">(23)</a></sup></li>
+from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;<sup><a href="#Note22">(22)</a></sup>.</li>
+<li><strong>Hue rotate</strong>: <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note23">(23)</a></sup><sup><a href="#Note22">(22)</a></sup></li>
 </ul>
 
 <p><a id=Lighten_Darken></a></p>
@@ -1226,7 +1257,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li><strong>RGB additive.</strong> <code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>.</li>
 <li><strong>HSL &quot;lightness&quot; additive.</strong> <code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>.</li>
 <li><strong>CIELAB.</strong> <code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors).</li>
-<li><strong>Tints or shades.</strong> A &quot;tint&quot; is a lighter version, and a &quot;shade&quot; is a darker version.  See &quot;<a href="#Alpha_Blending">Alpha Blending</a>&quot;.</li>
+<li><strong>Tints and shades.</strong> A &quot;tint&quot; is a lighter version, and a &quot;shade&quot; is a darker version.  See &quot;<a href="#Alpha_Blending">Alpha Blending</a>&quot;.</li>
 </ul>
 
 <p><a id=Saturate_Desaturate></a></p>
@@ -1237,7 +1268,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <ul>
 <li><strong>HSV &quot;saturation&quot; additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
-<li><strong>Tones, or mixtures of gray.</strong> A &quot;tone&quot; is a desaturated version.  A color can be saturated by <a href="#Alpha_Blending">alpha blending</a> that color with either its <a href="#Relative_Luminance_Grayscale">grayscale</a> version or an arbitrary shade of gray.</li>
+<li><strong>Tones, or mixtures of gray.</strong> A &quot;tone&quot; is a desaturated version.  A color can be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with either its <a href="#Relative_Luminance_Grayscale">grayscale</a> version or an arbitrary shade of gray.</li>
 <li><strong>Saturate matrix.</strong>  See &quot;<a href="#Color%20Matrices">Color Matrices</a>&quot;.</li>
 </ul>
 
@@ -1248,7 +1279,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <p>In the following formulas, <code>color</code> is an RGB color in 0-1 format.</p>
 
 <ul>
-<li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note25">(25)</a></sup></li>
+<li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note24">(24)</a></sup></li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
 <li><strong>Similar to grayscale</strong> (see <a href="#Relative_Luminance_Grayscale">&quot;Relative Luminance (Grayscale)&quot;</a>):
 
@@ -1278,7 +1309,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <p>Color difference algorithms are used to determine if two colors are similar.</p>
 
-<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or <code>COLORDIFF</code> implementations cannot be converted to each other.  This section gives some ways to implement <code>COLORDIFF</code>.</p>
+<p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><em>color difference</em></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement <code>COLORDIFF</code>.</p>
 
 <p><strong>Euclidean distance.</strong> The following pseudocode implements the Euclidean distance of two colors.</p>
 
@@ -1296,7 +1327,7 @@ END METHOD
 
 <ul>
 <li>The Euclidean distance is independent of color model; however, <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>, rather than companded RGB colors, should be used.</li>
-<li>For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy and others 1994])<sup><a href="#Note26">(26)</a></sup>.</li>
+<li>For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively (for the <em>&Delta;E*</em><sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy and others 1994])<sup><a href="#Note25">(25)</a></sup>.</li>
 <li>If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 </blockquote>
@@ -1493,8 +1524,8 @@ END METHOD
 <li>applying a &quot;nearest neighbor&quot; approach (replacing that image&#39;s colors with their <a href="#Nearest_Colors">nearest dominant colors</a>), or</li>
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
-<li>Finding the number of <em>unique</em> colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note27">(27)</a></sup></li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculated from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a><sup><a href="#Note28">(28)</a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens  before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+<li>Finding the number of <em>unique</em> colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note26">(26)</a></sup></li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculated from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a><sup><a href="#Note27">(27)</a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens  before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
 
@@ -1521,23 +1552,23 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note29">(29)</a></sup> and/or &quot;<a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
+<p><strong>Note:</strong> The fact that <em>ColorBrewer 2.0</em> identifies some of its color maps as being &quot;print friendly&quot;<sup><a href="#Note28">(28)</a></sup> and/or &quot;<a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">color blind friendly</a>&quot; suggests that these two factors can be important when generating color maps of the three kinds just mentioned.</p>
 </blockquote>
 
 <p><a id=Color_Collections></a></p>
 
 <h3>Color Collections</h3>
 
-<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note30">(30)</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
+<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note29">(29)</a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like">colors tutorial for the HTML 3D Library</a>.</p>
 
 <p>Converting a color (such as an RGB color) to a color name is equivalent to&mdash;</p>
 
 <ul>
 <li>retrieving the name keyed to that color in a hash table (or returning an error if that color doesn&#39;t exist in the hash table), or</li>
-<li>finding the <a href="#Nearest_Colors">nearest color</a> to that color among the named colors, and returning the color found this way (and/or that color&#39;s name).<sup><a href="#Note27">(27)</a></sup></li>
+<li>finding the <a href="#Nearest_Colors">nearest color</a> to that color among the named colors, and returning the color found this way (and/or that color&#39;s name).<sup><a href="#Note26">(26)</a></sup></li>
 </ul>
 
-<p>Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup><a href="#Note27">(27)</a></sup></p>
+<p>Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup><a href="#Note26">(26)</a></sup></p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1556,7 +1587,7 @@ END METHOD
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
-<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note31">(31)</a></sup>, the first nine of which
+<li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note30">(30)</a></sup>, the first nine of which
 were intended for readers with normal and <a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">defective</a> color vision, and</li>
 <li>B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.</li>
 </ul>
@@ -1673,7 +1704,7 @@ wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding val
 <li><code>CMF(wl)</code> models three <strong>color-matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
-<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note32">(32)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
+<li>the CIE 1931 (2-degree) standard observer<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note31">(31)</a></sup>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree field of view, and</li>
 <li>the  CIE 1964 (10-degree) standard observer<sup><a href="#Note1">(1)</a></sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.</li>
 </ul></li>
 </ul>
@@ -1739,7 +1770,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody&#39;s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below finds the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note33">(33)</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
+<p>The <code>Planckian</code> method shown below finds the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that formula (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note32">(32)</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
 
 <pre>METHOD Planckian(wavelength, temp)
     num = pow(wavelength, -5)
@@ -1785,7 +1816,7 @@ END METHOD
 <li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
 <li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
 takes into account the relative proportions of the pigments or colors in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note34">(34)</a></sup></li>
+<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note33">(33)</a></sup></li>
 </ol>
 
 <p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where <code>values</code> is a list of values (for example, reflectance factors of several curves at the same wavelength), and <code>weights</code> is a list of those values&#39; corresponding weights (for example, mixing proportions of those curves).</p>
@@ -1901,7 +1932,7 @@ END METHOD
 
 <p><small><sup id=Note13>(13)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</small></p>
 
-<p><small><sup id=Note14>(14)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are subjective terms: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) compared to other colors of the same hue and brightness. (See also the CIE&#39;s International Lighting Vocabulary.) Note, however, that CIELAB has no formal saturation formula (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</small></p>
+<p><small><sup id=Note14>(14)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are subjective terms: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) compared to other colors of the same hue and brightness. (See also the CIE&#39;s International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</small></p>
 
 <p><small><sup id=Note15>(15)</sup> The prime symbol appears near Y because the conversion from RGB usually involves <a href="#Linear_RGB_and_Companded_RGB">companded RGB colors</a>, so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</small></p>
 
@@ -1913,40 +1944,34 @@ END METHOD
 
 <p><small><sup id=Note19>(19)</sup> See C. Poynton, <a href="http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf">&quot;<em>YUV</em> and <em>luminance</em> considered harmful&quot;</a>.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> In the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0</a>, the <em>contrast ratio</em> of two colors is <code>(RelLum(brighter) + 0.05) / (RelLum(darker) + 0.05)</code>, where <code>RelLum(color)</code> is the &quot;relative luminance&quot; of a color as defined in the guidelines, <code>brighter</code> is the color with higher <code>RelLum</code>; and <code>darker</code> is the other color.  In general, under those guidelines, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level).</p>
+<p><small><sup id=Note20>(20)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.  See also his <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview">summary of harmonious color relationships</a>.</small></p>
 
-<p>For companded sRGB 8/8/8 colors, <code>RelLum(color)</code> is effectively equivalent to <code>LuminanceSRGB(color)</code>, but with the guidelines using a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.  <code>RelLum(color)</code> is equivalent to <a href="#Relative_Luminance_Grayscale"><code>Luminance(color)</code></a> whenever conformance to the guidelines is not important.</p>
-
-<p>A small percentage of people have <a href="https://peteroupc.github.io/suppcolor.html#Defective_and_Animal_Color_Vision">defective color vision</a> (which includes &quot;colorblindness&quot;) and so may find certain colors harder to distinguish.  However, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">&quot;Understanding WCAG 2.0&quot;</a>, &quot;effective <a href="#Relative_Luminance_Grayscale">luminance contrast</a> can generally be computed without regard to specific color deficiency, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</small></p>
-
-<p><small><sup id=Note21>(21)</sup> B. MacEvoy calls these <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonies"><em>hue harmonies</em></a>.  See also his <a href="http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview">summary of harmonious color relationships</a>.</small></p>
-
-<p><small><sup id=Note22>(22)</sup> <code>Lerp3</code> is equivalent to <code>mix</code> in OpenGL Shading Language (GLSL).  Making <code>alpha</code> the output of a function (for example, <code>Lerp3(color1, color2, FUNC(...))</code>,
+<p><small><sup id=Note21>(21)</sup> <code>Lerp3</code> is equivalent to <code>mix</code> in OpenGL Shading Language (GLSL).  Making <code>alpha</code> the output of a function (for example, <code>Lerp3(color1, color2, FUNC(...))</code>,
 where <code>FUNC</code> is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail <a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp">in another page</a>.</small></p>
 
-<p><small><sup id=Note23>(23)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.</small></p>
+<p><small><sup id=Note22>(22)</sup> P. Haeberli, <a href="http://www.graficaobscura.com/matrix/index.html">&quot;Matrix Operations for Image Processing&quot;</a>, 1993.  The hue rotation matrix given was generated using the technique in the section &quot;Hue Rotation While Preserving Luminance&quot;, with constants rounded to five significant digits and with <code>rwgt=0.2126</code>, <code>gwgt=0.7152</code>, and <code>bwgt = 0.0722</code>, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by <code>pi / 180</code>.</small></p>
+<p><small><sup id=Note23>(23)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by <code>pi / 180</code>.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</small></p>
+<p><small><sup id=Note24>(24)</sup> This is often called the &quot;CMY&quot; (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).  If such an operation is used, the conversions between &quot;CMY&quot; and RGB are exactly the same.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> The &quot;E&quot; here stands for the German word <em>Empfindung</em>.</small></p>
+<p><small><sup id=Note25>(25)</sup> The &quot;E&quot; here stands for the German word <em>Empfindung</em>.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> How to implement hash tables is outside the scope of this document.</small></p>
+<p><small><sup id=Note26>(26)</sup> How to implement hash tables is outside the scope of this document.</small></p>
 
-<p><small><sup id=Note28>(28)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an image data transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small></p>
+<p><small><sup id=Note27>(27)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an image data transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small></p>
 
-<p><small><sup id=Note29>(29)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).</small></p>
+<p><small><sup id=Note28>(28)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK and Other Ink-Mixture Color Models</a>&quot;).</small></p>
 
-<p><small><sup id=Note30>(30)</sup> Many color collections are represented by swatches of paper or fabric and/or found in paper &quot;fan decks&quot;.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</small></p>
+<p><small><sup id=Note29>(29)</sup> Many color collections are represented by swatches of paper or fabric and/or found in paper &quot;fan decks&quot;.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</small></p>
 
-<p><small><sup id=Note31>(31)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</small></p>
+<p><small><sup id=Note30>(30)</sup> An approximation of the colors to companded sRGB, in order, is (in <a href="#HTML_Color_Format">HTML color format</a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour-science</code> package.</small></p>
 
-<p><small><sup id=Note32>(32)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</small></p>
+<p><small><sup id=Note31>(31)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/">Wyman, Sloan, and Shirley 2013</a>.</small></p>
 
-<p><small><sup id=Note33>(33)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</small></p>
+<p><small><sup id=Note32>(32)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/">Colour Rendering of Spectra</a>&quot;.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
+<p><small><sup id=Note33>(33)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch">B. MacEvoy explains</a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39">principles 39 to 41</a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
 <p><a id=License></a></p>
 
