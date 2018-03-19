@@ -1431,12 +1431,12 @@ The SPD, the reflectance or transmittance curve, and the color-matching function
 
 The pseudocode below includes a `SpectrumToTristim` method for computing tristimulus values.  In the method:
 
-- `REFL(wl)`, `LIGHT(wl)`, and `CMF(wl)` are arbitrary functions further described later.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
-- `REFL(wl)` models the **reflectance or transmittance curve**. `REFL` returns the value of the curve at the wavelength `wl`; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If `REFL` is `PerfectWhite` (below), then the tristimulus values calculated are the _adopted white_ (and are those of the light source itself).
+- `LIGHT(wl)`, `REFL(wl)`, and `CMF(wl)` are arbitrary functions further described later.  All three take a wavelength (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
 - `LIGHT(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`. Choices for `LIGHT` include&mdash;
     - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [Python sample code](https://peteroupc.github.io/colorutil.zip) for implementation),
     - the blackbody spectral formula given in "[Color Temperature](#Color_Temperature)", and
     - the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.
+- `REFL(wl)` models the **reflectance or transmittance curve**. `REFL` returns the value of the curve at the wavelength `wl`; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If `REFL` is `PerfectWhite` (below), then the tristimulus values calculated are the _adopted white_ (and are those of the light source itself).
 - `CMF(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `CMF` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `CMF` include&mdash;
     - the CIE 1931 (2-degree) standard observer<sup>[(1)](#Note1)</sup><sup>[(37)](#Note37)</sup>, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree field of view, and
     - the  CIE 1964 (10-degree) standard observer<sup>[(1)](#Note1)</sup>, which is used to generate XYZ colors based on color stimuli seen at a 10-degree field of view.
@@ -1480,7 +1480,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 > **Notes:**
 >
-> 1. Although `REFL`, `LIGHT`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
+> 1. Although `LIGHT`, `REFL`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
 > 2. **Metamerism** occurs when two materials match the same color for a given light source (`LIGHT`), viewer (`CMF`), and/or viewing angle, but not for another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
 >
 > **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;

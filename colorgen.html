@@ -1738,8 +1738,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  In the method:</p>
 
 <ul>
-<li><code>REFL(wl)</code>, <code>LIGHT(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions further described later.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 1 later in this section.</em>)</li>
-<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If <code>REFL</code> is <code>PerfectWhite</code> (below), then the tristimulus values calculated are the <em>adopted white</em> (and are those of the light source itself).</li>
+<li><code>LIGHT(wl)</code>, <code>REFL(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions further described later.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 1 later in this section.</em>)</li>
 <li><code>LIGHT(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>. Choices for <code>LIGHT</code> include&mdash;
 
 <ul>
@@ -1747,6 +1746,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;, and</li>
 <li>the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.</li>
 </ul></li>
+<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If <code>REFL</code> is <code>PerfectWhite</code> (below), then the tristimulus values calculated are the <em>adopted white</em> (and are those of the light source itself).</li>
 <li><code>CMF(wl)</code> models three <strong>color-matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include&mdash;
 
 <ul>
@@ -1797,7 +1797,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Although <code>REFL</code>, <code>LIGHT</code>, and <code>CMF</code> are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>CMF</code> and <code>LIGHT</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
+<li>Although <code>LIGHT</code>, <code>REFL</code>, and <code>CMF</code> are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>CMF</code> and <code>LIGHT</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
 <li><strong>Metamerism</strong> occurs when two materials match the same color for a given light source (<code>LIGHT</code>), viewer (<code>CMF</code>), and/or viewing angle, but not for another.  If this happens, the two materials&#39; reflectance or transmittance curves (<code>REFL</code>) are called <em>metamers</em>.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).</li>
 </ol>
 
