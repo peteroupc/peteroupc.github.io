@@ -209,7 +209,7 @@
 <li><strong>As a point in space</strong>, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
 
 <ul>
-<li><a href="#RGB_Color_Model">RGB</a> color spaces describe proportions of red, green, and blue dots of light.</li>
+<li><a href="#RGB_Color_Model">RGB</a> color spaces describe proportions of &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; dots of light.</li>
 <li><a href="#HSV">HSV</a>, <a href="#HSL">HSL</a>, and <a href="#HWB">HWB</a> color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.</li>
 <li><a href="#CIE_XYZ">XYZ</a>, <a href="#CIELAB">CIELAB</a>, and <a href="#CIELUV">CIELUV</a> color spaces are based on human color perception.</li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models">CMYK</a> color spaces are especially used to describe proportions of four specific kinds of ink.</li>
@@ -224,24 +224,13 @@
 
 <p>The <strong>red-green-blue (RGB) color model</strong> is the most commonly seen color model in mainstream computer programming.</p>
 
-<p>The RGB model is ideally based on the intensity that red, green, and blue dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note8">(8)</a></sup> The RGB model is a cube with one vertex set to black, the opposite vertex set to white, and the remaining vertices set to red, green, blue, cyan, yellow, and magenta.</p>
+<p>The RGB model is ideally based on the intensity that &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; dots of light should have in order to reproduce certain colors on electronic displays.<sup><a href="#Note8">(8)</a></sup> The RGB model is a cube with one vertex set to &quot;black&quot;, the opposite vertex set to &quot;white&quot;, and the remaining vertices set to &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;cyan&quot;, &quot;yellow&quot;, and &quot;magenta&quot;.</p>
 
 <p><strong>RGB color spaces</strong> generally differ in their red, green, blue, and white points<sup><a href="#Note9">(9)</a></sup> as well as in their <a href="#Linear_RGB_and_Companded_RGB"><em>color component transfer functions</em></a>.</p>
 
 <p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: <code>red</code>, <code>green</code>, <code>blue</code>; and each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
 
 <p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
-
-<blockquote>
-<p><strong>Note:</strong> An RGB color&mdash;</p>
-
-<ul>
-<li>is white, black, or a shade of gray (<em>achromatic</em>) if it has equal red, green, and blue components, and</li>
-<li>is a <a href="http://en.wikipedia.org/wiki/Web_colors">&quot;Web safe&quot; color</a> if its red, green, and blue components are each a multiple of 0.2.</li>
-</ul>
-
-<p>An <a href="#Notation_and_Definitions"><em>image color list</em></a> is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.</p>
-</blockquote>
 
 <p><a id=RGB_Integer_Formats></a></p>
 
@@ -527,14 +516,6 @@ METHOD HsvToRgb(hsv)
 END METHOD
 </pre>
 
-<p>In the rest of this document&mdash;</p>
-
-<ul>
-<li><strong><code>HSVHue(color)</code></strong> is the HSV &quot;hue&quot; component of a color, that is, <code>RgbToHsv(color)[0]</code>,</li>
-<li><strong><code>HSVSat(color)</code></strong> is the HSV &quot;saturation&quot; component of a color, that is, <code>RgbToHsv(color)[1]</code>, and</li>
-<li><strong><code>HSVVal(color)</code></strong> is the HSV &quot;brightness&quot; or &quot;value&quot; component of a color, that is, <code>RgbToHsv(color)[2]</code>.</li>
-</ul>
-
 <blockquote>
 <p><strong>Notes:</strong></p>
 
@@ -622,13 +603,6 @@ METHOD HslToRgb(hsl)
 END METHOD
 </pre>
 
-<p>In the rest of this document&mdash;</p>
-
-<ul>
-<li><strong><code>HSLSat(color)</code></strong> is the HSL &quot;saturation&quot; component of a color, that is, <code>RgbToHsl(color)[1]</code>, and</li>
-<li><strong><code>HSLLgt(color)</code></strong> is the HSL &quot;lightness&quot; component of a color, that is, <code>RgbToHsl(color)[2]</code>.</li>
-</ul>
-
 <blockquote>
 <p><strong>Notes:</strong></p>
 
@@ -653,7 +627,7 @@ END METHOD
 <p>The conversions given below are independent of RGB color space, but should be done using <a href="#Linear_RGB_and_Companded_RGB"><em>linear RGB</em> colors</a>.</p>
 
 <ul>
-<li>To convert an RGB color <code>color</code> to HWB, generate <code>[HSVHue(color), min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]</code>.</li>
+<li>To convert an RGB color <code>color</code> to HWB, generate <code>[RgbToHsv(color)[0], min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]</code>.</li>
 <li>To convert an HWB color <code>hwb</code> to RGB, generate <code>HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])</code> if <code>hwb[2] &lt; 1</code>, or <code>[hwb[0], 0, 0]</code> otherwise.</li>
 </ul>
 
@@ -676,11 +650,11 @@ END METHOD
 <p>There are at least two conventions for XYZ colors:</p>
 
 <ul>
-<li>In one convention (&quot;absolute XYZ&quot;), the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
-<li>In another convention (&quot;relative XYZ&quot;), the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  Here, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;).</li>
+<li><strong>Absolute XYZ.</strong> In this convention, the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).</li>
+<li><strong>Relative XYZ.</strong> In this convention, the three components are normalized to a given white point and black point (usually those of a <em>reference medium</em>), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  Here, the black point is generally, but not always, the absolute XYZ color <code>[0, 0, 0]</code> (&quot;absolute black&quot;).</li>
 </ul>
 
-<p>The following methods, in the pseudocode below, convert a companded sRGB color (<code>rgb</code>) to and from a relative XYZ color, where a Y of 0 means &quot;absolute black&quot;:</p>
+<p>The following methods, in the pseudocode below, convert a color between companded sRGB (<code>rgb</code>) and relative XYZ color, treating a Y of 0 as &quot;absolute black&quot;:</p>
 
 <ul>
 <li><code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code> treat a Y of 1 as the D65 white point.</li>
@@ -788,10 +762,16 @@ and is calculated analogously to <em>xy</em> chromaticity.</li>
 
 <ul>
 <li><em>L*</em>, or <em>lightness</em> of a color (how bright that color appears in comparison to white), is 0 or greater and 100 or less, where 0 is black and 100 is white.</li>
-<li><em>a*</em> is a coordinate of the red/green axis; the positive <em>a*</em> axis points to red (actually magenta)
-and the negative <em>a*</em> axis points to green.</li>
-<li><em>b*</em> is a coordinate of the yellow/blue axis; the positive <em>b*</em> axis points to yellow
-and the negative <em>b*</em> axis points to blue.<sup><a href="#Note19">(19)</a></sup></li>
+<li><em>a*</em> is a coordinate of the red/green axis (positive points to red, negative to green).</li>
+<li><em>b*</em> is a coordinate of the yellow/blue axis (positive points to yellow, negative to blue).<sup><a href="#Note19">(19)</a></sup></li>
+</ul>
+
+<p><em>L*C*h</em> form expresses CIELAB colors as polar coordinates; the three components have the following order:</p>
+
+<ul>
+<li>Lightness (<em>L*</em>).</li>
+<li><em>Chroma</em> (<em>C*</em>) is the distance of the color from the &quot;gray&quot; line.<sup><a href="#Note20">(20)</a></sup>.</li>
+<li><em>Hue</em> (<em>h</em>, an angle)<sup><a href="#Note13">(13)</a></sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta</li>
 </ul>
 
 <p>In the following pseudocode:</p>
@@ -804,8 +784,7 @@ and the negative <em>b*</em> axis points to blue.<sup><a href="#Note19">(19)</a>
 <li><code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50 white point.<sup><a href="#Note15">(15)</a></sup></li>
 </ul></li>
 <li><code>XYZToLab(xyz, wpoint)</code> and <code>LabToXYZ(lab, wpoint)</code> convert an XYZ color to or from CIELAB, respectively, treating <code>wpoint</code> (an XYZ color) as the white point.</li>
-<li><code>LabToChroma(lab)</code> finds a CIELAB color&#39;s <em>chroma</em> (<em>C*</em>), or distance of that color from the &quot;gray&quot; line.<sup><a href="#Note20">(20)</a></sup></li>
-<li><code>LabToHue(lab)</code> finds a CIELAB color&#39;s <em>hue</em> (<em>h</em>, an angle)<sup><a href="#Note13">(13)</a></sup>. Hue ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.</li>
+<li><code>LabToChroma(lab)</code> and <code>LabToHue(lab)</code> finds a CIELAB color&#39;s <em>chroma</em> or <em>hue</em>, respectively.</li>
 <li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue (<em>L*C*h</em>), in that order.</li>
 <li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>&Delta;H*</em>) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.</li>
 <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chromaticness difference</em> (&Delta;<em>C</em><sub>h</sub>) between two CIELAB colors, as given, for example, in ISO 13655.</li>
@@ -1081,7 +1060,7 @@ END METHOD
 
 <p>Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table&#39;s &quot;patches&quot;.<sup><a href="#Note24">(24)</a></sup></p>
 
-<p><strong>Other ink mixtures.</strong> Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that use mixtures that include inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of five or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
+<p><strong>Other ink mixtures.</strong> Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that involve inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of five or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
 
 <p><strong>Rough conversions.</strong> The following pseudocode shows <em>very rough</em> and <em>approximate</em> conversions between an RGB color (<code>color</code>) and a CMYK color (<code>cmyk</code>):</p>
 
@@ -1144,13 +1123,13 @@ END METHOD
 <li>An <a href="#Notation_and_Definitions"><em>image color list</em></a>&#39;s <strong>average relative luminance</strong> is often equivalent to the average <code>Luminance(color)</code> value among the colors in that image color list.</li>
 </ol>
 
-<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:</p>
-
-<ul>
-<li>The average, minimum, or maximum of an RGB color&#39;s red, green, and blue components (as shown on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example).</li>
-<li>The red, green, or blue component of an RGB color (also as seen on T. Helland&#39;s site).</li>
-<li>A <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
-</ul>
+<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:
+    - <strong>Red channel</strong>: <code>[color[0], color[0], color[0]]</code>.
+    - <strong>Green channel</strong>: <code>[color[1], color[1], color[1]]</code>.
+    - <strong>Blue channel</strong>: <code>[color[2], color[2], color[2]]</code>.
+    - <strong>Maximum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>max(max(color[0], color[1]), color[2])</code>.
+    - <strong>Minimum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>min(min(color[0], color[1]), color[2])</code>. (This and the previous techniques are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example.)
+    - <strong>Light/dark ratio</strong>: A <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</p>
 </blockquote>
 
 <p><a id=Color_Schemes_and_Harmonies></a></p>
@@ -1303,7 +1282,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 
 <ul>
 <li><strong>RGB additive.</strong> <code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>.</li>
-<li><strong>HSL &quot;lightness&quot; additive.</strong> <code>HslToRgb(HSVHue(color), HSLSat(color), min(max(HSLLgt(color) + value, 0), 1))</code>.</li>
+<li><strong>HSL &quot;lightness&quot; additive.</strong> <code>HslToRgb(hsl[0], hsl[1], min(max(hsl[2] + value, 0), 1))</code>, where <code>hsl = RgbToHsl(color)</code>.</li>
 <li><strong>CIELAB.</strong> <code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors).</li>
 <li><strong>Tints and shades.</strong> A &quot;tint&quot; is a lighter version, and a &quot;shade&quot; is a darker version.  See &quot;<a href="#Alpha_Blending">Alpha Blending</a>&quot;.</li>
 </ul>
@@ -1315,7 +1294,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <p>The following approaches can generate a lighter or darker version of a color. In the examples, <code>color</code> is an RGB color in 0-1 format, and <code>value</code> is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.</p>
 
 <ul>
-<li><strong>HSV &quot;saturation&quot; additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[0])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
+<li><strong>HSV &quot;saturation&quot; additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 <li><strong>Tones, or mixtures of gray.</strong> A &quot;tone&quot; is a desaturated version.  A color can be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with either its <a href="#Relative_Luminance_Grayscale">grayscale</a> version or an arbitrary shade of gray.</li>
 <li><strong>Saturate matrix.</strong>  See &quot;<a href="#Color%20Matrices">Color Matrices</a>&quot;.</li>
 </ul>
@@ -1329,26 +1308,27 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <ul>
 <li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note30">(30)</a></sup></li>
 <li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
-<li><strong>Similar to grayscale</strong> (see <a href="#Relative_Luminance_Grayscale">&quot;Relative Luminance (Grayscale)&quot;</a>):
-
-<ul>
-<li><strong>Red channel</strong>: <code>[color[0], color[0], color[0]]</code>.</li>
-<li><strong>Green channel</strong>: <code>[color[1], color[1], color[1]]</code>.</li>
-<li><strong>Blue channel</strong>: <code>[color[2], color[2], color[2]]</code>.</li>
-<li><strong>Maximum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>max(max(color[0], color[1]), color[2])</code>.</li>
-<li><strong>Minimum</strong>: <code>[c, c, c]</code>, where <code>c</code> is <code>min(min(color[0], color[1]), color[2])</code>.</li>
-</ul></li>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> Raster image processing techniques&mdash;</p>
+<p><strong>Notes:</strong>
+1. An RGB color&mdash;
+    - is white, black, or a shade of gray (<em>achromatic</em>) if it has equal red, green, and blue components, and
+    - is a <a href="http://en.wikipedia.org/wiki/Web_colors">&quot;Web safe&quot; color</a> if its red, green, and blue components are each a multiple of 0.2.</p>
+
+<pre>An [_image color list_](#Notation_and_Definitions) is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.
+</pre>
+
+<ol>
+<li><p>Raster image processing techniques&mdash;</p>
 
 <ul>
 <li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including <a href="https://en.wikipedia.org/wiki/Chroma_key"><em>chroma key</em></a>), or</li>
 <li>that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),</li>
 </ul>
 
-<p>are largely out of the scope of this document.</p>
+<p>are largely out of the scope of this document.</p></li>
+</ol>
 </blockquote>
 
 <p><a id=Color_Differences></a></p>
@@ -1573,7 +1553,7 @@ END METHOD
 <li>applying a <a href="https://en.wikipedia.org/wiki/Dither">&quot;dithering&quot;</a> technique (especially to reduce undesirable color &quot;banding&quot; in certain cases), which is outside the scope of this document, however.</li>
 </ul></li>
 <li>Finding the number of <em>unique</em> colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup><a href="#Note32">(32)</a></sup></li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculated from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a><sup><a href="#Note33">(33)</a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens  before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a colorimeter or similar device, or be calculated from <a href="http://eilv.cie.co.at/term/567"><em>scene-referred</em> image data</a><sup><a href="#Note33">(33)</a></sup>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB">sRGB</a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><em>output-referred</em></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data.  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
 
@@ -1733,7 +1713,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <li><strong>Observer.</strong> An observer&#39;s visual response is modeled by three <em>color-matching functions</em>.</li>
 </ul>
 
-<p>The SPD, the reflectance or transmittance curve, and the color-matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify a color.</p>
+<p>The SPD, the reflectance or transmittance curve, and the color-matching functions, are converted to three numbers (called <em>tristimulus values</em>) that uniquely identify a perceived color.</p>
 
 <p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  In the method:</p>
 
@@ -1937,7 +1917,7 @@ END METHOD
 
 <p><small><sup id=Note1>(1)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources">tabulated data</a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving &quot;red, yellow, and blue&quot;, &quot;primary/secondary/tertiary&quot; colors, or using a &quot;color wheel&quot; to &quot;predict&quot; color mixtures.  Also deliberately missing are discussions on color psychology, color forecasting, or color in natural language, all topics that are generally irrelevant in programming.</small></p>
+<p><small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving &quot;red, yellow, and blue&quot;, &quot;primary/secondary/tertiary&quot; colors, or using a &quot;color wheel&quot; to &quot;predict&quot; color mixtures.  Also deliberately missing are discussions on color psychology, &quot;color forecasting&quot;, or color in natural language, all topics that are generally irrelevant in programming.</small></p>
 
 <p><small><sup id=Note3>(3)</sup> It&#39;s not accurate to speak of &quot;red light&quot;, &quot;green light&quot;, &quot;blue light&quot;, &quot;white light&quot;, and so on.</small></p>
 
@@ -1949,7 +1929,7 @@ END METHOD
 
 <p><small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see &quot;<a href="http://ixora.io/projects/colorblindness/color-blindness-simulation-research/">Color Blindness Simulation Research</a>&quot;, by &quot;Jim&quot;.</small></p>
 
-<p><small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel (red, green, and blue), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as red, green, blue, and white, or RGBW &mdash; and ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or electronic displays.</small></p>
+<p><small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel (&quot;red&quot;, &quot;green&quot;, and &quot;blue&quot;), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;, or RGBW &mdash; and ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or electronic displays.</small></p>
 
 <p><small><sup id=Note9>(9)</sup> Although most RGB color spaces in common use define their red, green, and blue points as actual colors, this is not always the case.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces">ACES2065-1 color space</a> of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.</small></p>
 
@@ -1988,7 +1968,7 @@ END METHOD
 <li>such a claim &quot;is really only the case for very low spatial frequencies&quot;, according to P. Kovesi (P. Kovesi, &quot;Good Colour Maps: How to Design Them&quot;, arXiv:1509.03700 [cs.GR], 2015).</small></li>
 </ul>
 
-<p><small><sup id=Note19>(19)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light/dark contrast, the <em>opponent signal</em> red vs. green, and the opponent signal yellow vs. blue, respectively, which are believed to be generated by the human visual system in response to a stimulus of light. (These three contrasts are largely associated with E. Hering&#39;s work.  See also the entry &quot;<a href="http://eilv.cie.co.at/term/542">hue</a>&quot; in the CIE&#39;s International Lighting Vocabulary.)</small></p>
+<p><small><sup id=Note19>(19)</sup> The placement of the <em>L*</em>, <em>a*</em>, and <em>b*</em> axes is related to the light-dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small></p>
 
 <p><small><sup id=Note20>(20)</sup> The terms <em>lightness</em> and <em>chroma</em> are relative to an area appearing white.  The corresponding terms <em>brightness</em> and <em>saturation</em>, respectively, are subjective terms: <em>brightness</em> is the perceived degree of reflected or emitted light, and <em>saturation</em> is the perceived hue strength (<em>colorfulness</em>) of an area in proportion to its brightness. (See also the CIE&#39;s International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Colorfulness">colorfulness</a>).</small></p>
 
