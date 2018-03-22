@@ -160,7 +160,7 @@ The **red-green-blue (RGB) color model** is the most commonly seen color model i
 
 The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(8)](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
 
-There are many [RGB color spaces](#RGB_Color_Spaces) ,not just one.
+There are many [RGB color spaces](#RGB_Color_Spaces), not just one.
 
 **RGB colors.** An RGB color consists of three components in the following order: `red`, `green`, `blue`; and each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
 
@@ -309,7 +309,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 
 **RGB color spaces** generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [sRGB](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
 
-**Red, green, blue, and white points.** RGB color spaces generally differ in what they consider red, green, blue, and white.  But they need not define the red, green, and/or blue points as actual colors.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
+**Red, green, blue, and white points.** RGB color spaces generally differ in what they consider "red", "green", "blue", and "white".  But they need not define the red, green, and/or blue points as actual colors.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
 
 **Color component transfer function.** This is a function used to convert a _linear RGB_ color to a _companded RGB_ color in the same color space. For many RGB color spaces (but not sRGB, described [later](#sRGB)), this is a simple power function, such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number. (In this case, the function is also called _gamma encoding_.)  In a given RGB color space:
 - A **linear RGB** color has a linear relationship of emitted light (as opposed to perceived light).
@@ -902,7 +902,7 @@ Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to 
         k = min(min(1.0 - color[0], 1.0 - color[1]), 1.0 - color[2])
         cmyk=[0, 0, 0, 1]
         if k!=1:
-           cmyk=[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[2]) - k) /
+           cmyk=[((1.0 - color[0]) - k) / (1 - k), ((1.0 - color[1]) - k) /
               (1 - k), ((1.0 - color[2]) - k) / (1 - k), k]
         end
         // CMYK to RGB
