@@ -637,10 +637,11 @@ def hslToRgb(hsl):
         return rgb
 
 def hsvHue(rgb):
+  """  Deprecated. Use `rgbToHsv(rgb)[0]` instead.  """
   return rgbToHsv(rgb)[0]
 
 def rgbToHwb(color):
-  return [hsvHue(color), \
+  return [rgbToHsv(rgb)[0], \
     min(min(color[0],color[1]),color[2]), \
     1-max(max(color[0],color[1]),color[2])]
 
@@ -681,6 +682,11 @@ def xyzTosRGB(xyz):
             -0.9692436, 1.875968, 0.04155506, 0.05563008,
             -0.2039770, 1.056972])
     return (linearTosRGB3(rgb), [0,0,0],[1,1,1])
+
+def wavelengthTosRGB(wavelength):
+   srgb=xyzTosRGB(d65Illum(wavelength))
+   # Clamp sRGB value
+   return [(0 if x<0 else (1 if x>1 else x)) for x in srgb]
 
 def xyzToLab(xyzval,wpoint):
     xyz=[xyzval[0]/wpoint[0],xyzval[1]/wpoint[1],xyzval[2]/wpoint[2]]
