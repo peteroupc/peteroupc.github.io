@@ -54,8 +54,8 @@ This document presents an overview of many common color topics that are of gener
     - [CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)
 - [Color Operations](#Color_Operations)
     - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
-    - [Color Schemes and Harmonies](#Color_Schemes_and_Harmonies)
     - [Alpha Blending](#Alpha_Blending)
+    - [Color Schemes and Harmonies](#Color_Schemes_and_Harmonies)
     - [Contrast Ratio](#Contrast_Ratio)
     - [Porter&ndash;Duff Formulas](#Porter_ndash_Duff_Formulas)
     - [Blend Modes](#Blend_Modes)
@@ -307,7 +307,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
 
-**RGB color spaces** generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [sRGB](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
+**RGB color spaces** are numerous, and they generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [sRGB](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
 
 **Red, green, blue, and white points.** RGB color spaces generally differ in what they consider "red", "green", "blue", and "white".  But they need not define the red, green, and/or blue points as actual colors.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
 
@@ -948,34 +948,17 @@ _Relative luminance_&mdash;
 > 4. An [_image color list_](#Notation_and_Definitions)'s **average relative luminance** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
 >
 > **Note:** Although an application should favor implementing `Luminance(color)` to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:
-> - **Red channel**: `[color[0], color[0], color[0]]`.
-> - **Green channel**: `[color[1], color[1], color[1]]`.
-> - **Blue channel**: `[color[2], color[2], color[2]]`.
-> - **Maximum**: `[c, c, c]`, where `c` is `max(max(color[0], color[1]), color[2])`.
-> - **Minimum**: `[c, c, c]`, where `c` is `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
+> - **Red channel**: `color[0]`.
+> - **Green channel**: `color[1]`.
+> - **Blue channel**: `color[2]`.
+> - **Maximum**: `max(max(color[0], color[1]), color[2])`.
+> - **Minimum**: `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
 > - **Light/dark ratio**: A [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as [HSL](#HSL) "lightness"; see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
-
-<a id=Color_Schemes_and_Harmonies></a>
-### Color Schemes and Harmonies
-
-The following techniques generate new colors that are related to existing colors.
-
-- **Color harmonies**<sup>[(24)](#Note24)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup>[(11)](#Note11)</sup> to generate the hues for the colors that make up that harmony:
-    - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
-    - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
-    - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
-    - **Triadic**: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.
-    - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
-    - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
-    - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
-    - **Tetradic**: Double complementary with Y = &pi/2.
-    - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
-- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Alpha_Blending) of a given color are monochrome colors.
 
 <a id=Alpha_Blending></a>
 ### Alpha Blending
 
-The `Lerp3` function below gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(25)](#Note25)</sup>
+The `Lerp3` function below gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(24)](#Note24)</sup>
 - **Shade.** Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
 - **Tint.** Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
 - **Tone.** Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
@@ -990,6 +973,23 @@ The `Lerp3` function below gets an _alpha blend_ of two colors, where `color1` a
         return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
             color1[2]+(color2[2]-color1[2])*alpha]
     END METHOD
+
+<a id=Color_Schemes_and_Harmonies></a>
+### Color Schemes and Harmonies
+
+The following techniques generate new colors that are related to existing colors.
+
+- **Color harmonies**<sup>[(25)](#Note25)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup>[(11)](#Note11)</sup> to generate the hues for the colors that make up that harmony:
+    - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
+    - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
+    - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
+    - **Triadic**: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.
+    - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
+    - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
+    - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
+    - **Tetradic**: Double complementary with Y = &pi/2.
+    - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
+- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Alpha_Blending) of a given color are monochrome colors.
 
 <a id=Contrast_Ratio></a>
 ### Contrast Ratio
@@ -1063,10 +1063,10 @@ is transformed with a color matrix (`matrix`) as follows:
 
 Examples of matrices include:
 
-- **Sepia**: `[0.393, 0.769, 0.189, 0.349, 0.686, 0.168, 0.272, 0.534, 0.131]`.
-- **Saturate**: `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
+- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>, and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
+- **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>.
-- **Hue rotate**: `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(27)](#Note27)</sup><sup>[(26)](#Note26)</sup>
+- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(27)](#Note27)</sup><sup>[(26)](#Note26)</sup>
 
 <a id=Lighten_Darken></a>
 ### Lighten/Darken
@@ -1081,7 +1081,7 @@ The following approaches can generate a lighter or darker version of a color. In
 <a id=Saturate_Desaturate></a>
 ### Saturate/Desaturate
 
-The following approaches can generate a lighter or darker version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
+The following approaches can generate a saturated or desaturated version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
 
 - **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
 - **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Relative_Luminance_Grayscale) version or an arbitrary shade of gray.
@@ -1636,16 +1636,16 @@ _uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is 
 
 <small><sup id=Note23>(23)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).</small>
 
-<small><sup id=Note24>(24)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
-
-<small><sup id=Note25>(25)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
+<small><sup id=Note24>(24)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
 where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).</small>
+
+<small><sup id=Note25>(25)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
 
 <small><sup id=Note26>(26)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.</small>
 
 <small><sup id=Note27>(27)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
 
-<small><sup id=Note28>(28)</sup> This is often called the "CMY" (cyan-magenta-yellow) version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
+<small><sup id=Note28>(28)</sup> This is often called the "CMY" ("cyan-magenta-yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
 
 <small><sup id=Note29>(29)</sup> The "E" here stands for the German word _Empfindung_.</small>
 
