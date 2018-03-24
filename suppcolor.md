@@ -19,6 +19,7 @@ This document presents supplemental topics about color.  They add to my article 
 - [Additional Color Models](#Additional_Color_Models)
     - [HSI](#HSI)
     - [Hunter L,a,b](#Hunter_L_a_b)
+- [Additional Color Formulas](#Additional_Color_Formulas)
 - [Terminal Graphics](#Terminal_Graphics)
 - [Irrelevant Topics](#Irrelevant_Topics)
 - [Notes](#Notes)
@@ -146,6 +147,32 @@ The `LabToHue`, `LabToChroma`, `LabHueDifference`,
 Hunter L, a, b colors analogously to CIELAB colors.
 
 The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delta;b_, or _&Delta;C_, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.
+
+<a id=Additional_Color_Formulas></a>
+## Additional Color Formulas
+
+**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
+
+    METHOD COLORDIFF(lab1, lab2)
+        c1=LabToChroma(lab1)
+        c2=LabToChroma(lab2)
+        dl=1
+        dc=1+0.045*c1
+        dh=1+0.015*c1
+        if TEXTILES
+                dl=2
+                dc=1+0.048*c1
+                dh=1+0.014*c1
+        end
+        da=lab2[1]-lab1[1]
+        db=lab2[2]-lab1[2]
+        dchr=c2-c1
+        dhue=sqrt(max(0,da*da+db*db-dchr*dchr))
+        dl=((lab2[0]-lab1[0])/dl)
+        dc=(dchr/dc)
+        dh=(dhue/dh)
+        return sqrt(dl*dl+dc*dc+dh*dh)
+    END METHOD
 
 <a id=Terminal_Graphics></a>
 ## Terminal Graphics
