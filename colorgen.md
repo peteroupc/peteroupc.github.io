@@ -301,7 +301,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 >
 > 1. Other variants of the HTML color format<sup>[(10)](#Note10)</sup>:
 >     - The [CSS Color Module Level 3](https://www.w3.org/TR/css3-color/#rgb-color), which specifies this format, also mentions a **3-digit variant**, consisting of "#" followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
->     - An **8-digit variant** used in the Android operating system consists of "#" followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8/8/8/8 RGBA colors.
+>     - An **8-digit variant** used in the Android operating system consists of "#" followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes RGBA colors with four 8-bit integer components (0 or greater, 255 or less).
 > 2. As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or its 3-digit variant are in the [_sRGB color space_](#sRGB) (as companded colors).
 
 <a id=RGB_Color_Spaces></a>
@@ -523,7 +523,7 @@ The conversions given below are independent of RGB color space, but should be do
 <a id=CIE_XYZ></a>
 ### CIE XYZ
 
-The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a distribution of light into a point in three-dimensional space, as further explained in "[Spectral Color Functions](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
+The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a spectral curve into a point in three-dimensional space, as further explained in "[Spectral Color Functions](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
 
 - X is a component without special meaning.
 - Y indicates the [_luminance_](http://6degreesoffreedom.co/luminance-vs-illuminance/) of the color.<sup>[(12)](#Note12)</sup>
@@ -739,11 +739,6 @@ In the following pseudocode:
 
 > **Note:** The difference in lightness, _a\*_, _b\*_, or chroma (_&Delta;L\*_, _&Delta;a\*_, _&Delta;b\*_, or _&Delta;C\*_, respectively) between two CIELAB colors is simply the difference between the corresponding value of the second CIELAB color and that of the first.
 
-> **Examples:**
->
-> 1. An application can consider a color **dark** if its lightness (_L\*_) is lower than some threshold, say, 30.
-> 2. An application can consider a color **light** if its lightness (_L\*_) is greater than some threshold, say, 70.
-
 <a id=CIELUV></a>
 ### CIELUV
 
@@ -817,7 +812,7 @@ In the following pseudocode&mdash;
 - C<sub>_B_</sub>, or _blue chroma_, is based on the difference between blue and luma and is an integer 16 or greater and 240 or less.
 - C<sub>_R_</sub>, or _red chroma_, is, based on the difference between red and luma and is an integer 16 or greater and 240 or less.
 
-The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color is in 8/8/8 format (rather than 0-1 format) with the components separated out (still 0 or greater and 255 or less). There are three variants shown here, namely&mdash;
+The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color consists of three 8-bit integer components (0 or greater, 255 or less), rather than being in 0-1 format. There are three variants shown here, namely&mdash;
 
 - the ITU-R BT.601 variant (for standard-definition digital video), as the `YCbCrToRgb` and `RgbToYCbCr` methods,
 - the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
@@ -946,11 +941,14 @@ _Relative luminance_&mdash;
 > 2. **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
 > 3. **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If `Luminance(color)` is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.  See also "[Contrast Ratio](#Contrast_Ratio)", later.
 > 4. An [_image color list_](#Notation_and_Definitions)'s **average relative luminance** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
+> 5. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
+> 6. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
 > **Note:** Although an application should favor implementing `Luminance(color)` to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:
 > - **Red channel**: `color[0]`.
 > - **Green channel**: `color[1]`.
 > - **Blue channel**: `color[2]`.
+> - **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
 > - **Maximum**: `max(max(color[0], color[1]), color[2])`.
 > - **Minimum**: `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
 > - **Light/dark ratio**: A [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as [HSL](#HSL) "lightness"; see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
@@ -958,7 +956,7 @@ _Relative luminance_&mdash;
 <a id=Alpha_Blending></a>
 ### Alpha Blending
 
-The `Lerp3` function below gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_ being 0 or greater and 1 or less (0 means equal to `color1` and 1 means equal to `color2`).<sup>[(24)](#Note24)</sup>
+The `Lerp3` function below<sup>[(24)](#Note24)</sup> gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_. `alpha` is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (see P. Haeberli and D. Voorhees, "[Image Processing by Interpolation and Extrapolation](http://www.graficaobscura.com/interp/index.html)").
 - **Shade.** Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
 - **Tint.** Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
 - **Tone.** Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
@@ -1052,21 +1050,21 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Color_Matrices></a>
 ### Color Matrices
 
-A _color matrix_ is a 9-item (3x3) list for transforming colors.  As used in this document, an RGB color (`color`)
-is transformed with a color matrix (`matrix`) as follows:
-
-    newColor = [
-       min(max(color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],0),1),
-       min(max(color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],0),1),
-       min(max(color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8],0),1),
-    ]
-
-Examples of matrices include:
+A _color matrix_ is a 9-item (3x3) list for transforming colors. Examples of color matrices include:
 
 - **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>, and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>.
 - **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(27)](#Note27)</sup><sup>[(26)](#Note26)</sup>
+
+In the following pseudocode, `TransformColor` transforms an RGB color (`color`) is transformed with a color matrix (`matrix`).
+
+    METHOD TransformColor(color, matrix)
+       return [
+          min(max(color[0]*matrix[0]+color[1]*matrix[1]+color[2]*matrix[2],0),1),
+          min(max(color[0]*matrix[3]+color[1]*matrix[4]+color[2]*matrix[5],0),1),
+          min(max(color[0]*matrix[6]+color[1]*matrix[7]+color[2]*matrix[8],0),1) ]
+    END METHOD
 
 <a id=Lighten_Darken></a>
 ### Lighten/Darken
@@ -1116,7 +1114,7 @@ Color difference algorithms are used to determine if two colors are similar.
 
 In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement `COLORDIFF`.
 
-**Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.
+**Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.  This color difference formula is independent of color model; however, [_linear RGB_ colors](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
 
     METHOD COLORDIFF(color1, color2)
        d1=color2[0] - color1[0]
@@ -1127,7 +1125,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
     END METHOD
 
 > **Notes:**
-> - The Euclidean distance is independent of color model; however, [_linear RGB_ colors](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
+>
 > - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy and others 1994])<sup>[(29)](#Note29)</sup>.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
@@ -1168,28 +1166,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
         return sqrt(dl*dl+dc*dc+dh*dh)
     END METHOD
 
-**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
-
-    METHOD COLORDIFF(lab1, lab2)
-        c1=LabToChroma(lab1)
-        c2=LabToChroma(lab2)
-        dl=1
-        dc=1+0.045*c1
-        dh=1+0.015*c1
-        if TEXTILES
-                dl=2
-                dc=1+0.048*c1
-                dh=1+0.014*c1
-        end
-        da=lab2[1]-lab1[1]
-        db=lab2[2]-lab1[2]
-        dchr=c2-c1
-        dhue=sqrt(max(0,da*da+db*db-dchr*dchr))
-        dl=((lab2[0]-lab1[0])/dl)
-        dc=(dchr/dc)
-        dh=(dhue/dh)
-        return sqrt(dl*dl+dc*dc+dh*dh)
-    END METHOD
+**CIE94.** This CIELAB-specific formula is detailed on the [supplemental color topics](https://peteroupc.github.io/suppcolor.html#Additional_Color_Formulas) page.
 
 **CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two [CIELAB](#CIELAB) colors.
 
