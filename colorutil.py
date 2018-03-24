@@ -546,10 +546,10 @@ def hsvToRgb(hsv):
     sat=hsv[1]
     val=hsv[2]
     if hue < 0:
-      hue = pi * 2 - (-hue)%( pi * 2)
-    if hue >= pi * 2:
-      hue = (hue)%( pi * 2)
-    hue60 = hue * 3 / pi
+      hue = math.pi * 2 - (-hue)%( math.pi * 2)
+    if hue >= math.pi * 2:
+      hue = (hue)%( math.pi * 2)
+    hue60 = hue * 3 / math.pi
     hi = int(hue60)
     f = hue60 - hi
     c = val * (1 - sat)
@@ -606,32 +606,30 @@ def hslToRgb(hsl):
         if lum <= 0.5: bb = lum * (1.0 + sat)
         if lum > 0.5: bb= lum + sat - (lum * sat)
         a = lum * 2 - bb
-        r = a
-        g = a
-        b = a
         deg60 = math.pi / 3
         deg240 = math.pi * 4 / 3
+        hueval = hsl[0]
         if hueval < 0:
           hueval = math.pi * 2 - (-hueval)%(math.pi * 2)
         if hueval >= math.pi * 2:
           hueval = (hueval)%(math.pi * 2)
-        deg60 = pi / 3
-        deg240 = pi * 4 / 3
-        hue = hueval + pi * 2 / 3
-        hue2 = hueval - pi * 2 / 3
-        if hue >= pi * 2:
-            hue = hue - pi * 2
-        if hues2 < 0:
-            hues2 = hues2 + pi * 2
+        deg60 = math.pi / 3
+        deg240 = math.pi * 4 / 3
+        hue = hueval + math.pi * 2 / 3
+        hue2 = hueval - math.pi * 2 / 3
+        if hue >= math.pi * 2:
+            hue = hue - math.pi * 2
+        if hue2 < 0:
+            hue2 = hue2 + math.pi * 2
         rgb = [a, a, a]
         hues = [hue, hueval, hue2]
         i = 0
         while i < 3:
            if hues[i] < deg60:
                  rgb[i] = a + (bb - a) * hues[i] / deg60
-           if hues[i] >= deg60 and hues[i] < pi:
+           if hues[i] >= deg60 and hues[i] < math.pi:
               rgb[i] = bb
-           if hues[i] >= pi and hues[i] < deg240:
+           if hues[i] >= math.pi and hues[i] < deg240:
                rgb[i] = a + (bb - a) * (deg240 - hues[i]) / deg60
            i = i + 1
         return rgb
