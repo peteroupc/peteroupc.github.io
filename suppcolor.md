@@ -21,6 +21,7 @@ This document presents supplemental topics about color.  They add to my article 
     - [Hunter L,a,b](#Hunter_L_a_b)
 - [Additional Color Formulas](#Additional_Color_Formulas)
 - [Terminal Graphics](#Terminal_Graphics)
+- [Color Measurement Devices](#Color_Measurement_Devices)
 - [Irrelevant Topics](#Irrelevant_Topics)
 - [Notes](#Notes)
 - [License](#License)
@@ -89,7 +90,7 @@ A color following the HSI color model consists of three components, in the follo
 - A component called "saturation" is 0 or greater and 1 or less.
 - A component called "intensity", the average of the red, green, and blue components, is 0 or greater and 1 or less.
 
-The conversions given below are independent of RGB color space, but should be done using [_linearized RGB_ colors](https://peteroupc.github.io/colorgen.html#Linearized_and_Companded_RGB).
+The conversions given below are independent of RGB color space, but should be done using [_linear RGB_ colors](https://peteroupc.github.io/colorgen.html#RGB_Color_Spaces).
 
     METHOD RgbToHsi(rgb)
         sum=rgb[0]+rgb[1]+rgb[2]
@@ -193,6 +194,28 @@ Some command-line shells support coloring the background or foreground of text. 
 - "10" followed by color number: Brighter background color.
 
 The _color number_ is one of the following: "0" (black), "1" (red), "2" (green), "3" (yellow), "4" (blue), "5" (magenta), "6" (cyan), or "7" (white).  Note that not all shells support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.
+
+<a id=Color_Measurement_Devices></a>
+## Color Measurement Devices
+
+Measuring color is not like pointing and shooting with a camera, and it's not like measuring height or weight.  In general, special devices or technologies are needed to measure color.
+
+There are two general kinds of color measurement devices: _colorimeters_ and _spectrophotometers_.  In general:
+- A _colorimeter_ detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three _tristimulus values_ that identify a particular color.
+- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
+
+Color measurements of the same sample can vary depending on many things, including&mdash;
+- how the sample is prepared,
+- how the sample is presented to the measurement device,
+- for opaque samples, whether the measurement device includes gloss in the measurement (as in "sphere" or "diffuse/8&deg;" devices) or excludes it (as in "45/0" or "0/45" devices),
+- for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
+- how the measurement device illuminates the sample and filters the light in the device's path (especially if it's a colorimeter or the sample is fluorescent),
+- the measurement device's aperture (sample view area), and
+- for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.
+
+Several [application notes](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.
+
+At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, several colorimeters are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [selection](http://www.argyllcms.com/doc/measurement devices.html) of color measurement devices.
 
 <a id=Irrelevant_Topics></a>
 ## Irrelevant Topics

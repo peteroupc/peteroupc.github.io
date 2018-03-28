@@ -31,6 +31,7 @@
 </ul></li>
 <li><a href="#Additional_Color_Formulas">Additional Color Formulas</a></li>
 <li><a href="#Terminal_Graphics">Terminal Graphics</a></li>
+<li><a href="#Color_Measurement_Devices">Color Measurement Devices</a></li>
 <li><a href="#Irrelevant_Topics">Irrelevant Topics</a></li>
 <li><a href="#Notes">Notes</a></li>
 <li><a href="#License">License</a></li>
@@ -121,7 +122,7 @@ END
 <li>A component called &quot;intensity&quot;, the average of the red, green, and blue components, is 0 or greater and 1 or less.</li>
 </ul>
 
-<p>The conversions given below are independent of RGB color space, but should be done using <a href="https://peteroupc.github.io/colorgen.html#Linearized_and_Companded_RGB"><em>linearized RGB</em> colors</a>.</p>
+<p>The conversions given below are independent of RGB color space, but should be done using <a href="https://peteroupc.github.io/colorgen.html#RGB_Color_Spaces"><em>linear RGB</em> colors</a>.</p>
 
 <pre>METHOD RgbToHsi(rgb)
     sum=rgb[0]+rgb[1]+rgb[2]
@@ -233,6 +234,35 @@ END METHOD
 </ul>
 
 <p>The <em>color number</em> is one of the following: &quot;0&quot; (black), &quot;1&quot; (red), &quot;2&quot; (green), &quot;3&quot; (yellow), &quot;4&quot; (blue), &quot;5&quot; (magenta), &quot;6&quot; (cyan), or &quot;7&quot; (white).  Note that not all shells support all the SGR codes given here, and that the exact colors named by each color number can vary with the implementation.</p>
+
+<p><a id=Color_Measurement_Devices></a></p>
+
+<h2>Color Measurement Devices</h2>
+
+<p>Measuring color is not like pointing and shooting with a camera, and it&#39;s not like measuring height or weight.  In general, special devices or technologies are needed to measure color.</p>
+
+<p>There are two general kinds of color measurement devices: <em>colorimeters</em> and <em>spectrophotometers</em>.  In general:</p>
+
+<ul>
+<li>A <em>colorimeter</em> detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three <em>tristimulus values</em> that identify a particular color.</li>
+<li>A <em>spectrophotometer</em> breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a <a href="https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions"><em>spectral curve</em></a>.</li>
+</ul>
+
+<p>Color measurements of the same sample can vary depending on many things, including&mdash;</p>
+
+<ul>
+<li>how the sample is prepared,</li>
+<li>how the sample is presented to the measurement device,</li>
+<li>for opaque samples, whether the measurement device includes gloss in the measurement (as in &quot;sphere&quot; or &quot;diffuse/8&deg;&quot; devices) or excludes it (as in &quot;45/0&quot; or &quot;0/45&quot; devices),</li>
+<li>for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),</li>
+<li>how the measurement device illuminates the sample and filters the light in the device&#39;s path (especially if it&#39;s a colorimeter or the sample is fluorescent),</li>
+<li>the measurement device&#39;s aperture (sample view area), and</li>
+<li>for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.</li>
+</ul>
+
+<p>Several <a href="https://www.hunterlab.com/application-notes.html">application notes</a> by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.</p>
+
+<p>At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, several colorimeters are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a <a href="http://www.argyllcms.com/doc/measurement%20devices.html">selection</a> of color measurement devices.</p>
 
 <p><a id=Irrelevant_Topics></a></p>
 
