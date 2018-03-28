@@ -2,7 +2,7 @@
 
 [Peter Occil](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 20, 2018.
+Begun on Mar. 5, 2016; last updated on Mar. 25, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -239,7 +239,7 @@ where the game might need to generate the same content of that kind multiple tim
 In general, such a game should use a PRNG with a custom seed for such purposes only if&mdash;
 
 1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or
-2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to generate the content repeatedly (see recommendations 2 and 3).
+2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content (see recommendations 2 and 3).
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
@@ -259,7 +259,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 
 _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers&mdash;
 - at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and
-- some of it may be disclosed in the announcement that those numbers will be generated.
+- some of it can be disclosed in the announcement that those numbers will be generated.
 
 One process to generate verifiable random numbers is described in [RFC 3797](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [hash functions](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
@@ -400,7 +400,7 @@ A _hash function_ is a function that takes an arbitrary input of any size (such 
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [random number generation methods](https://peteroupc.github.io/randomfunc.html) for techniques.)
-- If a number of random bits is needed, and the hash code has at least that many bits, then that many bits may instead be taken directly from the hash code.
+- If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.
 
 For such purposes, applications should choose hash functions designed such that&mdash;
 - every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_), and

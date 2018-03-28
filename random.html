@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com">Peter Occil</a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Feb. 20, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Mar. 25, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -349,7 +349,7 @@
 
 <ol>
 <li>generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or</li>
-<li>the game makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to generate the content repeatedly (see recommendations 2 and 3).</li>
+<li>the game makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content (see recommendations 2 and 3).</li>
 </ol>
 
 <p>Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.</p>
@@ -376,7 +376,7 @@
 
 <ul>
 <li>at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and</li>
-<li>some of it may be disclosed in the announcement that those numbers will be generated.</li>
+<li>some of it can be disclosed in the announcement that those numbers will be generated.</li>
 </ul>
 
 <p>One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt">RFC 3797</a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of <a href="#Hash_Functions">hash functions</a> stronger than MD5 (see the last paragraph of section 3.3 of that RFC).</p>
@@ -641,7 +641,7 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 
 <ul>
 <li>The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on <a href="https://peteroupc.github.io/randomfunc.html">random number generation methods</a> for techniques.)</li>
-<li>If a number of random bits is needed, and the hash code has at least that many bits, then that many bits may instead be taken directly from the hash code.</li>
+<li>If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.</li>
 </ul>
 
 <p>For such purposes, applications should choose hash functions designed such that&mdash;</p>
