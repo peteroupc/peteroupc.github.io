@@ -207,7 +207,7 @@ There are two general kinds of color measurement devices: _colorimeters_ and _sp
 Color measurements of the same sample can vary depending on many things, including&mdash;
 - how the sample is prepared,
 - how the sample is presented to the measurement device,
-- for opaque samples, whether the measurement device includes gloss in the measurement (as in "sphere" or "diffuse/8&deg;" devices) or excludes it (as in "45/0" or "0/45" devices),
+- for opaque samples, whether that device includes gloss in the measurement (as in "sphere" or "diffuse/8&deg;" devices) or excludes it (as in "45/0" or "0/45" devices),
 - for non-opaque samples, whether the device measures light passing through the sample in all directions (total transmission) or straight-on only (regular transmission),
 - how the measurement device illuminates the sample and filters the light in the device's path (especially if it's a colorimeter or the sample is fluorescent),
 - the measurement device's aperture (sample view area), and
@@ -215,7 +215,7 @@ Color measurements of the same sample can vary depending on many things, includi
 
 Several [application notes](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.
 
-At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, several colorimeters are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [selection](http://www.argyllcms.com/doc/measurement devices.html) of color measurement devices.
+At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, [several colorimeters](https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/) are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [selection](http://www.argyllcms.com/doc/instruments.html) of color measurement devices.
 
 <a id=Irrelevant_Topics></a>
 ## Irrelevant Topics
