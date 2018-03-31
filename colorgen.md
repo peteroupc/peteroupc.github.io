@@ -1443,7 +1443,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `LIGHT`, `REFL`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. **Metamerism** occurs when two materials match the same color for a given light source (`LIGHT`), viewer (`CMF`), and/or viewing angle, but not for another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
+> 2. **Metamerism** occurs when two materials match the same color under a given viewing situation (such as light source [`LIGHT`] or viewer [`CMF`]), and/or viewing situation, but given another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
 >
 > **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 > - the tristimulus values (e.g., from `SpectrumToTristim()`) will be a relative [XYZ color](#CIE_XYZ) such that Y ranges from 0 for "absolute black" to 1 for the D65 white point,
@@ -1560,7 +1560,10 @@ Questions for this document:
 
 <small><sup id=Note3>(3)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
 
-<small><sup id=Note4>(4)</sup> Natural daylight and sunlight differ considerably depending on time of day and year, place, and weather.  These factors greatly influence the colors an observer sees under daylight and sunlight.  A material's surface properties such as gloss, transparency, roughness, and more also influence color perception, as do individual differences among observers due to aging, culture, defective color vision, personal experience, and more. B. MacEvoy documents the [wide observer variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
+<small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
+- _Light_. For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
+- _Objects._ A material's surface properties such as gloss, transparency, roughness, and more influence color perception in different ways.
+- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [wide observer variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
 
 <small><sup id=Note5>(5)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
 
@@ -1581,10 +1584,10 @@ Questions for this document:
 
 <small><sup id=Note12>(12)</sup> In interior and architectural design, Y is also known as _light reflectance value_ (LRV), provided the XYZ color is such that Y ranges from 0 for black to 100 for white.</small>
 
-<small><sup id=Note13>(13)</sup> In some cases, the D50 white point can be more convenient than the D65 white point (which is otherwise usual for sRGB) because:
+<small><sup id=Note13>(13)</sup> In some cases, the D50 white point can be more convenient than the D65 white point (which is otherwise usual for sRGB) for at least two reasons:
 
-- Calculations relative to the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
-- In the printing industry, the D50 illuminant and D50 white point are in wide use; for example, the CIELAB color space in use there is generally based on the D50 white point.</small>
+- Using the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
+- The printing industry uses the D50 illuminant and D50 white point widely, including in CIELAB.</small>
 
 <small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
