@@ -1130,7 +1130,7 @@ END METHOD
 <li><strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.</li>
 <li><strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.</li>
 <li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (This and the previous techniques are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/">T. Helland&#39;s site</a>, for example.)</li>
-<li><strong>Light/dark ratio</strong>: A <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
+<li><strong>Light/dark factor</strong>: A <a href="#CIELAB">CIELAB</a> or <a href="#CIELUV">CIELUV</a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL">HSL</a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/">&quot;Converting color to grayscale&quot;</a>).</li>
 </ul>
 </blockquote>
 
@@ -1257,10 +1257,10 @@ END METHOD
 
 <h3>Color Matrices</h3>
 
-<p>A <em>color matrix</em> is a 9-item (3x3) list for transforming colors. Examples of color matrices include:</p>
+<p>A <em>color matrix</em> is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:</p>
 
 <ul>
-<li><strong>Sepia.</strong> Sepia matrices can have the form <code>[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;<sup><a href="#Note26">(26)</a></sup>, and <code>sw</code> is the RGB color for &quot;sepia white&quot; (an arbitrary choice).  An example for linear sRGB is: <code>[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]</code>.</li>
+<li><strong>Sepia.</strong> Sepia matrices can have the form <code>[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;, and <code>sw</code> is the RGB color for &quot;sepia white&quot; (an arbitrary choice).  An example for linear sRGB is: <code>[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]</code>.</li>
 <li><strong>Saturate.</strong> <code>[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]</code>, where <code>s</code> ranges
 from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>r</code>, <code>g</code>, and <code>b</code> are as defined in the section &quot;<a href="#Relative_Luminance_Grayscale">Relative Luminance (Grayscale)</a>&quot;<sup><a href="#Note26">(26)</a></sup>.</li>
 <li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note27">(27)</a></sup><sup><a href="#Note26">(26)</a></sup></li>
@@ -1882,7 +1882,7 @@ END METHOD
 <p>The following topics would greatly enrich this document:</p>
 
 <ul>
-<li>A method for performing color calibration and color matching using a smartphone&#39;s camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any granted patents or pending patent applications.</li>
+<li>A method for performing color calibration and color matching using a smartphone&#39;s camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.</li>
 </ul>
 
 <p><a id=Questions_for_This_Document></a></p>
