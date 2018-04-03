@@ -590,8 +590,7 @@ Some kinds of _chromaticity coordinates_ follow.
 
 - **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
 - **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(15)](#Note15)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
-- **_rg_ chromaticity** (_r_, _g_, _b_) involves RGB colors rather than XYZ colors
-and is calculated analogously to _xy_ chromaticity.
+- **_rg_ chromaticity** (_r_, _g_, _b_) involves RGB colors rather than XYZ colors and is calculated analogously to _xy_ chromaticity.
 
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
@@ -885,7 +884,7 @@ The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yell
 
 **Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [color measurement device](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [CIELAB](#CIELAB) colors under standardized lighting and measurement conditions.
 
-The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors relative to the D50 white point, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
+The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
 
 Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table's "patches".<sup>[(22)](#Note22)</sup>
 
@@ -1442,8 +1441,8 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 > **Notes:**
 >
-> 1. Although `LIGHT`, `REFL`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on samples at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. **Metamerism** occurs when two materials match the same color under a given viewing situation (such as light source [`LIGHT`] or viewer [`CMF`]), and/or viewing situation, but given another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
+> 1. Although `LIGHT`, `REFL`, and `CMF` are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `CMF` and `LIGHT`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
+> 2. **Metamerism** occurs when two materials match the same color under a given viewing situation (such as light source [`LIGHT`] and/or viewer [`CMF`]), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`REFL`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`REFL`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).
 >
 > **Example:** If `LIGHT` and `CMF` are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the [sRGB color space](#sRGB))&mdash;
 > - the tristimulus values (e.g., from `SpectrumToTristim()`) will be a relative [XYZ color](#CIE_XYZ) such that Y ranges from 0 for "absolute black" to 1 for the D65 white point,
@@ -1543,6 +1542,10 @@ The following topics may be added in the future based on reader interest:
 - The CAM02 color appearance model.
 - Color rendering metrics for light sources, including color rendering index (CRI) and the metrics given in TM-30-15 by the Illuminating Engineering Society.
 
+The following topics would greatly enrich this document:
+
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any granted patents or pending patent applications.
+
 <a id=Questions_for_This_Document></a>
 ### Questions for This Document
 
@@ -1561,8 +1564,8 @@ Questions for this document:
 <small><sup id=Note3>(3)</sup> It's not accurate to speak of "red light", "green light", "blue light", "white light", and so on.</small>
 
 <small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
-- _Light_. For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
-- _Objects._ A material's surface properties such as gloss, transparency, roughness, and more influence color perception in different ways.
+- _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
+- _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
 - _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [wide observer variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
 
 <small><sup id=Note5>(5)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
@@ -1584,10 +1587,9 @@ Questions for this document:
 
 <small><sup id=Note12>(12)</sup> In interior and architectural design, Y is also known as _light reflectance value_ (LRV), provided the XYZ color is such that Y ranges from 0 for black to 100 for white.</small>
 
-<small><sup id=Note13>(13)</sup> In some cases, the D50 white point can be more convenient than the D65 white point (which is otherwise usual for sRGB) for at least two reasons:
-
-- Using the D50 white point can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles.
-- The printing industry uses the D50 illuminant and D50 white point widely, including in CIELAB.</small>
+<small><sup id=Note13>(13)</sup> Although the D65 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
+- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50 white point given in CIE Publication 15 [before it was corrected](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
+- The printing industry uses the D50 illuminant widely, including in CIELAB.</small>
 
 <small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
@@ -1609,7 +1611,7 @@ _uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is 
 
 <small><sup id=Note21>(21)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linear RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of general interest to programmers.</small>
 
-<small><sup id=Note22>(22)</sup> Details of how multidimensional interpolation works are outside the scope of this page, but an example is SciPy's [`griddata`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
+<small><sup id=Note22>(22)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [`griddata`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
 
 <small><sup id=Note23>(23)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).</small>
 
