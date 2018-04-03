@@ -213,7 +213,7 @@ Color measurements of the same sample can vary depending on many things, includi
 - the measurement device's aperture (sample view area), and
 - for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.
 
-Several [application notes](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.
+Several [application notes](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.  Color measurements should also be repeatable, but how to ensure this is outside the scope of this section.
 
 At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, [several colorimeters](https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/) are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [selection](http://www.argyllcms.com/doc/instruments.html) of color measurement devices.
 
