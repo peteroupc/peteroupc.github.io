@@ -950,7 +950,7 @@ _Relative luminance_&mdash;
 > - **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
 > - **Maximum**: `max(max(color[0], color[1]), color[2])`.
 > - **Minimum**: `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
-> - **Light/dark ratio**: A [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light-dark dimension, such as [HSL](#HSL) "lightness"; see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
+> - **Light/dark factor**: A [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [HSL](#HSL) "lightness"; see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
 
 <a id=Alpha_Blending></a>
 ### Alpha Blending
@@ -1049,9 +1049,9 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Color_Matrices></a>
 ### Color Matrices
 
-A _color matrix_ is a 9-item (3x3) list for transforming colors. Examples of color matrices include:
+A _color matrix_ is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:
 
-- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>, and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
+- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
 from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(26)](#Note26)</sup>.
 - **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(27)](#Note27)</sup><sup>[(26)](#Note26)</sup>
@@ -1544,7 +1544,7 @@ The following topics may be added in the future based on reader interest:
 
 The following topics would greatly enrich this document:
 
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any granted patents or pending patent applications.
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
 
 <a id=Questions_for_This_Document></a>
 ### Questions for This Document
