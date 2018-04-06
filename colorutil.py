@@ -294,6 +294,65 @@ _DSERIES = [
 60.40,-9.55,6.30,
 61.90,-9.80,6.50 ]
 
+# Least Slope Squared matrix for sRGB, D65/2
+# Generated using the following code:
+"""
+import numpy as np
+d65data=np.array([d65Illum(x) for x in brange(10,380,730)])
+a=np.mat([cie1931cmf(x) for x in brange(10,380,730)])
+aprime=a.transpose()
+aa=np.array([cie1931cmf(x) for x in brange(10,380,730)])
+aprimea=aa.transpose()
+wdiag=np.diag(d65data)
+w=np.array(d65data)
+mat=np.mat([ \
+   [3.240970, -1.537383, -0.4986108],\
+   [-0.9692436, 1.875968, 0.04155506],\
+   [0.05563008, -0.2039770, 1.056972]])
+wnorm=w.dot(aprimea[1])
+t=(mat*aprime*wdiag)/wnorm
+# Compute Least Slope Squared matrix
+v=np.diag([4 for x in brange(10,380,730)])
+v[0,0]=2
+v[v.shape[0]-1,v.shape[0]-1]=2
+for i in range(1,v.shape[0]):
+  v[i,i-1]=-2
+  v[i-1,i]=-2
+v=np.mat(v)
+vt=v.T
+tt=t.T
+tc=(t*tt).I
+b12=(vt*v-vt*tt*tc*t*v+tt*t).I*tt
+"""
+
+_LSSMATRIX = [0.093334, -0.172841, 1.080663, 0.093313,
+-0.172771, 1.080615, 0.093219, -0.172464,
+1.080402, 0.092753, -0.170943, 1.079345,
+ 0.091044, -0.165338, 1.075443, 0.085434,
+-0.146831, 1.062524, 0.072348, -0.103101,
+1.031828, 0.048693, -0.022250, 0.974539,
+0.014713, 0.097953, 0.888175, -0.026463,
+0.251248, 0.775877, -0.069390, 0.423316,
+0.646532, -0.108047, 0.598111, 0.510186,
+-0.137513, 0.762302, 0.375264, -0.151824,
+0.902902, 0.248802, -0.143812, 1.005301,
+0.138259, -0.108077, 1.057813, 0.049935,
+-0.042382, 1.054298, -0.012262, 0.050151,
+0.998245, -0.048701, 0.164198, 0.896933,
+-0.061345, 0.291390, 0.763274, -0.054751,
+0.422004, 0.612728, -0.034671, 0.545895,
+0.461469, -0.007152, 0.654889, 0.323747,
+0.021714, 0.742596, 0.210406, 0.047463,
+0.806891, 0.126114, 0.067545, 0.849938,
+0.069151, 0.081519, 0.877079, 0.033022,
+0.090544, 0.892740, 0.012097, 0.095829,
+0.901330, 0.000596, 0.098752, 0.905755,
+-0.005336, 0.100266, 0.907906, -0.008222,
+0.101004, 0.908894, -0.009549, 0.101343,
+0.909379, -0.010200, 0.101510, 0.909605,
+-0.010503, 0.101588, 0.909694, -0.010623,
+0.101618, 0.909726, -0.010666, 0.101629]
+
 class SPD:
   """ Spectral power distribution class. """
   def __init__(self, values, interval, minWavelength, maxWavelength=None):
@@ -486,6 +545,24 @@ def bandpasscorrect(data):
    for k in range(1,n-1):
       ret[k]=1.166*ret[k]-0.083*ret[k-1]-0.083*ret[k+1]
    return ret
+
+def sRGBToSPD(rgb):
+  """ Generates a representative reflectance curve from a companded
+     sRGB color.  Currently implements the least slope squared
+     method by S. A. Burns, but because the
+     values in the resulting curve might be less than 0, which
+     is implausible, this may change eventually
+     to an iterative least slope squared method.  """
+  lin=linearFromsRGB3(rgb)
+  rlen=len(_LSSMATRIX)/3
+  ret=None
+  if lin[0]<0.001 and lin[1]<0.001 and lin[2]<0.001:
+    ret=[0.001 for i in range(rlen)]
+  else:
+    ret=[_LSSMATRIX[i*3]*lin[0] + \
+      _LSSMATRIX[i*3+1]*lin[1] + \
+      _LSSMATRIX[i*3+2]*lin[2] for i in range(rlen)]
+  return SPD(ret,10,380,730)
 
 ##################################################
 

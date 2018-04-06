@@ -131,10 +131,10 @@
 <li><strong>CIE.</strong> French initials for the International Commission on Illumination.</li>
 <li><strong>Color model.</strong> Describes, in general terms, the relationship of colors in a theoretical space.</li>
 <li><strong>Color space.</strong> A mapping from colors to numbers that follows a particular color model.</li>
-<li><strong>D50 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature about 5000 kelvins.</li>
-<li><strong>D50 white point.</strong> The white point determined by the D50 illuminant and the CIE 1931 standard observer.</li>
-<li><strong>D65 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature about 6500 kelvins.<sup><a href="#Note1">(1)</a></sup></li>
-<li><strong>D65 white point.</strong> The white point determined by the D65 illuminant and the CIE 1931 standard observer.</li>
+<li><strong>D50 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature of about 5000 kelvins.</li>
+<li><strong>D50/2 white point.</strong> The white point determined by the D50 illuminant and the CIE 1931 standard observer.</li>
+<li><strong>D65 illuminant.</strong> CIE illuminant that approximates daylight at a correlated color temperature of about 6500 kelvins.<sup><a href="#Note1">(1)</a></sup></li>
+<li><strong>D65/2 white point.</strong> The white point determined by the D65 illuminant and the CIE 1931 standard observer.</li>
 <li><strong>IEC.</strong> International Electrotechnical Commission.</li>
 <li><strong>Image color list.</strong> Means either&mdash;
 
@@ -147,7 +147,6 @@
 <li><strong>Light source.</strong> Means a <a href="http://eilv.cie.co.at/term/982"><em>primary light source</em></a> or an <a href="http://eilv.cie.co.at/term/554"><em>illuminant</em></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
 <li><strong>RGB.</strong> Red-green-blue.</li>
 <li><strong><code>RNDNUMRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, <code>RNDINTEXC</code>.</strong> These methods are defined in my article on <a href="https://peteroupc.github.io/randomfunc.html">random number generation methods</a>.</li>
-<li><strong>SPD.</strong> Spectral power distribution.</li>
 </ul>
 
 <p><a id=Overview_of_Color_Vision></a></p>
@@ -415,7 +414,7 @@ END METHOD
 
 <ul>
 <li>the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard ITU BT-709),</li>
-<li>the white point was chosen as the D65 white point, and</li>
+<li>the white point was chosen as the D65/2 white point, and</li>
 <li>the color component transfer function (implemented as <code>LinearTosRGB</code> below) was based on the gamma encoding used for cathode-ray-tube monitors.</li>
 </ul>
 
@@ -661,8 +660,8 @@ END METHOD
 <p>The following methods, in the pseudocode below, convert a color between companded sRGB (<code>rgb</code>) and relative XYZ color, treating a Y of 0 as &quot;absolute black&quot;:</p>
 
 <ul>
-<li><code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code> treat a Y of 1 as the D65 white point.</li>
-<li><code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code> treat a Y of 1 as the D50 white point (see note 2 later in this section)<sup><a href="#Note13">(13)</a></sup>.</li>
+<li><code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code> treat a Y of 1 as the D65/2 white point.</li>
+<li><code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code> treat a Y of 1 as the D50/2 white point (see note 2 later in this section)<sup><a href="#Note13">(13)</a></sup>.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -783,11 +782,11 @@ END METHOD
 <li>The following methods convert a companded sRGB color to and from CIELAB:
 
 <ul>
-<li><code>SRGBToLab</code> and <code>SRGBFromLab</code> treat white as the D65 white point.</li>
-<li><code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50 white point.<sup><a href="#Note13">(13)</a></sup></li>
+<li><code>SRGBToLab</code> and <code>SRGBFromLab</code> treat white as the D65/2 white point.</li>
+<li><code>SRGBToLabD50</code> and <code>SRGBFromLabD50</code> treat white as the D50/2 white point.<sup><a href="#Note13">(13)</a></sup></li>
 </ul></li>
 <li><code>XYZToLab(xyz, wpoint)</code> and <code>LabToXYZ(lab, wpoint)</code> convert an XYZ color to or from CIELAB, respectively, treating <code>wpoint</code> (an XYZ color) as the white point.</li>
-<li><code>LabToChroma(lab)</code> and <code>LabToHue(lab)</code> finds a CIELAB color&#39;s <em>chroma</em> or <em>hue</em>, respectively.</li>
+<li><code>LabToChroma(lab)</code> and <code>LabToHue(lab)</code> find a CIELAB color&#39;s <em>chroma</em> or <em>hue</em>, respectively.</li>
 <li><code>LchToLab(lch)</code> finds a CIELAB color given a 3-item list of lightness, chroma, and hue (<em>L*C*h</em>), in that order.</li>
 <li><code>LabHueDifference(lab1, lab2)</code> finds the <em>metric hue difference</em> (<em>&Delta;H*</em>) between two CIELAB colors.  The return value can be positive or negative, but in some cases, the absolute value of that return value can be important.</li>
 <li><code>LabChromaHueDifference(lab1, lab2)</code> finds the <em>chromaticness difference</em> (&Delta;<em>C</em><sub>h</sub>) between two CIELAB colors, as given, for example, in ISO 13655.</li>
@@ -1101,7 +1100,7 @@ METHOD LuminanceSRGB(color)
     return c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722
 END METHOD
 
-// Convert companded sRGB (with D50 white point)
+// Convert companded sRGB (with D50/2 white point)
 // to relative luminance
 METHOD LuminanceSRGBD50(color)
     c = LinearFromsRGB(color)
@@ -1185,7 +1184,7 @@ END METHOD
 
 <h3>Contrast Ratio</h3>
 
-<p>There are at least two definitions of contrast ratio.</p>
+<p>There are two kinds of contrast ratio, among other kinds not covered in this document.</p>
 
 <p><strong>WCAG Contrast Ratio.</strong> One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, <code>ContrastRatioWCAG</code> implements the contrast ratio formula described in the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast">Web Content Accessibility Guidelines 2.0 (WCAG)</a>, where <code>RelLum(color)</code>&mdash;</p>
 
@@ -1210,8 +1209,6 @@ END METHOD
 <p>In general, under the WCAG, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html">&quot;Understanding WCAG 2.0&quot;</a>, &quot;effective luminance contrast can generally be computed without regard to specific <a href="#Defective_and_Animal_Color_Vision">color deficiency</a>, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</p>
 
 <p><strong>Opacity.</strong> In certain industries, a material&#39;s <em>contrast ratio</em> or <em>opacity</em> can be found by dividing the Y value of the material&#39;s <a href="#CIE_XYZ">XYZ color</a> measured over a black surface by the Y value of the material&#39;s XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.</p>
-
-<p><strong>Other Contrast Ratios.</strong> A thorough survey of other contrast ratios or formulas in use is not covered in this document.</p>
 
 <p><a id=Porter_ndash_Duff_Formulas></a></p>
 
@@ -1403,7 +1400,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p><strong>CIE94.</strong> This CIELAB-specific formula is detailed on the <a href="https://peteroupc.github.io/suppcolor.html#Additional_Color_Formulas">supplemental color topics</a> page.</p>
+<p><strong>CIE94.</strong> This <a href="#CIELAB">CIELAB</a>-specific formula is detailed on the <a href="https://peteroupc.github.io/suppcolor.html#Additional_Color_Formulas">supplemental color topics</a> page.</p>
 
 <p><strong>CIEDE2000.</strong> The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or <em>&Delta;E*</em><sub>00</sub>, between two <a href="#CIELAB">CIELAB</a> colors.</p>
 
@@ -1685,7 +1682,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <p>As mentioned earlier, color requires the existence of <em>light</em>, an <em>object</em>, and an <em>observer</em>.  These three things can be specified as follows:</p>
 
 <ul>
-<li><strong>Light.</strong> A light source can be specified in the form of a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; that describes the intensity of a light source at each <a href="http://eilv.cie.co.at/term/1426">wavelength</a> within the electromagnetic spectrum.</li>
+<li><strong>Light.</strong> A light source can be specified in the form of a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; that describes the intensity of a light source across the electromagnetic spectrum.</li>
 <li><strong>Object.</strong> There are two kinds of &quot;objects&quot;: <strong>reflective</strong> (opaque) and <strong>transmissive</strong> (translucent or transparent).  A <em>reflectance curve</em> or <em>transmittance curve</em>, respectively, describes the fraction of light that is reflected by or passes through the object, respectively.</li>
 <li><strong>Observer.</strong> An observer&#39;s visual response is modeled by three <em>color-matching functions</em>.</li>
 </ul>
@@ -1695,29 +1692,29 @@ maximum value of each color component, e.g., 0.5.</li>
 <p>The pseudocode below includes a <code>SpectrumToTristim</code> method for computing tristimulus values.  In the method:</p>
 
 <ul>
-<li><code>LIGHT(wl)</code>, <code>REFL(wl)</code>, and <code>CMF(wl)</code> are arbitrary functions further described later.  All three take a wavelength (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 1 later in this section.</em>)</li>
-<li><code>LIGHT(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>. Choices for <code>LIGHT</code> include&mdash;
+<li><code>lightFunc(wl)</code>, <code>reflFunc(wl)</code>, and <code>cmfFunc(wl)</code> are arbitrary functions further described later.  All three take a <a href="http://eilv.cie.co.at/term/1426"><em>wavelength</em></a> (<code>wl</code>) in nanometers (nm) and return the corresponding values at that wavelength. (<em>See also note 1 later in this section.</em>)</li>
+<li><code>lightFunc(wl)</code> models a <strong>light source&#39;s SPD</strong>; it returns the source&#39;s relative intensity at the wavelength <code>wl</code>. Choices for <code>lightFunc</code> include&mdash;
 
 <ul>
 <li>a CIE daylight illuminant such as the D65 or D50 illuminant (see the <a href="https://peteroupc.github.io/colorutil.zip">Python sample code</a> for implementation),</li>
-<li>the blackbody spectral formula given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;, and</li>
+<li>the <code>BlackbodySPD</code> method given in &quot;<a href="#Color_Temperature">Color Temperature</a>&quot;, and</li>
 <li>the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.</li>
 </ul></li>
-<li><code>REFL(wl)</code> models the <strong>reflectance or transmittance curve</strong>. <code>REFL</code> returns the value of the curve at the wavelength <code>wl</code>; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)  If <code>REFL</code> is <code>PerfectWhite</code> (below), then the tristimulus values calculated are the <em>adopted white</em> (and are those of the light source itself).</li>
-<li><code>CMF(wl)</code> models three <strong>color-matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>CMF</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>CMF</code> include the CIE 1931 or 1964 <em>standard observer</em>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note35">(35)</a></sup></li>
+<li><code>reflFunc(wl)</code> models the <strong>reflectance or transmittance curve</strong> and returns the value of that curve at the wavelength <code>wl</code>; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)</li>
+<li><code>cmfFunc(wl)</code> models three <strong>color-matching functions</strong> and returns a list of those functions&#39; values at the wavelength <code>wl</code>. The choice of <code>cmfFunc</code> determines the kind of tristimulus values returned by <code>SpectrumToTristim</code>. Choices for <code>cmfFunc</code> include the CIE 1931 or 1964 <em>standard observer</em>, which is used to generate <a href="#CIE_XYZ">XYZ colors</a> based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup><a href="#Note1">(1)</a></sup><sup><a href="#Note35">(35)</a></sup></li>
 </ul>
 
 <p>&nbsp;</p>
 
-<pre>METHOD SpectrumToTristim()
+<pre>METHOD SpectrumToTristim(reflFunc, lightFunc, cmfFunc)
     i = 360 // Start of relevant part of spectrum
     xyz=[0,0,0]
     weight = 0
     // Sample at 5 nm intervals
     while i &lt;= 830 // End of relevant part of spectrum
-             cmf=CMF(i)
-             refl=REFL(i)
-             spec=LIGHT(i)
+             cmf=cmfFunc(i)
+             refl=reflFunc(i)
+             spec=lightFunc(i)
              weight=weight+cmf[1]*spec*5
              xyz[0]=xyz[0]+refl*spec*cmf[0]*5
              xyz[1]=xyz[1]+refl*spec*cmf[1]*5
@@ -1729,8 +1726,8 @@ maximum value of each color component, e.g., 0.5.</li>
     // color-matching function set and light source together,
     // so that `weight` can be precomputed if they will
     // not change.
-    // NOTE: If `weight` is 1/683, `CMF` outputs XYZ
-    // values, and `REFL` always returns 1, then SpectrumToTristim
+    // NOTE: If `weight` is 1/683, `cmfFunc` outputs XYZ
+    // values, and `reflFunc` always returns 1, then SpectrumToTristim
     // will output XYZ values where Y is a value in cd/m^2.
     xyz[0] = xyz[0] / weight
     xyz[1] = xyz[1] / weight
@@ -1749,17 +1746,21 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Although <code>LIGHT</code>, <code>REFL</code>, and <code>CMF</code> are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>CMF</code> and <code>LIGHT</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
-<li><strong>Metamerism</strong> occurs when two materials match the same color under a given viewing situation (such as light source [<code>LIGHT</code>] and/or viewer [<code>CMF</code>]), but not under another.  If this happens, the two materials&#39; reflectance or transmittance curves (<code>REFL</code>) are called <em>metamers</em>.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (<code>REFL</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors).</li>
+<li>Although <code>lightFunc</code>, <code>reflFunc</code>, and <code>cmfFunc</code> are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of <code>cmfFunc</code> and <code>lightFunc</code>).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.</li>
+<li><strong>Metamerism</strong> occurs when two materials match the same color under a given viewing situation (such as light source, <code>lightFunc</code>, and/or viewer, <code>cmfFunc</code>), but not under another.  If this happens, the two materials&#39; reflectance or transmittance curves (<code>reflFunc</code>) are called <em>metamers</em>.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (<code>reflFunc</code>) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">B. MacEvoy&#39;s principle 38</a>.)</li>
+<li>The <a href="https://peteroupc.github.io/colorutil.zip">Python sample code</a> includes an <code>sRGBToSPD</code> method that generates a representative reflectance curve from a companded sRGB color, based on <a href="http://scottburns.us/reflectance-curves-from-srgb/">work by S. A. Burns</a>.</li>
 </ol>
 
-<p><strong>Example:</strong> If <code>LIGHT</code> and <code>CMF</code> are the D65 illuminant and the CIE 1931 standard observer, respectively (both used in the <a href="#sRGB">sRGB color space</a>)&mdash;</p>
+<p><strong>Examples:</strong>  In these examples, <code>D65</code> is the D65 illuminant, <code>D50</code> is the D50 illuminant, <code>CIE1931</code> is the CIE 1931 standard observer, and <code>refl</code> is an arbitrary reflectance curve.</p>
 
-<ul>
-<li>the tristimulus values (e.g., from <code>SpectrumToTristim()</code>) will be a relative <a href="#CIE_XYZ">XYZ color</a> such that Y ranges from 0 for &quot;absolute black&quot; to 1 for the D65 white point,</li>
-<li>the idiom <code>XYZTosRGB(SpectrumToTristim())</code> computes the companded sRGB color of the stimulus, and</li>
-<li>the idiom <code>XYZTosRGB(CMF(wl))</code> computes the companded sRGB color of a light source that emits light only at the wavelength <code>wl</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
-</ul>
+<ol>
+<li><code>SpectrumToTristim(refl, D65, CIE1931)</code> computes the reflectance curve&#39;s <a href="#CIE_XYZ">XYZ color</a> (where Y ranges from 0 for &quot;absolute black&quot; to 1 for the D65/2 white point).</li>
+<li><code>SpectrumToTristim(refl, D50, CIE1931)</code> is the same, except white is the D50/2 white point.</li>
+<li><code>SpectrumToTristim(PerfectWhite, light, cmf)</code> computes the white point for the given illuminant <code>light</code> and the color matching functions <code>cmf</code>.</li>
+<li><code>SpectrumToTristim(PerfectWhite, D65, CIE1931)</code> computes the D65/2 white point.</li>
+<li><code>XYZTosRGB(SpectrumToTristim(refl, D65, CIE1931))</code> computes the reflectance curve&#39;s <a href="#RGB_Color_Spaces">companded sRGB</a> color.</li>
+<li><code>XYZTosRGB(CIE1931(wl))</code> computes the companded sRGB color of a light source that emits light only at the wavelength <code>wl</code> (a <em>monochromatic stimulus</em>), where the wavelength is expressed in nm.</li>
+</ol>
 </blockquote>
 
 <p><a id=Color_Temperature></a></p>
@@ -1768,7 +1769,7 @@ END METHOD
 
 <p>A <em>blackbody</em> is an idealized material that emits light based only on its temperature.  As a blackbody&#39;s temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.</p>
 
-<p>The <code>Planckian</code> method shown below models the SPD of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>LIGHT</code> function below (for <code>SpectrumToTristim()</code>) uses that method (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note36">(36)</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
+<p>The <code>Planckian</code> method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its <strong>color temperature</strong>). The <code>BlackbodySPD</code> method below uses that method (where <code>TEMP</code> is the desired color temperature).<sup><a href="#Note36">(36)</a></sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.</p>
 
 <pre>METHOD Planckian(wl, temp)
     num = pow(wl, -5)
@@ -1777,7 +1778,7 @@ END METHOD
     return num / (exp(0.0143877687750393/(wl*pow(10, -9)*temp)) - 1)
 END METHOD
 
-METHOD LIGHT(wl) # NOTE: Relative only
+METHOD BlackbodySPD(wl) # NOTE: Relative only
     t=TEMP
     if t&lt;60: t=60 # For simplicity, in very low temperature
     return Planckian(wl, t) * 100.0 /
@@ -1786,7 +1787,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>LIGHT</code> function above is substantially equivalent to the CIE illuminant A.</p>
+<p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>BlackbodySPD</code> function above is substantially equivalent to the CIE illuminant A.</p>
 </blockquote>
 
 <p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><em>correlated color temperature</em></a> (CCT) as the temperature of the blackbody with the closest <em>uv</em> chromaticity<sup><a href="#Note15">(15)</a></sup> to that of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two <em>uv</em> chromaticities is more than 0.05.)</p>
@@ -1849,8 +1850,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>Finding a <em>representative</em> reflectance curve for an arbitrary (companded) RGB color can be done, for example, by the method described in <a href="http://www.cs.utah.edu/%7Ebes/papers/color/">Smits 1999</a> or the method described in <a href="https://web.archive.org/web/20170830124711/http://scottburns.us:80/reflectance-curves-from-srgb/">Burns 2015</a>. (Note that <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin38">widely varying reflectance curves</a> can match the same RGB color.)</li>
-<li>If the &quot;reflectance curves&quot; represent light passing through transmissive materials (such as light filters), rather than reflected from pigments, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of those curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
+<li>For <strong>transmissive materials</strong>, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of their transmittance curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
 <li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
 </ul>
 </blockquote>
@@ -1883,6 +1883,8 @@ END METHOD
 
 <ul>
 <li>A method for performing color calibration and color matching using a smartphone&#39;s camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.</li>
+<li>Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.</li>
+<li>Reference source code for a method to generate a plausible spectral reflectance curve given an RGB color, provided that method is not covered by any active patents or pending patent applications.</li>
 </ul>
 
 <p><a id=Questions_for_This_Document></a></p>
@@ -1935,10 +1937,10 @@ END METHOD
 
 <p><small><sup id=Note12>(12)</sup> In interior and architectural design, Y is also known as <em>light reflectance value</em> (LRV), provided the XYZ color is such that Y ranges from 0 for black to 100 for white.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> Although the D65 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:</p>
+<p><small><sup id=Note13>(13)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:</p>
 
 <ul>
-<li>Using the white point <code>[0.9642, 1, 0.8249]</code> can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50 white point given in CIE Publication 15 <a href="https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html">before it was corrected</a>).</li>
+<li>Using the white point <code>[0.9642, 1, 0.8249]</code> can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 <a href="https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html">before it was corrected</a>).</li>
 <li>The printing industry uses the D50 illuminant widely, including in CIELAB.</small></li>
 </ul>
 
