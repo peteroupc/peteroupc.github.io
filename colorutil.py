@@ -9,6 +9,181 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 import math
 
+#######################
+
+"""
+NOTE: These methods appear merely to ease
+porting this code into other programming languages.
+Where possible, these methods should be implemented
+using methods natively supported or commonly used in
+the programming language in question.
+"""
+
+def matNew(mat):
+    """ Creates a matrix from a 2-dimensional array. """
+    return matCopy(mat)
+
+def matFromVec(vec):
+    """ Creates a one-row matrix from a 1-dimensional vector. """
+    return matCopy([vec])
+
+def matDiag(vec):
+    """ Creates a diagonal matrix from a 1-dimensional vector. """
+    ret=matZeros((len(vec),len(vec)))
+    for i in range(len(vec)):
+        matSet(ret,i,i,vec[i])
+    return ret
+
+def matEye(n):
+    """ Creates an NxN matrix with ones in its diagonal. """
+    ret=matZeros((n,n))
+    for i in range(n):
+        matSet(ret,i,i,1)
+    return ret
+
+def matT(mat):
+    """ Creates a transposed version of a matrix. """
+    shape=matShape(mat)
+    return [[matGet(mat,y,x) for y in range(shape[0])] \
+        for x in range(shape[1])]
+
+def matCopy(mat):
+    """ Creates a copy of a matrix. """
+    shape=matShape(mat)
+    return [[matGet(mat,x,y) for y in range(shape[1])] \
+        for x in range(shape[0])]
+
+def matScale(mat, scale):
+    """ Creates a copy of a matrix with each element multiplied
+           by 'scale'. """
+    shape=matShape(mat)
+    return [[matGet(mat,x,y)*scale for y in range(shape[1])] \
+        for x in range(shape[0])]
+
+def matShape(mat):
+    """ Gets the height and width, in that order, of the matrix. """
+    return (len(mat),len(mat[0]))
+
+def matZeros(shape):
+    """ Creates a 0-filled matrix of the given height and width,
+           in that order. """
+    return [[0 for y in range(shape[1])] \
+        for x in range(shape[0])]
+
+def matOnes(shape):
+    """ Creates a 1-filled matrix of the given height and width,
+           in that order. """
+    return [[1 for y in range(shape[1])] \
+        for x in range(shape[0])]
+
+def matSub(a, b):
+    """ Creates a matrix consisting of 'a' minus 'b'. """
+    shape=matShape(a)
+    return [[matGet(a,x,y)-matGet(b,x,y) for y in range(shape[1])] \
+        for x in range(shape[0])]
+
+def matMul(a, b):
+    """ Creates a matrix consisting of 'a' multiplied by 'b', in that order. """
+    sa=matShape(a)
+    sb=matShape(b)
+    if sa[1]!=sb[0]: raise ValueError
+    ret=matZeros((sa[0],sb[1]))
+    for i in range(sa[0]):
+      for j in range(sb[1]):
+       val=0.0
+       for k in range(sa[1]):
+        val+=matGet(a,i,k)*matGet(b,k,j)
+       matSet(ret,i,j,val)
+    return ret
+
+def matI(a):
+    """ Creates a matrix consisting of the inverse of 'a'. """
+    shape=matShape(a)
+    if shape[0]!=shape[1]: raise ValueError
+    n=shape[0]
+    ret=matZeros((n,n*2))
+    for i in range(n):
+      for j in range(n):
+        matSet(ret,i,j,matGet(a,i,j))
+    for i in range(n):
+        matSet(ret,i,i+n,1)
+    for row in range(n):
+        rm=row
+        ap=abs(matGet(ret,rm,row))
+        for rint in range(row+1,n):
+            p=abs(matGet(ret,rint,row))
+            if ap<p:
+               ap=p
+               rm=rint
+        if 0.000000001 > ap:
+            return matCopy(a) # Not invertible
+        di=matGet(ret,rm,row)
+        if rm!=row:
+          for i in range(n*2):
+             t=matGet(ret,rm,i)
+             matSet(ret,rm,i,matGet(ret,row,i))
+             matSet(ret,row,i,t)
+        idi=1.0/di
+        for rint in range(row+1,n):
+          f=idi*matGet(ret,rint,row)
+          if f!=0:
+            for co in range(row,n*2):
+                matSet(ret,rint,co,matGet(ret,rint,co)-f*matGet(ret,row,co))
+    row=n-1
+    while row>=0:
+        ic=1.0/matGet(ret,row,row)
+        for rint in range(row):
+            icx=ic*matGet(ret,rint,row)
+            if icx!=0:
+              for co in range(row, n*2):
+                 matSet(ret,rint,co,matGet(ret,rint,co)-icx*matGet(ret,row,co))
+        matSet(ret,row,row,ic*matGet(ret,row,row))
+        for co in range(n,n*2):
+            matSet(ret,row,co,ic*matGet(ret,row,co))
+        row-=1
+    return matPart(ret,0,n,n,n*2)
+
+def matSet(mat, r, c, v):
+    """ Sets the (v)alue of the given (r)ow and (c)olumn of the (mat)rix. """
+    mat[r][c]=v
+
+def matGet(mat, r, c):
+    """ Gets the value of the given (r)ow and (c)olumn of the (mat)rix. """
+    return mat[r][c]
+
+def matPart(mat, rs, re, cs, ce):
+    """ Gets part of a matrix with rows indexed rs inclusive to re exclusive
+         and columns indexed cs inclusive to ce exclusive. """
+    return [[matGet(mat,x,y) for y in range(cs,ce)] \
+        for x in range(rs,re)]
+
+def matBlock(a, b, c, d):
+   """ Concatenates the topleft, topright, bottomleft, and bottomright
+           matrices into one. """
+   arows=matShape(a)[0]
+   acols=matShape(a)[1]
+   shape1=arows+matShape(c)[0]
+   shape2=acols+matShape(b)[1]
+   ret=matZeros((shape1,shape2))
+   for i in range(shape1):
+     for j in range(shape2):
+      val=0
+      if i<arows:
+        val=matGet((a if j<acols else b), i, (j if j<acols else j-acols))
+      else:
+        val=matGet((c if j<acols else d), i-arows, (j if j<acols else j-acols))
+      matSet(ret,i,j,val)
+   return ret
+
+def vecDot(a, b):
+    """ Finds the dot product of two number lists of equal size. """
+    ret=0.0
+    for i in range(len(a)):
+       ret+=a[i]*b[i]
+    return ret
+
+#######################
+
 # The following tables were taken from
 # "Selected Colorimetric Tables" on the CIE Web site:
 # http://www.cie.co.at/technical-work/technical-resources
@@ -294,64 +469,37 @@ _DSERIES = [
 60.40,-9.55,6.30,
 61.90,-9.80,6.50 ]
 
-# Least Slope Squared matrix for sRGB, D65/2
-# Generated using the following code:
-"""
-import numpy as np
-d65data=np.array([d65Illum(x) for x in brange(10,380,730)])
-a=np.mat([cie1931cmf(x) for x in brange(10,380,730)])
-aprime=a.transpose()
-aa=np.array([cie1931cmf(x) for x in brange(10,380,730)])
-aprimea=aa.transpose()
-wdiag=np.diag(d65data)
-w=np.array(d65data)
-mat=np.mat([ \
-   [3.240970, -1.537383, -0.4986108],\
-   [-0.9692436, 1.875968, 0.04155506],\
-   [0.05563008, -0.2039770, 1.056972]])
-wnorm=w.dot(aprimea[1])
-t=(mat*aprime*wdiag)/wnorm
-# Compute Least Slope Squared matrix
-v=np.diag([4 for x in brange(10,380,730)])
-v[0,0]=2
-v[v.shape[0]-1,v.shape[0]-1]=2
-for i in range(1,v.shape[0]):
-  v[i,i-1]=-2
-  v[i-1,i]=-2
-v=np.mat(v)
-vt=v.T
-tt=t.T
-tc=(t*tt).I
-b12=(vt*v-vt*tt*tc*t*v+tt*t).I*tt
-"""
+_LSSDATA = None
 
-_LSSMATRIX = [0.093334, -0.172841, 1.080663, 0.093313,
--0.172771, 1.080615, 0.093219, -0.172464,
-1.080402, 0.092753, -0.170943, 1.079345,
- 0.091044, -0.165338, 1.075443, 0.085434,
--0.146831, 1.062524, 0.072348, -0.103101,
-1.031828, 0.048693, -0.022250, 0.974539,
-0.014713, 0.097953, 0.888175, -0.026463,
-0.251248, 0.775877, -0.069390, 0.423316,
-0.646532, -0.108047, 0.598111, 0.510186,
--0.137513, 0.762302, 0.375264, -0.151824,
-0.902902, 0.248802, -0.143812, 1.005301,
-0.138259, -0.108077, 1.057813, 0.049935,
--0.042382, 1.054298, -0.012262, 0.050151,
-0.998245, -0.048701, 0.164198, 0.896933,
--0.061345, 0.291390, 0.763274, -0.054751,
-0.422004, 0.612728, -0.034671, 0.545895,
-0.461469, -0.007152, 0.654889, 0.323747,
-0.021714, 0.742596, 0.210406, 0.047463,
-0.806891, 0.126114, 0.067545, 0.849938,
-0.069151, 0.081519, 0.877079, 0.033022,
-0.090544, 0.892740, 0.012097, 0.095829,
-0.901330, 0.000596, 0.098752, 0.905755,
--0.005336, 0.100266, 0.907906, -0.008222,
-0.101004, 0.908894, -0.009549, 0.101343,
-0.909379, -0.010200, 0.101510, 0.909605,
--0.010503, 0.101588, 0.909694, -0.010623,
-0.101618, 0.909726, -0.010666, 0.101629]
+def _generateLSSData():
+  """ Generates data needed for sRGB-to-reflectance curve function. """
+  d65data=matFromVec([d65Illum(x) for x in brange(10,380,730)])
+  a=matNew([cie1931cmf(x) for x in brange(10,380,730)])
+  aprime=matT(a)
+  width=matShape(a)[0]
+  wdiag=matDiag(d65data[0])
+  mat=matNew([ \
+     [3.240970, -1.537383, -0.4986108],\
+     [-0.9692436, 1.875968, 0.04155506],\
+     [0.05563008, -0.2039770, 1.056972]])
+  wnorm=vecDot(d65data[0],aprime[1])
+  t=matScale(matMul(matMul(mat,aprime),wdiag),1.0/wnorm)
+  # Compute Least Slope Squared matrix
+  d=matScale(matEye(width),4)
+  dSize=matShape(d)[0]
+  matSet(d,0,0,2)
+  matSet(d,dSize-1,dSize-1,2)
+  for i in range(1,dSize):
+    matSet(d,i,i-1,-2)
+    matSet(d,i-1,i,-2)
+  dt=matT(d)
+  vt=matT(t)
+  tshape=matShape(t)
+  bm=matBlock(d,vt,t,matZeros((tshape[0],tshape[0])))
+  bm=matI(bm)
+  b11=matPart(bm,0,width,0,width)
+  b12=matPart(bm,0,matShape(vt)[0],width,matShape(bm)[1])
+  return [b11, b12]
 
 class SPD:
   """ Spectral power distribution class. """
@@ -547,22 +695,49 @@ def bandpasscorrect(data):
    return ret
 
 def sRGBToSPD(rgb):
-  """ Generates a representative reflectance curve from a companded
-     sRGB color.  Currently implements the least slope squared
-     method by S. A. Burns, but because the
-     values in the resulting curve might be less than 0, which
-     is implausible, this may change eventually
-     to an iterative least slope squared method.  """
-  lin=linearFromsRGB3(rgb)
-  rlen=len(_LSSMATRIX)/3
-  ret=None
-  if lin[0]<0.001 and lin[1]<0.001 and lin[2]<0.001:
-    ret=[0.001 for i in range(rlen)]
-  else:
-    ret=[_LSSMATRIX[i*3]*lin[0] + \
-      _LSSMATRIX[i*3+1]*lin[1] + \
-      _LSSMATRIX[i*3+2]*lin[2] for i in range(rlen)]
-  return SPD(ret,10,380,730)
+   """ Generates a representative reflectance curve from a companded
+     sRGB color.  Currently implements the iterative least slope squared
+     method by S. A. Burns, and ensures the values in the reflectance
+     curve are greater than 0, and 1 or less.  """
+   global _LSSDATA
+   rdata=_LSSDATA
+   if rdata == None:
+      rdata=_generateLSSData()
+      _LSSDATA=rdata
+   b11=rdata[0]
+   b12=rdata[1]
+   lin=linearFromsRGB3(rgb)
+   rm=0.0001
+   if rgb[0]<=rm and rgb[1]<=rm and rgb[2]<=rm:
+     return [rm for i in range(matShape(b12)[0])]
+   # Implements Iterative Least Slope Squared algorithm
+   rgb=matFromVec(rgb)
+   ret=matMul(b12,matT(rgb))
+   shapelen=matShape(ret)[0]
+   while True:
+     k1=[]
+     k0=[]
+     for r in range(shapelen):
+       refl=matGet(ret,r,0)
+       if refl>1:
+         k1+=[[(1 if r==i else 0) for i in range(shapelen)]]
+       if refl<=0:
+         k0+=[[(1 if r==i else 0) for i in range(shapelen)]]
+     k1len=len(k1)
+     k0len=len(k0)
+     if k1len+k0len==0:
+       break
+     k1+=k0
+     k=matNew(k1)
+     cmat=[[1 if i<k1len else rm] for i in range(k0len+k1len)]
+     cmat=matNew(cmat)
+     tk=matT(k)
+     ri=matI(matMul(matMul(k,b11),tk))
+     rj=matSub(matMul(k,ret),cmat)
+     rk=matMul(matMul(matMul(b11,tk),ri),rj)
+     ret=matSub(ret,rk)
+   spdarray=[matGet(ret,i,0) for i in range(matShape(ret)[0])]
+   return SPD(spdarray,10,380,730)
 
 ##################################################
 
