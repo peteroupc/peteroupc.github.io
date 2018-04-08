@@ -707,14 +707,16 @@ def sRGBToSPD(rgb):
    b11=rdata[0]
    b12=rdata[1]
    lin=linearFromsRGB3(rgb)
-   rm=0.0001
-   if rgb[0]<=rm and rgb[1]<=rm and rgb[2]<=rm:
+   rm=1e-5
+   if lin[0]<=rm and lin[1]<=rm and lin[2]<=rm:
      return [rm for i in range(matShape(b12)[0])]
    # Implements Iterative Least Slope Squared algorithm
-   rgb=matFromVec(rgb)
-   ret=matMul(b12,matT(rgb))
+   linmat=matFromVec(lin)
+   ret=matMul(b12,matT(linmat))
    shapelen=matShape(ret)[0]
+   iters=0
    while True:
+     iters+=1
      k1=[]
      k0=[]
      for r in range(shapelen):
@@ -726,6 +728,7 @@ def sRGBToSPD(rgb):
      k1len=len(k1)
      k0len=len(k0)
      if k1len+k0len==0:
+       spdarray=[matGet(ret,i,0) for i in range(matShape(ret)[0])]
        break
      k1+=k0
      k=matNew(k1)
@@ -736,7 +739,12 @@ def sRGBToSPD(rgb):
      rj=matSub(matMul(k,ret),cmat)
      rk=matMul(matMul(matMul(b11,tk),ri),rj)
      ret=matSub(ret,rk)
-   spdarray=[matGet(ret,i,0) for i in range(matShape(ret)[0])]
+     for i in range(matShape(ret)[0]):
+        s=matGet(ret,i,0)
+        #if s>1.0 and s<1.0+rm: matSet(ret,i,0,1.0)
+        #if s<rm and s>0.0-rm: matSet(ret,i,0,rm)
+        if s>1.0 and iters>20: matSet(ret,i,0,1.0) # Drastic measure to avoid overiteration
+        if s<rm and iters>20: matSet(ret,i,0,rm)
    return SPD(spdarray,10,380,730)
 
 ##################################################
@@ -918,7 +926,7 @@ def xyzTosRGBD50(xyz):
     rgb=_apply3x3Matrix(xyz, [3.134136, -1.617386, -0.4906622,
              -0.9787955, 1.916254, 0.03344287, 0.07195539,
              -0.2289768, 1.405386])
-    return (linearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return linearTosRGB3(rgb)
 
 def xyzFromsRGB(rgb):
     lin=linearFromsRGB3(rgb)
@@ -931,7 +939,7 @@ def xyzTosRGB(xyz):
     rgb=_apply3x3Matrix(xyz, [3.240970, -1.537383, -0.4986108,
             -0.9692436, 1.875968, 0.04155506, 0.05563008,
             -0.2039770, 1.056972])
-    return (linearTosRGB3(rgb), [0,0,0],[1,1,1])
+    return linearTosRGB3(rgb)
 
 def wavelengthTosRGB(wavelength):
    srgb=xyzTosRGB(d65Illum(wavelength))
