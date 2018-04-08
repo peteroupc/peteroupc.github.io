@@ -53,7 +53,7 @@ This document presents an overview of many common color topics that are of gener
     - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
     - [CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)
 - [Color Operations](#Color_Operations)
-    - [Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)
+    - [Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)
     - [Alpha Blending](#Alpha_Blending)
     - [Color Schemes and Harmonies](#Color_Schemes_and_Harmonies)
     - [Contrast Ratio](#Contrast_Ratio)
@@ -525,15 +525,16 @@ The conversions given below are independent of RGB color space, but should be do
 The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a spectral curve into a point in three-dimensional space, as further explained in "[Spectral Color Functions](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
 
 - X is a component without special meaning.
-- Y indicates the [_luminance_](http://6degreesoffreedom.co/luminance-vs-illuminance/) of the color.<sup>[(12)](#Note12)</sup>
+- Y is related to the color's [_luminance_](http://6degreesoffreedom.co/luminance-vs-illuminance/).
 - Z is a component without special meaning.
 
-There are at least two conventions for XYZ colors:
+Conventions for XYZ colors include the following:
 
-- **Absolute XYZ.** In this convention, the Y component represents an absolute luminance in candelas per square meter (cd/m<sup>2</sup>).
-- **Relative XYZ.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the relative XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then multiplied by a normalizing factor such as 1 or 100.  Here, the black point is generally, but not always, the absolute XYZ color `[0, 0, 0]` ("absolute black").
+- **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
+- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[(12)](#Note12)</sup>
+- **Custom black point.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the resulting XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then (optionally) multiplied by a normalizing factor such as 1 or 100.
 
-The following methods, in the pseudocode below, convert a color between companded sRGB (`rgb`) and relative XYZ, treating a Y of 0 as "absolute black":
+The following methods, in the pseudocode below, convert a color between companded sRGB (`rgb`) and relative XYZ:
 - `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)` treat a Y of 1 as the D65/2 white point.
 - `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)` treat a Y of 1 as the D50/2 white point (see note 2 later in this section)<sup>[(13)](#Note13)</sup>.
 
@@ -818,7 +819,7 @@ The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>
 
 For all these variants, the transformation should be done using [_companded RGB_ colors](#RGB_Color_Spaces).<sup>[(20)](#Note20)</sup>
 
-    // NOTE: Derived from scaled YPbPr using red/green/blue luminances
+    // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
     METHOD RgbToYCbCr(rgb)
         y = floor(16.0+rgb[0]*0.25678824+rgb[1]*0.50412941+rgb[2]*0.097905882)
@@ -827,7 +828,7 @@ For all these variants, the transformation should be done using [_companded RGB_
         return [y, cb, cr]
     END METHOD
 
-    // NOTE: Derived from scaled YPbPr using red/green/blue BT.709 luminances
+    // NOTE: Derived from scaled YPbPr using red/green/blue BT.709 luminance factors
     METHOD RgbToYCbCr709(rgb)
         y = floor(0.06200706*rgb[2] + 0.6142306*rgb[1] + 0.1825859*rgb[0] + 16.0)
         cb = floor(0.4392157*rgb[2] - 0.338572*rgb[1] - 0.1006437*rgb[0] + 128.0)
@@ -835,7 +836,7 @@ For all these variants, the transformation should be done using [_companded RGB_
         return [y, cb, cr]
     END METHOD
 
-    // NOTE: Derived from unscaled YPbPr using red/green/blue luminances
+    // NOTE: Derived from unscaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
     METHOD RgbToYCbCrJpeg(rgb)
         y = floor(0.299*rgb[0] + 0.587*rgb[1] + 0.114*rgb[2])
@@ -907,27 +908,27 @@ Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to 
 
 This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [_linear RGB_ colors](#RGB_Color_Spaces), unless noted otherwise.
 
-<a id=Relative_Luminance_Grayscale></a>
-### Relative Luminance (Grayscale)
+<a id=Luminance_Factor_Grayscale></a>
+### Luminance Factor (Grayscale)
 
-_Relative luminance_&mdash;
-- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
+The _luminance factor_&mdash;
+- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white (see the CIE's [International Lighting Vocabulary](http://eilv.cie.co.at/term/717)),
 - is called **`Luminance(color)`** in this document,
-- is equivalent to the Y component of an [XYZ color](#CIE_XYZ), and
+- is equivalent to the Y component of a relative [XYZ color](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
 
-**Linear RGB.** For [_linear RGB_ colors](#RGB_Color_Spaces), relative luminance is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the upper-case-Y components (relative luminances) of the RGB color space's red, green, and blue points, respectively.  (If a different white point than the RGB color space's usual white point should have a relative luminance of 1, then `r`, `g`, and `b` are the corresponding components after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(14)](#Note14)</sup>)
+**Linear RGB.** For [_linear RGB_ colors](#RGB_Color_Spaces), luminance factor is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the luminance factors (relative Y components) of the RGB color space's red, green, and blue points, respectively.  (If a different white point than the RGB color space's usual white point should have a luminance factor of 1, then `r`, `g`, and `b` are the corresponding values after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(14)](#Note14)</sup>)
 
-**Companded RGB.** Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not (relative) luminance.<sup>[(22)](#Note22)</sup>  The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(13)](#Note13)</sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.
+**Companded RGB.** Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(22)](#Note22)</sup>  The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(13)](#Note13)</sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.
 
-    // Convert companded sRGB to relative luminance
+    // Convert companded sRGB to luminance factor
     METHOD LuminanceSRGB(color)
         c = LinearFromsRGB(color)
         return c[0] * 0.2126 + c[1] * 0.7152 + c[2] * 0.0722
     END METHOD
 
     // Convert companded sRGB (with D50/2 white point)
-    // to relative luminance
+    // to luminance factor
     METHOD LuminanceSRGBD50(color)
         c = LinearFromsRGB(color)
         return c[0] * 0.2225 + c[1] * 0.7169 + c[2] * 0.0606
@@ -938,11 +939,11 @@ _Relative luminance_&mdash;
 > 1. **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 > 2. **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
 > 3. **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If `Luminance(color)` is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.  See also "[Contrast Ratio](#Contrast_Ratio)", later.
-> 4. An [_image color list_](#Notation_and_Definitions)'s **average relative luminance** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
+> 4. An [_image color list_](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
 > 5. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 6. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
-> **Note:** Although an application should favor implementing `Luminance(color)` to output relative luminance, that method could also be implemented to output any of the following values, which are similar to relative luminance:
+> **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
 > - **Red channel**: `color[0]`.
 > - **Green channel**: `color[1]`.
 > - **Blue channel**: `color[2]`.
@@ -994,7 +995,7 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 
 **WCAG Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, `ContrastRatioWCAG` implements the contrast ratio formula described in the [Web Content Accessibility Guidelines 2.0 (WCAG)](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), where `RelLum(color)`&mdash;
 - is the "relative luminance" of a color as defined in the WCAG, and
-- is equivalent to [`Luminance(color)`](#Relative_Luminance_Grayscale) whenever WCAG conformity is not important.
+- is equivalent to [`Luminance(color)`](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
 
 &nbsp;
 
@@ -1048,9 +1049,9 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 
 A _color matrix_ is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:
 
-- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
+- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[luminance factor (Grayscale)](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Relative Luminance (Grayscale)](#Relative_Luminance_Grayscale)"<sup>[(25)](#Note25)</sup>.
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[luminance factor (Grayscale)](#Luminance_Factor_Grayscale)"<sup>[(25)](#Note25)</sup>.
 - **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(26)](#Note26)</sup><sup>[(25)](#Note25)</sup>
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) is transformed with a color matrix (`matrix`).
@@ -1078,7 +1079,7 @@ The following approaches can generate a lighter or darker version of a color. In
 The following approaches can generate a saturated or desaturated version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
 
 - **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
-- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Relative_Luminance_Grayscale) version or an arbitrary shade of gray.
+- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Luminance_Factor_Grayscale) version or an arbitrary shade of gray.
 - **Saturate matrix.**  See "[Color Matrices](#Color Matrices)".
 
 <a id=Miscellaneous></a>
@@ -1359,13 +1360,13 @@ The following techniques can be used to generate random RGB colors. Note that fo
 - Generating a random string in the **HTML color format** is equivalent to generating a [random hexadecimal string](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string. But see the [note from earlier](#HTML_Color_Format).
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
 - To generate a random **dark color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Relative_Luminance_Grayscale) is less than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
     - generate `color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
 - To generate a random **light color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Relative_Luminance_Grayscale) is greater than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is greater than a given threshold, e.g., 0.5, or
     - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
-- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Relative_Luminance_Grayscale) is greater than 0.75 and less than 0.9.
+- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is greater than 0.75 and less than 0.9.
 - To generate a **random color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
 - To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))`.
 - To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
@@ -1444,7 +1445,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 >
 > **Examples:**  In these examples, `D65` is the D65 illuminant, `D50` is the D50 illuminant, `CIE1931` is the CIE 1931 standard observer, and `refl` is an arbitrary reflectance curve.
 >
-> 1. `SpectrumToTristim(refl, D65, CIE1931)` computes the reflectance curve's [XYZ color](#CIE_XYZ) (where Y ranges from 0 for "absolute black" to 1 for the D65/2 white point).
+> 1. `SpectrumToTristim(refl, D65, CIE1931)` computes the reflectance curve's [XYZ color](#CIE_XYZ) (where a Y of 1 is the D65/2 white point).
 > 2. `SpectrumToTristim(refl, D50, CIE1931)` is the same, except white is the D50/2 white point.
 > 3. `SpectrumToTristim(PerfectWhite, light, cmf)` computes the white point for the given illuminant `light` and the color matching functions `cmf`.
 > 4. `SpectrumToTristim(PerfectWhite, D65, CIE1931)` computes the D65/2 white point.
@@ -1588,11 +1589,11 @@ Questions for this document:
 
 <small><sup id=Note11>(11)</sup> The hue angle is in radians, and the angle is 0 or greater and less than 2&pi;. Radians can be converted to degrees by multiplying by `180 / pi`.  Degrees can be converted to radians by multiplying by `pi / 180`.</small>
 
-<small><sup id=Note12>(12)</sup> In interior and architectural design, Y is also known as _light reflectance value_ (LRV), provided the XYZ color is such that Y ranges from 0 for black to 100 for white.</small>
+<small><sup id=Note12>(12)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
 
 <small><sup id=Note13>(13)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
 - Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [before it was corrected](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-- The printing industry uses the D50 illuminant widely, including in CIELAB.</small>
+- The printing industry uses the D50/2 white point or a very similar white point widely, including in CIELAB.</small>
 
 <small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
@@ -1621,7 +1622,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note24>(24)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
 
-<small><sup id=Note25>(25)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB relative luminances for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB relative luminances are used rather than the values recommended by the source.</small>
+<small><sup id=Note25>(25)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.</small>
 
 <small><sup id=Note26>(26)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
 
@@ -1637,7 +1638,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note32>(32)</sup> Many color collections are represented by swatches of paper or fabric and/or found in paper "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
 
-<small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [HTML color format](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour-science` package.</small>
+<small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [HTML color format](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
 
 <small><sup id=Note34>(34)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).</small>
 
