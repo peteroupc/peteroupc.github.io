@@ -502,7 +502,13 @@ def _generateLSSData():
   return [b11, b12]
 
 class SPD:
-  """ Spectral power distribution class. """
+  """ Spectral power distribution class.
+
+     values - List of spectral values.
+     interval - Wavelength interval between spectral values, in nanometers.
+     minWavelength - Wavelength of the first spectral value, in nanometers.
+     maxWavelength - Maximum wavelength.  Optional; if omitted, this
+        value is inferred from the other parameters.  """
   def __init__(self, values, interval, minWavelength, maxWavelength=None):
     self.values=values
     self.minWavelength=minWavelength
@@ -698,7 +704,9 @@ def sRGBToSPD(rgb):
    """ Generates a representative reflectance curve from a companded
      sRGB color.  Currently implements the iterative least slope squared
      method by S. A. Burns, and ensures the values in the reflectance
-     curve are greater than 0, and 1 or less.  """
+     curve are greater than 0, and 1 or less.  `rgb` is a 3-element
+      list giving a companded sRGB color to convert to a reflectance curve
+     (in the SPD class). """
    global _LSSDATA
    rdata=_LSSDATA
    if rdata == None:
