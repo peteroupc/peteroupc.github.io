@@ -76,7 +76,6 @@ This document presents an overview of many common color topics that are of gener
     - [Color Temperature](#Color_Temperature)
     - [Color Mixture](#Color_Mixture)
 - [Conclusion](#Conclusion)
-    - [Questions for This Document](#Questions_for_This_Document)
 - [Notes](#Notes)
 - [License](#License)
 
@@ -87,9 +86,8 @@ This document presents an overview of many common color topics that are of gener
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
-- **D50 illuminant.** CIE illuminant that approximates daylight at a correlated color temperature of about 5000 kelvins.
+- **D50 illuminant, D65 illuminant.** CIE model of daylight at a correlated color temperature of about 5000 or 6500 kelvins respectively.<sup>[(1)](#Note1)</sup>
 - **D50/2 white point.** The white point determined by the D50 illuminant and the CIE 1931 standard observer.
-- **D65 illuminant.** CIE illuminant that approximates daylight at a correlated color temperature of about 6500 kelvins.<sup>[(1)](#Note1)</sup>
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **IEC.** International Electrotechnical Commission.
 - **Image color list.** Means either&mdash;
@@ -161,7 +159,7 @@ The RGB model is ideally based on the intensity that "red", "green", and "blue" 
 
 There are many [RGB color spaces](#RGB_Color_Spaces), not just one.
 
-**RGB colors.** An RGB color consists of three components in the following order: `red`, `green`, `blue`; and each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
+**RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue"; and each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
 
 **RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).
 
@@ -312,7 +310,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 
 **Color component transfer function.** This is a function used to convert a _linear RGB_ color to a _companded RGB_ color in the same color space. For many RGB color spaces (but not sRGB, described [later](#sRGB)), this is a simple power function, such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number. (In this case, the function is also called _gamma encoding_.)  In a given RGB color space:
 - A **linear RGB** color has a linear relationship of emitted light (as opposed to perceived light).
-- A **companded RGB** color has been encoded (_companded_) from linear RGB. For many RGB color spaces, companded RGB colors have a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in companded form.
+- A **companded RGB** color has been encoded (_companded_) from linear RGB. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
 > **Note:** In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.
 
@@ -374,8 +372,7 @@ The following sections discuss several color models, other than RGB, that are of
 [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
 
 - _Hue_ is an angle from red at 0 to yellow to green to cyan to blue to magenta to red.<sup>[(11)](#Note11)</sup>
-- A component called "saturation", the distance of the color from gray and white (but not necessarily from black),
-  is 0 or greater and 1 or less.
+- A component called "saturation", the distance of the color from gray and white (but not necessarily from black), is 0 or greater and 1 or less.
 - A component variously called "value" or "brightness" is the distance of the color from black and is 0 or greater and 1 or less.
 
 The following pseudocode converts colors between RGB and HSV.  The transformation is independent of RGB color space, but should be done using [_linear RGB_ colors](#RGB_Color_Spaces).
@@ -532,11 +529,11 @@ Conventions for XYZ colors include the following:
 
 - **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
 - **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[(12)](#Note12)</sup>
-- **Custom black point.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the resulting XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point, then (optionally) multiplied by a normalizing factor such as 1 or 100.
+- **Custom black point.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the resulting XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point.
 
 The following methods, in the pseudocode below, convert a color between companded sRGB (`rgb`) and relative XYZ:
-- `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)` treat a Y of 1 as the D65/2 white point.
-- `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)` treat a Y of 1 as the D50/2 white point (see note 2 later in this section)<sup>[(13)](#Note13)</sup>.
+- For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
+- For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point (see note 2 later in this section)<sup>[(13)](#Note13)</sup>.
 
 &nbsp;
 
@@ -911,8 +908,8 @@ This section goes over many of the operations that can be done on colors.  Note 
 <a id=Luminance_Factor_Grayscale></a>
 ### Luminance Factor (Grayscale)
 
-The _luminance factor_&mdash;
-- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white (see the CIE's [International Lighting Vocabulary](http://eilv.cie.co.at/term/717)),
+The [_luminance factor_](http://eilv.cie.co.at/term/717)&mdash;
+- is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
 - is called **`Luminance(color)`** in this document,
 - is equivalent to the Y component of a relative [XYZ color](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
@@ -1009,7 +1006,7 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 
 In general, under the WCAG, a _contrasting color_ is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to ["Understanding WCAG 2.0"](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [color deficiency](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
 
-**Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y value of the material's [XYZ color](#CIE_XYZ) measured over a black surface by the Y value of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
+**Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [XYZ color](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
 
 <a id=Porter_ndash_Duff_Formulas></a>
 ### Porter&ndash;Duff Formulas
@@ -1049,9 +1046,9 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 
 A _color matrix_ is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:
 
-- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[luminance factor (Grayscale)](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
+- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[luminance factor (Grayscale)](#Luminance_Factor_Grayscale)"<sup>[(25)](#Note25)</sup>.
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)"<sup>[(25)](#Note25)</sup>.
 - **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(26)](#Note26)</sup><sup>[(25)](#Note25)</sup>
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) is transformed with a color matrix (`matrix`).
@@ -1123,7 +1120,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
 
 > **Notes:**
 >
-> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively (for the _&Delta;E\*_<sub>ab</sub> method, differences around 2.3 are just noticeable [Mahy and others 1994])<sup>[(28)](#Note28)</sup>.
+> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[(28)](#Note28)</sup>.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1550,14 +1547,6 @@ The following topics would greatly enrich this document:
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
 - Reference source code for a method to generate a plausible spectral reflectance curve given an RGB color, provided that method is not covered by any active patents or pending patent applications.
 
-<a id=Questions_for_This_Document></a>
-### Questions for This Document
-
-Questions for this document:
-
-- Are there color topics not covered by this document that should be covered?
-- Is the threshold for the sRGB inverse component transfer function, as specified in the latest version of the IEC standard, 0.04045 (truncated to five decimal places) or `12.92 * 0.0031308 = 0.040449936`?
-
 <a id=Notes></a>
 ## Notes
 
@@ -1593,7 +1582,7 @@ Questions for this document:
 
 <small><sup id=Note13>(13)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
 - Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [before it was corrected](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-- The printing industry uses the D50/2 white point or a very similar white point widely, including in CIELAB.</small>
+- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, ["Why the printing industry is not using D65?"](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332), 2009).</small>
 
 <small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
