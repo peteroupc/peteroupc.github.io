@@ -749,8 +749,6 @@ def sRGBToSPD(rgb):
      ret=matSub(ret,rk)
      for i in range(matShape(ret)[0]):
         s=matGet(ret,i,0)
-        #if s>1.0 and s<1.0+rm: matSet(ret,i,0,1.0)
-        #if s<rm and s>0.0-rm: matSet(ret,i,0,rm)
         if s>1.0 and iters>20: matSet(ret,i,0,1.0) # Drastic measure to avoid overiteration
         if s<rm and iters>20: matSet(ret,i,0,rm)
    return SPD(spdarray,10,380,730)
