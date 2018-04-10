@@ -1077,7 +1077,7 @@ The following approaches can generate a saturated or desaturated version of a co
 
 - **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
 - **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Luminance_Factor_Grayscale) version or an arbitrary shade of gray.
-- **Saturate matrix.**  See "[Color Matrices](#Color Matrices)".
+- **Saturate matrix.**  See "[Color Matrices](#Color_Matrices)".
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
@@ -1487,12 +1487,12 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [XY
 <a id=Color_Mixture></a>
 ### Color Mixture
 
-In "[Subtractive Color Mixture Computation](https://web.archive.org/web/20170917204927/http://www.scottburns.us/subtractive-color-mixture/)", Scott A. Burns indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;
+The mixture of two colorants is quite complex, and there are several approaches to simulating this kind of color mixture.
 
-1. finding the [_reflectance curves_](#Spectral_Color_Functions) of the pigments or colors,
-2. generating a mixed reflectance curve by the _weighted geometric mean_ of the source curves, which
-  takes into account the relative proportions of the pigments or colors in the mixture, and
-3. converting the mixed reflectance curve to an RGB color.<sup>[(36)](#Note36)</sup>
+- As [S. A. Burns indicates](https://web.archive.org/web/20170917204927/http://www.scottburns.us/subtractive-color-mixture/), two or more [_reflectance curves_](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
+  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup>[(36)](#Note36)</sup>
+- As [B. MacEvoy indicates](http://www.handprint.com/HP/WCL/color3.html#mixprofile), two or more spectral curves for **transmissive materials** can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.
+- An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
 For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where&mdash;
 
@@ -1518,10 +1518,6 @@ For convenience, the `WGM` method below computes the weighted geometric mean of 
         end
         return ret
     END METHOD
-
-> **Notes:**
-> - For **transmissive materials**, the [simple product](http://www.handprint.com/HP/WCL/color3.html#mixprofile) of their transmittance curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.
-> - An alternative method of color formulation, based on the _Kubelka&ndash;Munk_ theory, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
 <a id=Conclusion></a>
 ## Conclusion

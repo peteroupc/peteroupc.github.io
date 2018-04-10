@@ -1290,7 +1290,7 @@ END METHOD
 <ul>
 <li><strong>HSV &quot;saturation&quot; additive.</strong> <code>HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])</code>, where <code>hsv = RgbToHsv(color)</code>.  (Note that HSL&#39;s &quot;saturation&quot; is inferior here.)</li>
 <li><strong>Tones, or mixtures of gray.</strong> A &quot;tone&quot; is a desaturated version.  A color can be desaturated by <a href="#Alpha_Blending">alpha blending</a> that color with either its <a href="#Luminance_Factor_Grayscale">grayscale</a> version or an arbitrary shade of gray.</li>
-<li><strong>Saturate matrix.</strong>  See &quot;<a href="#Color%20Matrices">Color Matrices</a>&quot;.</li>
+<li><strong>Saturate matrix.</strong>  See &quot;<a href="#Color_Matrices">Color Matrices</a>&quot;.</li>
 </ul>
 
 <p><a id=Miscellaneous></a></p>
@@ -1804,14 +1804,14 @@ END METHOD
 
 <h3>Color Mixture</h3>
 
-<p>In &quot;<a href="https://web.archive.org/web/20170917204927/http://www.scottburns.us/subtractive-color-mixture/">Subtractive Color Mixture Computation</a>&quot;, Scott A. Burns indicates that the color mixture of two pigments, or the mixture of two colors that is similar to mixing two pigments with those colors, can be simulated by&mdash;</p>
+<p>The mixture of two colorants is quite complex, and there are several approaches to simulating this kind of color mixture.</p>
 
-<ol>
-<li>finding the <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a> of the pigments or colors,</li>
-<li>generating a mixed reflectance curve by the <em>weighted geometric mean</em> of the source curves, which
-takes into account the relative proportions of the pigments or colors in the mixture, and</li>
-<li>converting the mixed reflectance curve to an RGB color.<sup><a href="#Note36">(36)</a></sup></li>
-</ol>
+<ul>
+<li>As <a href="https://web.archive.org/web/20170917204927/http://www.scottburns.us/subtractive-color-mixture/">S. A. Burns indicates</a>, two or more <a href="#Spectral_Color_Functions"><em>reflectance curves</em></a>, each representing a <strong>pigment or colorant</strong>, can be mixed by calculating their <em>weighted geometric mean</em>, which
+takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup><a href="#Note36">(36)</a></sup></li>
+<li>As <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">B. MacEvoy indicates</a>, two or more spectral curves for <strong>transmissive materials</strong> can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.</li>
+<li>An alternative method of color formulation, based on the <strong>Kubelka&ndash;Munk theory</strong>, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
+</ul>
 
 <p>For convenience, the <code>WGM</code> method below computes the weighted geometric mean of one or more numbers, where&mdash;</p>
 
@@ -1840,15 +1840,6 @@ takes into account the relative proportions of the pigments or colors in the mix
     return ret
 END METHOD
 </pre>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>For <strong>transmissive materials</strong>, the <a href="http://www.handprint.com/HP/WCL/color3.html#mixprofile">simple product</a> of their transmittance curves, rather than the geometric mean as given in step 2, yields the mixed curve of their mixture, according to B. MacEvoy.</li>
-<li>An alternative method of color formulation, based on the <em>Kubelka&ndash;Munk</em> theory, uses two curves for each colorant: an <em>absorption coefficient</em> curve (K curve) and a <em>scattering coefficient</em> curve (S curve).  The ratio of absorption to scattering (<em>K/S</em>) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.</li>
-</ul>
-</blockquote>
 
 <p><a id=Conclusion></a></p>
 
