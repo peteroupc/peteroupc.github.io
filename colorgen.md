@@ -1,11 +1,11 @@
 # Color Topics for Programmers
 
-[Peter Occil](mailto:poccil14@gmail.com)
+[**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages. **[Sample Python code](https://peteroupc.github.io/colorutil.zip) that implements many of the methods in this document is available.**  [Supplemental topics](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.[**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -24,60 +24,60 @@ This document presents an overview of many common color topics that are of gener
 - Determining which colors are used, or used by default, in user interface elements or documents.
 - Color pickers, including how to choose colors with them.
 - Specifics on setting and getting pixel, palette, and other colors in images (including screenshots) with the exception of finding dominant colors.
-- Colorization of command line outputs, or terminal or shell outputs. [ANSI graphic codes](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.
+- Colorization of command line outputs, or terminal or shell outputs. [**ANSI graphic codes**](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.
 - In general, topics that are specific to a programming language or application programming interface.
 
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Notation and Definitions](#Notation_and_Definitions)
-- [Overview of Color Vision](#Overview_of_Color_Vision)
-    - [Human Color Vision](#Human_Color_Vision)
-    - [Defective and Animal Color Vision](#Defective_and_Animal_Color_Vision)
-- [Specifying Colors](#Specifying_Colors)
-- [RGB Color Model](#RGB_Color_Model)
-    - [RGB Integer Formats](#RGB_Integer_Formats)
-    - [HTML-Related Color Formats](#HTML_Related_Color_Formats)
-    - [RGB Color Spaces](#RGB_Color_Spaces)
-    - [sRGB](#sRGB)
-- [Other Color Models](#Other_Color_Models)
-    - [HSV](#HSV)
-    - [HSL](#HSL)
-    - [HWB](#HWB)
-    - [CIE XYZ](#CIE_XYZ)
-        - [Chromaticity Coordinates](#Chromaticity_Coordinates)
-    - [CIELAB](#CIELAB)
-    - [CIELUV](#CIELUV)
-    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R)
-    - [CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)
-- [Color Operations](#Color_Operations)
-    - [Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)
-    - [Alpha Blending](#Alpha_Blending)
-    - [Color Schemes and Harmonies](#Color_Schemes_and_Harmonies)
-    - [Contrast Ratio](#Contrast_Ratio)
-    - [Porter&ndash;Duff Formulas](#Porter_ndash_Duff_Formulas)
-    - [Blend Modes](#Blend_Modes)
-    - [Color Matrices](#Color_Matrices)
-    - [Lighten/Darken](#Lighten_Darken)
-    - [Saturate/Desaturate](#Saturate_Desaturate)
-    - [Miscellaneous](#Miscellaneous)
-- [Color Differences](#Color_Differences)
-    - [Nearest Colors](#Nearest_Colors)
-- [Dominant Colors of an Image](#Dominant_Colors_of_an_Image)
-- [Color Maps](#Color_Maps)
-    - [Kinds of Color Maps](#Kinds_of_Color_Maps)
-    - [Color Collections](#Color_Collections)
-    - [Visually Distinct Colors](#Visually_Distinct_Colors)
-    - [Pseudocode](#Pseudocode)
-- [Generating a Random Color](#Generating_a_Random_Color)
-- [Spectral Color Functions](#Spectral_Color_Functions)
-    - [Color Temperature](#Color_Temperature)
-    - [Color Mixture](#Color_Mixture)
-- [Conclusion](#Conclusion)
-- [Notes](#Notes)
-- [License](#License)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Notation and Definitions**](#Notation_and_Definitions)
+- [**Overview of Color Vision**](#Overview_of_Color_Vision)
+    - [**Human Color Vision**](#Human_Color_Vision)
+    - [**Defective and Animal Color Vision**](#Defective_and_Animal_Color_Vision)
+- [**Specifying Colors**](#Specifying_Colors)
+- [**RGB Color Model**](#RGB_Color_Model)
+    - [**RGB Integer Formats**](#RGB_Integer_Formats)
+    - [**HTML-Related Color Formats**](#HTML_Related_Color_Formats)
+    - [**RGB Color Spaces**](#RGB_Color_Spaces)
+    - [**sRGB**](#sRGB)
+- [**Other Color Models**](#Other_Color_Models)
+    - [**HSV**](#HSV)
+    - [**HSL**](#HSL)
+    - [**HWB**](#HWB)
+    - [**CIE XYZ**](#CIE_XYZ)
+        - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
+    - [**CIELAB**](#CIELAB)
+    - [**CIELUV**](#CIELUV)
+    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R)
+    - [**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)
+- [**Color Operations**](#Color_Operations)
+    - [**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)
+    - [**Alpha Blending**](#Alpha_Blending)
+    - [**Color Schemes and Harmonies**](#Color_Schemes_and_Harmonies)
+    - [**Contrast Ratio**](#Contrast_Ratio)
+    - [**Porter&ndash;Duff Formulas**](#Porter_ndash_Duff_Formulas)
+    - [**Blend Modes**](#Blend_Modes)
+    - [**Color Matrices**](#Color_Matrices)
+    - [**Lighten/Darken**](#Lighten_Darken)
+    - [**Saturate/Desaturate**](#Saturate_Desaturate)
+    - [**Miscellaneous**](#Miscellaneous)
+- [**Color Differences**](#Color_Differences)
+    - [**Nearest Colors**](#Nearest_Colors)
+- [**Dominant Colors of an Image**](#Dominant_Colors_of_an_Image)
+- [**Color Maps**](#Color_Maps)
+    - [**Kinds of Color Maps**](#Kinds_of_Color_Maps)
+    - [**Color Collections**](#Color_Collections)
+    - [**Visually Distinct Colors**](#Visually_Distinct_Colors)
+    - [**Pseudocode**](#Pseudocode)
+- [**Generating a Random Color**](#Generating_a_Random_Color)
+- [**Spectral Color Functions**](#Spectral_Color_Functions)
+    - [**Color Temperature**](#Color_Temperature)
+    - [**Color Mixture**](#Color_Mixture)
+- [**Conclusion**](#Conclusion)
+- [**Notes**](#Notes)
+- [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
@@ -86,7 +86,7 @@ This document presents an overview of many common color topics that are of gener
 - **CIE.** French initials for the International Commission on Illumination.
 - **Color model.** Describes, in general terms, the relationship of colors in a theoretical space.
 - **Color space.** A mapping from colors to numbers that follows a particular color model.
-- **D50 illuminant, D65 illuminant.** CIE model of daylight at a correlated color temperature of about 5000 or 6500 kelvins respectively.<sup>[(1)](#Note1)</sup>
+- **D50 illuminant, D65 illuminant.** CIE models of daylight at a correlated color temperature of about 5000 or 6500 kelvins respectively.<sup>[**(1)**](#Note1)</sup>
 - **D50/2 white point.** The white point determined by the D50 illuminant and the CIE 1931 standard observer.
 - **D65/2 white point.** The white point determined by the D65 illuminant and the CIE 1931 standard observer.
 - **IEC.** International Electrotechnical Commission.
@@ -95,47 +95,47 @@ This document presents an overview of many common color topics that are of gener
     - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **ITU.** International Telecommunications Union.
-- **Light source.** Means a [_primary light source_](http://eilv.cie.co.at/term/982) or an [_illuminant_](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
+- **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
-- **`RNDNUMRANGE`, `RNDU01`, `RNDINT`, `RNDINTEXC`.** These methods are defined in my article on [random number generation methods](https://peteroupc.github.io/randomfunc.html).
+- **`RNDNUMRANGE`, `RNDU01`, `RNDINT`, `RNDINTEXC`.** These methods are defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Overview_of_Color_Vision></a>
 ## Overview of Color Vision
 
-Color<sup>[(2)](#Note2)</sup> is possible only if three things exist, namely&mdash;
+Color<sup>[**(2)**](#Note2)</sup> is possible only if three things exist, namely&mdash;
 
 - _light_,
 - an _object_ receiving that light (a surface, for example), and
 - an _observer_ viewing that object and interpreting the light received from it.
 
-Because of this, color does not exist in light, in objects receiving light, in light sources, or even in the signals generated by the eyes when they see things.<sup>[(3)](#Note3)</sup>  In the Opticks, I. Newton said, "the Rays to speak properly are not coloured."
+Because of this, color does not exist in light, in objects receiving light, in light sources, or even in the signals generated by the eyes when they see things.<sup>[**(3)**](#Note3)</sup>  In the Opticks, I. Newton said, "the Rays to speak properly are not coloured."
 
-Color appearance is subjective &mdash; since interpreting the light is required &mdash; and varies with the _light source_ (sunlight, daylight, incandescent light, etc.), _object_ (material), _observer_, viewing situation, or a combination of these.<sup>[(4)](#Note4)</sup>
+Color appearance is subjective &mdash; since interpreting the light is required &mdash; and varies with the _light source_ (sunlight, daylight, incandescent light, etc.), _object_ (material), _observer_, viewing situation, or a combination of these.<sup>[**(4)**](#Note4)</sup>
 
-> **Note:** The three things that together make color possible &mdash; _light_, _object_, and _observer_ &mdash; can be modeled by curves that span the _visible spectrum_ (the part of the electromagnetic spectrum in which light is "seen"), as described in the section "[Spectral Color Functions](#Spectral_Color_Functions)".
+> **Note:** The three things that together make color possible &mdash; _light_, _object_, and _observer_ &mdash; can be modeled by curves that span the _visible spectrum_ (the part of the electromagnetic spectrum in which light is "seen"), as described in the section "[**Spectral Color Functions**](#Spectral_Color_Functions)".
 
 <a id=Human_Color_Vision></a>
 ### Human Color Vision
 
 When a person views an object, the light it reflects reaches that person's eyes.
 
-The human eye has an inner back lining (called the _retina_) filled with three kinds of _cones_ (L, M, and S<sup>[(5)](#Note5)</sup>), and each kind of cone is differently sensitive to light.
+The human eye has an inner back lining (called the _retina_) filled with three kinds of _cones_ (L, M, and S<sup>[**(5)**](#Note5)</sup>), and each kind of cone is differently sensitive to light.
 
-The human visual system compares the responses it receives from the cones and converts them to three kinds of signals, namely a light-dark signal and the two _opponent signals_ red/green and blue/yellow. It's these signals, and not the cone responses, that are passed to the brain.<sup>[(6)](#Note6)</sup>
+The human visual system compares the responses it receives from the cones and converts them to three kinds of signals, namely a light-dark signal and the two _opponent signals_ red/green and blue/yellow. It's these signals, and not the cone responses, that are passed to the brain.<sup>[**(6)**](#Note6)</sup>
 
 The human brain interprets the signals from the eyes to judge color appearance, taking into account the visual situation. One process involved in this is called _adaptation_, in which the human visual system, roughly speaking, treats the brightest thing in the scene as "white" and mentally adjusts the rest of the colors it sees accordingly, to account for differences in lighting.  Adaptation is thus similar to a digital camera's "auto white balance".
 
 > **Notes:**
 >
 > 1. The cone responses can be described by three overlapping "curves" that peak at different places in the visible spectrum &mdash; where the M and L curves span the entire visible spectrum.  As a result, at least two of the three kinds of cones will react to light, not just one by itself.
-> 2. Because there are three kinds of cones, three numbers are enough to uniquely identify a color humans can see &mdash; which is why many [color spaces](https://peteroupc.github.io/suppcolor.html#Kinds_of_Color_Spaces) are 3-dimensional, such as RGB or CIE XYZ spaces.
+> 2. Because there are three kinds of cones, three numbers are enough to uniquely identify a color humans can see &mdash; which is why many [**color spaces**](https://peteroupc.github.io/suppcolor.html#Kinds_of_Color_Spaces) are 3-dimensional, such as RGB or CIE XYZ spaces.
 
 <a id=Defective_and_Animal_Color_Vision></a>
 ### Defective and Animal Color Vision
 
-[Defective color vision](http://eilv.cie.co.at/term/287), including so-called ["colorblindness"](https://en.wikipedia.org/wiki/Color_blindness), results from defective or missing cones and affects a small portion of people, mostly males. Two forms of defective color vision, _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, kinds of light that result in a similar response of the S and M or S and L cones, respectively (usually appearing magenta/red or green/cyan), are harder to distinguish.<sup>[(7)](#Note7)</sup>
+[**Defective color vision**](http://eilv.cie.co.at/term/287), including so-called [**"colorblindness"**](https://en.wikipedia.org/wiki/Color_blindness), results from defective or missing cones and affects a small portion of people, mostly males. Two forms of defective color vision, _protanopia_ and _deuteranopia_, result from defects in the L or M cones, respectively, so that for a person with either condition, kinds of light that result in a similar response of the S and M or S and L cones, respectively (usually appearing magenta/red or green/cyan), are harder to distinguish.<sup>[**(7)**](#Note7)</sup>
 
-In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the [mantis shrimp](https://en.wikipedia.org/wiki/Mantis_shrimp) has at least twelve different cone types, making its color vision considerably sharper than humans'.
+In addition to humans, many other animals possess color vision to a greater or lesser extent.  As an extreme example, the [**mantis shrimp**](https://en.wikipedia.org/wiki/Mantis_shrimp) has at least twelve different cone types, making its color vision considerably sharper than humans'.
 
 <a id=Specifying_Colors></a>
 ## Specifying Colors
@@ -143,21 +143,21 @@ In addition to humans, many other animals possess color vision to a greater or l
 A color can be specified in one of two ways:
 
 * **As a point in space**, that is, as a small set of numbers (usually three numbers) showing where the color lies in a color space. This is what mostly happens in practice. Some color spaces include the following:
-    - [RGB](#RGB_Color_Model) color spaces describe proportions of "red", "green", and "blue" dots of light.
-    - [HSV](#HSV), [HSL](#HSL), and [HWB](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
-    - [XYZ](#CIE_XYZ), [CIELAB](#CIELAB), and [CIELUV](#CIELUV) color spaces are based on human color perception.
-    - [CMYK](#CMYK_and_Other_Ink_Mixture_Color_Models) color spaces are especially used to describe proportions of four specific kinds of ink.
-    - [Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](#Y_prime_C_B_C_R) color spaces are especially used in video encoding.
-* **As a _spectral curve_**, which gives the behavior of light across the electromagnetic spectrum (see "[Spectral Color Functions](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
+    - [**RGB**](#RGB_Color_Model) color spaces describe proportions of "red", "green", and "blue" dots of light.
+    - [**HSV**](#HSV), [**HSL**](#HSL), and [**HWB**](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
+    - [**XYZ**](#CIE_XYZ), [**CIELAB**](#CIELAB), and [**CIELUV**](#CIELUV) color spaces are based on human color perception.
+    - [**CMYK**](#CMYK_and_Other_Ink_Mixture_Color_Models) color spaces are especially used to describe proportions of four specific kinds of ink.
+    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R) color spaces are especially used in video encoding.
+* **As a _spectral curve_**, which gives the behavior of light across the electromagnetic spectrum (see "[**Spectral Color Functions**](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
 
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
 The **red-green-blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.
 
-The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on electronic displays.<sup>[(8)](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
+The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on electronic displays.<sup>[**(8)**](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
 
-There are many [RGB color spaces](#RGB_Color_Spaces), not just one.
+There are many [**RGB color spaces**](#RGB_Color_Spaces), not just one.
 
 **RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue"; and each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
 
@@ -228,7 +228,7 @@ The following pseudocode contains methods for converting RGB colors to and from 
 A color string in the **HTML color format** (also known as "hex" format), which expresses RGB colors in 8/8/8 format as text strings, consists of&mdash;
 
 1. the character "#", followed by
-2. six base-16 (hexadecimal) digits<sup>[(9)](#Note9)</sup>, two each for the red, green, and blue components, in that order.
+2. six base-16 (hexadecimal) digits<sup>[**(9)**](#Note9)</sup>, two each for the red, green, and blue components, in that order.
 
 For example, the HTML color `#003F86` expresses the RGB color whose red, green, and blue components in 8/8/8 format are (0, 63, 134).
 
@@ -296,19 +296,19 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 
 > **Notes:**
 >
-> 1. Other variants of the HTML color format<sup>[(10)](#Note10)</sup>:
->     - The [CSS Color Module Level 3](https://www.w3.org/TR/css3-color/#rgb-color), which specifies this format, also mentions a **3-digit variant**, consisting of "#" followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
+> 1. Other variants of the HTML color format<sup>[**(10)**](#Note10)</sup>:
+>     - The [**CSS Color Module Level 3**](https://www.w3.org/TR/css3-color/#rgb-color), which specifies this format, also mentions a **3-digit variant**, consisting of "#" followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
 >     - An **8-digit variant** used in the Android operating system consists of "#" followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes RGBA colors with four 8-bit integer components (0 or greater, 255 or less).
-> 2. As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or its 3-digit variant are in the [_sRGB color space_](#sRGB) (as companded colors).
+> 2. As used in the [**CSS color module level 3**](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or its 3-digit variant are in the [**_sRGB color space_**](#sRGB) (as companded colors).
 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
 
-**RGB color spaces** are numerous, and they generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [sRGB](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[RGB Working Space Information](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
+**RGB color spaces** are numerous, and they generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [**sRGB**](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
 
-**Red, green, blue, and white points.** RGB color spaces generally differ in what they consider "red", "green", "blue", and "white".  But they need not define the red, green, and/or blue points as actual colors.  For example, the [ACES2065-1 color space](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
+**Red, green, blue, and white points.** RGB color spaces generally differ in what they consider "red", "green", "blue", and "white".  But they need not define the red, green, and/or blue points as actual colors.  For example, the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
 
-**Color component transfer function.** This is a function used to convert a _linear RGB_ color to a _companded RGB_ color in the same color space. For many RGB color spaces (but not sRGB, described [later](#sRGB)), this is a simple power function, such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number. (In this case, the function is also called _gamma encoding_.)  In a given RGB color space:
+**Color component transfer function.** This is a function used to convert a _linear RGB_ color to a _companded RGB_ color in the same color space. For many RGB color spaces (but not sRGB, described [**later**](#sRGB)), this is a simple power function, such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number. (In this case, the function is also called _gamma encoding_.)  In a given RGB color space:
 - A **linear RGB** color has a linear relationship of emitted light (as opposed to perceived light).
 - A **companded RGB** color has been encoded (_companded_) from linear RGB. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
@@ -323,7 +323,7 @@ Among RGB color spaces, one of the most popular is the _sRGB color space_.  In s
 - the white point was chosen as the D65/2 white point, and
 - the color component transfer function (implemented as `LinearTosRGB` below) was based on the gamma encoding used for cathode-ray-tube monitors.
 
-For background, see the [sRGB proposal](https://www.w3.org/Graphics/Color/sRGB), which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
+For background, see the [**sRGB proposal**](https://www.w3.org/Graphics/Color/sRGB), which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.
 
 The following methods convert colors between linear and companded sRGB.
 (Note that the threshold `0.0031308` is that of IEC 61966-2-1, the official sRGB standard;
@@ -369,13 +369,13 @@ The following sections discuss several color models, other than RGB, that are of
 <a id=HSV></a>
 ### HSV
 
-[HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
+[**HSV**](https://en.wikipedia.org/wiki/HSL_and_HSV)  (also known as HSB) is a color model that transforms RGB colors to make them easier to manipulate and reason with.  An HSV color consists of three components, in the following order:
 
-- _Hue_ is an angle from red at 0 to yellow to green to cyan to blue to magenta to red.<sup>[(11)](#Note11)</sup>
+- _Hue_ is an angle from red at 0 to yellow to green to cyan to blue to magenta to red.<sup>[**(11)**](#Note11)</sup>
 - A component called "saturation", the distance of the color from gray and white (but not necessarily from black), is 0 or greater and 1 or less.
 - A component variously called "value" or "brightness" is the distance of the color from black and is 0 or greater and 1 or less.
 
-The following pseudocode converts colors between RGB and HSV.  The transformation is independent of RGB color space, but should be done using [_linear RGB_ colors](#RGB_Color_Spaces).
+The following pseudocode converts colors between RGB and HSV.  The transformation is independent of RGB color space, but should be done using [**_linear RGB_ colors**](#RGB_Color_Spaces).
 
     METHOD RgbToHsv(rgb)
         mx = max(max(rgb[0], rgb[1]), rgb[2])
@@ -425,15 +425,15 @@ The following pseudocode converts colors between RGB and HSV.  The transformatio
 <a id=HSL></a>
 ### HSL
 
-[HSL](https://en.wikipedia.org/wiki/HSL_and_HSV) (also known as HLS), like HSV, is a color model that transforms RGB colors to ease intuition.  An HSL color consists of three components, in the following order:
+[**HSL**](https://en.wikipedia.org/wiki/HSL_and_HSV) (also known as HLS), like HSV, is a color model that transforms RGB colors to ease intuition.  An HSL color consists of three components, in the following order:
 
-- _Hue_ is the same for a given RGB color as in [HSV](#HSV).
+- _Hue_ is the same for a given RGB color as in [**HSV**](#HSV).
 - A component called "saturation" is the distance of the color from gray (but not necessarily from
 black or white), which is 0 or greater and 1 or less.
 - A component variously called "lightness", "luminance", or "luminosity", is roughly the amount
 of black or white mixed with the color and is 0 or greater and 1 or less, where 0 is black, 1 is white, closer to 0 means closer to black, and closer to 1 means closer to white.
 
-The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using [_linear RGB_ colors](#RGB_Color_Spaces).
+The following pseudocode converts colors between RGB and HSL.  The transformation is independent of RGB color space, but should be done using [**_linear RGB_ colors**](#RGB_Color_Spaces).
 
     METHOD RgbToHsl(rgb)
         vmax = max(max(rgb[0], rgb[1]), rgb[2])
@@ -505,11 +505,11 @@ The following pseudocode converts colors between RGB and HSL.  The transformatio
 ### HWB
 
 In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was published (Smith and Lyons 1996).  An HWB color consists of three components in the following order:
-- _Hue_ is the same for a given RGB color as in [HSV](#HSV).
+- _Hue_ is the same for a given RGB color as in [**HSV**](#HSV).
 - _Whiteness_, the amount of white mixed to the color, is 0 or greater and 1 or less.
 - _Blackness_, the amount of black mixed to the color, is 0 or greater and 1 or less.
 
-The conversions given below are independent of RGB color space, but should be done using [_linear RGB_ colors](#RGB_Color_Spaces).
+The conversions given below are independent of RGB color space, but should be done using [**_linear RGB_ colors**](#RGB_Color_Spaces).
 
 - To convert an RGB color `color` to HWB, generate `[RgbToHsv(color)[0], min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`.
 - To convert an HWB color `hwb` to RGB, generate `HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])` if `hwb[2] < 1`, or `[hwb[0], 0, 0]` otherwise.
@@ -519,21 +519,21 @@ The conversions given below are independent of RGB color space, but should be do
 <a id=CIE_XYZ></a>
 ### CIE XYZ
 
-The [CIE 1931 standard colorimetric system](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a spectral curve into a point in three-dimensional space, as further explained in "[Spectral Color Functions](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
+The [**CIE 1931 standard colorimetric system**](https://en.wikipedia.org/wiki/CIE_1931_color_space) (called the _XYZ color model_ in this document) describes a transformation of a spectral curve into a point in three-dimensional space, as further explained in "[**Spectral Color Functions**](#Spectral_Color_Functions)".  An XYZ color consists of three components, in the following order:
 
 - X is a component without special meaning.
-- Y is related to the color's [_luminance_](http://6degreesoffreedom.co/luminance-vs-illuminance/).
+- Y is related to the color's [**_luminance_**](http://6degreesoffreedom.co/luminance-vs-illuminance/).
 - Z is a component without special meaning.
 
 Conventions for XYZ colors include the following:
 
 - **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
-- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[(12)](#Note12)</sup>
+- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[**(12)**](#Note12)</sup>
 - **Custom black point.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the resulting XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point.
 
 The following methods, in the pseudocode below, convert a color between companded sRGB (`rgb`) and relative XYZ:
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
-- For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point (see note 2 later in this section)<sup>[(13)](#Note13)</sup>.
+- For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point (see note 2 later in this section)<sup>[**(13)**](#Note13)</sup>.
 
 &nbsp;
 
@@ -576,8 +576,8 @@ The following methods, in the pseudocode below, convert a color between compande
 
 > **Notes:**
 >
-> 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [inverse of the matrix](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[(14)](#Note14)</sup>
-> 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [inverse](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[(14)](#Note14)</sup>
+> 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [**inverse of the matrix**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[**(14)**](#Note14)</sup>
+> 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [**inverse**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[**(14)**](#Note14)</sup>
 > 3. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 
 <a id=Chromaticity_Coordinates></a>
@@ -586,7 +586,7 @@ The following methods, in the pseudocode below, convert a color between compande
 Some kinds of _chromaticity coordinates_ follow.
 
 - **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
-- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[(15)](#Note15)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
+- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[**(15)**](#Note15)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
 - **_rg_ chromaticity** (_r_, _g_, _b_) involves RGB colors rather than XYZ colors and is calculated analogously to _xy_ chromaticity.
 
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
@@ -619,24 +619,24 @@ In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to a
 <a id=CIELAB></a>
 ### CIELAB
 
-[CIELAB](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_ or CIE 1976 _L\*a\*b\*_) is a three-dimensional color model designed for color comparisons.<sup>[(16)](#Note16)</sup> In general, CIELAB color spaces differ in their white points.
+[**CIELAB**](https://en.wikipedia.org/wiki/Lab_color_space) (also known as CIE _L\*a\*b\*_ or CIE 1976 _L\*a\*b\*_) is a three-dimensional color model designed for color comparisons.<sup>[**(16)**](#Note16)</sup> In general, CIELAB color spaces differ in their white points.
 
 A color in CIELAB consists of three components, in the following order:
 
 - _L\*_, or _lightness_ of a color (how bright that color appears in comparison to white), is 0 or greater and 100 or less, where 0 is black and 100 is white.
 - _a\*_ is a coordinate of the red/green axis (positive points to red, negative to green).
-- _b\*_ is a coordinate of the yellow/blue axis (positive points to yellow, negative to blue).<sup>[(17)](#Note17)</sup>
+- _b\*_ is a coordinate of the yellow/blue axis (positive points to yellow, negative to blue).<sup>[**(17)**](#Note17)</sup>
 
 _L\*C\*h_ form expresses CIELAB colors as polar coordinates; the three components have the following order:
 
 - Lightness (_L\*_) remains unchanged.
-- _Chroma_ (_C\*_) is the distance of the color from the "gray" line.<sup>[(18)](#Note18)</sup>.
-- _Hue_ (_h_, an angle)<sup>[(11)](#Note11)</sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta
+- _Chroma_ (_C\*_) is the distance of the color from the "gray" line.<sup>[**(18)**](#Note18)</sup>.
+- _Hue_ (_h_, an angle)<sup>[**(11)**](#Note11)</sup> ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta
 
 In the following pseudocode:
 - The following methods convert a companded sRGB color to and from CIELAB:
     - `SRGBToLab` and `SRGBFromLab` treat white as the D65/2 white point.
-    - `SRGBToLabD50` and `SRGBFromLabD50` treat white as the D50/2 white point.<sup>[(13)](#Note13)</sup>
+    - `SRGBToLabD50` and `SRGBFromLabD50` treat white as the D50/2 white point.<sup>[**(13)**](#Note13)</sup>
 - `XYZToLab(xyz, wpoint)` and `LabToXYZ(lab, wpoint)` convert an XYZ color to or from CIELAB, respectively, treating `wpoint` (an XYZ color) as the white point.
 - `LabToChroma(lab)` and `LabToHue(lab)` find a CIELAB color's _chroma_ or _hue_, respectively.
 - `LchToLab(lch)` finds a CIELAB color given a 3-item list of lightness, chroma, and hue (_L\*C\*h_), in that order.
@@ -738,11 +738,11 @@ In the following pseudocode:
 <a id=CIELUV></a>
 ### CIELUV
 
-CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially useful when working with colors of light sources.
+CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially useful when working with colors of light sources.
 
 In the following pseudocode&mdash;
-- the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [CIELAB](#CIELAB), and
-- the `LuvToSaturation` method finds the [_saturation_](https://en.wikipedia.org/wiki/Colorfulness) (_s_<sub>uv</sub>) of a CIELUV color.
+- the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [**CIELAB**](#CIELAB), and
+- the `LuvToSaturation` method finds the [**_saturation_**](https://en.wikipedia.org/wiki/Colorfulness) (_s_<sub>uv</sub>) of a CIELUV color.
 
 &nbsp;
 
@@ -802,9 +802,9 @@ In the following pseudocode&mdash;
 <a id=Y_prime_C_B_C_R></a>
 ### Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>
 
-[Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
+[**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a color model used above all in video encoding.  A color in Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
 
-- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[(19)](#Note19)</sup>
+- Y&prime;, or _luma_, is an integer 16 or greater and 235 or less: 16 for black, and 235 for white.<sup>[**(19)**](#Note19)</sup>
 - C<sub>_B_</sub>, or _blue chroma_, is based on the difference between blue and luma and is an integer 16 or greater and 240 or less.
 - C<sub>_R_</sub>, or _red chroma_, is, based on the difference between red and luma and is an integer 16 or greater and 240 or less.
 
@@ -812,9 +812,9 @@ The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>
 
 - the ITU-R BT.601 variant (for standard-definition digital video), as the `YCbCrToRgb` and `RgbToYCbCr` methods,
 - the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
-- the [JPEG File Interchange Format](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
+- the [**JPEG File Interchange Format**](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-For all these variants, the transformation should be done using [_companded RGB_ colors](#RGB_Color_Spaces).<sup>[(20)](#Note20)</sup>
+For all these variants, the transformation should be done using [**_companded RGB_ colors**](#RGB_Color_Spaces).<sup>[**(20)**](#Note20)</sup>
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
@@ -877,13 +877,13 @@ For all these variants, the transformation should be done using [_companded RGB_
 <a id=CMYK_and_Other_Ink_Mixture_Color_Models></a>
 ### CMYK and Other Ink-Mixture Color Models
 
-The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[Color Mixture](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the _printing condition_ (as defined in ISO 12647-1), including what inks and paper are used and how the inks are printed.
+The _CMYK color model_, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on paper.  However, since color mixture of inks is considerably complex (see "[**Color Mixture**](#Color_Mixture)", later), the proper interpretation of CMYK colors depends on the _printing condition_ (as defined in ISO 12647-1), including what inks and paper are used and how the inks are printed.
 
-**Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [color measurement device](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [CIELAB](#CIELAB) colors under standardized lighting and measurement conditions.
+**Characterization tables.** In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color "patches" and using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices) to measure their [**CIELAB**](#CIELAB) colors under standardized lighting and measurement conditions.
 
-The International Color Consortium maintains a [list of standardized conversions](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
+The International Color Consortium maintains a [**list of standardized conversions**](http://www.color.org/chardata/drsection1.xalter) of CMYK color "patches", usually to CIELAB colors, for different standardized printing conditions.  Such conversions are generally known as _characterization data_ or _characterization tables_.
 
-Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table's "patches".<sup>[(21)](#Note21)</sup>
+Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table's "patches".<sup>[**(21)**](#Note21)</sup>
 
 **Other ink mixtures.** Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that involve inks other than cyan, magenta, yellow, and black (notably "extended gamut" systems of five or more inks, and systems that use custom "spot" color inks) are not yet of general interest to programmers.
 
@@ -903,20 +903,20 @@ Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to 
 <a id=Color_Operations></a>
 ## Color Operations
 
-This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [_linear RGB_ colors](#RGB_Color_Spaces), unless noted otherwise.
+This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.
 
 <a id=Luminance_Factor_Grayscale></a>
 ### Luminance Factor (Grayscale)
 
-The [_luminance factor_](http://eilv.cie.co.at/term/717)&mdash;
+The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
 - is a single number indicating a color's luminance relative to white, that is, how much light reaches the eyes when that color is viewed, in comparison to white,
 - is called **`Luminance(color)`** in this document,
-- is equivalent to the Y component of a relative [XYZ color](#CIE_XYZ), and
+- is equivalent to the Y component of a relative [**XYZ color**](#CIE_XYZ), and
 - ranges from 0 for "black" to 1 for "white".
 
-**Linear RGB.** For [_linear RGB_ colors](#RGB_Color_Spaces), luminance factor is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the luminance factors (relative Y components) of the RGB color space's red, green, and blue points, respectively.  (If a different white point than the RGB color space's usual white point should have a luminance factor of 1, then `r`, `g`, and `b` are the corresponding values after a [_chromatic adaptation transform_](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[(14)](#Note14)</sup>)
+**Linear RGB.** For [**_linear RGB_ colors**](#RGB_Color_Spaces), luminance factor is `(color[0] * r + color[1] * g + color[2] * b)`, where `r`, `g`, and `b` are the luminance factors (relative Y components) of the RGB color space's red, green, and blue points, respectively.  (If a different white point than the RGB color space's usual white point should have a luminance factor of 1, then `r`, `g`, and `b` are the corresponding values after a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another.<sup>[**(14)**](#Note14)</sup>)
 
-**Companded RGB.** Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[(22)](#Note22)</sup>  The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[(13)](#Note13)</sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.
+**Companded RGB.** Applying the formula just given to _companded RGB_ colors results in a value more properly called _luma_, not luminance.<sup>[**(22)**](#Note22)</sup>  The following pseudocode implements `Luminance(color)` for companded sRGB colors (`LuminanceSRGB` and `LuminanceSRGBD50`)<sup>[**(13)**](#Note13)</sup>.  Note that the methods first convert to linear RGB, then apply the formula just given.
 
     // Convert companded sRGB to luminance factor
     METHOD LuminanceSRGB(color)
@@ -935,8 +935,8 @@ The [_luminance factor_](http://eilv.cie.co.at/term/717)&mdash;
 >
 > 1. **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
 > 2. **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
-> 3. **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If `Luminance(color)` is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.  See also "[Contrast Ratio](#Contrast_Ratio)", later.
-> 4. An [_image color list_](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
+> 3. **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If `Luminance(color)` is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.  See also "[**Contrast Ratio**](#Contrast_Ratio)", later.
+> 4. An [**_image color list_**](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
 > 5. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
 > 6. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
@@ -946,13 +946,13 @@ The [_luminance factor_](http://eilv.cie.co.at/term/717)&mdash;
 > - **Blue channel**: `color[2]`.
 > - **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
 > - **Maximum**: `max(max(color[0], color[1]), color[2])`.
-> - **Minimum**: `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [T. Helland's site](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
-> - **Light/dark factor**: A [CIELAB](#CIELAB) or [CIELUV](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [HSL](#HSL) "lightness"; see J. Cook, ["Converting color to grayscale"](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
+> - **Minimum**: `min(min(color[0], color[1]), color[2])`. (This and the previous techniques are also seen on [**T. Helland's site**](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
+> - **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness"; see J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
 
 <a id=Alpha_Blending></a>
 ### Alpha Blending
 
-The `Lerp3` function below<sup>[(23)](#Note23)</sup> gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_. `alpha` is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (see P. Haeberli and D. Voorhees, "[Image Processing by Interpolation and Extrapolation](http://www.graficaobscura.com/interp/index.html)").
+The `Lerp3` function below<sup>[**(23)**](#Note23)</sup> gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_. `alpha` is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (see P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)").
 - **Shade.** Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
 - **Tint.** Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
 - **Tone.** Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
@@ -973,7 +973,7 @@ The `Lerp3` function below<sup>[(23)](#Note23)</sup> gets an _alpha blend_ of tw
 
 The following techniques generate new colors that are related to existing colors.
 
-- **Color harmonies**<sup>[(24)](#Note24)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup>[(11)](#Note11)</sup> to generate the hues for the colors that make up that harmony:
+- **Color harmonies**<sup>[**(24)**](#Note24)</sup> result by generating several colors that differ in hue (hue angle).  For each color harmony given below, the following numbers are added to a hue angle<sup>[**(11)**](#Note11)</sup> to generate the hues for the colors that make up that harmony:
     - **Analogous**: 0, Y, -Y, where Y is 2&pi;/3 or less. In general, _analogous colors_ are colors spaced at equal hue intervals from a central color.
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
@@ -983,16 +983,16 @@ The following techniques generate new colors that are related to existing colors
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
     - **Tetradic**: Double complementary with Y = &pi/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
-- **Monochrome colors**: Colors with the same hue; for example, different [shades, tints, and/or tones](#Alpha_Blending) of a given color are monochrome colors.
+- **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, and/or tones**](#Alpha_Blending) of a given color are monochrome colors.
 
 <a id=Contrast_Ratio></a>
 ### Contrast Ratio
 
 There are two kinds of contrast ratio, among other kinds not covered in this document.
 
-**WCAG Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, `ContrastRatioWCAG` implements the contrast ratio formula described in the [Web Content Accessibility Guidelines 2.0 (WCAG)](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), where `RelLum(color)`&mdash;
+**WCAG Contrast Ratio.** One kind of contrast ratio quantifies how differently two colors appear.  In the pseudocode below, `ContrastRatioWCAG` implements the contrast ratio formula described in the [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast), where `RelLum(color)`&mdash;
 - is the "relative luminance" of a color as defined in the WCAG, and
-- is equivalent to [`Luminance(color)`](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
+- is equivalent to [**`Luminance(color)`**](#Luminance_Factor_Grayscale) whenever WCAG conformity is not important.
 
 &nbsp;
 
@@ -1004,9 +1004,9 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 
 > **Note:** For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.
 
-In general, under the WCAG, a _contrasting color_ is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to ["Understanding WCAG 2.0"](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [color deficiency](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
+In general, under the WCAG, a _contrasting color_ is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to [**"Understanding WCAG 2.0"**](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [**color deficiency**](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
 
-**Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [XYZ color](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
+**Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [**XYZ color**](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
 
 <a id=Porter_ndash_Duff_Formulas></a>
 ### Porter&ndash;Duff Formulas
@@ -1028,7 +1028,7 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 <a id=Blend_Modes></a>
 ### Blend Modes
 
-[Blend modes](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
+[**Blend modes**](https://en.wikipedia.org/wiki/Blend_modes) take a source color and destination color and blend them to create a new color.  The same blend mode, or different blend modes, can be applied to each component of a given color.  In the idioms below, `src` is one component of the source color, `dst` is the same component of the destination color (for example, `src` and `dst` can both be two RGB colors' red components), and both components are assumed to be 0 or greater and 1 or less.  The following are examples of blend modes.
 
 - **Normal**: `src`.
 - **Lighten**: `max(src, dst)`.
@@ -1046,10 +1046,10 @@ Porter and Duff (1984) define twelve formulas for combining (compositing) two RG
 
 A _color matrix_ is a 9-item (3x3) list for transforming colors. The following are examples of color matrices:
 
-- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
+- **Sepia.** Sepia matrices can have the form `[r*sw[0], g*sw[0], b*sw[0], r*sw[1], g*sw[1], b*sw[1], r*sw[2], g*sw[2], b*sw[2]]`, where `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)", and `sw` is the RGB color for "sepia white" (an arbitrary choice).  An example for linear sRGB is: `[0.207,0.696,0.07,0.212,0.712,0.072,0.16,0.538,0.054]`.
 - **Saturate.** `[s+(1-s)*r, (1-s)*g, (1-s)*b, (1-s)*r, s+(1-s)*g,(1-s)*b,(1-s)*r,(1-s)*g,s+(1-s)*b]`, where `s` ranges
-from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[Luminance Factor (Grayscale)](#Luminance_Factor_Grayscale)"<sup>[(25)](#Note25)</sup>.
-- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[(26)](#Note26)</sup><sup>[(25)](#Note25)</sup>
+from 0 through 1 (the greater `s` is, the less saturated), and `r`, `g`, and `b` are as defined in the section "[**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)"<sup>[**(25)**](#Note25)</sup>.
+- **Hue rotate.** `[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]`, where `sr = sin(rotation)`, `cr = cos(rotation)`, and `rotation` is the hue rotation angle.<sup>[**(26)**](#Note26)</sup><sup>[**(25)**](#Note25)</sup>
 
 In the following pseudocode, `TransformColor` transforms an RGB color (`color`) is transformed with a color matrix (`matrix`).
 
@@ -1068,7 +1068,7 @@ The following approaches can generate a lighter or darker version of a color. In
 - **RGB additive.** `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`.
 - **HSL "lightness" additive.** `HslToRgb(hsl[0], hsl[1], min(max(hsl[2] + value, 0), 1))`, where `hsl = RgbToHsl(color)`.
 - **CIELAB.** `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors).
-- **Tints and shades.** A "tint" is a lighter version, and a "shade" is a darker version.  See "[Alpha Blending](#Alpha_Blending)".
+- **Tints and shades.** A "tint" is a lighter version, and a "shade" is a darker version.  See "[**Alpha Blending**](#Alpha_Blending)".
 
 <a id=Saturate_Desaturate></a>
 ### Saturate/Desaturate
@@ -1076,27 +1076,27 @@ The following approaches can generate a lighter or darker version of a color. In
 The following approaches can generate a saturated or desaturated version of a color. In the examples, `color` is an RGB color in 0-1 format, and `value` is positive to saturate a color, or negative to desaturate a color, and -1 or greater and 1 or less.
 
 - **HSV "saturation" additive.** `HsvToRgb(hsv[0], min(max(hsv[1] + color, 0), 1), hsv[2])`, where `hsv = RgbToHsv(color)`.  (Note that HSL's "saturation" is inferior here.)
-- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [alpha blending](#Alpha_Blending) that color with either its [grayscale](#Luminance_Factor_Grayscale) version or an arbitrary shade of gray.
-- **Saturate matrix.**  See "[Color Matrices](#Color_Matrices)".
+- **Tones, or mixtures of gray.** A "tone" is a desaturated version.  A color can be desaturated by [**alpha blending**](#Alpha_Blending) that color with either its [**grayscale**](#Luminance_Factor_Grayscale) version or an arbitrary shade of gray.
+- **Saturate matrix.**  See "[**Color Matrices**](#Color_Matrices)".
 
 <a id=Miscellaneous></a>
 ### Miscellaneous
 
 In the following formulas, `color` is an RGB color in 0-1 format.
 
-- **Invert ("film negative")**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[(27)](#Note27)</sup>
+- **Invert ("film negative")**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[**(27)**](#Note27)</sup>
 - **Swap blue and red channels**: `[color[2], color[1], color[0]]`.
 
 > **Notes:**
 >
 > 1. An RGB color&mdash;
 >     - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
->     - is a ["Web safe" color](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
+>     - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
 >
->     An [_image color list_](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
+>     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 >
 > 2. Raster image processing techniques&mdash;
->     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including [_chroma key_](https://en.wikipedia.org/wiki/Chroma_key)), or
+>     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
 >     - that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),
 >
 >     are largely out of the scope of this document.
@@ -1106,9 +1106,9 @@ In the following formulas, `color` is an RGB color in 0-1 format.
 
 Color difference algorithms are used to determine if two colors are similar.
 
-In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_color difference_](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement `COLORDIFF`.
+In this document, `COLORDIFF(color1, color2)` is a function that calculates a [**_color difference_**](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement `COLORDIFF`.
 
-**Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.  This color difference formula is independent of color model; however, [_linear RGB_ colors](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
+**Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.  This color difference formula is independent of color model; however, [**_linear RGB_ colors**](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
 
     METHOD COLORDIFF(color1, color2)
        d1=color2[0] - color1[0]
@@ -1120,12 +1120,12 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
 
 > **Notes:**
 >
-> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[(28)](#Note28)</sup>.
+> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[**(28)**](#Note28)</sup>.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
-**Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article ["Colour metric"](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
+**Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article [**"Colour metric"**](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
 
-**CMC.** The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two [CIELAB](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
+**CMC.** The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two [**CIELAB**](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
 
 - `LPARAM` is a lightness tolerance and is usually either 2 or 1, and
 - `CPARAM` is a chroma tolerance and is usually 1.
@@ -1160,9 +1160,9 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [_
         return sqrt(dl*dl+dc*dc+dh*dh)
     END METHOD
 
-**CIE94.** This [CIELAB](#CIELAB)-specific formula is detailed on the [supplemental color topics](https://peteroupc.github.io/suppcolor.html#Additional_Color_Formulas) page.
+**CIE94.** This [**CIELAB**](#CIELAB)-specific formula is detailed on the [**supplemental color topics**](https://peteroupc.github.io/suppcolor.html#Additional_Color_Formulas) page.
 
-**CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two [CIELAB](#CIELAB) colors.
+**CIEDE2000.** The following pseudocode implements the color difference formula published in 2000 by the CIE, called CIEDE2000 or _&Delta;E\*_<sub>00</sub>, between two [**CIELAB**](#CIELAB) colors.
 
     METHOD COLORDIFF(lab1, lab2)
         dl=lab2[0]-lab1[0]
@@ -1234,7 +1234,7 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 > **Examples:**
 >
 > - To find the nearest color to `color` in a list of colors (`list`), generate `nearestColor = list[NearestColorIndex(color, list)]`.
-> - Sorting colors into **color categories** can be done by [_k_-means clustering](http://aishack.in/tutorials/kmeans-clustering) (see also the [Wikipedia article](https://en.wikipedia.org/wiki/K-means_clustering)), which involves&mdash;
+> - Sorting colors into **color categories** can be done by [**_k_-means clustering**](http://aishack.in/tutorials/kmeans-clustering) (see also the [**Wikipedia article**](https://en.wikipedia.org/wiki/K-means_clustering)), which involves&mdash;
 >     1. defining a list (`repColors`) of _k_ color points (which, for example, can be representative colors for red, blue, black, white, and so on, or can be colors chosen at random), then
 >     2. for each color (`color`) to be categorized, finding the nearest color to that color among the _k_ color points (for example, by calling `NearestColorIndex(color, repColors)`), then
 >     3. replacing each color point in `repColors` with its new average color (based on the colors that point categorizes), then
@@ -1245,65 +1245,65 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 <a id=Dominant_Colors_of_an_Image></a>
 ## Dominant Colors of an Image
 
-There are several methods of finding the kind or kinds of colors that appear most prominently in an [_image color list_](#Notation_and_Definitions).
+There are several methods of finding the kind or kinds of colors that appear most prominently in an [**_image color list_**](#Notation_and_Definitions).
 
 **Averaging.**  To find the dominant color using this technique&mdash;
 - add all the image color list's colors, or a sample or subset of them (for RGB colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of colors added this way.
 
-Note that for best results, this technique needs to be carried out with [_linear RGB_](#RGB_Color_Spaces) rather than companded RGB colors.
+Note that for best results, this technique needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
-**[Color quantization](https://en.wikipedia.org/wiki/Color_quantization).** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with [_linear RGB_](#RGB_Color_Spaces) rather than companded RGB colors.
+**[**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization).** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
 **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
-- Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of ["Web safe colors"](#RGB_Colors_and_the_0_1_Format).
+- Generate or furnish a list of colors that cover the space of colors well.  This is the _color palette_. A good example is the list of [**"Web safe colors"**](#RGB_Colors_and_the_0_1_Format).
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
-- For each color in the image color list, find its [nearest color](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
+- For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
 
 > **Notes:**
 >
 > 1. For all three techniques, in the case of a raster image, an implementation can scale down that image before proceeding to find its dominant colors.  Algorithms to resize or "resample" images are out of scope for this page, however.
 > 2. Reducing the number of colors in an image usually involves finding that image's dominant colors and either&mdash;
->     - applying a "nearest neighbor" approach (replacing that image's colors with their [nearest dominant colors](#Nearest_Colors)), or
->     - applying a ["dithering"](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
-> 3. Finding the number of _unique_ colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[(29)](#Note29)</sup>
-> 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [color measurement device](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [_scene-referred_ image data](http://eilv.cie.co.at/term/567)<sup>[(30)](#Note30)</sup>. PNG and many other image formats store image data commonly interpreted as [sRGB](#sRGB) by default; however, sRGB is an [_output-referred_](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
+>     - applying a "nearest neighbor" approach (replacing that image's colors with their [**nearest dominant colors**](#Nearest_Colors)), or
+>     - applying a [**"dithering"**](https://en.wikipedia.org/wiki/Dither) technique (especially to reduce undesirable color "banding" in certain cases), which is outside the scope of this document, however.
+> 3. Finding the number of _unique_ colors in an image color list is equivalent to storing those colors as keys in a hash table, then counting the number of keys stored this way.<sup>[**(29)**](#Note29)</sup>
+> 4. **Extracting a scene's "true colors"**: For applications where matching colors from the real world is important, colors need to be measured using a [**color measurement device**](https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices), or be calculated from [**_scene-referred_ image data**](http://eilv.cie.co.at/term/567)<sup>[**(30)**](#Note30)</sup>. PNG and many other image formats store image data commonly interpreted as [**sRGB**](#sRGB) by default; however, sRGB is an [**_output-referred_**](http://eilv.cie.co.at/term/565) color space, not a scene-referred one (it's based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image's colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.
 
 <a id=Color_Maps></a>
 ## Color Maps
 
-A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, [_linear RGB_ colors](#RGB_Color_Spaces) should be used rather than companded RGB colors.
+A _color map_ (or _color palette_) is a list of colors, which are usually related. All the colors in a color map can be in any one color space, but unless noted otherwise, [**_linear RGB_ colors**](#RGB_Color_Spaces) should be used rather than companded RGB colors.
 
 > **Example:** A **grayscale color map** consists of the companded RGB colors `[[0, 0, 0], [0.5, 0.5, 0.5], [1, 1, 1]]`.
 
 <a id=Kinds_of_Color_Maps></a>
 ### Kinds of Color Maps
 
-The [_ColorBrewer 2.0_](http://colorbrewer2.org/) Web site's suggestions for color maps are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [three kinds](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
+The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for color maps are designed above all for visualizing data on land maps.  For such purposes, C. Brewer, the creator of _ColorBrewer 2.0_, has identified [**three kinds**](http://colorbrewer2.org/learnmore/schemes_full.html) of appropriate color maps:
 
 - **Sequential color maps** for showing "ordered data that progress from low to high". Those found in _ColorBrewer 2.0_ use varying tints of the same hue or of two close hues.
-- **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [recommends](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
-- **Qualitative color maps** for showing discrete categories of data (see also "[Visually Distinct Colors](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
+- **Diverging color maps** for showing continuous data with a clearly defined midpoint (the "critical value") and where the distinction between low and high is also visually important. Those found in _ColorBrewer 2.0_ use varying tints of two "contrasting hues", one hue at each end, with lighter tints closer to the middle.  Where such color maps are used in 3D visualizations, K. Moreland [**recommends**](http://www.kennethmoreland.com/color-advice/) "limiting the color map to reasonably bright colors".
+- **Qualitative color maps** for showing discrete categories of data (see also "[**Visually Distinct Colors**](#Visually_Distinct_Colors)"). Those found in _ColorBrewer 2.0_ use varying hues.
 
-> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[(31)](#Note31)</sup> and/or "[color blind friendly](#Defective_and_Animal_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
+> **Note:** The fact that _ColorBrewer 2.0_ identifies some of its color maps as being "print friendly"<sup>[**(31)**](#Note31)</sup> and/or "[**color blind friendly**](#Defective_and_Animal_Color_Vision)" suggests that these two factors can be important when generating color maps of the three kinds just mentioned.
 
 <a id=Color_Collections></a>
 ### Color Collections
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", and "5RP 5/6"<sup>[(32)](#Note32)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [colors tutorial for the HTML 3D Library](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", and "5RP 5/6"<sup>[**(32)**](#Note32)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table), or
-- finding the [nearest color](#Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).<sup>[(29)](#Note29)</sup>
+- finding the [**nearest color**](#Nearest_Colors) to that color among the named colors, and returning the color found this way (and/or that color's name).<sup>[**(29)**](#Note29)</sup>
 
-Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[(29)](#Note29)</sup>
+Converting a color name to a color is equivalent to retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.<sup>[**(29)**](#Note29)</sup>
 
 > **Notes:**
 >
-> - As used in the [CSS color module level 3](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [_sRGB color space_](#sRGB) (as companded colors).
-> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 7.1/2.5") to a color can be done by multidimensional interpolation of the known color points.<sup>[(21)](#Note21)</sup>
+> - As used in the [**CSS color module level 3**](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [**_sRGB color space_**](#sRGB) (as companded colors).
+> - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 7.1/2.5") to a color can be done by multidimensional interpolation of the known color points.<sup>[**(21)**](#Note21)</sup>
 
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
@@ -1311,18 +1311,18 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 Color maps can list colors used to identify different items. Because of this
 use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
-- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[(33)](#Note33)</sup>, the first nine of which
-  were intended for readers with normal and [defective](#Defective_and_Animal_Color_Vision) color vision, and
+- K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[**(33)**](#Note33)</sup>, the first nine of which
+  were intended for readers with normal and [**defective**](#Defective_and_Animal_Color_Vision) color vision, and
 - B. Berlin and P. Kay, in a work published in 1969, identified eleven basic color terms: black, white, gray, purple, pink, red, green, blue, yellow, orange, and brown.
 
-In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color (or rather than color) to help users identify them. (Note that under the [Web Content Accessibility Guidelines 2.0](https://www.w3.org/TR/2008/REC-WCAG20-20081211/) level A, color may not be ["the only visual means of conveying information"](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
+In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly's list) should use other visual means in addition to color (or rather than color) to help users identify them. (Note that under the [**Web Content Accessibility Guidelines 2.0**](https://www.w3.org/TR/2008/REC-WCAG20-20081211/) level A, color may not be [**"the only visual means of conveying information"**](http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color).)
 
 In general, any method that seeks to choose colors that are maximally distant in a particular
-color space (that is, where the smallest [color difference](#Color_Differences) [`COLORDIFF`]
+color space (that is, where the smallest [**color difference**](#Color_Differences) [`COLORDIFF`]
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
 can be limited to those in a particular _color gamut_. Here, the color difference method
-should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[Color Distribution Methodology](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
+should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
 
 <a id=Pseudocode></a>
 ### Pseudocode
@@ -1351,30 +1351,30 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
-The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [_linear RGB_ colors](#RGB_Color_Spaces), unless noted otherwise.
+The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.
 
 - Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`.
-- Generating a random string in the **HTML color format** is equivalent to generating a [random hexadecimal string](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string. But see the [note from earlier](#HTML_Color_Format).
+- Generating a random string in the **HTML color format** is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string. But see the [**note from earlier**](#HTML_Color_Format).
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
 - To generate a random **dark color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
     - generate `color = [RNDU01() * maxComp, RNDU01() * maxComp, RNDU01() * maxComp]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
 - To generate a random **light color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is greater than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than a given threshold, e.g., 0.5, or
     - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
-- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [`Luminance(color)`](#Luminance_Factor_Grayscale) is greater than 0.75 and less than 0.9.
+- One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than 0.75 and less than 0.9.
 - To generate a **random color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
 - To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))`.
 - To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
 - To generate a **random tone** of a given color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))`.
-- To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [hue](#HSV).
+- To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [**hue**](#HSV).
 - **Random color sampling:**
     - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDU01())`.
-    - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also ["Choosing a Random Item from a List"](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-    - To select several random colors from a color map: See ["Choosing Several Unique Items"](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
-- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [earlier](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
-- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [_hash function_](https://peteroupc.github.io/random.html#Hash_Functions).
+    - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
+    - To select several random colors from a color map: See [**"Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
+- **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
+- **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions).
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
@@ -1389,13 +1389,13 @@ The SPD, the reflectance or transmittance curve, and the color-matching function
 
 The pseudocode below includes a `SpectrumToTristim` method for computing tristimulus values.  In the method:
 
-- `lightFunc(wl)`, `reflFunc(wl)`, and `cmfFunc(wl)` are arbitrary functions further described later.  All three take a [_wavelength_](http://eilv.cie.co.at/term/1426) (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
+- `lightFunc(wl)`, `reflFunc(wl)`, and `cmfFunc(wl)` are arbitrary functions further described later.  All three take a [**_wavelength_**](http://eilv.cie.co.at/term/1426) (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
 - `lightFunc(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`. Choices for `lightFunc` include&mdash;
-    - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [Python sample code](https://peteroupc.github.io/colorutil.zip) for implementation),
-    - the `BlackbodySPD` method given in "[Color Temperature](#Color_Temperature)", and
+    - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [**Python sample code**](https://peteroupc.github.io/colorutil.zip) for implementation),
+    - the `BlackbodySPD` method given in "[**Color Temperature**](#Color_Temperature)", and
     - the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.
 - `reflFunc(wl)` models the **reflectance or transmittance curve** and returns the value of that curve at the wavelength `wl`; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)
-- `cmfFunc(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `cmfFunc` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `cmfFunc` include the CIE 1931 or 1964 _standard observer_, which is used to generate [XYZ colors](#CIE_XYZ) based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup>[(1)](#Note1)</sup><sup>[(34)](#Note34)</sup>
+- `cmfFunc(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `cmfFunc` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `cmfFunc` include the CIE 1931 or 1964 _standard observer_, which is used to generate [**XYZ colors**](#CIE_XYZ) based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup>[**(1)**](#Note1)</sup><sup>[**(34)**](#Note34)</sup>
 
 &nbsp;
 
@@ -1437,16 +1437,16 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 > **Notes:**
 >
 > 1. Although `lightFunc`, `reflFunc`, and `cmfFunc` are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `cmfFunc` and `lightFunc`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
-> 2. **Metamerism** occurs when two materials match the same color under one viewing situation (such as light source, `lightFunc`, and/or viewer, `cmfFunc`), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`reflFunc`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`reflFunc`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also [B. MacEvoy's principle 38](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
-> 3. The [Python sample code](https://peteroupc.github.io/colorutil.zip) includes an `sRGBToSPD` method that generates a representative reflectance curve from a companded sRGB color, based on [work by S. A. Burns](http://scottburns.us/reflectance-curves-from-srgb/).
+> 2. **Metamerism** occurs when two materials match the same color under one viewing situation (such as light source, `lightFunc`, and/or viewer, `cmfFunc`), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`reflFunc`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`reflFunc`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also [**B. MacEvoy's principle 38**](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
+> 3. The [**Python sample code**](https://peteroupc.github.io/colorutil.zip) includes an `sRGBToSPD` method that generates a representative reflectance curve from a companded sRGB color, based on [**work by S. A. Burns**](http://scottburns.us/reflectance-curves-from-srgb/).
 >
 > **Examples:**  In these examples, `D65` is the D65 illuminant, `D50` is the D50 illuminant, `CIE1931` is the CIE 1931 standard observer, and `refl` is an arbitrary reflectance curve.
 >
-> 1. `SpectrumToTristim(refl, D65, CIE1931)` computes the reflectance curve's [XYZ color](#CIE_XYZ) (where a Y of 1 is the D65/2 white point).
+> 1. `SpectrumToTristim(refl, D65, CIE1931)` computes the reflectance curve's [**XYZ color**](#CIE_XYZ) (where a Y of 1 is the D65/2 white point).
 > 2. `SpectrumToTristim(refl, D50, CIE1931)` is the same, except white is the D50/2 white point.
 > 3. `SpectrumToTristim(PerfectWhite, light, cmf)` computes the white point for the given illuminant `light` and the color matching functions `cmf`.
 > 4. `SpectrumToTristim(PerfectWhite, D65, CIE1931)` computes the D65/2 white point.
-> 5. `XYZTosRGB(SpectrumToTristim(refl, D65, CIE1931))` computes the reflectance curve's [companded sRGB](#RGB_Color_Spaces) color.
+> 5. `XYZTosRGB(SpectrumToTristim(refl, D65, CIE1931))` computes the reflectance curve's [**companded sRGB**](#RGB_Color_Spaces) color.
 > 6. `XYZTosRGB(CIE1931(wl))` computes the companded sRGB color of a light source that emits light only at the wavelength `wl` (a _monochromatic stimulus_), where the wavelength is expressed in nm.
 
 <a id=Color_Temperature></a>
@@ -1454,7 +1454,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).<sup>[(35)](#Note35)</sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
+The `Planckian` method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).<sup>[**(35)**](#Note35)</sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
@@ -1472,9 +1472,9 @@ The `Planckian` method shown below models the spectral power distribution (SPD) 
 
 > **Note:** If `TEMP` is 2856, the `BlackbodySPD` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [_correlated color temperature_](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[(15)](#Note15)</sup> to that of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.)
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[**(15)**](#Note15)</sup> to that of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.)
 
-The following method (`XYZToCCT`), which computes an approximate CCT from an [XYZ color](#CIE_XYZ), is based on the formula found in McCamy 1992.
+The following method (`XYZToCCT`), which computes an approximate CCT from an [**XYZ color**](#CIE_XYZ), is based on the formula found in McCamy 1992.
 
     METHOD XYZToCCT(xyz)
         xyy = XYZToxyY(xyz)
@@ -1489,9 +1489,9 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [XY
 
 The mixture of two colorants is quite complex, and there are several approaches to simulating this kind of color mixture.
 
-- As [S. A. Burns indicates](https://web.archive.org/web/20170917204927/http://www.scottburns.us/subtractive-color-mixture/), two or more [_reflectance curves_](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
-  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup>[(36)](#Note36)</sup>
-- As [B. MacEvoy indicates](http://www.handprint.com/HP/WCL/color3.html#mixprofile), two or more spectral curves for **transmissive materials** can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.
+- As [**S. A. Burns indicates**](http://www.scottburns.us/subtractive-color-mixture/), two or more [**_reflectance curves_**](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
+  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup>[**(36)**](#Note36)</sup>
+- As [**B. MacEvoy indicates**](http://www.handprint.com/HP/WCL/color3.html#mixprofile), two or more spectral curves for **transmissive materials** can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.
 - An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described in a 1985 thesis by E. Walowit.  ISO 18314-2 is also a relevant document.
 
 For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where&mdash;
@@ -1546,7 +1546,7 @@ The following topics would greatly enrich this document:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> The CIE publishes [tabulated data](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</small>
+<small><sup id=Note1>(1)</sup> The CIE publishes [**tabulated data**](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</small>
 
 <small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving "red, yellow, and blue", "primary/secondary/tertiary" colors, or using a "color wheel" to "predict" color mixtures.  Also deliberately missing are discussions on color psychology, "color forecasting", or color in natural language, all topics that are generally irrelevant in programming.</small>
 
@@ -1555,19 +1555,19 @@ The following topics would greatly enrich this document:
 <small><sup id=Note4>(4)</sup> Color perception is influenced by the three things that make color possible:
 - _Light._ For example, natural daylight and sunlight change how they render colors depending on time of day and year, place, and weather.
 - _Objects._ A material's surface properties such as gloss, transparency, haze, and more affect color perception.
-- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [wide observer variation](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
+- _Observers._ Different observers "see" colors differently due to aging, culture, defective color vision, personal experience, kind of observer (human, camera, lens, animal, etc.), and more. B. MacEvoy documents the [**wide observer variation**](http://www.handprint.com/HP/WCL/color2.html#individualdiffs) even among people with normal color vision.</small>
 
 <small><sup id=Note5>(5)</sup> Standing for long, medium, and short wavelength, respectively.  It's not quite accurate to speak of "red", "green", and "blue" cones, respectively.</small>
 
 <small><sup id=Note6>(6)</sup> The light-dark signal is roughly the sum of the three cone responses; the red/green signal is roughly the M response minus the L response; and the blue/yellow signal is roughly the sum of the M and L responses minus the S response.  The theory of opponent colors is largely due to E. Hering's work and was reconciled with the three-cone theory around the mid-20th century (for example, through work by Hurvich and Jameson).</small>
 
-<small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see "[Color Blindness Simulation Research](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
+<small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
 
 <small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or electronic displays.</small>
 
 <small><sup id=Note9>(9)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small>
 
-<small><sup id=Note10>(10)</sup> A [Working Draft](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
+<small><sup id=Note10>(10)</sup> A [**Working Draft**](http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation) of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;
 
 - an 8-digit format, consisting of "#" followed by eight base-16 digits, two each for the red, green, blue, and alpha components, in that order, and
 - a 4-digit format, consisting of "#" followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, "#345F" is the same as "#334455FF" in the 8-digit format).</small>
@@ -1577,41 +1577,41 @@ The following topics would greatly enrich this document:
 <small><sup id=Note12>(12)</sup> In interior and architectural design, the luminance factor multiplied by 100 is also known as _light reflectance value_ (LRV).</small>
 
 <small><sup id=Note13>(13)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
-- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [before it was corrected](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, ["Why the printing industry is not using D65?"](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332), 2009).</small>
+- Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
+- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332), 2009).</small>
 
-<small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[The Luminance of an sRGB Color](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
+<small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
-<small><sup id=Note15>(15)</sup> [CIE Technical Note 001:2014](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [Euclidean distance](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
+<small><sup id=Note15>(15)</sup> [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
 _uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).</small>
 
 <small><sup id=Note16>(16)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
-- CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [B. Lindbloom](http://www.brucelindbloom.com/index.html?UPLab.html), and
+- CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
 - such a claim "is really only the case for very low spatial frequencies", according to P. Kovesi (P. Kovesi, "Good Colour Maps: How to Design Them", arXiv:1509.03700 [cs.GR], 2015).</small>
 
 <small><sup id=Note17>(17)</sup> The placement of the _L\*_, _a\*_, and _b\*_ axes is related to the light-dark signal and the two opponent signals red/green and blue/yellow. See also endnote 6.</small>
 
-<small><sup id=Note18>(18)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are subjective terms: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) of an area in proportion to its brightness. (See also the CIE's International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on [colorfulness](https://en.wikipedia.org/wiki/Colorfulness)).</small>
+<small><sup id=Note18>(18)</sup> The terms _lightness_ and _chroma_ are relative to an area appearing white.  The corresponding terms _brightness_ and _saturation_, respectively, are subjective terms: _brightness_ is the perceived degree of reflected or emitted light, and _saturation_ is the perceived hue strength (_colorfulness_) of an area in proportion to its brightness. (See also the CIE's International Lighting Vocabulary.) CIELAB has no formal saturation formula, however (see the Wikipedia article on [**colorfulness**](https://en.wikipedia.org/wiki/Colorfulness)).</small>
 
-<small><sup id=Note19>(19)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [companded RGB colors](#RGB_Color_Spaces), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  (See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
+<small><sup id=Note19>(19)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**companded RGB colors**](#RGB_Color_Spaces), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
 
 <small><sup id=Note20>(20)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linear RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of general interest to programmers.</small>
 
-<small><sup id=Note21>(21)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [`griddata`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
+<small><sup id=Note21>(21)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [**`griddata`**](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
 
-<small><sup id=Note22>(22)</sup> See C. Poynton, ["_YUV_ and _luminance_ considered harmful"](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).</small>
+<small><sup id=Note22>(22)</sup> See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).</small>
 
 <small><sup id=Note23>(23)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
-where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [in another page](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).</small>
+where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [**in another page**](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).</small>
 
-<small><sup id=Note24>(24)</sup> B. MacEvoy calls these [_hue harmonies_](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [summary of harmonious color relationships](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
+<small><sup id=Note24>(24)</sup> B. MacEvoy calls these [**_hue harmonies_**](http://www.handprint.com/HP/WCL/tech13.html#harmonies).  See also his [**summary of harmonious color relationships**](http://www.handprint.com/HP/WCL/tech13.html#harmonyoverview).</small>
 
-<small><sup id=Note25>(25)</sup> P. Haeberli, ["Matrix Operations for Image Processing"](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.</small>
+<small><sup id=Note25>(25)</sup> P. Haeberli, [**"Matrix Operations for Image Processing"**](http://www.graficaobscura.com/matrix/index.html), 1993.  The hue rotation matrix given was generated using the technique in the section "Hue Rotation While Preserving Luminance", with constants rounded to five significant digits and with `rwgt=0.2126`, `gwgt=0.7152`, and `bwgt = 0.0722`, the sRGB luminance factors for the red, green, and blue points.  For the saturation and hue rotation matrices, the sRGB luminance factors are used rather than the values recommended by the source.</small>
 
 <small><sup id=Note26>(26)</sup> The hue rotation angle is in radians, and the angle is greater than -2&pi; and less than 2&pi;. Degrees can be converted to radians by multiplying by `pi / 180`.</small>
 
-<small><sup id=Note27>(27)</sup> This is often called the "CMY" ("cyan-magenta-yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
+<small><sup id=Note27>(27)</sup> This is often called the "CMY" ("cyan-magenta-yellow") version of the RGB color (although the resulting color is not necessarily based on a proportion of cyan, magenta, and yellow inks; see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").  If such an operation is used, the conversions between "CMY" and RGB are exactly the same.</small>
 
 <small><sup id=Note28>(28)</sup> The "E" here stands for the German word _Empfindung_.</small>
 
@@ -1619,18 +1619,18 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note30>(30)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an image data transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small>
 
-<small><sup id=Note31>(31)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[CMYK and Other Ink-Mixture Color Models](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
+<small><sup id=Note31>(31)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
 
 <small><sup id=Note32>(32)</sup> Many color collections are represented by swatches of paper or fabric and/or found in paper "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
 
-<small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [HTML color format](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
+<small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [**HTML color format**](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
 
-<small><sup id=Note34>(34)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [Wyman, Sloan, and Shirley 2013](http://jcgt.org/published/0002/02/01/).</small>
+<small><sup id=Note34>(34)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [**Wyman, Sloan, and Shirley 2013**](http://jcgt.org/published/0002/02/01/).</small>
 
-<small><sup id=Note35>(35)</sup> See also J. Walker, "[Colour Rendering of Spectra](http://www.fourmilab.ch/documents/specrend/)".</small>
+<small><sup id=Note35>(35)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
 
-<small><sup id=Note36>(36)</sup> As [B. MacEvoy explains](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [principles 39 to 41](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
+<small><sup id=Note36>(36)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
 <a id=License></a>
 ## License
-This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).
+This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

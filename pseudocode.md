@@ -1,6 +1,6 @@
 # Pseudocode Conventions
 
-[Peter Occil](mailto:poccil14@gmail.com)
+[**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
 ## Introduction
@@ -10,13 +10,13 @@ This document explains the conventions and common functions used in some of my a
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Symbols](#Symbols)
-- [Lists and Files](#Lists_and_Files)
-- [Functions](#Functions)
-- [Pseudocode Notes](#Pseudocode_Notes)
-- [License](#License)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Symbols**](#Symbols)
+- [**Lists and Files**](#Lists_and_Files)
+- [**Functions**](#Functions)
+- [**Pseudocode Notes**](#Pseudocode_Notes)
+- [**License**](#License)
 
 <a id=Symbols></a>
 ## Symbols
@@ -82,4 +82,4 @@ In the pseudocode:
 
 <a id=License></a>
 ## License
-This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).
+This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
