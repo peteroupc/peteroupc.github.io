@@ -13,12 +13,12 @@
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#3D_Line">3D Line</a></li>
-<li><a href="#Floor">Floor</a></li>
-<li><a href="#Striped_Disk">Striped Disk</a></li>
-<li><a href="#Washer">Washer</a></li>
-<li><a href="#Miscellaneous">Miscellaneous</a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#3D_Line"><strong>3D Line</strong></a></li>
+<li><a href="#Floor"><strong>Floor</strong></a></li>
+<li><a href="#Striped_Disk"><strong>Striped Disk</strong></a></li>
+<li><a href="#Washer"><strong>Washer</strong></a></li>
+<li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
 </ul>
 
 <p><a id=3D_Line></a></p>
@@ -50,7 +50,7 @@ function create3DLine(point1,point2,thickness){
 
 <p>This method creates a flat tiled floor.</p>
 
-<p><img src="floor.png" alt="Image of a floor"></p>
+<p><img src="floor.png" alt="**Image of a floor**"></p>
 
 <pre>// xStart, yStart - X and Y coordinates of the start of the floor
 // width, height - Width and height of the floor
@@ -90,7 +90,7 @@ function makeFloor(xStart,yStart,width,height,tileSize,z){
 
 <p>This method creates a ring or disk striped in two colors.</p>
 
-<p><img src="mesh2.png" alt="Image of a disk striped in red and almost-white"></p>
+<p><img src="mesh2.png" alt="**Image of a disk striped in red and almost-white**"></p>
 
 <pre>// inner, outer - inner and outer radius of the disk
 // color1, color2 - colors of each stripe; for example:
@@ -119,7 +119,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 
 <p>This method creates a washer-shaped 3D model.</p>
 
-<p><img src="mesh3.png" alt="Image of a washer"></p>
+<p><img src="mesh3.png" alt="**Image of a washer**"></p>
 
 <pre>function createWasher(inner,outer,height,slices){
   var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);

@@ -1,30 +1,30 @@
 # Supplemental Color Topics for Programmers
 
-[Peter Occil](mailto:poccil14@gmail.com)
+[**Peter Occil**](mailto:poccil14@gmail.com)
 
 <a id=Introduction></a>
 ## Introduction
 
-This document presents supplemental topics about color.  They add to my article on [color topics for programmers](https://peteroupc.github.io/colorgen.html).
+This document presents supplemental topics about color.  They add to my article on [**color topics for programmers**](https://peteroupc.github.io/colorgen.html).
 
 <a id=Contents></a>
 ## Contents
 
-- [Introduction](#Introduction)
-- [Contents](#Contents)
-- [Notation and Definitions](#Notation_and_Definitions)
-- [Kinds of Color Spaces](#Kinds_of_Color_Spaces)
-- [Calculating the Mean Hue Angle](#Calculating_the_Mean_Hue_Angle)
-- [Additional Color Formats](#Additional_Color_Formats)
-- [Additional Color Models](#Additional_Color_Models)
-    - [HSI](#HSI)
-    - [Hunter L,a,b](#Hunter_L_a_b)
-- [Additional Color Formulas](#Additional_Color_Formulas)
-- [Terminal Graphics](#Terminal_Graphics)
-- [Color Measurement Devices](#Color_Measurement_Devices)
-- [Irrelevant Topics](#Irrelevant_Topics)
-- [Notes](#Notes)
-- [License](#License)
+- [**Introduction**](#Introduction)
+- [**Contents**](#Contents)
+- [**Notation and Definitions**](#Notation_and_Definitions)
+- [**Kinds of Color Spaces**](#Kinds_of_Color_Spaces)
+- [**Calculating the Mean Hue Angle**](#Calculating_the_Mean_Hue_Angle)
+- [**Additional Color Formats**](#Additional_Color_Formats)
+- [**Additional Color Models**](#Additional_Color_Models)
+    - [**HSI**](#HSI)
+    - [**Hunter L,a,b**](#Hunter_L_a_b)
+- [**Additional Color Formulas**](#Additional_Color_Formulas)
+- [**Terminal Graphics**](#Terminal_Graphics)
+- [**Color Measurement Devices**](#Color_Measurement_Devices)
+- [**Irrelevant Topics**](#Irrelevant_Topics)
+- [**Notes**](#Notes)
+- [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
@@ -40,12 +40,12 @@ _Color spaces_ are designed to organize colors.  They can be categorized as any 
 
 - **Device-dependent** color spaces are based on how devices display or record color.  Such color spaces include&mdash;
     - **light-mixture color spaces**, based on mixtures of colored light sources (such as RGB, red-green-blue), and
-    - **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup>[(1)](#Note1)</sup>
+    - **colorant-mixture color spaces**, based on mixtures of inks, dyes, or other colorants (such as CMYK, cyan-magenta-yellow-black).<sup>[**(1)**](#Note1)</sup>
 
     A color space defined in terms of a device-dependent color space is itself device-dependent.  Examples of this include HSL, HSV, and HWB, which transform an RGB color space to ease intuition.
 - **Device-independent** color spaces are other than device dependent (including color spaces based on how humans perceive color).  These include XYZ color spaces as well as color spaces defined in terms of the XYZ color model, such as CIELAB and CIELUV.
 - **Lightness-based** color spaces have three dimensions, one of which is a light-dark dimension and the other two of which are _chromatic_ dimensions.  Examples include HSL, CIE _L\*C\*h_, CIE XYZ, and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Of these color spaces:
-    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[(2)](#Note2)</sup>
+    - **Opponent** color spaces are arranged in three axes: black/white, red/green, and blue/yellow.  Examples include CIELAB and Hunter L,a,b.<sup>[**(2)**](#Note2)</sup>
 - **Hue-based** color spaces have three dimensions, one of which is hue.  Examples include HSL, HSV, and CIE _L\*C\*h_.
 
 <a id=Calculating_the_Mean_Hue_Angle></a>
@@ -71,7 +71,7 @@ The `MeanAngle` method, as given in the pseudocode below, finds the average of o
 <a id=Additional_Color_Formats></a>
 ## Additional Color Formats
 
-The following color formats express RGB colors in [8/8/8 format](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
+The following color formats express RGB colors in [**8/8/8 format**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
 
 - **Delphi** format: Consists of "$00" followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.
 - **Visual Basic** format: Consists of "&H" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
@@ -90,7 +90,7 @@ A color following the HSI color model consists of three components, in the follo
 - A component called "saturation" is 0 or greater and 1 or less.
 - A component called "intensity", the average of the red, green, and blue components, is 0 or greater and 1 or less.
 
-The conversions given below are independent of RGB color space, but should be done using [_linear RGB_ colors](https://peteroupc.github.io/colorgen.html#RGB_Color_Spaces).
+The conversions given below are independent of RGB color space, but should be done using [**_linear RGB_ colors**](https://peteroupc.github.io/colorgen.html#RGB_Color_Spaces).
 
     METHOD RgbToHsi(rgb)
         sum=rgb[0]+rgb[1]+rgb[2]
@@ -144,7 +144,7 @@ The conversion between XYZ and Hunter L,a,b colors is as given below.
 
 The `LabToHue`, `LabToChroma`, `LabHueDifference`,
 `LabChromaHueDifference`, and
-`LchToLab` methods from the [discussion on CIELAB colors](colorgen.html#CIELAB) work with
+`LchToLab` methods from the [**discussion on CIELAB colors**](colorgen.html#CIELAB) work with
 Hunter L, a, b colors analogously to CIELAB colors.
 
 The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delta;b_, or _&Delta;C_, respectively), between two Hunter L, a, b colors is simply the difference between the corresponding value of the second Hunter L, a, b color and that of the first.
@@ -152,7 +152,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 <a id=Additional_Color_Formulas></a>
 ## Additional Color Formulas
 
-**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [CIELAB](#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
+**CIE94.** The following pseudocode implements the color difference formula published in 1994 by the CIE, called CIE94 or _&Delta;E\*_<sub>94</sub>, between two [**CIELAB**](#CIELAB) colors.  Note that in this formula, the order of the two colors is important (the first color is the reference, and the second color is the test).  In the pseudocode below, `TEXTILES` is `true` for a color difference suitable for textile applications, and `false` otherwise.
 
     METHOD COLORDIFF(lab1, lab2)
         c1=LabToChroma(lab1)
@@ -178,7 +178,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 <a id=Terminal_Graphics></a>
 ## Terminal Graphics
 
-Some command-line shells support coloring the background or foreground of text.  In shells that support ["ANSI" (American National Standards Institute) color codes](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
+Some command-line shells support coloring the background or foreground of text.  In shells that support [**"ANSI" (American National Standards Institute) color codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[**" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
 - "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
 - "1": Set the following text in bold.
@@ -202,7 +202,7 @@ Measuring color is not like pointing and shooting with a camera, and it's not li
 
 There are two general kinds of color measurement devices: _colorimeters_ and _spectrophotometers_.  In general:
 - A _colorimeter_ detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three _tristimulus values_ that identify a particular color.
-- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
+- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_**](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
 
 Color measurements of the same sample can vary depending on many things, including&mdash;
 - how the sample is prepared,
@@ -213,9 +213,9 @@ Color measurements of the same sample can vary depending on many things, includi
 - the measurement device's aperture (sample view area), and
 - for spectrophotometers, the wavelength range, resolution, and bandwidth of measurement.
 
-Several [application notes](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.  Color measurements should also be repeatable, but how to ensure this is outside the scope of this section.
+Several [**application notes**](https://www.hunterlab.com/application-notes.html) by HunterLab (AN 1018, AN 1031, AN 1033) provide more detailed information.  Color measurements should also be repeatable, but how to ensure this is outside the scope of this section.
 
-At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, [several colorimeters](https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/) are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [selection](http://www.argyllcms.com/doc/instruments.html) of color measurement devices.
+At the time of this writing, most color measurement devices are still expensive and mostly for professional use.  However, [**several colorimeters**](https://www.coltechcon.com/publication/overview-low-cost-color-capture-devices/) are available in the consumer market, as is a limited selection of spectrophotometers.  G. W. Gill describes a [**selection**](http://www.argyllcms.com/doc/instruments.html) of color measurement devices.
 
 <a id=Irrelevant_Topics></a>
 ## Irrelevant Topics
@@ -229,12 +229,12 @@ The following topics on color are rarely relevant to programmers:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [ACES2065-1 RGB color space](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;
-- "additive mixture" should not be used to mean light mixture, but rather to mean [_additive mixture of color stimuli_](http://eilv.cie.co.at/term/24), and
+<small><sup id=Note1>(1)</sup> The colors that such lights or colorants are based on can be called "primary colors"; it's only in the context of light-mixture, colorant-mixture, or opponent color spaces that "primary colors" are normally relevant to programming.  Note that some light-mixture color spaces, such as the [**ACES2065-1 RGB color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), include imaginary points for one or more "primary colors" in exchange for covering a range of colors not normally possible otherwise.  Moreover, in my opinion&mdash;
+- "additive mixture" should not be used to mean light mixture, but rather to mean [**_additive mixture of color stimuli_**](http://eilv.cie.co.at/term/24), and
 - "subtractive mixture" is an inferior term to colorant mixture.</small>
 
 <small><sup id=Note2>(2)</sup> In the context of such color spaces, the colors red, green, blue, and yellow are often called the _unique hues_, and those colors, with or without white and black, can be called "primary colors".  Here, such "primary colors" serve more to anchor the location of a particular color in the color space than to "mix all colors" or represent specific light sources or colorants.</small>
 
 <a id=License></a>
 ## License
-This page is licensed under [Creative Commons Zero](https://creativecommons.org/publicdomain/zero/1.0/).
+This page is licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

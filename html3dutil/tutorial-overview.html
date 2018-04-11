@@ -31,45 +31,45 @@
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Public_Domain_HTML_3D_Library">Public-Domain HTML 3D Library</a></li>
-<li><a href="#Example">Example</a></li>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#How_to_Use">How to Use</a>
+<li><a href="#Public_Domain_HTML_3D_Library"><strong>Public-Domain HTML 3D Library</strong></a></li>
+<li><a href="#Example"><strong>Example</strong></a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#How_to_Use"><strong>How to Use</strong></a>
 
 <ul>
-<li><a href="#List_of_Classes">List of Classes</a></li>
-<li><a href="#H3DU_Scene3D"><code>H3DU.Scene3D</code></a></li>
-<li><a href="#The_Camera">The &quot;Camera&quot;</a></li>
-<li><a href="#3D_Models">3D Models</a></li>
-<li><a href="#Shapes">Shapes</a></li>
-<li><a href="#The_Render_Loop">The Render Loop</a></li>
+<li><a href="#List_of_Classes"><strong>List of Classes</strong></a></li>
+<li><a href="#H3DU_Scene3D"><strong><code>H3DU.Scene3D</code></strong></a></li>
+<li><a href="#The_Camera"><strong>The &quot;Camera&quot;</strong></a></li>
+<li><a href="#3D_Models"><strong>3D Models</strong></a></li>
+<li><a href="#Shapes"><strong>Shapes</strong></a></li>
+<li><a href="#The_Render_Loop"><strong>The Render Loop</strong></a></li>
 </ul></li>
-<li><a href="#A_Skeleton_for_3D_Apps">A Skeleton for 3D Apps</a></li>
-<li><a href="#Demos">Demos</a>
+<li><a href="#A_Skeleton_for_3D_Apps"><strong>A Skeleton for 3D Apps</strong></a></li>
+<li><a href="#Demos"><strong>Demos</strong></a>
 
 <ul>
-<li><a href="#Simple_Demos">Simple Demos</a></li>
-<li><a href="#Materials">Materials</a></li>
-<li><a href="#Shapes_and_meshes">Shapes and meshes</a></li>
-<li><a href="#Paths">Paths</a></li>
-<li><a href="#Curves_and_Surfaces">Curves and Surfaces</a></li>
-<li><a href="#Textures">Textures</a></li>
-<li><a href="#Shaders">Shaders</a></li>
-<li><a href="#Particle_Systems">Particle Systems</a></li>
-<li><a href="#Loading_3D_Models">Loading 3D Models</a></li>
-<li><a href="#Selecting_Objects">Selecting Objects</a></li>
-<li><a href="#Lights">Lights</a></li>
-<li><a href="#Text">Text</a></li>
-<li><a href="#Projections">Projections</a></li>
-<li><a href="#Miscellaneous">Miscellaneous</a></li>
+<li><a href="#Simple_Demos"><strong>Simple Demos</strong></a></li>
+<li><a href="#Materials"><strong>Materials</strong></a></li>
+<li><a href="#Shapes_and_meshes"><strong>Shapes and meshes</strong></a></li>
+<li><a href="#Paths"><strong>Paths</strong></a></li>
+<li><a href="#Curves_and_Surfaces"><strong>Curves and Surfaces</strong></a></li>
+<li><a href="#Textures"><strong>Textures</strong></a></li>
+<li><a href="#Shaders"><strong>Shaders</strong></a></li>
+<li><a href="#Particle_Systems"><strong>Particle Systems</strong></a></li>
+<li><a href="#Loading_3D_Models"><strong>Loading 3D Models</strong></a></li>
+<li><a href="#Selecting_Objects"><strong>Selecting Objects</strong></a></li>
+<li><a href="#Lights"><strong>Lights</strong></a></li>
+<li><a href="#Text"><strong>Text</strong></a></li>
+<li><a href="#Projections"><strong>Projections</strong></a></li>
+<li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
 </ul></li>
-<li><a href="#Example_2">Example</a></li>
-<li><a href="#History">History</a>
+<li><a href="#Example_2"><strong>Example</strong></a></li>
+<li><a href="#History"><strong>History</strong></a>
 
 <ul>
-<li><a href="#Version_2_0_0_beta3">Version 2.0.0-beta3</a></li>
-<li><a href="#Version_2_0_0_beta2">Version 2.0.0-beta2</a></li>
-<li><a href="#Version_2_0_0_beta1">Version 2.0.0-beta1:</a></li>
+<li><a href="#Version_2_0_0_beta3"><strong>Version 2.0.0-beta3</strong></a></li>
+<li><a href="#Version_2_0_0_beta2"><strong>Version 2.0.0-beta2</strong></a></li>
+<li><a href="#Version_2_0_0_beta1"><strong>Version 2.0.0-beta1:</strong></a></li>
 </ul></li>
 </ul>
 
@@ -106,32 +106,32 @@ window.addEventListener(&quot;load&quot;,function(){
 <p>This is an overview of most of the JavaScript classes available in this library:</p>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.html"><code>H3DU</code></a> - Contains various utility methods in the HTML 3D Library</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html"><code>H3DU.Math</code></a> - Contains math methods useful in 3D applications, such as matrices and vectors</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Mesh.html"><code>H3DU.Mesh</code></a> - Helper class for building a 3D model</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html"><code>H3DU.MeshBuffer</code></a> - Represents a 3D model</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Meshes.html"><code>H3DU.Meshes</code></a> - Contains methods for generating common 3D models.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Material.html"><code>H3DU.Material</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html"><code>H3DU.PbrMaterial</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.Texture.html"><code>H3DU.Texture</code></a> - Represents textures and colors for a 3D object&#39;s appearance.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Lights.html"><code>H3DU.Lights</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.LightSource.html"><code>H3DU.LightSource</code></a> - Represents light sources</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>H3DU.Batch3D</code></a> - Represents a collection of shapes to draw and a projection and view.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.FrameBufferInfo.html"><code>H3DU.FrameBufferInfo</code></a> - Describes a frame buffer, or an offscreen buffer for rendering graphics content.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html"><code>H3DU.ShaderInfo</code></a> - Represents a GLSL shader program</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Shape.html"><code>H3DU.Shape</code></a> - Represents an instance of a 3D shape with its own transform and appearance</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html"><code>H3DU.ShapeGroup</code></a> - Represents a group of 3D shapes</li>
-<li> <a href="https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html"><code>H3DU.BSplineCurve</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html"><code>H3DU.BSplineSurface</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.CurveBuilder.html"><code>H3DU.CurveBuilder</code></a>,
-<a href="https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html"><code>H3DU.SurfaceBuilder</code></a> - Supports generating parametric curves and surfaces</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.html"><strong><code>H3DU</code></strong></a> - Contains various utility methods in the HTML 3D Library</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Math.html"><strong><code>H3DU.Math</code></strong></a> - Contains math methods useful in 3D applications, such as matrices and vectors</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Mesh.html"><strong><code>H3DU.Mesh</code></strong></a> - Helper class for building a 3D model</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html"><strong><code>H3DU.MeshBuffer</code></strong></a> - Represents a 3D model</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Meshes.html"><strong><code>H3DU.Meshes</code></strong></a> - Contains methods for generating common 3D models.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Material.html"><strong><code>H3DU.Material</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.PbrMaterial.html"><strong><code>H3DU.PbrMaterial</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.Texture.html"><strong><code>H3DU.Texture</code></strong></a> - Represents textures and colors for a 3D object&#39;s appearance.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Lights.html"><strong><code>H3DU.Lights</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.LightSource.html"><strong><code>H3DU.LightSource</code></strong></a> - Represents light sources</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><strong><code>H3DU.Batch3D</code></strong></a> - Represents a collection of shapes to draw and a projection and view.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.FrameBufferInfo.html"><strong><code>H3DU.FrameBufferInfo</code></strong></a> - Describes a frame buffer, or an offscreen buffer for rendering graphics content.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.ShaderInfo.html"><strong><code>H3DU.ShaderInfo</code></strong></a> - Represents a GLSL shader program</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Shape.html"><strong><code>H3DU.Shape</code></strong></a> - Represents an instance of a 3D shape with its own transform and appearance</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.ShapeGroup.html"><strong><code>H3DU.ShapeGroup</code></strong></a> - Represents a group of 3D shapes</li>
+<li> <a href="https://peteroupc.github.io/html3dutil/H3DU.BSplineCurve.html"><strong><code>H3DU.BSplineCurve</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.BSplineSurface.html"><strong><code>H3DU.BSplineSurface</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.CurveBuilder.html"><strong><code>H3DU.CurveBuilder</code></strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html"><strong><code>H3DU.SurfaceBuilder</code></strong></a> - Supports generating parametric curves and surfaces</li>
 </ul>
 
 <p>The following classes concern themselves with the HTML 3D canvas context:</p>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Scene3D.html"><code>H3DU.Scene3D</code></a> - Holds an HTML 3D canvas context (GL context).</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.TextureLoader.html"><code>H3DU.TextureLoader</code></a> - Caches textures loaded by the application and maps them to GL contexts.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.Scene3D.html"><strong><code>H3DU.Scene3D</code></strong></a> - Holds an HTML 3D canvas context (GL context).</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.TextureLoader.html"><strong><code>H3DU.TextureLoader</code></strong></a> - Caches textures loaded by the application and maps them to GL contexts.</li>
 </ul>
 
 <p>For much more information on all of these classes, see my <a href="https://peteroupc.github.io/html3dutil">documentation for the HTML 3D library</a>.</p>
@@ -240,7 +240,7 @@ batch.addShape(shape);
 <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</li>
 <li><dfn><code>shape.setColor(color)</code></dfn>
 <br>Gives the shape a particular color. <code>color</code> can be an HTML color (&quot;#ff0000&quot;), CSS color (&quot;red&quot;), RGB color(&quot;rgb(20, 30, 40)&quot;) or HSL color(&quot;hsl(20, 50%, 50%)&quot;), or a set of values from 0 to 1 (example: <code>[1.0,0.5,0.0]</code>).
-See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html">colors tutorial</a>.</li>
+See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html"><strong>colors tutorial</strong></a>.</li>
 <li><dfn><code>shape.setTexture(name)</code></dfn>
 <br>Gives the shape a particular texture, with the URL <code>name</code>. The texture should be in the same origin as the Web page (which usually means the same directory).</li>
 <li><dfn><code>shape.copy()</code></dfn>
@@ -293,8 +293,8 @@ H3DU.renderLoop(function(time){
 <h3>Simple Demos</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/simple.html">demos/simple.html</a> - A simple demo using this library.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/triangle.html">demos/triangle.html</a> - Demonstrates drawing a triangle.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/simple.html"><strong>demos/simple.html</strong></a> - A simple demo using this library.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/triangle.html"><strong>demos/triangle.html</strong></a> - Demonstrates drawing a triangle.</li>
 </ul>
 
 <p><a id=Materials></a></p>
@@ -302,7 +302,7 @@ H3DU.renderLoop(function(time){
 <h3>Materials</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/selfpulse.html">demos/selfpulse.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/selfpulse.html"><strong>demos/selfpulse.html</strong></a> - Demonstrates
 a rotating, pulsating box.</li>
 </ul>
 
@@ -311,24 +311,24 @@ a rotating, pulsating box.</li>
 <h3>Shapes and meshes</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/compositeMesh.html">demos/compositeMesh.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/compositeMesh.html"><strong>demos/compositeMesh.html</strong></a> - Demonstrates
 combining multiple meshes into one.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/shapes.html">demos/shapes.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/shapes.html"><strong>demos/shapes.html</strong></a> - Demonstrates
 the built-in shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/newshapes.html">demos/newshapes.html</a> - Fancier
+<li><a href="https://peteroupc.github.io/html3dutil/demos/newshapes.html"><strong>demos/newshapes.html</strong></a> - Fancier
 demo of some of the built-in shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/builtinshapes.html">demos/builtinshapes.html</a> - Interactive demo of
+<li><a href="https://peteroupc.github.io/html3dutil/demos/builtinshapes.html"><strong>demos/builtinshapes.html</strong></a> - Interactive demo of
 the built-in shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html">demos/platonic.html</a> - A demo featuring the five
+<li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html"><strong>demos/platonic.html</strong></a> - A demo featuring the five
 platonic solids. Demonstrates:
 
 <ul>
 <li>How vertex and index arrays are built up to create geometric meshes, and</li>
 <li>How to position HTML elements on top of 3D models based on their 3D positions.</li>
 </ul></li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/clock.html">demos/clock.html</a> - A demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/clock.html"><strong>demos/clock.html</strong></a> - A demo
 featuring a wall clock.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/gears.html">demos/gears.html</a> - A demonstration of rotating gears.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gears.html"><strong>demos/gears.html</strong></a> - A demonstration of rotating gears.</li>
 </ul>
 
 <p><a id=Paths></a></p>
@@ -336,14 +336,14 @@ featuring a wall clock.</li>
 <h3>Paths</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/marchingdots.html">demos/marchingdots.html</a> - Demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/marchingdots.html"><strong>demos/marchingdots.html</strong></a> - Demo
 of a series of dots following a path like marching ants. Shows some of the functionality of graphics paths.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/polyclip.html">demos/polyclip.html</a> -
+<li><a href="https://peteroupc.github.io/html3dutil/demos/polyclip.html"><strong>demos/polyclip.html</strong></a> -
 Similar to &quot;marchingdots.html&quot;, but now uses the union of two circles as a path to demonstrate polygon
 clipping.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/pathtube.html">demos/pathtube.html</a> - Demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/pathtube.html"><strong>demos/pathtube.html</strong></a> - Demo
 of a tube formed by a path curve.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/pathshapes.html">demos/pathshapes.html</a> - Demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/pathshapes.html"><strong>demos/pathshapes.html</strong></a> - Demo
 of 3D and 2D shapes generated by a 2D path.</li>
 </ul>
 
@@ -352,19 +352,19 @@ of 3D and 2D shapes generated by a 2D path.</li>
 <h3>Curves and Surfaces</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/surfaces.html">demos/surfaces.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/surfaces.html"><strong>demos/surfaces.html</strong></a> - Demonstrates
 using evaluators to generate parametric surfaces.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/curves.html">demos/curves.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/curves.html"><strong>demos/curves.html</strong></a> - Demonstrates
 using evaluators to generate parametric curves.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html">demos/surfacesexpr.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html"><strong>demos/surfacesexpr.html</strong></a> - Demonstrates
 parametric surfaces, with a custom formula editor.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/curvesexpr.html">demos/curvesexpr.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/curvesexpr.html"><strong>demos/curvesexpr.html</strong></a> - Demonstrates
 parametric curves, with a custom formula editor.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/implicit.html">demos/implicit.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/implicit.html"><strong>demos/implicit.html</strong></a> - Demonstrates
 implicit surfaces.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/invoevo.html">demos/invoevo.html</a> - Demonstrates drawing certain custom curves.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/drawingtoy.html">demos/drawingtoy.html</a> - Draws a design that&#39;s reminiscent of a popular drawing toy.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html">demos/bsplinecircles.html</a> - Demonstrates how circles and ellipses can be generated using the <code>BSplineCurve</code> class.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/invoevo.html"><strong>demos/invoevo.html</strong></a> - Demonstrates drawing certain custom curves.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/drawingtoy.html"><strong>demos/drawingtoy.html</strong></a> - Draws a design that&#39;s reminiscent of a popular drawing toy.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/bsplinecircles.html"><strong>demos/bsplinecircles.html</strong></a> - Demonstrates how circles and ellipses can be generated using the <code>BSplineCurve</code> class.</li>
 </ul>
 
 <p><a id=Textures></a></p>
@@ -372,17 +372,17 @@ implicit surfaces.</li>
 <h3>Textures</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html">demos/textured.html</a> - Demonstrates loading textures
+<li><a href="https://peteroupc.github.io/html3dutil/demos/textured.html"><strong>demos/textured.html</strong></a> - Demonstrates loading textures
 and applying them to 3D shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/specular.html">demos/specular.html</a> - Demonstrates using
+<li><a href="https://peteroupc.github.io/html3dutil/demos/specular.html"><strong>demos/specular.html</strong></a> - Demonstrates using
 textures as specular reflection maps.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/normalmap.html">demos/normalmap.html</a> - Demonstrates using
+<li><a href="https://peteroupc.github.io/html3dutil/demos/normalmap.html"><strong>demos/normalmap.html</strong></a> - Demonstrates using
 normal map textures.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html">demos/gradient.html</a> - Demonstrates generating a custom
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient.html"><strong>demos/gradient.html</strong></a> - Demonstrates generating a custom
 texture -- a linear gradient from one color to another.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/skysphere.html">demos/skysphere.html</a> - Demonstrates how to
+<li><a href="https://peteroupc.github.io/html3dutil/demos/skysphere.html"><strong>demos/skysphere.html</strong></a> - Demonstrates how to
 implement a 360-degree background texture -- a <em>sky sphere</em> -- using custom shader materials.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/procedtexture.html">demos/procedtexture.html</a> - Demonstrates how to apply a shader-generated texture to a 3D shape.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/procedtexture.html"><strong>demos/procedtexture.html</strong></a> - Demonstrates how to apply a shader-generated texture to a 3D shape.</li>
 </ul>
 
 <p><a id=Shaders></a></p>
@@ -390,18 +390,18 @@ implement a 360-degree background texture -- a <em>sky sphere</em> -- using cust
 <h3>Shaders</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">demos/squares.html</a> - Demonstrates shader-based filters.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/gears.html">demos/raymarch.html</a> - A demonstration of the following:
+<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html"><strong>demos/squares.html</strong></a> - Demonstrates shader-based filters.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gears.html"><strong>demos/raymarch.html</strong></a> - A demonstration of the following:
 
 <ul>
 <li>Custom shaders in HTML <code>script</code> blocks.</li>
 <li>The &quot;ray marching&quot; technique for procedural 3D content.</li>
 </ul></li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/checkerboard.html">demos/checkerboard.html</a> - Shader for generating a checkerboard texture.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient2.html">demos/gradient2.html</a> - Shader-based version of the &quot;gradient&quot; demo.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/marble.html">demos/marble.html</a> - Shader for generating a marble background.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/marble2.html">demos/marble2.html</a> - Another shader for generating a marble background.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/wood.html">demos/wood.html</a> - Shader for generating a wood background.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/checkerboard.html"><strong>demos/checkerboard.html</strong></a> - Shader for generating a checkerboard texture.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/gradient2.html"><strong>demos/gradient2.html</strong></a> - Shader-based version of the &quot;gradient&quot; demo.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/marble.html"><strong>demos/marble.html</strong></a> - Shader for generating a marble background.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/marble2.html"><strong>demos/marble2.html</strong></a> - Another shader for generating a marble background.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/wood.html"><strong>demos/wood.html</strong></a> - Shader for generating a wood background.</li>
 </ul>
 
 <p><a id=Particle_Systems></a></p>
@@ -409,8 +409,8 @@ implement a 360-degree background texture -- a <em>sky sphere</em> -- using cust
 <h3>Particle Systems</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/tris.html">demos/tris.html</a> - Demonstrates a particle system.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/fallingballs.html">demos/fallingballs.html</a> - Demonstrates falling balls
+<li><a href="https://peteroupc.github.io/html3dutil/demos/tris.html"><strong>demos/tris.html</strong></a> - Demonstrates a particle system.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/fallingballs.html"><strong>demos/fallingballs.html</strong></a> - Demonstrates falling balls
 of different sizes.</li>
 </ul>
 
@@ -419,8 +419,8 @@ of different sizes.</li>
 <h3>Loading 3D Models</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/obj.html">demos/obj.html</a> - An object file loader.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/stl.html">demos/stl.html</a> - Demonstrates loading 3D models.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/obj.html"><strong>demos/obj.html</strong></a> - An object file loader.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/stl.html"><strong>demos/stl.html</strong></a> - Demonstrates loading 3D models.</li>
 </ul>
 
 <p><a id=Selecting_Objects></a></p>
@@ -428,8 +428,8 @@ of different sizes.</li>
 <h3>Selecting Objects</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/picking.html">demos/picking.html</a>,  <a href="https://peteroupc.github.io/html3dutil/demos/picking2.html">demos/picking2.html</a>,
-<a href="https://peteroupc.github.io/html3dutil/demos/picking3.html">demos/picking3.html</a> - These demos demonstrate how object picking can be implemented.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/picking.html"><strong>demos/picking.html</strong></a>,  <a href="https://peteroupc.github.io/html3dutil/demos/picking2.html"><strong>demos/picking2.html</strong></a>,
+<a href="https://peteroupc.github.io/html3dutil/demos/picking3.html"><strong>demos/picking3.html</strong></a> - These demos demonstrate how object picking can be implemented.</li>
 </ul>
 
 <p><a id=Lights></a></p>
@@ -437,7 +437,7 @@ of different sizes.</li>
 <h3>Lights</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/animation-light.html">demos/animation-light.html</a> - Much like <em>animation.html</em>, but illuminated using a point light.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/animation-light.html"><strong>demos/animation-light.html</strong></a> - Much like <em>animation.html</em>, but illuminated using a point light.</li>
 </ul>
 
 <p><a id=Text></a></p>
@@ -445,7 +445,7 @@ of different sizes.</li>
 <h3>Text</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/textwith3d.html">demos/textwith3D.html</a> - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/textwith3d.html"><strong>demos/textwith3D.html</strong></a> - Demonstrates loading bitmap fonts and displaying text with them. Demonstrates showing bitmap font text on top of a 3D animation.</li>
 </ul>
 
 <p><a id=Projections></a></p>
@@ -453,8 +453,8 @@ of different sizes.</li>
 <h3>Projections</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">demos/perspective.html</a> - Demonstrates a perspective projection.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/animation-isometric.html">demos/animation-isometric.html</a> - Much like <em>animation.html</em>, but demonstrates an isometric projection.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html"><strong>demos/perspective.html</strong></a> - Demonstrates a perspective projection.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/animation-isometric.html"><strong>demos/animation-isometric.html</strong></a> - Much like <em>animation.html</em>, but demonstrates an isometric projection.</li>
 </ul>
 
 <p><a id=Miscellaneous></a></p>
@@ -462,15 +462,15 @@ of different sizes.</li>
 <h3>Miscellaneous</h3>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/background.html">demos/background.html</a> - A demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/background.html"><strong>demos/background.html</strong></a> - A demo
 featuring a background with continuously drawn 3D shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/animation.html">demos/animation.html</a> - A demo
+<li><a href="https://peteroupc.github.io/html3dutil/demos/animation.html"><strong>demos/animation.html</strong></a> - A demo
 illustrating a simple animation of 3D shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/starfield.html">demos/starfield.html</a> - Demo of a star field.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/quatlerp.html">demos/quatlerp.html</a> - Demonstrates
+<li><a href="https://peteroupc.github.io/html3dutil/demos/starfield.html"><strong>demos/starfield.html</strong></a> - Demo of a star field.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/quatlerp.html"><strong>demos/quatlerp.html</strong></a> - Demonstrates
 the difference between <a href="H3DU.Math.html#H3DU.Math.quatNlerp">H3DU.Math.quatNlerp</a> and <a href="H3DU.Math.html#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a>,
 both functions for interpolating quaternion rotations.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/underlay.html">demos/underlay.html</a> - Shows how
+<li><a href="https://peteroupc.github.io/html3dutil/demos/underlay.html"><strong>demos/underlay.html</strong></a> - Shows how
 <a href="H3DU.RenderPass.html">H3DU.RenderPass</a> can be used to draw a two-dimensional background under three-dimensional
 content.</li>
 </ul>
@@ -637,7 +637,7 @@ polygons. Path triangulation now supports polygons with holes.</li>
 <li>A known issue: When using the <a href="H3DU.Camera.html">H3DU.Camera</a> in conjunction with the compatibility behavior of <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, only one side of the scene will appear lighted by default.</li>
 </ul>
 
-<p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html">older version history</a>.</p>
+<p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html"><strong>older version history</strong></a>.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

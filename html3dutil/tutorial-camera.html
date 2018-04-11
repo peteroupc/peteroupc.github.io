@@ -12,51 +12,51 @@
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-<a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>,
+<a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>,
 and explains how the GL pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library&#39;s Releases page</strong></a>.</strong></p>
 
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Introduction">Introduction</a></li>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#The_Camera_and_Geometric_Transforms">The &quot;Camera&quot; and Geometric Transforms</a>
+<li><a href="#Introduction"><strong>Introduction</strong></a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#The_Camera_and_Geometric_Transforms"><strong>The &quot;Camera&quot; and Geometric Transforms</strong></a>
 
 <ul>
-<li><a href="#Overview_of_Transformations">Overview of Transformations</a></li>
+<li><a href="#Overview_of_Transformations"><strong>Overview of Transformations</strong></a></li>
 </ul></li>
-<li><a href="#Projection_Transform">Projection Transform</a>
+<li><a href="#Projection_Transform"><strong>Projection Transform</strong></a>
 
 <ul>
-<li><a href="#Perspective_Projection">Perspective Projection</a>
+<li><a href="#Perspective_Projection"><strong>Perspective Projection</strong></a>
 
 <ul>
-<li><a href="#Demo">Demo</a></li>
+<li><a href="#Demo"><strong>Demo</strong></a></li>
 </ul></li>
-<li><a href="#Orthographic_Projection">Orthographic Projection</a></li>
-<li><a href="#Other_Projections">Other Projections</a></li>
+<li><a href="#Orthographic_Projection"><strong>Orthographic Projection</strong></a></li>
+<li><a href="#Other_Projections"><strong>Other Projections</strong></a></li>
 </ul></li>
-<li><a href="#View_Transform">View Transform</a></li>
-<li><a href="#Vertex_Coordinates_in_the_Graphics_System">Vertex Coordinates in the Graphics System</a></li>
-<li><a href="#Other_Pages">Other Pages</a></li>
+<li><a href="#View_Transform"><strong>View Transform</strong></a></li>
+<li><a href="#Vertex_Coordinates_in_the_Graphics_System"><strong>Vertex Coordinates in the Graphics System</strong></a></li>
+<li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
 <p><a id=The_Camera_and_Geometric_Transforms></a></p>
 
 <h2>The &quot;Camera&quot; and Geometric Transforms</h2>
 
-<p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><code>Batch3D</code></a> class
+<p>The <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html"><strong><code>Batch3D</code></strong></a> class
 of the HTML 3D Library has a concept of a &quot;projection transform&quot; and a &quot;view transform&quot;.
 If we use the concept of a &quot;camera&quot;, the projection is like setting the camera&#39;s focus and
 lens, and the view transform is like setting its position and orientation. <code>Batch3D</code>
 has methods for setting all these attributes of this abstract &quot;camera&quot;. Two of them are
-<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.perspective"><code>perspective()</code></a>
-and <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setLookAt"><code>setLookAt()</code></a>,
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.perspective"><strong><code>perspective()</code></strong></a>
+and <a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setLookAt"><strong><code>setLookAt()</code></strong></a>,
 which are shown in the example below.</p>
 
 <pre>// Set the perspective view. Camera has a 45-degree field of view
@@ -83,7 +83,7 @@ is not discussed in this page.</li>
 <li>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</li>
 </ul>
 
-<p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a> on this page,
+<p>As <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a> on this page,
 however, these transformations and matrices are
 merely for the convenience of the library; all the graphics pipeline expects is the clip
 space coordinates of the things it draws. The pipeline uses those coordinates
@@ -106,9 +106,9 @@ orthographic projection, described below.</p>
 look bigger than more distant objects with the same size, making the
 projection similar to how our eyes see the world.</p>
 
-<p><img src="persp1.png" alt="Two rows of spheres, and a drawing of a perspective view volume."></p>
+<p><img src="persp1.png" alt="**Two rows of spheres, and a drawing of a perspective view volume.**"></p>
 
-<p><img src="persp2.png" alt="Two rows of spheres, and a side drawing of a perspective view volume."></p>
+<p><img src="persp2.png" alt="**Two rows of spheres, and a side drawing of a perspective view volume.**"></p>
 
 <p>The 3D scene is contained in a so-called <em>view volume</em>, and only objects contained in the
 view volume will be visible. The lines above show what a perspective view
@@ -138,7 +138,7 @@ near clipping plane will be located at the chopped-off top, and the far clipping
 <p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>.
 However, this is not the whole story, since in general, nearly all lines that are parallel in world space
 will generally not appear parallel in a perspective projection, so additional math is needed to
-achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System">explained later</a>.</p>
+achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a>.</p>
 
 <p>The following methods define a perspective projection.</p>
 
@@ -162,7 +162,7 @@ projection. The <code>fov</code>, <code>near</code>, and <code>far</code> parame
 and the aspect ratio used to calculate the projection matrix adapts automatically to the <code>H3DU.Scene3D</code> in which
 the <code>Batch3D</code> is rendered.</p>
 
-<p><strong><a href="http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum"><code>H3DU.Math.mat4frustum(left, right, bottom, top, near, far)</code></a></strong></p>
+<p><strong>[</strong><code>H3DU.Math.mat4frustum(left, right, bottom, top, near, far)</code><strong>](<a href="http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum">http://peteroupc.github.io/html3dutil/H3DU.Math.html#.mat4frustum</a>)</strong></p>
 
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection matrix based on the location of the six clipping planes that
@@ -180,7 +180,7 @@ of where they meet the near clipping plane.</li>
 <h4>Demo</h4>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html">perspective.html</a> - Demonstrates a perspective projection.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/perspective.html"><strong>perspective.html</strong></a> - Demonstrates a perspective projection.</li>
 </ul>
 
 <p><a id=Orthographic_Projection></a></p>
@@ -247,7 +247,7 @@ the <code>Batch3D</code> is rendered, and the method&#39;s six parameters are th
 <p>There are other kinds of possible projections, such as oblique projections
 or isometric projections. For these
 and other projections, you can specify a custom projection matrix using the
-<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setProjectionMatrix"><code>setProjectionMatrix()</code></a>
+<a href="http://peteroupc.github.io/html3dutil/H3DU.Batch3D.html#.setProjectionMatrix"><strong><code>setProjectionMatrix()</code></strong></a>
 method.</p>
 
 <p><strong><code>batch3d.setProjectionMatrix(matrix)</code></strong></p>
@@ -345,8 +345,8 @@ as they are more and more distant from the &quot;camera&quot;.</p>
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 
 <ul>
-<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
-<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
+<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><strong><em>Creating shapes using the Public Domain HTML 3D Library</em></strong></a></li>
 </ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>

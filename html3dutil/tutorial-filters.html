@@ -11,36 +11,36 @@
 <h2>Introduction</h2>
 
 <p>This page describes what graphics filters are and how they work in my
-public domain <a href="http://peteroupc.github.io/html3dutil">HTML 3D Library</a>.
+public domain <a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>.
 It also describes several examples of graphics filters.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases">HTML 3D Library&#39;s Releases page</a>.</strong></p>
+<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library&#39;s Releases page</strong></a>.</strong></p>
 
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
 
 <ul>
-<li><a href="#Introduction">Introduction</a></li>
-<li><a href="#Contents">Contents</a></li>
-<li><a href="#Graphics_Filters">Graphics Filters</a></li>
-<li><a href="#Writing_Graphics_Filters">Writing Graphics Filters</a></li>
-<li><a href="#Using_Graphics_Filters">Using Graphics Filters</a></li>
-<li><a href="#Sample_Code">Sample Code</a></li>
-<li><a href="#Examples">Examples</a>
+<li><a href="#Introduction"><strong>Introduction</strong></a></li>
+<li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Graphics_Filters"><strong>Graphics Filters</strong></a></li>
+<li><a href="#Writing_Graphics_Filters"><strong>Writing Graphics Filters</strong></a></li>
+<li><a href="#Using_Graphics_Filters"><strong>Using Graphics Filters</strong></a></li>
+<li><a href="#Sample_Code"><strong>Sample Code</strong></a></li>
+<li><a href="#Examples"><strong>Examples</strong></a>
 
 <ul>
-<li><a href="#Grayscale">Grayscale</a></li>
-<li><a href="#Invert">Invert</a></li>
-<li><a href="#Red_Tint">Red Tint</a></li>
-<li><a href="#Mirror_Filter">Mirror Filter</a></li>
-<li><a href="#Matrix_Filter">Matrix Filter</a></li>
-<li><a href="#Color_Matrix_Filter">Color Matrix Filter</a></li>
-<li><a href="#Pixelate_Filter">Pixelate Filter</a></li>
-<li><a href="#Wave_Filter">Wave Filter</a></li>
-<li><a href="#Waterpaint_Filter">Waterpaint Filter</a></li>
+<li><a href="#Grayscale"><strong>Grayscale</strong></a></li>
+<li><a href="#Invert"><strong>Invert</strong></a></li>
+<li><a href="#Red_Tint"><strong>Red Tint</strong></a></li>
+<li><a href="#Mirror_Filter"><strong>Mirror Filter</strong></a></li>
+<li><a href="#Matrix_Filter"><strong>Matrix Filter</strong></a></li>
+<li><a href="#Color_Matrix_Filter"><strong>Color Matrix Filter</strong></a></li>
+<li><a href="#Pixelate_Filter"><strong>Pixelate Filter</strong></a></li>
+<li><a href="#Wave_Filter"><strong>Wave Filter</strong></a></li>
+<li><a href="#Waterpaint_Filter"><strong>Waterpaint Filter</strong></a></li>
 </ul></li>
-<li><a href="#Other_Pages">Other Pages</a></li>
+<li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
 <p><a id=Graphics_Filters></a></p>
@@ -202,10 +202,10 @@ scene.render(renders);
 <h2>Examples</h2>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> - Demonstrates graphics filters.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html"><strong>squares.html</strong></a> - Demonstrates graphics filters.</li>
 </ul>
 
-<p>The demo <a href="https://peteroupc.github.io/html3dutil/demos/squares.html">squares.html</a> includes a number
+<p>The demo <a href="https://peteroupc.github.io/html3dutil/demos/squares.html"><strong>squares.html</strong></a> includes a number
 of graphics filters implemented as shaders.</p>
 
 <p>Here are more details on some of the filters it includes.</p>
@@ -214,7 +214,7 @@ of graphics filters implemented as shaders.</p>
 
 <h3>Grayscale</h3>
 
-<p><img src="filters1.png" alt="Grayscale filtered image using former implementation"></p>
+<p><img src="filters1.png" alt="**Grayscale filtered image using former implementation**"></p>
 
 <p>The grayscale filter converts the screen to black and white. This is currently
 implemented using the color matrix filter, described later, rather than the code already given above.</p>
@@ -223,7 +223,7 @@ implemented using the color matrix filter, described later, rather than the code
 
 <h3>Invert</h3>
 
-<p><img src="filters2.png" alt="Invert filtered image using former implementation"></p>
+<p><img src="filters2.png" alt="**Invert filtered image using former implementation**"></p>
 
 <p>The invert filter is built-in to the HTML 3D Library. It inverts the colors of the screen so the effect looks
 like a film negative.</p>
@@ -245,7 +245,7 @@ return H3DU.ShaderInfo.makeEffect(context,
 
 <h3>Red Tint</h3>
 
-<p><img src="filters9.png" alt="Red Tint filtered image using former implementation"></p>
+<p><img src="filters9.png" alt="**Red Tint filtered image using former implementation**"></p>
 
 <p>The red tint filter adds a hint of red to the image.  This is currently implemented using the
 color matrix filter, described later.  The former implementation of the filter
@@ -264,7 +264,7 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <h3>Mirror Filter</h3>
 
-<p><img src="filters7.png" alt="Mirror filtered image"></p>
+<p><img src="filters7.png" alt="**Mirror filtered image**"></p>
 
 <p>This filter does a horizontal flip of its pixels. Note that the filter, given below, reads not from
 the current pixel, but rather the pixel from the opposite side to the current pixel (it takes 1 minus
@@ -285,8 +285,8 @@ return H3DU.ShaderInfo.makeEffect(context,[
 
 <h3>Matrix Filter</h3>
 
-<p><img src="filters4.png" alt="Blur filtered image">
-<img src="filters8.png" alt="Edge detect filtered image"></p>
+<p><img src="filters4.png" alt="**Blur filtered image**">
+<img src="filters8.png" alt="**Edge detect filtered image**"></p>
 
 <p>This filter enables a family of image processing filters, such as blurring, sharpening,
 edge detection, and embossing, that process each pixel and its neighbors. This filter takes
@@ -333,7 +333,7 @@ black and white and shades of gray.</p>
 
 <h3>Pixelate Filter</h3>
 
-<p><img src="filters5.png" alt="Pixelate filtered image"></p>
+<p><img src="filters5.png" alt="**Pixelate filtered image**"></p>
 
 <p>This filter pixelates the screen, in effect, by scaling it down and then scaling it up.
 This filter takes a uniform variable named <code>coarseness</code>, which indicates how many normal pixels
@@ -361,7 +361,7 @@ return H3DU.ShaderInfo.makeEffect([
 
 <h3>Wave Filter</h3>
 
-<p><img src="filters3.png" alt="Wave filtered image"></p>
+<p><img src="filters3.png" alt="**Wave filtered image**"></p>
 
 <p>This filter shifts the pixels in each row horizontally to cause the screen to undulate
 vertically. This filter takes a uniform variable named <code>time</code>, which indicates the animation
@@ -373,7 +373,7 @@ frame for the undulation effect.</p>
 
 <h3>Waterpaint Filter</h3>
 
-<p><img src="filters6.png" alt="Waterpaint filtered image"></p>
+<p><img src="filters6.png" alt="**Waterpaint filtered image**"></p>
 
 <p>This is a watercoloring effect based on a public domain shader by someone
 named &quot;Themaister&quot;.</p>
@@ -387,10 +387,10 @@ named &quot;Themaister&quot;.</p>
 <p>The following pages of mine on CodeProject also discuss this library:</p>
 
 <ul>
-<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><em>Public-Domain HTML 3D Library</em></a></li>
-<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><em>Creating shapes using the Public Domain HTML 3D Library</em></a></li>
-<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></a></li>
-<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><em>The &quot;Camera&quot; and the Projection and View Transforms</em></a></li>
+<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
+<li><a href="http://www.codeproject.com/Tips/987914/Creating-shapes-using-the-Public-Domain-HTML-D-Lib"><strong><em>Creating shapes using the Public Domain HTML 3D Library</em></strong></a></li>
+<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><strong><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></strong></a></li>
+<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><strong><em>The &quot;Camera&quot; and the Projection and View Transforms</em></strong></a></li>
 </ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>
