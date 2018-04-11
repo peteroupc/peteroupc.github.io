@@ -175,7 +175,7 @@
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs; however, the definition of <code>RNDINT</code> is not limited to those kinds.</p>
 
 <ul>
-<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [</strong>0, positive <code>MODULUS</code>)** (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2">(2)**</a></sup></li>
+<li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval [</strong>0, positive <code>MODULUS</code>)** (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2"><strong>(2)</strong></a></sup></li>
 <li><strong>Method 2</strong>: If <code>RNG()</code> outputs <strong>floating-point numbers in the interval [0, 1)</strong>, then find <code>s</code>, where <code>s</code> is the number of <em>significand permutations</em> for the floating-point format, and use Method 1 above, where <code>MODULUS</code> is <code>s</code> and <code>RNG()</code> is <code>floor(RNG() * s)</code> instead.  (If the RNG outputs arbitrary-precision floating-point numbers, <code>s</code> should be set to the number of different values that are possible from the underlying RNG.)</li>
 <li><strong>Other RNGs:</strong> A detailed <code>RNDINT(maxInclusive)</code> implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it&#39;s in wide use) should send me a comment.</li>
 </ul>
@@ -430,7 +430,7 @@ can be implemented as follows<sup><a href="#Note4">(4)**</a></sup>:</p>
 
 <ul>
 <li><code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.</li>
-<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5">(5)**</a></sup>)</li>
+<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5"><strong>(5)</strong></a></sup>)</li>
 </ul>
 
 <p>These approaches, though, are recommended only if the programming language&mdash;</p>
@@ -446,7 +446,7 @@ can be implemented as follows<sup><a href="#Note4">(4)**</a></sup>:</p>
 
 <h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
 
-<p><strong><code>RNDINTEXCRANGE</code></strong> returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>**</a>, as the following pseudocode demonstrates.</p>
+<p><strong><code>RNDINTEXCRANGE</code></strong> returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>****</a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
@@ -503,7 +503,7 @@ END METHOD
 <h3><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</h3>
 
 <p><strong><code>RNDNUMEXCRANGE</code></strong> returns a  **random number in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.
- It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>**</a>, as the following pseudocode demonstrates.</p>
+ It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>****</a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
@@ -614,7 +614,7 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h3>Shuffling</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle">Fisher&ndash;Yates shuffle method**</a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong>**</a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre>METHOD Shuffle(list)
    // NOTE: Check size of the list early to prevent
@@ -734,10 +734,10 @@ END METHOD
 <li>Generating a random number in the interval [**<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code> is equivalent to&mdash;
 
 <ul>
-<li>generating a list of all numbers in the interval [<code>mn</code>, <code>mx</code>) of the form <code>mn + step * x</code>, where <code>x &gt;= 0</code> is an integer, then</li>
+<li>generating a list of all numbers in the interval [**<code>mn</code>, <code>mx</code>) of the form <code>mn + step * x</code>, where <code>x &gt;= 0</code> is an integer, then</li>
 <li>choosing a random item from the list generated this way.</li>
 </ul></li>
-<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em>**</a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
+<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em>****</a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
 </ul>
 </blockquote>
 
@@ -1168,7 +1168,7 @@ END METHOD
 
 <ul>
 <li>divide the weights in the <code>weights</code> list by the sum of all weights, and</li>
-<li>use a modified version of <a href="#Continuous_Weighted_Choice"><code>ContinuousWeightedChoice</code>**</a> that uses <code>randomVariable</code> rather than generating a new random number. <strong>OR</strong></li>
+<li>use a modified version of <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong>**</a> that uses <code>randomVariable</code> rather than generating a new random number. <strong>OR</strong></li>
 </ul></li>
 <li>Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the distribution&#39;s inverse CDF (see method 2, given earlier).</li>
 </ol>
@@ -2124,7 +2124,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The <em>period</em> is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small></p>
 
-<p><small><sup id=Note7>(7)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><em>Markov chains</em>**</a>, which are outside this page&#39;s scope.</small></p>
+<p><small><sup id=Note7>(7)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong><em>Markov chains</em></strong>**</a>, which are outside this page&#39;s scope.</small></p>
 
 <p><small><sup id=Note8>(8)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multivariate normal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>. The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</small></p>
 

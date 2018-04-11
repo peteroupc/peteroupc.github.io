@@ -180,7 +180,7 @@ The difference in lightness, _a_, _b_, or chroma (_&Delta;L_, _&Delta;a_, _&Delt
 
 Some command-line shells support coloring the background or foreground of text.  In shells that support [**"ANSI" (American National Standards Institute) color codes**](https://en.wikipedia.org/wiki/ANSI_escape_code) (generally in the category "select graphic rendition", or SGR), the sequence U+001B (escape character) followed by "[**" followed by a semicolon-separated sequence of numbers (given below) followed by "m" is a graphic control sequence (see also Ecma-048, sec. 8.3.117):
 
-- "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[m" has the same effect.)
+- "0": Reset the foreground and background color and other graphic properties to default.  (U+001B followed by "[**m" has the same effect.)
 - "1": Set the following text in bold.
 - "2": Use a slightly dimmer foreground color than usual.
 - "3": Set the following text in italics.
@@ -202,7 +202,7 @@ Measuring color is not like pointing and shooting with a camera, and it's not li
 
 There are two general kinds of color measurement devices: _colorimeters_ and _spectrophotometers_.  In general:
 - A _colorimeter_ detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three _tristimulus values_ that identify a particular color.
-- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_**](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
+- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_****](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
 
 Color measurements of the same sample can vary depending on many things, including&mdash;
 - how the sample is prepared,
