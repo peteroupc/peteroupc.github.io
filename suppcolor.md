@@ -202,7 +202,7 @@ Measuring color is not like pointing and shooting with a camera, and it's not li
 
 There are two general kinds of color measurement devices: _colorimeters_ and _spectrophotometers_.  In general:
 - A _colorimeter_ detects light passing through a small number of special filters, and converts the light detected this way to numbers.  These numbers are usually three _tristimulus values_ that identify a particular color.
-- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [_spectral curve_****](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
+- A _spectrophotometer_ breaks light like a prism into many wavelength bands, detects these bands, and converts each band into a number.  These numbers together form a [**_spectral curve_******](https://peteroupc.github.io/colorgen.html#Spectral_Color_Functions).
 
 Color measurements of the same sample can vary depending on many things, including&mdash;
 - how the sample is prepared,

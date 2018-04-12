@@ -365,7 +365,7 @@ can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
 
-**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`****](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`******](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -408,7 +408,7 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
 
 **`RNDNUMEXCRANGE`** returns a  **random number in the interval [`minInclusive`, `maxExclusive`)**.
- It can be implemented using [`RNDNUMRANGE`****](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+ It can be implemented using [`RNDNUMRANGE`******](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -595,7 +595,7 @@ Choosing an item this way is also known as _sampling with replacement_.
 > - Generating a random number in the interval [**`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
 >     - generating a list of all numbers in the interval [**`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
 >     - choosing a random item from the list generated this way.
-> - [_Bootstrapping_****](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+> - [**_Bootstrapping_******](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items

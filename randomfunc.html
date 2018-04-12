@@ -446,7 +446,7 @@ can be implemented as follows<sup><a href="#Note4">(4)**</a></sup>:</p>
 
 <h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
 
-<p><strong><code>RNDINTEXCRANGE</code></strong> returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>****</a>, as the following pseudocode demonstrates.</p>
+<p><strong><code>RNDINTEXCRANGE</code></strong> returns a **random integer in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDINTRANGE</code>******</a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
@@ -503,7 +503,7 @@ END METHOD
 <h3><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</h3>
 
 <p><strong><code>RNDNUMEXCRANGE</code></strong> returns a  **random number in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)**.
- It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>****</a>, as the following pseudocode demonstrates.</p>
+ It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><code>RNDNUMRANGE</code>******</a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
@@ -737,7 +737,7 @@ END METHOD
 <li>generating a list of all numbers in the interval [**<code>mn</code>, <code>mx</code>) of the form <code>mn + step * x</code>, where <code>x &gt;= 0</code> is an integer, then</li>
 <li>choosing a random item from the list generated this way.</li>
 </ul></li>
-<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><em>Bootstrapping</em>****</a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
+<li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><strong><em>Bootstrapping</em></strong>****</a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
 </ul>
 </blockquote>
 
