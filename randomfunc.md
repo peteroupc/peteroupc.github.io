@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 25, 2018.
+Begun on June 4, 2017; last updated on Apr. 13, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -127,7 +127,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.
 
-- **Method 1**: If `RNG()` outputs **integers in the interval \[**0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup>
+- **Method 1**: If `RNG()` outputs **integers in the interval \[**0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(2)**](#Note2)</sup>
 - **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
 - **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
 
@@ -266,9 +266,11 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
          // NOTE: If the signed integer format uses two's-complement
          // form, use the following line:
          if RNDINT(1) == 0: ret = -1 - ret
-         // NOTE: If the signed integer format uses sign-magnitude
-         // form (such as .NET's `System.Decimal`) or one's-complement
-         // form, use the following three lines instead of the preceding line;
+         // NOTE: If the signed integer format has positive and negative
+         // zero, as is the case for Java `float` and
+         // `double` and .NET's implementation of `System.Decimal`,
+         // for example, use the following
+         // three lines instead of the preceding line;
          // here, zero will be rejected at a 50% chance because zero occurs
          // twice in both forms.
          // negative = RNDINT(1) == 0
@@ -326,8 +328,8 @@ For fixed-point or floating-point number formats with fixed precision (such as J
        end
        while true
          ret = RNDU01() * NUM_MAX
-         // NOTE: If the number format uses sign-magnitude
-         // representation, as is the case for Java `float` and
+         // NOTE: If the number format has positive and negative
+         // zero, as is the case for Java `float` and
          // `double` and .NET's implementation of `System.Decimal`,
          // for example, use the following:
          negative = RNDINT(1) == 0
@@ -365,7 +367,7 @@ can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
 
-**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`******](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`********](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -408,7 +410,7 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
 
 **`RNDNUMEXCRANGE`** returns a  **random number in the interval [`minInclusive`, `maxExclusive`)**.
- It can be implemented using [`RNDNUMRANGE`******](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+ It can be implemented using [`RNDNUMRANGE`********](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error

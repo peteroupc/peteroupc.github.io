@@ -10,7 +10,7 @@
 
 <h2>Introduction</h2>
 
-<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.<a href="https://peteroupc.github.io/colorutil.zip"><strong>Sample Python code</strong></a>  <strong>that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html"><strong>Supplemental topics</strong></a> are listed in another open-source page.</p>
+<p>This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  <a href="https://peteroupc.github.io/colorutil.zip"><strong>Sample Python code</strong></a>  <strong>that implements many of the methods in this document is available.</strong>  <a href="https://peteroupc.github.io/suppcolor.html"><strong>Supplemental topics</strong></a> are listed in another open-source page.</p>
 
 <p><strong>Topics this document covers include:</strong></p>
 
@@ -378,7 +378,7 @@ END METHOD
 <li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color"><strong>CSS Color Module Level 3</strong></a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
 <li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes RGBA colors with four 8-bit integer components (0 or greater, 255 or less).</li>
 </ul></li>
-<li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS color module level 3</strong></a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as companded colors).</li>
+<li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as companded colors).</li>
 </ol>
 </blockquote>
 
@@ -1502,7 +1502,7 @@ END METHOD
 
 <p>Note that for best results, this technique needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
 
-<p><strong>[</strong>Color quantization<strong>](<a href="https://en.wikipedia.org/wiki/Color_quantization">https://en.wikipedia.org/wiki/Color_quantization</a>).</strong> In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
+<p><a href="https://en.wikipedia.org/wiki/Color_quantization"><strong>Color quantization</strong></a>. In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
@@ -1574,7 +1574,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS color module level 3</strong></a>, named colors defined in that module are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as companded colors).</li>
+<li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, named colors defined in that module are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as companded colors).</li>
 <li>If the color names identify points in a color space (as in the &quot;5RP 5/6&quot; example), converting a color name with a similar format (e.g., &quot;5.6PB 7.1/2.5&quot;) to a color can be done by multidimensional interpolation of the known color points.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
 </ul>
 </blockquote>
@@ -1916,7 +1916,7 @@ END METHOD
 
 <ul>
 <li>Using the white point <code>[0.9642, 1, 0.8249]</code> can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 <a href="https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html"><strong>before it was corrected</strong></a>).</li>
-<li>The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, <a href="https://fogra.org/plugin.php?menuid=125&amp;template=mv/templates/mv_show_front.html&amp;mv_id=10&amp;extern_meta=x&amp;mv_content_id=140332"><strong>&quot;Why the printing industry is not using D65?&quot;</strong></a>, 2009).</small></li>
+<li>The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, <a href="https://fogra.org/plugin.php?menuid=125&amp;template=mv/templates/mv_show_front.html&amp;mv_id=10&amp;extern_meta=x&amp;mv_content_id=140332&amp;getlang=en"><strong>&quot;Why the printing industry is not using D65?&quot;</strong></a>, 2009).</small></li>
 </ul>
 
 <p><small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</small></p>
