@@ -103,9 +103,10 @@
 <li>The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
 
 <ul>
-<li>transcendental and trigonometric operations must be at least substantially close to accurate, and</li>
-<li>arithmetic and number conversion operations implemented in limited-precision number formats must be accurate within rounding error.</li>
+<li><code>ln</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, and <code>atan2</code> must be at least substantially close to accurate, and</li>
+<li>arithmetic operations, <code>pow</code>, <code>abs</code>, <code>sqrt</code>, <code>floor</code>, <code>round</code>, and <code>mod</code>, if implemented in limited-precision number formats, must be accurate within rounding error.</li>
 </ul></li>
+<li>If the pseudocode works with non-integer numbers, an implementation can represent such numbers in any non-integer number format it wishes (including a floating-point, fixed-point, decimal, and/or binary number format), unless noted otherwise.</li>
 </ul>
 
 <p><a id=License></a></p>

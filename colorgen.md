@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.[**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  [**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -299,7 +299,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 > 1. Other variants of the HTML color format<sup>[**(10)**](#Note10)</sup>:
 >     - The [**CSS Color Module Level 3**](https://www.w3.org/TR/css3-color/#rgb-color), which specifies this format, also mentions a **3-digit variant**, consisting of "#" followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, "#345" is the same as "#334455" in the 6-digit format).
 >     - An **8-digit variant** used in the Android operating system consists of "#" followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes RGBA colors with four 8-bit integer components (0 or greater, 255 or less).
-> 2. As used in the [**CSS color module level 3**](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or its 3-digit variant are in the [**_sRGB color space_**](#sRGB) (as companded colors).
+> 2. As used in the [**CSS Color Module Level 3**](http://www.w3.org/TR/css3-color/), for example, colors in the HTML color format or its 3-digit variant are in the [**_sRGB color space_**](#sRGB) (as companded colors).
 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
@@ -1253,7 +1253,7 @@ There are several methods of finding the kind or kinds of colors that appear mos
 
 Note that for best results, this technique needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
-**[**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization).** In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
+[**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization). In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
 **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
@@ -1302,7 +1302,7 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 
 > **Notes:**
 >
-> - As used in the [**CSS color module level 3**](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [**_sRGB color space_**](#sRGB) (as companded colors).
+> - As used in the [**CSS Color Module Level 3**](http://www.w3.org/TR/css3-color/), named colors defined in that module are in the [**_sRGB color space_**](#sRGB) (as companded colors).
 > - If the color names identify points in a color space (as in the "5RP 5/6" example), converting a color name with a similar format (e.g., "5.6PB 7.1/2.5") to a color can be done by multidimensional interpolation of the known color points.<sup>[**(21)**](#Note21)</sup>
 
 <a id=Visually_Distinct_Colors></a>
@@ -1578,7 +1578,7 @@ The following topics would greatly enrich this document:
 
 <small><sup id=Note13>(13)</sup> Although the D65/2 white point is the usual one for sRGB, another white point may be more convenient in the following cases, among others:
 - Using the white point `[0.9642, 1, 0.8249]` can improve interoperability with applications color-managed with International Color Consortium (ICC) version 2 or 4 profiles (this is the D50/2 white point given in CIE Publication 15 [**before it was corrected**](https://lists.w3.org/Archives/Public/public-colorweb/2018Apr/0003.html)).
-- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332), 2009).</small>
+- The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, [**"Why the printing industry is not using D65?"**](https://fogra.org/plugin.php?menuid=125&template=mv/templates/mv_show_front.html&mv_id=10&extern_meta=x&mv_content_id=140332&getlang=en), 2009).</small>
 
 <small><sup id=Note14>(14)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
