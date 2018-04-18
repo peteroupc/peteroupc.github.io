@@ -886,7 +886,7 @@ METHOD LabChromaHueDifference(lab1, lab2)
 
 <h3>CIELUV</h3>
 
-<p>CIELUV (also known as CIE <em>L*u*v*</em> or CIE 1976 <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, <em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>, and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV"><strong>B. MacEvoy explains</strong></a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially useful when working with colors of light sources.</p>
+<p>CIELUV (also known as CIE <em>L*u*v*</em> or CIE 1976 <em>L*u*v*</em>) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, <em>L*</em>, or <em>lightness</em> (which is the same as in CIELAB), <em>u*</em>, and <em>v*</em>, in that order.  As <a href="http://www.handprint.com/HP/WCL/color7.html#CIELUV"><strong>B. MacEvoy explains</strong></a>, &quot;CIELUV represents the additive mixture of two lights as a straight line&quot;, so that this color model is especially useful for light sources.</p>
 
 <p>In the following pseudocode&mdash;</p>
 
@@ -1319,7 +1319,7 @@ END METHOD
 <li><p>Raster image processing techniques&mdash;</p>
 
 <ul>
-<li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>), or</li>
+<li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (techniques that include <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>), or</li>
 <li>that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),</li>
 </ul>
 
@@ -1638,7 +1638,7 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 
 <ul>
 <li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
-<li>Generating a random string in the <strong>HTML color format</strong> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string. But see the <a href="#HTML_Color_Format"><strong>note from earlier</strong></a>.</li>
+<li>Generating a random string in the <a href="#HTML_Color_Format"><strong>HTML color format</strong></a> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.</li>
 <li>Generating a random color in the <strong>0-1 format</strong> is equivalent to generating <code>[RNDU01(), RNDU01(), RNDU01()]</code>.</li>
 <li>To generate a random <strong>dark color</strong>, either&mdash;
 
@@ -1677,7 +1677,7 @@ maximum value of each color component, e.g., 0.5.</li>
 <p>As mentioned earlier, color requires the existence of <em>light</em>, an <em>object</em>, and an <em>observer</em>.  These three things can be specified as follows:</p>
 
 <ul>
-<li><strong>Light.</strong> A light source can be specified in the form of a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; that describes the intensity of a light source across the electromagnetic spectrum.</li>
+<li><strong>Light.</strong> A light source can be specified as a <em>spectral power distribution</em> (SPD), a &quot;curve&quot; that describes the intensity of a light source across the electromagnetic spectrum.</li>
 <li><strong>Object.</strong> There are two kinds of &quot;objects&quot;: <strong>reflective</strong> (opaque) and <strong>transmissive</strong> (translucent or transparent).  A <em>reflectance curve</em> or <em>transmittance curve</em>, respectively, describes the fraction of light that is reflected by or passes through the object, respectively.</li>
 <li><strong>Observer.</strong> An observer&#39;s visual response is modeled by three <em>color-matching functions</em>.</li>
 </ul>
@@ -1877,7 +1877,7 @@ END METHOD
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources"><strong>tabulated data</strong></a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</small></p>
+<p><small><sup id=Note1>(1)</sup> The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources"><strong>tabulated data</strong></a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/"><strong>Wyman, Sloan, and Shirley 2013</strong></a></small></p>
 
 <p><small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving &quot;red, yellow, and blue&quot;, &quot;primary/secondary/tertiary&quot; colors, or using a &quot;color wheel&quot; to &quot;predict&quot; color mixtures.  Also deliberately missing are discussions on color psychology, &quot;color forecasting&quot;, or color in natural language, all topics that are generally irrelevant in programming.</small></p>
 
@@ -1967,7 +1967,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in <a href="#HTML_Color_Format"><strong>HTML color format</strong></a>): &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour</code> package.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in <a href="http://jcgt.org/published/0002/02/01/"><strong>Wyman, Sloan, and Shirley 2013</strong></a>.</small></p>
+<p><small><sup id=Note34>(34)</sup> No note text yet.</small></p>
 
 <p><small><sup id=Note35>(35)</sup> See also J. Walker, &quot;<a href="http://www.fourmilab.ch/documents/specrend/"><strong>Colour Rendering of Spectra</strong></a>&quot;.</small></p>
 
