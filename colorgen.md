@@ -738,7 +738,7 @@ In the following pseudocode:
 <a id=CIELUV></a>
 ### CIELUV
 
-CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially useful when working with colors of light sources.
+CIELUV (also known as CIE _L\*u\*v\*_ or CIE 1976 _L\*u\*v\*_) is a second color model designed for color comparisons.   A CIELUV color has three components, namely, _L\*_, or _lightness_ (which is the same as in CIELAB), _u\*_, and _v\*_, in that order.  As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color7.html#CIELUV), "CIELUV represents the additive mixture of two lights as a straight line", so that this color model is especially useful for light sources.
 
 In the following pseudocode&mdash;
 - the `SRGBToLuv`, `SRGBFromLuv`, `SRGBToLuvD50`, `SRGBFromLuvD50`, `XYZToLuv`, and `LuvToXYZ` methods perform conversions involving CIELUV colors analogously to the similarly named methods for [**CIELAB**](#CIELAB), and
@@ -1096,7 +1096,7 @@ In the following formulas, `color` is an RGB color in 0-1 format.
 >     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 >
 > 2. Raster image processing techniques&mdash;
->     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
+>     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (techniques that include [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
 >     - that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),
 >
 >     are largely out of the scope of this document.
@@ -1354,7 +1354,7 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.
 
 - Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`.
-- Generating a random string in the **HTML color format** is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string. But see the [**note from earlier**](#HTML_Color_Format).
+- Generating a random string in the [**HTML color format**](#HTML_Color_Format) is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
 - To generate a random **dark color**, either&mdash;
     - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is less than a given threshold, e.g., 0.5, or
@@ -1381,7 +1381,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
 
 As mentioned earlier, color requires the existence of _light_, an _object_, and an _observer_.  These three things can be specified as follows:
 
-- **Light.** A light source can be specified in the form of a _spectral power distribution_ (SPD), a "curve" that describes the intensity of a light source across the electromagnetic spectrum.
+- **Light.** A light source can be specified as a _spectral power distribution_ (SPD), a "curve" that describes the intensity of a light source across the electromagnetic spectrum.
 - **Object.** There are two kinds of "objects": **reflective** (opaque) and **transmissive** (translucent or transparent).  A _reflectance curve_ or _transmittance curve_, respectively, describes the fraction of light that is reflected by or passes through the object, respectively.
 - **Observer.** An observer's visual response is modeled by three _color-matching functions_.
 
@@ -1546,7 +1546,7 @@ The following topics would greatly enrich this document:
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> The CIE publishes [**tabulated data**](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.</small>
+<small><sup id=Note1>(1)</sup> The CIE publishes [**tabulated data**](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in [**Wyman, Sloan, and Shirley 2013**](http://jcgt.org/published/0002/02/01/)</small>
 
 <small><sup id=Note2>(2)</sup> This overview has none of the heavy baggage from color teachings involving "red, yellow, and blue", "primary/secondary/tertiary" colors, or using a "color wheel" to "predict" color mixtures.  Also deliberately missing are discussions on color psychology, "color forecasting", or color in natural language, all topics that are generally irrelevant in programming.</small>
 
@@ -1625,7 +1625,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note33>(33)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [**HTML color format**](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
 
-<small><sup id=Note34>(34)</sup> In some cases, the CIE 1931 standard observer can be approximated using the methods given in [**Wyman, Sloan, and Shirley 2013**](http://jcgt.org/published/0002/02/01/).</small>
+<small><sup id=Note34>(34)</sup> No note text yet.</small>
 
 <small><sup id=Note35>(35)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
 

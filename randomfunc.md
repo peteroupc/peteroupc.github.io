@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 13, 2018.
+Begun on June 4, 2017; last updated on Apr. 18, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -127,7 +127,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.
 
-- **Method 1**: If `RNG()` outputs **integers in the interval \[**0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[(2)**](#Note2)</sup>
+- **Method 1**: If `RNG()` outputs **integers in the interval** **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup>
 - **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
 - **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
 
@@ -347,7 +347,7 @@ For fixed-point or floating-point number formats with fixed precision (such as J
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
-`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval \[0, `maxExclusive`\)**,
+`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval** **\[0, `maxExclusive`\)**,
 can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 
      METHOD RNDINTEXC(maxExclusive)
@@ -367,7 +367,7 @@ can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
 
-**`RNDINTEXCRANGE`** returns a **random integer in the interval [`minInclusive`, `maxExclusive`)**.  It can be implemented using [`RNDINTRANGE`********](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** returns a **random integer in the interval** **\[`minInclusive`, `maxExclusive`\)**.  It can be implemented using [`RNDINTRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -409,8 +409,8 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
 
-**`RNDNUMEXCRANGE`** returns a  **random number in the interval [`minInclusive`, `maxExclusive`)**.
- It can be implemented using [`RNDNUMRANGE`********](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDNUMEXCRANGE`** returns a  **random number in the interval \[`minInclusive`, `maxExclusive`\)**.
+ It can be implemented using [`RNDNUMRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -502,7 +502,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method****](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -597,7 +597,7 @@ Choosing an item this way is also known as _sampling with replacement_.
 > - Generating a random number in the interval [**`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
 >     - generating a list of all numbers in the interval [**`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
 >     - choosing a random item from the list generated this way.
-> - [**_Bootstrapping_******](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+> - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -787,10 +787,10 @@ The following pseudocode takes a single list `weights`, and returns the index of
     END METHOD
 
 > **Example:** Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
-
-        index = DiscreteWeightedChoice(weights)
-        // Get the actual item
-        item = list[index]
+>
+>         index = DiscreteWeightedChoice(weights)
+>         // Get the actual item
+>         item = list[index]
 
 In the example above, the weights sum to 21.  However, the weights do not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
@@ -964,7 +964,7 @@ If both **a PDF and a uniform random variable in the interval [**0, 1) (`randomV
 
 1. Do the same process as method 1, given earlier, except&mdash;
     - divide the weights in the `weights` list by the sum of all weights, and
-    - use a modified version of [**`ContinuousWeightedChoice`****](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
+    - use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
 2. Generate `ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
 
 If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
@@ -1793,7 +1793,7 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
 
-<small><sup id=Note7>(7)</sup> Such techniques usually involve [**_Markov chains_****](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
+<small><sup id=Note7>(7)</sup> Such techniques usually involve [**_Markov chains_**](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
 
 <small><sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.</small>
 
