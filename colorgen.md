@@ -420,7 +420,7 @@ The following pseudocode converts colors between RGB and HSV.  The transformatio
 > **Notes:**
 >
 > - In most applications, hue is in degrees and is 0 or greater and less than 360.
-> - The HSV color model is not perception-based, as acknowledged in (Smith and Lyons 1996)<sup>[**(12)**](#Note12)</sup>.
+> - The HSV color model is not perception-based, as the HWB paper acknowledges<sup>[**(12)**](#Note12)</sup>.
 
 <a id=HSL></a>
 ### HSL
@@ -499,12 +499,12 @@ The following pseudocode converts colors between RGB and HSL.  The transformatio
 > **Notes:**
 >
 > - In some applications and specifications, especially where this color model is called HLS, the HSL color's "lightness" component comes before "saturation".  This is not the case in this document, though.
-> - The HSL color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
+> - The HSL color model is not perception-based, as the HWB paper acknowledges<sup>[**(12)**](#Note12)</sup>.
 
 <a id=HWB></a>
 ### HWB
 
-In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was published (Smith and Lyons 1996).  An HWB color consists of three components in the following order:
+In 1996, the HWB model, which seeks to be more intuitive than HSV or HSL, was published<sup>[**(12)**](#Note12)</sup>.  An HWB color consists of three components in the following order:
 - _Hue_ is the same for a given RGB color as in [**HSV**](#HSV).
 - _Whiteness_, the amount of white mixed to the color, is 0 or greater and 1 or less.
 - _Blackness_, the amount of black mixed to the color, is 0 or greater and 1 or less.
@@ -514,7 +514,7 @@ The conversions given below are independent of RGB color space, but should be do
 - To convert an RGB color `color` to HWB, generate `[RgbToHsv(color)[0], min(min(color[0], color[1]), color[2]), 1 - max(max(color[0], color[1]), color[2])]`.
 - To convert an HWB color `hwb` to RGB, generate `HsvToRgb([hwb[0], 1 - hwb[1]/(1-hwb[2]), 1 - hwb[2]])` if `hwb[2] < 1`, or `[hwb[0], 0, 0]` otherwise.
 
-> **Note:** The HWB color model is not perception-based, as acknowledged in (Smith and Lyons 1996).
+> **Note:** The HWB color model is not perception-based, as the HWB paper acknowledges<sup>[**(12)**](#Note12)</sup>.
 
 <a id=CIE_XYZ></a>
 ### CIE XYZ
@@ -1395,7 +1395,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
     - the `BlackbodySPD` method given in "[**Color Temperature**](#Color_Temperature)", and
     - the SPD for a light-emitting diode (LED), fluorescent, or other artificial light source.
 - `reflFunc(wl)` models the **reflectance or transmittance curve** and returns the value of that curve at the wavelength `wl`; the value is 0 or greater and usually 1 or less.  (For optically brightened and other photoluminescent and fluorescent materials, the curve can have values greater than 1.)
-- `cmfFunc(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `cmfFunc` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `cmfFunc` include the CIE 1931 or 1964 _standard observer_, which is used to generate [**XYZ colors**](#CIE_XYZ) based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup>[**(1)**](#Note1)</sup><sup>[**(35)**](#Note35)</sup>
+- `cmfFunc(wl)` models three **color-matching functions** and returns a list of those functions' values at the wavelength `wl`. The choice of `cmfFunc` determines the kind of tristimulus values returned by `SpectrumToTristim`. Choices for `cmfFunc` include the CIE 1931 or 1964 _standard observer_, which is used to generate [**XYZ colors**](#CIE_XYZ) based on color stimuli seen at a 2-degree or 10-degree field of view, respectively.<sup>[**(1)**](#Note1)</sup>
 
 &nbsp;
 
@@ -1454,7 +1454,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 
 A _blackbody_ is an idealized material that emits light based only on its temperature.  As a blackbody's temperature goes up, its chromaticity changes from red to orange to pale yellow up to sky blue.
 
-The `Planckian` method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).<sup>[**(36)**](#Note36)</sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
+The `Planckian` method shown below models the spectral power distribution (SPD) of a blackbody with the given temperature in kelvins (its **color temperature**). The `BlackbodySPD` method below uses that method (where `TEMP` is the desired color temperature).<sup>[**(35)**](#Note35)</sup>.  Note that such familiar light sources as sunlight, daylight, candlelight, and incandescent lamps can be closely described by the appropriate blackbody SPD.
 
     METHOD Planckian(wl, temp)
         num = pow(wl, -5)
@@ -1482,7 +1482,7 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [**
         return ((449*c+3525)*c+6823.3)*c+5520.33
     END METHOD
 
-> **Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light's CCT, the "warmer" the light appears, and the higher the CCT, the "cooler".  Note, however, that CCT (or any other single number associated with a light source) is generally inadequate by itself to describe how a light source renders colors.
+> **Note:** Color temperature, as used here, is not to be confused with the division of colors into _warm_ (usually red, yellow, and orange) and _cool_ (usually blue and blue green) categories, a subjective division which admits of much variation.  But in general, in the context of light sources, the lower the light's CCT, the "warmer" the light appears, and the higher the CCT, the "cooler".  However, CCT (or any other single number associated with a light source) is generally inadequate by itself to describe how a light source renders colors.
 
 <a id=Color_Mixture></a>
 ### Color Mixture
@@ -1490,9 +1490,9 @@ The following method (`XYZToCCT`), which computes an approximate CCT from an [**
 The mixture of two colorants is quite complex, and there are several approaches to simulating this kind of color mixture.
 
 - As [**S. A. Burns indicates**](http://www.scottburns.us/subtractive-color-mixture/), two or more [**_reflectance curves_**](#Spectral_Color_Functions), each representing a **pigment or colorant**, can be mixed by calculating their _weighted geometric mean_, which
-  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup>[**(37)**](#Note37)</sup>
+  takes into account the relative proportions of those colorants in the mixture; the result is a new reflectance curve that can be converted into an RGB color.<sup>[**(36)**](#Note36)</sup>
 - As [**B. MacEvoy indicates**](http://www.handprint.com/HP/WCL/color3.html#mixprofile), two or more spectral curves for **transmissive materials** can be mixed simply by multiplying them; the result is a new spectral curve for the mixed material.
-- An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup>[**(38)**](#Note38)</sup>.  ISO 18314-2 is also a relevant document.
+- An alternative method of color formulation, based on the **Kubelka&ndash;Munk theory**, uses two curves for each colorant: an _absorption coefficient_ curve (K curve) and a _scattering coefficient_ curve (S curve).  The ratio of absorption to scattering (_K/S_) has a simple relationship to reflectance factors in the Kubelka&ndash;Munk theory.  The Python sample code implements the Kubelka&ndash;Munk equations.  One way to predict a color formula using this theory is described by E. Walowit in 1985<sup>[**(37)**](#Note37)</sup>.  ISO 18314-2 is also a relevant document.
 
 For convenience, the `WGM` method below computes the weighted geometric mean of one or more numbers, where&mdash;
 
@@ -1626,13 +1626,11 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note34>(34)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [**HTML color format**](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
 
-<small><sup id=Note35>(35)</sup> No note text yet.</small>
+<small><sup id=Note35>(35)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
 
-<small><sup id=Note36>(36)</sup> See also J. Walker, "[**Colour Rendering of Spectra**](http://www.fourmilab.ch/documents/specrend/)".</small>
+<small><sup id=Note36>(36)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
-<small><sup id=Note37>(37)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
-
-<small><sup id=Note38>(38)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+<small><sup id=Note37>(37)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
 
 <a id=License></a>
 ## License
