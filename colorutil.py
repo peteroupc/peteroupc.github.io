@@ -76,6 +76,12 @@ def matOnes(shape):
     return [[1 for y in range(shape[1])] \
         for x in range(shape[0])]
 
+def matAdd(a, b):
+    """ Creates a matrix consisting of 'a' plus 'b'. """
+    shape=matShape(a)
+    return [[matGet(a,x,y)+matGet(b,x,y) for y in range(shape[1])] \
+        for x in range(shape[0])]
+
 def matSub(a, b):
     """ Creates a matrix consisting of 'a' minus 'b'. """
     shape=matShape(a)
