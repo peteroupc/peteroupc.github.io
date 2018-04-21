@@ -1438,7 +1438,7 @@ The pseudocode below includes a `SpectrumToTristim` method for computing tristim
 >
 > 1. Although `lightFunc`, `reflFunc`, and `cmfFunc` are actually continuous functions, in practice tristimulus values are calculated based on measurements at discrete wavelengths.  For example, CIE Publication 15 recommends a 5-nm wavelength interval.  For spectral data at 10-nm and 20-nm intervals, the practice described in ISO 13655 or in ASTM International E308 and E2022 can be used to compute tristimulus values (in particular, E308 includes tables of weighting factors for common combinations of `cmfFunc` and `lightFunc`).  For purposes of color reproduction, only wavelengths within the range 360-780 nm (0.36-0.78 &mu;m) are relevant in practice.
 > 2. **Metamerism** occurs when two materials match the same color under one viewing situation (such as light source, `lightFunc`, and/or viewer, `cmfFunc`), but not under another.  If this happens, the two materials' reflectance or transmittance curves (`reflFunc`) are called _metamers_.  For applications involving real-world color matching, metamerism is why reflectance and transmittance curves (`reflFunc`) can be less ambiguous than colors in the form of three tristimulus values (such as XYZ or RGB colors). (See also [**B. MacEvoy's principle 38**](http://www.handprint.com/HP/WCL/color18a.html#ctprin38).)
-> 3. The [**Python sample code**](https://peteroupc.github.io/colorutil.zip) includes an `sRGBToSPD` method that generates a representative reflectance curve from a companded sRGB color, based on [**work by S. A. Burns**](http://scottburns.us/reflectance-curves-from-srgb/).
+> 3. The [**Python sample code**](https://peteroupc.github.io/colorutil.zip) includes the methods `sRGBToSPD` and `sRGBToSPDOtsu`, which each generate a representative reflectance curve from a companded sRGB color, based on work by [**S. A. Burns**](http://scottburns.us/reflectance-curves-from-srgb/) and by [**H. Otsu and colleagues**](http://lightmetrica.org/h-otsu/project/rgb2spec/), respectively.
 >
 > **Examples:**  In these examples, `D65` is the D65 illuminant, `D50` is the D50 illuminant, `CIE1931` is the CIE 1931 standard observer, and `refl` is an arbitrary reflectance curve.
 >
@@ -1541,7 +1541,6 @@ The following topics would greatly enrich this document:
 
 - A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
 - Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
-- Reference source code for a method to generate a plausible spectral reflectance curve given an RGB color, provided that method is not covered by any active patents or pending patent applications.
 
 <a id=Notes></a>
 ## Notes
