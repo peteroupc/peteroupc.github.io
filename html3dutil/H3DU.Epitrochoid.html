@@ -453,7 +453,7 @@ if(document.location.href.indexOf("file://")!=0){
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
     po.src = '//apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    var s = xExtra(document).getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 }
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
