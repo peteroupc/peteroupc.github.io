@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 12, 2018.
+Begun on Mar. 5, 2016; last updated on Apr. 25, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -320,7 +320,7 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 <a id=Advice_for_New_Programming_Language_APIs></a>
 ## Advice for New Programming Language APIs
 
-Wherever possible, existing libraries and techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example&mdash;
+Wherever possible, applications should use existing libraries and techniques that already meet the requirements for unpredictable-random and statistical-random RNGs.  For example&mdash;
 - an unpredictable-random implementation can&mdash;
     - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
     - call the `getentropy` method on OpenBSD, or
@@ -361,27 +361,39 @@ The number of distinct permutations is the [**multinomial coefficient**](http://
 - (_np_)! / _p_!<sup>_n_</sup>, if the list is formed from _p_ identical lists each with _n_ different items, and
 - _n_! / (_q_! &times; (_n_ - _q_)!), if the list consists of _n_ different items and _q_ items are selected without replacement from that list (see RFC 3797, sec. 3.3).
 
-In general, a PRNG with state length _k_ bits, as shown in the table below, can't choose from among all the distinct permutations of a list with more items than the given maximum list size _n_ (_k_ is the base-2 logarithm of _n_!, rounded up to an integer). (Note that a PRNG with state length _k_ bits can't have a period greater than 2<sup>_k_</sup>, so can't choose from among more than 2<sup>_k_</sup> permutations.)
+Formulas suggesting state lengths for PRNGs are implemented below in Python.  For example, to shuffle a 52-item list, a PRNG with state length 226 or more is suggested, and to shuffle two 52-item lists of identical contents together, a PRNG with state length 500 or more is suggested.
 
-| State length (_k_)  |  Maximum list size (_n_) |
-| -----------------|----------------------- |
-| 64 | 20 |
-| 128 | 34 |
-| 226 | 52 |
-| 256 | 57 |
-| 512 | 98 |
-| 525 | 100 |
+    def fac(x):
+        """ Calculates factorial of x. """
+        return 1 if x<=1 else x*fac(x-1)
 
-A PRNG with state length less than the number of bits given below (_k_) can't choose from among all the distinct permutations of a list formed from _p_ identical lists each with _n_ different items, as shown in this table  (_k_ is the base-2 logarithm of ((_np_)! / _p_!<sup>_n_</sup>), rounded up to an integer).
+    def ceillog2(x):
+        """ Calculates base-2 logarithm of x, rounded up. """
+        ret=0
+        ceiling=True
+        while x>1:
+           one=ceiling and ((x&1)!=0)
+           x=x>>1
+           if one:
+             ret+=1; ceiling=False
+           ret+=1
+        return ret
 
-| Number of lists (_p_) | Items per list (_n_) | Minimum state length (_k_) |
-| -----------------|----------|------------- |
-| 1 | 20 | 62 |
-| 2 | 20 | 140 |
-| 4 | 20 | 304 |
-| 1 | 52 | 226 |
-| 2 | 52 | 500 |
-| 1 | 60 | 273 |
+    def stateLengthN(n):
+      """ Suggested state length for PRNGs that shuffle
+        a list of n items. """
+      return ceillog2(fac(n))
+
+    def stateLengthNChooseK(n, k):
+      """ Suggested state length for PRNGs that choose k
+       different items randomly from a list of n items. """
+      return ceillog2(fac(n)/(fac(k)*fac(n-k)))
+
+    def stateLengthDecks(numDecks, numCards):
+      """ Suggested state length for PRNGs that shuffle
+        multiple decks of cards in one. """
+      return ceillog2(fac(numDecks*numCards)/ \
+          (fac(numDecks)**numCards))
 
 Whenever a [**statistical-random implementation**](#Statistical_Random_Generators) or [**seeded RNG**](#Seeded_Random_Generators) is otherwise called for, if an application is expected&mdash;
 - to shuffle lists of size no larger than 100, then any PRNG used for shuffling is encouraged to have a period at least as high as the number of permutations of the largest list it is expected to shuffle. (See "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html) for further discussion.)
