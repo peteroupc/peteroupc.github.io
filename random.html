@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Apr. 12, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Apr. 25, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -484,7 +484,7 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 
 <h2>Advice for New Programming Language APIs</h2>
 
-<p>Wherever possible, existing libraries and techniques that already meet the requirements for unpredictable-random and statistical-random RNGs should be used.  For example&mdash;</p>
+<p>Wherever possible, applications should use existing libraries and techniques that already meet the requirements for unpredictable-random and statistical-random RNGs.  For example&mdash;</p>
 
 <ul>
 <li><p>an unpredictable-random implementation can&mdash;</p>
@@ -540,80 +540,40 @@ as a normal, geometric, binomial, or discrete weighted distribution) or fall wit
 <li><em>n</em>! / (<em>q</em>! &times; (<em>n</em> - <em>q</em>)!), if the list consists of <em>n</em> different items and <em>q</em> items are selected without replacement from that list (see RFC 3797, sec. 3.3).</li>
 </ul>
 
-<p>In general, a PRNG with state length <em>k</em> bits, as shown in the table below, can&#39;t choose from among all the distinct permutations of a list with more items than the given maximum list size <em>n</em> (<em>k</em> is the base-2 logarithm of <em>n</em>!, rounded up to an integer). (Note that a PRNG with state length <em>k</em> bits can&#39;t have a period greater than 2<sup><em>k</em></sup>, so can&#39;t choose from among more than 2<sup><em>k</em></sup> permutations.)</p>
+<p>Formulas suggesting state lengths for PRNGs are implemented below in Python.  For example, to shuffle a 52-item list, a PRNG with state length 226 or more is suggested, and to shuffle two 52-item lists of identical contents together, a PRNG with state length 500 or more is suggested.</p>
 
-<table><thead>
-<tr>
-<th>State length (<em>k</em>)</th>
-<th>Maximum list size (<em>n</em>)</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>64</td>
-<td>20</td>
-</tr>
-<tr>
-<td>128</td>
-<td>34</td>
-</tr>
-<tr>
-<td>226</td>
-<td>52</td>
-</tr>
-<tr>
-<td>256</td>
-<td>57</td>
-</tr>
-<tr>
-<td>512</td>
-<td>98</td>
-</tr>
-<tr>
-<td>525</td>
-<td>100</td>
-</tr>
-</tbody></table>
+<pre>def fac(x):
+    &quot;&quot;&quot; Calculates factorial of x. &quot;&quot;&quot;
+    return 1 if x&lt;=1 else x*fac(x-1)
 
-<p>A PRNG with state length less than the number of bits given below (<em>k</em>) can&#39;t choose from among all the distinct permutations of a list formed from <em>p</em> identical lists each with <em>n</em> different items, as shown in this table  (<em>k</em> is the base-2 logarithm of ((<em>np</em>)! / <em>p</em>!<sup><em>n</em></sup>), rounded up to an integer).</p>
+def ceillog2(x):
+    &quot;&quot;&quot; Calculates base-2 logarithm of x, rounded up. &quot;&quot;&quot;
+    ret=0
+    ceiling=True
+    while x&gt;1:
+       one=ceiling and ((x&amp;1)!=0)
+       x=x&gt;&gt;1
+       if one:
+         ret+=1; ceiling=False
+       ret+=1
+    return ret
 
-<table><thead>
-<tr>
-<th>Number of lists (<em>p</em>)</th>
-<th>Items per list (<em>n</em>)</th>
-<th>Minimum state length (<em>k</em>)</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>1</td>
-<td>20</td>
-<td>62</td>
-</tr>
-<tr>
-<td>2</td>
-<td>20</td>
-<td>140</td>
-</tr>
-<tr>
-<td>4</td>
-<td>20</td>
-<td>304</td>
-</tr>
-<tr>
-<td>1</td>
-<td>52</td>
-<td>226</td>
-</tr>
-<tr>
-<td>2</td>
-<td>52</td>
-<td>500</td>
-</tr>
-<tr>
-<td>1</td>
-<td>60</td>
-<td>273</td>
-</tr>
-</tbody></table>
+def stateLengthN(n):
+  &quot;&quot;&quot; Suggested state length for PRNGs that shuffle
+    a list of n items. &quot;&quot;&quot;
+  return ceillog2(fac(n))
+
+def stateLengthNChooseK(n, k):
+  &quot;&quot;&quot; Suggested state length for PRNGs that choose k
+   different items randomly from a list of n items. &quot;&quot;&quot;
+  return ceillog2(fac(n)/(fac(k)*fac(n-k)))
+
+def stateLengthDecks(numDecks, numCards):
+  &quot;&quot;&quot; Suggested state length for PRNGs that shuffle
+    multiple decks of cards in one. &quot;&quot;&quot;
+  return ceillog2(fac(numDecks*numCards)/ \
+      (fac(numDecks)**numCards))
+</pre>
 
 <p>Whenever a <a href="#Statistical_Random_Generators"><strong>statistical-random implementation</strong></a> or <a href="#Seeded_Random_Generators"><strong>seeded RNG</strong></a> is otherwise called for, if an application is expected&mdash;</p>
 
