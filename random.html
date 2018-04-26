@@ -175,12 +175,7 @@
 <li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
-<p>The RNG should be reseeded from time to time (using a newly generated <em>unpredictable seed</em>) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so&mdash;</p>
-
-<ul>
-<li>before it generates more than 2<sup>32</sup> bits without reseeding, and</li>
-<li>not later than a set time span (e.g., one hour) after the RNG was last seeded or reseeded.</li>
-</ul>
+<p>The RNG should be reseeded, using a newly generated <em>unpredictable seed</em>, to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).</p>
 
 <p><a id=Examples></a></p>
 

@@ -113,9 +113,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data which meets the quality requirement described earlier, which does not contain, in whole or in part, the PRNG's own output, and which ultimately derives from one or more nondeterministic sources (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and
 - must be at least the same size as the PRNG's _state length_.
 
-The RNG should be reseeded from time to time (using a newly generated _unpredictable seed_) to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding and should do so&mdash;
-- before it generates more than 2<sup>32</sup> bits without reseeding, and
-- not later than a set time span (e.g., one hour) after the RNG was last seeded or reseeded.
+The RNG should be reseeded, using a newly generated _unpredictable seed_, to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
 
 <a id=Examples></a>
 ### Examples
@@ -123,7 +121,7 @@ The RNG should be reseeded from time to time (using a newly generated _unpredict
 Examples of unpredictable-random implementations include the following:
 - The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness ("entropy") is available.
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
-- The `BCryptGenRandom` method in recent Windows-based systems.
+- The `BCryptGenRandom` method in recent versions of Windows. (An independent analysis, published in 2007, showed flaws in an earlier version of `CryptGenRandom`.)
 - Two-source extractors, multi-source extractors, or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
     - disk access timings,
     - keystroke timings,
