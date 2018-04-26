@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Apr. 25, 2018.
+Begun on Mar. 5, 2016; last updated on Apr. 26, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -356,26 +356,26 @@ The first consideration touches on the shuffling method.  The [**Fisher&ndash;Ya
 
 The second consideration is present if the application uses PRNGs for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
-The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. Special cases of this are&mdash;
-- _n_!, if the list consists of _n_ different items,
-- (_np_)! / _p_!<sup>_n_</sup>, if the list is formed from _p_ identical lists each with _n_ different items, and
-- _n_! / (_q_! &times; (_n_ - _q_)!), if the list consists of _n_ different items and _q_ items are selected without replacement from that list (see RFC 3797, sec. 3.3).
+The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items).
 
 Formulas suggesting state lengths for PRNGs are implemented below in Python.  For example, to shuffle a 52-item list, a PRNG with state length 226 or more is suggested, and to shuffle two 52-item lists of identical contents together, a PRNG with state length 500 or more is suggested.
 
     def fac(x):
         """ Calculates factorial of x. """
-        return 1 if x<=1 else x*fac(x-1)
+        if x<=1: return 1
+        ret=1
+        for i in range(x): ret=ret*(i+1)
+        return ret
 
     def ceillog2(x):
         """ Calculates base-2 logarithm of x, rounded up. """
         ret=0
-        ceiling=True
+        needCeil=True
         while x>1:
-           one=ceiling and ((x&1)!=0)
+           one=needCeil and ((x&1)!=0)
            x=x>>1
            if one:
-             ret+=1; ceiling=False
+             ret+=1; needCeil=False
            ret+=1
         return ret
 
@@ -386,7 +386,8 @@ Formulas suggesting state lengths for PRNGs are implemented below in Python.  Fo
 
     def stateLengthNChooseK(n, k):
       """ Suggested state length for PRNGs that choose k
-       different items randomly from a list of n items. """
+       different items randomly from a list of n items
+       (see RFC 3797, sec. 3.3) """
       return ceillog2(fac(n)/(fac(k)*fac(n-k)))
 
     def stateLengthDecks(numDecks, numCards):
@@ -395,13 +396,17 @@ Formulas suggesting state lengths for PRNGs are implemented below in Python.  Fo
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
 
-Whenever a [**statistical-random implementation**](#Statistical_Random_Generators) or [**seeded RNG**](#Seeded_Random_Generators) is otherwise called for, if an application is expected&mdash;
-- to shuffle lists of size no larger than 100, then any PRNG used for shuffling is encouraged to have a period at least as high as the number of permutations of the largest list it is expected to shuffle. (See "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html) for further discussion.)
-- to shuffle lists of arbitrary size, or lists of size larger than 100, then any PRNG used for shuffling is encouraged to have a period at least as high as the number of permutations of an X-item list, where X is the average expected size of lists to be shuffled (or, alternatively, 100 if the lists to be shuffled will usually be large). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
+Whenever a [**statistical-random implementation**](#Statistical_Random_Generators) or [**seeded RNG**](#Seeded_Random_Generators) is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;
 
-The PRNG in question should&mdash;
-- meet or exceed the quality requirements of a statistical-random implementation, and
-- have been initialized automatically with an _unpredictable seed_ before use.
+- the maximum size of lists the application is expected to shuffle, if that number is less than 100; otherwise,
+- the average size of such lists; or, if the application chooses,
+- the application shuffling 100-item lists (which usually means a state length of 525 or greater).
+
+(Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.  See also "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).)
+
+The PRNG chosen this way&mdash;
+- should meet or exceed the quality requirements of a statistical-random implementation, and
+- should have been initialized automatically with an _unpredictable seed_ before use.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
