@@ -127,6 +127,7 @@ Examples of unpredictable-random implementations include the following:
     - keystroke timings,
     - thermal noise, and
     - A. Seznec's technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.
+- An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how secure RNGs can be constructed, and inspired much of the "Unpredictable-Random Generators" section.
 
 <a id=Statistical_Random_Generators></a>
 ## Statistical-Random Generators
@@ -241,11 +242,11 @@ In general, such a game should use a PRNG with a custom seed for such purposes o
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
-Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. Under recommendation 4, the game&mdash;
-
-- may change the algorithm it uses to generate random maps, but
-- should use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
-- should continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
+> **Example:** Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. Under recommendation 4, the game&mdash;
+>
+> - may change the algorithm it uses to generate random maps, but
+> - should use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
+> - should continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
 
 <a id=Unit_Testing></a>
 #### Unit Testing
@@ -266,13 +267,11 @@ One process to generate verifiable random numbers is described in [**RFC 3797**]
 
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html))<sup>[**(3)**](#Note3)</sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.
 
-However, special care should be taken if the noise implementation implements [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), or [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)) and uses one of the following techniques:
-- The implementation should use a **table of "hard-coded" gradients or hash values** only if the noise generation meets the [**seeding recommendations**](#Seeding_Recommendations) (treating the table as the seed).
-- If the noise implementation **incorporates a [**hash function**](#Hash_Functions)**&mdash;
-    - that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_, and
-    - the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation.
+However, a noise implementation that implements [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), or [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)) should, wherever feasible, **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).  Those gradients or hash values may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded values as the seed).
 
-Wherever feasible, a cellular, value, or gradient noise implementation should **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).
+If a cellular, value, or gradient noise implementation **incorporates a** [**_hash function_**](#Hash_Functions)&mdash;
+    - that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_, and
+    - if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation, the implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
