@@ -186,7 +186,7 @@
 <ul>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
-<li>The <code>BCryptGenRandom</code> method in recent Windows-based systems.</li>
+<li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, published in 2007, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
 
 <ul>
@@ -195,6 +195,7 @@
 <li>thermal noise, and</li>
 <li>A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.</li>
 </ul></li>
+<li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how secure RNGs can be constructed, and inspired much of the &quot;Unpredictable-Random Generators&quot; section.</li>
 </ul>
 
 <p><a id=Statistical_Random_Generators></a></p>
@@ -349,13 +350,15 @@
 
 <p>Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.</p>
 
-<p>Suppose a game generates a map with random terrain and shows the player a &quot;code&quot; to generate that map. Under recommendation 4, the game&mdash;</p>
+<blockquote>
+<p><strong>Example:</strong> Suppose a game generates a map with random terrain and shows the player a &quot;code&quot; to generate that map. Under recommendation 4, the game&mdash;</p>
 
 <ul>
 <li>may change the algorithm it uses to generate random maps, but</li>
 <li>should use, in connection with the new algorithm, &quot;codes&quot; that can&#39;t be confused with &quot;codes&quot; it used for previous algorithms, and</li>
 <li>should continue to generate the same random map using an old &quot;code&quot; when the player enters it, even after the change to a new algorithm.</li>
 </ul>
+</blockquote>
 
 <p><a id=Unit_Testing></a></p>
 
@@ -382,19 +385,11 @@
 
 <p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
 
-<p>However, special care should be taken if the noise implementation implements <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>) and uses one of the following techniques:</p>
+<p>However, a noise implementation that implements <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>) should, wherever feasible, <strong>use an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point).  Those gradients or hash values may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded values as the seed).</p>
 
-<ul>
-<li>The implementation should use a <strong>table of &quot;hard-coded&quot; gradients or hash values</strong> only if the noise generation meets the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> (treating the table as the seed).</li>
-<li>If the noise implementation <strong>incorporates a <a href="#Hash_Functions"><strong>hash function</strong></a></strong>&mdash;
-
-<ul>
-<li>that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>, and</li>
-<li>the noise implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input, if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation.</li>
-</ul></li>
-</ul>
-
-<p>Wherever feasible, a cellular, value, or gradient noise implementation should <strong>use an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point).</p>
+<p>If a cellular, value, or gradient noise implementation <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>&mdash;
+    - that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>, and
+    - if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation, the implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input.</p>
 
 <p><a id=Programming_Language_APIs></a></p>
 
