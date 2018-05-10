@@ -529,7 +529,6 @@ Conventions for XYZ colors include the following:
 
 - **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
 - **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[**(13)**](#Note13)</sup>
-- **Custom black point.** In this convention, the three components are normalized to a given white point and black point (usually those of a _reference medium_), such that Y ranges from 0 for black to a known value for white.  Specifically, the resulting XYZ color is the absolute XYZ color minus the black point, then divided by the absolute-Y difference between the white point and the black point.
 
 The following methods, in the pseudocode below, convert a color between companded sRGB (`rgb`) and relative XYZ:
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
@@ -579,6 +578,10 @@ The following methods, in the pseudocode below, convert a color between compande
 > 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [**inverse of the matrix**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[**(15)**](#Note15)</sup>
 > 2. Where the XYZ color will be relative to a different white point than the RGB color space's usual white point, a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the [**inverse**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) of the adapted matrix. The `XYZFromsRGBD50` and `XYZTosRGBD50` methods are examples of such adaptation.<sup>[**(15)**](#Note15)</sup>
 > 3. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
+> 4. XYZ colors that have undergone **black point compensation** (see also ISO 18619) can be expressed as `Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))`, where&mdash;
+>     - `wpoint` is the white point as an absolute or relative XYZ color,
+>     - `xyz` is a relative XYZ color (relative to `wpoint`), and
+>     - `blackSrc` and `blackDest` are the luminance factors of the source and destination black points.
 
 <a id=Chromaticity_Coordinates></a>
 #### Chromaticity Coordinates
@@ -1206,6 +1209,8 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
         r=0-2*trc*sin(2*dt*pi/180)
         return sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
     END METHOD
+
+**Commercial factors.** A _commercial factor_ (`cf`) is an additional parameter to CMC and other color difference formulas.  The `COLORDIFF` result is divided by `cf` (which is usually 1) to get the final color difference.
 
 <a id=Nearest_Colors></a>
 ### Nearest Colors
