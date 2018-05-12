@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 1, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 12, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -14,19 +14,20 @@
 
 <h2>Introduction and Summary</h2>
 
-<p>As I see it, there are two kinds of random number generators (RNGs) needed by most applications, namely&mdash;</p>
+<p>Many applications rely on random number generators (RNGs); these RNGs include&mdash;</p>
 
 <ul>
-<li><em>statistical-random generators</em>, which seek to generate numbers that follow a uniform random distribution, and</li>
-<li><em>cryptographic-random generators</em>, which seek to generate numbers that are cost-prohibitive to predict.</li>
+<li><em>statistical RNGs</em>, which seek to generate numbers that follow a uniform random distribution,</li>
+<li><em>cryptographic RNGs</em>, which seek to generate numbers that are cost-prohibitive to predict, and</li>
+<li><em>seeded PRNGs</em> (pseudorandom number generators), which generate numbers that &quot;seem&quot; random given an initial &quot;seed&quot;.</li>
 </ul>
 
 <p><strong>This document covers:</strong></p>
 
 <ul>
-<li>Statistical-random and cryptographic-random generators, as well as recommendations on their use and properties.</li>
+<li>Statistical and cryptographic RNGs, as well as recommendations on their use and properties.</li>
 <li>A discussion on when an application that needs numbers that &quot;seem&quot; random should specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
-<li>An explanation of what programming language interfaces implement statistical-random and cryptographic-random generators, as well as advice on implementing them in programming languages.</li>
+<li>An explanation of what programming language interfaces implement statistical and cryptographic RNGs, as well as advice on implementing them in programming languages.</li>
 <li>Issues on shuffling with an RNG.</li>
 </ul>
 
@@ -47,19 +48,19 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><a href="#Cryptographic_Random_Generators"><strong>Cryptographic-Random</strong></a></td>
+<td><a href="#Cryptographic_RNGs"><strong>Cryptographic RNG</strong></a></td>
 <td>In information security cases, or when speed is not a concern.</td>
 <td><code>/dev/urandom</code>, <code>BCryptGenRandom</code></td>
 </tr>
 <tr>
-<td><a href="#Statistical_Random_Generators"><strong>Statistical-Random</strong></a></td>
+<td><a href="#Statistical_RNGs"><strong>Statistical RNG</strong></a></td>
 <td>When information security is not a concern, but speed is.  See also <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>.</td>
 <td><code>xoroshiro128+</code>, <code>xorshift128+</code></td>
 </tr>
 <tr>
-<td><a href="#Seeded_Random_Generators"><strong>Seeded PRNG</strong></a></td>
+<td><a href="#Seeded%20PRNGs"><strong>Seeded PRNG</strong></a></td>
 <td>When generating reproducible results in a way not practical otherwise.</td>
-<td>Statistical-random quality PRNG with custom seed</td>
+<td>High-quality PRNG with custom seed</td>
 </tr>
 </tbody></table>
 
@@ -71,21 +72,21 @@
 <li><a href="#Introduction_and_Summary"><strong>Introduction and Summary</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Definitions"><strong>Definitions</strong></a></li>
-<li><a href="#Cryptographic_Random_Generators"><strong>Cryptographic-Random Generators</strong></a>
+<li><a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a>
 
 <ul>
 <li><a href="#Quality"><strong>Quality</strong></a></li>
 <li><a href="#Seeding_and_Reseeding"><strong>Seeding and Reseeding</strong></a></li>
 <li><a href="#Examples"><strong>Examples</strong></a></li>
 </ul></li>
-<li><a href="#Statistical_Random_Generators"><strong>Statistical-Random Generators</strong></a>
+<li><a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a>
 
 <ul>
 <li><a href="#Quality_2"><strong>Quality</strong></a></li>
 <li><a href="#Seeding_and_Reseeding_2"><strong>Seeding and Reseeding</strong></a></li>
 <li><a href="#Examples_and_Non_Examples"><strong>Examples and Non-Examples</strong></a></li>
 </ul></li>
-<li><a href="#Seeded_Random_Generators"><strong>Seeded Random Generators</strong></a>
+<li><a href="#Seeded_PRNGs"><strong>Seeded PRNGs</strong></a>
 
 <ul>
 <li><a href="#Seeding_Recommendations"><strong>Seeding Recommendations</strong></a></li>
@@ -135,11 +136,11 @@
 <li><strong>Information security.</strong> Defined in ISO/IEC 27000.</li>
 </ul>
 
-<p><a id=Cryptographic_Random_Generators></a></p>
+<p><a id=Cryptographic_RNGs></a></p>
 
-<h2>Cryptographic-Random Generators</h2>
+<h2>Cryptographic RNGs</h2>
 
-<p>Cryptographic-random implementations (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such implementations are indispensable in information security contexts, such as&mdash;</p>
+<p>Cryptographic RNGs (also known as &quot;cryptographically strong&quot; or &quot;cryptographically secure&quot; RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such RNGs are indispensable in information security contexts, such as&mdash;</p>
 
 <ul>
 <li> generating keying material, such as encryption keys,</li>
@@ -152,19 +153,19 @@
 
 <p>They are also useful in cases where the application generates random numbers so infrequently that the RNG&#39;s speed is not a concern.</p>
 
-<p>A cryptographic-random implementation ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding as explained later.</p>
+<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding as explained later.</p>
 
 <p><a id=Quality></a></p>
 
 <h3>Quality</h3>
 
-<p>A cryptographic-random implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see &quot;Seeding and Reseeding&quot;.)</p>
+<p>A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see &quot;Seeding and Reseeding&quot;.)</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 
 <h3>Seeding and Reseeding</h3>
 
-<p>If a cryptographic-random implementation uses a PRNG, the following requirements apply.</p>
+<p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
 
 <p>The PRNG&#39;s <em>state length</em> must be at least 128 bits and should be at least 256 bits.</p>
 
@@ -181,7 +182,7 @@
 
 <h3>Examples</h3>
 
-<p>Examples of cryptographic-random implementations include the following:</p>
+<p>Examples of cryptographic RNG implementations include the following:</p>
 
 <ul>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
@@ -195,42 +196,42 @@
 <li>thermal noise, and</li>
 <li>A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.</li>
 </ul></li>
-<li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic-Random Generators&quot; section.</li>
+<li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
 
-<p><a id=Statistical_Random_Generators></a></p>
+<p><a id=Statistical_RNGs></a></p>
 
-<h2>Statistical-Random Generators</h2>
+<h2>Statistical RNGs</h2>
 
-<p>Statistical-random generators are used, for example, in simulations, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical-random generators are generally suitable only if&mdash;</p>
+<p>Statistical RNGs are used, for example, in simulations, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical RNGs are generally suitable only if&mdash;</p>
 
 <ul>
 <li> information security is not involved, and</li>
-<li> the application generates random numbers so frequently that it would slow down undesirably if a cryptographic-random implementation were used instead.</li>
+<li> the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.</li>
 </ul>
 
 <p>If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>).</p>
 
-<p>A statistical-random implementation is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic-random implementation provided it remains reasonably fast.</p>
+<p>A statistical RNG implementation is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG implementation provided it remains reasonably fast.</p>
 
 <p><a id=Quality_2></a></p>
 
 <h3>Quality</h3>
 
-<p>A statistical-random implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
+<p>A statistical RNG implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
 <h3>Seeding and Reseeding</h3>
 
-<p>If a statistical-random implementation uses a PRNG, the following requirements apply.</p>
+<p>If a statistical RNG implementation uses a PRNG, the following requirements apply.</p>
 
 <p>The PRNG&#39;s <em>state length</em> must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.</p>
 
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with a seed described as follows. The seed&mdash;</p>
 
 <ul>
-<li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from a cryptographic-random implementation,</li>
+<li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from a cryptographic RNG implementation,</li>
 <li>must not contain, in whole or in part, the RNG&#39;s own output,</li>
 <li>must not be a fixed value, a nearly fixed value, or a user-entered value,</li>
 <li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and</li>
@@ -243,7 +244,7 @@
 
 <h3>Examples and Non-Examples</h3>
 
-<p>Examples of statistical-random generators include the following:</p>
+<p>Examples of statistical RNGs include the following:</p>
 
 <ul>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
@@ -262,11 +263,11 @@
 <li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.  (See also the Wikipedia article for further problems with linear congruential generators.)</li>
 </ul>
 
-<p><a id=Seeded_Random_Generators></a></p>
+<p><a id=Seeded_PRNGs></a></p>
 
-<h2>Seeded Random Generators</h2>
+<h2>Seeded PRNGs</h2>
 
-<p>In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparently-random principles, starting from a known initial state, or &quot;seed&quot;. Such applications usually care about reproducible results. (Note that in the definitions for <a href="#Cryptographic_Random_Generators"><strong>cryptographic-random</strong></a> and <a href="#Statistical_Random_Generators"><strong>statistical-random</strong></a> generators given earlier, the PRNGs involved are automatically seeded before use.)</p>
+<p>In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparent randomness, starting from a known initial state, or &quot;seed&quot;. Such applications usually care about reproducible results. (Note that in the definitions for <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNGs given earlier, the PRNGs involved are automatically seeded before use.)</p>
 
 <p><a id=Seeding_Recommendations></a></p>
 
@@ -280,7 +281,7 @@
 <ul>
 <li>is hard-coded,</li>
 <li>was based on user-entered data,</li>
-<li>is known to the application and was generated using an <a href="#Cryptographic_Random_Generators"><strong>cryptographic-random</strong></a> or <a href="#Statistical_Random_Generators"><strong>statistical-random</strong></a> implementation (as defined earlier),</li>
+<li>is known to the application and was generated using a <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> or <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNG (as defined earlier),</li>
 <li>is a <a href="#Verifiable_Random_Numbers"><strong>verifiable random number</strong></a> (as defined later), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
 </ul></li>
@@ -316,7 +317,7 @@
 <p>Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;</p>
 
 <ul>
-<li>should meet or exceed the quality requirements of a statistical-random implementation,</li>
+<li>should meet or exceed the quality requirements of a statistical RNG implementation,</li>
 <li>should be reasonably fast, and</li>
 <li>should have a <em>state length</em> of 64 bits or greater.</li>
 </ul>
@@ -331,7 +332,7 @@
 
 <h4>Games</h4>
 
-<p>Many kinds of games generate game content using apparently-random principles, such as&mdash;</p>
+<p>Many kinds of games generate game content based on apparent randomness, such as&mdash;</p>
 
 <ul>
 <li>procedurally generated maps for a role-playing game,</li>
@@ -398,8 +399,8 @@
 
 <h2>Programming Language APIs</h2>
 
-<p>The following table lists application programming interfaces (APIs) implementing
-cryptographic-random and statistical-random RNGs for popular programming languages. Note the following:</p>
+<p>The following table lists application programming interfaces (APIs) for
+cryptographic and statistical RNGs for popular programming languages. Note the following:</p>
 
 <ul>
 <li>In single-threaded applications, for each kind of RNG, it&#39;s encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.</li>
@@ -407,9 +408,9 @@ cryptographic-random and statistical-random RNGs for popular programming languag
 
 <ul>
 <li>create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or</li>
-<li>store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this might not always be ideal for cryptographic-random RNGs).</li>
+<li>store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this might not always be ideal for cryptographic RNG implementations).</li>
 </ul></li>
-<li>Methods and libraries mentioned in the &quot;Statistical-random&quot; column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the &quot;Cryptographic-random&quot; column).</li>
+<li>Methods and libraries mentioned in the &quot;Statistical&quot; column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the &quot;Cryptographic&quot; column).</li>
 <li>The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.</li>
 </ul>
@@ -417,8 +418,8 @@ of that library, or imply a preference of that library over others. The list is 
 <table><thead>
 <tr>
 <th>Language</th>
-<th>Cryptographic-random</th>
-<th>Statistical-random</th>
+<th>Cryptographic</th>
+<th>Statistical</th>
 <th>Other</th>
 </tr>
 </thead><tbody>
@@ -457,13 +458,13 @@ of that library, or imply a preference of that library over others. The list is 
 <p><small></p>
 
 <p>(A) Default general RNG implements the <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which doesn&#39;t
-meet the statistical-random requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.</p>
+meet the statistical RNG requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.</p>
 
 <p>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</p>
 
-<p>(C) See <a href="#Advice_for_New_Programming_Language_APIs"><strong>&quot;Advice for New Programming Language APIs&quot;</strong></a> for implementation notes for cryptographic-random implementations.</p>
+<p>(C) See <a href="#Advice_for_New_Programming_Language_APIs"><strong>&quot;Advice for New Programming Language APIs&quot;</strong></a> for implementation notes for cryptographic RNG implementations.</p>
 
-<p>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical-random requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</p>
+<p>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</p>
 
 <p>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> method presents a beautiful and simple API for random number generation.</p>
 
@@ -477,10 +478,10 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 
 <h2>Advice for New Programming Language APIs</h2>
 
-<p>Wherever possible, applications should use existing libraries and techniques that already meet the requirements for cryptographic-random and statistical-random RNGs.  For example&mdash;</p>
+<p>Wherever possible, applications should use existing libraries and techniques that already meet the requirements for cryptographic and statistical RNGs.  For example&mdash;</p>
 
 <ul>
-<li><p>a cryptographic-random implementation can&mdash;</p>
+<li><p>a cryptographic RNG implementation can&mdash;</p>
 
 <ul>
 <li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
@@ -489,12 +490,12 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 </ul>
 
 <p>and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and</p></li>
-<li>a statistical-random implementation can use a PRNG algorithm mentioned as an example in the <a href="#Statistical_Random_Generators"><strong>statistical-random generator</strong></a> section.</li>
+<li>a statistical RNG implementation can use a PRNG algorithm mentioned as an example in the <a href="#Statistical_RNGs"><strong>statistical RNGs</strong></a> section.</li>
 </ul>
 
-<p>If existing solutions are inadequate, a programming language API could implement cryptographic-random and statistical-random RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for cryptographic-random generators could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer ought to run in amortized linear time on the number of random bytes the API will generate.</p>
+<p>If existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for such RNGs could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer ought to run in amortized linear time on the number of random bytes the API will generate.</p>
 
-<p>Cryptographic-random and statistical-random implementations&mdash;</p>
+<p>Cryptographic and statistical RNG implementations&mdash;</p>
 
 <ul>
 <li>should be reasonably fast for most applications, and</li>
@@ -503,7 +504,7 @@ meet the statistical-random requirements, strictly speaking, but might be adequa
 
 <p>My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on
 eleven uniform random number methods; in my opinion, a new programming language&#39;s standard library ought to include
-those eleven methods separately for cryptographic-random and for statistical-random generators. That document also
+those eleven methods separately for cryptographic and for statistical RNGs. That document also
 discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
 as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.</p>
 
@@ -566,7 +567,7 @@ def stateLengthDecks(numDecks, numCards):
       (fac(numDecks)**numCards))
 </pre>
 
-<p>Whenever a <a href="#Statistical_Random_Generators"><strong>statistical-random implementation</strong></a> or <a href="#Seeded_Random_Generators"><strong>seeded RNG</strong></a> is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;</p>
+<p>Whenever a <a href="#Statistical_RNGs"><strong>statistical RNG implementation</strong></a> or <a href="#Seeded%20PRNGs"><strong>seeded PRNG</strong></a> is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;</p>
 
 <ul>
 <li>the maximum size of lists the application is expected to shuffle, if that number is less than 100; otherwise,</li>
@@ -576,7 +577,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>(Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.  See also &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html"><strong>BigDeal document by van Staveren</strong></a>.)</p>
 
-<p>The PRNG chosen this way should meet or exceed the quality requirements of a statistical-random implementation.</p>
+<p>The PRNG chosen this way should meet or exceed the quality requirements of a statistical RNG implementation.</p>
 
 <p><a id=Hash_Functions></a></p>
 
@@ -623,7 +624,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Motivation</h2>
 
-<p>In this document, I made the distinction between <em>statistical-random</em> and <em>cryptographic-random</em> generators because that is how programming languages often present random number generators &mdash; they usually offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as <code>java.security.SecureRandom</code>).</p>
+<p>In this document, I made the distinction between <em>statistical</em> and <em>cryptographic</em> RNGs because that is how programming languages often present random number generators &mdash; they usually offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as <code>java.security.SecureRandom</code>).</p>
 
 <p>What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today&mdash;</p>
 
@@ -639,9 +640,9 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Conclusion</h2>
 
-<p>In conclusion, most applications that require random numbers usually want either unpredictability (&quot;cryptographic security&quot;), or speed and high quality. I believe that RNGs that meet the descriptions specified in the <a href="#Cryptographic_Random_Generators"><strong>Cryptographic-Random Generators</strong></a> and <a href="#Statistical_Random_Generators"><strong>Statistical-Random Generators</strong></a> sections will meet the needs of those applications.</p>
+<p>In conclusion, most applications that require random numbers usually want either unpredictability (&quot;cryptographic security&quot;), or speed and high quality. I believe that RNGs that meet the descriptions specified in the <a href="#Cryptographic_RNGs"><strong>Cryptographic RNGs</strong></a> and <a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a> sections will meet the needs of those applications.</p>
 
-<p>In addition, this document recommends using cryptographic-random implementations in many cases, especially in information security contexts, and recommends easier programming interfaces for both cryptographic-random and statistical-random implementations in new programming languages.</p>
+<p>In addition, this document recommends using cryptographic RNG implementations in many cases, especially in information security contexts, and recommends easier programming interfaces for both cryptographic and statistical RNGs in new programming languages.</p>
 
 <p>I acknowledge&mdash;</p>
 
@@ -661,8 +662,8 @@ def stateLengthDecks(numDecks, numCards):
 <ul>
 <li> Have I characterized the randomness needs of applications properly?</li>
 <li> Did I cover the vast majority of applications that require randomness?</li>
-<li> Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic-random or statistical-random RNGs?</li>
-<li> Are there certain kinds of applications that require a different kind of RNG (cryptographic-random, statistical-random, seeded, etc.) than I recommended?</li>
+<li> Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?</li>
+<li> Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?</li>
 <li>In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?</li>
 </ul>
 
@@ -670,7 +671,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution&#39;s <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a> (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.</small></p>
+<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to use a uniform distribution, at least in theory, by applying the nonuniform distribution&#39;s <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a> (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.</small></p>
 
 <p><small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
 
