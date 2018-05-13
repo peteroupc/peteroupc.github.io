@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 12, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 13, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -58,7 +58,7 @@
 <td><code>xoroshiro128+</code>, <code>xorshift128+</code></td>
 </tr>
 <tr>
-<td><a href="#Seeded%20PRNGs"><strong>Seeded PRNG</strong></a></td>
+<td><a href="#Seeded_PRNGs"><strong>Seeded PRNG</strong></a></td>
 <td>When generating reproducible results in a way not practical otherwise.</td>
 <td>High-quality PRNG with custom seed</td>
 </tr>
@@ -77,6 +77,7 @@
 <ul>
 <li><a href="#Quality"><strong>Quality</strong></a></li>
 <li><a href="#Seeding_and_Reseeding"><strong>Seeding and Reseeding</strong></a></li>
+<li><a href="#Nondeterministic_Sources"><strong>Nondeterministic Sources</strong></a></li>
 <li><a href="#Examples"><strong>Examples</strong></a></li>
 </ul></li>
 <li><a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a>
@@ -153,7 +154,7 @@
 
 <p>They are also useful in cases where the application generates random numbers so infrequently that the RNG&#39;s speed is not a concern.</p>
 
-<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.  Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here, since an implementation for which such sources are available can rely less on PRNGs, which are deterministic and benefit from reseeding as explained later.</p>
+<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em>, as described later in this section.</p>
 
 <p><a id=Quality></a></p>
 
@@ -172,11 +173,32 @@
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with a seed defined as follows. The seed&mdash;</p>
 
 <ul>
-<li>must consist of data which meets the quality requirement described earlier, which does not contain, in whole or in part, the PRNG&#39;s own output, and which ultimately derives from one or more nondeterministic sources (such data may be mixed with other arbitrary data as long as the result is no less cost-prohibitive to predict), and</li>
-<li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
+<li>must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG&#39;s <em>state length</em>,</li>
+<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output,</li>
+<li>must have at least as many bits as the PRNG&#39;s <em>state length</em>, and</li>
+<li>may be mixed with other arbitrary data as long as the result is no easier to predict.</li>
 </ul>
 
-<p>The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of the output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).</p>
+<p>The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).</p>
+
+<p><a id=Nondeterministic_Sources></a></p>
+
+<h3>Nondeterministic Sources</h3>
+
+<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.  Examples of nondeterministic sources are&mdash;</p>
+
+<ul>
+<li>disk access timings,</li>
+<li>keystroke timings,</li>
+<li>thermal noise, and</li>
+<li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.</li>
+</ul>
+
+<p>Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here.</p>
+
+<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output; this is generally a number of bits no greater than that output&#39;s size in bits.  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.</p>
+
+<p>For a cryptographic RNG, the output of the strongest nondeterministic source used to derive a seed, if a PRNG is used, or derive an RNG output otherwise, ought to have a min-entropy equal to or greater than that PRNG&#39;s <em>state length</em> or that RNG output&#39;s size in bits, respectively.</p>
 
 <p><a id=Examples></a></p>
 
@@ -185,17 +207,10 @@
 <p>Examples of cryptographic RNG implementations include the following:</p>
 
 <ul>
-<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (&quot;entropy&quot;) is available.</li>
+<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (entropy) is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, published in 2007, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
-<li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.  Such sources include, where available&mdash;
-
-<ul>
-<li>disk access timings,</li>
-<li>keystroke timings,</li>
-<li>thermal noise, and</li>
-<li>A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.</li>
-</ul></li>
+<li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
 
@@ -235,7 +250,7 @@
 <li>must not contain, in whole or in part, the RNG&#39;s own output,</li>
 <li>must not be a fixed value, a nearly fixed value, or a user-entered value,</li>
 <li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and</li>
-<li>must be at least the same size as the PRNG&#39;s <em>state length</em>.</li>
+<li>must have at least as many bits as the PRNG&#39;s <em>state length</em>.</li>
 </ul>
 
 <p>The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a <em>state length</em> less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p>
@@ -567,7 +582,7 @@ def stateLengthDecks(numDecks, numCards):
       (fac(numDecks)**numCards))
 </pre>
 
-<p>Whenever a <a href="#Statistical_RNGs"><strong>statistical RNG implementation</strong></a> or <a href="#Seeded%20PRNGs"><strong>seeded PRNG</strong></a> is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;</p>
+<p>Whenever a <a href="#Statistical_RNGs"><strong>statistical RNG implementation</strong></a> or <a href="#Seeded_PRNGs"><strong>seeded PRNG</strong></a> is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;</p>
 
 <ul>
 <li>the maximum size of lists the application is expected to shuffle, if that number is less than 100; otherwise,</li>
