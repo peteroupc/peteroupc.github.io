@@ -97,7 +97,6 @@ This document presents an overview of many common color topics that are of gener
 - **ITU.** International Telecommunications Union.
 - **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
-- **`RNDNUMRANGE`, `RNDU01`, `RNDINT`, `RNDINTEXC`.** These methods are defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Overview_of_Color_Vision></a>
 ## Overview of Color Vision
@@ -1356,7 +1355,7 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
-The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.
+The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.  In this section, `RNDNUMRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 
 - Generating a random color in the **8/8/8 format** is equivalent to calling `From888(RNDINT(16777215))`.
 - Generating a random string in the [**HTML color format**](#HTML_Color_Format) is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.

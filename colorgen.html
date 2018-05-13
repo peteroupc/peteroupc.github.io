@@ -141,7 +141,6 @@
 <li><strong>ITU.</strong> International Telecommunications Union.</li>
 <li><strong>Light source.</strong> Means a <a href="http://eilv.cie.co.at/term/982"><strong><em>primary light source</em></strong></a> or an <a href="http://eilv.cie.co.at/term/554"><strong><em>illuminant</em></strong></a>, as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.</li>
 <li><strong>RGB.</strong> Red-green-blue.</li>
-<li><strong><code>RNDNUMRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, <code>RNDINTEXC</code>.</strong> These methods are defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
 </ul>
 
 <p><a id=Overview_of_Color_Vision></a></p>
@@ -1642,7 +1641,7 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 
 <h2>Generating a Random Color</h2>
 
-<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a>, unless noted otherwise.</p>
+<p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a>, unless noted otherwise.  In this section, <code>RNDNUMRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</p>
 
 <ul>
 <li>Generating a random color in the <strong>8/8/8 format</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
