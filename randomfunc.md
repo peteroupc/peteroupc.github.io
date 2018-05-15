@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Apr. 18, 2018.
+Begun on June 4, 2017; last updated on May 14, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1779,7 +1779,7 @@ Currently, the following are not covered in this document, but may be added base
    generation (including by extracting uniformly distributed bits from two or more such sources), or
 - have two or more of the foregoing properties.
 
-If a number generator uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to one with a uniform distribution, at least in theory, by applying the nonuniform distribution's [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number (see also "[**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)").  Further details on this kind of conversion, as well a list of CDFs, are outside the scope of this document.</small>
+If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_  or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
 
 <small><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).
 

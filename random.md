@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 13, 2018.
+Begun on Mar. 5, 2016; last updated on May 14, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -113,9 +113,9 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 The PRNG's _state length_ must be at least 128 bits and should be at least 256 bits.
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
+- must have as many bits as the PRNG's _state length_,
 - must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG's _state length_,
-- must consist of data that does not contain, in whole or in part, the PRNG's own output,
-- must have at least as many bits as the PRNG's _state length_, and
+- must consist of data that does not contain, in whole or in part, the PRNG's own output, and
 - may be mixed with other arbitrary data as long as the result is no easier to predict.
 
 The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
@@ -171,11 +171,11 @@ If a statistical RNG implementation uses a PRNG, the following requirements appl
 The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
+- must have as many bits as the PRNG's _state length_,
 - must consist of data not known _a priori_ by the implementation, such as random bits from a cryptographic RNG implementation,
 - must not contain, in whole or in part, the RNG's own output,
-- must not be a fixed value, a nearly fixed value, or a user-entered value,
-- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>[**(2)**](#Note2)</sup>, and
-- must have at least as many bits as the PRNG's _state length_.
+- must not be a fixed value, a nearly fixed value, or a user-entered value, and
+- is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup>[**(2)**](#Note2)</sup>.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 
@@ -486,7 +486,7 @@ Comments on any aspect of the document are welcome, but answers to the following
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to use a uniform distribution, at least in theory, by applying the nonuniform distribution's [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function) (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.</small>
+<small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_ or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
 
 <small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
