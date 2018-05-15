@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 13, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 14, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -173,9 +173,9 @@
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with a seed defined as follows. The seed&mdash;</p>
 
 <ul>
+<li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
 <li>must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output,</li>
-<li>must have at least as many bits as the PRNG&#39;s <em>state length</em>, and</li>
+<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output, and</li>
 <li>may be mixed with other arbitrary data as long as the result is no easier to predict.</li>
 </ul>
 
@@ -246,11 +246,11 @@
 <p>Before an instance of the RNG generates a random number, it must have been initialized (&quot;seeded&quot;) with a seed described as follows. The seed&mdash;</p>
 
 <ul>
+<li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
 <li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from a cryptographic RNG implementation,</li>
 <li>must not contain, in whole or in part, the RNG&#39;s own output,</li>
-<li>must not be a fixed value, a nearly fixed value, or a user-entered value,</li>
-<li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and</li>
-<li>must have at least as many bits as the PRNG&#39;s <em>state length</em>.</li>
+<li>must not be a fixed value, a nearly fixed value, or a user-entered value, and</li>
+<li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</li>
 </ul>
 
 <p>The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a <em>state length</em> less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p>
@@ -686,7 +686,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, then it can be converted to use a uniform distribution, at least in theory, by applying the nonuniform distribution&#39;s <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a> (CDF) to each generated number.  A CDF returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is 0 or greater and 1 or less. Further details on CDFs or this kind of conversion are outside the scope of this document.</small></p>
+<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em> or <em>randomness extraction</em> methods that it is outside the scope of this document to describe.</small></p>
 
 <p><small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
 
