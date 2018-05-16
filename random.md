@@ -114,8 +114,7 @@ The PRNG's _state length_ must be at least 128 bits and should be at least 256 b
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG's _state length_,
-- must consist of data that does not contain, in whole or in part, the PRNG's own output, and
+- must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG's _state length_, and
 - may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.
 
 The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
@@ -170,8 +169,7 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data ultimately derived from queried timestamps and/or one or more nondeterministic sources (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>),
-- must consist of data that does not contain, in whole or in part, the PRNG's own output,
+- must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>),
 - may be mixed with arbitrary data other than the seed, and
 - should, where available, be the output of a cryptographic RNG or a seed for such an RNG.
 
@@ -181,7 +179,7 @@ The implementation is encouraged to reseed itself from time to time (using a new
 ### Examples and Non-Examples
 
 Examples of statistical RNGs include the following<sup>[**(4)**](#Note4)</sup>:
-- [**`xoshiro256\*\*`**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
+- [**`xoshiro256**`**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
 - `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see note in the [**source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
 - `Lehmer128` (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
