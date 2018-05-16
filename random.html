@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 14, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 15, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -91,7 +91,7 @@
 
 <ul>
 <li><a href="#Seeding_Recommendations"><strong>Seeding Recommendations</strong></a></li>
-<li><a href="#Seedable_PRNG_Recommendations"><strong>Seedable PRNG Recommendations</strong></a></li>
+<li><a href="#Recommendations_for_Seeded_PRNGs"><strong>=Recommendations for Seeded PRNGs</strong></a></li>
 <li><a href="#Examples_2"><strong>Examples</strong></a>
 
 <ul>
@@ -129,7 +129,7 @@
 
 <ul>
 <li><strong>Random number generator (RNG).</strong> Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
-<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time) and without making explicit use of nondeterminism.</li>
+<li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.</li>
 <li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup><em>L</em></sup> where <em>L</em> is the PRNG&#39;s <em>state length</em>.</li>
@@ -185,7 +185,7 @@
 
 <h3>Nondeterministic Sources</h3>
 
-<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.  Examples of nondeterministic sources are&mdash;</p>
+<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> (sources that don&#39;t always return the same output for the same input) for random number generation.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  Examples of nondeterministic sources are&mdash;</p>
 
 <ul>
 <li>disk access timings,</li>
@@ -194,9 +194,7 @@
 <li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.</li>
 </ul>
 
-<p>Sources that are reasonably fast for most applications (for instance, by producing very many random bits per second), especially sources implemented in hardware, are highly advantageous here.</p>
-
-<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output; this is generally a number of bits no greater than that output&#39;s size in bits.  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.</p>
+<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output, compared to fully random data; this is generally the size in bits of the fully random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as a fully random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.</p>
 
 <p>For a cryptographic RNG, the output of the strongest nondeterministic source used to derive a seed, if a PRNG is used, or derive an RNG output otherwise, ought to have a min-entropy equal to or greater than that PRNG&#39;s <em>state length</em> or that RNG output&#39;s size in bits, respectively.</p>
 
@@ -207,7 +205,7 @@
 <p>Examples of cryptographic RNG implementations include the following:</p>
 
 <ul>
-<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness (entropy) is available.</li>
+<li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, published in 2007, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
@@ -227,13 +225,13 @@
 
 <p>If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>).</p>
 
-<p>A statistical RNG implementation is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG implementation provided it remains reasonably fast.</p>
+<p>A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.</p>
 
 <p><a id=Quality_2></a></p>
 
 <h3>Quality</h3>
 
-<p>A statistical RNG implementation generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
+<p>A statistical RNG generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
@@ -247,10 +245,10 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data not known <em>a priori</em> by the implementation, such as random bits from a cryptographic RNG implementation,</li>
-<li>must not contain, in whole or in part, the RNG&#39;s own output,</li>
-<li>must not be a fixed value, a nearly fixed value, or a user-entered value, and</li>
-<li>is encouraged not to consist of a timestamp (especially not a timestamp with millisecond or coarser granularity)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</li>
+<li>must consist of data ultimately derived from queried timestamps and/or nondeterministic sources (timestamps with millisecond or coarser granularity are not encouraged, however<sup><a href="#Note3"><strong>(3)</strong></a></sup>),</li>
+<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output,</li>
+<li>may be mixed with other arbitrary data, and</li>
+<li>should, where available, be the output of a cryptographic RNG or a seed for such an RNG.</li>
 </ul>
 
 <p>The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a <em>state length</em> less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG&#39;s period without reseeding.</p>
@@ -295,7 +293,7 @@
 
 <ul>
 <li>is hard-coded,</li>
-<li>was based on user-entered data,</li>
+<li>derived from user-entered data,</li>
 <li>is known to the application and was generated using a <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> or <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNG (as defined earlier),</li>
 <li>is a <a href="#Verifiable_Random_Numbers"><strong>verifiable random number</strong></a> (as defined later), or</li>
 <li>is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for a result that varies only daily),</li>
@@ -325,14 +323,14 @@
 <li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> is not stable (because its generation behavior could change in the future).</li>
 </ul>
 
-<p><a id=Seedable_PRNG_Recommendations></a></p>
+<p><a id=Recommendations_for_Seeded_PRNGs></a></p>
 
-<h3>Seedable PRNG Recommendations</h3>
+<h3>=Recommendations for Seeded PRNGs</h3>
 
 <p>Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;</p>
 
 <ul>
-<li>should meet or exceed the quality requirements of a statistical RNG implementation,</li>
+<li>should meet or exceed the quality requirements of a statistical RNG,</li>
 <li>should be reasonably fast, and</li>
 <li>should have a <em>state length</em> of 64 bits or greater.</li>
 </ul>
@@ -399,7 +397,7 @@
 
 <h4>Noise</h4>
 
-<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
+<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
 
 <p>However, a noise implementation that implements <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>) should, wherever feasible, <strong>use an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point).  Those gradients or hash values may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded values as the seed).</p>
 
@@ -466,7 +464,7 @@ of that library, or imply a preference of that library over others. The list is 
 <td>Ruby</td>
 <td>(C); <code>SecureRandom</code> class (<code>require &#39;securerandom&#39;</code>)</td>
 <td></td>
-<td><code>Random#rand()</code> (ranges from 0 through 1) (A) (E); <code>Random#rand(N)</code> (integer) (A) (E); <code>Random.new(seed)</code> (default seed uses entropy)</td>
+<td><code>Random#rand()</code> (ranges from 0 through 1) (A) (E); <code>Random#rand(N)</code> (integer) (A) (E); <code>Random.new(seed)</code> (default seed uses nondeterministic data)</td>
 </tr>
 </tbody></table>
 
@@ -600,7 +598,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note4"><strong>(4)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -609,17 +607,7 @@ def stateLengthDecks(numDecks, numCards):
 <li>If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.</li>
 </ul>
 
-<p>For such purposes, applications should choose hash functions designed such that&mdash;</p>
-
-<ul>
-<li>every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>), and</li>
-<li>if the hash function&#39;s use implicates information security, then&mdash;
-
-<ul>
-<li>it is at least cost-prohibitive to find an unknown second input that leads to the same output as that of a given input (the <em>one-way property</em>), and</li>
-<li>it is at least cost-prohibitive to find an unknown input that leads to a given output (<em>collision resistance</em>).</li>
-</ul></li>
-</ul>
+<p>For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input (the <em>one-way property</em>) and finding an unknown input that leads to a given output (<em>collision resistance</em>) are each cost-prohibitive, and should have other information security properties depending on the application.</p>
 
 <p><a id=GPU_Programming_Environments></a></p>
 
@@ -646,7 +634,7 @@ def stateLengthDecks(numDecks, numCards):
 <ul>
 <li>specify few and weak requirements on RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
 <li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
-<li>implement RNGs by default that leave a bit to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
+<li>implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
 <li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
 <li>leave the default seeding fixed.</li>
 </ul>
@@ -688,13 +676,15 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em> or <em>randomness extraction</em> methods that it is outside the scope of this document to describe.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
+<p><small><sup id=Note2>(2)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> Noise implementations include cellular noise, value noise, gradient noise, <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>. A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a> to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.</p>
+<p><small><sup id=Note3>(3)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
+
+<p><small><sup id=Note4>(4)</sup> Noise implementations include cellular noise, value noise, gradient noise, <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>. A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a> to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.</p>
 
 <p>Note that usual implementations of noise (other than cellular, value, or gradient noise) don&#39;t sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for colored noise, a filter is applied to the samples.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note5>(5)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 
