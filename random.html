@@ -174,8 +174,7 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output, and</li>
+<li>must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG&#39;s <em>state length</em>, and</li>
 <li>may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.</li>
 </ul>
 
@@ -245,8 +244,7 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data ultimately derived from queried timestamps and/or one or more nondeterministic sources (timestamps with millisecond or coarser granularity are not encouraged, however<sup><a href="#Note3"><strong>(3)</strong></a></sup>),</li>
-<li>must consist of data that does not contain, in whole or in part, the PRNG&#39;s own output,</li>
+<li>must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup><a href="#Note3"><strong>(3)</strong></a></sup>),</li>
 <li>may be mixed with arbitrary data other than the seed, and</li>
 <li>should, where available, be the output of a cryptographic RNG or a seed for such an RNG.</li>
 </ul>
