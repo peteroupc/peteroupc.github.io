@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 15, 2018.
+Begun on Mar. 5, 2016; last updated on May 16, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -52,7 +52,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
     - [**Examples and Non-Examples**](#Examples_and_Non_Examples)
 - [**Seeded PRNGs**](#Seeded_PRNGs)
     - [**Seeding Recommendations**](#Seeding_Recommendations)
-    - [**=Recommendations for Seeded PRNGs**](#Recommendations_for_Seeded_PRNGs)
+    - [**Recommendations for Seeded PRNGs**](#Recommendations_for_Seeded_PRNGs)
     - [**Examples**](#Examples_2)
         - [**Games**](#Games)
         - [**Unit Testing**](#Unit_Testing)
@@ -116,7 +116,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must have as many bits as the PRNG's _state length_,
 - must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG's _state length_,
 - must consist of data that does not contain, in whole or in part, the PRNG's own output, and
-- may be mixed with other arbitrary data as long as the result is no easier to predict.
+- may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.
 
 The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
 
@@ -170,9 +170,9 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data ultimately derived from queried timestamps and/or nondeterministic sources (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>),
+- must consist of data ultimately derived from queried timestamps and/or one or more nondeterministic sources (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>),
 - must consist of data that does not contain, in whole or in part, the PRNG's own output,
-- may be mixed with other arbitrary data, and
+- may be mixed with arbitrary data other than the seed, and
 - should, where available, be the output of a cryptographic RNG or a seed for such an RNG.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
@@ -180,14 +180,14 @@ The implementation is encouraged to reseed itself from time to time (using a new
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
 
-Examples of statistical RNGs include the following:
+Examples of statistical RNGs include the following<sup>[**(4)**](#Note4)</sup>:
+- [**`xoshiro256\*\*`**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
+- `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see note in the [**source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
+- `Lehmer128` (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see note in the [**source code**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
-- `Lehmer128` (state length 128 bits).
 - `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
-- PCG (classes named `pcg32`, `pcg64`, and `pcg64_fast`; state lengths 127, 255, and 127 bits, respectively) by Melissa O'Neill.
 
 Non-examples include the following:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in one of the tests in `BigCrush`, part of L'Ecuyer and Simard's "TestU01". (See also S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.)
@@ -226,7 +226,7 @@ Meeting recommendation 4 is aided by using _stable_ PRNGs; see [**"Definitions"*
 - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
 <a id=Recommendations_for_Seeded_PRNGs></a>
-### =Recommendations for Seeded PRNGs
+### Recommendations for Seeded PRNGs
 
 Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;
 
@@ -280,7 +280,7 @@ One process to generate verifiable random numbers is described in [**RFC 3797**]
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html))<sup>[**(4)**](#Note4)</sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html))<sup>[**(5)**](#Note5)</sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.
 
 However, a noise implementation that implements [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), or [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)) should, wherever feasible, **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).  Those gradients or hash values may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded values as the seed).
 
@@ -423,7 +423,7 @@ The PRNG chosen this way should meet or exceed the quality requirements of a sta
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup>[**(5)**](#Note5)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup>[**(6)**](#Note6)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -486,11 +486,13 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small><sup id=Note3>(3)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
-<small><sup id=Note4>(4)</sup> Noise implementations include cellular noise, value noise, gradient noise, [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
+<small><sup id=Note4>(4)</sup> PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill, was formerly listed here, but [**S. Vigna believes**](http://pcg.di.unimi.it/pcg.php) "there is no reason to use PCG generators" when better alternatives exist.</small>
+
+<small><sup id=Note5>(5)</sup> Noise implementations include cellular noise, value noise, gradient noise, [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
 
 Note that usual implementations of noise (other than cellular, value, or gradient noise) don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for colored noise, a filter is applied to the samples.</small>
 
-<small><sup id=Note5>(5)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note6>(6)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
 <a id=License></a>
 ## License
