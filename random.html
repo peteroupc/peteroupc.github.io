@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on May 16, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on May 17, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -230,7 +230,7 @@
 
 <h3>Quality</h3>
 
-<p>A statistical RNG generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm&#39;s expected number of state transitions before a cycle occurs and its expected number of state transitions during a cycle must each be at least 2<sup>32</sup>. The RNG need not be equidistributed.</p>
+<p>A statistical RNG generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm must either satisfy the <em>one-way property</em> or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of <code>BigCrush</code>, part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;. The RNG need not be equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
@@ -254,7 +254,7 @@
 
 <h3>Examples and Non-Examples</h3>
 
-<p>Examples of statistical RNGs include the following<sup><a href="#Note4"><strong>(4)</strong></a></sup>:</p>
+<p>Examples of statistical RNGs include the following:</p>
 
 <ul>
 <li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>`xoshiro256</strong>`**</a> (state length 256 bits; nonzero seed).</li>
@@ -266,10 +266,16 @@
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 </ul>
 
+<p>The following also count as statistical RNGs, but are not preferred:</p>
+
+<ul>
+<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
+<li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. <a href="http://pcg.di.unimi.it/pcg.php"><strong>S. Vigna believes</strong></a> &quot;there is no reason to use PCG generators&quot; when better alternatives exist.</li>
+</ul>
+
 <p>Non-examples include the following:</p>
 
 <ul>
-<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in one of the tests in <code>BigCrush</code>, part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
 <li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.</li>
 </ul>
 
@@ -394,7 +400,7 @@
 
 <h4>Noise</h4>
 
-<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
+<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images and sound.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.</p>
 
 <p>However, a noise implementation that implements <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, or <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>) should, wherever feasible, <strong>use an RNG to initialize a table of gradients or hash values</strong> in advance, to be used later by the <em>noise function</em> (a function that outputs seemingly random numbers given an <em>n</em>-dimensional point).  Those gradients or hash values may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded values as the seed).</p>
 
@@ -473,8 +479,7 @@ of that library, or imply a preference of that library over others. The list is 
 
 <p><small></p>
 
-<p>(A) General RNG implements the <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which doesn&#39;t
-meet the statistical RNG requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</p>
+<p>(A) General RNG implements <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</p>
 
 <p>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</p>
 
@@ -601,7 +606,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note6"><strong>(6)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -610,7 +615,7 @@ def stateLengthDecks(numDecks, numCards):
 <li>If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.</li>
 </ul>
 
-<p>For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input (the <em>one-way property</em>) and finding an unknown input that leads to a given output (<em>collision resistance</em>) are each cost-prohibitive, and should have other information security properties depending on the application.</p>
+<p>For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive (the <em>one-way property</em>) and so is finding an unknown input that leads to a given output (<em>collision resistance</em>), and should have other information security properties depending on the application.</p>
 
 <p><a id=GPU_Programming_Environments></a></p>
 
@@ -683,13 +688,11 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill, was formerly listed here, but <a href="http://pcg.di.unimi.it/pcg.php"><strong>S. Vigna believes</strong></a> &quot;there is no reason to use PCG generators&quot; when better alternatives exist.</small></p>
-
-<p><small><sup id=Note5>(5)</sup> Noise implementations include cellular noise, value noise, gradient noise, <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>. A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a> to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.</p>
+<p><small><sup id=Note4>(4)</sup> Noise implementations include cellular noise, value noise, gradient noise, <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>. A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a> to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.</p>
 
 <p>Note that usual implementations of noise (other than cellular, value, or gradient noise) don&#39;t sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for colored noise, a filter is applied to the samples.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note5>(5)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 
