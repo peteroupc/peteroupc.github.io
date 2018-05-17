@@ -24,7 +24,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 
 **This document does not cover:**
 
-- Testing an RNG implementation for adequate random number generation.
+- Testing an RNG implementation for correctness or adequate random number generation.
 - Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
 
 **The following table summarizes the kinds of RNGs covered in this document:**
@@ -169,7 +169,7 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>), and
+- must consist of data ultimately derived from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output should cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(3)**](#Note3)</sup>, and
 - may be mixed with arbitrary data other than the seed.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
@@ -482,7 +482,7 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small><sup id=Note2>(2)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small>
 
-<small><sup id=Note3>(3)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
+<small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
 <small><sup id=Note4>(4)</sup> PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill, was formerly listed here, but [**S. Vigna believes**](http://pcg.di.unimi.it/pcg.php) "there is no reason to use PCG generators" when better alternatives exist.</small>
 

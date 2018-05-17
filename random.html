@@ -34,7 +34,7 @@
 <p><strong>This document does not cover:</strong></p>
 
 <ul>
-<li>Testing an RNG implementation for adequate random number generation.</li>
+<li>Testing an RNG implementation for correctness or adequate random number generation.</li>
 <li>Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.</li>
 </ul>
 
@@ -244,7 +244,7 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and</li>
+<li>must consist of data ultimately derived from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output should cover a state space of at least as many bits as the PRNG&#39;s <em>state length</em><sup><a href="#Note3"><strong>(3)</strong></a></sup>, and</li>
 <li>may be mixed with arbitrary data other than the seed.</li>
 </ul>
 
@@ -681,7 +681,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note2>(2)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> This statement appears because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
+<p><small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
 
 <p><small><sup id=Note4>(4)</sup> PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill, was formerly listed here, but <a href="http://pcg.di.unimi.it/pcg.php"><strong>S. Vigna believes</strong></a> &quot;there is no reason to use PCG generators&quot; when better alternatives exist.</small></p>
 
