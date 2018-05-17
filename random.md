@@ -110,11 +110,11 @@ A cryptographic RNG implementation generates uniformly distributed random bits s
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
-The PRNG's _state length_ must be at least 128 bits and should be at least 256 bits.
+The PRNG's _state length_ must be at least 128 bits and should be at least 256 bits.  The _security strength_ used by the RNG must be at least 112 bits, should be at least 128 bits, and may equal the PRNG's _state length_.
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as fully random data with as many bits as the PRNG's _state length_, and
+- must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
 - may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.
 
 The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
@@ -129,9 +129,9 @@ A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ 
 - thermal noise, and
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.
 
-A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to fully random data; this is generally the size in bits of the fully random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as a fully random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.
+A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.
 
-For a cryptographic RNG, the output of the strongest nondeterministic source used to derive a seed, if a PRNG is used, or derive an RNG output otherwise, ought to have a min-entropy equal to or greater than that PRNG's _state length_ or that RNG output's size in bits, respectively.
+If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of min-entropy as the _security strength_.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of min-entropy as the RNG output's size in bits.
 
 <a id=Examples></a>
 ### Examples
@@ -169,9 +169,8 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>),
-- may be mixed with arbitrary data other than the seed, and
-- should, where available, be the output of a cryptographic RNG or a seed for such an RNG.
+- must consist of data ultimately derived from queried timestamps, one or more nondeterministic sources, and/or the output of a cryptographic RNG (timestamps with millisecond or coarser granularity are not encouraged, however<sup>[**(3)**](#Note3)</sup>), and
+- may be mixed with arbitrary data other than the seed.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
 
@@ -189,7 +188,7 @@ Examples of statistical RNGs include the following<sup>[**(4)**](#Note4)</sup>:
 
 Non-examples include the following:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in one of the tests in `BigCrush`, part of L'Ecuyer and Simard's "TestU01". (See also S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoroshiro128+` website.)
-- Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.  (See also the Wikipedia article for further problems with linear congruential generators.)
+- Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
 
 <a id=Seeded_PRNGs></a>
 ## Seeded PRNGs
@@ -296,7 +295,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 - In multithreaded applications, for each kind of RNG, it's encouraged to either&mdash;
     - create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or
     - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this might not always be ideal for cryptographic RNG implementations).
-- Methods and libraries mentioned in the "Statistical" column need to be initialized with a full-length seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
+- Methods and libraries mentioned in the "Statistical" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
 - The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.
 
@@ -307,11 +306,12 @@ of that library, or imply a preference of that library over others. The list is 
 | Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
 | JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
 | Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
+| PHP | `random_int()` (since PHP 7) |  | `mt_rand()` (A) |
 
 <small>
 
-(A) Default general RNG implements the [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
-meet the statistical RNG requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.
+(A) General RNG implements the [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which doesn't
+meet the statistical RNG requirements, strictly speaking, but might be adequate for many applications due to its extremely long period.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.
 
 (B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
 
