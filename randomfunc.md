@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 14, 2018.
+Begun on June 4, 2017; last updated on May 22, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -51,14 +51,13 @@ All the random number methods presented on this page&mdash;
     - [**Creating a Random Character String**](#Creating_a_Random_Character_String)
     - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
     - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
-    - [**Almost-Random Sampling**](#Almost_Random_Sampling)
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Discrete Weighted Choice**](#Discrete_Weighted_Choice)
-        - [**Weighted Choice Without Replacement**](#Weighted_Choice_Without_Replacement)
-        - [**Choosing Multiple Items**](#Choosing_Multiple_Items)
+        - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
+        - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
         - [**Piecewise Constant Distribution**](#Piecewise_Constant_Distribution)
     - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
@@ -103,12 +102,11 @@ In this document:
     - [`a`, `b`] means "`a` or greater and `b` or less".
 * **Norm.** The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
-* **Significand permutations.** A floating-point format's floating-point base raised to the power of the format's precision (the maximum number of significant digits that the format can represent without loss). For example&mdash;
-    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) significand permutations,
-    - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> significand permutations,
-    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) significand permutations,
-    - the .NET Framework decimal format (`System.Decimal`) has a precision of 28 (since it can represent up to that many significant digits without loss, even though it can represent some numbers greater than 10<sup>28</sup>), so it has 10<sup>28</sup> significand permutations, and
-    - arbitrary-precision floating point numbers (e.g., Java `BigDecimal`) can have a theoretically arbitrary number of significand permutations.
+* **Maximum even parts.** The number of maximum even parts is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in a given floating-point number format.  For example&mdash;
+    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts (see "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks) for further discussion),
+    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) maximum even parts,
+    - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> maximum even parts, and
+    - the .NET Framework decimal format (`System.Decimal`) would have 2<sup>96</sup> maximum even parts, but 2<sup>96</sup> is not representable, so it actually has 2<sup>95</sup> maximum even parts instead.
 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
@@ -125,11 +123,10 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.  (These two kinds were chosen because they were the most commonly seen in practice.)
 
 - **Method 1**: If `RNG()` outputs **integers in the interval** **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup>
-- **Method 2**: If `RNG()` outputs **floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _significand permutations_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.  (If the RNG outputs arbitrary-precision floating-point numbers, `s` should be set to the number of different values that are possible from the underlying RNG.)
-- **Other RNGs:** A detailed `RNDINT(maxInclusive)` implementation for other kinds of RNGs is not given here, since they seem to be lesser seen in practice.  Readers who know of such an RNG (provided it's in wide use) should send me a comment.
+- **Method 2**: If `RNG()` outputs **fixed-precision floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _maximum even parts_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.
 
 &nbsp;
 
@@ -174,7 +171,7 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
                             // NOTE: If the programming language supports a bitwise
                             // AND operator, the mod operation can be implemented
                             // as "rndNumber AND ((1 << wordBits) - 1)"
-                            rngNumber = mod(rngNumber, (1 << wordBits))
+                            rngNumber = rem(rngNumber, (1 << wordBits))
                          end
                          tempnumber = tempnumber << wordBits
                          // NOTE: In programming languages that
@@ -204,10 +201,10 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
       isPowerOfTwo=floor(modBits) == modBits
       // Special cases if MODULUS is a power of 2
       if isPowerOfTwo
-           if maxInclusive == 1: return mod(RNG(), 2)
-           if maxInclusive == 3 and modBits >= 2: return mod(RNG(), 4)
-           if maxInclusive == 255 and modBits >= 8: return mod(RNG(), 256)
-           if maxInclusive == 65535 and modBits >=16: return mod(RNG(), 65535)
+           if maxInclusive == 1: return rem(RNG(), 2)
+           if maxInclusive == 3 and modBits >= 2: return rem(RNG(), 4)
+           if maxInclusive == 255 and modBits >= 8: return rem(RNG(), 256)
+           if maxInclusive == 65535 and modBits >=16: return rem(RNG(), 65535)
        end
       if maxInclusive > MODULUS - 1:
          if isPowerOfTwo
@@ -225,7 +222,7 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
               while true
                         ret = RNG()
                         if ret < nPlusOne: return ret
-                        if ret < maxexc: return mod(ret, nPlusOne)
+                        if ret < maxexc: return rem(ret, nPlusOne)
               end
       end
     END METHOD
@@ -233,10 +230,10 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating u
 > **Notes:**
 >
 > - To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
-> - To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - mod(X, DIV)` if `X >= 0`, or `X - (DIV - mod(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
+> - To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - rem(X, DIV)` if `X >= 0`, or `X - (DIV - rem(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
 > - A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
 >      - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
->      - To convert a point `P` to its 2D coordinates, generate `[mod(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
+>      - To convert a point `P` to its 2D coordinates, generate `[rem(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
 >      - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
 
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
@@ -288,9 +285,9 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 <a id=RNDU01_Random_Numbers_in_0_1></a>
 ### `RNDU01`: Random Numbers in [0, 1]
 
-The idiom `RNDINT(X) / X` (called **`RNDU01()`** in this document), generates a **random number in the interval [0, 1]**, where `X` is the number of fractional parts between 0 and 1. (For fixed-precision floating-point number formats, `X` should equal the number of _significand permutations_ for that format. See "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks) for further discussion.)
+The idiom `RNDINT(X) / X` (called **`RNDU01()`** in this document), generates a **random number in the interval [0, 1]**, where `X` is the number of _maximum even parts_.
 
-For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (for examples, see the [**note for "significand permutations"**](#Notation_and_Definitions)).
+For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of digits the format can represent without loss; e.g., 53 for Java's `double`).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -344,11 +341,13 @@ For fixed-point or floating-point number formats with fixed precision (such as J
        end
     END
 
+> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The [**"Variance" MathWorld article**](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
 `RNDINTEXC(maxExclusive)`, which generates a **random number in the interval** **\[0, `maxExclusive`\)**,
-can be implemented as follows<sup>[(4)**](#Note4)</sup>:
+can be implemented as follows<sup>[**(4)**](#Note4)</sup>:
 
      METHOD RNDINTEXC(maxExclusive)
         if maxExclusive <= 0: return error
@@ -367,7 +366,7 @@ can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 <a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTEXCRANGE`: Random Integers in [N, M)
 
-**`RNDINTEXCRANGE`** returns a **random integer in the interval** **\[`minInclusive`, `maxExclusive`\)**.  It can be implemented using [`RNDINTRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDINTEXCRANGE`** returns a **random integer in the interval** **\[`minInclusive`, `maxExclusive`\)**.  It can be implemented using [**`RNDINTRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -388,7 +387,7 @@ can be implemented as follows<sup>[(4)**](#Note4)</sup>:
 ### `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers in [0, 1), (0, 1], or (0, 1)
 
 Three methods related to `RNDU01()` can be implemented as follows, where
-`X` is the number of fractional parts between 0 and 1 (see `RNDU01()` section).
+`X` is the number of _maximum even parts_.
 
 - **`RNDU01OneExc()`, interval [0, 1)**, can be implemented in one of the following ways:
     - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.  This is preferred.
@@ -410,7 +409,7 @@ Three methods related to `RNDU01()` can be implemented as follows, where
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
 
 **`RNDNUMEXCRANGE`** returns a  **random number in the interval \[`minInclusive`, `maxExclusive`\)**.
- It can be implemented using [`RNDNUMRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+ It can be implemented using [**`RNDNUMRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
@@ -594,8 +593,8 @@ Choosing an item this way is also known as _sampling with replacement_.
 
 > **Notes:**
 
-> - Generating a random number in the interval [**`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
->     - generating a list of all numbers in the interval [**`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
+> - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
+>     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
 >     - choosing a random item from the list generated this way.
 > - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
@@ -679,18 +678,6 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
 
 > **Note:** Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
-
-<a id=Almost_Random_Sampling></a>
-### Almost-Random Sampling
-
-Some applications (particularly some games) may find it important to control which random numbers appear, to make the random outcomes appear fairer to users.  Without this control, a user may experience long streaks of good outcomes or long streaks of bad outcomes, both of which are theoretically possible with a random number generator.  To implement this kind of "almost-random" sampling, do one of the following:
-
-- Generate a list of possible outcomes (for example, the list can contain 10 items labeled "good" and three labeled "bad") and [**shuffle**](#Shuffling) that list.  Each time an outcome has to be generated, choose the next unchosen outcome from the shuffled list.  Once all those outcomes are chosen, shuffle the list and continue.
-- Create two lists: one list with the different possible outcomes, and another list of the same size containing an integer weight 0 or greater for each outcome (for example, one list can contain the items "good" and "bad", and the other list can contain the weights 10 and 3, respectively).  Each time an outcome has to be generated, choose one outcome using the [**weighted choice without replacement**](#Weighted_Choice_Without_Replacement) technique.  Once all of the weights are 0, re-fill the list of weights with the same weights the list had at the start, and continue.
-
-However, "almost-random" sampling techniques are not recommended whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
-
-> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The [**"Variance" MathWorld article**](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=Choosing_a_Random_Date_Time></a>
 ### Choosing a Random Date/Time
@@ -794,10 +781,10 @@ The following pseudocode takes a single list `weights`, and returns the index of
 
 In the example above, the weights sum to 21.  However, the weights do not mean that when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
-<a id=Weighted_Choice_Without_Replacement></a>
-#### Weighted Choice Without Replacement
+<a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
+#### Weighted Choice Without Replacement (Multiple Copies)
 
-To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, when items are selected repeatedly, each weight behaves like the number of "copies" of each item. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
+To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, **each weight behaves like the number of "copies" of each item**. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
 
     // Get the sum of weights
     // (NOTE: This code assumes that `weights` is
@@ -827,10 +814,12 @@ To implement weighted choice _without replacement_ (which can be thought of as d
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [**shuffle**](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
-<a id=Choosing_Multiple_Items></a>
-#### Choosing Multiple Items
+> **Note:** Weighted choice without replacement can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome; e.g., "good" or "bad", and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
 
-The discrete weighted choice method can also be used for choosing multiple items from a list, whether or not the items have the same probability of being chosen.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.
+<a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
+#### Weighted Choice Without Replacement (Single Copies)
+
+The discrete weighted choice method can also be used for choosing items from a list, where each item has a separate probability of being chosen and **can be chosen no more than once**.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.
 
     // (NOTE: This code assumes that `weights` is
     // a list that can be modified.  If the original weights
@@ -864,7 +853,7 @@ The discrete weighted choice method can also be used to implement a [**_piecewis
     // Choose a random number in the chosen interval on the list
     number = RNDNUMEXCRANGE(list[index], list[index + 1])
 
-The code above implements the distribution _with replacement_.  Implementing the distribution _without replacement_ is similar to implementing [**discrete weighted choice without replacement**](#Weighted_Choice_Without_Replacement); the only change is to replace `AddItem(items, list[index])` with `AddItem(items, RNDNUMEXCRANGE(list[index], list[index + 1]))` in the pseudocode.
+The code above implements the distribution _with replacement_.  Implementing the distribution _without replacement_ is similar to implementing [**weighted choice of multiple copies**](#Weighted_Choice_Without_Replacement_Multiple_Copies); the only change is to replace `AddItem(items, list[index])` with `AddItem(items, RNDNUMEXCRANGE(list[index], list[index + 1]))` in the pseudocode.
 
 <a id=Continuous_Weighted_Choice></a>
 ### Continuous Weighted Choice
@@ -953,7 +942,7 @@ If a probability distribution's **PDF is known**, one of the following technique
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
              if minValue >= maxValue: return error
-             while True:
+             while True
                  x=RNDNUMEXCRANGE(minValue, maxValue)
                  y=RNDNUMEXCRANGE(0, maxDensity)
                  if y < PDF(x): return x
@@ -988,7 +977,7 @@ To generate random content from a mixture&mdash;
 >         number = 0
 >         // If index 0 was chosen, sample from the mean 1 normal
 >         if index==0: number = Normal(1, 1)
->         // Else index 1 was chosen, sample from the mean -1 normal
+>         // Else index 1 was chosen, so sample from the mean -1 normal
 >         else: number = Normal(-1, 1)
 >
 > 2. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(10)**](#Note10)</sup>
@@ -1104,7 +1093,7 @@ Alternatively, or in addition, the following method (implementing a ratio-of-uni
 
 > **Notes:**
 > - In a _standard normal distribution_, `mu` = 0 and `sigma` = 1.
-> - Note that if variance is given, rather than standard deviation, the standard deviation (`sigma`) is the variance's square root.
+> - If variance is given, rather than standard deviation, the standard deviation (`sigma`) is the variance's square root.
 
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
@@ -1168,9 +1157,7 @@ as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 In the following method, which generates a random integer that follows a _Poisson distribution_&mdash;
 
 - `mean` is the average number of independent events of a certain kind per fixed unit of time or space (for example, per day, hour, or square kilometer), and can be an integer or a non-integer, and
-- the method's return value&mdash;
-    - gives a random number of such events within one such unit, and
-    - is such that the average of the return values approaches `mean` when this method is repeatedly given the same value for `mean`.
+- the method's return value gives a random number of such events within one such unit.
 
 The method given here is based on Knuth's method from 1969.
 
@@ -1769,11 +1756,11 @@ Currently, the following are not covered in this document, but may be added base
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> This definition includes RNGs that&mdash;
+<small><sup id=Note1>(1)</sup> An RNG meeting this definition can&mdash;
 - seek to generate random numbers that are at least cost-prohibitive (but not necessarily _impossible_) to predict,
 - merely seek to generate number sequences likely to pass statistical tests of randomness,
-- are initialized automatically before use,
-- are initialized with an application-specified "seed",
+- be initialized automatically before use,
+- be initialized with an application-specified "seed",
 - use a deterministic algorithm for random number generation,
 - rely, at least primarily, on one or more nondeterministic sources for random number
    generation (including by extracting uniformly distributed bits from two or more such sources), or
@@ -1785,11 +1772,11 @@ If the software and/or hardware uses a nonuniform distribution, but otherwise me
 
 Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.</small>
 
-<small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by decreasing its absolute value by 1 and swapping the bits of the resulting number.</small>
+<small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by swapping the bits of a number equal to that number's absolute value minus 1.</small>
 
 <small><sup id=Note4>(4)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.</small>
 
-<small><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`, where `min(a,b)` is the smaller of `a` and `b`, returns an integer in the interval \[**0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.</small>
+<small><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))` returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.</small>
 
 <small><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
 
@@ -1798,7 +1785,7 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 <small><sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.</small>
 
 <small><sup id=Note9>(9)</sup> More formally&mdash;
-- the PDF is the derivative (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
+- the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
 - the CDF is also defined as the _integral_ of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>

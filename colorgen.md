@@ -194,9 +194,9 @@ The following pseudocode contains methods for converting RGB colors to and from 
     // Converts N/N/N integer format to 0-1 format
     METHOD FromNNN(rgb, scale)
        sm1 = scale - 1
-       r = mod(rgb, scale)
-       g = mod(floor(rgb / scale), scale)
-       b = mod(floor(rgb / (scale * scale)), scale)
+       r = rem(rgb, scale)
+       g = rem(floor(rgb / scale), scale)
+       b = rem(floor(rgb / (scale * scale)), scale)
        return [ r / sm1, g / sm1, b / sm1]
     END METHOD
 
@@ -215,9 +215,9 @@ The following pseudocode contains methods for converting RGB colors to and from 
     END METHOD
 
     METHOD From565(rgb, scale)
-       r = mod(rgb, 32)
-       g = mod(floor(rgb / 32.0), 64)
-       b = mod(floor(rgb / (32.0 * 64.0)), 32)
+       r = rem(rgb, 32)
+       g = rem(floor(rgb / 32.0), 64)
+       b = rem(floor(rgb / (32.0 * 64.0)), 32)
        return [ r / 31.0, g / 63.0, b / 31.0]
     END METHOD
 
@@ -260,9 +260,9 @@ The following pseudocode presents methods to convert RGB colors to and from the 
        g = round(rgb[1] * 255)
        b = round(rgb[2] * 255)
        return ["#",
-         NumToHex(mod(floor(r/16),16)), NumToHex(mod(r, 16)),
-         NumToHex(mod(floor(g/16),16)), NumToHex(mod(g, 16)),
-         NumToHex(mod(floor(b/16),16)), NumToHex(mod(b, 16)),
+         NumToHex(rem(floor(r/16),16)), NumToHex(rem(r, 16)),
+         NumToHex(rem(floor(g/16),16)), NumToHex(rem(g, 16)),
+         NumToHex(rem(floor(b/16),16)), NumToHex(rem(b, 16)),
        ]
     END METHOD
 
@@ -391,8 +391,8 @@ The following pseudocode converts colors between RGB and HSV.  The transformatio
         else
                 h=4+(rgb[0]-rgb[1])/(mx-mn)
         end
-        if h < 6: h = 6 - mod(-h, 6)
-        if h >= 6: h = mod(h, 6)
+        if h < 6: h = 6 - rem(-h, 6)
+        if h >= 6: h = rem(h, 6)
         return [h * (pi / 3), s, mx]
     END METHOD
 
@@ -400,8 +400,8 @@ The following pseudocode converts colors between RGB and HSV.  The transformatio
         hue=hsv[0]
         sat=hsv[1]
         val=hsv[2]
-        if hue < 0: hue = pi * 2 - mod(-hue, pi * 2)
-        if hue >= pi * 2: hue = mod(hue, pi * 2)
+        if hue < 0: hue = pi * 2 - rem(-hue, pi * 2)
+        if hue >= pi * 2: hue = rem(hue, pi * 2)
         hue60 = hue * 3 / pi
         hi = floor(hue60)
         f = hue60 - hi
@@ -459,8 +459,8 @@ The following pseudocode converts colors between RGB and HSL.  The transformatio
                 h=pi * 2 / 3 + ((vmax-rgb[0])*deg60 + hvd) / vd
                 h = h - ((vmax-rgb[2])*deg60+hvd) / vd
         end
-        if h < 0: h = pi * 2 - mod(-h, pi * 2)
-        if h >= pi * 2: h = mod(h, pi * 2)
+        if h < 0: h = pi * 2 - rem(-h, pi * 2)
+        if h >= pi * 2: h = rem(h, pi * 2)
         return [h, s, lt]
     END METHOD
 
@@ -473,8 +473,8 @@ The following pseudocode converts colors between RGB and HSL.  The transformatio
         if lum > 0.5: bb= lum + sat - (lum * sat)
         a = lum * 2 - bb
         hueval = hsl[0]
-        if hueval < 0: hueval = pi * 2 - mod(-hueval, pi * 2)
-        if hueval >= pi * 2: hueval = mod(hueval, pi * 2)
+        if hueval < 0: hueval = pi * 2 - rem(-hueval, pi * 2)
+        if hueval >= pi * 2: hueval = rem(hueval, pi * 2)
         deg60 = pi / 3
         deg240 = pi * 4 / 3
         hue = hueval + pi * 2 / 3
