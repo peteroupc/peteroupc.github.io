@@ -138,10 +138,10 @@ END METHOD
 
 METHOD HsiToRgb(hsi)
    h=hsi[0]
-   if h &lt; 0: h = pi * 2 - mod(-h, pi * 2)
-   if h &gt;= pi * 2: h = mod(h, pi * 2)
+   if h &lt; 0: h = pi * 2 - rem(-h, pi * 2)
+   if h &gt;= pi * 2: h = rem(h, pi * 2)
    deg120=2*pi/3
-   hmod=mod(h, deg120)
+   hmod=rem(h, deg120)
    a=hsi[2]*(1-hsi[1])
    b=(hsi[1]*cos(hmod)/sin(hmod+pi/6)+1)*hsi[2]
    c=3*hsi[2]-a-b

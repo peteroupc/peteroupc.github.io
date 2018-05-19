@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 17, 2018.
+Begun on Mar. 5, 2016; last updated on May 20, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -79,7 +79,7 @@ The following definitions are helpful in better understanding this document.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
 - **Pseudorandom number generator (PRNG).** A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.
 - **Seed.**  Arbitrary data for initializing the state of a PRNG.
-- **State length.**  The maximum size of the seed a PRNG can take to initialize its state without truncating or compressing that seed.
+- **State length.**  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.
 - **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>_L_</sup> where _L_ is the PRNG's _state length_.
 - **Stable.** A programming interface is _stable_ if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
 - **Information security.** Defined in ISO/IEC 27000.
@@ -92,11 +92,10 @@ Cryptographic RNGs (also known as "cryptographically strong" or "cryptographical
 -  generating keying material, such as encryption keys,
 -  generating random passwords, nonces, or session identifiers,
 -  generating "salts" to vary hash codes of the same password,
--  use in communications between two networked computers,
--  use in transfer, transport, messaging, and other communication protocols, and
+-  use in communications between two networked computers (including in data transfer, data transport, and messaging), and
 -  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
 
-They are also useful in cases where the application generates random numbers so infrequently that the RNG's speed is not a concern.
+They are also useful when the application generates random numbers so infrequently that the RNG's speed is not a concern.
 
 A cryptographic RNG ultimately relies on one or more _nondeterministic sources_, as described later in this section.
 
@@ -127,7 +126,7 @@ A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ 
 - disk access timings,
 - keystroke timings,
 - thermal noise, and
-- the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion, provided a high-resolution counter is available.
+- the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available.
 
 A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.
 
@@ -169,7 +168,7 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data ultimately derived from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output should cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(3)**](#Note3)</sup>, and
+- must consist of data that ultimately derives from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(3)**](#Note3)</sup>, and
 - may be mixed with arbitrary data other than the seed.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
@@ -178,7 +177,7 @@ The implementation is encouraged to reseed itself from time to time (using a new
 ### Examples and Non-Examples
 
 Examples of statistical RNGs include the following:
-- [**`xoshiro256**`**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
+- [**xoshiro256 star star**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
 - `xoroshiro128+` (state length 128 bits; nonzero seed &mdash; but see note in the [**source code**](http://xoshiro.di.unimi.it/xoroshiro128plus.c) about the lowest bit of the PRNG's outputs).
 - `Lehmer128` (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
@@ -205,7 +204,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
 
 1. the initial state (the seed) which the "random" result will be generated from&mdash;
     - is hard-coded,
-    - derived from user-entered data,
+    - is derived from user-entered data,
     - is known to the application and was generated using a [**cryptographic**](#Cryptographic_RNGs) or [**statistical**](#Statistical_RNGs) RNG (as defined earlier),
     - is a [**verifiable random number**](#Verifiable_Random_Numbers) (as defined later), or
     - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
@@ -368,7 +367,7 @@ The first consideration touches on the shuffling method.  The [**Fisher&ndash;Ya
 
 The second consideration is present if the application uses PRNGs for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
-The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items).
+The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items.)
 
 Formulas suggesting state lengths for PRNGs are implemented below in Python.  For example, to shuffle a 52-item list, a PRNG with state length 226 or more is suggested, and to shuffle two 52-item lists of identical contents together, a PRNG with state length 500 or more is suggested.
 

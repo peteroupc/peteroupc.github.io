@@ -24,7 +24,7 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
       if x<=1: return 1
       ret=1
       x=floor(x)
-      smod = mod(x,2)
+      smod = rem(x,2)
       k=0
       if smod==0: k=floor(x/2)
       if smod==1: k=floor((x-1)/2)+1

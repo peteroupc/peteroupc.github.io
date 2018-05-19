@@ -62,7 +62,7 @@ def prepareMarkdown(data)
    ret="#{p1} #{p2}\n\n"+nt+"\n\n"
    next ret
   }
-  data=data.gsub(/(\A|[^\\])\[(?!\*\*)([^\]]+)\]\(/){
+  data=data.gsub(/(\A|[^\\])\[(?!\*\*)([^\]\n]+)\]\(/){
    ret="#{$1}[**#{$2}**]("
    next ret
   }
