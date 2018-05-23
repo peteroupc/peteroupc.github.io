@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on May 22, 2018.</p>
+<p>Begun on June 4, 2017; last updated on May 23, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -948,16 +948,16 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Examples:</strong>
-1. Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>DiscreteWeightedChoice</code> method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.</p>
-
-<pre>        index = DiscreteWeightedChoice(weights)
-        // Get the actual item
-        item = list[index]
-</pre>
+<p><strong>Examples:</strong></p>
 
 <ol>
-<li>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDNUMEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</li>
+<li><p>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>DiscreteWeightedChoice</code> method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.</p>
+
+<pre>    index = DiscreteWeightedChoice(weights)
+    // Get the actual item
+    item = list[index]
+</pre></li>
+<li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDNUMEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
 <li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = DiscreteWeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDNUMEXCRANGE(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
 </ol>
 </blockquote>
@@ -1097,21 +1097,18 @@ END METHOD
 
 <h3>Random Numbers from a Distribution of Data Points</h3>
 
-<p>To generate a random number (or data point) based on the distribution of a list of numbers (or data points)&mdash;</p>
+<p>Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called <a href="http://scikit-learn.org/stable/modules/density.html"><strong><em>density estimation</em></strong></a>, which include histograms, <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation"><strong>kernel density estimation</strong></a>, and Gaussian <a href="https://en.wikipedia.org/wiki/Mixture_model"><strong>mixture models</strong></a>.  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.</p>
 
-<ul>
-<li>choose one of the numbers or points at random (see, for example, <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Choosing a Random Item from a List</strong></a>), and</li>
-<li>add a randomized &quot;jitter&quot; to the chosen number or point; for example&mdash;
+<p>One method of generating random numbers this way (based on <strong>kernel density estimation</strong>) is as follows:</p>
 
-<ul>
-<li>add <code>Normal(0, sigma)</code> to the chosen number, where <code>sigma</code> is the <em>bandwidth</em> (which should be as low or as high as allows the estimated distribution to fit the data and remain smooth), or</li>
-<li>add a separately generated <code>Normal(0, sigma)</code> to each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
-</ul></li>
-</ul>
+<ol>
+<li>Choose one of the numbers or points in the data at random (see, for example, <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Choosing a Random Item from a List</strong></a>).</li>
+<li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
+</ol>
 
-<p>A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized &quot;jitter&quot; (whose distribution is formally called a <em>kernel</em>) is outside the scope of this document.  For further information on <em>kernel density estimation</em>, which the random number generation technique here is related to, see the Wikipedia articles on <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation"><strong>single-variable</strong></a> and <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>multiple-variable</strong></a> estimation, or a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</p>
+<p><strong>Histograms</strong> are sets of one or more <em>bins</em> of equal size.  Histograms are <a href="#Mixtures_of_Distributions"><strong><em>mixtures</em></strong></a>, where each bin&#39;s weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  <strong>Gaussian mixture models</strong> are also mixtures, in this case, mixtures of one or more <a href="#Normal_Gaussian_Distribution"><strong>Gaussian (normal) distributions</strong></a>.</p>
 
-<p>Alternatively, an application can fit a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of <a href="#Normal_Gaussian_Distribution"><strong>Gaussian distributions</strong></a> to the data points and sample a data point from that mixture.  This document doesn&#39;t cover how to fit such a mixture (a <em>Gaussian mixture model</em>), but see the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Mixture_model"><strong>mixture models</strong></a>.</p>
+<p>This document doesn&#39;t detail how to build a density estimation model. Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</p>
 
 <p><a id=Random_Numbers_from_an_Arbitrary_Distribution></a></p>
 
@@ -2102,7 +2099,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note7>(7)</sup> Such techniques usually involve <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong><em>Markov chains</em></strong></a>, which are outside this page&#39;s scope.</small></p>
 
-<p><small><sup id=Note8>(8)</sup> A third kind of randomized &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multivariate normal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>. The second kind of &quot;jitter&quot; given here is an easy special case of the multivariate normal distribution, where the <em>bandwidth</em> corresponds to a bandwidth matrix with diagonal elements equal to <em>bandwidth</em>-squared and with zeros everywhere else.</small></p>
+<p><small><sup id=Note8>(8)</sup> &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multivariate normal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</small></p>
 
 <p><small><sup id=Note9>(9)</sup> More formally&mdash;</p>
 
