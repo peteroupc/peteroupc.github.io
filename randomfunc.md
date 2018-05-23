@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 22, 2018.
+Begun on June 4, 2017; last updated on May 23, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -773,6 +773,7 @@ The following pseudocode takes a single list `weights`, and returns the index of
     END METHOD
 
 > **Examples:**
+>
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
 >
 >             index = DiscreteWeightedChoice(weights)
@@ -906,16 +907,16 @@ The pseudocode below takes two lists as follows:
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
 
-To generate a random number (or data point) based on the distribution of a list of numbers (or data points)&mdash;
+Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called [**_density estimation_**](http://scikit-learn.org/stable/modules/density.html), which include histograms, [**kernel density estimation**](https://en.wikipedia.org/wiki/Kernel_density_estimation), and Gaussian [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model).  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
 
-- choose one of the numbers or points at random (see, for example, [**Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)), and
-- add a randomized "jitter" to the chosen number or point; for example&mdash;
-    - add `Normal(0, sigma)` to the chosen number, where `sigma` is the _bandwidth_ (which should be as low or as high as allows the estimated distribution to fit the data and remain smooth), or
-    - add a separately generated `Normal(0, sigma)` to each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(8)**](#Note8)</sup>.
+One method of generating random numbers this way (based on **kernel density estimation**) is as follows:
 
-A detailed discussion on how to calculate bandwidth or on other possible ways to add randomized "jitter" (whose distribution is formally called a _kernel_) is outside the scope of this document.  For further information on _kernel density estimation_, which the random number generation technique here is related to, see the Wikipedia articles on [**single-variable**](https://en.wikipedia.org/wiki/Kernel_density_estimation) and [**multiple-variable**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation) estimation, or a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
+1. Choose one of the numbers or points in the data at random (see, for example, [**Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)).
+2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(8)**](#Note8)</sup>.
 
-Alternatively, an application can fit a [**mixture**](#Mixtures_of_Distributions) of [**Gaussian distributions**](#Normal_Gaussian_Distribution) to the data points and sample a data point from that mixture.  This document doesn't cover how to fit such a mixture (a _Gaussian mixture model_), but see the Wikipedia article on [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model).
+**Histograms** are sets of one or more _bins_ of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
+
+This document doesn't detail how to build a density estimation model. Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -1773,7 +1774,7 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note7>(7)</sup> Such techniques usually involve [**_Markov chains_**](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
 
-<small><sup id=Note8>(8)</sup> A third kind of randomized "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_. The second kind of "jitter" given here is an easy special case of the multivariate normal distribution, where the _bandwidth_ corresponds to a bandwidth matrix with diagonal elements equal to _bandwidth_-squared and with zeros everywhere else.</small>
+<small><sup id=Note8>(8)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
 <small><sup id=Note9>(9)</sup> More formally&mdash;
 - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
