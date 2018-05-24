@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 20, 2018.
+Begun on Mar. 5, 2016; last updated on May 23, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -116,7 +116,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
 - may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.
 
-The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it must do so before it generates more than 2<sup>67</sup> bits without reseeding, and should do so as often as feasible (whenever doing so would not slow down applications undesirably).
+The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.
 
 <a id=Nondeterministic_Sources></a>
 ### Nondeterministic Sources
@@ -130,7 +130,7 @@ A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ 
 
 A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.
 
-If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of min-entropy as the _security strength_.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of min-entropy as the RNG output's size in bits.
+If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of entropy as the _security strength_.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of entropy as the RNG output's size in bits.
 
 <a id=Examples></a>
 ### Examples
@@ -171,7 +171,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data that ultimately derives from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(3)**](#Note3)</sup>, and
 - may be mixed with arbitrary data other than the seed.
 
-The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits. If the implementation reseeds, it should do so before it generates more values than the square root of the PRNG's period without reseeding.
+The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG's period's square root or less.
 
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
@@ -455,9 +455,12 @@ What has motivated me to write a more rigorous definition of random number gener
 <a id=Conclusion></a>
 ## Conclusion
 
-In conclusion, most applications that require random numbers usually want either unpredictability ("cryptographic security"), or speed and high quality. I believe that RNGs that meet the descriptions specified in the [**Cryptographic RNGs**](#Cryptographic_RNGs) and [**Statistical RNGs**](#Statistical_RNGs) sections will meet the needs of those applications.
+Random numbers that merely "look random" are not enough for most applications.  That is why this document defines [**cryptographic RNGs**](#Cryptographic_RNGs) and [**statistical RNGs**](#Statistical_RNGs); I believe RNGs that meet either category will fulfill the expectations of many applications as regards random numbers.  In general:
 
-In addition, this document recommends using cryptographic RNG implementations in many cases, especially in information security contexts, and recommends easier programming interfaces for both cryptographic and statistical RNGs in new programming languages.
+- For _statistical RNGs_, the random numbers not only "look random", but are shown to behave like random numbers through statistical tests.
+- For _cryptographic RNGs_, the random numbers not only "look random", but are virtually unpredictable.
+
+In addition, this document recommends using cryptographic RNGs in many cases, especially in information security contexts, and recommends easier programming interfaces for both cryptographic and statistical RNGs in new programming languages.
 
 I acknowledge&mdash;
 - the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120, and
