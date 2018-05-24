@@ -1102,7 +1102,7 @@ END METHOD
 <p>One method of generating random numbers this way (based on <strong>kernel density estimation</strong>) is as follows:</p>
 
 <ol>
-<li>Choose one of the numbers or points in the data at random (see, for example, <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Choosing a Random Item from a List</strong></a>).</li>
+<li>Choose one of the numbers or points in the list at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
 <li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
 </ol>
 
