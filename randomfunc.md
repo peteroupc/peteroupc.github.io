@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 23, 2018.
+Begun on June 4, 2017; last updated on May 24, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -90,8 +90,6 @@ All the random number methods presented on this page&mdash;
 
 <a id=Notation_and_Definitions></a>
 ## Notation and Definitions
-
-In this document:
 
 * The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 * **Intervals.** The following notation is used for intervals:
@@ -276,7 +274,7 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
        end
     END METHOD
 
-> **Notes:**
+> **Examples:**
 > - To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
 > - Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
 > - Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
@@ -1786,7 +1784,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note11>(11)</sup> The "Dice" section used the following sources:
 
-- Red Blob Games, [**"Probability and Games: Dice Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
+- Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
