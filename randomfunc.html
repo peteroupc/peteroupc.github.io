@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on May 23, 2018.</p>
+<p>Begun on June 4, 2017; last updated on May 24, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -125,8 +125,6 @@
 <p><a id=Notation_and_Definitions></a></p>
 
 <h2>Notation and Definitions</h2>
-
-<p>In this document:</p>
 
 <ul>
 <li>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</li>
@@ -337,7 +335,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+<p><strong>Examples:</strong></p>
 
 <ul>
 <li>To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by <code>RNDINTRANGE(1, N)</code>.</li>
@@ -2115,7 +2113,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note11>(11)</sup> The &quot;Dice&quot; section used the following sources:</p>
 
 <ul>
-<li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Dice Rolls&quot;</strong></a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
+<li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
 <li>The <a href="http://mathworld.wolfram.com/Dice.html"><strong>MathWorld article &quot;Dice&quot;</strong></a> provided the mean of the dice roll distribution.</li>
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
