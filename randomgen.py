@@ -418,10 +418,35 @@ class RandomGen:
     list.insert(ls,len(ls),total)
     return [ls[i]-ls[i-1] for i in range(1,len(ls))]
 
-def integersWithSum(self, n, total):
+  def integersWithSum(self, n, total):
     if n <= 0 or total <=0:
         raise ValueError
     return [s-1 for s in self.nonzeroIntegersWithSum(n, total + n)]
+
+  def diceRoll(self, dice, sides = 6, bonus = 0):
+    if dice < 0 or sides < 1: raise ValueError
+    if dice == 0: return 0
+    if sides == 1: return dice
+    ret = 0
+    if dice > 50:
+        # If there are many dice to roll,
+        # use a faster approach, noting that
+        # the dice-roll distribution approaches
+        # a "discrete" normal distribution as the
+        # number of dice increases.
+        mean = dice * (sides + 1) * 0.5
+        sigma = math.sqrt(dice * (sides * sides - 1) / 12)
+        ret = -1
+        while ret < dice or ret > dice * sides:
+            ret = round(self.normal(mean, sigma))
+    else:
+         i = 0
+         while i < dice:
+              ret = ret + self.rndintrange(1, sides)
+              i = i + 1
+    ret = ret + bonus
+    if ret < 0: ret = 0
+    return ret
 
 class AlmostRandom:
   def __init__(self, randgen, list):
@@ -438,3 +463,36 @@ class AlmostRandom:
     item=self.list[self.index]
     self.index+=1
     return item
+
+# Examples of use
+if __name__ == "__main__":
+    # Generate multiple dice rolls
+    randgen=RandomGen()
+    dierolls=[randgen.diceRoll(2,6) for i in range(10)]
+    # Results
+    print("Results: %s" % (dierolls))
+    # Highest die roll
+    print("Highest: %d" % (max(dierolls)))
+    # Lowest die roll
+    print("Lowest: %d" % (min(dierolls)))
+    # Sum, dropping the lowest
+    print("Sum: %d" % (sum(dierolls)))
+    # Sum, dropping the lowest
+    print("Drop-the-lowest: %d" % (sum(dierolls)-min(dierolls)))
+    #
+    #  Discrete weighted choice
+    #
+    ranges=[[0, 5], [5, 10], [10, 11], [11, 13]]
+    weights=[3,15,1,2]
+    def rc():
+        index=randgen.weighted_choice(weights)
+        item=ranges[index] # Choose a random range
+        return randgen.rndintexcrange(item[0],item[1])
+    print("Weighted choice results")
+    print([rc() for i in range(25)])
+    #
+    #  Model times to failure
+    #
+    rate = 1.0/1000 # Failure rate
+    print("Times to failure (rate: %f)" % (rate))
+    print([randgen.exponential(rate) for i in range(25)])
