@@ -182,7 +182,7 @@ The following are examples of these formats:
 
 There are many ways to store RGB and RGBA colors in these formats as integers or as a series of bytes.  For example, the RGB color's components can be in "little endian" or "big endian" byte order, or the order in which the color's components are packed into an integer can vary.  A thorough survey of the integer color formats in common use is outside the scope of this document.
 
-The following pseudocode contains methods for converting RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
+The following pseudocode presents methods to convert RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
 
     // Converts 0-1 format to N/N/N format as an integer.
     METHOD ToNNN(rgb, scale)
@@ -954,10 +954,10 @@ The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
 ### Alpha Blending
 
 The `Lerp3` function below<sup>[**(25)**](#Note25)</sup> gets an _alpha blend_ of two colors, where `color1` and `color2` are the two colors, and `alpha` is the _alpha component_. `alpha` is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (see P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)").
-- **Shade.** Generating a shade of a color (mixing with black) is equivalent to alpha blending that color with black (such as `[0, 0, 0]` in RGB).
-- **Tint.** Generating a tint of a color (mixing with white) is equivalent to alpha blending that color with white (such as `[1, 1, 1]` in RGB).
-- **Tone.** Generating a tone of a color (mixing with gray) is equivalent to alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
-- **Averaging.** Averaging two colors is equivalent to alpha blending with `alpha` set to 0.5.
+- **Shade.** Generating a shade of a color (mixing with black) can be done by alpha blending that color with black (such as `[0, 0, 0]` in RGB).
+- **Tint.** Generating a tint of a color (mixing with white) can be done by alpha blending that color with white (such as `[1, 1, 1]` in RGB).
+- **Tone.** Generating a tone of a color (mixing with gray) can be done by alpha blending that color with gray (such as `[0.5, 0.5, 0.5]` in RGB).
+- **Averaging.** Averaging two colors results by alpha blending with `alpha` set to 0.5.
 - **Colorize.** `color1` is black, `color2` is the destination color, and `alpha` is `Luminance(srcColor)`, where `srcColor` is the source color.  RGB example: `Lerp3([0, 0, 0], destinationColor, Luminance(srcColor))`.  The destination color is usually the same for each pixel in an image.
 - Converting an RGBA color to an RGB color on white is equivalent to `Lerp3([color[0], color[1], color[2]], [1, 1, 1], color[3])`.
 - Converting an RGBA color to an RGB color over `color2`, another RGB color, is equivalent to `Lerp3([color[0], color[1], color[2]], color2, color[3])`.
@@ -1386,13 +1386,13 @@ As mentioned earlier, color requires the existence of _light_, an _object_, and 
 
 - **Light.** A light source can be specified as a _spectral power distribution_ (SPD), a "curve" that describes the intensity of a light source across the electromagnetic spectrum.
 - **Object.** There are two kinds of "objects": **reflective** (opaque) and **transmissive** (translucent or transparent).  A _reflectance curve_ or _transmittance curve_, respectively, describes the fraction of light that is reflected by or passes through the object, respectively.
-- **Observer.** An observer's visual response is modeled by three _color-matching functions_.
+- **Observer.** An observer's visual response can be modeled by three _color-matching functions_.
 
 The SPD, the reflectance or transmittance curve, and the color-matching functions, are converted to three numbers (called _tristimulus values_) that uniquely identify a perceived color.
 
 The pseudocode below includes a `SpectrumToTristim` method for computing tristimulus values.  In the method:
 
-- `lightFunc(wl)`, `reflFunc(wl)`, and `cmfFunc(wl)` are arbitrary functions further described later.  All three take a [**_wavelength_**](http://eilv.cie.co.at/term/1426) (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
+- `lightFunc(wl)`, `reflFunc(wl)`, and `cmfFunc(wl)` are arbitrary functions described next.  All three take a [**_wavelength_**](http://eilv.cie.co.at/term/1426) (`wl`) in nanometers (nm) and return the corresponding values at that wavelength. (_See also note 1 later in this section._)
 - `lightFunc(wl)` models a **light source's SPD**; it returns the source's relative intensity at the wavelength `wl`. Choices for `lightFunc` include&mdash;
     - a CIE daylight illuminant such as the D65 or D50 illuminant (see the [**Python sample code**](https://peteroupc.github.io/colorutil.zip) for implementation),
     - the `BlackbodySPD` method given in "[**Color Temperature**](#Color_Temperature)", and
@@ -1627,7 +1627,7 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 
 <small><sup id=Note33>(33)</sup> In general, a color can be considered "print friendly" if it lies within the extent of colors (_color gamut_) that can be reproduced under a given or standardized printing condition (see also "[**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)").</small>
 
-<small><sup id=Note34>(34)</sup> Many color collections are represented by printed color swatches and/or found in printed "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
+<small><sup id=Note34>(34)</sup> Many color collections are represented by printed or dyed color swatches and/or found in printed "fan decks".  Most color collections of this kind, however, are proprietary. "5RP 5/6" is an example from a famous color system and color space from the early 20th century.</small>
 
 <small><sup id=Note35>(35)</sup> An approximation of the colors to companded sRGB, in order, is as follows (in [**HTML color format**](#HTML_Color_Format)): "#F0F0F1", "#181818", "#F7C100", "#875392", "#F78000", "#9EC9EF", "#C0002D", "#C2B280", "#838382", "#008D4B", "#E68DAB", "#0067A8", "#F99178", "#5E4B97", "#FBA200", "#B43E6B", "#DDD200", "#892610", "#8DB600", "#65421B", "#E4531B", "#263A21". The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python `colour` package.</small>
 

@@ -60,8 +60,9 @@ All the random number methods presented on this page&mdash;
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
     - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
     - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
-    - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Mixtures of Distributions**](#Mixtures_of_Distributions)
+    - [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers)
+    - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Censored and Truncated Distributions**](#Censored_and_Truncated_Distributions)
     - [**Correlated Random Numbers**](#Correlated_Random_Numbers)
 - [**Specific Non-Uniform Distributions**](#Specific_Non_Uniform_Distributions)
@@ -86,6 +87,8 @@ All the random number methods presented on this page&mdash;
     - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
 - [**Conclusion**](#Conclusion)
 - [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
+    - [**Implementation of `erf`**](#Implementation_of_erf)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -708,7 +711,7 @@ Alternatively, random numbers can be generated (using any method and where the n
 <a id=Rejection_Sampling></a>
 ### Rejection Sampling
 
-_Rejection sampling_ is a simple and flexible technique for generating random content that
+_Rejection sampling_ is a simple and flexible approach for generating random content that
 meets certain requirements.  To implement rejection sampling:
 
 1. Generate the random content (such as a random number) by any method and with any distribution and range.
@@ -912,9 +915,62 @@ One method of generating random numbers this way (based on **kernel density esti
 1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
 2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(8)**](#Note8)</sup>.
 
-**Histograms** are sets of one or more _bins_ of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
+**Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
 
 This document doesn't detail how to build a density estimation model. Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
+
+<a id=Mixtures_of_Distributions></a>
+### Mixtures of Distributions
+
+A _mixture_ consists of two or more probability distributions with separate probabilities of being sampled.
+To generate random content from a mixture&mdash;
+
+1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
+2. based on the value of `index`, generate the random content from the corresponding distribution.
+
+> **Examples:**
+>
+> 1. One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
+>
+>         index = DiscreteWeightedChoice([80, 20])
+>         number = 0
+>         // If index 0 was chosen, sample from the mean 1 normal
+>         if index==0: number = Normal(1, 1)
+>         // Else index 1 was chosen, so sample from the mean -1 normal
+>         else: number = Normal(-1, 1)
+>
+> 2. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(9)**](#Note9)</sup>
+> 3. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
+>     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
+>     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
+>
+>     For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDNUMEXCRANGE(mn, mx)` instead.
+
+<a id=Transformations_of_Random_Numbers></a>
+### Transformations of Random Numbers
+
+Random numbers can be generated by combining and/or transforming one or more random numbers
+and/or discarding some of them.
+
+As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(10)**](#Note10)</sup>  These and similar distributions can be generalized as follows.
+
+Generate two or more random numbers, each with a separate probability distribution, then:
+
+1. **Highest-of:**  Choose the highest generated number.
+2. **Drop-the-lowest:**  Add all generated numbers except the lowest.
+3. **Reroll-the-lowest:**  Add all generated numbers except the lowest, then add a number generated randomly by a separate probability distribution.
+4. **Lowest-of:**  Choose the lowest generated number.
+5. **Drop-the-highest:**  Add all generated numbers except the highest.
+6. **Reroll-the-highest:**  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.
+7. **Sum:** Add all generated numbers.
+
+If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
+
+> **Note:** Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions.
+>
+> **Examples:**
+> 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.
+> 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)").
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -922,7 +978,7 @@ This document doesn't detail how to build a density estimation model. Other refe
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(9)**](#Note9)</sup>
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(11)**](#Note11)</sup>
 
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
@@ -950,33 +1006,6 @@ If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, whe
 
 > **Note:** Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
-<a id=Mixtures_of_Distributions></a>
-### Mixtures of Distributions
-
-A _mixture_ consists of two or more sampling distributions with separate probabilities of being sampled.
-To generate random content from a mixture&mdash;
-
-1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
-2. based on the value of `index`, generate the random content from the corresponding distribution.
-
-> **Examples:**
->
-> 1. One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
->
->         index = DiscreteWeightedChoice([80, 20])
->         number = 0
->         // If index 0 was chosen, sample from the mean 1 normal
->         if index==0: number = Normal(1, 1)
->         // Else index 1 was chosen, so sample from the mean -1 normal
->         else: number = Normal(-1, 1)
->
-> 2. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(10)**](#Note10)</sup>
-> 3. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
->     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
->     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
->
->     For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDNUMEXCRANGE(mn, mx)` instead.
-
 <a id=Censored_and_Truncated_Distributions></a>
 ### Censored and Truncated Distributions
 
@@ -999,12 +1028,12 @@ Another way to generate correlated random numbers is explained in the section "[
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
 
-This section contains information on some of the most common non-uniform sampling distributions.
+This section contains information on some of the most common non-uniform probability distributions.
 
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[**(11)**](#Note11)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[**(12)**](#Note12)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1045,7 +1074,7 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 
 The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-In the pseudocode below, which uses the polar method <sup>[**(12)**](#Note12)</sup> to generate two normally-distributed random numbers:
+In the pseudocode below, which uses the polar method <sup>[**(13)**](#Note13)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1547,35 +1576,9 @@ The _multinomial distribution_ models the number of times each of several mutual
 Correlated random numbers can be generated by sampling from a [**multivariate normal distribution**](#Multivariate_Normal_Distribution), then converting the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:
 
 - The parameter `covar` is the covariance matrix for the multivariate normal distribution.
-- `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v`.  It's provided here because some popular programming languages, such as JavaScript at the time of this writing, don't include a built-in version of `erf`.  In the method, `EPSILON` is a very small number to end the iterative calculation.
+- `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v` (see the appendix).
 
 The pseudocode below is one example of a _copula_ (a distribution of groups of two or more correlated uniform random numbers), namely, a _Gaussian copula_.
-
-    METHOD erf(v)
-        if v==0: return 0
-        if v<0: return -erf(-v)
-        if v==infinity: return 1
-        // NOTE: For Java `double`, the following
-        // line can be added:
-        // if v>=6: return 1
-        i=1
-        ret=0
-        zp=-(v*v)
-        zval=1.0
-        den=1.0
-        while i < 100
-            r=v*zval/den
-            den=den+2
-            ret=ret+r
-            // NOTE: EPSILON can be pow(10,14),
-            // for example.
-            if abs(r)<EPSILON: break
-            if i==1: zval=zp
-            else: zval = zval*zp/i
-            i = i + 1
-        end
-        return ret*2/sqrt(pi)
-    END METHOD
 
     METHOD GaussianCopula(covar)
         mvn=MultivariateNormal(nothing, covar)
@@ -1605,7 +1608,7 @@ Most commonly used:
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `mu` and `scale`
 are the two parameters of the Cauchy distribution.  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5)) * 2`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
-- **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. The `lamda` is usually the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year).  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
+- **Exponential distribution**: `-ln(RNDU01ZeroExc()) / lamda`, where `lamda` is the inverse scale. Usually, `lamda` is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).
 This expresses a distribution of maximum values.
 - **Geometric distribution**: `NegativeBinomial(1, p)`, where `p` has the same meaning
@@ -1707,7 +1710,7 @@ This problem is equivalent to generating, uniformly at random, a unit vector (ve
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(13)**](#Note13)</sup> until their [**_norm_**](#Notation_and_Definitions) is R or less,
+- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(14)**](#Note14)</sup> until their [**_norm_**](#Notation_and_Definitions) is R or less,
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
@@ -1774,23 +1777,61 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note8>(8)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
-<small><sup id=Note9>(9)</sup> More formally&mdash;
+<small><sup id=Note9>(9)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
+
+<small><sup id=Note10>(10)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and sum of two rolls of dice.</small>
+
+<small><sup id=Note11>(11)</sup> More formally&mdash;
 - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
 - the CDF is also defined as the _integral_ of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note10>(10)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
-
-<small><sup id=Note11>(11)</sup> The "Dice" section used the following sources:
+<small><sup id=Note12>(12)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note12>(12)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
+<small><sup id=Note13>(13)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
 
-<small><sup id=Note13>(13)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+<small><sup id=Note14>(14)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<a id=Appendix></a>
+## Appendix
+
+&nbsp;
+
+<a id=Implementation_of_erf></a>
+### Implementation of `erf`
+
+The pseudocode below shows how the [**error function**](https://en.wikipedia.org/wiki/Error_function) `erf` can be implemented, in case the programming language used doesn't include a built-in version of `erf` (such as JavaScript at the time of this writing).   In the pseudocode, `EPSILON` is a very small number to end the iterative calculation.
+
+    METHOD erf(v)
+        if v==0: return 0
+        if v<0: return -erf(-v)
+        if v==infinity: return 1
+        // NOTE: For Java `double`, the following
+        // line can be added:
+        // if v>=6: return 1
+        i=1
+        ret=0
+        zp=-(v*v)
+        zval=1.0
+        den=1.0
+        while i < 100
+            r=v*zval/den
+            den=den+2
+            ret=ret+r
+            // NOTE: EPSILON can be pow(10,14),
+            // for example.
+            if abs(r)<EPSILON: break
+            if i==1: zval=zp
+            else: zval = zval*zp/i
+            i = i + 1
+        end
+        return ret*2/sqrt(pi)
+    END METHOD
 
 <a id=License></a>
 ## License
