@@ -6,6 +6,7 @@
 *.log
 *.map
 *.nupkg
+*.pyc
 *.sdsettings
 *.shf*
 *.snk
