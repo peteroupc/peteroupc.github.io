@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on May 26, 2018.</p>
+<p>Begun on June 4, 2017; last updated on May 30, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -125,6 +125,7 @@
 <ul>
 <li><a href="#Implementation_of_erf"><strong>Implementation of <code>erf</code></strong></a></li>
 </ul></li>
+<li><a href="#Mean_and_Variance_Calculation"><strong>Mean and Variance Calculation</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -415,7 +416,7 @@ END
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The <a href="http://mathworld.wolfram.com/Variance.html"><strong>&quot;Variance&quot; MathWorld article</strong></a> gives methods for calculating the estimate&#39;s variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequences</em></strong></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the mean of those N points, and the error in the estimate is the square root of the (bias-corrected sample) variance of the N points (see the appendix). (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequences</em></strong></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 </blockquote>
 
 <p><a id=RNDINTEXC_Random_Integers_in_0_N></a></p>
@@ -1175,7 +1176,7 @@ and/or discarding some of them.</p>
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
 
 <blockquote>
-<p><strong>Note:</strong> Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions.</p>
+<p><strong>Note:</strong> Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions, respectively.</p>
 
 <p><strong>Examples:</strong></p>
 
@@ -2174,6 +2175,29 @@ generation (including by extracting uniformly distributed bits from two or more 
     end
     return ret*2/sqrt(pi)
 END METHOD
+</pre>
+
+<p><a id=Mean_and_Variance_Calculation></a></p>
+
+<h2>Mean and Variance Calculation</h2>
+
+<p>The following method calculates the mean and the <a href="http://mathworld.wolfram.com/Variance.html"><strong>bias-corrected sample variance</strong></a> of a list of numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.</p>
+
+<pre>METHOD MeanAndVariance(list)
+    if size(list)==0: return [0, 0]
+    if size(list)==1: return [list[0], 0]
+    xm=list[0]
+    xs=0
+    i=1
+    while i &lt; len(list)
+        c = list[i]
+        i = i + 1
+        cxm = (c - xm)
+        xm = xm + cxm *1.0/ i
+        xs = xs + cxm * (c - xm)
+    end
+    return [xm, xs*1.0/(size(list)-1)]
+END
 </pre>
 
 <p><a id=License></a></p>
