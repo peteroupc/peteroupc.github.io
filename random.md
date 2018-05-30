@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 23, 2018.
+Begun on Mar. 5, 2016; last updated on May 29, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -83,6 +83,7 @@ The following definitions are helpful in better understanding this document.
 - **Period.** The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup>_L_</sup> where _L_ is the PRNG's _state length_.
 - **Stable.** A programming interface is _stable_ if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
 - **Information security.** Defined in ISO/IEC 27000.
+- **Nondeterministic source.** Data source that does not always return the same output for the same input.
 
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
@@ -96,8 +97,6 @@ Cryptographic RNGs (also known as "cryptographically strong" or "cryptographical
 -  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 They are also useful when the application generates random numbers so infrequently that the RNG's speed is not a concern.
-
-A cryptographic RNG ultimately relies on one or more _nondeterministic sources_, as described later in this section.
 
 <a id=Quality></a>
 ### Quality
@@ -121,7 +120,7 @@ The RNG should be reseeded, using a newly generated seed as described earlier, t
 <a id=Nondeterministic_Sources></a>
 ### Nondeterministic Sources
 
-A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ (sources that don't always return the same output for the same input) for random number generation.<sup>[**(2)**](#Note2)</sup>  Examples of nondeterministic sources are&mdash;
+A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ for random number generation.<sup>[**(2)**](#Note2)</sup>  Examples of nondeterministic sources are&mdash;
 
 - disk access timings,
 - keystroke timings,
@@ -157,7 +156,7 @@ A statistical RNG is usually implemented with a PRNG, but can also be implemente
 <a id=Quality_2></a>
 ### Quality
 
-A statistical RNG generates random bits, each of which is uniformly randomly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm must either satisfy the _one-way property_ or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be equidistributed.
+A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm must either satisfy the _one-way property_ or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be perfectly equidistributed.
 
 <a id=Seeding_and_Reseeding_2></a>
 ### Seeding and Reseeding

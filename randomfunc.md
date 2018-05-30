@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 26, 2018.
+Begun on June 4, 2017; last updated on May 30, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -89,6 +89,7 @@ All the random number methods presented on this page&mdash;
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
+- [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -341,7 +342,7 @@ For fixed-point or floating-point number formats with fixed precision (such as J
        end
     END
 
-> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain, adding them up, then dividing the sum by N.  The [**"Variance" MathWorld article**](http://mathworld.wolfram.com/Variance.html) gives methods for calculating the estimate's variance. (After calculating the error, or square root of variance, and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the mean of those N points, and the error in the estimate is the square root of the (bias-corrected sample) variance of the N points (see the appendix). (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
@@ -966,7 +967,7 @@ Generate two or more random numbers, each with a separate probability distributi
 
 If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
 
-> **Note:** Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions.
+> **Note:** Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions, respectively.
 >
 > **Examples:**
 >
@@ -1832,6 +1833,27 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
         end
         return ret*2/sqrt(pi)
     END METHOD
+
+<a id=Mean_and_Variance_Calculation></a>
+## Mean and Variance Calculation
+
+The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.
+
+    METHOD MeanAndVariance(list)
+        if size(list)==0: return [0, 0]
+        if size(list)==1: return [list[0], 0]
+        xm=list[0]
+        xs=0
+        i=1
+        while i < len(list)
+            c = list[i]
+            i = i + 1
+            cxm = (c - xm)
+            xm = xm + cxm *1.0/ i
+            xs = xs + cxm * (c - xm)
+        end
+        return [xm, xs*1.0/(size(list)-1)]
+    END
 
 <a id=License></a>
 ## License
