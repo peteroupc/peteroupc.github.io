@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on May 30, 2018.
+Begun on June 4, 2017; last updated on May 31, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -55,7 +55,7 @@ All the random number methods presented on this page&mdash;
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
-    - [**Discrete Weighted Choice**](#Discrete_Weighted_Choice)
+    - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
     - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
@@ -89,7 +89,7 @@ All the random number methods presented on this page&mdash;
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
-- [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
+    - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -101,7 +101,7 @@ All the random number methods presented on this page&mdash;
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-* **Norm.** The norm of one or more numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
+* **Norm.** The norm of one or more real numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
 * **Maximum even parts.** The number of maximum even parts is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in a given floating-point number format.  For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts (see "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks) for further discussion),
@@ -593,7 +593,7 @@ To choose a random item from a list&mdash;
 Choosing an item this way is also known as _sampling with replacement_.
 
 > **Notes:**
-
+>
 > - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
 >     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
 >     - choosing a random item from the list generated this way.
@@ -733,14 +733,14 @@ Example criteria include checking any one or more of&mdash;
 
 Some applications need to choose random items or numbers such that some of them are more likely to be chosen than others (a _non-uniform_ distribution). Most of the techniques in this section show how to use the [**uniform random number methods**](#Uniform_Random_Numbers) to generate such random items or numbers.
 
-<a id=Discrete_Weighted_Choice></a>
-### Discrete Weighted Choice
+<a id=Weighted_Choice></a>
+### Weighted Choice
 
-The discrete weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.
+The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.
 
 The following pseudocode takes a single list `weights`, and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.) Each weight should be 0 or greater.
 
-    METHOD DiscreteWeightedChoice(weights)
+    METHOD WeightedChoice(weights)
         if size(weights) == 0: return error
         sum = 0
         // Get the sum of all weights
@@ -776,21 +776,21 @@ The following pseudocode takes a single list `weights`, and returns the index of
 
 > **Examples:**
 >
-> 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `DiscreteWeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
+> 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
 >
->             index = DiscreteWeightedChoice(weights)
+>             index = WeightedChoice(weights)
 >             // Get the actual item
 >             item = list[index]
 >
 > 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random number can be chosen from that range using code like the following: `number = RNDNUMEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
-> 3. Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = DiscreteWeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDNUMEXCRANGE(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
+> 3. Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDNUMEXCRANGE(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
 
-In all the examples above, the weights sum to 21.  However, the weights do not mean that, say, when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `DiscreteWeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `DiscreteWeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+In all the examples above, the weights sum to 21.  However, the weights do not mean that, say, when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `WeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `WeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
 
-To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `DiscreteWeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, **each weight behaves like the number of "copies" of each item**. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
+To implement weighted choice _without replacement_ (which can be thought of as drawing a ball _without_ putting it back), generate an index by `WeightedChoice`, and then decrease the weight for the chosen index by 1.  In this way, **each weight behaves like the number of "copies" of each item**. This technique, though, will only work properly if all the weights are integers 0 or greater.  The pseudocode below is an example of this.
 
     // Get the sum of weights
     // (NOTE: This code assumes that `weights` is
@@ -810,7 +810,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
     i = 0
     items = NewList()
     while i < totalWeight
-        index = DiscreteWeightedChoice(weights)
+        index = WeightedChoice(weights)
         // Decrease weight by 1 to implement selection
         // without replacement.
         weights[index] = weights[index] - 1
@@ -825,7 +825,7 @@ Alternatively, if all the weights are integers 0 or greater and their sum is rel
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
 
-The discrete weighted choice method can also be used for choosing items from a list, where each item has a separate probability of being chosen and **can be chosen no more than once**.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.
+Weighted choice can also choose items from a list, where each item has a separate probability of being chosen and **can be chosen no more than once**.  In this case, after choosing a random index, set the weight for that index to 0 to keep it from being chosen again.  The pseudocode below is an example of this.
 
     // (NOTE: This code assumes that `weights` is
     // a list that can be modified.  If the original weights
@@ -838,7 +838,7 @@ The discrete weighted choice method can also be used for choosing items from a l
     i = 0
     // Choose k items from the list
     while i < k or i < size(weights)
-        index = DiscreteWeightedChoice(weights)
+        index = WeightedChoice(weights)
         // Set the weight for the chosen index to 0
         // so it won't be chosen again
         weights[index] = 0
@@ -926,14 +926,14 @@ This document doesn't detail how to build a density estimation model. Other refe
 A _mixture_ consists of two or more probability distributions with separate probabilities of being sampled.
 To generate random content from a mixture&mdash;
 
-1. generate `index = DiscreteWeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
+1. generate `index = WeightedChoice(weights)`, where `weights` is a list of relative probabilities that each distribution in the mixture will be sampled, then
 2. based on the value of `index`, generate the random content from the corresponding distribution.
 
 > **Examples:**
 >
 > 1. One mixture consists of two normal distributions with two different means: 1 and -1, but the mean 1 normal will be sampled 80% of the time.  The following pseudocode shows how this mixture can be sampled:
 >
->         index = DiscreteWeightedChoice([80, 20])
+>         index = WeightedChoice([80, 20])
 >         number = 0
 >         // If index 0 was chosen, sample from the mean 1 normal
 >         if index==0: number = Normal(1, 1)
@@ -1564,7 +1564,7 @@ The _multinomial distribution_ models the number of times each of several mutual
         i = 0
         while i < trials
             // Choose an index
-            index = DiscreteWeightedChoice(weights)
+            index = WeightedChoice(weights)
             // Tally the event at the chosen index
             list[index] = list[index] + 1
             i = i + 1
@@ -1587,7 +1587,6 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
         i = 0
        sqrt2=sqrt(2)
        while i < size(covar)
-          stdev=sqrt(covar[i][i])
           // Apply the standard normal distribution's CDF
           // function to get uniform variables
           mvn[i] = (erf(mvn[i]/(sqrt2))+1)*0.5
@@ -1835,7 +1834,7 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
     END METHOD
 
 <a id=Mean_and_Variance_Calculation></a>
-## Mean and Variance Calculation
+### Mean and Variance Calculation
 
 The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.
 

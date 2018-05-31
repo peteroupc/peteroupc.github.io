@@ -480,7 +480,7 @@ if __name__ == "__main__":
     # Sum, dropping the lowest
     print("Drop-the-lowest: %d" % (sum(dierolls)-min(dierolls)))
     #
-    #  Discrete weighted choice
+    #  Weighted choice
     #
     ranges=[[0, 5], [5, 10], [10, 11], [11, 13]]
     weights=[3,15,1,2]
