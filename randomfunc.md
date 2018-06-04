@@ -43,7 +43,7 @@ All the random number methods presented on this page&mdash;
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
     - [`RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers in \[0, 1), (0, 1\], or (0, 1)](#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_in_0_1_0_1_or_0_1)
     - [**`RNDNUMEXCRANGE`: Random Numbers in \[X, Y)**](#RNDNUMEXCRANGE_Random_Numbers_in_X_Y)
-    - [**`RNDBITS`: Random N-Bit Integers**](#RNDBITS_Random_N_Bit_Integers)
+    - [**Uniform Random Bits**](#Uniform_Random_Bits)
     - [**Special Programming Environments**](#Special_Programming_Environments)
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean Conditions**](#Boolean_Conditions)
@@ -115,7 +115,6 @@ All the random number methods presented on this page&mdash;
 This section describes how an underlying RNG can be used to generate uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
 
 * Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTRANGEEXC`.
-* Random Bits: `RNDBITS`.
 * Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
 * Other Random Numbers: `RNDNUMRANGE`, `RNDNUMRANGEEXC`.
 
@@ -420,42 +419,12 @@ Three methods related to `RNDU01()` can be implemented as follows, where
        end
     END METHOD
 
-<a id=RNDBITS_Random_N_Bit_Integers></a>
-### `RNDBITS`: Random N-Bit Integers
+<a id=Uniform_Random_Bits></a>
+### Uniform Random Bits
 
-The idiom `RNDINT((1 << b) - 1)`, called **`RNDBITS(b)`** in this document, is a na&iuml;ve way of generating a **uniform random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
+The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
 
-Although this idiom works well for arbitrary-precision integers, it won't work well for the much more popular integer types called _fixed-length two's-complement signed integers_ <sup>[**(3)**](#Note3)</sup>. For such signed integers as well as fixed-length unsigned integers, `RNDBITS(bits)` can be implemented using the pseudocode below.  In the pseudocode below, `BITCOUNT` is the number of bits used in the format.  Note that for such signed integers, `RNDBITS(bits)` can return a sequence of bits that resolves to a negative number.
-
-    METHOD RNDBITS(bits)
-         if bits<0 or bits > BITCOUNT: return error
-         if bits==0: return 0
-         if bits==1: return RNDINT(1)
-         if bits==2 and BITCOUNT == 2
-             return (RNDINT(1) << 1) | RNDINT(1)
-         end
-         if bits==2: return RNDINT(3)
-         bitsMinus2 = bits - 2
-         // NOTE: The "|" below is the OR operator between
-         // two integers.  The following line is implemented this
-         // way to accommodate implementations that use
-         // fixed-length two's-complement signed integers.
-         ret = (RNDINT((1<<bitsMinus2) - 1) << bitsMinus2) | RNDINT(3)
-         // NOTE: If the implementation uses fixed-length
-         // unsigned integers, the following line can replace
-         // the preceding line.  Note that the implementation
-         // avoids shifting an integer by BITCOUNT bits or more,
-         // because such behavior is undefined in C and C++.
-         // ret = RNDINT( (((1 << (bits - 1)) - 1) << 1) | 1 )
-         // NOTE: Alternatively, a list containing powers-of-two
-         // minus 1 can be generated (calculating `floor(pow(2,i)) - 1`
-         // for each relevant index `i` of the list, assuming unlimited
-         // precision) and the following line used instead of the
-         // preceding (assuming `list` is
-         // the list generated this way):
-         // ret = RNDINT( list[bits] )
-         return ret
-    END METHOD
+In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits, by setting each byte to `RNDINT(255)`.
 
 <a id=Special_Programming_Environments></a>
 ### Special Programming Environments

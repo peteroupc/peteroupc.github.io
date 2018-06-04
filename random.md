@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on May 29, 2018.
+Begun on Mar. 5, 2016; last updated on June 3, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -346,8 +346,8 @@ Cryptographic and statistical RNG implementations&mdash;
 - should be safe for concurrent use by multiple threads, whenever convenient.
 
 My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on
-eleven uniform random number methods; in my opinion, a new programming language's standard library ought to include
-those eleven methods separately for cryptographic and for statistical RNGs. That document also
+ten uniform random number methods; in my opinion, a new programming language's standard library ought to include
+those ten methods separately for cryptographic and for statistical RNGs. That document also
 discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
 as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.
 
