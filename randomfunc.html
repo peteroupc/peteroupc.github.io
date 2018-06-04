@@ -60,7 +60,7 @@
 <li><a href="#RNDINTEXCRANGE_Random_Integers_in_N_M"><strong><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</strong></a></li>
 <li><a href="#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_in_0_1_0_1_or_0_1"><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers in [0, 1), (0, 1], or (0, 1)</a></li>
 <li><a href="#RNDNUMEXCRANGE_Random_Numbers_in_X_Y"><strong><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</strong></a></li>
-<li><a href="#RNDBITS_Random_N_Bit_Integers"><strong><code>RNDBITS</code>: Random N-Bit Integers</strong></a></li>
+<li><a href="#Uniform_Random_Bits"><strong>Uniform Random Bits</strong></a></li>
 <li><a href="#Special_Programming_Environments"><strong>Special Programming Environments</strong></a></li>
 </ul></li>
 <li><a href="#Randomization_Techniques"><strong>Randomization Techniques</strong></a>
@@ -163,7 +163,6 @@
 
 <ul>
 <li>Random Integers: <code>RNDINT</code>, <code>RNDINTEXC</code>, <code>RNDINTRANGE</code>, <code>RNDINTRANGEEXC</code>.</li>
-<li>Random Bits: <code>RNDBITS</code>.</li>
 <li>Random Numbers in 0-1 Bounded Interval: <code>RNDU01</code>, <code>RNDU01ZeroExc</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroOneExc</code>.</li>
 <li>Other Random Numbers: <code>RNDNUMRANGE</code>, <code>RNDNUMRANGEEXC</code>.</li>
 </ul>
@@ -521,44 +520,13 @@ END METHOD
 END METHOD
 </pre>
 
-<p><a id=RNDBITS_Random_N_Bit_Integers></a></p>
+<p><a id=Uniform_Random_Bits></a></p>
 
-<h3><code>RNDBITS</code>: Random N-Bit Integers</h3>
+<h3>Uniform Random Bits</h3>
 
-<p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code>, called <strong><code>RNDBITS(b)</code></strong> in this document, is a na&iuml;ve way of generating a <strong>uniform random <code>N</code>-bit integer</strong> (with maximum 2<sup><code>b</code> - 1</sup>).</p>
+<p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code> is a na&iuml;ve way of generating a <strong>uniform random <code>N</code>-bit integer</strong> (with maximum 2<sup><code>b</code> - 1</sup>).</p>
 
-<p>Although this idiom works well for arbitrary-precision integers, it won&#39;t work well for the much more popular integer types called <em>fixed-length two&#39;s-complement signed integers</em> <sup><a href="#Note3"><strong>(3)</strong></a></sup>. For such signed integers as well as fixed-length unsigned integers, <code>RNDBITS(bits)</code> can be implemented using the pseudocode below.  In the pseudocode below, <code>BITCOUNT</code> is the number of bits used in the format.  Note that for such signed integers, <code>RNDBITS(bits)</code> can return a sequence of bits that resolves to a negative number.</p>
-
-<pre>METHOD RNDBITS(bits)
-     if bits&lt;0 or bits &gt; BITCOUNT: return error
-     if bits==0: return 0
-     if bits==1: return RNDINT(1)
-     if bits==2 and BITCOUNT == 2
-         return (RNDINT(1) &lt;&lt; 1) | RNDINT(1)
-     end
-     if bits==2: return RNDINT(3)
-     bitsMinus2 = bits - 2
-     // NOTE: The &quot;|&quot; below is the OR operator between
-     // two integers.  The following line is implemented this
-     // way to accommodate implementations that use
-     // fixed-length two&#39;s-complement signed integers.
-     ret = (RNDINT((1&lt;&lt;bitsMinus2) - 1) &lt;&lt; bitsMinus2) | RNDINT(3)
-     // NOTE: If the implementation uses fixed-length
-     // unsigned integers, the following line can replace
-     // the preceding line.  Note that the implementation
-     // avoids shifting an integer by BITCOUNT bits or more,
-     // because such behavior is undefined in C and C++.
-     // ret = RNDINT( (((1 &lt;&lt; (bits - 1)) - 1) &lt;&lt; 1) | 1 )
-     // NOTE: Alternatively, a list containing powers-of-two
-     // minus 1 can be generated (calculating `floor(pow(2,i)) - 1`
-     // for each relevant index `i` of the list, assuming unlimited
-     // precision) and the following line used instead of the
-     // preceding (assuming `list` is
-     // the list generated this way):
-     // ret = RNDINT( list[bits] )
-     return ret
-END METHOD
-</pre>
+<p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits, by setting each byte to <code>RNDINT(255)</code>.</p>
 
 <p><a id=Special_Programming_Environments></a></p>
 
@@ -1515,8 +1483,8 @@ end
 <p>Distributions based on the gamma distribution:</p>
 
 <ul>
-<li><strong><code>GammaDist3(a, b, c)</code> (3 parameters)</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter.</li>
-<li><strong><code>GammaDist4(a, b, c, d)</code> (4 parameters)</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
+<li><strong>3-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter.</li>
+<li><strong>4-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
 <li><strong>Exponential distribution</strong>: <code>GammaDist(1, 1.0 / lamda)</code> or <code>-ln(RNDU01ZeroOneExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Expresses a sum of <code>n</code> exponential random variables with the given <code>lamda</code> parameter.</li>
 </ul>
