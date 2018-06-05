@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 4, 2018.
+Begun on June 4, 2017; last updated on June 5, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -76,7 +76,7 @@ All the random number methods presented on this page&mdash;
     - [**Stable Distribution**](#Stable_Distribution)
     - [**Hypergeometric Distribution**](#Hypergeometric_Distribution)
     - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
-    - [**Dirichlet Distribution: Random Numbers with a Given Positive Sum**](#Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum)
+    - [**Random Numbers with a Given Positive Sum**](#Random_Numbers_with_a_Given_Positive_Sum)
     - [**Multinomial Distribution**](#Multinomial_Distribution)
     - [**Gaussian Copula**](#Gaussian_Copula)
     - [**Other Non-Uniform Distributions**](#Other_Non_Uniform_Distributions)
@@ -545,7 +545,7 @@ To generate a random string of characters (usually a random _alphanumeric string
 > **Notes:**
 >
 > - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-> - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.
+> - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).
 > - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
 > - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
 > - For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
@@ -1177,9 +1177,9 @@ The following method generates a random integer that follows a _Poisson distribu
         pn = exp(-mean)
         count = 0
         while true
-            count = count + 1
             p = p * RNDU01OneExc()
-            if p <= pn: return count - 1
+            if p <= pn: return count
+            count = count + 1
         end
     END METHOD
 
@@ -1479,10 +1479,10 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
 > 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
 > 3. A **Beckmann distribution** can be sampled by calculating the norm of a binormal random pair (see example 1); that is, calculate `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in the binormal pair.
 
-<a id=Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum></a>
-### Dirichlet Distribution: Random Numbers with a Given Positive Sum
+<a id=Random_Numbers_with_a_Given_Positive_Sum></a>
+### Random Numbers with a Given Positive Sum
 
-Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see the [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1 (and will follow a  _Dirichlet distribution_).  Note that in the exceptional case that all numbers are 0, the process should repeat. (A more general version of the Dirichlet distribution allows the first parameter in `GammaDist` to vary for each random number.)
+Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
 The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.)  In the pseudocode below&mdash;
 
@@ -1646,6 +1646,8 @@ Miscellaneous:
 the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
+
+The Python sample code also contains an implementation of the **negative multinomial distribution**.
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling

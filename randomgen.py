@@ -177,7 +177,7 @@ class RandomGen:
       if norm>0:
         return [p*radius/norm for p in point]
 
-  def dirichlet(self, count, sum = 1.0):
+  def numbersWithSum(self, count, sum = 1.0):
     if count<=0 or sum<=0:
       raise ValueError
     while True:
@@ -256,11 +256,17 @@ class RandomGen:
     return math.exp(self.normal(mu,sigma))
 
   def weibull(self, a, b):
-    return b*(-math.log(1.0-self.rndu01oneexc()))**(1.0/a)
+    return b*(-math.log(self.rndu01zerooneexc()))**(1.0/a)
 
   def triangular(self, startpt, midpt, endpt):
     return self.continuous_choice([startpt,midpt,endpt],\
       [0,1,0])
+
+  def gumbel(self,a,b):
+     return a + math.log(self.exponential()) * b
+
+  def frechet(self,a,b,mu=0):
+    return b*pow(self.exponential(),-1.0/a)+mu
 
   def beta(self, a, b):
     x=self.gamma(a)
@@ -325,6 +331,9 @@ class RandomGen:
       if p<=pn:
         return count-1
 
+  def rayleigh(self,a):
+     return a * math.sqrt(-2 * math.log(self.rndu01zerooneexc()))
+
   def gamma(self,mean,b=1.0,c=1.0,d=0.0):
     if mean<=0:
       raise ValueError
@@ -363,12 +372,12 @@ class RandomGen:
     if p<=0.0:
       return 1.0/0.0
     if successes==1.0:
-      return int(math.log(1.0-self.rndu01oneexc())/ln(1.0-p))
+      return int(math.log(self.rndu01zerooneexc())/ln(1.0-p))
     else:
       return self.poisson(self.gamma(successes)*(1-p)/p)
 
   def exponential(self,lamda = 1.0):
-    return -math.log(1.0-self.rndu01oneexc())/lamda
+    return -math.log(self.rndu01zerooneexc())/lamda
 
   def pareto(self,minimum,alpha):
     return self.rndu01zerooneexc()**(-1.0/alpha)*minimum
@@ -396,6 +405,34 @@ class RandomGen:
         if u<0:
           angle=-angle
         return mean+angle
+
+  def negativeMultinomial(self, succ, failures):
+    """
+Negative multinomial distribution.
+
+Models the number of failures of one or more
+kinds before a given number of successes happens.
+succ: Number of successes.
+failures: Contains probabilities for each kind of failure.
+The sum of probabilities must be less than 1.
+Returns: A list containing a random number
+of failures of each kind of failure.
+    """
+    ret=[0 for _ in failures]
+    i=0
+    while i<succ:
+        r=self.rndu01oneexc()
+        p=0
+        nosuccess=false
+        for j in range(len(failures)):
+              if r>=p and r<p+failures[j]:
+                     ret[j]+=1
+                     nosuccess=true
+                     break
+              p+=failures[j]
+        if not nosuccess: i+=1
+    return ret
+
 
   def nonzeroIntegersWithSum(self, n, total):
     if n <= 0 or total <=0:
