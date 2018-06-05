@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 4, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 5, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -105,7 +105,7 @@
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
 <li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
-<li><a href="#Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum"><strong>Dirichlet Distribution: Random Numbers with a Given Positive Sum</strong></a></li>
+<li><a href="#Random_Numbers_with_a_Given_Positive_Sum"><strong>Random Numbers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 <li><a href="#Gaussian_Copula"><strong>Gaussian Copula</strong></a></li>
 <li><a href="#Other_Non_Uniform_Distributions"><strong>Other Non-Uniform Distributions</strong></a></li>
@@ -681,7 +681,7 @@ END METHOD
 
 <ul>
 <li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
-<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables).  In that case, storing the list of strings as a single string is usually not a clean way to store those strings.</li>
+<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).</li>
 <li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating a random hexadecimal string is equivalent to generating <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
 <li>For generating a random base-10 digit string, the list of characters passed to <code>RandomString</code> consists of the basic digits only.</li>
@@ -1442,9 +1442,9 @@ END METHOD
     pn = exp(-mean)
     count = 0
     while true
-        count = count + 1
         p = p * RNDU01OneExc()
-        if p &lt;= pn: return count - 1
+        if p &lt;= pn: return count
+        count = count + 1
     end
 END METHOD
 </pre>
@@ -1777,11 +1777,11 @@ end
 </ol>
 </blockquote>
 
-<p><a id=Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum></a></p>
+<p><a id=Random_Numbers_with_a_Given_Positive_Sum></a></p>
 
-<h3>Dirichlet Distribution: Random Numbers with a Given Positive Sum</h3>
+<h3>Random Numbers with a Given Positive Sum</h3>
 
-<p>Generating N <code>GammaDist(total, 1)</code> numbers and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see the <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1 (and will follow a  <em>Dirichlet distribution</em>).  Note that in the exceptional case that all numbers are 0, the process should repeat. (A more general version of the Dirichlet distribution allows the first parameter in <code>GammaDist</code> to vary for each random number.)</p>
+<p>Generating N <code>GammaDist(total, 1)</code> numbers and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
 
 <p>The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.)  In the pseudocode below&mdash;</p>
 
