@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 3, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 4, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -104,7 +104,7 @@
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
 <li><a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a></li>
-<li><a href="#Multivariate_Normal_Distribution"><strong>Multivariate Normal Distribution</strong></a></li>
+<li><a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a></li>
 <li><a href="#Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum"><strong>Dirichlet Distribution: Random Numbers with a Given Positive Sum</strong></a></li>
 <li><a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a></li>
 <li><a href="#Gaussian_Copula"><strong>Gaussian Copula</strong></a></li>
@@ -526,7 +526,7 @@ END METHOD
 
 <p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code> is a na&iuml;ve way of generating a <strong>uniform random <code>N</code>-bit integer</strong> (with maximum 2<sup><code>b</code> - 1</sup>).</p>
 
-<p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits, by setting each byte to <code>RNDINT(255)</code>.</p>
+<p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to <code>RNDINT(255)</code>.</p>
 
 <p><a id=Special_Programming_Environments></a></p>
 
@@ -1064,7 +1064,9 @@ end
 END METHOD
 </pre>
 
+<blockquote>
 <p><strong>Example</strong>: Assume <code>list</code> is the following: <code>[0, 1, 2, 2.5, 3]</code>, and <code>weights</code> is the following: <code>[0.2, 0.8, 0.5, 0.3, 0.1]</code>.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the <code>ContinuousWeightedChoice</code> method.</p>
+</blockquote>
 
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
 
@@ -1108,6 +1110,14 @@ if index==0: number = Normal(1, 1)
 // Else index 1 was chosen, so sample from the mean -1 normal
 else: number = Normal(-1, 1)
 </pre></li>
+<li><p>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Gamma_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate.  An example is below.</p>
+
+<pre>index = WeightedChoice([0.6, 0.3, 0.1])
+// Rates of the three exponential distributions
+rates = [0.3, 0.1, 0.05]
+// Generate an exponential random number with chosen rate
+number = -ln(RNDU01ZeroOneExc()) / rates[index]
+</pre></li>
 <li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
@@ -1139,18 +1149,22 @@ and/or discarding some of them.</p>
 <li><strong>Drop-the-highest:</strong>  Add all generated numbers except the highest.</li>
 <li><strong>Reroll-the-highest:</strong>  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.</li>
 <li><strong>Sum:</strong> Add all generated numbers.</li>
+<li><strong>Mean:</strong> Find the mean of all generated numbers (see the appendix).</li>
 </ol>
 
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
 
 <blockquote>
-<p><strong>Note:</strong> Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-order statistics distributions, respectively.</p>
+<p><strong>Notes:</strong> Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-<strong>order statistics distributions</strong>, respectively.</p>
 
 <p><strong>Examples:</strong></p>
 
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;).</li>
+<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> uniform random numbers, each by <code>RNDNUMRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
+<li>A <strong>compound Poisson distribution</strong> models the sum of <em>n</em> random numbers generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
+<li>A <strong>hypoexponential distribution</strong> models the sum of <em>n</em> random numbers following an exponential distribution, each with a separate <code>lamda</code> parameter (see &quot;<a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>&quot;)..</li>
 </ol>
 </blockquote>
 
@@ -1621,8 +1635,8 @@ END METHOD
 <p>Extended versions of the stable distribution:</p>
 
 <ul>
-<li>The four-parameter stable distribution (<code>Stable4(alpha, beta, mu, sigma)</code>), where <code>mu</code> is the mean and <code>sigma</code> is the scale, is <code>Stable(alpha, beta) * sigma + mu</code>.</li>
-<li>The &quot;type 0&quot; stable distribution (<code>StableType0(alpha, beta, mu, sigma)</code>) is <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
+<li><strong>Four-parameter stable distribution</strong>: <code>Stable(alpha, beta) * sigma + mu</code>, where <code>mu</code> is the mean and <code>sigma</code> is the scale.  If <code>alpha</code> and <code>beta</code> are 1, the result is a <strong>Landau distribution</strong>.</li>
+<li><strong>&quot;Type 0&quot; stable distribution</strong>: <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
 </ul>
 
 <p><a id=Hypergeometric_Distribution></a></p>
@@ -1664,11 +1678,11 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 12, and <code>count</code> is 52.</p>
 </blockquote>
 
-<p><a id=Multivariate_Normal_Distribution></a></p>
+<p><a id=Multivariate_Normal_Multinormal_Distribution></a></p>
 
-<h3>Multivariate Normal Distribution</h3>
+<h3>Multivariate Normal (Multinormal) Distribution</h3>
 
-<p>The following pseudocode calculates a random point in space that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong><em>multivariate normal distribution</em></strong></a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
+<p>The following pseudocode calculates a random point in space that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong><em>multivariate normal (multinormal) distribution</em></strong></a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
 
 <ul>
 <li>A list, <code>mu</code> (&mu;), which indicates the means
@@ -1754,7 +1768,13 @@ end
 </pre>
 
 <blockquote>
-<p><strong>Example:</strong> A <strong>binormal distribution</strong> (two-variable normal distribution) can be sampled using the following idiom: <code>MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])</code>, where <code>mu1</code> and <code>mu2</code> are the means of the two random variables, <code>s1</code> and <code>s2</code> are their standard deviations, and <code>rho</code> is a <em>correlation coefficient</em> greater than -1 and less than 1 (0 means no correlation).</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>A <strong>binormal distribution</strong> (two-variable normal distribution) can be sampled using the following idiom: <code>MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])</code>, where <code>mu1</code> and <code>mu2</code> are the means of the two random variables, <code>s1</code> and <code>s2</code> are their standard deviations, and <code>rho</code> is a <em>correlation coefficient</em> greater than -1 and less than 1 (0 means no correlation).</li>
+<li>A <strong>log-multinormal distribution</strong> can be sampled by generating numbers from a multinormal distribution, then applying <code>exp(n)</code> to the resulting numbers, where <code>n</code> is each number generated this way.</li>
+<li>A <strong>Beckmann distribution</strong> can be sampled by calculating the norm of a binormal random pair (see example 1); that is, calculate <code>sqrt(x*x+y*y)</code>, where <code>x</code> and <code>y</code> are the two numbers in the binormal pair.</li>
+</ol>
 </blockquote>
 
 <p><a id=Dirichlet_Distribution_Random_Numbers_with_a_Given_Positive_Sum></a></p>
@@ -1854,7 +1874,7 @@ END METHOD
 
 <h3>Gaussian Copula</h3>
 
-<p>Correlated random numbers can be generated by sampling from a <a href="#Multivariate_Normal_Distribution"><strong>multivariate normal distribution</strong></a>, then converting the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:</p>
+<p>Correlated random numbers can be generated by sampling from a <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>multivariate normal distribution</strong></a>, then converting the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:</p>
 
 <ul>
 <li>The parameter <code>covar</code> is the covariance matrix for the multivariate normal distribution.</li>
@@ -1899,16 +1919,16 @@ the two parameters of the beta distribution, and <code>nc</code> is a parameter 
 as in the negative binomial distribution.  As used here, this is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)</li>
 <li><strong>Gumbel distribution</strong>: <code>a + ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of minimum values.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
-same meaning as in the two-parameter gamma distribution.</li>
+same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
 <li><strong>Laplace (double exponential) distribution</strong>: <code>(ln(RNDU01ZeroExc()) - ln(RNDU01ZeroExc())) * beta + mu</code>, where <code>beta</code> is the scale and <code>mu</code> is the mean.</li>
 <li><strong>Logarithmic distribution</strong>: <code>min + (max - min) * RNDU01OneExc() * RNDU01OneExc()</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to <code>min</code> are exponentially more likely than numbers closer to <code>max</code>.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
-<li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(RNDU01ZeroExc()))</code>, where <code>a</code> is the scale and is greater than 0.</li>
+<li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(RNDU01ZeroExc()))</code>, where <code>a</code> is the scale and is greater than 0.  If <code>a</code> follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
-<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a)</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>a</code> and <code>b</code> are greater than 0.</li>
+<li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale <code>loc</code> is the location, and <code>a</code> and <code>b</code> are greater than 0.</li>
 </ul>
 
 <p>Miscellaneous:</p>
