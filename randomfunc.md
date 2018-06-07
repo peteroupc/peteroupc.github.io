@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 5, 2018.
+Begun on June 4, 2017; last updated on June 6, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -951,8 +951,8 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 >
 > 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)").
-> 3. Sampling a **Bates distribution** involves sampling _n_ uniform random numbers, each by `RNDNUMRANGE(minimum, maximum)`, then finding the mean of those numbers (see the appendix).
-> 4. A **compound Poisson distribution** models the sum of _n_ random numbers generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers).
+> 3. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDNUMRANGE(minimum, maximum)`, then finding the mean of those numbers (see the appendix).
+> 4. A **compound Poisson distribution** models the sum of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers).
 > 5. A **hypoexponential distribution** models the sum of _n_ random numbers following an exponential distribution, each with a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)")..
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
@@ -1104,8 +1104,7 @@ A random integer that follows a _binomial distribution_&mdash;
 - expresses the number of successes that have happened after a given number of independently performed trials
 (expressed as `trials` below), where the probability of a success in each trial is `p` (which ranges from 0, never, to
 1, always, and which can be 0.5, meaning an equal chance of success or failure), and
-- is also known as  [**_Hamming distance_**](https://en.wikipedia.org/wiki/Hamming_distance), if each trial is treated
-as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
+- is also known as  [**_Hamming distance_**](https://en.wikipedia.org/wiki/Hamming_distance), if each trial is treated as a "bit" that's set to 1 for a success and 0 for a failure, and if `p` is 0.5.
 
 &nbsp;
 
@@ -1186,7 +1185,7 @@ The following method generates a random integer that follows a _Poisson distribu
 <a id=Gamma_Distribution></a>
 ### Gamma Distribution
 
-The following method generates a random integer that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000.  Usually, the method expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -1393,12 +1392,8 @@ of face cards drawn this way follows a hypergeometric distribution where `trials
 
 The following pseudocode calculates a random point in space that follows a [**_multivariate normal (multinormal) distribution_**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution).  The method `MultivariateNormal` takes the following parameters:
 
-- A list, `mu` (&mu;), which indicates the means
-to add to each component of the random point. `mu` can be `nothing`, in which case each
-component will have a mean of zero.
+- A list, `mu` (&mu;), which indicates the means to add to each component of the random point. `mu` can be `nothing`, in which case each component will have a mean of zero.
 - A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).
-
-For conciseness, the following pseudocode uses `for` loops, defined as follows. `for X=Y to Z; [Statements] ; end` is shorthand for `X = Y; while X <= Z; [Statements]; X = X + 1; end`.
 
     METHOD Decompose(matrix)
       numrows = size(matrix)
@@ -1406,28 +1401,24 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
       // Does a Cholesky decomposition of a matrix
       // assuming it's positive definite and invertible
       ret=NewList()
-      for i = 0 to numrows - 1
+      for i in 0...numrows
         submat = NewList()
-        for j = 0 to numrows - 1
-          AddItem(submat, 0)
-        end
+        for j in 0...numrows: AddItem(submat, 0)
         AddItem(ret, submat)
       end
       s1 = sqrt(matrix[0][0])
       if s1==0: return ret // For robustness
-      for i = 1 to numrows - 1
+      for i in 1...numrows
         ret[0][i]=matrix[0][i]*1.0/s1
       end
-      for i = 1 to numrows - 1
+      for i in 1...numrows
         sum=0.0
-        for j = 0 to i - 1
-          sum = sum + ret[j][i]*ret[j][i]
-        end
+        for j = 0 to i - 1: sum = sum + ret[j][i]*ret[j][i]
         sq=matrix[i][i]-sum
         if sq<0: sq=0 // For robustness
         ret[i][i]=math.sqrt(sq)
       end
-      for j = 1 to numrows - 1
+      for j in 1...numrows
         for i = j + 1 to numrows - 1
           // For robustness
           if ret[j][j]==0: ret[j][i]=0
@@ -1462,11 +1453,7 @@ For conciseness, the following pseudocode uses `for` loops, defined as follows. 
         nv=Normal(0,1)
         if mulen == nothing: sum = 0
         else: sum=mu[i]
-        j=0
-        while j<mulen
-          sum=sum+nv*cho[j][i]
-          j=j+1
-        end
+        for j in 0...mulen: sum=sum+nv*cho[j][i]
         AddItem(ret, sum)
         i=i+1
       end
@@ -1512,22 +1499,14 @@ The following pseudocode shows how to generate random integers with a given posi
         end
         Sort(ls)
         AddItem(ls, total)
-         i = 1
-        while i < size(ls):
-                AddItem(ret, list[i] - list[i - 1])
-                i = i + 1
-        end
+        for i in 1...size(ls): AddItem(ret, list[i] - list[i - 1])
         return ret
     END METHOD
 
     METHOD IntegersWithSum(n, total)
         if n <= 0 or total <=0: return error
         ret = NonzeroIntegersWithSum(n, total + n)
-         i = 0
-        while i < size(ret):
-                ret[i] = ret[i] - 1
-                i = i + 1
-        end
+        for i in 0...size(ret): ret[i] = ret[i] - 1
         return ret
     END METHOD
 
@@ -1536,6 +1515,7 @@ The following pseudocode shows how to generate random integers with a given posi
 > - The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
 > - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
 > - Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
+> - The similar **Dirichlet distribution** models _n_ random numbers, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, and dividing all those numbers except the last by the sum of all _n_+1 numbers (see Devroye 1986, p. 594).
 
 <a id=Multinomial_Distribution></a>
 ### Multinomial Distribution
@@ -1546,11 +1526,7 @@ The _multinomial distribution_ models the number of times each of several mutual
         if trials < 0: return error
         // create a list of successes
         list = NewList()
-        i = 0
-        while i < size(weights)
-           AddItem(list, 0)
-           i = i + 1
-        end
+        for i in 0...size(weights): AddItem(list, 0)
         i = 0
         while i < trials
             // Choose an index
@@ -1574,13 +1550,11 @@ The pseudocode below is one example of a _copula_ (a distribution of groups of t
 
     METHOD GaussianCopula(covar)
         mvn=MultivariateNormal(nothing, covar)
-        i = 0
        sqrt2=sqrt(2)
-       while i < size(covar)
+       for i in 0...size(covar)
           // Apply the standard normal distribution's CDF
           // function to get uniform variables
           mvn[i] = (erf(mvn[i]/(sqrt2))+1)*0.5
-           i = i + 1
        end
        return mvn
     END METHOD
@@ -1647,7 +1621,8 @@ the same meaning as in the normal distribution, and `alpha` is a shape parameter
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
-The Python sample code also contains an implementation of the **negative multinomial distribution**.
+The Python sample code also contains implementations of the **negative multinomial distribution**
+and the **multivariate Poisson distribution**.
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling

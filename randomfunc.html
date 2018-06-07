@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 5, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 6, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1162,8 +1162,8 @@ and/or discarding some of them.</p>
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;).</li>
-<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> uniform random numbers, each by <code>RNDNUMRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
-<li>A <strong>compound Poisson distribution</strong> models the sum of <em>n</em> random numbers generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
+<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDNUMRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
+<li>A <strong>compound Poisson distribution</strong> models the sum of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
 <li>A <strong>hypoexponential distribution</strong> models the sum of <em>n</em> random numbers following an exponential distribution, each with a separate <code>lamda</code> parameter (see &quot;<a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>&quot;)..</li>
 </ol>
 </blockquote>
@@ -1359,8 +1359,7 @@ END METHOD
 <li>expresses the number of successes that have happened after a given number of independently performed trials
 (expressed as <code>trials</code> below), where the probability of a success in each trial is <code>p</code> (which ranges from 0, never, to
 1, always, and which can be 0.5, meaning an equal chance of success or failure), and</li>
-<li>is also known as  <a href="https://en.wikipedia.org/wiki/Hamming_distance"><strong><em>Hamming distance</em></strong></a>, if each trial is treated
-as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and if <code>p</code> is 0.5.</li>
+<li>is also known as  <a href="https://en.wikipedia.org/wiki/Hamming_distance"><strong><em>Hamming distance</em></strong></a>, if each trial is treated as a &quot;bit&quot; that&#39;s set to 1 for a success and 0 for a failure, and if <code>p</code> is 0.5.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1453,7 +1452,7 @@ END METHOD
 
 <h3>Gamma Distribution</h3>
 
-<p>The following method generates a random integer that follows a <em>gamma distribution</em> and is based on Marsaglia and Tsang&#39;s method from 2000.  Usually, the method expresses either&mdash;</p>
+<p>The following method generates a random number that follows a <em>gamma distribution</em> and is based on Marsaglia and Tsang&#39;s method from 2000.  Usually, the number expresses either&mdash;</p>
 
 <ul>
 <li>the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of <code>meanLifetime</code>, or</li>
@@ -1685,58 +1684,49 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 <p>The following pseudocode calculates a random point in space that follows a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong><em>multivariate normal (multinormal) distribution</em></strong></a>.  The method <code>MultivariateNormal</code> takes the following parameters:</p>
 
 <ul>
-<li>A list, <code>mu</code> (&mu;), which indicates the means
-to add to each component of the random point. <code>mu</code> can be <code>nothing</code>, in which case each
-component will have a mean of zero.</li>
-<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).</li>
-</ul>
+<li>A list, <code>mu</code> (&mu;), which indicates the means to add to each component of the random point. <code>mu</code> can be <code>nothing</code>, in which case each component will have a mean of zero.</li>
+<li><p>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).</p>
 
-<p>For conciseness, the following pseudocode uses <code>for</code> loops, defined as follows. <code>for X=Y to Z; [Statements] ; end</code> is shorthand for <code>X = Y; while X &lt;= Z; [Statements]; X = X + 1; end</code>.</p>
-
-<pre>METHOD Decompose(matrix)
+<p>METHOD Decompose(matrix)
   numrows = size(matrix)
   if matrix[0]!=numrows: return error
   // Does a Cholesky decomposition of a matrix
   // assuming it&#39;s positive definite and invertible
   ret=NewList()
-  for i = 0 to numrows - 1
+  for i in 0...numrows
     submat = NewList()
-    for j = 0 to numrows - 1
-      AddItem(submat, 0)
-    end
+    for j in 0...numrows: AddItem(submat, 0)
     AddItem(ret, submat)
   end
   s1 = sqrt(matrix[0][0])
   if s1==0: return ret // For robustness
-  for i = 1 to numrows - 1
-    ret[0][i]=matrix[0][i]*1.0/s1
+  for i in 1...numrows
+    ret[0][i]=matrix[0][i]<em>1.0/s1
   end
-  for i = 1 to numrows - 1
+  for i in 1...numrows
     sum=0.0
-    for j = 0 to i - 1
-      sum = sum + ret[j][i]*ret[j][i]
-    end
+    for j = 0 to i - 1: sum = sum + ret[j][i]</em>ret[j][i]
     sq=matrix[i][i]-sum
     if sq&lt;0: sq=0 // For robustness
     ret[i][i]=math.sqrt(sq)
   end
-  for j = 1 to numrows - 1
+  for j in 1...numrows
     for i = j + 1 to numrows - 1
       // For robustness
       if ret[j][j]==0: ret[j][i]=0
       if ret[j][j]!=0
         sum=0
         for k = 0 to j - 1
-          sum = sumret[k][i]*ret[k][j]
+          sum = sumret[k][i]<em>ret[k][j]
         end
-        ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
+        ret[j][i]=(matrix[j][i]-sum)</em>1.0/ret[j][j]
       end
     end
   end
   return ret
-END METHOD
+END METHOD</p>
 
-METHOD MultivariateNormal(mu, cov)
+<p>METHOD MultivariateNormal(mu, cov)
   mulen=size(cov)
   if mu != nothing
    mulen = size(mu)
@@ -1755,17 +1745,13 @@ METHOD MultivariateNormal(mu, cov)
     nv=Normal(0,1)
     if mulen == nothing: sum = 0
     else: sum=mu[i]
-    j=0
-    while j&lt;mulen
-      sum=sum+nv*cho[j][i]
-      j=j+1
-    end
+    for j in 0...mulen: sum=sum+nv*cho[j][i]
     AddItem(ret, sum)
     i=i+1
   end
   return ret
-end
-</pre>
+end</p></li>
+</ul>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
@@ -1813,22 +1799,14 @@ end
     end
     Sort(ls)
     AddItem(ls, total)
-     i = 1
-    while i &lt; size(ls):
-            AddItem(ret, list[i] - list[i - 1])
-            i = i + 1
-    end
+    for i in 1...size(ls): AddItem(ret, list[i] - list[i - 1])
     return ret
 END METHOD
 
 METHOD IntegersWithSum(n, total)
     if n &lt;= 0 or total &lt;=0: return error
     ret = NonzeroIntegersWithSum(n, total + n)
-     i = 0
-    while i &lt; size(ret):
-            ret[i] = ret[i] - 1
-            i = i + 1
-    end
+    for i in 0...size(ret): ret[i] = ret[i] - 1
     return ret
 END METHOD
 </pre>
@@ -1840,6 +1818,7 @@ END METHOD
 <li>The problem of generating N random numbers with a given positive sum <code>sum</code> is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of <code>sum</code> units.</li>
 <li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers with the sum <code>N * avg</code>.</li>
 <li>Generating <code>N</code> random numbers <code>min</code> or greater and with a given positive sum <code>sum</code> is equivalent to generating <code>N</code> random numbers with the sum <code>sum - n * min</code>, then adding <code>min</code> to each number generated this way.</li>
+<li>The similar <strong>Dirichlet distribution</strong> models <em>n</em> random numbers, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, and dividing all those numbers except the last by the sum of all <em>n</em>+1 numbers (see Devroye 1986, p. 594).</li>
 </ul>
 </blockquote>
 
@@ -1853,11 +1832,7 @@ END METHOD
     if trials &lt; 0: return error
     // create a list of successes
     list = NewList()
-    i = 0
-    while i &lt; size(weights)
-       AddItem(list, 0)
-       i = i + 1
-    end
+    for i in 0...size(weights): AddItem(list, 0)
     i = 0
     while i &lt; trials
         // Choose an index
@@ -1885,13 +1860,11 @@ END METHOD
 
 <pre>METHOD GaussianCopula(covar)
     mvn=MultivariateNormal(nothing, covar)
-    i = 0
    sqrt2=sqrt(2)
-   while i &lt; size(covar)
+   for i in 0...size(covar)
       // Apply the standard normal distribution&#39;s CDF
       // function to get uniform variables
       mvn[i] = (erf(mvn[i]/(sqrt2))+1)*0.5
-       i = i + 1
    end
    return mvn
 END METHOD
@@ -1965,6 +1938,9 @@ the same meaning as in the normal distribution, and <code>alpha</code> is a shap
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
+
+<p>The Python sample code also contains implementations of the <strong>negative multinomial distribution</strong>
+and the <strong>multivariate Poisson distribution</strong>.</p>
 
 <p><a id=Geometric_Sampling></a></p>
 
