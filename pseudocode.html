@@ -20,6 +20,7 @@
 <li><a href="#Introduction"><strong>Introduction</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Symbols"><strong>Symbols</strong></a></li>
+<li><a href="#Loops"><strong>Loops</strong></a></li>
 <li><a href="#Lists_and_Files"><strong>Lists and Files</strong></a></li>
 <li><a href="#Functions"><strong>Functions</strong></a></li>
 <li><a href="#Pseudocode_Notes"><strong>Pseudocode Notes</strong></a></li>
@@ -40,6 +41,19 @@
 <li><code>!=</code> means &quot;is not equal to&quot;.</li>
 <li>The <code>&lt;&lt;</code> operator in the pseudocode is a bitwise left shift, with both sides of the operator being integers.  If both sides are positive, it is the same as multiplying the left-hand side by 2<sup><em>n</em></sup>, where <em>n</em> is the right-hand side.</li>
 <li>The <code>|</code> operator in the pseudocode is a bitwise OR operator between two integers.  It combines the bits of both integers so that each bit is set in the result if the corresponding bit is set on either or both sides of the operator.</li>
+</ul>
+
+<p><a id=Loops></a></p>
+
+<h2>Loops</h2>
+
+<p>Pseudocode may use <code>while</code> loops, which are self-explanatory.</p>
+
+<p>Pseudocode may also use <code>for</code> loops, defined as follows:</p>
+
+<ul>
+<li><code>for X in Y...Z; [[Statements]] ; end</code> is shorthand for <code>X = Y; while X &lt; Z; [[Statements]]; X = X + 1; end</code>.</li>
+<li><code>for X in Y...Z: [[Single-Statement]]</code> is shorthand for <code>X = Y; while X &lt; Z; [[Single-Statement]]; X = X + 1; end</code>.</li>
 </ul>
 
 <p><a id=Lists_and_Files></a></p>

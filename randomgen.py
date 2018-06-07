@@ -376,6 +376,16 @@ class RandomGen:
     else:
       return self.poisson(self.gamma(successes)*(1-p)/p)
 
+  def dirichlet(alphas):
+     gammas=[self.gamma(x,1) for x in alphas]
+     sumgammas=sum(gammas)
+     return [gammas[i]/sumgammas for i in range(len(alphas)-1)]
+
+  def multipoisson(self, firstmean, othermeans):
+     """ Multivariate Poisson distribution (as found in Mathematica). """
+     first=self.poisson(firstmean)
+     return [first+self.poisson(m) for m in othermeans]
+
   def exponential(self,lamda = 1.0):
     return -math.log(self.rndu01zerooneexc())/lamda
 
@@ -432,7 +442,6 @@ of failures of each kind of failure.
               p+=failures[j]
         if not nosuccess: i+=1
     return ret
-
 
   def nonzeroIntegersWithSum(self, n, total):
     if n <= 0 or total <=0:
