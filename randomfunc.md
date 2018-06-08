@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 6, 2018.
+Begun on June 4, 2017; last updated on June 8, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -48,8 +48,8 @@ All the random number methods presented on this page&mdash;
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean Conditions**](#Boolean_Conditions)
     - [**Shuffling**](#Shuffling)
-    - [**Creating a Random Character String**](#Creating_a_Random_Character_String)
     - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
+        - [**Example: Random Character Strings**](#Example_Random_Character_Strings)
     - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
@@ -516,17 +516,29 @@ An important consideration with respect to shuffling is the nature of the underl
 > - for each simulated dataset, the same statistics are calculated as for the original dataset, then
 > - the statistics for the simulated datasets are compared with those of the original.
 
-<a id=Creating_a_Random_Character_String></a>
-### Creating a Random Character String
+<a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
+### Sampling With Replacement: Choosing a Random Item from a List
 
-To generate a random string of characters (usually a random _alphanumeric string_, or string of letters and digits):
+To choose a random item from a list&mdash;
 
-1. Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;
-    * the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57),
-    * the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and
-    * the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122),
+- whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
+- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in pseudocode given in a [**later section**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items) (the result will be a 1-item list or be an empty list if there are no items).
 
-    as found in the Basic Latin block of the Unicode Standard.
+Choosing an item this way is also known as _sampling with replacement_.
+
+> **Notes:**
+>
+> - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
+>     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
+>     - choosing a random item from the list generated this way.
+> - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+
+<a id=Example_Random_Character_Strings></a>
+#### Example: Random Character Strings
+
+To generate a random string of characters:
+
+1. Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.
 2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)
 
         METHOD RandomString(characterList, stringSize)
@@ -547,26 +559,13 @@ To generate a random string of characters (usually a random _alphanumeric string
 > - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).
 > - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
-> - Generating a random hexadecimal string is equivalent to generating `RandomString(characterList, stringSize)`, where `characterList` is `["0", "1", ..., "9", "A", ..., "F"]` or `["0", "1", ..., "9", "a", ..., "f"]` (with ellipses used to save space), and `stringSize` is the desired size.
-> - For generating a random base-10 digit string, the list of characters passed to `RandomString` consists of the basic digits only.
 > - Ways to generate "pronounceable" words or words similar to natural-language words<sup>[**(7)**](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
-
-<a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
-### Sampling With Replacement: Choosing a Random Item from a List
-
-To choose a random item from a list&mdash;
-
-- whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
-- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in pseudocode given in a [**later section**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items) (the result will be a 1-item list or be an empty list if there are no items).
-
-Choosing an item this way is also known as _sampling with replacement_.
-
-> **Notes:**
 >
-> - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
->     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
->     - choosing a random item from the list generated this way.
-> - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
+> **Examples of character lists:**
+>
+> 1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
+> 2. For a base-10 digit string, the characters can be the basic digits only.
+> 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f".
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -1394,6 +1393,8 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
 - A list, `mu` (&mu;), which indicates the means to add to each component of the random point. `mu` can be `nothing`, in which case each component will have a mean of zero.
 - A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).
+
+&mdash;
 
     METHOD Decompose(matrix)
       numrows = size(matrix)

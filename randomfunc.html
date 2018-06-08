@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 6, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 8, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -68,8 +68,11 @@
 <ul>
 <li><a href="#Boolean_Conditions"><strong>Boolean Conditions</strong></a></li>
 <li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
-<li><a href="#Creating_a_Random_Character_String"><strong>Creating a Random Character String</strong></a></li>
-<li><a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Sampling With Replacement: Choosing a Random Item from a List</strong></a></li>
+<li><a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Sampling With Replacement: Choosing a Random Item from a List</strong></a>
+
+<ul>
+<li><a href="#Example_Random_Character_Strings"><strong>Example: Random Character Strings</strong></a></li>
+</ul></li>
 <li><a href="#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>Sampling Without Replacement: Choosing Several Unique Items</strong></a></li>
 <li><a href="#Choosing_a_Random_Date_Time"><strong>Choosing a Random Date/Time</strong></a></li>
 <li><a href="#Generating_Random_Numbers_in_Sorted_Order"><strong>Generating Random Numbers in Sorted Order</strong></a></li>
@@ -643,52 +646,6 @@ END METHOD
 </ul>
 </blockquote>
 
-<p><a id=Creating_a_Random_Character_String></a></p>
-
-<h3>Creating a Random Character String</h3>
-
-<p>To generate a random string of characters (usually a random <em>alphanumeric string</em>, or string of letters and digits):</p>
-
-<ol>
-<li><p>Generate a list of the letters, digits, and/or other characters the string can have.  For example, those characters can be&mdash;</p>
-
-<ul>
-<li>the basic digits &quot;0&quot; to &quot;9&quot; (U+0030-U+0039, nos. 48-57),</li>
-<li>the basic upper case letters &quot;A&quot; to &quot;Z&quot; (U+0041-U+005A, nos. 65-90), and</li>
-<li>the basic lower case letters &quot;a&quot; to &quot;z&quot; (U+0061-U+007A, nos. 96-122),</li>
-</ul>
-
-<p>as found in the Basic Latin block of the Unicode Standard.</p></li>
-<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</p>
-
-<pre>METHOD RandomString(characterList, stringSize)
-        i = 0
-        newString = NewList()
-        while i &lt; stringSize
-                // Choose a character from the list
-                randomChar = characterList[RNDINTEXC(size(characterList))]
-                // Add the character to the string
-                AddItem(newString, randomChar)
-                i = i + 1
-        end
-        return newString
-END METHOD
-</pre></li>
-</ol>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
-<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).</li>
-<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
-<li>Generating a random hexadecimal string is equivalent to generating <code>RandomString(characterList, stringSize)</code>, where <code>characterList</code> is <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;A&quot;, ..., &quot;F&quot;]</code> or <code>[&quot;0&quot;, &quot;1&quot;, ..., &quot;9&quot;, &quot;a&quot;, ..., &quot;f&quot;]</code> (with ellipses used to save space), and <code>stringSize</code> is the desired size.</li>
-<li>For generating a random base-10 digit string, the list of characters passed to <code>RandomString</code> consists of the basic digits only.</li>
-<li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note7"><strong>(7)</strong></a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
-</ul>
-</blockquote>
-
 <p><a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a></p>
 
 <h3>Sampling With Replacement: Choosing a Random Item from a List</h3>
@@ -714,6 +671,50 @@ END METHOD
 </ul></li>
 <li><a href="https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29"><strong><em>Bootstrapping</em></strong></a> is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.</li>
 </ul>
+</blockquote>
+
+<p><a id=Example_Random_Character_Strings></a></p>
+
+<h4>Example: Random Character Strings</h4>
+
+<p>To generate a random string of characters:</p>
+
+<ol>
+<li>Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.</li>
+<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</p>
+
+<pre>METHOD RandomString(characterList, stringSize)
+        i = 0
+        newString = NewList()
+        while i &lt; stringSize
+                // Choose a character from the list
+                randomChar = characterList[RNDINTEXC(size(characterList))]
+                // Add the character to the string
+                AddItem(newString, randomChar)
+                i = i + 1
+        end
+        return newString
+END METHOD
+</pre></li>
+</ol>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
+<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).</li>
+<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
+<li>Ways to generate &quot;pronounceable&quot; words or words similar to natural-language words<sup><a href="#Note7"><strong>(7)</strong></a></sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.</li>
+</ul>
+
+<p><strong>Examples of character lists:</strong></p>
+
+<ol>
+<li>For an <em>alphanumeric string</em>, or string of letters and digits, the characters can be the basic digits &quot;0&quot; to &quot;9&quot; (U+0030-U+0039, nos. 48-57), the basic upper case letters &quot;A&quot; to &quot;Z&quot; (U+0041-U+005A, nos. 65-90), and the basic lower case letters &quot;a&quot; to &quot;z&quot; (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.</li>
+<li>For a base-10 digit string, the characters can be the basic digits only.</li>
+<li>For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters &quot;A&quot; to &quot;F&quot; or &quot;a&quot; to &quot;f&quot;.</li>
+</ol>
 </blockquote>
 
 <p><a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a></p>
@@ -1685,9 +1686,12 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
 
 <ul>
 <li>A list, <code>mu</code> (&mu;), which indicates the means to add to each component of the random point. <code>mu</code> can be <code>nothing</code>, in which case each component will have a mean of zero.</li>
-<li><p>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).</p>
+<li>A list of lists <code>cov</code>, that specifies a <em>covariance matrix</em> (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).</li>
+</ul>
 
-<p>METHOD Decompose(matrix)
+<p>&mdash;</p>
+
+<pre>METHOD Decompose(matrix)
   numrows = size(matrix)
   if matrix[0]!=numrows: return error
   // Does a Cholesky decomposition of a matrix
@@ -1701,11 +1705,11 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
   s1 = sqrt(matrix[0][0])
   if s1==0: return ret // For robustness
   for i in 1...numrows
-    ret[0][i]=matrix[0][i]<em>1.0/s1
+    ret[0][i]=matrix[0][i]*1.0/s1
   end
   for i in 1...numrows
     sum=0.0
-    for j = 0 to i - 1: sum = sum + ret[j][i]</em>ret[j][i]
+    for j = 0 to i - 1: sum = sum + ret[j][i]*ret[j][i]
     sq=matrix[i][i]-sum
     if sq&lt;0: sq=0 // For robustness
     ret[i][i]=math.sqrt(sq)
@@ -1717,16 +1721,16 @@ of face cards drawn this way follows a hypergeometric distribution where <code>t
       if ret[j][j]!=0
         sum=0
         for k = 0 to j - 1
-          sum = sumret[k][i]<em>ret[k][j]
+          sum = sumret[k][i]*ret[k][j]
         end
-        ret[j][i]=(matrix[j][i]-sum)</em>1.0/ret[j][j]
+        ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
       end
     end
   end
   return ret
-END METHOD</p>
+END METHOD
 
-<p>METHOD MultivariateNormal(mu, cov)
+METHOD MultivariateNormal(mu, cov)
   mulen=size(cov)
   if mu != nothing
    mulen = size(mu)
@@ -1750,8 +1754,8 @@ END METHOD</p>
     i=i+1
   end
   return ret
-end</p></li>
-</ul>
+end
+</pre>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
