@@ -494,6 +494,76 @@ of failures of each kind of failure.
     if ret < 0: ret = 0
     return ret
 
+  def _ierf(self, x):
+    """ Inverse error function. """
+    coeffs=[0.3333333333333333, 0.23333333333333334, 0.2015873015873016, 0.19263668430335099, 0.19532547699214364, 0.20593586454697566, 0.2232097574187521, 0.24697023314275485, 0.27765382560322394, 0.3161426235531171, 0.3637175870396921, 0.4220720808430425, 0.49336326556393456, 0.5802938460615139, 0.6862233969476911, 0.815312205552808, 0.9727032088645521, 1.1647499636184413, 1.3993010831666697, 1.6860544545395042]
+    cx=x*0.886226925452758 # x/(2.0/sqrt(pi))
+    ret=cx
+    cxsq=cx*cx
+    for c in coeffs:
+      cx*=cxsq
+      ret+=cx*c
+    return ret
+
+  def _icdfnormal(self, x):
+    return self._ierf(2*x-1)*math.sqrt(2)
+
+  def powerlognormal(self, p, sigma=1.0):
+    """ Power lognormal distribution, as described in NIST/SEMATECH
+     e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     accessed Jun. 9, 2018, sec. 1.3.6.6.14. """
+    return math.exp(self._icdfnormal(1-(1-self.rndu01())**(1.0/p))*sigma)
+
+  def powernormal(self, p):
+    """ Power normal distribution, as described in NIST/SEMATECH
+     e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+     accessed Jun. 9, 2018, sec. 1.3.6.6.13. """
+    return self._icdfnormal(1-(1-self.rndu01())**(1.0/p))
+
+  def _decompose(self, matrix):
+      numrows = len(matrix)
+      if len(matrix[0])!=numrows: raise ValueError
+      # Does a Cholesky decomposition of a matrix
+      # assuming it's positive definite and invertible
+      ret=[[0 for j in range(numrows)] for i in range(numrows)]
+      s1 = math.sqrt(matrix[0][0])
+      if s1==0: return ret # For robustness
+      for i in range(0,numrows):
+        ret[0][i]=matrix[0][i]*1.0/s1
+      for i in range(0,numrows):
+        sum=0.0
+        for j in range(i): sum = sum + ret[j][i]*ret[j][i]
+        sq=matrix[i][i]-sum
+        if sq<0: sq=0 # For robustness
+        ret[i][i]=math.sqrt(sq)
+      for j in range(0,numrows):
+        for i in range(j+1,numrows):
+          # For robustness
+          if ret[j][j]==0: ret[j][i]=0
+          if ret[j][j]!=0:
+            sum=0
+            for k in range(j):sum = sum + ret[k][i]*ret[k][j]
+            ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
+      return ret
+
+  def multinormal(self, mu, cov):
+      mulen=len(cov)
+      if mu != None:
+        mulen = len(mu)
+        if mulen!=len(cov): raise ValueError
+        if mulen!=len(cov[0]): raise ValueError
+      cho=self._decompose(cov)
+      i=0
+      ret=[0 for i in range(mulen)]
+      variables=[self.normal(0,1) for i in range(mulen)]
+      while i<mulen:
+        sum = 0
+        if mu != None: sum=mu[i]
+        for j in range(mulen): sum=sum+variables[j]*cho[j][i]
+        ret[i]=sum
+        i=i+1
+      return ret
+
 class AlmostRandom:
   def __init__(self, randgen, list):
     if len(list)==0:
@@ -542,3 +612,6 @@ if __name__ == "__main__":
     rate = 1.0/1000 # Failure rate
     print("Times to failure (rate: %f)" % (rate))
     print([randgen.exponential(rate) for i in range(25)])
+
+    for i in range(10):
+       print(randgen.multinormal(None, [[1, 0],[0, 1]]))

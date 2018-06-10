@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 8, 2018.
+Begun on June 4, 2017; last updated on June 9, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -59,8 +59,8 @@ All the random number methods presented on this page&mdash;
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
     - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
-    - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Mixtures of Distributions**](#Mixtures_of_Distributions)
+    - [**Random Numbers from a Distribution of Data Points**](#Random_Numbers_from_a_Distribution_of_Data_Points)
     - [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers)
     - [**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)
     - [**Censored and Truncated Distributions**](#Censored_and_Truncated_Distributions)
@@ -874,20 +874,6 @@ The pseudocode below takes two lists as follows:
 
 > **Example**: Assume `list` is the following: `[0, 1, 2, 2.5, 3]`, and `weights` is the following: `[0.2, 0.8, 0.5, 0.3, 0.1]`.  The weight for 2 is 0.5, and that for 2.5 is 0.3.  Since 2 has a higher weight than 2.5, numbers near 2 are more likely to be chosen than numbers near 2.5 with the `ContinuousWeightedChoice` method.
 
-<a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
-### Random Numbers from a Distribution of Data Points
-
-Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called [**_density estimation_**](http://scikit-learn.org/stable/modules/density.html), which include histograms, [**kernel density estimation**](https://en.wikipedia.org/wiki/Kernel_density_estimation), and Gaussian [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model).  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
-
-One method of generating random numbers this way (based on **kernel density estimation**) is as follows:
-
-1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(8)**](#Note8)</sup>.
-
-**Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
-
-This document doesn't detail how to build a density estimation model. Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
-
 <a id=Mixtures_of_Distributions></a>
 ### Mixtures of Distributions
 
@@ -916,12 +902,26 @@ To generate random content from a mixture&mdash;
 >         // Generate an exponential random number with chosen rate
 >         number = -ln(RNDU01ZeroOneExc()) / rates[index]
 >
-> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(9)**](#Note9)</sup>
+> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(8)**](#Note8)</sup>
 > 4. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
 >
 >     For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is `mx - mn` instead and the number is sampled by `RNDNUMEXCRANGE(mn, mx)` instead.
+
+<a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
+### Random Numbers from a Distribution of Data Points
+
+Generating random numbers (or data points) based on how a list of numbers (or data points) is distributed involves a family of techniques called [**_density estimation_**](http://scikit-learn.org/stable/modules/density.html), which include histograms, [**kernel density estimation**](https://en.wikipedia.org/wiki/Kernel_density_estimation), and Gaussian [**mixture models**](https://en.wikipedia.org/wiki/Mixture_model).  These techniques seek to model the distribution of data points in a given data set, where areas with more points are more likely to be sampled.
+
+One method of generating random numbers this way (based on **kernel density estimation**) is as follows:
+
+1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
+2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(9)**](#Note9)</sup>.
+
+**Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
+
+This document doesn't detail how to build a density estimation model. Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -1398,7 +1398,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
     METHOD Decompose(matrix)
       numrows = size(matrix)
-      if matrix[0]!=numrows: return error
+      if size(matrix[0])!=numrows: return error
       // Does a Cholesky decomposition of a matrix
       // assuming it's positive definite and invertible
       ret=NewList()
@@ -1409,25 +1409,23 @@ The following pseudocode calculates a random point in space that follows a [**_m
       end
       s1 = sqrt(matrix[0][0])
       if s1==0: return ret // For robustness
-      for i in 1...numrows
+      for i in 0...numrows
         ret[0][i]=matrix[0][i]*1.0/s1
       end
-      for i in 1...numrows
+      for i in 0...numrows
         sum=0.0
-        for j = 0 to i - 1: sum = sum + ret[j][i]*ret[j][i]
+        for j in 0...i: sum = sum + ret[j][i]*ret[j][i]
         sq=matrix[i][i]-sum
         if sq<0: sq=0 // For robustness
         ret[i][i]=math.sqrt(sq)
       end
-      for j in 1...numrows
-        for i = j + 1 to numrows - 1
+      for j in 0...numrows
+        for i in (j + 1)...numrows
           // For robustness
           if ret[j][j]==0: ret[j][i]=0
           if ret[j][j]!=0
             sum=0
-            for k = 0 to j - 1
-              sum = sumret[k][i]*ret[k][j]
-            end
+            for k in 0...j: sum = sum + ret[k][i]*ret[k][j]
             ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
           end
         end
@@ -1438,7 +1436,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
     METHOD MultivariateNormal(mu, cov)
       mulen=size(cov)
       if mu != nothing
-       mulen = size(mu)
+        mulen = size(mu)
         if mulen!=size(cov): return error
         if mulen!=size(cov[0]): return error
       end
@@ -1450,11 +1448,13 @@ The following pseudocode calculates a random point in space that follows a [**_m
       cho=Decompose(cov)
       i=0
       ret=NewList()
+      variables=NewList()
+      for j in 0...mulen: AddItem(variables, Normal(0, 1))
       while i<mulen
         nv=Normal(0,1)
-        if mulen == nothing: sum = 0
-        else: sum=mu[i]
-        for j in 0...mulen: sum=sum+nv*cho[j][i]
+        sum = 0
+        if mu == nothing: sum=mu[i]
+        for j in 0...mulen: sum=sum+variables[j]*cho[j][i]
         AddItem(ret, sum)
         i=i+1
       end
@@ -1463,7 +1463,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
 > **Examples:**
 >
-> 1. A **binormal distribution** (two-variable normal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
+> 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
 > 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
 > 3. A **Beckmann distribution** can be sampled by calculating the norm of a binormal random pair (see example 1); that is, calculate `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in the binormal pair.
 
@@ -1542,9 +1542,9 @@ The _multinomial distribution_ models the number of times each of several mutual
 <a id=Gaussian_Copula></a>
 ### Gaussian Copula
 
-Correlated random numbers can be generated by sampling from a [**multivariate normal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:
+Correlated random numbers can be generated by sampling from a [**multinormal distribution**](#Multivariate_Normal_Multinormal_Distribution), then converting the resulting numbers to uniformly-distributed numbers.  In the following pseudocode, which generates correlated uniformly-distributed random numbers this way:
 
-- The parameter `covar` is the covariance matrix for the multivariate normal distribution.
+- The parameter `covar` is the covariance matrix for the multinormal distribution.
 - `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v` (see the appendix).
 
 The pseudocode below is one example of a _copula_ (a distribution of groups of two or more correlated uniform random numbers), namely, a _Gaussian copula_.
@@ -1598,11 +1598,13 @@ Miscellaneous:
 - **Beta prime distribution**: `pow(GammaDist(a, 1), 1.0 / alpha) * scale / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters and `scale` is the scale. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
+- **Birnbaum&mdash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
 - **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDNUMRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Fr&eacute;chet distribution**: `b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc`, where `a` is the shape, `b` is the scale, and `loc` is the location of the distribution's curve peak (mode). This expresses a distribution of maximum values.
 - **Generalized extreme value (Fisher&ndash;Tippett) distribution**: `a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c` if `c != 0`, or `a - ln(-ln(RNDU01ZeroOneExc())) * b` otherwise, where `b` is the scale, `a` is the location of the distribution's curve peak (mode), and `c` is a shape parameter. This expresses a distribution of maximum values.
+- **Generalized Tukey lambda distribution**: `s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, and `s1` and `s2` are scale parameters.
 - **Half-normal distribution**: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
 - **Inverse chi-squared distribution**: `df * scale / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom and `scale` is the scale, usually `1.0 / df`.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU01OneExc() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in [**Devroye 1986**](http://luc.devroye.org/rnbookindex.html).
@@ -1617,12 +1619,12 @@ Miscellaneous:
 - **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha)`, where `alpha`  is the shape.  Nominally in the interval (0, 1).
 - **Power law distribution**: `pow(pow(mn,n+1) + (pow(mx,n+1) - pow(mn,n+1)) * RNDU01(), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson variables.
-- **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have
-the same meaning as in the normal distribution, and `alpha` is a shape parameter.
+- **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
+- **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
-The Python sample code also contains implementations of the **negative multinomial distribution**
+The Python sample code also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,
 and the **multivariate Poisson distribution**.
 
 <a id=Geometric_Sampling></a>
@@ -1737,9 +1739,9 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note7>(7)</sup> Such techniques usually involve [**_Markov chains_**](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
 
-<small><sup id=Note8>(8)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multivariate normal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
+<small><sup id=Note8>(8)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
 
-<small><sup id=Note9>(9)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
+<small><sup id=Note9>(9)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
 <small><sup id=Note10>(10)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and sum of two rolls of dice.</small>
 
