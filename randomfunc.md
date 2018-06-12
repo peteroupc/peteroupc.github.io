@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 9, 2018.
+Begun on June 4, 2017; last updated on June 11, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -54,6 +54,7 @@ All the random number methods presented on this page&mdash;
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
+    - [**Random Walks**](#Random_Walks)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
@@ -341,13 +342,12 @@ For fixed-point or floating-point number formats with fixed precision (such as J
        end
     END
 
-> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the mean of those N points, and the error in the estimate is the square root of the (bias-corrected sample) variance of the N points (see the appendix). (After calculating the error and the estimated integral, both can be multiplied by the volume of the domain.) Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
-`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval** **\[0, `maxExclusive`\)**,
-can be implemented as follows<sup>[**(4)**](#Note4)</sup>:
+`RNDINTEXC(maxExclusive)`, which generates a **random number in the interval** **\[0, `maxExclusive`\)**, can be implemented as follows<sup>[**(4)**](#Note4)</sup>:
 
      METHOD RNDINTEXC(maxExclusive)
         if maxExclusive <= 0: return error
@@ -471,7 +471,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -559,8 +559,8 @@ To generate a random string of characters:
 > - If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > - Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).
 > - Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.
-> - Ways to generate "pronounceable" words or words similar to natural-language words<sup>[**(7)**](#Note7)</sup>, or to generate strings that match a regular expression, are too complicated to discuss in this document.
->
+> - Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
+
 > **Examples of character lists:**
 >
 > 1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
@@ -570,7 +570,7 @@ To generate a random string of characters:
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
 
-There are several techniques for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on whether `n` is known, how big `n` and `k` are, and other considerations.
+There are several techniques for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a dataset or list whose size is not known in advance.
 2. **If items are to be chosen in order:**
@@ -584,9 +584,10 @@ There are several techniques for choosing `k` unique items or values uniformly a
 5. **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
     - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-6. **If `n - k` is much smaller than `n`, the items are stored in a list whose order can be changed, and the order in which the items are sampled need not be random:** Proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
-7. **If `n - k` is much smaller than `n`, `n` is not very large, and the order in which the items are sampled need not be random:** Proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
-8. **If `n` is relatively large (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is a greater power of 2):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
+6. **If `n - k` is much smaller than `n`, and the order in which the items are sampled need not be random:**
+     - **If the items are stored in a list whose order can be changed**, then proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+     - Otherwise, **if `n` is not very large**, then proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
+7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -691,10 +692,37 @@ Example criteria include checking any one or more of&mdash;
 - whether a random number is divisible or not by certain numbers,
 - whether a random number is not among recently chosen random numbers,
 - whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),
-- whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure), and
+- whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
+- whether a random string matches a regular expression, and
 - whether a random number is not included in a "blacklist" of numbers.
 
-(KD-trees, hash tables, red-black trees, and prime-number testing algorithms are outside the scope of this document.)
+(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
+
+<a id=Random_Walks></a>
+### Random Walks
+
+A _random walk_ is a process with random behavior over time.  A simple form of random walk involves generating a random number that changes the state of the walk.  The pseudocode below generates a random walk of _n_ random numbers, where `STATEJUMP()` is the next number to add to the current state (see examples later in this section).
+
+    METHOD RandomWalk(n)
+      // Create a new list with an initial state
+      list=[0]
+      // Add 'n' new numbers to the list.
+      for i in 0...n: AddItem(list, list[i] + STATEJUMP())
+      return list
+    END METHOD
+
+> **Examples:**
+>
+> 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that differ by -1 or 1, chosen at random.
+> 2. If `STATEJUMP()` is `RNDNUMRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
+> 3. If `STATEJUMP()` is `Binomial(1, p)`, the random walk models a _binomial process_, where the state is advanced with probability `p`.
+> 4. If `STATEJUMP()` is `Binomial(1, p) * 2 - 1`, the random walk's state generates numbers that differ by -1 or 1 depending on the probability `p`.
+>
+> **Notes:**
+>
+> 1.  A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
+> 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, in which the random number at any given time is `Normal(mu * time, sigma * sqrt(time))`, where `mu` is the average value per time unit, `sigma` is the volatility, and `time` is a "timestamp" from the beginning of the process (a process of this kind is also known as _Brownian motion_).
+> 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (the random time is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.)
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
@@ -902,7 +930,7 @@ To generate random content from a mixture&mdash;
 >         // Generate an exponential random number with chosen rate
 >         number = -ln(RNDU01ZeroOneExc()) / rates[index]
 >
-> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(8)**](#Note8)</sup>
+> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(7)**](#Note7)</sup>
 > 4. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -917,7 +945,7 @@ Generating random numbers (or data points) based on how a list of numbers (or da
 One method of generating random numbers this way (based on **kernel density estimation**) is as follows:
 
 1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(9)**](#Note9)</sup>.
+2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(8)**](#Note8)</sup>.
 
 **Histograms** are sets of one or more _bins_, which are generally of equal size.  Histograms are [**_mixtures_**](#Mixtures_of_Distributions), where each bin's weight is the number of data points in that bin.  After a bin is randomly chosen, a random data point that could fit in that bin is generated (that point need not be an existing data point).  **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
 
@@ -929,7 +957,7 @@ This document doesn't detail how to build a density estimation model. Other refe
 Random numbers can be generated by combining and/or transforming one or more random numbers
 and/or discarding some of them.
 
-As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(10)**](#Note10)</sup>  These and similar distributions can be generalized as follows.
+As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(9)**](#Note9)</sup>  These and similar distributions can be generalized as follows.
 
 Generate two or more random numbers, each with a separate probability distribution, then:
 
@@ -952,7 +980,7 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)").
 > 3. Sampling a **Bates distribution** involves sampling _n_ random numbers by `RNDNUMRANGE(minimum, maximum)`, then finding the mean of those numbers (see the appendix).
 > 4. A **compound Poisson distribution** models the sum of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = Poisson(10)` for an average of 10 numbers).
-> 5. A **hypoexponential distribution** models the sum of _n_ random numbers following an exponential distribution, each with a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)")..
+> 5. A **hypoexponential distribution** models the sum of _n_ random numbers following an exponential distribution, each with a separate `lamda` parameter (see "[**Gamma Distribution**](#Gamma_Distribution)").
 
 <a id=Random_Numbers_from_an_Arbitrary_Distribution></a>
 ### Random Numbers from an Arbitrary Distribution
@@ -960,7 +988,7 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(11)**](#Note11)</sup>
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(10)**](#Note10)</sup>
 
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
@@ -977,7 +1005,7 @@ If a probability distribution's **PDF is known**, one of the following technique
              end
         END METHOD
 
-If both **a PDF and a uniform random variable in the interval [**0, 1) (`randomVariable`)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
+If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
 
 1. Do the same process as method 1, given earlier, except&mdash;
     - divide the weights in the `weights` list by the sum of all weights, and
@@ -1015,7 +1043,7 @@ This section contains information on some of the most common non-uniform probabi
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[**(12)**](#Note12)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[**(11)**](#Note11)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1056,7 +1084,7 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 
 The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can model many kinds of measurements or scores whose values are most likely around a given average and are less likely the farther away from that average on either side.
 
-In the pseudocode below, which uses the polar method <sup>[**(13)**](#Note13)</sup> to generate two normally-distributed random numbers:
+In the pseudocode below, which uses the polar method <sup>[**(12)**](#Note12)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1324,8 +1352,8 @@ which resembles a curve with a single peak, but with generally "fatter" tails th
 &nbsp;
 
     METHOD Stable(alpha, beta)
-         if alpha <=0 or alpha > 2: return error
-         if beta < -1 or beta > 1: return error
+        if alpha <=0 or alpha > 2: return error
+        if beta < -1 or beta > 1: return error
         halfpi = pi * 0.5
         unif=RNDNUMEXCRANGE(-halfpi, halfpi)
         while unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
@@ -1394,7 +1422,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 - A list, `mu` (&mu;), which indicates the means to add to each component of the random point. `mu` can be `nothing`, in which case each component will have a mean of zero.
 - A list of lists `cov`, that specifies a _covariance matrix_ (&Sigma;, a symmetric positive definite NxN matrix, where N is the number of components of the random point).
 
-&mdash;
+&nbsp;
 
     METHOD Decompose(matrix)
       numrows = size(matrix)
@@ -1528,13 +1556,11 @@ The _multinomial distribution_ models the number of times each of several mutual
         // create a list of successes
         list = NewList()
         for i in 0...size(weights): AddItem(list, 0)
-        i = 0
-        while i < trials
+        for i in 0...trials
             // Choose an index
             index = WeightedChoice(weights)
             // Tally the event at the chosen index
             list[index] = list[index] + 1
-            i = i + 1
         end
         return list
     END METHOD
@@ -1598,13 +1624,13 @@ Miscellaneous:
 - **Beta prime distribution**: `pow(GammaDist(a, 1), 1.0 / alpha) * scale / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters and `scale` is the scale. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
 - **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
  the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
-- **Birnbaum&mdash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
+- **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
 - **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDNUMRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Fr&eacute;chet distribution**: `b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc`, where `a` is the shape, `b` is the scale, and `loc` is the location of the distribution's curve peak (mode). This expresses a distribution of maximum values.
 - **Generalized extreme value (Fisher&ndash;Tippett) distribution**: `a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c` if `c != 0`, or `a - ln(-ln(RNDU01ZeroOneExc())) * b` otherwise, where `b` is the scale, `a` is the location of the distribution's curve peak (mode), and `c` is a shape parameter. This expresses a distribution of maximum values.
-- **Generalized Tukey lambda distribution**: `s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, and `s1` and `s2` are scale parameters.
+- **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
 - **Half-normal distribution**: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
 - **Inverse chi-squared distribution**: `df * scale / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom and `scale` is the scale, usually `1.0 / df`.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` if `RNDU01OneExc() <= mu / (mu + n)`, or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in [**Devroye 1986**](http://luc.devroye.org/rnbookindex.html).
@@ -1616,7 +1642,7 @@ Miscellaneous:
 - **Parabolic distribution**: `min + (max - min) * BetaDist(2, 2)`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 30).
 - **Pascal distribution**: `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution, except `successes` is always an integer.
 - **Pearson VI distribution**: `GammaDist(v, 1) / (GammaDist(w, 1))`, where `v` and `w` are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional `b` parameter is defined, but that parameter is canceled out in the source code).
-- **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha)`, where `alpha`  is the shape.  Nominally in the interval (0, 1).
+- **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha) / b`, where `alpha`  is the shape and `b` is the domain.  Nominally in the interval (0, 1).
 - **Power law distribution**: `pow(pow(mn,n+1) + (pow(mx,n+1) - pow(mn,n+1)) * RNDU01(), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson variables.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
@@ -1674,7 +1700,7 @@ This problem is equivalent to generating, uniformly at random, a unit vector (ve
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(14)**](#Note14)</sup> until their [**_norm_**](#Notation_and_Definitions) is R or less,
+- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(13)**](#Note13)</sup> until their [**_norm_**](#Notation_and_Definitions) is R or less,
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
@@ -1708,7 +1734,6 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 Currently, the following are not covered in this document, but may be added based on reader interest:
 
 - Techniques to generate random mazes, graphs, matrices, or paths.
-- Brownian motion and other random movement and stochastic processes.
 
 <a id=Notes></a>
 ## Notes
@@ -1737,29 +1762,27 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note6>(6)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
 
-<small><sup id=Note7>(7)</sup> Such techniques usually involve [**_Markov chains_**](https://en.wikipedia.org/wiki/Markov_chain), which are outside this page's scope.</small>
+<small><sup id=Note7>(7)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
 
-<small><sup id=Note8>(8)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
+<small><sup id=Note8>(8)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
-<small><sup id=Note9>(9)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
+<small><sup id=Note9>(9)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and sum of two rolls of dice.</small>
 
-<small><sup id=Note10>(10)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and sum of two rolls of dice.</small>
-
-<small><sup id=Note11>(11)</sup> More formally&mdash;
+<small><sup id=Note10>(10)</sup> More formally&mdash;
 - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
 - the CDF is also defined as the _integral_ of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note12>(12)</sup> The "Dice" section used the following sources:
+<small><sup id=Note11>(11)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note13>(13)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
+<small><sup id=Note12>(12)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
 
-<small><sup id=Note14>(14)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+<small><sup id=Note13>(13)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1800,7 +1823,7 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
 
-The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.
+The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.
 
     METHOD MeanAndVariance(list)
         if size(list)==0: return [0, 0]
