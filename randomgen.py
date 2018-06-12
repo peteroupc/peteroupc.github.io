@@ -10,8 +10,8 @@ https://creativecommons.org/publicdomain/zero/1.0/
 import math
 import random
 
-SIGBITS = 53
-FLOAT_MAX = 1.7976931348623157e+308
+_SIGBITS = 53
+_FLOAT_MAX = 1.7976931348623157e+308
 
 class RandomGen:
   def __init__(self,rng=None):
@@ -53,16 +53,16 @@ class RandomGen:
     return self.rndint((1 << bits) - 1)
 
   def rndu01(self):
-    e=-SIGBITS
+    e=-_SIGBITS
     while True:
       if self.rndint(1)==0:
         e-=1
       else:
         break
-    sig=self.rndint((1 << (SIGBITS - 1)) - 1)
+    sig=self.rndint((1 << (_SIGBITS - 1)) - 1)
     if sig==0 and self.rndint(1)==0:
       e+=1
-    sig=sig+(1<<(SIGBITS - 1))
+    sig=sig+(1<<(_SIGBITS - 1))
     # NOTE: Multiply by 1.0 to coerce to floating-point
     return sig * 1.0 * (2.0 ** e)
 
@@ -87,10 +87,10 @@ class RandomGen:
   def rndnumrange(self, minInclusive, maxInclusive):
     if minInclusive > maxInclusive:
       raise ValueError
-    if minInclusive >= 0 or minInclusive + FLOAT_MAX >= maxInclusive:
+    if minInclusive >= 0 or minInclusive + _FLOAT_MAX >= maxInclusive:
        return minInclusive + (maxInclusive - minInclusive) * self.rndu01()
     while True:
-       ret = self.rndu01() * FLOAT_MAX
+       ret = self.rndu01() * _FLOAT_MAX
        negative = self.rndint(1) == 0
        if negative:
           ret = 0 - ret
@@ -364,6 +364,31 @@ class RandomGen:
       ret=ret*math.exp(math.ln(1.0-self.rndu01oneexc()) / mean)
     return ret**(1.0/c)*b+d
 
+  def stable(self, alpha, beta):
+        if alpha <=0 or alpha > 2: raise ValueError
+        if beta < -1 or beta > 1: raise ValueError
+        halfpi = math.pi * 0.5
+        unif=self.rndnumexcrange(-halfpi, halfpi)
+        while unif==-halfpi: unif=self.rndnumexcrange(-halfpi, halfpi)
+        # Cauchy special case
+        if alpha == 1 and beta == 0: return tan(unif)
+        expo=-math.log(self.rndu01zeroexc())
+        c=math.cos(unif)
+        if alpha == 1:
+                s=math.sin(unif)
+                return 2.0*((unif*beta+halfpi)*s/c -  \
+                    beta * math.log(halfpi*expo*c/(unif*beta+halfpi)))/pi
+        z=-math.tan(alpha*halfpi)*beta
+        ug=unif+math.atan2(-z, 1)/alpha
+        cpow=pow(c, -1.0 / alpha)
+        return pow(1.0+z*z, 1.0 / (2*alpha))*  \
+            (math.sin(alpha*ug)*cpow)*  \
+            pow(math.cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
+
+  def stable0(self, alpha, beta, mu, sigma):
+       x=math.log(sigma)*2.0/pi if alpha==1 else math.tan(pi*0.5*alpha)
+       return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
+
   def negativebinomial(self,successes,p):
     if successes<0:
       raise ValueError
@@ -496,7 +521,7 @@ of failures of each kind of failure.
 
   def _ierf(self, x):
     """ Inverse error function. """
-    coeffs=[0.3333333333333333, 0.23333333333333334, 0.2015873015873016, 0.19263668430335099, 0.19532547699214364, 0.20593586454697566, 0.2232097574187521, 0.24697023314275485, 0.27765382560322394, 0.3161426235531171, 0.3637175870396921, 0.4220720808430425, 0.49336326556393456, 0.5802938460615139, 0.6862233969476911, 0.815312205552808, 0.9727032088645521, 1.1647499636184413, 1.3993010831666697, 1.6860544545395042]
+    coeffs=[0.3333333333333333, 0.23333333333333333, 0.2015873015873016, 0.19263668430335099, 0.19532547699214364, 0.20593586454697566, 0.2232097574187521, 0.24697023314275485, 0.27765382560322394, 0.3161426235531171, 0.3637175870396921, 0.4220720808430425, 0.49336326556393456, 0.5802938460615139, 0.6862233969476911, 0.815312205552808, 0.9727032088645521, 1.1647499636184413, 1.3993010831666697, 1.6860544545395042]
     cx=x*0.886226925452758 # x/(2.0/sqrt(pi))
     ret=cx
     cxsq=cx*cx
@@ -506,6 +531,8 @@ of failures of each kind of failure.
     return ret
 
   def _icdfnormal(self, x):
+    """ Inverse cumulative distribution function of the
+       standard normal distribution.  """
     return self._ierf(2*x-1)*math.sqrt(2)
 
   def powerlognormal(self, p, sigma=1.0):
@@ -546,6 +573,16 @@ of failures of each kind of failure.
             ret[j][i]=(matrix[j][i]-sum)*1.0/ret[j][j]
       return ret
 
+  def kth_smallest_of_n_u01(self, k, n):
+      """ Generates the kth smallest number among n random numbers
+         from 0 to 1. """
+      if k>n or n<1: raise ValueError
+      if n<20:
+           nums=[self.randu01() for i in n]
+           nums.sort()
+           return nums[k-1]
+      return self.beta(k, n+1-k)
+
   def multinormal(self, mu, cov):
       mulen=len(cov)
       if mu != None:
@@ -562,6 +599,36 @@ of failures of each kind of failure.
         for j in range(mulen): sum=sum+variables[j]*cho[j][i]
         ret[i]=sum
         i=i+1
+      return ret
+
+  def randomwalk_u01(self,n):
+     """ Random walk of uniform 0-1 random numbers. """
+     ret=[0 for i in range(n+1)]
+     for i in range(n):
+        ret[i]=self.rndu01()
+     for i in range(n):
+        ret[i+1]=ret[i+1]+ret[i]
+     return ret
+
+  def randomwalk_posneg1(self,n):
+     """ Random walk of uniform 0-1 random numbers. """
+     ret=[0 for i in range(n+1)]
+     for i in range(n):
+        ret[i]=self.rndint(1)*2-1
+     for i in range(n):
+        ret[i+1]=ret[i+1]+ret[i]
+     return ret
+
+  def wiener(self, mu, sigma, st, en, step=1.0):
+      """ Generates random numbers following a Wiener
+            process. Each element of the return value contains
+            a timestamp and a random number in that order. """
+      ret=[]
+      i=st
+      while i < en:
+         ret+=[[i,self.normal(mu*i,sigma*math.sqrt(i))]]
+         i+=step
+      ret+=[[en,self.normal(mu*en,sigma*math.sqrt(en))]]
       return ret
 
 class AlmostRandom:
@@ -612,6 +679,11 @@ if __name__ == "__main__":
     rate = 1.0/1000 # Failure rate
     print("Times to failure (rate: %f)" % (rate))
     print([randgen.exponential(rate) for i in range(25)])
-
+    #  Multinormal
     for i in range(10):
        print(randgen.multinormal(None, [[1, 0],[0, 1]]))
+    # Random walks
+    print(randgen.randomwalk_u01(50))
+    print(randgen.randomwalk_posneg1(50))
+    # White noise
+    print([randgen.normal() for i in range(20)])
