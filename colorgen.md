@@ -55,6 +55,7 @@ This document presents an overview of many common color topics that are of gener
 - [**Color Operations**](#Color_Operations)
     - [**Luminance Factor (Grayscale)**](#Luminance_Factor_Grayscale)
     - [**Alpha Blending**](#Alpha_Blending)
+    - [**Binarization**](#Binarization)
     - [**Color Schemes and Harmonies**](#Color_Schemes_and_Harmonies)
     - [**Contrast Ratio**](#Contrast_Ratio)
     - [**Porter&ndash;Duff Formulas**](#Porter_ndash_Duff_Formulas)
@@ -935,11 +936,9 @@ The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
 > **Examples:**
 >
 > 1. **Grayscale.** A color, `color`, can be converted to grayscale by calculating `[Luminance(color), Luminance(color), Luminance(color)]`.
-> 2. **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
-> 3. **Contrasting color.** A _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If `Luminance(color)` is 0.5 or less, select `[1, 1, 1]` (white) as a contrasting color; otherwise, select `[0, 0, 0]` (black) as a  contrasting color.  See also "[**Contrast Ratio**](#Contrast_Ratio)", later.
-> 4. An [**_image color list_**](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
-> 5. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
-> 6. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
+> 2. An [**_image color list_**](#Notation_and_Definitions)'s **average luminance factor** is often equivalent to the average `Luminance(color)` value among the colors in that image color list.
+> 3. An application can consider a color **dark** if `Luminance(color)` is lower than some threshold, say, 15.
+> 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
 > **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
 > - **Red channel**: `color[0]`.
@@ -968,6 +967,16 @@ The `Lerp3` function below<sup>[**(25)**](#Note25)</sup> gets an _alpha blend_ o
         return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
             color1[2]+(color2[2]-color1[2])*alpha]
     END METHOD
+
+<a id=Binarization></a>
+### Binarization
+
+_Binarization_, also known as _thresholding_, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization.
+
+- **Black and white.** Generate `[0, 0, 0]` (black) if `Luminance(color) < 0.5`, or `[1, 1, 1]` (white) otherwise.
+- **Contrasting color.** Generate `[1, 1, 1]` (black) if `Luminance(color) < 0.5`, or `[0, 0, 0]` (white) otherwise.
+
+Other forms of binarization may classify pixels based on their positions in the image.
 
 <a id=Color_Schemes_and_Harmonies></a>
 ### Color Schemes and Harmonies
@@ -1005,7 +1014,7 @@ There are two kinds of contrast ratio, among other kinds not covered in this doc
 
 > **Note:** For companded sRGB 8/8/8 colors, `RelLum(color)` is effectively equivalent to `LuminanceSRGB(color)`, but with the WCAG using a different version of `LinearFromsRGB`, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn't affect the result for such 8/8/8 colors.
 
-In general, under the WCAG, a _contrasting color_ is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to [**"Understanding WCAG 2.0"**](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [**color deficiency**](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
+Broadly speaking, a _contrasting color_ is a foreground (text) color with high contrast to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to [**"Understanding WCAG 2.0"**](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html), "effective luminance contrast can generally be computed without regard to specific [**color deficiency**](#Defective_and_Animal_Color_Vision), except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia".
 
 **Opacity.** In certain industries, a material's _contrast ratio_ or _opacity_ can be found by dividing the Y component of the material's [**XYZ color**](#CIE_XYZ) measured over a black surface by the Y component of the material's XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.
 
@@ -1083,24 +1092,19 @@ The following approaches can generate a saturated or desaturated version of a co
 <a id=Miscellaneous></a>
 ### Miscellaneous
 
-In the following formulas, `color` is an RGB color in 0-1 format.
+1. An RGB color&mdash;
+    - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
+     - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
 
-- **Invert ("film negative")**: `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[**(29)**](#Note29)</sup>
-- **Swap blue and red channels**: `[color[2], color[1], color[0]]`.
+     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 
-> **Notes:**
->
-> 1. An RGB color&mdash;
->     - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
->     - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
->
->     An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
->
-> 2. Raster image processing techniques&mdash;
->     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (techniques that include [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
->     - that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),
->
->     are largely out of the scope of this document.
+2. Raster image processing techniques&mdash;
+     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements techniques that include [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
+     - that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),
+
+     are largely out of the scope of this document.
+3.  An application can apply a function to each component of an RGB color in 0-1 format, such as power functions (of the form _base_<sup>_exponent_</sup>), inversions (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[**(29)**](#Note29)</sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
+4.  **Swap blue and red channels** of an RGB color in 0-1 format: `[color[2], color[1], color[0]]`. An application can similarly swap the values of any two components of a multicomponent color (including an RGB color) to form new colors.
 
 <a id=Color_Differences></a>
 ## Color Differences

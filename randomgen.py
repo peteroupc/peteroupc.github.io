@@ -619,16 +619,23 @@ of failures of each kind of failure.
         ret[i+1]=ret[i+1]+ret[i]
      return ret
 
-  def wiener(self, mu, sigma, st, en, step=1.0):
+  def wiener(self, st, en, step=1.0, mu = 0.0, sigma = 1.0):
       """ Generates random numbers following a Wiener
-            process. Each element of the return value contains
-            a timestamp and a random number in that order. """
+            process (Brownian motion). Each element of the return
+            value contains a timestamp and a random number in that order. """
+      if st==en: return [[st, self.normal(mu*st,sigma*math.sqrt(st))]]
       ret=[]
       i=st
+      lastv=0
+      lasttime=st
       while i < en:
-         ret+=[[i,self.normal(mu*i,sigma*math.sqrt(i))]]
+         if i==st: lastv=self.normal(mu*st,sigma*math.sqrt(st))
+         else: lastv=lastv+self.normal(mu*step,sigma*math.sqrt(step))
+         lasttime=i
+         ret+=[[i, lastv]]
          i+=step
-      ret+=[[en,self.normal(mu*en,sigma*math.sqrt(en))]]
+      lastv=lastv+self.normal(mu*(en-lasttime),sigma*math.sqrt(en-lasttime))
+      ret+=[[i, lastv]]
       return ret
 
 class AlmostRandom:
