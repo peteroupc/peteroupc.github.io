@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 11, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 12, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -906,7 +906,7 @@ END METHOD
 
 <ol>
 <li> A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include <code>Normal(0, 1)</code> (for modeling <em>Gaussian white noise</em>) and <code>Binomial(1, p)</code> (for modeling a <em>Bernoulli process</em>, where each number is 0 or 1 depending on the probability <code>p</code>).</li>
-<li> Some random walks model random behavior at every moment, not just at discrete times.  One example is a <em>Wiener process</em>, in which the random number at any given time is <code>Normal(mu * time, sigma * sqrt(time))</code>, where <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>time</code> is a &quot;timestamp&quot; from the beginning of the process (a process of this kind is also known as <em>Brownian motion</em>).</li>
+<li> Some random walks model random behavior at every moment, not just at discrete times.  One example is a <em>Wiener process</em>, with random states and jumps that are normally distributed (a process of this kind is also known as <em>Brownian motion</em>).  (For a random walk that follows a Wiener process, <code>STATEJUMP()</code> is <code>Normal(mu * timediff, sigma * sqrt(timediff))</code>, where  <code>mu</code> is the average value per time unit, <code>sigma</code> is the volatility, and <code>timediff</code> is the time difference between samples.)</li>
 <li> Some random walks model state changes happening at random times. One example is a <em>Poisson process</em>, in which the time between each event is a random exponential variable (the random time is <code>-ln(RNDU01ZeroOneExc()) / rate</code>, where <code>rate</code> is the average number of events per time unit; an <em>inhomogeneous Poisson process</em> results if <code>rate</code> can vary with the &quot;timestamp&quot; before each event jump.)</li>
 </ol>
 </blockquote>

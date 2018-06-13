@@ -83,6 +83,7 @@
 <ul>
 <li><a href="#Luminance_Factor_Grayscale"><strong>Luminance Factor (Grayscale)</strong></a></li>
 <li><a href="#Alpha_Blending"><strong>Alpha Blending</strong></a></li>
+<li><a href="#Binarization"><strong>Binarization</strong></a></li>
 <li><a href="#Color_Schemes_and_Harmonies"><strong>Color Schemes and Harmonies</strong></a></li>
 <li><a href="#Contrast_Ratio"><strong>Contrast Ratio</strong></a></li>
 <li><a href="#Porter_ndash_Duff_Formulas"><strong>Porter&ndash;Duff Formulas</strong></a></li>
@@ -1112,8 +1113,6 @@ END METHOD
 
 <ol>
 <li><strong>Grayscale.</strong> A color, <code>color</code>, can be converted to grayscale by calculating <code>[Luminance(color), Luminance(color), Luminance(color)]</code>.</li>
-<li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
-<li><strong>Contrasting color.</strong> A <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  One possible implementation: If <code>Luminance(color)</code> is 0.5 or less, select <code>[1, 1, 1]</code> (white) as a contrasting color; otherwise, select <code>[0, 0, 0]</code> (black) as a  contrasting color.  See also &quot;<a href="#Contrast_Ratio"><strong>Contrast Ratio</strong></a>&quot;, later.</li>
 <li>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a>&#39;s <strong>average luminance factor</strong> is often equivalent to the average <code>Luminance(color)</code> value among the colors in that image color list.</li>
 <li>An application can consider a color <strong>dark</strong> if <code>Luminance(color)</code> is lower than some threshold, say, 15.</li>
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
@@ -1155,6 +1154,19 @@ END METHOD
         color1[2]+(color2[2]-color1[2])*alpha]
 END METHOD
 </pre>
+
+<p><a id=Binarization></a></p>
+
+<h3>Binarization</h3>
+
+<p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization.</p>
+
+<ul>
+<li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
+<li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[0, 0, 0]</code> (white) otherwise.</li>
+</ul>
+
+<p>Other forms of binarization may classify pixels based on their positions in the image.</p>
 
 <p><a id=Color_Schemes_and_Harmonies></a></p>
 
@@ -1205,7 +1217,7 @@ END METHOD
 <p><strong>Note:</strong> For companded sRGB 8/8/8 colors, <code>RelLum(color)</code> is effectively equivalent to <code>LuminanceSRGB(color)</code>, but with the WCAG using a different version of <code>LinearFromsRGB</code>, with 0.03928 (the value used in the sRGB proposal) rather than 0.04045, but this difference doesn&#39;t affect the result for such 8/8/8 colors.</p>
 </blockquote>
 
-<p>In general, under the WCAG, a <em>contrasting color</em> is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html"><strong>&quot;Understanding WCAG 2.0&quot;</strong></a>, &quot;effective luminance contrast can generally be computed without regard to specific <a href="#Defective_and_Animal_Color_Vision"><strong>color deficiency</strong></a>, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</p>
+<p>Broadly speaking, a <em>contrasting color</em> is a foreground (text) color with high contrast to the background color or vice versa.  In general, under the WCAG, a contrasting color is one whose contrast ratio with another color is 4.5 or greater (or 7 or greater for a stricter conformance level). Also, according to <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html"><strong>&quot;Understanding WCAG 2.0&quot;</strong></a>, &quot;effective luminance contrast can generally be computed without regard to specific <a href="#Defective_and_Animal_Color_Vision"><strong>color deficiency</strong></a>, except for the use of predominantly long wavelength colors [such as red] against darker colors ... for [people with] protanopia&quot;.</p>
 
 <p><strong>Opacity.</strong> In certain industries, a material&#39;s <em>contrast ratio</em> or <em>opacity</em> can be found by dividing the Y component of the material&#39;s <a href="#CIE_XYZ"><strong>XYZ color</strong></a> measured over a black surface by the Y component of the material&#39;s XYZ color measured over a white surface.  Details of the measurement depend on the industry and material.</p>
 
@@ -1301,35 +1313,29 @@ END METHOD
 
 <h3>Miscellaneous</h3>
 
-<p>In the following formulas, <code>color</code> is an RGB color in 0-1 format.</p>
-
-<ul>
-<li><strong>Invert (&quot;film negative&quot;)</strong>: <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note29"><strong>(29)</strong></a></sup></li>
-<li><strong>Swap blue and red channels</strong>: <code>[color[2], color[1], color[0]]</code>.</li>
-</ul>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
 <ol>
 <li><p>An RGB color&mdash;</p>
 
 <ul>
-<li>is white, black, or a shade of gray (<em>achromatic</em>) if it has equal red, green, and blue components, and</li>
+<li><p>is white, black, or a shade of gray (<em>achromatic</em>) if it has equal red, green, and blue components, and</p>
+
+<ul>
 <li>is a <a href="http://en.wikipedia.org/wiki/Web_colors"><strong>&quot;Web safe&quot; color</strong></a> if its red, green, and blue components are each a multiple of 0.2.</li>
 </ul>
 
 <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.</p></li>
+</ul></li>
 <li><p>Raster image processing techniques&mdash;</p>
 
 <ul>
-<li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements (techniques that include <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>), or</li>
-<li>that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),</li>
-</ul>
+<li>that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements techniques that include <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>), or</li>
+<li><p>that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),</p>
 
 <p>are largely out of the scope of this document.</p></li>
+</ul></li>
+<li> An application can apply a function to each component of an RGB color in 0-1 format, such as power functions (of the form <em>base</em><sup><em>exponent</em></sup>), inversions (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code>.<sup><a href="#Note29"><strong>(29)</strong></a></sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
+<li> <strong>Swap blue and red channels</strong> of an RGB color in 0-1 format: <code>[color[2], color[1], color[0]]</code>. An application can similarly swap the values of any two components of a multicomponent color (including an RGB color) to form new colors.</li>
 </ol>
-</blockquote>
 
 <p><a id=Color_Differences></a></p>
 

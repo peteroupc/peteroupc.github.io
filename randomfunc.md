@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 11, 2018.
+Begun on June 4, 2017; last updated on June 12, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -721,7 +721,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > **Notes:**
 >
 > 1.  A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
-> 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, in which the random number at any given time is `Normal(mu * time, sigma * sqrt(time))`, where `mu` is the average value per time unit, `sigma` is the volatility, and `time` is a "timestamp" from the beginning of the process (a process of this kind is also known as _Brownian motion_).
+> 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
 > 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (the random time is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.)
 
 <a id=General_Non_Uniform_Distributions></a>
