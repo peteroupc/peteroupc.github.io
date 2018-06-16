@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 3, 2018.
+Begun on Mar. 5, 2016; last updated on June 15, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -449,7 +449,7 @@ What has motivated me to write a more rigorous definition of random number gener
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
-- leave the default seeding fixed.
+- leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html)).
 
 <a id=Conclusion></a>
 ## Conclusion

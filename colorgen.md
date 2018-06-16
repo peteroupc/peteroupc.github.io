@@ -93,7 +93,7 @@ This document presents an overview of many common color topics that are of gener
 - **IEC.** International Electrotechnical Commission.
 - **Image color list.** Means either&mdash;
     - a list of colors (which can have duplicates), all of the same color space, or
-    - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a digital video, or a digital document.
+    - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
 - **ITU.** International Telecommunications Union.
 - **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
@@ -1093,18 +1093,15 @@ The following approaches can generate a saturated or desaturated version of a co
 ### Miscellaneous
 
 1. An RGB color&mdash;
-    - is white, black, or a shade of gray (_achromatic_) if it has equal red, green, and blue components, and
+    - is white, black, or a shade of gray (**_achromatic_**) if it has equal red, green, and blue components, and
      - is a [**"Web safe" color**](http://en.wikipedia.org/wiki/Web_colors) if its red, green, and blue components are each a multiple of 0.2.
 
      An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 
-2. Raster image processing techniques&mdash;
-     - that replace one color with another color (or some modified version of the original color), but only if the original color meets certain requirements techniques that include [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key)), or
-     - that process each pixel and its neighboring pixels (including Gaussian blur and other convolution filters),
-
-     are largely out of the scope of this document.
-3.  An application can apply a function to each component of an RGB color in 0-1 format, such as power functions (of the form _base_<sup>_exponent_</sup>), inversions (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]`.<sup>[**(29)**](#Note29)</sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
-4.  **Swap blue and red channels** of an RGB color in 0-1 format: `[color[2], color[1], color[0]]`. An application can similarly swap the values of any two components of a multicomponent color (including an RGB color) to form new colors.
+2. Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).
+3. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
+4.  An application can **apply a function** to each component of a multicomponent color (including an RGB color), including power functions (of the form _base_<sup>_exponent_</sup>), inversions (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format<sup>[**(29)**](#Note29)</sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
+5.  An application can **swap** the values of any two components of a multicomponent color (including an RGB color) to form new colors.  The following example swaps the blue and red channels of an RGB color in 0-1 format: `[color[2], color[1], color[0]]`.
 
 <a id=Color_Differences></a>
 ## Color Differences

@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 12, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 16, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1900,12 +1900,11 @@ END METHOD
 <p>The pseudocode below is one example of a <em>copula</em> (a distribution of groups of two or more correlated uniform random numbers), namely, a <em>Gaussian copula</em>.</p>
 
 <pre>METHOD GaussianCopula(covar)
-    mvn=MultivariateNormal(nothing, covar)
-   sqrt2=sqrt(2)
+   mvn=MultivariateNormal(nothing, covar)
    for i in 0...size(covar)
-      // Apply the standard normal distribution&#39;s CDF
-      // function to get uniform variables
-      mvn[i] = (erf(mvn[i]/(sqrt2))+1)*0.5
+      // Apply the normal distribution&#39;s CDF
+      // to get uniform variables
+      mvn[i] = (erf(mvn[i]/(sqrt(2)*sqrt(covar[i][i])))+1)*0.5
    end
    return mvn
 END METHOD
@@ -1982,8 +1981,7 @@ the two parameters of the beta distribution, and <code>successes</code> is a par
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
-<p>The Python sample code also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,
-and the <strong>multivariate Poisson distribution</strong>.</p>
+<p>The Python sample code also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,  the <strong>multivariate <em>t</em>-distribution</strong>, and the <strong>multivariate Poisson distribution</strong>.</p>
 
 <p><a id=Geometric_Sampling></a></p>
 

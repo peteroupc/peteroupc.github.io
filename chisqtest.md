@@ -7,8 +7,8 @@ observed frequencies and probabilities.
 
 In the pseudocode below&mdash;
 - the [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply,
-- `ALMOSTZERO` is a number very close to 0 (for example, 10<sup>100</sup>), and
-- `EPSILON` is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>14</sup>).
+- `ALMOSTZERO` is a number very close to 0 (for example, 10<sup>-100</sup>), and
+- `EPSILON` is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>-14</sup>).
 
 The following are the parameters for `ChiSquaredTest` below:
 - `probabilities` is a list of probabilities for each event (ranging from 0, never, to 1, always).
@@ -58,7 +58,7 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
       // described in Thompson and Barnett, "Coulomb and
       // Bessel functions of complex arguments and order",
       // June 1986.
-      ret=ALMOSTZERO // For example, 10^100
+      ret=ALMOSTZERO // For example, 10^-100
       dLast=0
       cLast=ret
       i=0
@@ -83,7 +83,7 @@ be greater than or equal to that of the given sample).   (Note that if `probabil
         d=1.0/d
         delta=d*c
         ret*=delta
-         // For example 10^14
+         // For example 10^-14
         if abs(delta-1.0)<EPSILON: break
         dLast=d
         cLast=c
