@@ -13,8 +13,8 @@ observed frequencies and probabilities.</p>
 
 <ul>
 <li>the <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply,</li>
-<li><code>ALMOSTZERO</code> is a number very close to 0 (for example, 10<sup>100</sup>), and</li>
-<li><code>EPSILON</code> is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>14</sup>).</li>
+<li><code>ALMOSTZERO</code> is a number very close to 0 (for example, 10<sup>-100</sup>), and</li>
+<li><code>EPSILON</code> is a number setting an estimation tolerance for the p-value calculation (for example, 10<sup>-14</sup>).</li>
 </ul>
 
 <p>The following are the parameters for <code>ChiSquaredTest</code> below:</p>
@@ -68,7 +68,7 @@ METHOD GammaRegQ(a,b)
   // described in Thompson and Barnett, &quot;Coulomb and
   // Bessel functions of complex arguments and order&quot;,
   // June 1986.
-  ret=ALMOSTZERO // For example, 10^100
+  ret=ALMOSTZERO // For example, 10^-100
   dLast=0
   cLast=ret
   i=0
@@ -93,7 +93,7 @@ METHOD GammaRegQ(a,b)
     d=1.0/d
     delta=d*c
     ret*=delta
-     // For example 10^14
+     // For example 10^-14
     if abs(delta-1.0)&lt;EPSILON: break
     dLast=d
     cLast=c

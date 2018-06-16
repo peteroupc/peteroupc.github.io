@@ -601,6 +601,23 @@ of failures of each kind of failure.
         i=i+1
       return ret
 
+  def gaussian_copula(self, cov):
+       mvn=self.multinormal(None, cov)
+       for i in range(len(cov)):
+          # Apply the normal distribution's CDF
+          # to get uniform variables
+          mvn[i] = (math.erf(mvn[i]/(math.sqrt(2)*math.sqrt(cov[i][i])))+1)*0.5
+       return mvn
+
+  def multivariate_t(self, mu, cov, df):
+     """ Multivariate t-distribution, mu is the mean (can be None),
+           cov is the covariance matrix, and df is the degrees of freedom. """
+     mn=self.multinormal(None, cov)
+     if mu==None:
+       return [x/math.sqrt(self.gamma(df*0.5,2.0/df)) for x in mn]
+     else:
+       return [mu[i]+mn[i]/math.sqrt(self.gamma(df*0.5,2.0/df)) for i in range(len(mn))]
+
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
      ret=[0 for i in range(n+1)]
