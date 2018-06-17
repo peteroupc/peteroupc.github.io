@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 15, 2018.
+Begun on Mar. 5, 2016; last updated on June 17, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -25,6 +25,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 **This document does not cover:**
 
 - Testing an RNG implementation for correctness or adequate random number generation.
+- Generation of random numbers or keying material based in part on a password.
 - Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
 
 **The following table summarizes the kinds of RNGs covered in this document:**
