@@ -7,8 +7,8 @@
 <h2>PeterO.Cbor.CBORObject</h2>
 
 <pre>public sealed class CBORObject :
-    System.IComparable,
-    System.IEquatable
+    System.IEquatable,
+    System.IComparable
 </pre>
 
 <p>Represents an object in Concise Binary Object Representation (CBOR) and contains methods for reading and writing CBOR data. CBOR is defined in RFC 7049.<b>Converting CBOR objects</b></p>
@@ -492,7 +492,7 @@ is null.</li>
 <li><p><i>first</i>: The parameter  <i>first</i>
 is a CBOR object.</p></li>
 <li><p><i>second</i>: The parameter  <i>second</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -939,7 +939,7 @@ This object&#39;s value is outside the range of a 32-bit unsigned integer.</li>
 <pre>public ulong AsUInt64();
 </pre>
 
-<p>Converts this object to a 64-bit unsigned integer. Floating point values are truncated to an integer.</p>
+<p>Converts this object to a 64-bit unsigned integer. Non-integer values are truncated to an integer.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -1194,7 +1194,7 @@ is null.</p></li>
 
 <ul>
 <li><p><i>first</i>: The parameter  <i>first</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>second</i>: The parameter  <i>second</i>
 is a CBOR object.</p></li>
 </ul>
@@ -1209,7 +1209,7 @@ is a CBOR object.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Gets the binary representation of this data item.</p>
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1234,7 +1234,7 @@ is null.</li>
 <pre>public byte[] EncodeToBytes();
 </pre>
 
-<p>Gets the binary representation of this data item.</p>
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -2312,7 +2312,7 @@ is not a valid index into this array.</p></li>
 
 <ul>
 <li><p><i>first</i>: The parameter  <i>first</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>second</i>: The parameter  <i>second</i>
 is a CBOR object.</p></li>
 </ul>
@@ -2381,9 +2381,9 @@ This object&#39;s type is not a number type.</li>
 
 <ul>
 <li><p><i>a</i>: The parameter  <i>a</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>b</i>: The parameter  <i>b</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2403,9 +2403,9 @@ is a CBORObject object.</p></li>
 
 <ul>
 <li><p><i>a</i>: The parameter  <i>a</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>b</i>: The parameter  <i>b</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2425,9 +2425,9 @@ is a CBORObject object.</p></li>
 
 <ul>
 <li><p><i>a</i>: The parameter  <i>a</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>b</i>: The parameter  <i>b</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2447,9 +2447,9 @@ is a CBORObject object.</p></li>
 
 <ul>
 <li><p><i>a</i>: The parameter  <i>a</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>b</i>: The parameter  <i>b</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2469,9 +2469,9 @@ is a CBORObject object.</p></li>
 
 <ul>
 <li><p><i>a</i>: The parameter  <i>a</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>b</i>: The parameter  <i>b</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2613,7 +2613,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
 
 <ul>
 <li><p><i>first</i>: The parameter  <i>first</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>second</i>: The parameter  <i>second</i>
 is a CBOR object.</p></li>
 </ul>
@@ -2694,7 +2694,7 @@ has an unsupported type.</p></li>
 
 <ul>
 <li><p><i>first</i>: The parameter  <i>first</i>
-is a CBORObject object.</p></li>
+is a CBOR object.</p></li>
 <li><p><i>second</i>: The parameter  <i>second</i>
 is a CBOR object.</p></li>
 </ul>
@@ -2719,9 +2719,10 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
+<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order.</p></li>
 <li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
 <li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 7159 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
-<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default. (A byte string will instead be converted to traditional base64 without whitespace or padding if it has tag 22, or base16 for tag 23.)</p></li>
+<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). (A byte string will instead be converted to traditional base64 without whitespace or padding if it has tag 22, or base16 for tag 23.)</p></li>
 <li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
 <li><p>Simple values other than true and false will be converted to null. (This doesn&#39;t include floating-point numbers.)</p></li>
 <li><p>Infinity and not-a-number will be converted to null.</p></li>
@@ -2957,11 +2958,11 @@ An I/O error occurred.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes an arbitrary object to a CBOR data stream. Currently, the following objects are supported:</p>
+<p>Writes an arbitrary object to a CBOR data stream, using the specified options for controlling how the object is encoded to CBOR data format. If the object is convertible to a CBOR map or a CBOR object that contains CBOR maps, the keys to those maps are written out to the data stream in an undefined order. Currently, the following objects are supported:</p>
 
 <ul>
 <li><p>Lists of CBORObject.</p></li>
-<li><p>Maps of CBORObject.</p></li>
+<li><p>Maps of CBORObject. The keys to the map are written out to the data stream in an undefined order.</p></li>
 <li><p>Null.</p></li>
 <li><p>Byte arrays, which will always be written as definite-length byte strings.</p></li>
 <li><p>String objects, which will be written as indefinite-length text strings if their size exceeds a certain threshold (this behavior may change in future versions of this library).</p></li>
@@ -3432,7 +3433,7 @@ is null.</li>
     System.IO.Stream outputStream);
 </pre>
 
-<p>Converts an arbitrary object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8.</p>
+<p>Converts an arbitrary object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the object is convertible to a CBOR map, or to a CBOR object that contains CBOR maps, the keys to those maps are written out to the JSON string in an undefined order.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3448,7 +3449,7 @@ is an arbitrary object.</p></li>
     System.IO.Stream outputStream);
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8.</p>
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the JSON string in an undefined order.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3472,7 +3473,7 @@ is null.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p>Writes this CBOR object to a data stream.</p>
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3497,7 +3498,7 @@ An I/O error occurred.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes this CBOR object to a data stream.</p>
+<p>Writes this CBOR object to a data stream, using the specified options for encoding the data to CBOR format. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order.</p>
 
 <p><b>Parameters:</b></p>
 
