@@ -16,9 +16,9 @@
 <ul>
 <li><code>DispositionBuilder() DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(ContentDisposition mt) DispositionBuilder</code><br>
+<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(String type) DispositionBuilder</code><br>
+<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
 <li><code>String getDispositionType()</code><br>
 Gets this value&#39;s disposition type, such value, such as &quot;inline&quot; or
@@ -31,12 +31,12 @@ Irrelevant for content dispositions; will be removed in the future.</li>
 Deprecated.
 Irrelevant for content dispositions; will be removed in the future.
 Irrelevant for content dispositions; will be removed in the future.</li>
-<li><code>DispositionBuilder RemoveParameter(String name)</code><br>
+<li><code>DispositionBuilder RemoveParameter​(String name)</code><br>
 Removes a parameter from this content disposition.</li>
-<li><code>void setDispositionType(String value)</code><br></li>
-<li><code>DispositionBuilder SetDispositionType(String str)</code><br>
+<li><code>void setDispositionType​(String value)</code><br></li>
+<li><code>DispositionBuilder SetDispositionType​(String str)</code><br>
 Sets the disposition type, such as &quot;inline&quot;.</li>
-<li><code>DispositionBuilder SetParameter(String name,
+<li><code>DispositionBuilder SetParameter​(String name,
         String value)</code><br>
 Sets a parameter of this content disposition.</li>
 <li><code>ContentDisposition ToDisposition()</code><br>
@@ -50,9 +50,9 @@ Converts this object to a text string.</li>
 <ul>
 <li><code>DispositionBuilder() DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(ContentDisposition mt) DispositionBuilder</code><br>
+<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
-<li><code>DispositionBuilder(String type) DispositionBuilder</code><br>
+<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
 Initializes a new instance of the DispositionBuilder class.</li>
 </ul>
 
@@ -67,7 +67,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 
 <h3>DispositionBuilder</h3>
 
-<pre>public DispositionBuilder(ContentDisposition mt)
+<pre>public DispositionBuilder​(ContentDisposition mt)
 </pre>
 
 <p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
@@ -86,7 +86,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 
 <h3>DispositionBuilder</h3>
 
-<pre>public DispositionBuilder(String type)
+<pre>public DispositionBuilder​(String type)
 </pre>
 
 <p>Initializes a new instance of the <code>DispositionBuilder</code> class.</p>
@@ -120,7 +120,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 
 <h3>setDispositionType</h3>
 
-<pre>public final void setDispositionType(String value)
+<pre>public final void setDispositionType​(String value)
 </pre>
 
 <h3>isText</h3>
@@ -128,7 +128,9 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <pre>@Deprecated public final boolean isText()
 </pre>
 
-<p>Deprecated.&nbsp;Irrelevant for content dispositions; will be removed in the future.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Irrelevant for content dispositions; will be removed in the future.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -141,12 +143,15 @@ Initializes a new instance of the DispositionBuilder class.</li>
 <pre>@Deprecated public final boolean isMultipart()
 </pre>
 
-<p>Deprecated.&nbsp;Irrelevant for content dispositions; will be removed in the future.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Irrelevant for content dispositions; will be removed in the future.</div>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this is a multipart media type; otherwise, <code>false</code>.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>ToDisposition</h3>
@@ -164,7 +169,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 
 <h3>SetDispositionType</h3>
 
-<pre>public DispositionBuilder SetDispositionType(String str)
+<pre>public DispositionBuilder SetDispositionType​(String str)
 </pre>
 
 <p>Sets the disposition type, such as &quot;inline&quot;.</p>
@@ -189,7 +194,7 @@ Initializes a new instance of the DispositionBuilder class.</li>
 
 <h3>RemoveParameter</h3>
 
-<pre>public DispositionBuilder RemoveParameter(String name)
+<pre>public DispositionBuilder RemoveParameter​(String name)
 </pre>
 
 <p>Removes a parameter from this content disposition. Does nothing if the
@@ -218,7 +223,7 @@ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 
 <h3>SetParameter</h3>
 
-<pre>public DispositionBuilder SetParameter(String name, String value)
+<pre>public DispositionBuilder SetParameter​(String name, String value)
 </pre>
 
 <p>Sets a parameter of this content disposition.</p>

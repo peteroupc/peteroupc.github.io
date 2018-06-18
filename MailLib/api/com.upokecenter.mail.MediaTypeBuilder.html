@@ -17,10 +17,10 @@
 <li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class, using the type
 &quot;application/octet-stream&quot;.</li>
-<li><code>MediaTypeBuilder(MediaType mt) MediaTypeBuilder</code><br>
+<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class using the data from
 another media type.</li>
-<li><code>MediaTypeBuilder(String type,
+<li><code>MediaTypeBuilder​(String type,
             String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
 <li><code>String getSubType()</code><br>
@@ -31,16 +31,16 @@ Gets this value&#39;s top-level type.</li>
 Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
 Gets a value indicating whether this is a text media type.</li>
-<li><code>MediaTypeBuilder RemoveParameter(String name)</code><br>
+<li><code>MediaTypeBuilder RemoveParameter​(String name)</code><br>
 Removes a parameter from this builder object.</li>
-<li><code>MediaTypeBuilder SetParameter(String name,
+<li><code>MediaTypeBuilder SetParameter​(String name,
         String value)</code><br>
 Sets a parameter&#39;s name and value for this media type.</li>
-<li><code>void setSubType(String value)</code><br></li>
-<li><code>MediaTypeBuilder SetSubType(String str)</code><br>
+<li><code>void setSubType​(String value)</code><br></li>
+<li><code>MediaTypeBuilder SetSubType​(String str)</code><br>
 Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
-<li><code>void setTopLevelType(String value)</code><br></li>
-<li><code>MediaTypeBuilder SetTopLevelType(String str)</code><br>
+<li><code>void setTopLevelType​(String value)</code><br></li>
+<li><code>MediaTypeBuilder SetTopLevelType​(String str)</code><br>
 Sets this media type&#39;s top-level type.</li>
 <li><code>MediaType ToMediaType()</code><br>
 Converts this builder to an immutable media type object.</li>
@@ -54,10 +54,10 @@ Converts this object to a text string.</li>
 <li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class, using the type
 &quot;application/octet-stream&quot;.</li>
-<li><code>MediaTypeBuilder(MediaType mt) MediaTypeBuilder</code><br>
+<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class using the data from
 another media type.</li>
-<li><code>MediaTypeBuilder(String type,
+<li><code>MediaTypeBuilder​(String type,
             String subtype) MediaTypeBuilder</code><br>
 Initializes a new instance of the MediaTypeBuilder class.</li>
 </ul>
@@ -74,7 +74,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>MediaTypeBuilder</h3>
 
-<pre>public MediaTypeBuilder(MediaType mt)
+<pre>public MediaTypeBuilder​(MediaType mt)
 </pre>
 
 <p>Initializes a new instance of the <code>MediaTypeBuilder</code> class using the data from
@@ -94,7 +94,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>MediaTypeBuilder</h3>
 
-<pre>public MediaTypeBuilder(String type, String subtype)
+<pre>public MediaTypeBuilder​(String type, String subtype)
 </pre>
 
 <p>Initializes a new instance of the <code>MediaTypeBuilder</code> class.</p>
@@ -121,7 +121,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>setTopLevelType</h3>
 
-<pre>public final void setTopLevelType(String value)
+<pre>public final void setTopLevelType​(String value)
 </pre>
 
 <h3>getSubType</h3>
@@ -139,7 +139,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>setSubType</h3>
 
-<pre>public final void setSubType(String value)
+<pre>public final void setSubType​(String value)
 </pre>
 
 <h3>isText</h3>
@@ -165,7 +165,8 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this is a multipart media type; otherwise, <code>false</code>.</li>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>ToMediaType</h3>
@@ -183,7 +184,7 @@ Initializes a new instance of the MediaTypeBuilder class.</li>
 
 <h3>SetTopLevelType</h3>
 
-<pre>public MediaTypeBuilder SetTopLevelType(String str)
+<pre>public MediaTypeBuilder SetTopLevelType​(String str)
 </pre>
 
 <p>Sets this media type&#39;s top-level type.</p>
@@ -210,7 +211,7 @@ invalid for a top-level type.</p></li>
 
 <h3>RemoveParameter</h3>
 
-<pre>public MediaTypeBuilder RemoveParameter(String name)
+<pre>public MediaTypeBuilder RemoveParameter​(String name)
 </pre>
 
 <p>Removes a parameter from this builder object. Does nothing if the
@@ -239,7 +240,7 @@ letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
 
 <h3>SetParameter</h3>
 
-<pre>public MediaTypeBuilder SetParameter(String name, String value)
+<pre>public MediaTypeBuilder SetParameter​(String name, String value)
 </pre>
 
 <p>Sets a parameter&#39;s name and value for this media type.</p>
@@ -264,14 +265,15 @@ case.).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>name</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>
+name</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
 syntactically invalid.</p></li>
 </ul>
 
 <h3>SetSubType</h3>
 
-<pre>public MediaTypeBuilder SetSubType(String str)
+<pre>public MediaTypeBuilder SetSubType​(String str)
 </pre>
 
 <p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
