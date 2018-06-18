@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 16, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 17, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1958,7 +1958,7 @@ the two parameters of the beta distribution, and <code>successes</code> is a par
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.</li>
 <li><strong>Cosine distribution</strong>: <code>min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDNUMRANGE(-1, 1)</code> and <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>Double logarithmic distribution</strong>: <code>min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
-<li><strong>Fr&eacute;chet distribution</strong>: <code>b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>loc</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of maximum values.</li>
+<li><strong>Frech&eacute;t distribution</strong>: <code>b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>loc</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of maximum values.</li>
 <li><strong>Generalized extreme value (Fisher&ndash;Tippett) distribution</strong>: <code>a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c</code> if <code>c != 0</code>, or <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code> otherwise, where <code>b</code> is the scale, <code>a</code> is the location of the distribution&#39;s curve peak (mode), and <code>c</code> is a shape parameter. This expresses a distribution of maximum values.</li>
 <li><strong>Generalized Tukey lambda distribution</strong>: <code>(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc</code>, where <code>x</code> is <code>RNDU01()</code>, <code>lamda1</code> and <code>lamda2</code> are shape parameters, <code>s1</code> and <code>s2</code> are scale parameters, and <code>loc</code> is a location parameter.</li>
 <li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, sqrt(pi * 0.5) / invscale)))</code>, where <code>invscale</code> is a parameter of the half-normal distribution.</li>
