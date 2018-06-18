@@ -26,12 +26,13 @@ No special options for encoding/decoding.</li>
 
 <ul>
 <li><code>CBOREncodeOptions And​(CBOREncodeOptions o)</code><br>
-Returns an options object whose flags are shared by this and another options
-object.</li>
+Returns an options object containing the flags shared by this and another
+options object.</li>
 <li><code>int getValue()</code><br>
 Gets this options object&#39;s value.</li>
 <li><code>CBOREncodeOptions Or​(CBOREncodeOptions o)</code><br>
-Combines the flags of this options object with another options object.</li>
+Returns an options object containing the combined flags of this and another
+options object.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -79,7 +80,8 @@ Combines the flags of this options object with another options object.</li>
 <pre>public CBOREncodeOptions Or​(CBOREncodeOptions o)
 </pre>
 
-<p>Combines the flags of this options object with another options object.</p>
+<p>Returns an options object containing the combined flags of this and another
+ options object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -90,7 +92,7 @@ Combines the flags of this options object with another options object.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBOREncodeOptions object.</li>
+<li>A new CBOREncodeOptions object.</li>
 </ul>
 
 <h3>And</h3>
@@ -98,8 +100,8 @@ Combines the flags of this options object with another options object.</li>
 <pre>public CBOREncodeOptions And​(CBOREncodeOptions o)
 </pre>
 
-<p>Returns an options object whose flags are shared by this and another options
- object.</p>
+<p>Returns an options object containing the flags shared by this and another
+ options object.</p>
 
 <p><strong>Parameters:</strong></p>
 
