@@ -1118,24 +1118,34 @@ END METHOD
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
 </ol>
 
-<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:</p>
-
-<ul>
-<li><strong>Red channel</strong>: <code>color[0]</code>.</li>
-<li><strong>Green channel</strong>: <code>color[1]</code>.</li>
-<li><strong>Blue channel</strong>: <code>color[2]</code>.</li>
-<li><strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.</li>
-<li><strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.</li>
-<li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (This and the previous techniques are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>T. Helland&#39;s site</strong></a>, for example.)</li>
-<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>).</li>
-</ul>
+<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
+1. <strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.
+2. <strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.
+3. <strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.
+4. <strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (Techniques 2-4 as well as RGB channel extraction are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>T. Helland&#39;s site</strong></a>, for example.)
+5. <strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>).</p>
 </blockquote>
 
 <p><a id=Alpha_Blending></a></p>
 
 <h3>Alpha Blending</h3>
 
-<p>The <code>Lerp3</code> function below<sup><a href="#Note25"><strong>(25)</strong></a></sup> gets an <em>alpha blend</em> of two colors, where <code>color1</code> and <code>color2</code> are the two colors, and <code>alpha</code> is the <em>alpha component</em>. <code>alpha</code> is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (see P. Haeberli and D. Voorhees, &quot;<a href="http://www.graficaobscura.com/interp/index.html"><strong>Image Processing by Interpolation and Extrapolation</strong></a>&quot;).</p>
+<p>An <em>alpha blend</em> is a linear interpolation of two multicomponent colors (such as two RGB colors) that works component-by-component.  For example, the <code>Lerp3</code> function below<sup><a href="#Note25"><strong>(25)</strong></a></sup> does an alpha blend of two three-component colors, where&mdash;</p>
+
+<ul>
+<li><code>color1</code> and <code>color2</code> are the two colors, and</li>
+<li><code>alpha</code>, the <em>alpha component</em>, is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (see P. Haeberli and D. Voorhees, &quot;<a href="http://www.graficaobscura.com/interp/index.html"><strong>Image Processing by Interpolation and Extrapolation</strong></a>&quot;).</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD Lerp3(color1, color2, alpha)
+    return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
+        color1[2]+(color2[2]-color1[2])*alpha]
+END METHOD
+</pre>
+
+<p>Alpha blends can support the following color operations.</p>
 
 <ul>
 <li><strong>Shade.</strong> Generating a shade of a color (mixing with black) can be done by alpha blending that color with black (such as <code>[0, 0, 0]</code> in RGB).</li>
@@ -1147,26 +1157,18 @@ END METHOD
 <li>Converting an RGBA color to an RGB color over <code>color2</code>, another RGB color, is equivalent to <code>Lerp3([color[0], color[1], color[2]], color2, color[3])</code>.</li>
 </ul>
 
-<p>&nbsp;</p>
-
-<pre>METHOD Lerp3(color1, color2, alpha)
-    return [color1[0]+(color2[0]-color1[0])*alpha, color1[1]+(color2[1]-color1[1])*alpha,
-        color1[2]+(color2[2]-color1[2])*alpha]
-END METHOD
-</pre>
-
 <p><a id=Binarization></a></p>
 
 <h3>Binarization</h3>
 
-<p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization.</p>
+<p><em>Binarization</em>, also known as <em>thresholding</em>, involves classifying pixels or colors into one of two categories (usually black or white).  It involves applying a function to a pixel or color and returning 1 if the result is greater than a threshold, or 0 otherwise.  The following are examples of binarization with RGB colors in 0-1 format.</p>
 
 <ul>
 <li><strong>Black and white.</strong> Generate <code>[0, 0, 0]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[1, 1, 1]</code> (white) otherwise.</li>
 <li><strong>Contrasting color.</strong> Generate <code>[1, 1, 1]</code> (black) if <code>Luminance(color) &lt; 0.5</code>, or <code>[0, 0, 0]</code> (white) otherwise.</li>
 </ul>
 
-<p>Other forms of binarization may classify pixels based on their positions in the image.</p>
+<p>Other forms of binarization may classify pixels based at least in part on their positions in the image.</p>
 
 <p><a id=Color_Schemes_and_Harmonies></a></p>
 
@@ -1274,7 +1276,7 @@ from 0 through 1 (the greater <code>s</code> is, the less saturated), and <code>
 <li><strong>Hue rotate.</strong> <code>[-0.37124*sr + 0.7874*cr + 0.2126,  -0.49629*sr - 0.7152*cr + 0.7152, 0.86753*sr - 0.0722*cr + 0.0722, 0.20611*sr - 0.2126*cr + 0.2126, 0.08106*sr + 0.2848*cr + 0.7152, -0.28717*sr - 0.072199*cr + 0.0722, -0.94859*sr - 0.2126*cr + 0.2126, 0.65841*sr - 0.7152*cr + 0.7152, 0.29018*sr + 0.9278*cr + 0.0722]</code>, where <code>sr = sin(rotation)</code>, <code>cr = cos(rotation)</code>, and <code>rotation</code> is the hue rotation angle.<sup><a href="#Note28"><strong>(28)</strong></a></sup><sup><a href="#Note27"><strong>(27)</strong></a></sup></li>
 </ul>
 
-<p>In the following pseudocode, <code>TransformColor</code> transforms an RGB color (<code>color</code>) is transformed with a color matrix (<code>matrix</code>).</p>
+<p>In the following pseudocode, <code>TransformColor</code> transforms an RGB color (<code>color</code>) with a color matrix (<code>matrix</code>).</p>
 
 <pre>METHOD TransformColor(color, matrix)
    return [
@@ -1325,10 +1327,10 @@ END METHOD
 
 <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.</p></li>
 </ul></li>
-<li><p>Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).</p></li>
-<li>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace &quot;background&quot; pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel&#39;s color to determine whether that pixel is a &quot;background&quot; pixel (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.</li>
+<li><p>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace &quot;background&quot; pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel&#39;s color to determine whether that pixel is a &quot;background&quot; pixel (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.</p></li>
 <li> An application can <strong>apply a function</strong> to each component of a multicomponent color (including an RGB color), including power functions (of the form <em>base</em><sup><em>exponent</em></sup>), inversions (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup><a href="#Note29"><strong>(29)</strong></a></sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
 <li> An application can <strong>swap</strong> the values of any two components of a multicomponent color (including an RGB color) to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>
+<li>Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).</li>
 </ol>
 
 <p><a id=Color_Differences></a></p>
