@@ -208,9 +208,12 @@ Generates a CBOR object from an array of CBOR-encoded bytes.</li>
   CBORObject second)</code><br>
 Divides a CBORObject object by the value of a CBORObject object.</li>
 <li><code>byte[] EncodeToBytes()</code><br>
-Gets the binary representation of this data item.</li>
+Writes the binary representation of this CBOR object and returns a byte
+array of that representation.</li>
 <li><code>byte[] EncodeToBytes​(CBOREncodeOptions options)</code><br>
-Gets the binary representation of this data item.</li>
+Writes the binary representation of this CBOR object and returns a byte
+array of that representation, using the specified options for
+encoding the object to CBOR format.</li>
 <li><code>boolean equals​(CBORObject other)</code><br>
 Compares the equality of two CBOR objects.</li>
 <li><code>boolean equals​(Object obj)</code><br>
@@ -427,9 +430,10 @@ or 0 if this item is neither an array nor a map.</li>
 <li><code>static CBORObject Subtract​(CBORObject first,
     CBORObject second)</code><br>
 Finds the difference between two CBOR number objects.</li>
-<li><code>String ToJSONString()</code><br>
+<li><code>String ToJSONString()</code><br></li>
+<li><code>String ToJSONString​(JSONOptions options)</code><br>
 Converts this object to a string in JavaScript Object Notation (JSON)
-format.</li>
+format, using the specified options to control the encoding process.</li>
 <li><code>String toString()</code><br>
 Returns this CBOR object in string form.</li>
 <li><code>CBORObject Untag()</code><br>
@@ -509,7 +513,9 @@ Writes a CBOR object to a CBOR data stream.</li>
 <li><code>static void Write​(Object objValue,
  OutputStream output,
  CBOREncodeOptions options)</code><br>
-Writes an arbitrary object to a CBOR data stream.</li>
+Writes an arbitrary object to a CBOR data stream, using the specified
+options for controlling how the object is encoded to CBOR data
+format.</li>
 <li><code>static void Write​(String str,
  OutputStream stream)</code><br>
 Writes a string in CBOR format to a data stream.</li>
@@ -526,11 +532,18 @@ to a data stream in UTF-8.</li>
 Converts this object to a string in JavaScript Object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8.</li>
+<li><code>void WriteJSONTo​(OutputStream outputStream,
+       JSONOptions options)</code><br>
+Converts this object to a string in JavaScript Object Notation (JSON)
+format, as in the ToJSONString method, and writes that string to a
+data stream in UTF-8, using the given JSON options to control the
+encoding process.</li>
 <li><code>void WriteTo​(OutputStream stream)</code><br>
 Writes this CBOR object to a data stream.</li>
 <li><code>void WriteTo​(OutputStream stream,
    CBOREncodeOptions options)</code><br>
-Writes this CBOR object to a data stream.</li>
+Writes this CBOR object to a data stream, using the specified options for
+encoding the data to CBOR format.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -1023,7 +1036,7 @@ converter</code> is null.</li>
 
 <ul>
 <li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a CBORObject object.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1156,7 +1169,7 @@ parameter <code>data</code> is empty.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
 <li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
@@ -1956,7 +1969,7 @@ than 0, greater than 255, or from 24 through 31.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
 <li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
@@ -2144,7 +2157,7 @@ encoding or is not in JSON format.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
 <li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
@@ -2164,7 +2177,7 @@ encoding or is not in JSON format.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>first</code> - The parameter <code>first</code> is a CBORObject object.</p></li>
+<li><p><code>first</code> - The parameter <code>first</code> is a CBOR object.</p></li>
 <li><p><code>second</code> - The parameter <code>second</code> is a CBOR object.</p></li>
 </ul>
 
@@ -2638,13 +2651,18 @@ code point.</p></li>
 <pre>public static void Write​(Object objValue, OutputStream output, CBOREncodeOptions options) throws IOException
 </pre>
 
-<p>Writes an arbitrary object to a CBOR data stream. Currently, the following
+<p>Writes an arbitrary object to a CBOR data stream, using the specified
+ options for controlling how the object is encoded to CBOR data
+ format. If the object is convertible to a CBOR map or a CBOR object
+ that contains CBOR maps, the keys to those maps are written out to
+ the data stream in an undefined order. Currently, the following
  objects are supported: <ul> <li>Lists of CBORObject.</li> <li>Maps of
- CBORObject.</li> <li>Null.</li> <li>Byte arrays, which will always be
- written as definite-length byte strings.</li> <li>String objects,
- which will be written as indefinite-length text strings if their size
- exceeds a certain threshold (this behavior may change in future
- versions of this library).</li> <li>Any object accepted by the
+ CBORObject. The keys to the map are written out to the data stream in
+ an undefined order.</li> <li>Null.</li> <li>Byte arrays, which will
+ always be written as definite-length byte strings.</li> <li>String
+ objects, which will be written as indefinite-length text strings if
+ their size exceeds a certain threshold (this behavior may change in
+ future versions of this library).</li> <li>Any object accepted by the
  FromObject static methods.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
@@ -2671,7 +2689,9 @@ output</code> is null.</p></li>
 
 <p>Converts an arbitrary object to a string in JavaScript Object Notation
  (JSON) format, as in the ToJSONString method, and writes that string
- to a data stream in UTF-8.</p>
+ to a data stream in UTF-8. If the object is convertible to a CBOR
+ map, or to a CBOR object that contains CBOR maps, the keys to those
+ maps are written out to the JSON string in an undefined order.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3373,7 +3393,10 @@ if the given key is not found or this object is not a map.</li>
 <pre>public byte[] EncodeToBytes()
 </pre>
 
-<p>Gets the binary representation of this data item.</p>
+<p>Writes the binary representation of this CBOR object and returns a byte
+ array of that representation. If the CBOR object contains CBOR maps,
+ or is a CBOR map itself, the keys to the map are written out to the
+ byte array in an undefined order.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3386,7 +3409,11 @@ if the given key is not found or this object is not a map.</li>
 <pre>public byte[] EncodeToBytes​(CBOREncodeOptions options)
 </pre>
 
-<p>Gets the binary representation of this data item.</p>
+<p>Writes the binary representation of this CBOR object and returns a byte
+ array of that representation, using the specified options for
+ encoding the object to CBOR format. If the CBOR object contains CBOR
+ maps, or is a CBOR map itself, the keys to the map are written out to
+ the byte array in an undefined order.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3784,29 +3811,46 @@ valueOb</code> has an unsupported type.</p></li>
 <pre>public String ToJSONString()
 </pre>
 
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string object.</li>
+</ul>
+
+<h3>ToJSONString</h3>
+
+<pre>public String ToJSONString​(JSONOptions options)
+</pre>
+
 <p>Converts this object to a string in JavaScript Object Notation (JSON)
- format. This function works not only with arrays and maps, but also
- integers, strings, byte arrays, and other JSON data types. Notes:
- <ul> <li>If this object contains maps with non-string keys, the keys
- are converted to JSON strings before writing the map as a JSON
- string.</li> <li>If a number in the form of an arbitrary-precision
- binary float has a very high binary exponent, it will be converted to
- a double before being converted to a JSON string. (The resulting
- double could overflow to infinity, in which case the
- arbitrary-precision binary float is converted to null.)</li> <li>The
- string will not begin with a byte-order mark (U + FEFF); RFC 7159 (the
- JSON specification) forbids placing a byte-order mark at the
- beginning of a JSON string.</li> <li>Byte strings are converted to
- Base64 URL without whitespace or padding by default (see section 4.1
- of RFC 7049). (A byte string will instead be converted to traditional
- base64 without whitespace or padding if it has tag 22, or base16 for
- tag 23.)</li> <li>Rational numbers will be converted to their exact
- form, if possible, otherwise to a high-precision approximation. (The
- resulting approximation could overflow to infinity, in which case the
- rational number is converted to null.)</li> <li>Simple values other
- than true and false will be converted to null. (This doesn&#39;t include
- floating-point numbers.)</li> <li>Infinity and not-a-number will be
- converted to null.</li></ul></p>
+ format, using the specified options to control the encoding process.
+ This function works not only with arrays and maps, but also integers,
+ strings, byte arrays, and other JSON data types. Notes: <ul> <li>If
+ this object contains maps with non-string keys, the keys are
+ converted to JSON strings before writing the map as a JSON
+ string.</li> <li>If the CBOR object contains CBOR maps, or is a CBOR
+ map itself, the keys to the map are written out to the JSON string in
+ an undefined order.</li> <li>If a number in the form of an
+ arbitrary-precision binary float has a very high binary exponent, it
+ will be converted to a double before being converted to a JSON
+ string. (The resulting double could overflow to infinity, in which
+ case the arbitrary-precision binary float is converted to null.)</li>
+ <li>The string will not begin with a byte-order mark (U + FEFF); RFC
+ 7159 (the JSON specification) forbids placing a byte-order mark at
+ the beginning of a JSON string.</li> <li>Byte strings are converted
+ to Base64 URL without whitespace or padding by default (see section
+ 4.1 of RFC 7049). A byte string will instead be converted to
+ traditional base64 without whitespace or padding by default if it has
+ tag 22, or base16 for tag 23. Padding will be included in the Base64
+ URL or traditional base64 form if <b>Base64Padding</b> in the JSON
+ options is set to <b>true</b>.</li> <li>Rational numbers will be
+ converted to their exact form, if possible, otherwise to a
+ high-precision approximation. (The resulting approximation could
+ overflow to infinity, in which case the rational number is converted
+ to null.)</li> <li>Simple values other than true and false will be
+ converted to null. (This doesn&#39;t include floating-point
+ numbers.)</li> <li>Infinity and not-a-number will be converted to
+ null.</li></ul></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3874,7 +3918,35 @@ valueOb</code> has an unsupported type.</p></li>
 
 <p>Converts this object to a string in JavaScript Object Notation (JSON)
  format, as in the ToJSONString method, and writes that string to a
- data stream in UTF-8.</p>
+ data stream in UTF-8. If the CBOR object contains CBOR maps, or is a
+ CBOR map, the keys to the map are written out to the JSON string in
+ an undefined order.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>outputStream</code> - A writable data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is
+null.</p></li>
+</ul>
+
+<h3>WriteJSONTo</h3>
+
+<pre>public void WriteJSONTo​(OutputStream outputStream, JSONOptions options) throws IOException
+</pre>
+
+<p>Converts this object to a string in JavaScript Object Notation (JSON)
+ format, as in the ToJSONString method, and writes that string to a
+ data stream in UTF-8, using the given JSON options to control the
+ encoding process. If the CBOR object contains CBOR maps, or is a CBOR
+ map, the keys to the map are written out to the JSON string in an
+ undefined order.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3895,7 +3967,9 @@ null.</p></li>
 <pre>public void WriteTo​(OutputStream stream) throws IOException
 </pre>
 
-<p>Writes this CBOR object to a data stream.</p>
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR
+ maps, or is a CBOR map, the keys to the map are written out to the
+ data stream in an undefined order.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3915,7 +3989,10 @@ null.</p></li>
 <pre>public void WriteTo​(OutputStream stream, CBOREncodeOptions options) throws IOException
 </pre>
 
-<p>Writes this CBOR object to a data stream.</p>
+<p>Writes this CBOR object to a data stream, using the specified options for
+ encoding the data to CBOR format. If the CBOR object contains CBOR
+ maps, or is a CBOR map, the keys to the map are written out to the
+ data stream in an undefined order.</p>
 
 <p><strong>Parameters:</strong></p>
 
