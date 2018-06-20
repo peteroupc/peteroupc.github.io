@@ -1,54 +1,59 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.cbor.JSONOptions</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.cbor.PODOptions</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>com.upokecenter.cbor.JSONOptions</h1>
+<h1>com.upokecenter.cbor.PODOptions</h1>
 
-<h1>com.upokecenter.cbor.JSONOptions</h1>
+<h1>com.upokecenter.cbor.PODOptions</h1>
 
-<pre>public final class JSONOptions extends Object
+<pre>public class PODOptions extends Object
 </pre>
 
-<p>Includes options to control how CBOR objects are converted to JSON.</p>
+<p>Options for converting &quot;plain old data&quot; objects to CBOR objects.</p>
 
 <h2>Fields</h2>
 
 <ul>
-<li><code>static JSONOptions Default</code><br>
-The default options for converting CBOR objects to JSON.</li>
+<li><code>static PODOptions Default</code><br>
+The default settings for &quot;plain old data&quot; options.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>JSONOptions() JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with default
-options.</li>
-<li><code>JSONOptions​(boolean base64Padding) JSONOptions</code><br>
-Initializes a new instance of the JSONOptions class with the given
-values for the options.</li>
+<li><code>PODOptions() CBOR.PeterO.Cbor.PODOptions</code><br>
+Initializes a new instance of the CBOR.PeterO.Cbor.PODOptions class.</li>
+<li><code>PODOptions​(boolean removeIsPrefix,
+      boolean useCamelCase) CBOR.PeterO.Cbor.PODOptions</code><br>
+Initializes a new instance of the CBOR.PeterO.Cbor.PODOptions class.</li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean getBase64Padding()</code><br></li>
+<li><code>boolean getRemoveIsPrefix()</code><br></li>
+<li><code>boolean getUseCamelCase()</code><br></li>
 </ul>
 
 <h2>Field Details</h2>
 
 <h3>Default</h3>
 
-<pre>public static final JSONOptions Default
+<pre>public static final PODOptions Default
 </pre>
 
-<p>The default options for converting CBOR objects to JSON.</p>
+<p>The default settings for &quot;plain old data&quot; options.</p>
 
 <h2>Method Details</h2>
 
-<h3>getBase64Padding</h3>
+<h3>getRemoveIsPrefix</h3>
 
-<pre>public final boolean getBase64Padding()
+<pre>public final boolean getRemoveIsPrefix()
+</pre>
+
+<h3>getUseCamelCase</h3>
+
+<pre>public final boolean getUseCamelCase()
 </pre>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
