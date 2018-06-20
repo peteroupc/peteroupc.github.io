@@ -85,149 +85,149 @@ Represents the number 0.</li>
 <li><code>EFloat Abs()</code><br>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
-<li><code>EFloat Abs(EContext context)</code><br>
+<li><code>EFloat Abs​(EContext context)</code><br>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
-<li><code>EFloat Add(EFloat otherValue)</code><br>
+<li><code>EFloat Add​(EFloat otherValue)</code><br>
 Adds this object and another binary float and returns the result.</li>
-<li><code>EFloat Add(EFloat otherValue,
+<li><code>EFloat Add​(EFloat otherValue,
 EContext ctx)</code><br>
 Finds the sum of this object and another object.</li>
-<li><code>int compareTo(EFloat other)</code><br>
+<li><code>int compareTo​(EFloat other)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
-<li><code>EFloat CompareToSignal(EFloat other,
+<li><code>EFloat CompareToSignal​(EFloat other,
            EContext ctx)</code><br>
 Compares the mathematical values of this object and another object, treating
 quiet NaN as signaling.</li>
-<li><code>int CompareToTotal(EFloat other)</code><br>
+<li><code>int CompareToTotal​(EFloat other)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values.</li>
-<li><code>int CompareToTotal(EFloat other,
+<li><code>int CompareToTotal​(EFloat other,
           EContext ctx)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values.</li>
-<li><code>int CompareToTotalMagnitude(EFloat other)</code><br>
+<li><code>int CompareToTotalMagnitude​(EFloat other)</code><br>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
-<li><code>EFloat CompareToWithContext(EFloat other,
+<li><code>EFloat CompareToWithContext​(EFloat other,
                 EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
-<li><code>EFloat CopySign(EFloat other)</code><br>
+<li><code>EFloat CopySign​(EFloat other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
-<li><code>static EFloat Create(EInteger mantissa,
-  EInteger exponent)</code><br>
-Creates a number with the value exponent*2^mantissa (significand).</li>
-<li><code>static EFloat Create(int mantissaSmall,
+<li><code>static EFloat Create​(int mantissaSmall,
   int exponentSmall)</code><br>
 Creates a number with the value exponent*2^mantissa (significand).</li>
-<li><code>static EFloat CreateNaN(EInteger diag)</code><br>
+<li><code>static EFloat Create​(EInteger mantissa,
+  EInteger exponent)</code><br>
+Creates a number with the value exponent*2^mantissa (significand).</li>
+<li><code>static EFloat CreateNaN​(EInteger diag)</code><br>
 Creates a not-a-number arbitrary-precision binary float.</li>
-<li><code>static EFloat CreateNaN(EInteger diag,
+<li><code>static EFloat CreateNaN​(EInteger diag,
      boolean signaling,
      boolean negative,
      EContext ctx)</code><br>
 Creates a not-a-number arbitrary-precision binary float.</li>
-<li><code>EFloat Divide(EFloat divisor)</code><br>
+<li><code>EFloat Divide​(EFloat divisor)</code><br>
 Divides this object by another binary float and returns the result.</li>
-<li><code>EFloat Divide(EFloat divisor,
+<li><code>EFloat Divide​(EFloat divisor,
   EContext ctx)</code><br>
 Divides this arbitrary-precision binary float by another arbitrary-precision
 binary float.</li>
-<li><code>EFloat[] DivideAndRemainderNaturalScale(EFloat divisor)</code><br>
+<li><code>EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
 Renamed to DivRemNaturalScale.</li>
-<li><code>EFloat[] DivideAndRemainderNaturalScale(EFloat divisor,
+<li><code>EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor,
                           EContext ctx)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
 Renamed to DivRemNaturalScale.</li>
-<li><code>EFloat DivideToExponent(EFloat divisor,
+<li><code>EFloat DivideToExponent​(EFloat divisor,
+            long desiredExponentSmall,
+            EContext ctx)</code><br>
+Divides two arbitrary-precision binary floats, and gives a particular
+exponent to the result.</li>
+<li><code>EFloat DivideToExponent​(EFloat divisor,
+            long desiredExponentSmall,
+            ERounding rounding)</code><br>
+Divides two arbitrary-precision binary floats, and gives a particular
+exponent to the result.</li>
+<li><code>EFloat DivideToExponent​(EFloat divisor,
             EInteger exponent,
             EContext ctx)</code><br>
 Divides two arbitrary-precision binary floats, and gives a particular
 exponent to the result.</li>
-<li><code>EFloat DivideToExponent(EFloat divisor,
+<li><code>EFloat DivideToExponent​(EFloat divisor,
             EInteger desiredExponent,
             ERounding rounding)</code><br>
 Divides two arbitrary-precision binary floats, and gives a particular
 exponent to the result.</li>
-<li><code>EFloat DivideToExponent(EFloat divisor,
-            long desiredExponentSmall,
-            EContext ctx)</code><br>
-Divides two arbitrary-precision binary floats, and gives a particular
-exponent to the result.</li>
-<li><code>EFloat DivideToExponent(EFloat divisor,
-            long desiredExponentSmall,
-            ERounding rounding)</code><br>
-Divides two arbitrary-precision binary floats, and gives a particular
-exponent to the result.</li>
-<li><code>EFloat DivideToIntegerNaturalScale(EFloat divisor)</code><br>
+<li><code>EFloat DivideToIntegerNaturalScale​(EFloat divisor)</code><br>
 Divides two arbitrary-precision binary floats, and returns the integer part
 of the result, rounded down, with the preferred exponent set to this
 value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code>EFloat DivideToIntegerNaturalScale(EFloat divisor,
+<li><code>EFloat DivideToIntegerNaturalScale​(EFloat divisor,
                        EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
 result (which is initially rounded down), with the preferred exponent
 set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code>EFloat DivideToIntegerZeroScale(EFloat divisor,
+<li><code>EFloat DivideToIntegerZeroScale​(EFloat divisor,
                     EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
 result, with the exponent set to 0.</li>
-<li><code>EFloat DivideToSameExponent(EFloat divisor,
+<li><code>EFloat DivideToSameExponent​(EFloat divisor,
                 ERounding rounding)</code><br>
 Divides this object by another binary float and returns a result with the
 same exponent as this object (the dividend).</li>
-<li><code>EFloat[] DivRemNaturalScale(EFloat divisor)</code><br>
+<li><code>EFloat[] DivRemNaturalScale​(EFloat divisor)</code><br>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
-<li><code>EFloat[] DivRemNaturalScale(EFloat divisor,
+<li><code>EFloat[] DivRemNaturalScale​(EFloat divisor,
               EContext ctx)</code><br>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
-<li><code>boolean equals(EFloat other)</code><br>
+<li><code>boolean equals​(EFloat other)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object.</li>
-<li><code>boolean equals(Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object and that other object
 is an arbitrary-precision binary float.</li>
-<li><code>boolean EqualsInternal(EFloat otherValue)</code><br>
+<li><code>boolean EqualsInternal​(EFloat otherValue)</code><br>
 Determines whether this object&#39;s mantissa (significand) and exponent
 are equal to those of another object.</li>
-<li><code>EFloat Exp(EContext ctx)</code><br>
+<li><code>EFloat Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
-<li><code>static EFloat FromByte(byte inputByte)</code><br>
+<li><code>static EFloat FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
-<li><code>static EFloat FromDouble(double dbl)</code><br>
+<li><code>static EFloat FromDouble​(double dbl)</code><br>
 Creates a binary float from a 64-bit floating-point number.</li>
-<li><code>static EFloat FromEInteger(EInteger bigint)</code><br>
+<li><code>static EFloat FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to the same value as a binary float.</li>
-<li><code>static EFloat FromInt16(short inputInt16)</code><br>
+<li><code>static EFloat FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>static EFloat FromInt32(int inputInt32)</code><br>
+<li><code>static EFloat FromInt32​(int inputInt32)</code><br>
 Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>static EFloat FromInt64(long inputInt64)</code><br>
+<li><code>static EFloat FromInt64​(long inputInt64)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>static EFloat FromSingle(float flt)</code><br>
+<li><code>static EFloat FromSingle​(float flt)</code><br>
 Creates a binary float from a 32-bit floating-point number.</li>
-<li><code>static EFloat FromString(String str)</code><br>
+<li><code>static EFloat FromString​(String str)</code><br>
 Creates a binary float from a text string that represents a number, using an
 unlimited precision context.</li>
-<li><code>static EFloat FromString(String str,
-      EContext ctx)</code><br>
-Creates a binary float from a text string that represents a number.</li>
-<li><code>static EFloat FromString(String str,
+<li><code>static EFloat FromString​(String str,
       int offset,
       int length)</code><br>
 Creates a binary float from a text string that represents a number.</li>
-<li><code>static EFloat FromString(String str,
+<li><code>static EFloat FromString​(String str,
       int offset,
       int length,
+      EContext ctx)</code><br>
+Creates a binary float from a text string that represents a number.</li>
+<li><code>static EFloat FromString​(String str,
       EContext ctx)</code><br>
 Creates a binary float from a text string that represents a number.</li>
 <li><code>EInteger getExponent()</code><br>
@@ -259,206 +259,206 @@ Gets a value indicating whether this object is a signaling not-a-number
 value.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code>EFloat Log(EContext ctx)</code><br>
+<li><code>EFloat Log​(EContext ctx)</code><br>
 Finds the natural logarithm of this object, that is, the power (exponent)
 that e (the base of natural logarithms) must be raised to in order to
 equal this object&#39;s value.</li>
-<li><code>EFloat Log10(EContext ctx)</code><br>
+<li><code>EFloat Log10​(EContext ctx)</code><br>
 Finds the base-10 logarithm of this object, that is, the power (exponent)
 that the number 10 must be raised to in order to equal this
 object&#39;s value.</li>
-<li><code>static EFloat Max(EFloat first,
+<li><code>static EFloat Max​(EFloat first,
 EFloat second)</code><br>
 Gets the greater value between two binary floats.</li>
-<li><code>static EFloat Max(EFloat first,
+<li><code>static EFloat Max​(EFloat first,
 EFloat second,
 EContext ctx)</code><br>
 Gets the greater value between two binary floats.</li>
-<li><code>static EFloat MaxMagnitude(EFloat first,
+<li><code>static EFloat MaxMagnitude​(EFloat first,
         EFloat second)</code><br>
 Gets the greater value between two values, ignoring their signs.</li>
-<li><code>static EFloat MaxMagnitude(EFloat first,
+<li><code>static EFloat MaxMagnitude​(EFloat first,
         EFloat second,
         EContext ctx)</code><br>
 Gets the greater value between two values, ignoring their signs.</li>
-<li><code>static EFloat Min(EFloat first,
+<li><code>static EFloat Min​(EFloat first,
 EFloat second)</code><br>
 Gets the lesser value between two binary floats.</li>
-<li><code>static EFloat Min(EFloat first,
+<li><code>static EFloat Min​(EFloat first,
 EFloat second,
 EContext ctx)</code><br>
 Gets the lesser value between two binary floats.</li>
-<li><code>static EFloat MinMagnitude(EFloat first,
+<li><code>static EFloat MinMagnitude​(EFloat first,
         EFloat second)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
-<li><code>static EFloat MinMagnitude(EFloat first,
+<li><code>static EFloat MinMagnitude​(EFloat first,
         EFloat second,
         EContext ctx)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
-<li><code>EFloat MovePointLeft(EInteger bigPlaces)</code><br>
+<li><code>EFloat MovePointLeft​(int places)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the left.</li>
-<li><code>EFloat MovePointLeft(EInteger bigPlaces,
+<li><code>EFloat MovePointLeft​(int places,
          EContext ctx)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the left.</li>
-<li><code>EFloat MovePointLeft(int places)</code><br>
+<li><code>EFloat MovePointLeft​(EInteger bigPlaces)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the left.</li>
-<li><code>EFloat MovePointLeft(int places,
+<li><code>EFloat MovePointLeft​(EInteger bigPlaces,
          EContext ctx)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the left.</li>
-<li><code>EFloat MovePointRight(EInteger bigPlaces)</code><br>
+<li><code>EFloat MovePointRight​(int places)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
-<li><code>EFloat MovePointRight(EInteger bigPlaces,
+<li><code>EFloat MovePointRight​(int places,
           EContext ctx)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
-<li><code>EFloat MovePointRight(int places)</code><br>
+<li><code>EFloat MovePointRight​(EInteger bigPlaces)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
-<li><code>EFloat MovePointRight(int places,
+<li><code>EFloat MovePointRight​(EInteger bigPlaces,
           EContext ctx)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
-<li><code>EFloat Multiply(EFloat otherValue)</code><br>
+<li><code>EFloat Multiply​(EFloat otherValue)</code><br>
 Multiplies two binary floats.</li>
-<li><code>EFloat Multiply(EFloat op,
+<li><code>EFloat Multiply​(EFloat op,
     EContext ctx)</code><br>
 Multiplies two binary floats.</li>
-<li><code>EFloat MultiplyAndAdd(EFloat multiplicand,
+<li><code>EFloat MultiplyAndAdd​(EFloat multiplicand,
           EFloat augend)</code><br>
 Multiplies by one binary float, and then adds another binary float.</li>
-<li><code>EFloat MultiplyAndAdd(EFloat op,
+<li><code>EFloat MultiplyAndAdd​(EFloat op,
           EFloat augend,
           EContext ctx)</code><br>
 Multiplies by one value, and then adds another value.</li>
-<li><code>EFloat MultiplyAndSubtract(EFloat op,
+<li><code>EFloat MultiplyAndSubtract​(EFloat op,
                EFloat subtrahend,
                EContext ctx)</code><br>
 Multiplies by one value, and then subtracts another value.</li>
 <li><code>EFloat Negate()</code><br>
 Gets an object with the same value as this one, but with the sign reversed.</li>
-<li><code>EFloat Negate(EContext context)</code><br>
+<li><code>EFloat Negate​(EContext context)</code><br>
 Returns a binary float with the same value as this object but with the sign
 reversed.</li>
-<li><code>EFloat NextMinus(EContext ctx)</code><br>
+<li><code>EFloat NextMinus​(EContext ctx)</code><br>
 Finds the largest value that&#39;s smaller than the given value.</li>
-<li><code>EFloat NextPlus(EContext ctx)</code><br>
+<li><code>EFloat NextPlus​(EContext ctx)</code><br>
 Finds the smallest value that&#39;s greater than the given value.</li>
-<li><code>EFloat NextToward(EFloat otherValue,
+<li><code>EFloat NextToward​(EFloat otherValue,
       EContext ctx)</code><br>
 Finds the next value that is closer to the other object&#39;s value than
 this object&#39;s value.</li>
-<li><code>static EFloat PI(EContext ctx)</code><br>
+<li><code>static EFloat PI​(EContext ctx)</code><br>
 Finds the constant π, the circumference of a circle divided by its
 diameter.</li>
-<li><code>EFloat Plus(EContext ctx)</code><br>
+<li><code>EFloat Plus​(EContext ctx)</code><br>
 Rounds this object&#39;s value to a given precision, using the given
 rounding mode and range of exponent, and also converts negative zero
 to positive zero.</li>
-<li><code>EFloat Pow(EFloat exponent,
+<li><code>EFloat Pow​(int exponentSmall)</code><br>
+Raises this object&#39;s value to the given exponent.</li>
+<li><code>EFloat Pow​(int exponentSmall,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
-<li><code>EFloat Pow(int exponentSmall)</code><br>
-Raises this object&#39;s value to the given exponent.</li>
-<li><code>EFloat Pow(int exponentSmall,
+<li><code>EFloat Pow​(EFloat exponent,
 EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
 <li><code>EInteger Precision()</code><br>
 Finds the number of digits in this number&#39;s mantissa (significand).</li>
-<li><code>EFloat Quantize(EFloat otherValue,
+<li><code>EFloat Quantize​(int desiredExponentInt,
+    EContext ctx)</code><br>
+Returns a binary float with the same value but a new exponent.</li>
+<li><code>EFloat Quantize​(EFloat otherValue,
     EContext ctx)</code><br>
 Returns a binary float with the same value as this object but with the same
 exponent as another binary float.</li>
-<li><code>EFloat Quantize(EInteger desiredExponent,
+<li><code>EFloat Quantize​(EInteger desiredExponent,
     EContext ctx)</code><br>
 Returns a binary float with the same value but a new exponent.</li>
-<li><code>EFloat Quantize(int desiredExponentInt,
-    EContext ctx)</code><br>
-Returns a binary float with the same value but a new exponent.</li>
-<li><code>EFloat Reduce(EContext ctx)</code><br>
+<li><code>EFloat Reduce​(EContext ctx)</code><br>
 Removes trailing zeros from this object&#39;s mantissa (significand).</li>
-<li><code>EFloat Remainder(EFloat divisor,
+<li><code>EFloat Remainder​(EFloat divisor,
      EContext ctx)</code><br>
 Finds the remainder that results when dividing two arbitrary-precision
 binary floats.</li>
-<li><code>EFloat RemainderNaturalScale(EFloat divisor) &quot;this&quot; - ((&quot;this&quot; /
+<li><code>EFloat RemainderNaturalScale​(EFloat divisor) &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;)</code><br>
 Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;)</li>
-<li><code>EFloat RemainderNaturalScale(EFloat divisor,
+<li><code>EFloat RemainderNaturalScale​(EFloat divisor,
                  EContext ctx)</code><br>
 Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;).</li>
-<li><code>EFloat RemainderNear(EFloat divisor,
+<li><code>EFloat RemainderNear​(EFloat divisor,
          EContext ctx)</code><br>
 Finds the distance to the closest multiple of the given divisor, based on
 the result of dividing this object&#39;s value by another
 object&#39;s value.</li>
-<li><code>EFloat RoundToExponent(EInteger exponent,
+<li><code>EFloat RoundToExponent​(int exponentSmall,
            EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to a
 new exponent if necessary.</li>
-<li><code>EFloat RoundToExponent(int exponentSmall,
+<li><code>EFloat RoundToExponent​(EInteger exponent,
            EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to a
 new exponent if necessary.</li>
-<li><code>EFloat RoundToExponentExact(EInteger exponent,
+<li><code>EFloat RoundToExponentExact​(int exponentSmall,
+                EContext ctx)</code><br>
+Returns a binary float with the same value as this object but rounded to an
+integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code>EFloat RoundToExponentExact​(EInteger exponent,
                 EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to the
 given exponent, and signals an inexact flag if the result would be
 inexact.</li>
-<li><code>EFloat RoundToExponentExact(EInteger exponent,
+<li><code>EFloat RoundToExponentExact​(EInteger exponent,
                 ERounding rounding)</code><br>
 Returns a binary number with the same value as this object but rounded to
 the given exponent.</li>
-<li><code>EFloat RoundToExponentExact(int exponentSmall,
-                EContext ctx)</code><br>
+<li><code>EFloat RoundToIntegerExact​(EContext ctx)</code><br>
 Returns a binary float with the same value as this object but rounded to an
 integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code>EFloat RoundToIntegerExact(EContext ctx)</code><br>
-Returns a binary float with the same value as this object but rounded to an
-integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code>EFloat RoundToIntegerNoRoundedFlag(EContext ctx) FlagInexact FlagRounded</code><br>
+<li><code>EFloat RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded</code><br>
 Returns a binary float with the same value as this object but rounded to an
 integer, without adding the FlagInexact or FlagRounded
 flags.</li>
-<li><code>EFloat RoundToIntegralExact(EContext ctx)</code><br>
+<li><code>EFloat RoundToIntegralExact​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerExact.
 Renamed to RoundToIntegerExact.</li>
-<li><code>EFloat RoundToIntegralNoRoundedFlag(EContext ctx)</code><br>
+<li><code>EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerNoRoundedFlag.
 Renamed to RoundToIntegerNoRoundedFlag.</li>
-<li><code>EFloat RoundToPrecision(EContext ctx)</code><br>
+<li><code>EFloat RoundToPrecision​(EContext ctx)</code><br>
 Rounds this object&#39;s value to a given precision, using the given
 rounding mode and range of exponent.</li>
-<li><code>EFloat ScaleByPowerOfTwo(EInteger bigPlaces)</code><br>
+<li><code>EFloat ScaleByPowerOfTwo​(int places)</code><br>
 Returns a number similar to this number but with the scale adjusted.</li>
-<li><code>EFloat ScaleByPowerOfTwo(EInteger bigPlaces,
+<li><code>EFloat ScaleByPowerOfTwo​(int places,
+             EContext ctx)</code><br>
+Returns a number similar to this number but with the scale adjusted.</li>
+<li><code>EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)</code><br>
+Returns a number similar to this number but with the scale adjusted.</li>
+<li><code>EFloat ScaleByPowerOfTwo​(EInteger bigPlaces,
              EContext ctx)</code><br>
 Returns a number similar to this number but with its scale adjusted.</li>
-<li><code>EFloat ScaleByPowerOfTwo(int places)</code><br>
-Returns a number similar to this number but with the scale adjusted.</li>
-<li><code>EFloat ScaleByPowerOfTwo(int places,
-             EContext ctx)</code><br>
-Returns a number similar to this number but with the scale adjusted.</li>
 <li><code>int signum()</code><br>
 Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
-<li><code>EFloat Sqrt(EContext ctx)</code><br>
+<li><code>EFloat Sqrt​(EContext ctx)</code><br>
 Finds the square root of this object&#39;s value.</li>
-<li><code>EFloat SquareRoot(EContext ctx)</code><br>
+<li><code>EFloat SquareRoot​(EContext ctx)</code><br>
 Deprecated.
 Renamed to Sqrt.
 Renamed to Sqrt.</li>
-<li><code>EFloat Subtract(EFloat otherValue)</code><br>
+<li><code>EFloat Subtract​(EFloat otherValue)</code><br>
 Subtracts an arbitrary-precision binary float from this instance and returns
 the result.</li>
-<li><code>EFloat Subtract(EFloat otherValue,
+<li><code>EFloat Subtract​(EFloat otherValue,
     EContext ctx)</code><br>
 Subtracts an arbitrary-precision binary float from this instance.</li>
 <li><code>byte ToByteChecked()</code><br>
@@ -526,7 +526,7 @@ least-significant bits of its two&#39;s-complement form as a 64-bit
 signed integer.</li>
 <li><code>String ToPlainString()</code><br>
 Converts this value to a string, but without exponential notation.</li>
-<li><code>String ToShortestString(EContext ctx)</code><br>
+<li><code>String ToShortestString​(EContext ctx)</code><br>
 Returns a string representation of this number&#39;s value after rounding to the
 given precision (using the given arithmetic context).</li>
 <li><code>float ToSingle()</code><br>
@@ -654,7 +654,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object&#39;s value equals 0; otherwise, . <code>false</code>.</li>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, . <code>
+false</code>.</li>
 </ul>
 
 <h3>getMantissa</h3>
@@ -699,7 +700,7 @@ value is negative (including a negative NaN).</li>
 
 <h3>Create</h3>
 
-<pre>public static EFloat Create(int mantissaSmall, int exponentSmall)
+<pre>public static EFloat Create​(int mantissaSmall, int exponentSmall)
 </pre>
 
 <p>Creates a number with the value exponent*2^mantissa (significand).</p>
@@ -719,7 +720,7 @@ value is negative (including a negative NaN).</li>
 
 <h3>Create</h3>
 
-<pre>public static EFloat Create(EInteger mantissa, EInteger exponent)
+<pre>public static EFloat Create​(EInteger mantissa, EInteger exponent)
 </pre>
 
 <p>Creates a number with the value exponent*2^mantissa (significand).</p>
@@ -746,7 +747,7 @@ or <code>exponent</code> is null.</li>
 
 <h3>CreateNaN</h3>
 
-<pre>public static EFloat CreateNaN(EInteger diag)
+<pre>public static EFloat CreateNaN​(EInteger diag)
 </pre>
 
 <p>Creates a not-a-number arbitrary-precision binary float.</p>
@@ -773,7 +774,7 @@ object. If none is needed, should be zero.</li>
 
 <h3>CreateNaN</h3>
 
-<pre>public static EFloat CreateNaN(EInteger diag, boolean signaling, boolean negative, EContext ctx)
+<pre>public static EFloat CreateNaN​(EInteger diag, boolean signaling, boolean negative, EContext ctx)
 </pre>
 
 <p>Creates a not-a-number arbitrary-precision binary float.</p>
@@ -809,7 +810,7 @@ do so.</p></li>
 
 <h3>FromDouble</h3>
 
-<pre>public static EFloat FromDouble(double dbl)
+<pre>public static EFloat FromDouble​(double dbl)
 </pre>
 
 <p>Creates a binary float from a 64-bit floating-point number. This method
@@ -831,7 +832,7 @@ do so.</p></li>
 
 <h3>FromEInteger</h3>
 
-<pre>public static EFloat FromEInteger(EInteger bigint)
+<pre>public static EFloat FromEInteger​(EInteger bigint)
 </pre>
 
 <p>Converts an arbitrary-precision integer to the same value as a binary float.</p>
@@ -850,7 +851,7 @@ do so.</p></li>
 
 <h3>FromSingle</h3>
 
-<pre>public static EFloat FromSingle(float flt)
+<pre>public static EFloat FromSingle​(float flt)
 </pre>
 
 <p>Creates a binary float from a 32-bit floating-point number. This method
@@ -873,7 +874,7 @@ number.</li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString(String str, int offset, int length, EContext ctx)
+<pre>public static EFloat FromString​(String str, int offset, int length, EContext ctx)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. Note
@@ -899,8 +900,10 @@ number.</li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
-<li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
+str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <li><p><code>ctx</code> - A precision context specifying the precision, rounding, and
 exponent range (in bits) to apply to the parsed number. Can be null.</p></li>
 </ul>
@@ -922,7 +925,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString(String str)
+<pre>public static EFloat FromString​(String str)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number, using an
@@ -943,7 +946,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString(String str, EContext ctx)
+<pre>public static EFloat FromString​(String str, EContext ctx)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
@@ -972,7 +975,7 @@ exponent range to apply to the parsed number. Can be null.</p></li>
 
 <h3>FromString</h3>
 
-<pre>public static EFloat FromString(String str, int offset, int length)
+<pre>public static EFloat FromString​(String str, int offset, int length)
 </pre>
 
 <p>Creates a binary float from a text string that represents a number. For more
@@ -983,8 +986,10 @@ exponent range to apply to the parsed number. Can be null.</p></li>
 
 <ul>
 <li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>str</code> begins.</p></li>
-<li><p><code>length</code> - The length, in code units, of the desired portion of <code>str</code> (but not more than <code>str</code> &#39;s length).</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
+str</code> begins.</p></li>
+<li><p><code>length</code> - The length, in code units, of the desired portion of <code>
+str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1004,7 +1009,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 
 <h3>Max</h3>
 
-<pre>public static EFloat Max(EFloat first, EFloat second, EContext ctx)
+<pre>public static EFloat Max​(EFloat first, EFloat second, EContext ctx)
 </pre>
 
 <p>Gets the greater value between two binary floats.</p>
@@ -1029,7 +1034,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Max</h3>
 
-<pre>public static EFloat Max(EFloat first, EFloat second)
+<pre>public static EFloat Max​(EFloat first, EFloat second)
 </pre>
 
 <p>Gets the greater value between two binary floats.</p>
@@ -1049,7 +1054,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MaxMagnitude</h3>
 
-<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second, EContext ctx)
+<pre>public static EFloat MaxMagnitude​(EFloat first, EFloat second, EContext ctx)
 </pre>
 
 <p>Gets the greater value between two values, ignoring their signs. If the
@@ -1075,7 +1080,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MaxMagnitude</h3>
 
-<pre>public static EFloat MaxMagnitude(EFloat first, EFloat second)
+<pre>public static EFloat MaxMagnitude​(EFloat first, EFloat second)
 </pre>
 
 <p>Gets the greater value between two values, ignoring their signs. If the
@@ -1096,7 +1101,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Min</h3>
 
-<pre>public static EFloat Min(EFloat first, EFloat second, EContext ctx)
+<pre>public static EFloat Min​(EFloat first, EFloat second, EContext ctx)
 </pre>
 
 <p>Gets the lesser value between two binary floats.</p>
@@ -1121,7 +1126,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>Min</h3>
 
-<pre>public static EFloat Min(EFloat first, EFloat second)
+<pre>public static EFloat Min​(EFloat first, EFloat second)
 </pre>
 
 <p>Gets the lesser value between two binary floats.</p>
@@ -1141,7 +1146,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MinMagnitude</h3>
 
-<pre>public static EFloat MinMagnitude(EFloat first, EFloat second, EContext ctx)
+<pre>public static EFloat MinMagnitude​(EFloat first, EFloat second, EContext ctx)
 </pre>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the
@@ -1167,7 +1172,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MinMagnitude</h3>
 
-<pre>public static EFloat MinMagnitude(EFloat first, EFloat second)
+<pre>public static EFloat MinMagnitude​(EFloat first, EFloat second)
 </pre>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the
@@ -1188,7 +1193,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>PI</h3>
 
-<pre>public static EFloat PI(EContext ctx)
+<pre>public static EFloat PI​(EContext ctx)
 </pre>
 
 <p>Finds the constant &#x3c0;, the circumference of a circle divided by its
@@ -1230,7 +1235,7 @@ value is signaling NaN.</li>
 
 <h3>Abs</h3>
 
-<pre>public EFloat Abs(EContext context)
+<pre>public EFloat Abs​(EContext context)
 </pre>
 
 <p>Finds the absolute value of this object (if it&#x27;s negative, it becomes
@@ -1255,7 +1260,7 @@ quiet NaN if this value is signaling NaN.</li>
 
 <h3>Add</h3>
 
-<pre>public EFloat Add(EFloat otherValue)
+<pre>public EFloat Add​(EFloat otherValue)
 </pre>
 
 <p>Adds this object and another binary float and returns the result.</p>
@@ -1274,7 +1279,7 @@ quiet NaN if this value is signaling NaN.</li>
 
 <h3>Add</h3>
 
-<pre>public EFloat Add(EFloat otherValue, EContext ctx)
+<pre>public EFloat Add​(EFloat otherValue, EContext ctx)
 </pre>
 
 <p>Finds the sum of this object and another object. The result&#x27;s exponent
@@ -1299,7 +1304,7 @@ which case the precision is unlimited and no rounding is needed.</p></li>
 
 <h3>compareTo</h3>
 
-<pre>public int compareTo(EFloat other)
+<pre>public int compareTo​(EFloat other)
 </pre>
 
 <p>Compares the mathematical values of this object and another object,
@@ -1334,7 +1339,7 @@ or if <code>other</code> is null, or 0 if both values are equal.</li>
 
 <h3>CompareToSignal</h3>
 
-<pre>public EFloat CompareToSignal(EFloat other, EContext ctx)
+<pre>public EFloat CompareToSignal​(EFloat other, EContext ctx)
 </pre>
 
 <p>Compares the mathematical values of this object and another object, treating
@@ -1363,7 +1368,7 @@ other value, or 1 if this object is greater.</li>
 
 <h3>CompareToTotal</h3>
 
-<pre>public int CompareToTotal(EFloat other, EContext ctx)
+<pre>public int CompareToTotal​(EFloat other, EContext ctx)
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
@@ -1398,7 +1403,7 @@ Does not signal flags if either value is signaling NaN.</li>
 
 <h3>CompareToTotal</h3>
 
-<pre>public int CompareToTotal(EFloat other)
+<pre>public int CompareToTotal​(EFloat other)
 </pre>
 
 <p>Compares the values of this object and another object, imposing a total
@@ -1428,7 +1433,7 @@ object is less than the other value, or 1 if this object is greater.</li>
 
 <h3>CompareToTotalMagnitude</h3>
 
-<pre>public int CompareToTotalMagnitude(EFloat other)
+<pre>public int CompareToTotalMagnitude​(EFloat other)
 </pre>
 
 <p>Compares the absolute values of this object and another object, imposing a
@@ -1457,7 +1462,7 @@ object is less than the other value, or 1 if this object is greater.</li>
 
 <h3>CompareToWithContext</h3>
 
-<pre>public EFloat CompareToWithContext(EFloat other, EContext ctx)
+<pre>public EFloat CompareToWithContext​(EFloat other, EContext ctx)
 </pre>
 
 <p>Compares the mathematical values of this object and another object. <p>In
@@ -1486,7 +1491,7 @@ other value, or 1 if this object is greater.</li>
 
 <h3>CopySign</h3>
 
-<pre>public EFloat CopySign(EFloat other)
+<pre>public EFloat CopySign​(EFloat other)
 </pre>
 
 <p>Returns a number with the same value as this one, but copying the sign
@@ -1512,7 +1517,7 @@ other value, or 1 if this object is greater.</li>
 
 <h3>Divide</h3>
 
-<pre>public EFloat Divide(EFloat divisor)
+<pre>public EFloat Divide​(EFloat divisor)
 </pre>
 
 <p>Divides this object by another binary float and returns the result. When
@@ -1535,7 +1540,7 @@ exact because it would have a nonterminating binary expansion.</li>
 
 <h3>Divide</h3>
 
-<pre>public EFloat Divide(EFloat divisor, EContext ctx)
+<pre>public EFloat Divide​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Divides this arbitrary-precision binary float by another arbitrary-precision
@@ -1567,10 +1572,12 @@ not exact.</li>
 
 <h3>DivideAndRemainderNaturalScale</h3>
 
-<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor)
+<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor)
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to DivRemNaturalScale.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1587,10 +1594,12 @@ order.</li>
 
 <h3>DivideAndRemainderNaturalScale</h3>
 
-<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale(EFloat divisor, EContext ctx)
+<pre>@Deprecated public EFloat[] DivideAndRemainderNaturalScale​(EFloat divisor, EContext ctx)
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to DivRemNaturalScale.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to DivRemNaturalScale.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1617,7 +1626,7 @@ order.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, EContext ctx)
+<pre>public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, EContext ctx)
 </pre>
 
 <p>Divides two arbitrary-precision binary floats, and gives a particular
@@ -1658,7 +1667,7 @@ result is not exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre>public EFloat DivideToExponent(EFloat divisor, long desiredExponentSmall, ERounding rounding)
+<pre>public EFloat DivideToExponent​(EFloat divisor, long desiredExponentSmall, ERounding rounding)
 </pre>
 
 <p>Divides two arbitrary-precision binary floats, and gives a particular
@@ -1690,7 +1699,7 @@ exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre>public EFloat DivideToExponent(EFloat divisor, EInteger exponent, EContext ctx)
+<pre>public EFloat DivideToExponent​(EFloat divisor, EInteger exponent, EContext ctx)
 </pre>
 
 <p>Divides two arbitrary-precision binary floats, and gives a particular
@@ -1730,7 +1739,7 @@ result is not exact.</li>
 
 <h3>DivideToExponent</h3>
 
-<pre>public EFloat DivideToExponent(EFloat divisor, EInteger desiredExponent, ERounding rounding)
+<pre>public EFloat DivideToExponent​(EFloat divisor, EInteger desiredExponent, ERounding rounding)
 </pre>
 
 <p>Divides two arbitrary-precision binary floats, and gives a particular
@@ -1761,7 +1770,7 @@ not exact.</li>
 
 <h3>DivideToIntegerNaturalScale</h3>
 
-<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor)
+<pre>public EFloat DivideToIntegerNaturalScale​(EFloat divisor)
 </pre>
 
 <p>Divides two arbitrary-precision binary floats, and returns the integer part
@@ -1785,7 +1794,7 @@ dividend is nonzero. Signals FlagInvalid and returns not-a-number
 
 <h3>DivideToIntegerNaturalScale</h3>
 
-<pre>public EFloat DivideToIntegerNaturalScale(EFloat divisor, EContext ctx)
+<pre>public EFloat DivideToIntegerNaturalScale​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Divides this object by another object, and returns the integer part of the
@@ -1819,7 +1828,7 @@ the rounding mode is ERounding.None and the result is not exact.</li>
 
 <h3>DivideToIntegerZeroScale</h3>
 
-<pre>public EFloat DivideToIntegerZeroScale(EFloat divisor, EContext ctx)
+<pre>public EFloat DivideToIntegerZeroScale​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Divides this object by another object, and returns the integer part of the
@@ -1849,7 +1858,7 @@ if the result doesn&#39;t fit the given precision.</li>
 
 <h3>DivideToSameExponent</h3>
 
-<pre>public EFloat DivideToSameExponent(EFloat divisor, ERounding rounding)
+<pre>public EFloat DivideToSameExponent​(EFloat divisor, ERounding rounding)
 </pre>
 
 <p>Divides this object by another binary float and returns a result with the
@@ -1876,7 +1885,7 @@ exact.</li>
 
 <h3>DivRemNaturalScale</h3>
 
-<pre>public EFloat[] DivRemNaturalScale(EFloat divisor)
+<pre>public EFloat[] DivRemNaturalScale​(EFloat divisor)
 </pre>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
@@ -1897,7 +1906,7 @@ order.</li>
 
 <h3>DivRemNaturalScale</h3>
 
-<pre>public EFloat[] DivRemNaturalScale(EFloat divisor, EContext ctx)
+<pre>public EFloat[] DivRemNaturalScale​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Calculates the quotient and remainder using the DivideToIntegerNaturalScale
@@ -1928,7 +1937,7 @@ order.</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals(EFloat other)
+<pre>public boolean equals​(EFloat other)
 </pre>
 
 <p>Determines whether this object&#x27;s mantissa (significand), exponent, and
@@ -1950,7 +1959,7 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals(Object obj)
+<pre>public boolean equals​(Object obj)
 </pre>
 
 <p>Determines whether this object&#x27;s mantissa (significand), exponent, and
@@ -1978,7 +1987,7 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 
 <h3>EqualsInternal</h3>
 
-<pre>public boolean EqualsInternal(EFloat otherValue)
+<pre>public boolean EqualsInternal​(EFloat otherValue)
 </pre>
 
 <p>Determines whether this object&#x27;s mantissa (significand) and exponent
@@ -1999,7 +2008,7 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 
 <h3>Exp</h3>
 
-<pre>public EFloat Exp(EContext ctx)
+<pre>public EFloat Exp​(EContext ctx)
 </pre>
 
 <p>Finds e (the base of natural logarithms) raised to the power of this
@@ -2072,7 +2081,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object is not a number (NaN); otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object is not a number (NaN); otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -2085,7 +2095,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object is negative infinity; otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object is negative infinity; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -2098,7 +2109,8 @@ otherwise, <code>false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object is positive infinity; otherwise, <code>false</code>.</li>
+<li><code>true</code> if this object is positive infinity; otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>IsQuietNaN</h3>
@@ -2132,7 +2144,7 @@ otherwise, <code>false</code>.</li>
 
 <h3>Log</h3>
 
-<pre>public EFloat Log(EContext ctx)
+<pre>public EFloat Log​(EContext ctx)
 </pre>
 
 <p>Finds the natural logarithm of this object, that is, the power (exponent)
@@ -2166,7 +2178,7 @@ infinity if this object&#39;s value is 0.</li>
 
 <h3>Log10</h3>
 
-<pre>public EFloat Log10(EContext ctx)
+<pre>public EFloat Log10​(EContext ctx)
 </pre>
 
 <p>Finds the base-10 logarithm of this object, that is, the power (exponent)
@@ -2197,7 +2209,7 @@ or the precision is unlimited (the context&#39;s Precision property is
 
 <h3>MovePointLeft</h3>
 
-<pre>public EFloat MovePointLeft(int places)
+<pre>public EFloat MovePointLeft​(int places)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2220,7 +2232,7 @@ more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre>public EFloat MovePointLeft(int places, EContext ctx)
+<pre>public EFloat MovePointLeft​(int places, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2248,7 +2260,7 @@ more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre>public EFloat MovePointLeft(EInteger bigPlaces)
+<pre>public EFloat MovePointLeft​(EInteger bigPlaces)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2271,7 +2283,7 @@ to more than 0.</li>
 
 <h3>MovePointLeft</h3>
 
-<pre>public EFloat MovePointLeft(EInteger bigPlaces, EContext ctx)
+<pre>public EFloat MovePointLeft​(EInteger bigPlaces, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2299,7 +2311,7 @@ to more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre>public EFloat MovePointRight(int places)
+<pre>public EFloat MovePointRight​(int places)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2322,7 +2334,7 @@ more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre>public EFloat MovePointRight(int places, EContext ctx)
+<pre>public EFloat MovePointRight​(int places, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2350,7 +2362,7 @@ more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre>public EFloat MovePointRight(EInteger bigPlaces)
+<pre>public EFloat MovePointRight​(EInteger bigPlaces)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2373,7 +2385,7 @@ to more than 0.</li>
 
 <h3>MovePointRight</h3>
 
-<pre>public EFloat MovePointRight(EInteger bigPlaces, EContext ctx)
+<pre>public EFloat MovePointRight​(EInteger bigPlaces, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with the radix point moved to
@@ -2401,7 +2413,7 @@ to more than 0.</li>
 
 <h3>Multiply</h3>
 
-<pre>public EFloat Multiply(EFloat otherValue)
+<pre>public EFloat Multiply​(EFloat otherValue)
 </pre>
 
 <p>Multiplies two binary floats. The resulting exponent will be the sum of the
@@ -2421,7 +2433,7 @@ to more than 0.</li>
 
 <h3>Multiply</h3>
 
-<pre>public EFloat Multiply(EFloat op, EContext ctx)
+<pre>public EFloat Multiply​(EFloat op, EContext ctx)
 </pre>
 
 <p>Multiplies two binary floats. The resulting scale will be the sum of the
@@ -2448,7 +2460,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MultiplyAndAdd</h3>
 
-<pre>public EFloat MultiplyAndAdd(EFloat multiplicand, EFloat augend)
+<pre>public EFloat MultiplyAndAdd​(EFloat multiplicand, EFloat augend)
 </pre>
 
 <p>Multiplies by one binary float, and then adds another binary float.</p>
@@ -2468,7 +2480,7 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 
 <h3>MultiplyAndAdd</h3>
 
-<pre>public EFloat MultiplyAndAdd(EFloat op, EFloat augend, EContext ctx)
+<pre>public EFloat MultiplyAndAdd​(EFloat op, EFloat augend, EContext ctx)
 </pre>
 
 <p>Multiplies by one value, and then adds another value.</p>
@@ -2496,7 +2508,7 @@ multiplying and adding.</p></li>
 
 <h3>MultiplyAndSubtract</h3>
 
-<pre>public EFloat MultiplyAndSubtract(EFloat op, EFloat subtrahend, EContext ctx)
+<pre>public EFloat MultiplyAndSubtract​(EFloat op, EFloat subtrahend, EContext ctx)
 </pre>
 
 <p>Multiplies by one value, and then subtracts another value.</p>
@@ -2525,7 +2537,8 @@ multiplying and subtracting.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>op</code> or <code>subtrahend</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>op</code> or <code>
+subtrahend</code> is null.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -2545,7 +2558,7 @@ signaling NaN.</li>
 
 <h3>Negate</h3>
 
-<pre>public EFloat Negate(EContext context)
+<pre>public EFloat Negate​(EContext context)
 </pre>
 
 <p>Returns a binary float with the same value as this object but with the sign
@@ -2571,7 +2584,7 @@ this value is signaling NaN.</li>
 
 <h3>NextMinus</h3>
 
-<pre>public EFloat NextMinus(EContext ctx)
+<pre>public EFloat NextMinus​(EContext ctx)
 </pre>
 
 <p>Finds the largest value that&#x27;s smaller than the given value.</p>
@@ -2591,13 +2604,14 @@ the pre-existing flags).</li>
 <ul>
 <li>Returns the largest value that&#39;s less than the given value. Returns
 negative infinity if the result is negative infinity. Signals
-FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null, the precision is 0, or <code>ctx</code> has an unlimited
 exponent range.</li>
 </ul>
 
 <h3>NextPlus</h3>
 
-<pre>public EFloat NextPlus(EContext ctx)
+<pre>public EFloat NextPlus​(EContext ctx)
 </pre>
 
 <p>Finds the smallest value that&#x27;s greater than the given value.</p>
@@ -2623,7 +2637,7 @@ an unlimited exponent range.</li>
 
 <h3>NextToward</h3>
 
-<pre>public EFloat NextToward(EFloat otherValue, EContext ctx)
+<pre>public EFloat NextToward​(EFloat otherValue, EContext ctx)
 </pre>
 
 <p>Finds the next value that is closer to the other object&#x27;s value than
@@ -2653,7 +2667,7 @@ an unlimited exponent range.</li>
 
 <h3>Plus</h3>
 
-<pre>public EFloat Plus(EContext ctx)
+<pre>public EFloat Plus​(EContext ctx)
 </pre>
 
 <p>Rounds this object&#x27;s value to a given precision, using the given
@@ -2678,7 +2692,7 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>Pow</h3>
 
-<pre>public EFloat Pow(EFloat exponent, EContext ctx)
+<pre>public EFloat Pow​(EFloat exponent, EContext ctx)
 </pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
@@ -2701,13 +2715,14 @@ which case the precision is unlimited and rounding isn&#39;t needed.</p></li>
 <li>This^exponent. Signals the flag FlagInvalid and returns NaN if this
 object and exponent are both 0; or if this value is less than 0 and
 the exponent either has a fractional part or is infinity. Signals
-FlagInvalid and returns not-a-number (NaN) if the parameter <code>ctx</code> is null or the precision is unlimited (the context&#39;s Precision
+FlagInvalid and returns not-a-number (NaN) if the parameter <code>
+ctx</code> is null or the precision is unlimited (the context&#39;s Precision
 property is 0), and the exponent has a fractional part.</li>
 </ul>
 
 <h3>Pow</h3>
 
-<pre>public EFloat Pow(int exponentSmall, EContext ctx)
+<pre>public EFloat Pow​(int exponentSmall, EContext ctx)
 </pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
@@ -2732,7 +2747,7 @@ object and exponent are both 0.</li>
 
 <h3>Pow</h3>
 
-<pre>public EFloat Pow(int exponentSmall)
+<pre>public EFloat Pow​(int exponentSmall)
 </pre>
 
 <p>Raises this object&#x27;s value to the given exponent.</p>
@@ -2767,7 +2782,7 @@ exponent are both 0.</li>
 
 <h3>Quantize</h3>
 
-<pre>public EFloat Quantize(EInteger desiredExponent, EContext ctx)
+<pre>public EFloat Quantize​(EInteger desiredExponent, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value but a new exponent. <p>Note that
@@ -2817,7 +2832,7 @@ exponent is outside that range.</li>
 
 <h3>Quantize</h3>
 
-<pre>public EFloat Quantize(int desiredExponentInt, EContext ctx)
+<pre>public EFloat Quantize​(int desiredExponentInt, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value but a new exponent. <p>Note that
@@ -2866,7 +2881,7 @@ exponent is outside that range.</li>
 
 <h3>Quantize</h3>
 
-<pre>public EFloat Quantize(EFloat otherValue, EContext ctx)
+<pre>public EFloat Quantize​(EFloat otherValue, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but with the same
@@ -2911,7 +2926,7 @@ exponent is outside that range.</li>
 
 <h3>Reduce</h3>
 
-<pre>public EFloat Reduce(EContext ctx)
+<pre>public EFloat Reduce​(EContext ctx)
 </pre>
 
 <p>Removes trailing zeros from this object&#x27;s mantissa (significand). For
@@ -2938,7 +2953,7 @@ there may still be some trailing zeros in the mantissa (significand).</li>
 
 <h3>Remainder</h3>
 
-<pre>public EFloat Remainder(EFloat divisor, EContext ctx)
+<pre>public EFloat Remainder​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Finds the remainder that results when dividing two arbitrary-precision
@@ -2971,7 +2986,7 @@ the given precision.</li>
 
 <h3>RemainderNaturalScale</h3>
 
-<pre>public EFloat RemainderNaturalScale(EFloat divisor)
+<pre>public EFloat RemainderNaturalScale​(EFloat divisor)
 </pre>
 
 <p>Calculates the remainder of a number by the formula <code>&quot;this&quot; - ((&quot;this&quot; /
@@ -2991,7 +3006,7 @@ the given precision.</li>
 
 <h3>RemainderNaturalScale</h3>
 
-<pre>public EFloat RemainderNaturalScale(EFloat divisor, EContext ctx)
+<pre>public EFloat RemainderNaturalScale​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
@@ -3021,7 +3036,7 @@ division, is needed.</p></li>
 
 <h3>RemainderNear</h3>
 
-<pre>public EFloat RemainderNear(EFloat divisor, EContext ctx)
+<pre>public EFloat RemainderNear​(EFloat divisor, EContext ctx)
 </pre>
 
 <p>Finds the distance to the closest multiple of the given divisor, based on
@@ -3064,7 +3079,7 @@ given precision.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre>public EFloat RoundToExponent(EInteger exponent, EContext ctx)
+<pre>public EFloat RoundToExponent​(EInteger exponent, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to a
@@ -3100,7 +3115,7 @@ arithmetic context.</li>
 
 <h3>RoundToExponent</h3>
 
-<pre>public EFloat RoundToExponent(int exponentSmall, EContext ctx)
+<pre>public EFloat RoundToExponent​(int exponentSmall, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to a
@@ -3136,7 +3151,7 @@ arithmetic context.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre>public EFloat RoundToExponentExact(EInteger exponent, EContext ctx)
+<pre>public EFloat RoundToExponentExact​(EInteger exponent, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to the
@@ -3173,7 +3188,7 @@ the valid range of the arithmetic context.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre>public EFloat RoundToExponentExact(EInteger exponent, ERounding rounding)
+<pre>public EFloat RoundToExponentExact​(EInteger exponent, ERounding rounding)
 </pre>
 
 <p>Returns a binary number with the same value as this object but rounded to
@@ -3200,7 +3215,7 @@ given precision.</li>
 
 <h3>RoundToExponentExact</h3>
 
-<pre>public EFloat RoundToExponentExact(int exponentSmall, EContext ctx)
+<pre>public EFloat RoundToExponentExact​(int exponentSmall, EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to an
@@ -3236,7 +3251,7 @@ the valid range of the arithmetic context.</li>
 
 <h3>RoundToIntegerExact</h3>
 
-<pre>public EFloat RoundToIntegerExact(EContext ctx)
+<pre>public EFloat RoundToIntegerExact​(EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to an
@@ -3266,7 +3281,7 @@ context.</li>
 
 <h3>RoundToIntegerNoRoundedFlag</h3>
 
-<pre>public EFloat RoundToIntegerNoRoundedFlag(EContext ctx)
+<pre>public EFloat RoundToIntegerNoRoundedFlag​(EContext ctx)
 </pre>
 
 <p>Returns a binary float with the same value as this object but rounded to an
@@ -3298,10 +3313,12 @@ outside of the valid range of the arithmetic context.</li>
 
 <h3>RoundToIntegralExact</h3>
 
-<pre>@Deprecated public EFloat RoundToIntegralExact(EContext ctx)
+<pre>@Deprecated public EFloat RoundToIntegralExact​(EContext ctx)
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to RoundToIntegerExact.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to RoundToIntegerExact.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3327,10 +3344,12 @@ context.</li>
 
 <h3>RoundToIntegralNoRoundedFlag</h3>
 
-<pre>@Deprecated public EFloat RoundToIntegralNoRoundedFlag(EContext ctx)
+<pre>@Deprecated public EFloat RoundToIntegralNoRoundedFlag​(EContext ctx)
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to RoundToIntegerNoRoundedFlag.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to RoundToIntegerNoRoundedFlag.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3357,7 +3376,7 @@ outside of the valid range of the arithmetic context.</li>
 
 <h3>RoundToPrecision</h3>
 
-<pre>public EFloat RoundToPrecision(EContext ctx)
+<pre>public EFloat RoundToPrecision​(EContext ctx)
 </pre>
 
 <p>Rounds this object&#x27;s value to a given precision, using the given
@@ -3383,7 +3402,7 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>ScaleByPowerOfTwo</h3>
 
-<pre>public EFloat ScaleByPowerOfTwo(int places)
+<pre>public EFloat ScaleByPowerOfTwo​(int places)
 </pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
@@ -3402,7 +3421,7 @@ null or the precision and exponent range are unlimited.</li>
 
 <h3>ScaleByPowerOfTwo</h3>
 
-<pre>public EFloat ScaleByPowerOfTwo(int places, EContext ctx)
+<pre>public EFloat ScaleByPowerOfTwo​(int places, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
@@ -3425,7 +3444,7 @@ flags are in addition to the pre-existing flags). Can be null.</p></li>
 
 <h3>ScaleByPowerOfTwo</h3>
 
-<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces)
+<pre>public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces)
 </pre>
 
 <p>Returns a number similar to this number but with the scale adjusted.</p>
@@ -3444,7 +3463,7 @@ flags are in addition to the pre-existing flags). Can be null.</p></li>
 
 <h3>ScaleByPowerOfTwo</h3>
 
-<pre>public EFloat ScaleByPowerOfTwo(EInteger bigPlaces, EContext ctx)
+<pre>public EFloat ScaleByPowerOfTwo​(EInteger bigPlaces, EContext ctx)
 </pre>
 
 <p>Returns a number similar to this number but with its scale adjusted.</p>
@@ -3467,7 +3486,7 @@ flags are in addition to the pre-existing flags). Can be null.</p></li>
 
 <h3>Sqrt</h3>
 
-<pre>public EFloat Sqrt(EContext ctx)
+<pre>public EFloat Sqrt​(EContext ctx)
 </pre>
 
 <p>Finds the square root of this object&#x27;s value.</p>
@@ -3496,10 +3515,12 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>SquareRoot</h3>
 
-<pre>@Deprecated public EFloat SquareRoot(EContext ctx)
+<pre>@Deprecated public EFloat SquareRoot​(EContext ctx)
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to Sqrt.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to Sqrt.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3525,7 +3546,7 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>Subtract</h3>
 
-<pre>public EFloat Subtract(EFloat otherValue)
+<pre>public EFloat Subtract​(EFloat otherValue)
 </pre>
 
 <p>Subtracts an arbitrary-precision binary float from this instance and returns
@@ -3545,7 +3566,7 @@ the precision is unlimited (the context&#39;s Precision property is 0).</li>
 
 <h3>Subtract</h3>
 
-<pre>public EFloat Subtract(EFloat otherValue, EContext ctx)
+<pre>public EFloat Subtract​(EFloat otherValue, EContext ctx)
 </pre>
 
 <p>Subtracts an arbitrary-precision binary float from this instance.</p>
@@ -3627,7 +3648,9 @@ not-a-number (NaN).</li>
 <pre>@Deprecated public EInteger ToEIntegerExact()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToEIntegerIfExact.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToEIntegerIfExact.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -3684,7 +3707,9 @@ not-a-number (NaN).</p></li>
 <pre>@Deprecated public EDecimal ToExtendedDecimal()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToEDecimal.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToEDecimal.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -3707,7 +3732,7 @@ not-a-number (NaN).</p></li>
 
 <h3>ToShortestString</h3>
 
-<pre>public String ToShortestString(EContext ctx)
+<pre>public String ToShortestString​(EContext ctx)
 </pre>
 
 <p>Returns a string representation of this number&#39;s value after rounding to the
@@ -3861,7 +3886,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 
 <h3>FromByte</h3>
 
-<pre>public static EFloat FromByte(byte inputByte)
+<pre>public static EFloat FromByte​(byte inputByte)
 </pre>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</p>
@@ -3939,7 +3964,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 
 <h3>FromInt16</h3>
 
-<pre>public static EFloat FromInt16(short inputInt16)
+<pre>public static EFloat FromInt16​(short inputInt16)
 </pre>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision binary float.</p>
@@ -4019,7 +4044,7 @@ an exact integer, or is less than -2147483648 or greater than
 
 <h3>FromInt32</h3>
 
-<pre>public static EFloat FromInt32(int inputInt32)
+<pre>public static EFloat FromInt32​(int inputInt32)
 </pre>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision binary float.</p>
@@ -4099,7 +4124,7 @@ than 9223372036854775807.</li>
 
 <h3>FromInt64</h3>
 
-<pre>public static EFloat FromInt64(long inputInt64)
+<pre>public static EFloat FromInt64​(long inputInt64)
 </pre>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision binary float.</p>
