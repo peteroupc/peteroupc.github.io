@@ -32,7 +32,9 @@ values for the options.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean getBase64Padding()</code><br></li>
+<li><code>boolean getBase64Padding()</code><br>
+If true, include padding when writing data in base64url or
+traditional base64 format to JSON.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -50,6 +52,16 @@ values for the options.</li>
 
 <pre>public final boolean getBase64Padding()
 </pre>
+
+<p>If <b>true</b>, include padding when writing data in base64url or
+ traditional base64 format to JSON.<p> The padding character is &#39;=&#39;.
+ </p></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The default is false, no padding.</li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

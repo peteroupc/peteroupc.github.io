@@ -22,7 +22,7 @@
 <ul>
 <li><code>EInteger Abs()</code><br>
 Returns the absolute value of this object&#39;s value.</li>
-<li><code>EInteger Add(EInteger bigintAugend)</code><br>
+<li><code>EInteger Add​(EInteger bigintAugend)</code><br>
 Adds this object and another object.</li>
 <li><code>int AsInt32Checked()</code><br>
 Deprecated.
@@ -44,43 +44,43 @@ Renamed to ToInt64Unchecked.</li>
 Returns whether this object&#39;s value can fit in a 32-bit signed integer.</li>
 <li><code>boolean CanFitInInt64()</code><br>
 Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
-<li><code>int compareTo(EInteger other)</code><br>
+<li><code>int compareTo​(EInteger other)</code><br>
 Compares an arbitrary-precision integer with this instance.</li>
-<li><code>EInteger Divide(EInteger bigintDivisor)</code><br>
+<li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
-<li><code>EInteger[] DivRem(EInteger divisor)</code><br>
+<li><code>EInteger[] DivRem​(EInteger divisor)</code><br>
 Divides this object by another arbitrary-precision integer and returns the
 quotient and remainder.</li>
-<li><code>boolean equals(Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object and another object are equal and have the
 same type.</li>
-<li><code>static EInteger FromByte(byte inputByte)</code><br>
+<li><code>static EInteger FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
-<li><code>static EInteger FromBytes(byte[] bytes,
+<li><code>static EInteger FromBytes​(byte[] bytes,
      boolean littleEndian)</code><br>
 Initializes an arbitrary-precision integer from an array of bytes.</li>
-<li><code>static EInteger FromInt16(short inputInt16)</code><br>
+<li><code>static EInteger FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
-<li><code>static EInteger FromInt32(int intValue)</code><br>
+<li><code>static EInteger FromInt32​(int intValue)</code><br>
 Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
-<li><code>static EInteger FromInt64(long longerValue)</code><br>
+<li><code>static EInteger FromInt64​(long longerValue)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
-<li><code>static EInteger FromRadixString(String str,
+<li><code>static EInteger FromRadixString​(String str,
            int radix)</code><br>
 Converts a string to an arbitrary-precision integer in a given radix.</li>
-<li><code>static EInteger FromRadixSubstring(String str,
+<li><code>static EInteger FromRadixSubstring​(String str,
               int radix,
               int index,
               int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer in a given
 radix.</li>
-<li><code>static EInteger FromString(String str)</code><br>
+<li><code>static EInteger FromString​(String str)</code><br>
 Converts a string to an arbitrary-precision integer.</li>
-<li><code>static EInteger FromSubstring(String str,
+<li><code>static EInteger FromSubstring​(String str,
          int index,
          int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer.</li>
-<li><code>EInteger Gcd(EInteger bigintSecond)</code><br>
+<li><code>EInteger Gcd​(EInteger bigintSecond)</code><br>
 Returns the greatest common divisor of this integer and the given integer.</li>
 <li><code>int GetDigitCount()</code><br>
 Returns the number of decimal digits used by this integer.</li>
@@ -90,7 +90,7 @@ Gets the lowest set bit in this number&#39;s absolute value.</li>
 Gets the lowest set bit in this number&#39;s absolute value.</li>
 <li><code>static EInteger getOne()</code><br>
 Gets the number 1 as an arbitrary-precision integer.</li>
-<li><code>boolean GetSignedBit(int index) &quot;Forms of numbers&quot;</code><br>
+<li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
 Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
 object&#39; s value.</li>
 <li><code>int GetSignedBitLength()</code><br>
@@ -98,7 +98,7 @@ Finds the minimum number of bits needed to represent this object&#39;s
 value, except for its sign.</li>
 <li><code>static EInteger getTen()</code><br>
 Gets the number 10 as an arbitrary-precision integer.</li>
-<li><code>boolean GetUnsignedBit(int index)</code><br>
+<li><code>boolean GetUnsignedBit​(int index)</code><br>
 Returns whether a bit is set in this number&#39;s absolute value.</li>
 <li><code>int GetUnsignedBitLength()</code><br>
 Finds the minimum number of bits needed to represent this number&#39;s
@@ -116,30 +116,30 @@ Gets a value indicating whether this value is even.</li>
 Gets a value indicating whether this object&#39;s value is a power of two.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this value is 0.</li>
-<li><code>EInteger Mod(EInteger divisor)</code><br>
+<li><code>EInteger Mod​(EInteger divisor)</code><br>
 Finds the modulus remainder that results when this instance is divided by
 the value of an arbitrary-precision integer.</li>
-<li><code>EInteger ModPow(EInteger pow,
+<li><code>EInteger ModPow​(EInteger pow,
   EInteger mod)</code><br>
 Calculates the remainder when this arbitrary-precision integer raised to a
 certain power is divided by another arbitrary-precision integer.</li>
-<li><code>EInteger Multiply(EInteger bigintMult)</code><br>
+<li><code>EInteger Multiply​(EInteger bigintMult)</code><br>
 Multiplies this instance by the value of an arbitrary-precision integer
 object.</li>
 <li><code>EInteger Negate()</code><br>
 Gets the value of this object with the sign reversed.</li>
-<li><code>EInteger Pow(int powerSmall)</code><br>
+<li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
-<li><code>EInteger PowBigIntVar(EInteger power)</code><br>
+<li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
 Raises an arbitrary-precision integer to a power, which is given as another
 arbitrary-precision integer.</li>
-<li><code>EInteger Remainder(EInteger divisor)</code><br>
+<li><code>EInteger Remainder​(EInteger divisor)</code><br>
 Finds the remainder that results when this instance is divided by the value
 of an arbitrary-precision integer.</li>
-<li><code>EInteger ShiftLeft(int numberBits)</code><br>
+<li><code>EInteger ShiftLeft​(int numberBits)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the left by
 a number of bits.</li>
-<li><code>EInteger ShiftRight(int numberBits)</code><br>
+<li><code>EInteger ShiftRight​(int numberBits)</code><br>
 Returns an arbitrary-precision integer with the bits shifted to the right.</li>
 <li><code>int signum()</code><br>
 Gets the sign of this object&#39;s value.</li>
@@ -147,13 +147,13 @@ Gets the sign of this object&#39;s value.</li>
 Finds the square root of this instance&#39;s value, rounded down.</li>
 <li><code>EInteger[] SqrtRem()</code><br>
 Calculates the square root and the remainder.</li>
-<li><code>EInteger Subtract(EInteger subtrahend)</code><br>
+<li><code>EInteger Subtract​(EInteger subtrahend)</code><br>
 Subtracts an arbitrary-precision integer from this arbitrary-precision
 integer.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
 byte (from 0 to 255).</li>
-<li><code>byte[] ToBytes(boolean littleEndian)</code><br>
+<li><code>byte[] ToBytes​(boolean littleEndian)</code><br>
 Returns a byte array of this integer&#39;s value.</li>
 <li><code>byte ToByteUnchecked()</code><br>
 Converts this number to a byte (from 0 to 255), returning the
@@ -174,7 +174,7 @@ Converts this object&#39;s value to a 64-bit signed integer, throwing an
 exception if it can&#39;t fit.</li>
 <li><code>long ToInt64Unchecked()</code><br>
 Converts this object&#39;s value to a 64-bit signed integer.</li>
-<li><code>String ToRadixString(int radix)</code><br>
+<li><code>String ToRadixString​(int radix)</code><br>
 Generates a string representing the value of this object, in the given
 radix.</li>
 <li><code>String toString()</code><br>
@@ -278,7 +278,7 @@ value is positive.</li>
 
 <h3>FromBytes</h3>
 
-<pre>public static EInteger FromBytes(byte[] bytes, boolean littleEndian)
+<pre>public static EInteger FromBytes​(byte[] bytes, boolean littleEndian)
 </pre>
 
 <p>Initializes an arbitrary-precision integer from an array of bytes.</p>
@@ -293,7 +293,8 @@ using the following rules: <ul> <li>Positive numbers have the first
 byte&#39;s highest bit cleared, and negative numbers have the bit
 set.</li> <li>The last byte contains the lowest 8-bits, the
 next-to-last contains the next lowest 8 bits, and so on. For example,
-the number 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>0x00, 0xc8</code>. (Note that the second example contains a set high bit in
+the number 300 can be encoded as <code>0x01, 0x2c</code> and 200 as <code>
+0x00, 0xc8</code>. (Note that the second example contains a set high bit in
 <code>0xC8</code>, so an additional 0 is added at the start to ensure it&#39;s
 interpreted as positive.)</li> <li>To encode negative numbers, take
 the absolute value of the number, subtract by 1, encode the number
@@ -325,7 +326,7 @@ is 0.</li>
 
 <h3>FromInt32</h3>
 
-<pre>public static EInteger FromInt32(int intValue)
+<pre>public static EInteger FromInt32​(int intValue)
 </pre>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision integer.</p>
@@ -345,7 +346,7 @@ number.</li>
 
 <h3>FromInt64</h3>
 
-<pre>public static EInteger FromInt64(long longerValue)
+<pre>public static EInteger FromInt64​(long longerValue)
 </pre>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision integer.</p>
@@ -366,7 +367,7 @@ number.</li>
 
 <h3>FromRadixString</h3>
 
-<pre>public static EInteger FromRadixString(String str, int radix)
+<pre>public static EInteger FromRadixString​(String str, int radix)
 </pre>
 
 <p>Converts a string to an arbitrary-precision integer in a given radix.</p>
@@ -396,7 +397,7 @@ string.</li>
 
 <h3>FromRadixSubstring</h3>
 
-<pre>public static EInteger FromRadixSubstring(String str, int radix, int index, int endIndex)
+<pre>public static EInteger FromRadixSubstring​(String str, int radix, int index, int endIndex)
 </pre>
 
 <p>Converts a portion of a string to an arbitrary-precision integer in a given
@@ -439,7 +440,7 @@ format.</p></li>
 
 <h3>FromString</h3>
 
-<pre>public static EInteger FromString(String str)
+<pre>public static EInteger FromString​(String str)
 </pre>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
@@ -470,7 +471,7 @@ format.</p></li>
 
 <h3>FromSubstring</h3>
 
-<pre>public static EInteger FromSubstring(String str, int index, int endIndex)
+<pre>public static EInteger FromSubstring​(String str, int index, int endIndex)
 </pre>
 
 <p>Converts a portion of a string to an arbitrary-precision integer.</p>
@@ -521,7 +522,7 @@ format.</p></li>
 
 <h3>Add</h3>
 
-<pre>public EInteger Add(EInteger bigintAugend)
+<pre>public EInteger Add​(EInteger bigintAugend)
 </pre>
 
 <p>Adds this object and another object.</p>
@@ -550,7 +551,9 @@ null.</li>
 <pre>@Deprecated public int AsInt32Checked()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToInt32Checked.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToInt32Checked.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -570,7 +573,9 @@ null.</li>
 <pre>@Deprecated public int AsInt32Unchecked()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToInt32Unchecked.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToInt32Unchecked.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -583,7 +588,9 @@ null.</li>
 <pre>@Deprecated public long AsInt64Checked()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToInt64Checked.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToInt64Checked.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -603,7 +610,9 @@ null.</li>
 <pre>@Deprecated public long AsInt64Unchecked()
 </pre>
 
-<p>Deprecated.&nbsp;Renamed to ToInt64Unchecked.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Renamed to ToInt64Unchecked.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -641,7 +650,7 @@ through 9223372036854775807; otherwise, <code>false</code>.</li>
 
 <h3>compareTo</h3>
 
-<pre>public int compareTo(EInteger other)
+<pre>public int compareTo​(EInteger other)
 </pre>
 
 <p>Compares an arbitrary-precision integer with this instance.</p>
@@ -667,7 +676,7 @@ less, or a positive number if this instance is greater.</li>
 
 <h3>Divide</h3>
 
-<pre>public EInteger Divide(EInteger bigintDivisor)
+<pre>public EInteger Divide​(EInteger bigintDivisor)
 </pre>
 
 <p>Divides this instance by the value of an arbitrary-precision integer. The
@@ -699,7 +708,7 @@ null.</p></li>
 
 <h3>DivRem</h3>
 
-<pre>public EInteger[] DivRem(EInteger divisor)
+<pre>public EInteger[] DivRem​(EInteger divisor)
 </pre>
 
 <p>Divides this object by another arbitrary-precision integer and returns the
@@ -728,7 +737,7 @@ quotient, and the second is the remainder.</li>
 
 <h3>equals</h3>
 
-<pre>public boolean equals(Object obj)
+<pre>public boolean equals​(Object obj)
 </pre>
 
 <p>Determines whether this object and another object are equal and have the
@@ -755,7 +764,7 @@ quotient, and the second is the remainder.</li>
 
 <h3>Gcd</h3>
 
-<pre>public EInteger Gcd(EInteger bigintSecond)
+<pre>public EInteger Gcd​(EInteger bigintSecond)
 </pre>
 
 <p>Returns the greatest common divisor of this integer and the given integer.
@@ -847,7 +856,7 @@ value is 0 or odd.</li>
 
 <h3>GetSignedBit</h3>
 
-<pre>public boolean GetSignedBit(int index)
+<pre>public boolean GetSignedBit​(int index)
 </pre>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
@@ -887,7 +896,7 @@ object&#39;s value is 0 or negative 1.</li>
 
 <h3>GetUnsignedBit</h3>
 
-<pre>public boolean GetUnsignedBit(int index)
+<pre>public boolean GetUnsignedBit​(int index)
 </pre>
 
 <p>Returns whether a bit is set in this number&#39;s absolute value.</p>
@@ -937,7 +946,7 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 
 <h3>Mod</h3>
 
-<pre>public EInteger Mod(EInteger divisor)
+<pre>public EInteger Mod​(EInteger divisor)
 </pre>
 
 <p>Finds the modulus remainder that results when this instance is divided by
@@ -967,7 +976,7 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 
 <h3>ModPow</h3>
 
-<pre>public EInteger ModPow(EInteger pow, EInteger mod)
+<pre>public EInteger ModPow​(EInteger pow, EInteger mod)
 </pre>
 
 <p>Calculates the remainder when this arbitrary-precision integer raised to a
@@ -989,12 +998,13 @@ object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>pow</code> or <code>mod</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>pow</code> or <code>
+mod</code> is null.</li>
 </ul>
 
 <h3>Multiply</h3>
 
-<pre>public EInteger Multiply(EInteger bigintMult)
+<pre>public EInteger Multiply​(EInteger bigintMult)
 </pre>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
@@ -1034,7 +1044,7 @@ null.</li>
 
 <h3>Pow</h3>
 
-<pre>public EInteger Pow(int powerSmall)
+<pre>public EInteger Pow​(int powerSmall)
 </pre>
 
 <p>Raises an arbitrary-precision integer to a power.</p>
@@ -1060,7 +1070,7 @@ than 0.</li>
 
 <h3>PowBigIntVar</h3>
 
-<pre>public EInteger PowBigIntVar(EInteger power)
+<pre>public EInteger PowBigIntVar​(EInteger power)
 </pre>
 
 <p>Raises an arbitrary-precision integer to a power, which is given as another
@@ -1087,7 +1097,7 @@ than 0.</li>
 
 <h3>Remainder</h3>
 
-<pre>public EInteger Remainder(EInteger divisor)
+<pre>public EInteger Remainder​(EInteger divisor)
 </pre>
 
 <p>Finds the remainder that results when this instance is divided by the value
@@ -1117,7 +1127,7 @@ than 0.</li>
 
 <h3>ShiftLeft</h3>
 
-<pre>public EInteger ShiftLeft(int numberBits)
+<pre>public EInteger ShiftLeft​(int numberBits)
 </pre>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the left by
@@ -1140,7 +1150,7 @@ parameter.</li>
 
 <h3>ShiftRight</h3>
 
-<pre>public EInteger ShiftRight(int numberBits)
+<pre>public EInteger ShiftRight​(int numberBits)
 </pre>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
@@ -1192,7 +1202,7 @@ is 0 or less, or one and zero if this value equals 1.</li>
 
 <h3>Subtract</h3>
 
-<pre>public EInteger Subtract(EInteger subtrahend)
+<pre>public EInteger Subtract​(EInteger subtrahend)
 </pre>
 
 <p>Subtracts an arbitrary-precision integer from this arbitrary-precision
@@ -1219,7 +1229,7 @@ null.</li>
 
 <h3>ToBytes</h3>
 
-<pre>public byte[] ToBytes(boolean littleEndian)
+<pre>public byte[] ToBytes​(boolean littleEndian)
 </pre>
 
 <p>Returns a byte array of this integer&#x27;s value. The byte array will take
@@ -1321,7 +1331,7 @@ single element 0.</li>
 
 <h3>ToRadixString</h3>
 
-<pre>public String ToRadixString(int radix)
+<pre>public String ToRadixString​(int radix)
 </pre>
 
 <p>Generates a string representing the value of this object, in the given
@@ -1413,7 +1423,7 @@ digits 0 to 9 (U + 0030 to U + 0039).</li>
 
 <h3>FromByte</h3>
 
-<pre>public static EInteger FromByte(byte inputByte)
+<pre>public static EInteger FromByte​(byte inputByte)
 </pre>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision integer.</p>
@@ -1467,7 +1477,7 @@ than 32767.</li>
 
 <h3>FromInt16</h3>
 
-<pre>public static EInteger FromInt16(short inputInt16)
+<pre>public static EInteger FromInt16​(short inputInt16)
 </pre>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision integer.</p>
