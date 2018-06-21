@@ -1118,12 +1118,15 @@ END METHOD
 <li>An application can consider a color <strong>light</strong> if <code>Luminance(color)</code> is greater than some threshold, say, 70.</li>
 </ol>
 
-<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
-1. <strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.
-2. <strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.
-3. <strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.
-4. <strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (Techniques 2-4 as well as RGB channel extraction are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>T. Helland&#39;s site</strong></a>, for example.)
-5. <strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>).</p>
+<p><strong>Note:</strong> Although an application should favor implementing <code>Luminance(color)</code> to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:</p>
+
+<ol>
+<li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
+<li><strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.</li>
+<li><strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.</li>
+<li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (Techniques 2-4 as well as RGB channel extraction are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>T. Helland&#39;s site</strong></a>, for example.)</li>
+<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>).</li>
+</ol>
 </blockquote>
 
 <p><a id=Alpha_Blending></a></p>
@@ -1295,7 +1298,7 @@ END METHOD
 <ul>
 <li><strong>RGB additive.</strong> <code>[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]</code>.</li>
 <li><strong>HSL &quot;lightness&quot; additive.</strong> <code>HslToRgb(hsl[0], hsl[1], min(max(hsl[2] + value, 0), 1))</code>, where <code>hsl = RgbToHsl(color)</code>.</li>
-<li><strong>CIELAB.</strong> <code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors).</li>
+<li><strong>CIELAB lightness additive.</strong> <code>SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])</code>, where <code>lab = SRGBToLab(color)</code> (for companded sRGB colors).</li>
 <li><strong>Tints and shades.</strong> A &quot;tint&quot; is a lighter version, and a &quot;shade&quot; is a darker version.  See &quot;<a href="#Alpha_Blending"><strong>Alpha Blending</strong></a>&quot;.</li>
 </ul>
 
@@ -1328,7 +1331,7 @@ END METHOD
 <p>An <a href="#Notation_and_Definitions"><strong><em>image color list</em></strong></a> is achromatic or &quot;Web safe&quot; if all its colors are achromatic or &quot;Web safe&quot;, respectively.</p></li>
 </ul></li>
 <li><p>Background removal algorithms, including <a href="https://en.wikipedia.org/wiki/Chroma_key"><strong><em>chroma key</em></strong></a>, can replace &quot;background&quot; pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel&#39;s color to determine whether that pixel is a &quot;background&quot; pixel (for example, by checking whether the <a href="#Color_Difference"><strong>color difference</strong></a> between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.</p></li>
-<li> An application can <strong>apply a function</strong> to each component of a multicomponent color (including an RGB color), including power functions (of the form <em>base</em><sup><em>exponent</em></sup>), inversions (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup><a href="#Note30"><strong>(30)</strong></a></sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
+<li> An application can <strong>apply a function</strong> to each component of a multicomponent color (including an RGB color), including a power function (of the form <em>base</em><sup><em>exponent</em></sup>), an inversion (an example is <code>[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]</code> for RGB colors in 0-1 format<sup><a href="#Note30"><strong>(30)</strong></a></sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.</li>
 <li> An application can <strong>swap</strong> the values of any two components of a multicomponent color (including an RGB color) to form new colors.  The following example swaps the blue and red channels of an RGB color: <code>[color[2], color[1], color[0]]</code>.</li>
 <li>Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).</li>
 </ol>
@@ -1341,14 +1344,15 @@ END METHOD
 
 <p>In this document, <code>COLORDIFF(color1, color2)</code> is a function that calculates a <a href="https://en.wikipedia.org/wiki/Color_difference"><strong><em>color difference</em></strong></a> (also known as &quot;color distance&quot;) between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement <code>COLORDIFF</code>.</p>
 
-<p><strong>Euclidean distance.</strong> The following pseudocode implements the Euclidean distance of two colors.  This color difference formula is independent of color model; however, <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a>, rather than companded RGB colors, should be used.</p>
+<p><strong>Euclidean distance.</strong> The following pseudocode implements the Euclidean distance of two multicomponent colors.  This color difference formula is independent of color model; however, <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a>, rather than companded RGB colors, should be used.</p>
 
-<pre>METHOD COLORDIFF(color1, color2)
-   d1=color2[0] - color1[0]
-   d2=color2[1] - color1[1]
-   d3=color2[2] - color1[2]
-   sqdist=d1*d1+d2*d2+d3*d3
-   return sqrt(sqdist)
+<pre>// Euclidean distance for multicomponent colors
+METHOD COLORDIFF(color1, color2)
+    ret = 0
+    for i in 0...len(color1)
+       ret=ret+(color2[i]-color1[i])*(color2[i]-color1[i])
+    end
+    return sqrt(ret)
 END METHOD
 </pre>
 
@@ -1356,7 +1360,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively<sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
+<li>For CIELAB or CIELUV, the 1976 <em>&Delta;E*</em><sub>ab</sub> (&quot;delta E a b&quot;) or <em>&Delta;E*</em><sub>uv</sub> color difference method, respectively<sup><a href="#Note31"><strong>(31)</strong></a></sup>, is the Euclidean distance between two CIELAB or two CIELUV colors, respectively.</li>
 <li>If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.</li>
 </ul>
 </blockquote>
@@ -1504,13 +1508,13 @@ END METHOD
 <p><strong>Averaging.</strong>  To find the dominant color using this technique&mdash;</p>
 
 <ul>
-<li>add all the image color list&#39;s colors, or a sample or subset of them (for RGB colors, adding two or more colors means adding each of their components individually), then</li>
+<li>add all the image color list&#39;s colors, or a sample or subset of them (for RGB or other multicomponent colors, adding two or more colors means adding each of their components individually), then</li>
 <li>divide the result by the number of colors added this way.</li>
 </ul>
 
 <p>Note that for best results, this technique needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
 
-<p><a href="https://en.wikipedia.org/wiki/Color_quantization"><strong>Color quantization</strong></a>. In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
+<p><a href="https://en.wikipedia.org/wiki/Color_quantization"><strong>Color quantization</strong></a>. In this technique, the image color list&#39;s colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include <em>k</em>-means clustering (see the previous section), recursive subdivision, and octrees. Again, for best results, color quantization needs to be carried out with <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em></strong></a> rather than companded RGB colors.</p>
 
 <p><strong>Histogram binning.</strong> To find the dominant colors using this technique (which is independent of color model):</p>
 
@@ -1520,6 +1524,8 @@ END METHOD
 <li>For each color in the image color list, find its <a href="#Nearest_Colors"><strong>nearest color</strong></a> in the color palette, and add 1 to the nearest color&#39;s corresponding value in the histogram.</li>
 <li>Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.</li>
 </ul>
+
+<p><strong>Posterization.</strong> This involves rounding each component of a multicomponent color to the nearest multiple of 1/<em>n</em>, where <em>n</em> is the desired number of levels per channel.  The rounding can be either up or down.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1567,7 +1573,7 @@ END METHOD
 
 <h3>Color Collections</h3>
 
-<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note35"><strong>(35)</strong></a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like"><strong>colors tutorial for the HTML 3D Library</strong></a>.</p>
+<p>If each color in a color map has a name, number, or code associated with it, the color map is also called a <em>color collection</em>.  Examples of names are &quot;red&quot;, &quot;vivid green&quot;, &quot;orange&quot;, &quot;lemonchiffon&quot;, and &quot;5RP 5/6&quot;<sup><a href="#Note35"><strong>(35)</strong></a></sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like"><strong>colors tutorial for the HTML 3D Library</strong></a>.</p>
 
 <p>Converting a color (such as an RGB color) to a color name is equivalent to&mdash;</p>
 
@@ -1591,8 +1597,7 @@ END METHOD
 
 <h3>Visually Distinct Colors</h3>
 
-<p>Color maps can list colors used to identify different items. Because of this
-use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
+<p>Color maps can list colors used to identify different items. Because of this use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;</p>
 
 <ul>
 <li>K. Kelly (1965) proposed a list of &quot;twenty two colors of maximum contrast&quot;<sup><a href="#Note36"><strong>(36)</strong></a></sup>, the first nine of which
@@ -1638,6 +1643,10 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
     END METHOD
 </pre>
 
+<blockquote>
+<p><strong>Example:</strong> The idiom <code>ColorMapContinuous(colormap, 1 - value)</code> gets a continuous color from the reversed version of a color map.</p>
+</blockquote>
+
 <p><a id=Generating_a_Random_Color></a></p>
 
 <h2>Generating a Random Color</h2>
@@ -1676,6 +1685,7 @@ maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another is equivalent to generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences"><strong>earlier</strong></a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.</li>
 <li><strong>Data hashing:</strong> A technique similar to generating random colors is to generate a color from arbitrary data using a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong><em>hash function</em></strong></a>.</li>
+<li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDNUMRANGE(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel by black or white at a predetermined probability each.</li>
 </ul>
 
 <p><a id=Spectral_Color_Functions></a></p>
