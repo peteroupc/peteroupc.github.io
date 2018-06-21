@@ -941,6 +941,7 @@ The [**_luminance factor_**](http://eilv.cie.co.at/term/717)&mdash;
 > 4. An application can consider a color **light** if `Luminance(color)` is greater than some threshold, say, 70.
 >
 > **Note:** Although an application should favor implementing `Luminance(color)` to output luminance factor, that method could also be implemented to output any of the following values, which are similar to luminance factor:
+>
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
 > 3. **Maximum**: `max(max(color[0], color[1]), color[2])`.
@@ -1081,7 +1082,7 @@ The following approaches can generate a lighter or darker version of a color. In
 
 - **RGB additive.** `[min(max(color[0]+value,0),1), min(max(color[1]+value,0),1), min(max(color[2]+value,0),1)]`.
 - **HSL "lightness" additive.** `HslToRgb(hsl[0], hsl[1], min(max(hsl[2] + value, 0), 1))`, where `hsl = RgbToHsl(color)`.
-- **CIELAB.** `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors).
+- **CIELAB lightness additive.** `SRGBFromLab(min(max(lab[0] + (value * 100), 0), 100), lab[1], lab[2])`, where `lab = SRGBToLab(color)` (for companded sRGB colors).
 - **Tints and shades.** A "tint" is a lighter version, and a "shade" is a darker version.  See "[**Alpha Blending**](#Alpha_Blending)".
 
 <a id=Saturate_Desaturate></a>
@@ -1103,7 +1104,7 @@ The following approaches can generate a saturated or desaturated version of a co
      An [**_image color list_**](#Notation_and_Definitions) is achromatic or "Web safe" if all its colors are achromatic or "Web safe", respectively.
 
 2. Background removal algorithms, including [**_chroma key_**](https://en.wikipedia.org/wiki/Chroma_key), can replace "background" pixels of a raster image with other colors.  Such algorithms are outside the scope of this document unless they use only a pixel's color to determine whether that pixel is a "background" pixel (for example, by checking whether the [**color difference**](#Color_Difference) between that color and a predetermined background color is small enough) and, if so, what color that pixel uses instead.
-3.  An application can **apply a function** to each component of a multicomponent color (including an RGB color), including power functions (of the form _base_<sup>_exponent_</sup>), inversions (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format<sup>[**(30)**](#Note30)</sup>), tone mapping curves, and other linear and nonlinear functions.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
+3.  An application can **apply a function** to each component of a multicomponent color (including an RGB color), including a power function (of the form _base_<sup>_exponent_</sup>), an inversion (an example is `[1.0 - color[0], 1.0 - color[1], 1.0 - color[2]]` for RGB colors in 0-1 format<sup>[**(30)**](#Note30)</sup>), or a tone mapping curve.  The function can be one-to-one, but need not be, as long as it maps numbers from 0 through 1 to numbers from 0 through 1.
 4.  An application can **swap** the values of any two components of a multicomponent color (including an RGB color) to form new colors.  The following example swaps the blue and red channels of an RGB color: `[color[2], color[1], color[0]]`.
 5. Raster image processing techniques that process each pixel depending on neighboring pixels or the image context are largely out of scope of this document.  These include pixel neighborhood filters (including Gaussian blur and other convolutions), morphological processing (including erosion and dilation), and image segmentation beyond individual pixels (including some clustering and background removal algorithms).
 
@@ -1114,19 +1115,20 @@ Color difference algorithms are used to determine if two colors are similar.
 
 In this document, `COLORDIFF(color1, color2)` is a function that calculates a [**_color difference_**](https://en.wikipedia.org/wiki/Color_difference) (also known as "color distance") between two colors in the same color space, where the lower the number, the closer the two colors are.  In general, however, color differences calculated using different color spaces or formulas cannot be converted to each other.  This section gives some ways to implement `COLORDIFF`.
 
-**Euclidean distance.** The following pseudocode implements the Euclidean distance of two colors.  This color difference formula is independent of color model; however, [**_linear RGB_ colors**](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
+**Euclidean distance.** The following pseudocode implements the Euclidean distance of two multicomponent colors.  This color difference formula is independent of color model; however, [**_linear RGB_ colors**](#RGB_Color_Spaces), rather than companded RGB colors, should be used.
 
+    // Euclidean distance for multicomponent colors
     METHOD COLORDIFF(color1, color2)
-       d1=color2[0] - color1[0]
-       d2=color2[1] - color1[1]
-       d3=color2[2] - color1[2]
-       sqdist=d1*d1+d2*d2+d3*d3
-       return sqrt(sqdist)
+        ret = 0
+        for i in 0...len(color1)
+           ret=ret+(color2[i]-color1[i])*(color2[i]-color1[i])
+        end
+        return sqrt(ret)
     END METHOD
 
 > **Notes:**
 >
-> - For CIELAB or CIELUV, the Euclidean distance method just given implements the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[**(31)**](#Note31)</sup>.
+> - For CIELAB or CIELUV, the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[**(31)**](#Note31)</sup>, is the Euclidean distance between two CIELAB or two CIELUV colors, respectively.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
 **Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to companded RGB colors, in his article [**"Colour metric"**](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
@@ -1256,12 +1258,12 @@ In the pseudocode below,the method `NearestColorIndex` finds, for a given color 
 There are several methods of finding the kind or kinds of colors that appear most prominently in an [**_image color list_**](#Notation_and_Definitions).
 
 **Averaging.**  To find the dominant color using this technique&mdash;
-- add all the image color list's colors, or a sample or subset of them (for RGB colors, adding two or more colors means adding each of their components individually), then
+- add all the image color list's colors, or a sample or subset of them (for RGB or other multicomponent colors, adding two or more colors means adding each of their components individually), then
 - divide the result by the number of colors added this way.
 
 Note that for best results, this technique needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
-[**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization). In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section). Again, for best results, color quantization needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
+[**Color quantization**](https://en.wikipedia.org/wiki/Color_quantization). In this technique, the image color list's colors are reduced to a small set of colors (for example, ten to twenty).  Quantization algorithms include _k_-means clustering (see the previous section), recursive subdivision, and octrees. Again, for best results, color quantization needs to be carried out with [**_linear RGB_**](#RGB_Color_Spaces) rather than companded RGB colors.
 
 **Histogram binning.** To find the dominant colors using this technique (which is independent of color model):
 
@@ -1269,6 +1271,8 @@ Note that for best results, this technique needs to be carried out with [**_line
 - Create a list with as many zeros as the number of colors in the palette.  This is the _histogram_.
 - For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
+
+**Posterization.** This involves rounding each component of a multicomponent color to the nearest multiple of 1/_n_, where _n_ is the desired number of levels per channel.  The rounding can be either up or down.
 
 > **Notes:**
 >
@@ -1300,7 +1304,7 @@ The [**_ColorBrewer 2.0_**](http://colorbrewer2.org/) Web site's suggestions for
 <a id=Color_Collections></a>
 ### Color Collections
 
-If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", and "5RP 5/6"<sup>[**(35)**](#Note35)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
+If each color in a color map has a name, number, or code associated with it, the color map is also called a _color collection_.  Examples of names are "red", "vivid green", "orange", "lemonchiffon", and "5RP 5/6"<sup>[**(35)**](#Note35)</sup>.  A survey of color collections or color atlases is not covered in this document, but some of them are discussed in some detail in my [**colors tutorial for the HTML 3D Library**](https://peteroupc.github.io/html3dutil/tutorial-colors.html#What_Do_Some_Colors_Look_Like).
 
 Converting a color (such as an RGB color) to a color name is equivalent to&mdash;
 - retrieving the name keyed to that color in a hash table (or returning an error if that color doesn't exist in the hash table), or
@@ -1316,8 +1320,7 @@ Converting a color name to a color is equivalent to retrieving the color keyed t
 <a id=Visually_Distinct_Colors></a>
 ### Visually Distinct Colors
 
-Color maps can list colors used to identify different items. Because of this
-use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
+Color maps can list colors used to identify different items. Because of this use, many applications need to use colors that are easily distinguishable by humans.  In this respect&mdash;
 
 - K. Kelly (1965) proposed a list of "twenty two colors of maximum contrast"<sup>[**(36)**](#Note36)</sup>, the first nine of which
   were intended for readers with normal and [**defective**](#Defective_and_Animal_Color_Vision) color vision, and
@@ -1356,6 +1359,8 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
            return colormap[round(value * (N - 1))]
         END METHOD
 
+> **Example:** The idiom `ColorMapContinuous(colormap, 1 - value)` gets a continuous color from the reversed version of a color map.
+
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
@@ -1383,6 +1388,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
     - To select several random colors from a color map: See [**"Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
 - **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions).
+- **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDNUMRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions
