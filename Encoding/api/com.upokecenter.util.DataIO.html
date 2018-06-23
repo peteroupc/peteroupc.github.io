@@ -15,32 +15,32 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static IByteReader ToByteReader(byte[] bytes)</code><br>
+<li><code>static IByteReader ToByteReader​(byte[] bytes)</code><br>
 Deprecated.
 Use ToReader instead.
 Use ToReader instead.</li>
-<li><code>static IByteReader ToByteReader(byte[] bytes,
+<li><code>static IByteReader ToByteReader​(byte[] bytes,
         int offset,
         int length)</code><br>
 Deprecated.
 Use ToReader instead.
 Use ToReader instead.</li>
-<li><code>static IByteReader ToByteReader(InputStream input)</code><br>
+<li><code>static IByteReader ToByteReader​(InputStream input)</code><br>
 Deprecated.
 Use ToReader instead.
 Use ToReader instead.</li>
-<li><code>static IReader ToReader(byte[] bytes)</code><br>
+<li><code>static IReader ToReader​(byte[] bytes)</code><br>
 Wraps a byte array into a byte reader.</li>
-<li><code>static IReader ToReader(byte[] bytes,
+<li><code>static IReader ToReader​(byte[] bytes,
     int offset,
     int length)</code><br>
 Wraps a portion of a byte array into a byte reader object.</li>
-<li><code>static IReader ToReader(InputStream input)</code><br>
+<li><code>static IReader ToReader​(InputStream input)</code><br>
 Wraps an input stream into a reader object.</li>
-<li><code>static IWriter ToWriter(IByteWriter output)</code><br>
+<li><code>static IWriter ToWriter​(IByteWriter output)</code><br>
 Wraps a byte writer (one that only implements a ReadByte method) to a writer
 (one that also implements a three-parameter Read method.)</li>
-<li><code>static IWriter ToWriter(OutputStream output)</code><br>
+<li><code>static IWriter ToWriter​(OutputStream output)</code><br>
 Wraps an output stream into a writer object.</li>
 </ul>
 
@@ -48,7 +48,7 @@ Wraps an output stream into a writer object.</li>
 
 <h3>ToReader</h3>
 
-<pre>public static IReader ToReader(byte[] bytes)
+<pre>public static IReader ToReader​(byte[] bytes)
 </pre>
 
 <p>Wraps a byte array into a byte reader. The reader will start at the
@@ -79,7 +79,7 @@ Wraps an output stream into a writer object.</li>
 
 <h3>ToReader</h3>
 
-<pre>public static IReader ToReader(byte[] bytes, int offset, int length)
+<pre>public static IReader ToReader​(byte[] bytes, int offset, int length)
 </pre>
 
 <p>Wraps a portion of a byte array into a byte reader object. <p>In the .NET
@@ -116,7 +116,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToReader</h3>
 
-<pre>public static IReader ToReader(InputStream input)
+<pre>public static IReader ToReader​(InputStream input)
 </pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
@@ -147,16 +147,19 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes, int offset, int length)
+<pre>@Deprecated public static IByteReader ToByteReader​(byte[] bytes, int offset, int length)
 </pre>
 
-<p>Deprecated.&nbsp;Use ToReader instead.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use ToReader instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>bytes</code> - The parameter <code>bytes</code> is not documented yet.</p></li>
-<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>bytes</code> begins.</p></li>
+<li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
+bytes</code> begins.</p></li>
 <li><p><code>length</code> - The length, in bytes, of the desired portion of <code>bytes</code>
 (but not more than <code>bytes</code> &#39;s length).</p></li>
 </ul>
@@ -178,10 +181,12 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre>@Deprecated public static IByteReader ToByteReader(InputStream input)
+<pre>@Deprecated public static IByteReader ToByteReader​(InputStream input)
 </pre>
 
-<p>Deprecated.&nbsp;Use ToReader instead.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use ToReader instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -197,10 +202,12 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToByteReader</h3>
 
-<pre>@Deprecated public static IByteReader ToByteReader(byte[] bytes)
+<pre>@Deprecated public static IByteReader ToByteReader​(byte[] bytes)
 </pre>
 
-<p>Deprecated.&nbsp;Use ToReader instead.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use ToReader instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -216,7 +223,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToWriter</h3>
 
-<pre>public static IWriter ToWriter(OutputStream output)
+<pre>public static IWriter ToWriter​(OutputStream output)
 </pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by
@@ -247,7 +254,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 
 <h3>ToWriter</h3>
 
-<pre>public static IWriter ToWriter(IByteWriter output)
+<pre>public static IWriter ToWriter​(IByteWriter output)
 </pre>
 
 <p>Wraps a byte writer (one that only implements a ReadByte method) to a writer
