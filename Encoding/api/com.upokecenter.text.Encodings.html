@@ -821,31 +821,6 @@ encoder and a decoder).</li>
 
 <h3>GetEncoding</h3>
 
-<pre>public static ICharacterEncoding GetEncoding​(String name, boolean forEmail)
-</pre>
-
-<p>Returns a character encoding from the given name.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>name</code> - A string naming a character encoding. See the ResolveAlias
-method. Can be null.</p></li>
-<li><p><code>forEmail</code> - If false, uses the encoding resolution rules in the Encoding
-Standard. If true, uses modified rules as described in the
-ResolveAliasForEmail method.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An object that enables encoding and decoding text in the given
-character encoding. Returns null if the name is null or empty, or if
-it names an unrecognized or unsupported encoding.</li>
-</ul>
-
-<h3>GetEncoding</h3>
-
 <pre>@Deprecated public static ICharacterEncoding GetEncoding​(String name, boolean forEmail, boolean allowReplacement)
 </pre>
 
@@ -863,6 +838,31 @@ method. Can be null.</p></li>
 Standard. If true, uses modified rules as described in the
 ResolveAliasForEmail method.</p></li>
 <li><p><code>allowReplacement</code> - Has no effect.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An object that enables encoding and decoding text in the given
+character encoding. Returns null if the name is null or empty, or if
+it names an unrecognized or unsupported encoding.</li>
+</ul>
+
+<h3>GetEncoding</h3>
+
+<pre>public static ICharacterEncoding GetEncoding​(String name, boolean forEmail)
+</pre>
+
+<p>Returns a character encoding from the given name.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>name</code> - A string naming a character encoding. See the ResolveAlias
+method. Can be null.</p></li>
+<li><p><code>forEmail</code> - If false, uses the encoding resolution rules in the Encoding
+Standard. If true, uses modified rules as described in the
+ResolveAliasForEmail method.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
