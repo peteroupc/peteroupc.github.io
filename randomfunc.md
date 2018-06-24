@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 20, 2018.
+Begun on June 4, 2017; last updated on June 23, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -716,7 +716,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > 1. If `STATEJUMP()` is `RNDINT(1) * 2 - 1`, the random walk generates numbers that differ by -1 or 1, chosen at random.
 > 2. If `STATEJUMP()` is `RNDNUMRANGE(-1, 1)`, the random state is advanced by a random real number in the interval [-1, 1].
 > 3. If `STATEJUMP()` is `Binomial(1, p)`, the random walk models a _binomial process_, where the state is advanced with probability `p`.
-> 4. If `STATEJUMP()` is `Binomial(1, p) * 2 - 1`, the random walk's state generates numbers that differ by -1 or 1 depending on the probability `p`.
+> 4. If `STATEJUMP()` is `Binomial(1, p) * 2 - 1`, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability `p`.
 >
 > **Notes:**
 >
