@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 20, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 23, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -899,7 +899,7 @@ END METHOD
 <li>If <code>STATEJUMP()</code> is <code>RNDINT(1) * 2 - 1</code>, the random walk generates numbers that differ by -1 or 1, chosen at random.</li>
 <li>If <code>STATEJUMP()</code> is <code>RNDNUMRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
 <li>If <code>STATEJUMP()</code> is <code>Binomial(1, p)</code>, the random walk models a <em>binomial process</em>, where the state is advanced with probability <code>p</code>.</li>
-<li>If <code>STATEJUMP()</code> is <code>Binomial(1, p) * 2 - 1</code>, the random walk&#39;s state generates numbers that differ by -1 or 1 depending on the probability <code>p</code>.</li>
+<li>If <code>STATEJUMP()</code> is <code>Binomial(1, p) * 2 - 1</code>, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability <code>p</code>.</li>
 </ol>
 
 <p><strong>Notes:</strong></p>
