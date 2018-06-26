@@ -45,12 +45,13 @@
     PeterO.Text.ICharacterInput input);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>input</i>: An ICharacterInput object.</li>
+<li><i>input</i>: The parameter  <i>input</i>
+is a public object.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -60,21 +61,15 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: An ICharacterInput object.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</li>
+<li><p><i>stream</i>: The parameter  <i>stream</i>
+is a public object.</p></li>
+<li><p><i>form</i>: The parameter  <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -83,12 +78,13 @@ is null.</li>
     string str);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string specifying the text to normalize.</li>
+<li><i>str</i>: The parameter  <i>str</i>
+is a text string.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -100,18 +96,19 @@ is null.</li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class. Uses a portion of a string as the input.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
-<li><p><i>index</i>: A zero-based index showing where the desired portion of  <i>str</i>
-begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
-&#39;s length).</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a public object.</p></li>
+<li><p><i>index</i>: The parameter  <i>index</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>length</i>: The parameter  <i>length</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>form</i>: The parameter  <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -121,13 +118,23 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
+<li><p><i>form</i>: The parameter  <i>form</i>
+is a Normalization object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>str</i>
+or &quot;input&quot; or &quot;charArray&quot; is null.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -136,14 +143,13 @@ begins.</p></li>
     System.Collections.Generic.IList characterList);
 </pre>
 
-<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using Normalization Form C.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>characterList</i>: A list of Unicode code points specifying the text to normalize.</li>
+<li><i>characterList</i>: The parameter  <i>characterList</i>
+is an IList object.</li>
 </ul>
 
 <h3>NormalizingCharacterInput Constructor</h3>
@@ -153,29 +159,21 @@ begins.</p></li>
     PeterO.Text.Normalization form);
 </pre>
 
-<p><b>Deprecated.</b> Either convert the list to a string or wrap it in an ICharacterInput and call the corresponding overload instead.</p>
-
-<p>Initializes a new instance of the <a href="PeterO.Text.NormalizerInput.html">PeterO.Text.NormalizerInput</a> class using the given normalization form.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.NormalizingCharacterInput.html">PeterO.Text.NormalizingCharacterInput</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>characterList</i>: An IList object.</p></li>
-<li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>characterList</i>
-is null.</li>
+<li><p><i>characterList</i>: The parameter  <i>characterList</i>
+is a public object.</p></li>
+<li><p><i>form</i>: The parameter  <i>form</i>
+is a Normalization object.</p></li>
 </ul>
 
 <h3>GetChars</h3>
 
 <pre>public static System.Collections.Generic.IList GetChars(
-    PeterO.Text.ICharacterInput input,
+    PeterO.Text.ICharacterInput chars,
     PeterO.Text.Normalization form);
 </pre>
 
@@ -186,7 +184,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: An object that implements a stream of Unicode characters.</p></li>
+<li><p><i>chars</i>: An object that implements a stream of Unicode characters.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
@@ -198,7 +196,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter <i>chars</i>
 is null.</li>
 </ul>
 
@@ -216,7 +214,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string.</p></li>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is a text string.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 

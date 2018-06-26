@@ -361,7 +361,7 @@ class RandomGen:
         break
     ret=dd*v
     if mean<1:
-      ret=ret*math.exp(math.ln(1.0-self.rndu01oneexc()) / mean)
+      ret=ret*math.exp(math.log(1.0-self.rndu01oneexc()) / mean)
     return ret**(1.0/c)*b+d
 
   def stable(self, alpha, beta):
@@ -613,10 +613,8 @@ of failures of each kind of failure.
      """ Multivariate t-distribution, mu is the mean (can be None),
            cov is the covariance matrix, and df is the degrees of freedom. """
      mn=self.multinormal(None, cov)
-     if mu==None:
-       return [x/math.sqrt(self.gamma(df*0.5,2.0/df)) for x in mn]
-     else:
-       return [mu[i]+mn[i]/math.sqrt(self.gamma(df*0.5,2.0/df)) for i in range(len(mn))]
+     cd=self.gamma(df*0.5,2.0/df)
+     return [(0 if mu==None else mu[i])+mn[i]/math.sqrt(cd) for i in range(len(mn))]
 
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
