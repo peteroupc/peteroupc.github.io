@@ -578,6 +578,8 @@ is null.</li>
     bool allowReplacement);
 </pre>
 
+<p><b>Deprecated.</b> The latest draft of the Encoding Standard includes &#39;replacement&#39; as an alias for itself, making this overload unnecessary.</p>
+
 <p>Returns a character encoding from the given name.</p>
 
 <p><b>Parameters:</b></p>
@@ -585,7 +587,7 @@ is null.</li>
 <ul>
 <li><p><i>name</i>: A string naming a character encoding. See the ResolveAlias method. Can be null.</p></li>
 <li><p><i>forEmail</i>: If false, uses the encoding resolution rules in the Encoding Standard. If true, uses modified rules as described in the ResolveAliasForEmail method.</p></li>
-<li><p><i>allowReplacement</i>: If true, allows the label <code>replacement</code>  to return the replacement encoding.</p></li>
+<li><p><i>allowReplacement</i>: Has no effect.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -626,7 +628,7 @@ is null.</li>
 <li><p><code>UTF-16LE</code>  - UTF-16 little-endian (16-bit UCS)</p></li>
 <li><p><code>UTF-16BE</code>  - UTF-16 big-endian (16-bit UCS)</p></li>
 <li><p>The special-purpose encoding  <code>x-user-defined</code></p></li>
-<li><p>The special-purpose encoding  <code>replacement</code> , which this function returns only if one of several aliases are passed to it, as defined in the Encoding Standard.</p></li>
+<li><p>The special-purpose encoding  <code>replacement</code> .</p></li>
 <li><p>28 legacy single-byte encodings:</p></li>
 <li><p><code>windows-1252</code>  : Western Europe (Note: The Encoding Standard aliases the names  <code>US-ASCII</code>  and  <code>ISO-8859-1</code>  to <code>windows-1252</code> , which uses a different character set from either; it differs from  <code>ISO-8859-1</code>  by assigning different characters to some bytes from 0x80 to 0x9F. The Encoding Standard does this for compatibility with existing Web pages.)</p></li>
 <li><p><code>ISO-8859-2</code> ,  <code>windows-1250</code>  : Central Europe</p></li>
