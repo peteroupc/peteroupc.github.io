@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 23, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 26, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -177,7 +177,7 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs; however, the definition of <code>RNDINT</code> is not limited to those kinds.  (These two kinds were chosen because they were the most commonly seen in practice.)</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating independent uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  This section explains how <code>RNDINT</code> can be implemented for two kinds of underlying RNGs; however, the definition of <code>RNDINT</code> is not limited to those kinds.  (These two kinds were chosen because they were the most commonly seen in practice.)</p>
 
 <ul>
 <li><strong>Method 1</strong>: If <code>RNG()</code> outputs <strong>integers in the interval</strong> <strong>[0, positive <code>MODULUS</code>)</strong> (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2"><strong>(2)</strong></a></sup></li>
