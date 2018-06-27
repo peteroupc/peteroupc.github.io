@@ -601,6 +601,17 @@ of failures of each kind of failure.
         i=i+1
       return ret
 
+  def upper_bound_copula(self, n = 2):
+      x=self.rndu01() # Generate number once
+      return [x for i in range(n)]
+
+  def product_copula(self, n = 2):
+      return [self.rndu01() for i in range(n)]
+
+  def lower_bound_copula(self):
+      x=self.rndu01() # Generate number once
+      return [x, 1.0 - x]
+
   def gaussian_copula(self, cov):
        mvn=self.multinormal(None, cov)
        for i in range(len(cov)):
