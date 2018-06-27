@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on June 26, 2018.</p>
+<p>Begun on June 4, 2017; last updated on June 27, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -701,12 +701,12 @@ END METHOD
 <blockquote>
 <p><strong>Notes:</strong></p>
 
-<ul>
+<ol>
 <li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
 <li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).</li>
-<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  Special considerations apply if the strings identify database records, file system paths, or other shared resources; such special considerations include the need to synchronize access, but are not discussed further in this document.</li>
+<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  <em>Random number generators alone should not be relied on to deliver unique results.</em>  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating &quot;pronounceable&quot; words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves <em>Markov chains</em>.  A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
-</ul>
+</ol>
 
 <p><strong>Examples of character lists:</strong></p>
 
@@ -1897,7 +1897,7 @@ END METHOD
 <li><code>erf(v)</code> is the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> of the variable <code>v</code> (see the appendix).</li>
 </ul>
 
-<p>The pseudocode below is one example of a <em>copula</em> (a distribution of groups of two or more correlated uniform random numbers), namely, a <em>Gaussian copula</em>.</p>
+<p>The pseudocode below is one example of a <em>copula</em> (a distribution describing how two or more uniform random numbers are correlated), namely, a <em>Gaussian copula</em>.</p>
 
 <pre>METHOD GaussianCopula(covar)
    mvn=MultivariateNormal(nothing, covar)
@@ -1915,6 +1915,8 @@ END METHOD
 <blockquote>
 <p><strong>Example:</strong> To generate two correlated uniform variables by this method, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong><em>rank correlation</em></strong></a> parameters, which can be converted to <code>rho</code>, can better describe the correlation than <code>rho</code> itself. For example, for a two-variable Gaussian copula, the Spearman coefficient <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Rank correlation parameters are not further discussed in this document.)</p>
 </blockquote>
+
+<p>Other kinds of copulas describe different kinds of correlation between random variables.  For example, M. Hofert and M. M&auml;chler (2011) describe nested Archimedean copulas<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
 
@@ -2036,7 +2038,7 @@ coordinates, respectively, of one vertex of the triangle.</p>
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
-<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note13"><strong>(13)</strong></a></sup> until their <a href="#Notation_and_Definitions"><strong><em>norm</em></strong></a> is R or less,</li>
+<li>generate N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note14"><strong>(14)</strong></a></sup> until their <a href="#Notation_and_Definitions"><strong><em>norm</em></strong></a> is R or less,</li>
 </ul>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for the two methods given here.</p>
@@ -2140,7 +2142,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note12>(12)</sup> The method that formerly appeared here is the <em>Box-Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+<p><small><sup id=Note13>(13)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
+
+<p><small><sup id=Note14>(14)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
 <p><a id=Appendix></a></p>
 
