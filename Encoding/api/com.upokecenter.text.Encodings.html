@@ -193,11 +193,7 @@ Returns a character encoding from the given name.</li>
 <li><code>static ICharacterEncoding GetEncoding​(String name,
        boolean forEmail,
        boolean allowReplacement)</code><br>
-Deprecated.
-The latest draft of the Encoding Standard includes &#39;replacement&#39; as an alias
-for itself, making this overload unnecessary.
-The latest draft of the Encoding Standard includes &#39;replacement&#39; as an alias
-for itself, making this overload unnecessary.</li>
+Returns a character encoding from the given name.</li>
 <li><code>static String InputToString​(ICharacterInput reader)</code><br>
 Reads Unicode characters from a character input and converts them to a text
 string.</li>
@@ -821,13 +817,10 @@ encoder and a decoder).</li>
 
 <h3>GetEncoding</h3>
 
-<pre>@Deprecated public static ICharacterEncoding GetEncoding​(String name, boolean forEmail, boolean allowReplacement)
+<pre>public static ICharacterEncoding GetEncoding​(String name, boolean forEmail, boolean allowReplacement)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>The latest draft of the Encoding Standard includes 'replacement' as an alias
- for itself, making this overload unnecessary.</div>
+<p>Returns a character encoding from the given name.</p>
 
 <p><strong>Parameters:</strong></p>
 
