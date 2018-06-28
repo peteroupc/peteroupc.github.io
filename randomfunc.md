@@ -1033,7 +1033,7 @@ According to (Saucier 2000), sec. 3.8, to generate two correlated (dependent) ra
 - generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
 - calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
 
-Another way to generate correlated random numbers is explained in the section "[**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)".
+Other ways to generate correlated random numbers are explained in the section "[**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)".
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1575,7 +1575,7 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
 - The parameter `covar` is the covariance matrix for the multinormal distribution.
 - `erf(v)` is the [**error function**](https://en.wikipedia.org/wiki/Error_function) of the variable `v` (see the appendix).
 
-&mdash;
+&nbsp;
 
     METHOD GaussianCopula(covar)
        mvn=MultivariateNormal(nothing, covar)
@@ -1593,8 +1593,8 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 
 Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;
 
-- the **Fr&eacute;&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
-- the **Fr&eacute;&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
+- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
+- the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no correlation between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(13)**](#Note13)</sup>.
 
@@ -1636,7 +1636,7 @@ Miscellaneous:
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
 - **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDNUMRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Double logarithmic distribution**: `min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())`, where `min` is the minimum value and `max` is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).
-- **Frech&eacute;t distribution**: `b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc`, where `a` is the shape, `b` is the scale, and `loc` is the location of the distribution's curve peak (mode). This expresses a distribution of maximum values.
+- **Fr&eacute;chet distribution**: `b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc`, where `a` is the shape, `b` is the scale, and `loc` is the location of the distribution's curve peak (mode). This expresses a distribution of maximum values.
 - **Generalized extreme value (Fisher&ndash;Tippett) distribution**: `a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c` if `c != 0`, or `a - ln(-ln(RNDU01ZeroOneExc())) * b` otherwise, where `b` is the scale, `a` is the location of the distribution's curve peak (mode), and `c` is a shape parameter. This expresses a distribution of maximum values.
 - **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDU01()`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
 - **Half-normal distribution**: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
@@ -1658,7 +1658,7 @@ Miscellaneous:
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
-The Python sample code also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, and the **multivariate Poisson distribution**.
+The Python sample code also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, the **multivariate _t_-copula**, and the **multivariate Poisson distribution**.
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling

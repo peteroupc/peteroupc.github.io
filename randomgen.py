@@ -627,6 +627,61 @@ of failures of each kind of failure.
      cd=self.gamma(df*0.5,2.0/df)
      return [(0 if mu==None else mu[i])+mn[i]/math.sqrt(cd) for i in range(len(mn))]
 
+  def _pochhammer(self, a, b):
+    return math.gamma(a+b)/math.gamma(a)
+
+  def _beta(self, a, b):
+    return math.gamma(a)*math.gamma(b)/math.gamma(a+b)
+
+  def _betainc(self, x, a, b):
+    # Incomplete beta function.  NOTE: The SciPy method
+    # scipy.stats.betainc(a, b, x) is the same as _betainc(x, a, b).
+    if x>0.5 and x < 1.0: return 1.0 - betainc(1.0 - x, b, a)
+    if x==0 and a>0: return 0.0
+    if b<50 and math.floor(b)==b:
+        if b<0: return 0
+        return (x**a)*sum([ \
+            self._pochhammer(a,i)*pow(1-x,i)*1.0/math.gamma(i+1) \
+            for i in range(int(b))])
+    if a>0 and a<50 and math.floor(a)==a:
+        return 1.0-((1.0-x)**b)*sum([ \
+            self._pochhammer(b,i)*(x**i)*1.0/math.gamma(i+1) \
+            for i in range(int(a))])
+    ret=pow(10,-100)
+    d=0
+    c=ret
+    i=0
+    k=0
+    while i < 100:
+        # Get next convergent of continued fraction
+        if i==0: num=1.0
+        else:
+          if (i&1)==1: num=-(a+k)*(a+b+k)*x*1.0/((a+i-1)*(a+i))
+          else: num=(b-k)*k*x*1.0/((a+i-1)*(a+i))
+        c=1+num/c # 1 is the convergent's denominator
+        d=1+num*d # ditto
+        if d==0: d=pow(10,-100)
+        if c==0: c=pow(10,-100)
+        d=1.0/d
+        delta=d*c
+        ret*=delta
+        if abs(delta-1.0)<pow(10,-14): break
+        i=i+1
+        if (i&1)==0: k=k+1
+    return ret*(x**a)*((1-x)**b)/(a*self._beta(a,b))
+
+  def _student_t_cdf(self,nu, x):
+    if x<=0:
+       return self._betainc(nu/(x*x+nu),nu*0.5,0.5)*0.5
+    else:
+       return (self._betainc((x*x)/(x*x+nu),0.5,nu*0.5)+1)*0.5
+
+  def t_copula(self, cov, df):
+    """ Multivariate t-copula. 'cov' is the covariance matrix
+       and 'df' is the degrees of freedom.  """
+    mt=self.multivariate_t(None, cov, df)
+    return [self._student_t_cdf(df, c) for c in mt]
+
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
      ret=[0 for i in range(n+1)]

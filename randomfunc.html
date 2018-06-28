@@ -1279,7 +1279,7 @@ END METHOD
 <li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
 </ul>
 
-<p>Another way to generate correlated random numbers is explained in the section &quot;<a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>&quot;.</p>
+<p>Other ways to generate correlated random numbers are explained in the section &quot;<a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>&quot;.</p>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
@@ -1899,7 +1899,7 @@ END METHOD
 <li><code>erf(v)</code> is the <a href="https://en.wikipedia.org/wiki/Error_function"><strong>error function</strong></a> of the variable <code>v</code> (see the appendix).</li>
 </ul>
 
-<p>&mdash;</p>
+<p>&nbsp;</p>
 
 <pre>METHOD GaussianCopula(covar)
    mvn=MultivariateNormal(nothing, covar)
@@ -1921,8 +1921,8 @@ END METHOD
 <p>Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;</p>
 
 <ul>
-<li>the <strong>Fr&eacute;&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
-<li>the <strong>Fr&eacute;&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no correlation between the numbers), and</li>
 <li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>
 </ul>
@@ -1969,7 +1969,7 @@ the two parameters of the beta distribution, and <code>successes</code> is a par
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.</li>
 <li><strong>Cosine distribution</strong>: <code>min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDNUMRANGE(-1, 1)</code> and <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>Double logarithmic distribution</strong>: <code>min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
-<li><strong>Frech&eacute;t distribution</strong>: <code>b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>loc</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of maximum values.</li>
+<li><strong>Fr&eacute;chet distribution</strong>: <code>b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>loc</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of maximum values.</li>
 <li><strong>Generalized extreme value (Fisher&ndash;Tippett) distribution</strong>: <code>a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c</code> if <code>c != 0</code>, or <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code> otherwise, where <code>b</code> is the scale, <code>a</code> is the location of the distribution&#39;s curve peak (mode), and <code>c</code> is a shape parameter. This expresses a distribution of maximum values.</li>
 <li><strong>Generalized Tukey lambda distribution</strong>: <code>(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc</code>, where <code>x</code> is <code>RNDU01()</code>, <code>lamda1</code> and <code>lamda2</code> are shape parameters, <code>s1</code> and <code>s2</code> are scale parameters, and <code>loc</code> is a location parameter.</li>
 <li><strong>Half-normal distribution</strong>: <code>abs(Normal(0, sqrt(pi * 0.5) / invscale)))</code>, where <code>invscale</code> is a parameter of the half-normal distribution.</li>
@@ -1992,7 +1992,7 @@ the two parameters of the beta distribution, and <code>successes</code> is a par
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
-<p>The Python sample code also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,  the <strong>multivariate <em>t</em>-distribution</strong>, and the <strong>multivariate Poisson distribution</strong>.</p>
+<p>The Python sample code also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,  the <strong>multivariate <em>t</em>-distribution</strong>, the <strong>multivariate <em>t</em>-copula</strong>, and the <strong>multivariate Poisson distribution</strong>.</p>
 
 <p><a id=Geometric_Sampling></a></p>
 
