@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on June 17, 2018.
+Begun on Mar. 5, 2016; last updated on June 29, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -279,13 +279,11 @@ One process to generate verifiable random numbers is described in [**RFC 3797**]
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html))<sup>[**(4)**](#Note4)</sup>.  In general, the same considerations apply to any RNGs the noise implementation uses as in other cases.
+Randomly generated numbers can serve as _noise_, that is, a randomized variation in images and sound.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-However, a noise implementation that implements [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), or [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)) should, wherever feasible, **use an RNG to initialize a table of gradients or hash values** in advance, to be used later by the _noise function_ (a function that outputs seemingly random numbers given an _n_-dimensional point).  Those gradients or hash values may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded values as the seed).
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  Wherever feasible, procedural noise implementations should **use an RNG to generate the additional data** for the noise function in advance.  The additional data may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded values as the seed).  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.  A noise implementation can use [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of procedural noise by calling the underlying noise function several times.
 
-If a cellular, value, or gradient noise implementation **incorporates a** [**_hash function_**](#Hash_Functions)&mdash;
-- that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_, and
-- if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation, the implementation should be initialized in advance with arbitrary data of fixed length to provide to the hash function as part of its input.
+2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
@@ -296,7 +294,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 - In single-threaded applications, for each kind of RNG, it's encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.
 - In multithreaded applications, for each kind of RNG, it's encouraged to either&mdash;
     - create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or
-    - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance (this might not always be ideal for cryptographic RNG implementations).
+    - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance<sup>[**(4)**](#Note4)</sup> (this might not always be ideal for cryptographic RNG implementations)
 - Methods and libraries mentioned in the "Statistical" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
 - The mention of a third-party library in this section does not imply sponsorship or endorsement
 of that library, or imply a preference of that library over others. The list is not comprehensive.
@@ -488,9 +486,12 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
-<small><sup id=Note4>(4)</sup> Noise implementations include cellular noise, value noise, gradient noise, [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions). A noise implementation can use [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion) to combine several layers of cellular, value, or gradient noise by calling the underlying noise function several times.
+<small><sup id=Note4>(4)</sup> An application that generates random numbers in parallel can also&mdash;
 
-Note that usual implementations of noise (other than cellular, value, or gradient noise) don't sample each point of the sample space more than once; rather, all the samples are generated (e.g., with an RNG), then, for colored noise, a filter is applied to the samples.</small>
+- use a different conforming RNG method for each instance, in addition to using independently-initialized instances, or
+- use a conforming RNG method specially designed for parallel random number generation,
+
+or both, to reduce the chance of correlations between the generated random numbers.</small>
 
 <small><sup id=Note5>(5)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
