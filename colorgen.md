@@ -1272,7 +1272,7 @@ Note that for best results, this technique needs to be carried out with [**_line
 - For each color in the image color list, find its [**nearest color**](#Nearest_Colors) in the color palette, and add 1 to the nearest color's corresponding value in the histogram.
 - Find the color or colors in the color palette with the highest histogram values, and return those colors as the dominant colors.
 
-**Posterization.** This involves rounding each component of a multicomponent color to the nearest multiple of 1/_n_, where _n_ is the desired number of levels per channel.  The rounding can be either up or down.
+**Posterization.** This involves rounding each component of a multicomponent color to the nearest multiple of 1/_n_, where _n_ is the desired number of levels per channel.  The rounding can be up, down, or otherwise.
 
 > **Notes:**
 >
