@@ -636,7 +636,7 @@ of failures of each kind of failure.
   def _betainc(self, x, a, b):
     # Incomplete beta function.  NOTE: The SciPy method
     # scipy.stats.betainc(a, b, x) is the same as _betainc(x, a, b).
-    if x>0.5 and x < 1.0: return 1.0 - betainc(1.0 - x, b, a)
+    if x>0.5 and x < 1.0: return 1.0 - self._betainc(1.0 - x, b, a)
     if x==0 and a>0: return 0.0
     if b<50 and math.floor(b)==b:
         if b<0: return 0
@@ -680,7 +680,8 @@ of failures of each kind of failure.
     """ Multivariate t-copula. 'cov' is the covariance matrix
        and 'df' is the degrees of freedom.  """
     mt=self.multivariate_t(None, cov, df)
-    return [self._student_t_cdf(df, c) for c in mt]
+    return [self._student_t_cdf(df, mt[i]) \
+        for i in range(len(mt))]
 
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
@@ -692,7 +693,7 @@ of failures of each kind of failure.
      return ret
 
   def randomwalk_posneg1(self,n):
-     """ Random walk of uniform 0-1 random numbers. """
+     """ Random walk of uniform positive and negative steps. """
      ret=[0 for i in range(n+1)]
      for i in range(n):
         ret[i]=self.rndint(1)*2-1
