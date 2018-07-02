@@ -15,6 +15,10 @@ _FLOAT_MAX = 1.7976931348623157e+308
 
 class RandomGen:
   def __init__(self,rng=None):
+    """ NOTE: Assumes that 'rng' implements
+     a 'randint(a, b)' method that returns a random
+     integer in the interval [a, b].  Currently, this
+     class assumes 'a' is always 0. """
     if rng==None:
       self.rng=random.Random()
     else:
@@ -38,7 +42,6 @@ class RandomGen:
       return 0
     if maxInclusive==1:
       return self._rndbit()
-    # NOTE: Second parameter of `randint` is inclusive maximum
     return self.rng.randint(0, maxInclusive)
 
   def rndintrange(self, minInclusive, maxInclusive):

@@ -2,9 +2,21 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on June 30, 2018.
+Begun on June 4, 2017; last updated on July 2, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
+
+<a id=Request_for_Comments></a>
+## Request for Comments
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randomfunc.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-and-Sampling-Methods) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+**Comments on any aspect of this document are welcome, but especially comments on the following:**
+
+- **Corrections to any method given on this page.**
+- **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
+- **If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.**
+- **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
 <a id=Introduction></a>
 ## Introduction
@@ -31,6 +43,7 @@ All the random number methods presented on this page&mdash;
 <a id=Contents></a>
 ## Contents
 
+- [**Request for Comments**](#Request_for_Comments)
 - [**Introduction**](#Introduction)
 - [**Contents**](#Contents)
 - [**Notation and Definitions**](#Notation_and_Definitions)
@@ -1733,13 +1746,7 @@ Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePoint
 This page discussed many ways applications can extract random numbers
 from random number generators.
 
-Feel free to send comments. They may help improve this page.  In particular, corrections to any method given on this page are welcome.
-
 I acknowledge the commenters to the CodeProject version of this page, including George Swan, who referred me to the reservoir sampling method.
-
-Currently, the following are not covered in this document, but may be added based on reader interest:
-
-- Techniques to generate random mazes, graphs, matrices, or paths.
 
 <a id=Notes></a>
 ## Notes
