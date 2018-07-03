@@ -701,6 +701,29 @@ of failures of each kind of failure.
     return [self._student_t_cdf(df, mt[i]) \
         for i in range(len(mt))]
 
+  def simplex_point(self, points):
+       ret=[]
+       if len(points) > len(points[0])+1: raise ValueError
+       if len(points)==1: # Return a copy of the point
+         for i in range(0,len(points[0])): ret+=[points[0][i]]
+         return ret
+       gammas=[]
+       # Sample from a Dirichlet distribution
+       simplexDims=len(points)-1
+       for i in range(0,len(points)): gammas+=[self.exponential()]
+       tsum=0
+       for i in range(0,len(gammas)): tsum = tsum + gammas[i]
+       tot = 0
+       for i in range(0,len(gammas) - 1):
+           gammas[i] = gammas[i] / tsum
+           tot = tot + gammas[i]
+       tot = 1.0 - tot
+       for i in range(0,len(points[0])): ret+=[points[0][i]*tot]
+       for i in range(1,len(points)):
+          for j in range(0,len(points[0])):
+             ret[j]=ret[j]+points[i][j]*gammas[i-1]
+       return ret
+
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
      ret=[0 for i in range(n+1)]

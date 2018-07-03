@@ -96,7 +96,7 @@ All the random number methods presented on this page&mdash;
     - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
     - [**Other Non-Uniform Distributions**](#Other_Non_Uniform_Distributions)
 - [**Geometric Sampling**](#Geometric_Sampling)
-    - [**Random Point Inside a Triangle**](#Random_Point_Inside_a_Triangle)
+    - [**Random Points Inside a Simplex**](#Random_Points_Inside_a_Simplex)
     - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
     - [**Random Points Inside a Ball or Shell**](#Random_Points_Inside_a_Ball_or_Shell)
     - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
@@ -944,7 +944,7 @@ To generate random content from a mixture&mdash;
 >         // Generate an exponential random number with chosen rate
 >         number = -ln(RNDU01ZeroOneExc()) / rates[index]
 >
-> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Point_Inside_a_Triangle), and a mixture of those triangles can be sampled.<sup>[**(7)**](#Note7)</sup>
+> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(7)**](#Note7)</sup>
 > 4. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -1567,7 +1567,6 @@ The following pseudocode shows how to generate random integers with a given posi
 
 > **Notes:**
 >
-> - The problem of generating N random numbers with a given positive sum `sum` is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of `sum` units.
 > - Generating `N` random numbers with a given positive average `avg` is equivalent to generating `N` random numbers with the sum `N * avg`.
 > - Generating `N` random numbers `min` or greater and with a given positive sum `sum` is equivalent to generating `N` random numbers with the sum `sum - n * min`, then adding `min` to each number generated this way.
 > - The similar **Dirichlet distribution** models _n_ random numbers, and can be sampled by generating _n_+1 random [**gamma-distributed**](#Gamma_Distribution) numbers, each with separate parameters, and dividing all those numbers except the last by the sum of all _n_+1 numbers (see Devroye 1986, p. 594).
@@ -1690,34 +1689,38 @@ The Python sample code also contains implementations of the **power normal distr
 
 This section contains various geometric sampling techniques.
 
-<a id=Random_Point_Inside_a_Triangle></a>
-### Random Point Inside a Triangle
+<a id=Random_Points_Inside_a_Simplex></a>
+### Random Points Inside a Simplex
 
-The following pseudocode, which
-generates, uniformly at random, a point inside a 2-dimensional triangle,
-takes three parameters, `p0`, `p1`, and `p2`, each of which is a 2-item list containing the X and Y
-coordinates, respectively, of one vertex of the triangle.
+The following pseudocode generates, uniformly at random, a point inside an _n_ dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, where each vertex is a list of points, all of a single dimension _n_ or greater.
 
-        METHOD RandomPointInTriangle(
-                x1=p1[0]-p0[0]
-                y1=p1[1]-p0[1]
-                x2=p2[0]-p0[0]
-                y2=p2[1]-p0[1]
-                den=(x1*y2-x2*y1)
-                // Avoid division by zero
-                if den==0: den=0.0000001
-                r=RNDU01()
-                s=RNDU01()
-                xv=r*x1 + s*x2
-                yv=r*y1 + s*y2
-                a=(xv*y2 - x2*yv)/den
-                b=(x1*yv - xv*y1)/den
-                if a<=0 or b<=0 or a+b>=1
-                        return [x1+x2+p0[0]-xv,y1+y2+p0[1]-yv]
-                else
-                        return [p0[0]+xv, p0[1]+yv]
-                end
-        end
+    METHOD RandomPointInSimplex(points):
+       ret=NewList()
+       if size(points) > size(points[0])+1: return error
+       if size(points)==1 // Return a copy of the point
+         for i in 0...size(points[0]): AddItem(ret,points[0][i])
+         return ret
+       end
+       gammas=NewList()
+       // Sample from a Dirichlet distribution
+       simplexDims=size(points)-1
+       for i in 0...size(points): AddItem(gammas, -ln(RNDU01ZeroOneExc()))
+       tsum=0
+       for i in 0...size(gammas): tsum = tsum + gammas[i]
+       tot = 0
+       for i in 0...size(gammas) - 1
+           gammas[i] = gammas[i] / tsum
+           tot = tot + gammas[i]
+       end
+       tot = 1.0 - tot
+       for i in 0...size(points[0]): AddItem(ret, points[0][i]*tot)
+       for i in 1...size(points)
+          for j in 0...size(points[0])
+             ret[j]=ret[j]+points[i][j]*gammas[i-1]
+          end
+       end
+       return ret
+    END METHOD
 
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
