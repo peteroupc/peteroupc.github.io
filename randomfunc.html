@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on July 2, 2018.</p>
+<p>Begun on June 4, 2017; last updated on July 3, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -120,6 +120,7 @@
 <li><a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a></li>
 <li><a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a></li>
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
+<li><a href="#Beta_Distribution"><strong>Beta Distribution</strong></a></li>
 <li><a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a></li>
 <li><a href="#von_Mises_Distribution"><strong>von Mises Distribution</strong></a></li>
 <li><a href="#Stable_Distribution"><strong>Stable Distribution</strong></a></li>
@@ -1558,6 +1559,25 @@ end
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Expresses a sum of <code>n</code> exponential random variables with the given <code>lamda</code> parameter.</li>
 </ul>
 
+<p><a id=Beta_Distribution></a></p>
+
+<h3>Beta Distribution</h3>
+
+<p>In the following method, which generates a random number that follows a <em>beta distribution</em>, <code>a</code> and <code>b</code> are two parameters each greater than 0.  The range of the beta distribution is [0, 1).</p>
+
+<pre>METHOD BetaDist(self, a, b, nc)
+  if b==1 and a==1: return RNDU01()
+  if a==1: return 1.0-pow(RNDU01(),1.0/b)
+  if b==1: return pow(RNDU01(),1.0/a)
+  x=GammaDist(a,1)
+  return x/(x+GammaDist(b,1))
+END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> A <strong>noncentral beta distribution</strong> is sampled by generating <code>BetaDist(a + Poisson(nc), b)</code>, where <code>nc</code> is greater than 0.</p>
+</blockquote>
+
 <p><a id=Negative_Binomial_Distribution></a></p>
 
 <h3>Negative Binomial Distribution</h3>
@@ -1950,8 +1970,6 @@ END METHOD
 <p>Most commonly used:</p>
 
 <ul>
-<li><strong>Beta distribution (<code>BetaDist(a, b)</code>)</strong>: <code>x / (x + GammaDist(b, 1))</code>, where <code>x</code> is <code>GammaDist(a + Poisson(nc * 0.5), 1)</code>, <code>a</code> and <code>b</code> are
-the two parameters of the beta distribution, and <code>nc</code> is a parameter such that <code>nc</code> other than 0 indicates a <em>noncentral</em> distribution.  The range of the beta distribution is [0, 1).</li>
 <li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(pi * (RNDU01OneExc()-0.5)) + mu</code>, where <code>scale</code> is the scale and <code>mu</code> is the location of the distribution&#39;s curve peak (mode).  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Extreme value distribution</strong>: <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code>, where <code>b</code> is the scale and <code>a</code> is the location of the distribution&#39;s curve peak (mode).  This expresses a distribution of maximum values.</li>
@@ -1979,8 +1997,7 @@ have the same meaning as in the normal distribution.</li>
 the two parameters of the beta distribution, and <code>trials</code> is a parameter of the binomial distribution.</li>
 <li><strong>Beta-PERT distribution</strong>: <code>startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)</code>. The distribution starts  at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>, <code>size</code> is <code>endpt - startpt</code>, and <code>shape</code> is a shape parameter that&#39;s 0 or greater, but usually 4.  If the mean (<code>mean</code>) is known rather than the peak, <code>midpt = 3 * mean / 2 - (startpt + endpt) / 4</code>.</li>
 <li><strong>Beta prime distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / alpha) * scale / pow(GammaDist(b, 1), 1.0 / alpha)</code>, where <code>a</code>, <code>b</code>, and <code>alpha</code> are shape parameters and <code>scale</code> is the scale. If <em>a</em> is 1, the result is a <em>Singh&ndash;Maddala distribution</em>; if <em>b</em> is 1, a <em>Dagum distribution</em>; if <em>a</em> and <em>b</em> are both 1, a <em>logarithmic logistic distribution</em>.</li>
-<li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are
-the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>.</li>
+<li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>.</li>
 <li><strong>Birnbaum&ndash;Saunders distribution</strong>: <code>pow(sqrt(4+x*x)+x,2)/(4.0*lamda)</code>, where <code>x = Normal(0,gamma)</code>, <code>gamma</code> is a shape parameter, and <code>lamda</code> is a scale parameter.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.</li>
 <li><strong>Cosine distribution</strong>: <code>min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDNUMRANGE(-1, 1)</code> and <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>

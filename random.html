@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on June 30, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jul. 2, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -35,7 +35,7 @@
 
 <ul>
 <li>Testing an RNG implementation for correctness or adequate random number generation.</li>
-<li>Generation of random numbers or keying material based in part on a password.</li>
+<li>Generation of random numbers or keying material based at least in part on a password.</li>
 <li>Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.</li>
 </ul>
 
@@ -402,7 +402,7 @@
 <p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  Wherever feasible, procedural noise implementations should <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  The additional data may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded data as the seed).  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.  A noise implementation can use <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a> to combine several layers of procedural noise by calling the underlying noise function several times.</p></li>
+<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note4"><strong>(4)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  Wherever feasible, procedural noise implementations should <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  The additional data may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded data as the seed).  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
 <li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
 </ol>
 
@@ -419,7 +419,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <ul>
 <li>create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or</li>
-<li>store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance<sup><a href="#Note4"><strong>(4)</strong></a></sup> (this might not always be ideal for cryptographic RNG implementations)</li>
+<li>store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance<sup><a href="#Note5"><strong>(5)</strong></a></sup> (this might not always be ideal for cryptographic RNG implementations)</li>
 </ul></li>
 <li>Methods and libraries mentioned in the &quot;Statistical&quot; column need to be initialized with a seed before use (for example, a seed generated using an implementation in the &quot;Cryptographic&quot; column).</li>
 <li>The mention of a third-party library in this section does not imply sponsorship or endorsement
@@ -601,7 +601,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note6"><strong>(6)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -688,7 +688,9 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> An application that generates random numbers in parallel can also&mdash;</p>
+<p><small><sup id=Note4>(4)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> An application that generates random numbers in parallel can also&mdash;</p>
 
 <ul>
 <li>use a different conforming RNG method for each instance, in addition to using independently-initialized instances, or</li>
@@ -697,7 +699,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>or both, to reduce the chance of correlations between the generated random numbers.</small></p>
 
-<p><small><sup id=Note5>(5)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note6>(6)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 

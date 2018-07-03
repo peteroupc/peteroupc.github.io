@@ -248,6 +248,7 @@ class RandomGen:
     return list[len(list)-1]
 
   def normal(self, mu=0.0, sigma=1.0):
+    """ Generates a normally-distributed random number. """
     bmp=0.8577638849607068 # sqrt(2/exp(1))
     while True:
       a=self.rndu01zeroexc()
@@ -259,6 +260,7 @@ class RandomGen:
     return math.exp(self.normal(mu,sigma))
 
   def weibull(self, a, b):
+    """ Generates a Weibull-distributed random number. """
     return b*(-math.log(self.rndu01zerooneexc()))**(1.0/a)
 
   def triangular(self, startpt, midpt, endpt):
@@ -271,8 +273,16 @@ class RandomGen:
   def frechet(self,a,b,mu=0):
     return b*pow(self.exponential(),-1.0/a)+mu
 
-  def beta(self, a, b):
-    x=self.gamma(a)
+  def beta(self, a, b, nc = 0):
+    """ Generates a beta-distributed random number.
+     `a` and `b` are the two parameters of the beta distribution,
+     and `nc` is a parameter such that `nc` other than 0
+     indicates a _noncentral_ distribution. """
+    avar = a + self.poisson(nc)
+    if b==1 and avar==1: return self.rndu01()
+    if avar==1: return 1.0-pow(self.rndu01(),1.0/b)
+    if b==1: return pow(self.rndu01(),1.0/avar)
+    x=self.gamma(avar)
     return x/(x+self.gamma(b))
 
   def binomial(self, trials, p):
@@ -391,6 +401,9 @@ class RandomGen:
   def stable0(self, alpha, beta, mu, sigma):
        x=math.log(sigma)*2.0/pi if alpha==1 else math.tan(pi*0.5*alpha)
        return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
+
+  def geometric(self, p):
+     return self.negativebinomial(1, p)
 
   def negativebinomial(self,successes,p):
     if successes<0:
@@ -637,8 +650,10 @@ of failures of each kind of failure.
     return math.gamma(a)*math.gamma(b)/math.gamma(a+b)
 
   def _betainc(self, x, a, b):
-    # Incomplete beta function.  NOTE: The SciPy method
+    # Incomplete beta function.  NOTES:
+    # 1. The SciPy method
     # scipy.stats.betainc(a, b, x) is the same as _betainc(x, a, b).
+    # 2. This is also the beta distribution's CDF.
     if x>0.5 and x < 1.0: return 1.0 - self._betainc(1.0 - x, b, a)
     if x==0 and a>0: return 0.0
     if b<50 and math.floor(b)==b:
