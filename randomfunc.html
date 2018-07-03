@@ -134,7 +134,7 @@
 <li><a href="#Geometric_Sampling"><strong>Geometric Sampling</strong></a>
 
 <ul>
-<li><a href="#Random_Point_Inside_a_Triangle"><strong>Random Point Inside a Triangle</strong></a></li>
+<li><a href="#Random_Points_Inside_a_Simplex"><strong>Random Points Inside a Simplex</strong></a></li>
 <li><a href="#Random_Points_on_the_Surface_of_a_Hypersphere"><strong>Random Points on the Surface of a Hypersphere</strong></a></li>
 <li><a href="#Random_Points_Inside_a_Ball_or_Shell"><strong>Random Points Inside a Ball or Shell</strong></a></li>
 <li><a href="#Random_Latitude_and_Longitude"><strong>Random Latitude and Longitude</strong></a></li>
@@ -1158,7 +1158,7 @@ rates = [0.3, 0.1, 0.05]
 // Generate an exponential random number with chosen rate
 number = -ln(RNDU01ZeroOneExc()) / rates[index]
 </pre></li>
-<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Point_Inside_a_Triangle"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note7"><strong>(7)</strong></a></sup></p></li>
+<li><p>Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note7"><strong>(7)</strong></a></sup></p></li>
 <li><p>For generating a random integer from multiple nonoverlapping ranges of integers&mdash;</p>
 
 <ul>
@@ -1894,7 +1894,6 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>The problem of generating N random numbers with a given positive sum <code>sum</code> is equivalent to the problem of generating a uniformly distributed point inside an N-dimensional simplex (simplest convex figure) whose edges all have a length of <code>sum</code> units.</li>
 <li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers with the sum <code>N * avg</code>.</li>
 <li>Generating <code>N</code> random numbers <code>min</code> or greater and with a given positive sum <code>sum</code> is equivalent to generating <code>N</code> random numbers with the sum <code>sum - n * min</code>, then adding <code>min</code> to each number generated this way.</li>
 <li>The similar <strong>Dirichlet distribution</strong> models <em>n</em> random numbers, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, and dividing all those numbers except the last by the sum of all <em>n</em>+1 numbers (see Devroye 1986, p. 594).</li>
@@ -2038,35 +2037,39 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 
 <p>This section contains various geometric sampling techniques.</p>
 
-<p><a id=Random_Point_Inside_a_Triangle></a></p>
+<p><a id=Random_Points_Inside_a_Simplex></a></p>
 
-<h3>Random Point Inside a Triangle</h3>
+<h3>Random Points Inside a Simplex</h3>
 
-<p>The following pseudocode, which
-generates, uniformly at random, a point inside a 2-dimensional triangle,
-takes three parameters, <code>p0</code>, <code>p1</code>, and <code>p2</code>, each of which is a 2-item list containing the X and Y
-coordinates, respectively, of one vertex of the triangle.</p>
+<p>The following pseudocode generates, uniformly at random, a point inside an <em>n</em> dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, where each vertex is a list of points, all of a single dimension <em>n</em> or greater.</p>
 
-<pre>    METHOD RandomPointInTriangle(
-            x1=p1[0]-p0[0]
-            y1=p1[1]-p0[1]
-            x2=p2[0]-p0[0]
-            y2=p2[1]-p0[1]
-            den=(x1*y2-x2*y1)
-            // Avoid division by zero
-            if den==0: den=0.0000001
-            r=RNDU01()
-            s=RNDU01()
-            xv=r*x1 + s*x2
-            yv=r*y1 + s*y2
-            a=(xv*y2 - x2*yv)/den
-            b=(x1*yv - xv*y1)/den
-            if a&lt;=0 or b&lt;=0 or a+b&gt;=1
-                    return [x1+x2+p0[0]-xv,y1+y2+p0[1]-yv]
-            else
-                    return [p0[0]+xv, p0[1]+yv]
-            end
-    end
+<pre>METHOD RandomPointInSimplex(points):
+   ret=NewList()
+   if size(points) &gt; size(points[0])+1: return error
+   if size(points)==1 // Return a copy of the point
+     for i in 0...size(points[0]): AddItem(ret,points[0][i])
+     return ret
+   end
+   gammas=NewList()
+   // Sample from a Dirichlet distribution
+   simplexDims=size(points)-1
+   for i in 0...size(points): AddItem(gammas, -ln(RNDU01ZeroOneExc()))
+   tsum=0
+   for i in 0...size(gammas): tsum = tsum + gammas[i]
+   tot = 0
+   for i in 0...size(gammas) - 1
+       gammas[i] = gammas[i] / tsum
+       tot = tot + gammas[i]
+   end
+   tot = 1.0 - tot
+   for i in 0...size(points[0]): AddItem(ret, points[0][i]*tot)
+   for i in 1...size(points)
+      for j in 0...size(points[0])
+         ret[j]=ret[j]+points[i][j]*gammas[i-1]
+      end
+   end
+   return ret
+END METHOD
 </pre>
 
 <p><a id=Random_Points_on_the_Surface_of_a_Hypersphere></a></p>
