@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 2, 2018.
+Begun on June 4, 2017; last updated on July 3, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -85,6 +85,7 @@ All the random number methods presented on this page&mdash;
     - [**Binomial Distribution**](#Binomial_Distribution)
     - [**Poisson Distribution**](#Poisson_Distribution)
     - [**Gamma Distribution**](#Gamma_Distribution)
+    - [**Beta Distribution**](#Beta_Distribution)
     - [**Negative Binomial Distribution**](#Negative_Binomial_Distribution)
     - [**von Mises Distribution**](#von_Mises_Distribution)
     - [**Stable Distribution**](#Stable_Distribution)
@@ -1267,6 +1268,21 @@ Distributions based on the gamma distribution:
 - **Exponential distribution**: `GammaDist(1, 1.0 / lamda)` or `-ln(RNDU01ZeroOneExc()) / lamda`, where `lamda` is the inverse scale. Usually, `lamda` is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a _Poisson process_.) `1.0 / lamda` is the scale (mean), which is usually the average waiting time between two independent events of the same kind.
 - **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`.  Expresses a sum of `n` exponential random variables with the given `lamda` parameter.
 
+<a id=Beta_Distribution></a>
+### Beta Distribution
+
+In the following method, which generates a random number that follows a _beta distribution_, `a` and `b` are two parameters each greater than 0.  The range of the beta distribution is [0, 1).
+
+    METHOD BetaDist(self, a, b, nc)
+      if b==1 and a==1: return RNDU01()
+      if a==1: return 1.0-pow(RNDU01(),1.0/b)
+      if b==1: return pow(RNDU01(),1.0/a)
+      x=GammaDist(a,1)
+      return x/(x+GammaDist(b,1))
+    END METHOD
+
+> **Note:** A **noncentral beta distribution** is sampled by generating `BetaDist(a + Poisson(nc), b)`, where `nc` is greater than 0.
+
 <a id=Negative_Binomial_Distribution></a>
 ### Negative Binomial Distribution
 
@@ -1613,8 +1629,6 @@ Other kinds of copulas describe different kinds of correlation between random nu
 
 Most commonly used:
 
-- **Beta distribution (`BetaDist(a, b)`)**: `x / (x + GammaDist(b, 1))`, where `x` is `GammaDist(a + Poisson(nc * 0.5), 1)`, `a` and `b` are
- the two parameters of the beta distribution, and `nc` is a parameter such that `nc` other than 0 indicates a _noncentral_ distribution.  The range of the beta distribution is [0, 1).
 - **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `scale` is the scale and `mu` is the location of the distribution's curve peak (mode).  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Extreme value distribution**: `a - ln(-ln(RNDU01ZeroOneExc())) * b`, where `b` is the scale and `a` is the location of the distribution's curve peak (mode).  This expresses a distribution of maximum values.
@@ -1640,8 +1654,7 @@ Miscellaneous:
  the two parameters of the beta distribution, and `trials` is a parameter of the binomial distribution.
 - **Beta-PERT distribution**: `startpt + size * BetaDist(1.0 + (midpt - startpt) * shape / size, 1.0 + (endpt - midpt) * shape / size)`. The distribution starts  at `startpt`, peaks at `midpt`, and ends at `endpt`, `size` is `endpt - startpt`, and `shape` is a shape parameter that's 0 or greater, but usually 4.  If the mean (`mean`) is known rather than the peak, `midpt = 3 * mean / 2 - (startpt + endpt) / 4`.
 - **Beta prime distribution**: `pow(GammaDist(a, 1), 1.0 / alpha) * scale / pow(GammaDist(b, 1), 1.0 / alpha)`, where `a`, `b`, and `alpha` are shape parameters and `scale` is the scale. If _a_ is 1, the result is a _Singh&ndash;Maddala distribution_; if _b_ is 1, a _Dagum distribution_; if _a_ and _b_ are both 1, a _logarithmic logistic distribution_.
-- **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are
- the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
+- **Beta negative binomial distribution**: `NegativeBinomial(successes, BetaDist(a, b))`, where `a` and `b` are the two parameters of the beta distribution, and `successes` is a parameter of the negative binomial distribution. If _successes_ is 1, the result is a _Waring&ndash;Yule distribution_.
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: `sqrt(GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.
 - **Cosine distribution**: `min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDNUMRANGE(-1, 1)` and `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
