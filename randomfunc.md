@@ -1006,7 +1006,7 @@ Many probability distributions can be defined in terms of any of the following:
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
 1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
-2. Use [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling). Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1. **OR**
+2. Use [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling). Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1.  The Python sample code includes a `randomFromInterp` method that implements this approach numerically. **OR**
 3. Use [**_rejection sampling_**](#Rejection_Sampling).  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
@@ -1025,7 +1025,7 @@ If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomV
     - use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
 2. Generate `ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
 
-If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.
+If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.  See also `randomFromInterp` in the Python sample code.
 
 > **Note:** Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 

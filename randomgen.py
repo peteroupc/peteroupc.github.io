@@ -13,6 +13,50 @@ import random
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e+308
 
+def tableInterpSearch(table,x,censor=False):
+   tablelen=len(table)-1
+   left=0
+   right=tablelen-1
+   while left<=right:
+      index=int((left+right)/2)
+      c=table[index]
+      n=table[index+1]
+      if c[0]>=x && n[0]<x:
+          interp=(x-c[0])*1.0/(n[0]-c[0])
+          return c[1]+(n[1]-c[1])*interp
+      if c[0]<x:
+          left = index+1
+          continue
+      right=index-1
+      continue
+    if censor:
+       if x<=table[0][0]: return table[0][1]
+       if x>=table[tablelen][0]:
+           return table[tablelen][1]
+    return None
+
+def numericalInvert(func, x, y, n=100):
+  ret=[x+(y-x)*(i*1.0/n) for i in range(n+1)]
+  return [[func(x), x] for i in 
+
+  def randomFromInterp(self, table):
+     """ Generates a random number given a list of CDF--number
+       pairs sorted by CDF.  
+
+       An example of this list is as follows.
+       ` [[0.1, 0], [0.4, 1], [0.8, 2], [0.9, 3], [0.95, 4], [0.99, 5]]`
+       
+       In this example, the first item of each pair is the value of
+       a cumulative distribution function and is in the interval [0, 1],
+       and the second item is the number associated with that CDF's
+       value. The random number will fall within the range of numbers
+       suggested in the table, which will be in the interval [0, 5] in the
+       example above. """
+     while True:
+        x=tableInterpSearch(table, self.rndu01())
+        if x!=None: return x
+
+
 class RandomGen:
   def __init__(self,rng=None):
     """ NOTE: Assumes that 'rng' implements
