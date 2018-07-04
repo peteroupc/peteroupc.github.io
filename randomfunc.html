@@ -1242,7 +1242,6 @@ and/or discarding some of them.</p>
 
 <ol>
 <li>Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the <code>list</code>) and another list of the same size with the PDF&#39;s values at those points (the <code>weights</code>).  Finally generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn&#39;t 1. <strong>OR</strong></li>
-<li>Use <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a>. Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse cumulative distribution function</em> (<em>inverse CDF</em>, or inverse of the CDF) assuming the area under the PDF is 1. <strong>OR</strong></li>
 <li><p>Use <a href="#Rejection_Sampling"><strong><em>rejection sampling</em></strong></a>.  Choose the lowest and highest random number to generate (<code>minValue</code> and <code>maxValue</code>, respectively) and find the maximum value of the PDF at or between those points (<code>maxDensity</code>).  The rejection sampling approach is then illustrated with the following pseudocode, where <code>PDF(X)</code> is the distribution&#39;s PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn&#39;t 1.</p>
 
 <pre>METHOD ArbitraryDist(minValue, maxValue, maxDensity)
@@ -1256,19 +1255,11 @@ END METHOD
 </pre></li>
 </ol>
 
-<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then one of the following techniques can be used to generate a random number that follows that distribution:</p>
+<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Do the same process as method 1, given earlier, except&mdash;
+    - divide the weights in the <code>weights</code> list by the sum of all weights, and
+    - use a modified version of <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong></a> that uses <code>randomVariable</code> rather than generating a new random number.</p>
 
-<ol>
-<li>Do the same process as method 1, given earlier, except&mdash;
-
-<ul>
-<li>divide the weights in the <code>weights</code> list by the sum of all weights, and</li>
-<li>use a modified version of <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong></a> that uses <code>randomVariable</code> rather than generating a new random number. <strong>OR</strong></li>
-</ul></li>
-<li>Generate <code>ICDF(randomVariable)</code>, where <code>ICDF(X)</code> is the distribution&#39;s inverse CDF (see method 2, given earlier).</li>
-</ol>
-
-<p>If the distribution&#39;s <strong>CDF is known</strong>, generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the inverse of that CDF.</p>
+<p>If the distribution&#39;s <strong>CDF is known</strong>, an approach called <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a> can be used: Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse CDF</em>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes <code>from_interp</code> and <code>numbers_from_cdf</code> methods that implement this approach numerically.</p>
 
 <blockquote>
 <p><strong>Note:</strong> Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.</p>
@@ -1950,7 +1941,19 @@ END METHOD
 <p>Each of the resulting uniform numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> here) by one of the methods given in &quot;<a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a>&quot;. (See also Cario and Nelson 1997.)</p>
 
 <blockquote>
-<p><strong>Example:</strong> To generate two correlated uniform variables with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong><em>rank correlation</em></strong></a> parameters, which can be converted to <code>rho</code>, can better describe the correlation than <code>rho</code> itself. For example, for a two-variable Gaussian copula, the Spearman coefficient <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Rank correlation parameters are not further discussed in this document.)</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>To generate two correlated uniform variables with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong><em>rank correlation</em></strong></a> parameters, which can be converted to <code>rho</code>, can better describe the correlation than <code>rho</code> itself. For example, for a two-variable Gaussian copula, the Spearman coefficient <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Rank correlation parameters are not further discussed in this document.)</li>
+<li><p>The following example generates two random numbers that follow a Gaussian copula with exponential marginals (<code>rho</code> is the Pearson correlation coefficient, and <code>rate1</code> and <code>rate2</code> are the rates of the two exponential marginals).</p>
+
+<p>METHOD CorrelatedExpo(rho, rate1, rate2)
+       copula = GaussianCopula([[1, rho], [rho, 1]])
+       // Transform to exponentials using that
+       // distribution&#39;s inverse CDF
+       return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
+   END METHOD</p></li>
+</ol>
 </blockquote>
 
 <p>Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;</p>
@@ -2029,7 +2032,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Zeta distribution</strong>: Generate <code>n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))</code>, and if <code>d / pow(2, r) &lt; (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)</code>, where <code>d = pow((1.0 / n) + 1, r)</code>, repeat this process. The parameter <code>r</code> is greater than 0. Based on method described in Devroye 1986. A zeta distribution <a href="#Censoring_and_Truncation"><strong>truncated</strong></a> by rejecting random values greater than some positive integer is called a <em>Zipf distribution</em> or <em>Estoup distribution</em>. (Note that Devroye uses &quot;Zipf distribution&quot; to refer to the untruncated zeta distribution.)</li>
 </ul>
 
-<p>The Python sample code also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,  the <strong>multivariate <em>t</em>-distribution</strong>, the <strong>multivariate <em>t</em>-copula</strong>, and the <strong>multivariate Poisson distribution</strong>.</p>
+<p>The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> also contains implementations of the <strong>power normal distribution</strong>, the <strong>power lognormal distribution</strong>, the <strong>negative multinomial distribution</strong>,  the <strong>multivariate <em>t</em>-distribution</strong>, the <strong>multivariate <em>t</em>-copula</strong>, and the <strong>multivariate Poisson distribution</strong>.</p>
 
 <p><a id=Geometric_Sampling></a></p>
 
@@ -2041,7 +2044,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 
 <h3>Random Points Inside a Simplex</h3>
 
-<p>The following pseudocode generates, uniformly at random, a point inside an <em>n</em> dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, where each vertex is a list of points, all of a single dimension <em>n</em> or greater.</p>
+<p>The following pseudocode generates, uniformly at random, a point inside an <em>n</em> dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater.</p>
 
 <pre>METHOD RandomPointInSimplex(points):
    ret=NewList()
