@@ -13,7 +13,8 @@ import random
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e+308
 
-def tableInterpSearch(table,x,censor=False):
+def _tableInterpSearch(table,x,censor=False):
+   # Effective length is the length of table minus 1
    tablelen=len(table)-1
    left=0
    right=tablelen-1
@@ -21,41 +22,23 @@ def tableInterpSearch(table,x,censor=False):
       index=int((left+right)/2)
       c=table[index]
       n=table[index+1]
-      if c[0]>=x && n[0]<x:
+      if x>=c[0] and x<n[0]:
           interp=(x-c[0])*1.0/(n[0]-c[0])
           return c[1]+(n[1]-c[1])*interp
-      if c[0]<x:
+      if x>c[0]:
           left = index+1
           continue
       right=index-1
       continue
-    if censor:
+   if censor:
        if x<=table[0][0]: return table[0][1]
        if x>=table[tablelen][0]:
            return table[tablelen][1]
-    return None
+   return None
 
-def numericalInvert(func, x, y, n=100):
+def numericalTable(func, x, y, n=100):
   ret=[x+(y-x)*(i*1.0/n) for i in range(n+1)]
-  return [[func(x), x] for i in 
-
-  def randomFromInterp(self, table):
-     """ Generates a random number given a list of CDF--number
-       pairs sorted by CDF.  
-
-       An example of this list is as follows.
-       ` [[0.1, 0], [0.4, 1], [0.8, 2], [0.9, 3], [0.95, 4], [0.99, 5]]`
-       
-       In this example, the first item of each pair is the value of
-       a cumulative distribution function and is in the interval [0, 1],
-       and the second item is the number associated with that CDF's
-       value. The random number will fall within the range of numbers
-       suggested in the table, which will be in the interval [0, 5] in the
-       example above. """
-     while True:
-        x=tableInterpSearch(table, self.rndu01())
-        if x!=None: return x
-
+  return [[func(b), b] for b in ret]
 
 class RandomGen:
   def __init__(self,rng=None):
@@ -370,6 +353,7 @@ class RandomGen:
     return successes
 
   def poisson(self,mean):
+    """ Generates a random number following a Poisson distribution.  """
     if mean<0:
       raise ValueError
     if mean==0:
@@ -389,9 +373,11 @@ class RandomGen:
         return count-1
 
   def rayleigh(self,a):
-     return a * math.sqrt(-2 * math.log(self.rndu01zerooneexc()))
+    """ Generates a random number following a Rayleigh distribution.  """
+    return a * math.sqrt(-2 * math.log(self.rndu01zerooneexc()))
 
   def gamma(self,mean,b=1.0,c=1.0,d=0.0):
+    """ Generates a random number following a gamma distribution.  """
     if mean<=0:
       raise ValueError
     dd=mean
@@ -422,6 +408,7 @@ class RandomGen:
     return ret**(1.0/c)*b+d
 
   def stable(self, alpha, beta):
+        """ Generates a random number following a stable distribution.  """
         if alpha <=0 or alpha > 2: raise ValueError
         if beta < -1 or beta > 1: raise ValueError
         halfpi = math.pi * 0.5
@@ -443,6 +430,7 @@ class RandomGen:
             pow(math.cos(unif-alpha*ug)/expo, (1.0 - alpha) / alpha)
 
   def stable0(self, alpha, beta, mu, sigma):
+       """ Generates a random number following a 'type 0' stable distribution.  """
        x=math.log(sigma)*2.0/pi if alpha==1 else math.tan(pi*0.5*alpha)
        return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
 
@@ -768,6 +756,39 @@ of failures of each kind of failure.
              ret[j]=ret[j]+points[i][j]*gammas[i-1]
        return ret
 
+  def numbers_from_cdf(self, cdf, mn, mx, n = 1):
+      """ Generates one or more random numbers from a probability
+         distribution by numerically inverting its cumulative
+         distribution function (CDF).  The random number
+         will be in the interval [mn, mx].  `n` random numbers will be
+         generated. `cdf` is the CDF; it takes one parameter and returns,
+         for that parameter, the probability that a random number will
+         be less than or equal to that parameter. By default, `n` is 1.  """
+      ntable=numericalTable(cdf, mn, mx)
+      return [self.from_interp(ntable) for i in range(n)]
+
+  def from_interp(self, table):
+     """ Generates a random number given a list of CDF--number
+       pairs sorted by CDF.
+
+       An example of this list is as follows.
+       ` [[0.1, 0], [0.4, 1], [0.8, 2], [0.9, 3], [0.95, 4], [0.99, 5]]`
+
+       In this example, the first item of each pair is the value of
+       a cumulative distribution function (CDF) and is in the interval [0, 1],
+       and the second item is the number associated with that CDF's
+       value. The random number will fall within the range of numbers
+       suggested in the table, which will be in the interval [0, 5] in the
+       example above.
+
+       The `numericalTable` method generates an appropriate table
+       for this method's `table` parameter, given a CDF and a range
+       of numbers.
+       """
+     while True:
+        x=_tableInterpSearch(table, self.rndu01())
+        if x!=None: return x
+
   def randomwalk_u01(self,n):
      """ Random walk of uniform 0-1 random numbers. """
      ret=[0 for i in range(n+1)]
@@ -861,3 +882,7 @@ if __name__ == "__main__":
     print(randgen.randomwalk_posneg1(50))
     # White noise
     print([randgen.normal() for i in range(20)])
+    # Demonstrate numerical CDF inversion
+    print("Gaussian values by CDF inversion")
+    normal_cdf = lambda x: 0.5*(1+math.erf(x/math.sqrt(2)))
+    print(randgen.numbers_from_cdf(normal_cdf, -6, 6, n=30))

@@ -1006,8 +1006,7 @@ Many probability distributions can be defined in terms of any of the following:
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
 1. Use the PDF to calculate the weights for a number of sample points (usually regularly spaced). Create one list with the sampled points in ascending order (the `list`) and another list of the same size with the PDF's values at those points (the `weights`).  Finally generate [**`ContinuousWeightedChoice(list, weights)`**](#Continuous_Weighted_Choice) to generate a random number bounded by the lowest and highest sampled point. This technique can be used even if the area under the PDF isn't 1. **OR**
-2. Use [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling). Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse cumulative distribution function_ (_inverse CDF_, or inverse of the CDF) assuming the area under the PDF is 1.  The Python sample code includes a `randomFromInterp` method that implements this approach numerically. **OR**
-3. Use [**_rejection sampling_**](#Rejection_Sampling).  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
+2. Use [**_rejection sampling_**](#Rejection_Sampling).  Choose the lowest and highest random number to generate (`minValue` and `maxValue`, respectively) and find the maximum value of the PDF at or between those points (`maxDensity`).  The rejection sampling approach is then illustrated with the following pseudocode, where `PDF(X)` is the distribution's PDF (see also Saucier 2000, p. 39).   This technique can be used even if the area under the PDF isn't 1.
 
         METHOD ArbitraryDist(minValue, maxValue, maxDensity)
              if minValue >= maxValue: return error
@@ -1018,14 +1017,11 @@ If a probability distribution's **PDF is known**, one of the following technique
              end
         END METHOD
 
-If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then one of the following techniques can be used to generate a random number that follows that distribution:
-
-1. Do the same process as method 1, given earlier, except&mdash;
+If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Do the same process as method 1, given earlier, except&mdash;
     - divide the weights in the `weights` list by the sum of all weights, and
-    - use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number. **OR**
-2. Generate `ICDF(randomVariable)`, where `ICDF(X)` is the distribution's inverse CDF (see method 2, given earlier).
+    - use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number.
 
-If the distribution's **CDF is known**, generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the inverse of that CDF.  See also `randomFromInterp` in the Python sample code.
+If the distribution's **CDF is known**, an approach called [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) can be used: Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse CDF_.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes `from_interp` and `numbers_from_cdf` methods that implement this approach numerically.
 
 > **Note:** Further details on inverse transform sampling or on how to find inverses, as well as lists of PDFs and CDFs, are outside the scope of this page.
 
@@ -1614,7 +1610,17 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
 
 Each of the resulting uniform numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by one of the methods given in "[**Random Numbers from an Arbitrary Distribution**](#Random_Numbers_from_an_Arbitrary_Distribution)". (See also Cario and Nelson 1997.)
 
-> **Example:** To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [**_rank correlation_**](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a two-variable Gaussian copula, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
+> **Examples:**
+>
+> 1. To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [**_rank correlation_**](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a two-variable Gaussian copula, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
+> 2. The following example generates two random numbers that follow a Gaussian copula with exponential marginals (`rho` is the Pearson correlation coefficient, and `rate1` and `rate2` are the rates of the two exponential marginals).
+>
+>        METHOD CorrelatedExpo(rho, rate1, rate2)
+>            copula = GaussianCopula([[1, rho], [rho, 1]])
+>            // Transform to exponentials using that
+>            // distribution's inverse CDF
+>            return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
+>        END METHOD
 
 Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;
 
@@ -1682,7 +1688,7 @@ Miscellaneous:
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
-The Python sample code also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, the **multivariate _t_-copula**, and the **multivariate Poisson distribution**.
+The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, the **multivariate _t_-copula**, and the **multivariate Poisson distribution**.
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling
@@ -1692,7 +1698,7 @@ This section contains various geometric sampling techniques.
 <a id=Random_Points_Inside_a_Simplex></a>
 ### Random Points Inside a Simplex
 
-The following pseudocode generates, uniformly at random, a point inside an _n_ dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, where each vertex is a list of points, all of a single dimension _n_ or greater.
+The following pseudocode generates, uniformly at random, a point inside an _n_ dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater.
 
     METHOD RandomPointInSimplex(points):
        ret=NewList()
