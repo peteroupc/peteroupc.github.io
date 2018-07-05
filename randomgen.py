@@ -42,10 +42,18 @@ def numericalTable(func, x, y, n=100):
 
 class RandomGen:
   def __init__(self,rng=None):
-    """ NOTE: Assumes that 'rng' implements
+    """ NOTES:
+
+     1. Assumes that 'rng' implements
      a 'randint(a, b)' method that returns a random
      integer in the interval [a, b].  Currently, this
-     class assumes 'a' is always 0. """
+     class assumes 'a' is always 0.
+     2. _rndint_ (and functions that ultimately call it) may be
+     slower than desirable if many random numbers are
+     needed at once.  Ways to improve the performance
+     of generating many random numbers at once, such
+     as parallel processing or vectorization, are currently outside
+     the scope of this code. """
     if rng==None:
       self.rng=random.Random()
     else:
