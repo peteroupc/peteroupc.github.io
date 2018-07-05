@@ -32,10 +32,10 @@
 <li><p>The name  <code>ascii</code>  is treated as a synonym for <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name  <code>cp1252</code>  is treated as a synonym for  <code>windows-1252</code> , even though it&#39;s not an IANA registered alias.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
 <li><p>(a) If a sequence of encoded words decodes to a string with a CTL character (U+007F, or a character less than U+0020 and not TAB) after being converted to Unicode, the encoded words are left un-decoded.</p></li>
-<li><p>(b) This implementation can decode an encoded word that uses ISO-2022-JP (the only supported encoding that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.)</p>
-
-<p>---.</p></li>
+<li><p>(b) This implementation can decode an encoded word that uses ISO-2022-JP (the only supported encoding that uses code switching) even if the encoded word&#39;s payload ends in a different mode from &quot;ASCII mode&quot;. (Each encoded word still starts in &quot;ASCII mode&quot;, though.)</p></li>
 </ul>
+
+<p>It would be appreciated if users of this library contact the author if they find other ways in which this implementation deviates from the mail specifications or other applicable specifications.Note that this class currently doesn&#39;t support the &quot;padding&quot; parameter for message bodies with the media type &quot;application/octet stream&quot; or treated as that media type (see RFC 2046 sec. 4.5.1).</p>
 
 <h3>Message Constructor</h3>
 
@@ -155,7 +155,9 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public string FileName { get; }
 </pre>
 
-<p>Gets a filename suggested by this message for saving the message&#39;s body to a file. For more information on the algorithm, see ContentDisposition.MakeFilename.</p>
+<p>Gets a file name suggested by this message for saving the message&#39;s body to a file. For more information on the algorithm, see ContentDisposition.MakeFilename.This method generates a file name based on the  <code>filename</code>  parameter of the Content-Disposition header field, if it exists, or on the  <code>name</code>  parameter of the Content-Type header field, otherwise.</p>
+
+<p><b>Remark:</b> Note that RFC 2046 sec. 4.5.1 ( <code>application/octet-stream</code>  subtype) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39; parameter which gave a <i>suggested</i> file name to be used if the data were written to a file&quot;. (Although the same section says this parameter &quot;has been deprecated in anticipation of [the] Content-Disposition header field&quot;, the  <code>name</code>  parameter may still be written out to email messages in some implementations, even in media types other than <code>application/octet-stream</code> .) Also, RFC 2183 sec. 2.3 ( <code>filename</code> parameter) confirms that the &quot;<i>suggested</i> filename&quot; in the  <code>filename</code> parameter &quot;should be <i>used as a basis</i> for the actual filename, where possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which discusses the use of that parameter in Hypertext Transfer Protocol (HTTP). Thus, this implementation is justified in not using the exact file name given, but rather adapting it to increase the chance of the name being usable in file systems.To the extent that the &quot;name&quot; parameter is not allowed in message bodies with the media type &quot;application/octet-stream&quot; or treated as that media-type, this is a deviation of RFC 2045 and 2046 (see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful parameters that apply to all media types&quot;).</p>
 
 <p><b>Returns:</b></p>
 
