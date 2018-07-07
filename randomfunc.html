@@ -1887,7 +1887,7 @@ END METHOD
 <ul>
 <li>Generating <code>N</code> random numbers with a given positive average <code>avg</code> is equivalent to generating <code>N</code> random numbers with the sum <code>N * avg</code>.</li>
 <li>Generating <code>N</code> random numbers <code>min</code> or greater and with a given positive sum <code>sum</code> is equivalent to generating <code>N</code> random numbers with the sum <code>sum - n * min</code>, then adding <code>min</code> to each number generated this way.</li>
-<li>The similar <strong>Dirichlet distribution</strong> models <em>n</em> random numbers, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, and dividing all those numbers except the last by the sum of all <em>n</em>+1 numbers (see Devroye 1986, p. 594).</li>
+<li>The <strong>Dirichlet distribution</strong>, as defined in some places (e.g., <em>Mathematica</em>; Devroye 1986, p. 594), models <em>n</em> random numbers, and can be sampled by generating <em>n</em>+1 random <a href="#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum, and dividing the first <em>n</em> numbers by that sum.</li>
 </ul>
 </blockquote>
 
