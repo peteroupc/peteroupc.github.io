@@ -31,6 +31,9 @@ Determines whether this object and another object are equal.</li>
 <li><code>String getDispositionType()</code><br>
 Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
 &quot;attachment&quot;.</li>
+<li><code>String GetFilename()</code><br>
+Gets an adapted version of the &quot;filename&quot; parameter in this content
+disposition object by using the &quot;MakeFilename&quot; method.</li>
 <li><code>String GetParameter​(String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>Map&lt;String,String&gt; getParameters()</code><br>
@@ -235,6 +238,21 @@ string will be in normalization form C. Returns an empty string if
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>GetFilename</h3>
+
+<pre>public String GetFilename()
+</pre>
+
+<p>Gets an adapted version of the &quot;filename&quot; parameter in this content
+ disposition object by using the &quot;MakeFilename&quot; method.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The adapted file name in the form of a string, or the empty string
+if there is no &quot;filename&quot; parameter.</li>
 </ul>
 
 <h3>GetParameter</h3>
