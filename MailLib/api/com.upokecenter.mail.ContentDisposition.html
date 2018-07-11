@@ -37,7 +37,8 @@ disposition object by using the &quot;MakeFilename&quot; method.</li>
 <li><code>String GetParameter​(String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>Map&lt;String,String&gt; getParameters()</code><br>
-Gets a list of parameter names associated with this object and their values.</li>
+Gets a list of parameter names associated with this object and their
+values.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
 <li><code>boolean isAttachment()</code><br>
@@ -54,8 +55,12 @@ object.</li>
  ContentDisposition defaultValue)</code><br>
 Creates a new content disposition object from the value of a
 Content-Disposition header field.</li>
+<li><code>String ToSingleLineString()</code><br>
+Converts this content disposition to a text string form suitable for
+inserting in HTTP headers.</li>
 <li><code>String toString()</code><br>
-Converts this object to a text string.</li>
+Converts this content disposition to a text string form suitable for
+inserting in email headers.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -168,7 +173,15 @@ false</code>.</li>
 <pre>public final Map&lt;String,String&gt; getParameters()
 </pre>
 
-<p>Gets a list of parameter names associated with this object and their values.</p>
+<p>Gets a list of parameter names associated with this object and their
+ values.<p>For the &quot;filename&quot; parameter, the value of that parameter
+ is not adapted with the ContentDisposition.MakeFilename method. Thus,
+ for example, the &quot;filename&quot; parameter, if any, returned by this
+ method could have an arbitrary length, be encoded using RFC 2047
+ encoded words (which some email implementations still like to write
+ out, even though that RFC says encoded words &quot;MUST NOT appear within
+ a &#39;quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be
+ usable as is as a file name.</p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -185,7 +198,11 @@ appear in any particular order; this is at least the case in version
 <pre>public String toString()
 </pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this content disposition to a text string form suitable for
+ inserting in email headers. Notably, the string contains the value of
+ a Content-Disposition header field (without the text necessarily
+ starting with &quot;Content-Disposition&quot; followed by a space), and
+ consists of one or more lines.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -196,7 +213,24 @@ appear in any particular order; this is at least the case in version
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string representation of this object.</li>
+<li>A text string form of this content disposition.</li>
+</ul>
+
+<h3>ToSingleLineString</h3>
+
+<pre>public String ToSingleLineString()
+</pre>
+
+<p>Converts this content disposition to a text string form suitable for
+ inserting in HTTP headers. Notably, the string contains the value of
+ a Content-Disposition header field (without the text necessarily
+ starting with &quot;Content-Disposition&quot; followed by a space), and
+ consists of a single line.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string form of this content disposition.</li>
 </ul>
 
 <h3>MakeFilename</h3>
@@ -205,13 +239,42 @@ appear in any particular order; this is at least the case in version
 </pre>
 
 <p>Converts a file name from the Content-Disposition header to a suitable name
- for saving data to a file. <p>Examples:</p>
- <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;</code> (RFC 2047
- encoding)</p> <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long
- filename&quot;</code> (RFC 2047 encoding)</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot;
- -&gt; &quot;hello.txt&quot;</code> (RFC 2231 encoding)</p> <p><code>&quot;nul.txt&quot; -&gt;
- &quot;_nul.txt&quot;</code> (Reserved name)</p> <p><code>&quot;dir1/dir2/file&quot; -&gt;
- &quot;dir1_dir2_file&quot;</code> (Directory separators)</p></p>
+ for saving data to a file. This method is idempotent; that is,
+ calling the method again on the result doesn&#39;t change that result.
+ <p>Examples:</p> <p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt;
+ &quot;hello.txt&quot;</code> (RFC 2047 encoding)</p>
+ <p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC 2047
+ encoding)</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code> (RFC
+ 2231 encoding)</p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code> (Reserved
+ name)</p> <p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>
+ (Directory separators)</p><p> <p><b>Remark:</b> Email and HTTP
+ headers may specify suggested filenames using the Content-Disposition
+ header field&#39;s <code>filename</code> parameter or, in practice, the
+ Content-Type header field&#39;s <code>name</code> parameter.</p> <p>Although
+ RFC 2047 encoded words appearing in both parameters are written out
+ by some implementations, this practice is discouraged by some
+ (especially since the RFC itself says that encoded words &quot;MUST NOT
+ appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename
+ method has good reason to decode RFC 2047 encoded words (and RFC 2231
+ encoding) in filenames passed to this method.</p> <p>RFC 2046 sec.
+ 4.5.1 (<code>application/octet-stream</code> subtype in Content-Type header
+ field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39;
+ parameter which gave a <i>suggested</i> file name to be used if the
+ data were written to a file&quot;. Also, RFC 2183 sec. 2.3
+ (<code>filename</code> parameter in Content-Disposition) confirms that the
+ &quot;<i>suggested</i> filename&quot; in the <code>filename</code> parameter &quot;should
+ be <i>used as a basis</i> for the actual filename, where possible&quot;,
+ and that that file name should &quot;not [be] blindly use[d]&quot;. See also
+ RFC 6266, section 4.3, which discusses the use of that parameter in
+ Hypertext Transfer Protocol (HTTP).</p> <p>To the extent that the
+ &quot;name&quot; parameter is not allowed in message bodies other than those
+ with the media type &quot;application/octet-stream&quot; or treated as that
+ media-type, this is a deviation of RFC 2045 and 2046 (see also RFC
+ 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful
+ parameters that apply to all media types&quot;). (Some email
+ implementations may still write out the &quot;name&quot; parameter, even in
+ media types other than <code>application/octet-stream</code> and even
+ though RFC 2046 has deprecated that parameter.) </p> </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -230,14 +293,8 @@ filename (including the directory separators slash and backslash) are
 replaced with underscores; spaces and tabs are collapsed to a single
 space; leading and trailing spaces and tabs are removed; and the
 filename is truncated if it would otherwise be too long. The returned
-string will be in normalization form C. Returns an empty string if
-<code>str</code> is null.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+string will be in normalization form C. Returns &quot;_&quot; if &quot;str&quot; is null
+or empty.</li>
 </ul>
 
 <h3>GetFilename</h3>
@@ -251,8 +308,8 @@ string will be in normalization form C. Returns an empty string if
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The adapted file name in the form of a string, or the empty string
-if there is no &quot;filename&quot; parameter.</li>
+<li>The adapted file name in the form of a string. Returns &quot;_&quot; if there
+is no &quot;filename&quot; parameter or that parameter is empty.</li>
 </ul>
 
 <h3>GetParameter</h3>
@@ -260,7 +317,15 @@ if there is no &quot;filename&quot; parameter.</li>
 <pre>public String GetParameter​(String name)
 </pre>
 
-<p>Gets a parameter from this disposition object.</p>
+<p>Gets a parameter from this disposition object.<p>For the &quot;filename&quot;
+ parameter, the value of that parameter is not adapted with the
+ ContentDisposition.MakeFilename method. Thus, for example, the
+ &quot;filename&quot; parameter, if any, returned by this method could have an
+ arbitrary length, be encoded using RFC 2047 encoded words (which some
+ email implementations still like to write out, even though that RFC
+ says encoded words &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;; see
+ ContentDisposition.MakeFilename), or not be usable as is as a file
+ name.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -302,8 +367,8 @@ Can&#39;t be null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A content disposition object, or &quot;Attachment&quot; if <code>dispoValue</code>
-is empty or syntactically invalid.</li>
+<li>A content disposition object, or ContentDisposition.Attachment&quot; if
+<code>dispoValue</code> is empty or syntactically invalid.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

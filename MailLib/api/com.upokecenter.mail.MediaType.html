@@ -15,7 +15,7 @@
  example, the media type <code>text/plain; charset = utf-8</code> is a text
  media type ("text"), namely, a plain text type ("plain"), and the
  parameters say that the data uses UTF-8, a Unicode character encoding
- ("charset=utf-8"). Other top-level types include "audio", "video",
+ ("charset = utf-8"). Other top-level types include "audio", "video",
  and "application".</p> <p>A media type is sometimes known as a "MIME
  type", for Multipurpose Internet Mail Extensions, the standard that
  introduced media types.</p> <p>This type is immutable, meaning its
@@ -72,8 +72,12 @@ Parses a media type string and returns a media type object.</li>
  MediaType defaultValue)</code><br>
 Parses a media type string and returns a media type object, or the default
 value if the string is invalid.</li>
+<li><code>String ToSingleLineString()</code><br>
+Converts this media type to a text string form suitable for inserting in
+HTTP headers.</li>
 <li><code>String toString()</code><br>
-Converts this object to a text string.</li>
+Converts this media type to a text string form suitable for inserting in
+email headers.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -233,7 +237,11 @@ particular order; this is at least the case in version 0.10.0.</li>
 <pre>public String toString()
 </pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this media type to a text string form suitable for inserting in
+ email headers. Notably, the string contains the value of a
+ Content-Type header field (without the text necessarily starting with
+ &quot;Content-Type&quot; followed by a space), and consists of one or more
+ lines.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -244,7 +252,23 @@ particular order; this is at least the case in version 0.10.0.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string representation of this object.</li>
+<li>A text string form of this media type.</li>
+</ul>
+
+<h3>ToSingleLineString</h3>
+
+<pre>public String ToSingleLineString()
+</pre>
+
+<p>Converts this media type to a text string form suitable for inserting in
+ HTTP headers. Notably, the string contains the value of a
+ Content-Type header field (without the text necessarily starting with
+ &quot;Content-Type&quot; followed by a space), and consists of a single line.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string form of this media type.</li>
 </ul>
 
 <h3>GetCharset</h3>
@@ -332,8 +356,8 @@ type can include parameters.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A media type object, or text/plain if <code>mediaTypeValue</code> is
-empty or syntactically invalid.</li>
+<li>A media type object, or MediaType.TextPlainAscii if <code>
+mediaTypeValue</code> is empty or syntactically invalid.</li>
 </ul>
 
 <h3>Parse</h3>
