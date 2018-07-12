@@ -15,6 +15,8 @@
 
 <p>A portable library in C# and Java for parsing and generating Internet mail messages.</p>
 
+<p>Note that sending and receiving email messages is outside the scope of this library; however, an application that sends and/or receives such messages can use this library to help interpret those messages.</p>
+
 <h2>Documentation</h2>
 
 <p><strong>See the <a href="https://peteroupc.github.io/MailLib/api/">Java API documentation</a>.</strong></p>
@@ -70,10 +72,23 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 
 <h2>Release Notes</h2>
 
+<p>Version 0.11.0:</p>
+
+<ul>
+<li>Corrected the documentation for MediaType&#39;s and ContentDisposition&#39;s Parameters properties</li>
+<li>Added DisplayName property in NamedAddress class</li>
+<li>More robust ContentDisposition.MakeFilename method</li>
+<li>Update Unicode data</li>
+<li>Converted to .NET Standard</li>
+<li>Updated Encoding library used</li>
+<li>Supported parsing several new header fields</li>
+<li>Bug fixes</li>
+</ul>
+
 <p>Version 0.10.0:</p>
 
 <ul>
-<li>Character encoding conversion library moved out of this library (see <a href="https://github.com/peteroupc/Encoding">PeterO.Encoding</a>; currently uses version 2.0 of that library.</li>
+<li>Character encoding conversion library moved out of this library (see <a href="https://github.com/peteroupc/Encoding">PeterO.Encoding</a>; currently uses version 0.2.0 of that library.</li>
 <li>Updated normalization and IDNA data to Unicode 9.0</li>
 <li>Normalization implementation renamed to NormalizerInput from NormalizerCharacterInput; the latter class is now deprecated</li>
 <li>Add GetHeaderArray, SetDate, and GetDate methods of Message class</li>
