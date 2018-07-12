@@ -12,7 +12,32 @@
 <p>Specifies how a message body should be displayed or handled by a mail user
  agent. This type is immutable; its contents can&#39;t be changed after
  it&#39;s created. To create a changeable disposition object, use the
- DispositionBuilder class.</p>
+ DispositionBuilder class. <p><b>About the &quot;filename&quot;
+ parameter</b></p> <p>The &quot;filename&quot; parameter of a content
+ disposition suggests a name to use when saving data to a file. For
+ the &quot;filename&quot; parameter, the GetParameter method and Parameters
+ property (<code>getParameters</code>) method in Java) do not adapt that
+ parameter&#39;s value using the ContentDisposition.MakeFilename method.
+ Thus, for example, the &quot;filename&quot; parameter, if any, returned by this
+ method could have an arbitrary length, be encoded using RFC 2047
+ encoded words (which some email and HTTP implementations still like
+ to write out in headers, even though that RFC says encoded words
+ &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;; see
+ ContentDisposition.MakeFilename), or not be usable as is as a file
+ name.</p> <p><b>Example:</b> An example of RFC 2047 encoded words
+ is:</p> <p><b>=?UTF-8?Q?test?=</b></p> <p>Content-Disposition header
+ fields like the following have appeared in practice:</p>
+ <p><b>Content-Disposition: attachment;
+ filename==?UTF-8?Q?example?=</b></p> <p><b>Content-Disposition:
+ attachment; filename==?UTF-8?Q?test.png?=</b></p>
+ <p><b>Content-Disposition: attachment;
+ filename=&quot;=?UTF-8?Q?test.png?=&quot;</b></p> <p>In this implementation,
+ the first and second of these are syntactically invalid, so they
+ trigger parse errors, while the third of these is syntactically
+ valid, but the &quot;filename&quot; parameter is treated as
+ &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047
+ encoded words are not decoded at the moment a content disposition is
+ parsed (using the Parse method).</p></p>
 
 <h2>Fields</h2>
 
@@ -49,12 +74,12 @@ Gets a value indicating whether the disposition type is inline.</li>
 Converts a file name from the Content-Disposition header to a suitable name
 for saving data to a file.</li>
 <li><code>static ContentDisposition Parse​(String dispoValue)</code><br>
-Parses a content disposition string and returns a content disposition
-object.</li>
-<li><code>static ContentDisposition Parse​(String dispositionValue,
- ContentDisposition defaultValue)</code><br>
 Creates a new content disposition object from the value of a
 Content-Disposition header field.</li>
+<li><code>static ContentDisposition Parse​(String dispositionValue,
+ ContentDisposition defaultValue)</code><br>
+Parses a content disposition string and returns a content disposition
+object, or the default value if the string is invalid.</li>
 <li><code>String ToSingleLineString()</code><br>
 Converts this content disposition to a text string form suitable for
 inserting in HTTP headers.</li>
@@ -175,13 +200,8 @@ false</code>.</li>
 
 <p>Gets a list of parameter names associated with this object and their
  values.<p>For the &quot;filename&quot; parameter, the value of that parameter
- is not adapted with the ContentDisposition.MakeFilename method. Thus,
- for example, the &quot;filename&quot; parameter, if any, returned by this
- method could have an arbitrary length, be encoded using RFC 2047
- encoded words (which some email implementations still like to write
- out, even though that RFC says encoded words &quot;MUST NOT appear within
- a &#39;quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be
- usable as is as a file name.</p></p>
+ is not adapted with the ContentDisposition.MakeFilename method; see
+ the documentation for the ContentDisposition class.</p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -255,22 +275,22 @@ appear in any particular order; this is at least the case in version
  by some implementations, this practice is discouraged by some
  (especially since the RFC itself says that encoded words &quot;MUST NOT
  appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename
- method has good reason to decode RFC 2047 encoded words (and RFC 2231
- encoding) in filenames passed to this method.</p> <p>RFC 2046 sec.
- 4.5.1 (<code>application/octet-stream</code> subtype in Content-Type header
- field) cites an earlier RFC 1341, which &quot;defined the use of a &#39;NAME&#39;
- parameter which gave a <i>suggested</i> file name to be used if the
- data were written to a file&quot;. Also, RFC 2183 sec. 2.3
- (<code>filename</code> parameter in Content-Disposition) confirms that the
- &quot;<i>suggested</i> filename&quot; in the <code>filename</code> parameter &quot;should
- be <i>used as a basis</i> for the actual filename, where possible&quot;,
- and that that file name should &quot;not [be] blindly use[d]&quot;. See also
- RFC 6266, section 4.3, which discusses the use of that parameter in
- Hypertext Transfer Protocol (HTTP).</p> <p>To the extent that the
- &quot;name&quot; parameter is not allowed in message bodies other than those
- with the media type &quot;application/octet-stream&quot; or treated as that
- media-type, this is a deviation of RFC 2045 and 2046 (see also RFC
- 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful
+ method has a basis in the RFCs to decode RFC 2047 encoded words (and
+ RFC 2231 encoding) in filenames passed to this method.</p> <p>RFC
+ 2046 sec. 4.5.1 (<code>application/octet-stream</code> subtype in
+ Content-Type header field) cites an earlier RFC 1341, which &quot;defined
+ the use of a &#39;NAME&#39; parameter which gave a <i>suggested</i> file name
+ to be used if the data were written to a file&quot;. Also, RFC 2183 sec.
+ 2.3 (<code>filename</code> parameter in Content-Disposition) confirms that
+ the &quot;<i>suggested</i> filename&quot; in the <code>filename</code> parameter
+ &quot;should be <i>used as a basis</i> for the actual filename, where
+ possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;.
+ See also RFC 6266, section 4.3, which discusses the use of that
+ parameter in Hypertext Transfer Protocol (HTTP).</p> <p>To the extent
+ that the &quot;name&quot; parameter is not allowed in message bodies other than
+ those with the media type &quot;application/octet-stream&quot; or treated as
+ that media-type, this is a deviation of RFC 2045 and 2046 (see also
+ RFC 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful
  parameters that apply to all media types&quot;). (Some email
  implementations may still write out the &quot;name&quot; parameter, even in
  media types other than <code>application/octet-stream</code> and even
@@ -317,15 +337,10 @@ is no &quot;filename&quot; parameter or that parameter is empty.</li>
 <pre>public String GetParameter​(String name)
 </pre>
 
-<p>Gets a parameter from this disposition object.<p>For the &quot;filename&quot;
- parameter, the value of that parameter is not adapted with the
- ContentDisposition.MakeFilename method. Thus, for example, the
- &quot;filename&quot; parameter, if any, returned by this method could have an
- arbitrary length, be encoded using RFC 2047 encoded words (which some
- email implementations still like to write out, even though that RFC
- says encoded words &quot;MUST NOT appear within a &#39;quoted-string&#39;&quot;; see
- ContentDisposition.MakeFilename), or not be usable as is as a file
- name.</p></p>
+<p>Gets a parameter from this disposition object. For the &quot;filename&quot; parameter,
+ the value of that parameter is not adapted with the
+ ContentDisposition.MakeFilename method; see the documentation for the
+ ContentDisposition class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -355,8 +370,8 @@ Can&#39;t be null.</li>
 <pre>public static ContentDisposition Parse​(String dispoValue)
 </pre>
 
-<p>Parses a content disposition string and returns a content disposition
- object.</p>
+<p>Creates a new content disposition object from the value of a
+ Content-Disposition header field.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -383,8 +398,25 @@ null.</li>
 <pre>public static ContentDisposition Parse​(String dispositionValue, ContentDisposition defaultValue)
 </pre>
 
-<p>Creates a new content disposition object from the value of a
- Content-Disposition header field.</p>
+<p>Parses a content disposition string and returns a content disposition
+ object, or the default value if the string is invalid. This method
+ checks the syntactic validity of the string, but not whether it has
+ all parameters it&#39;s required to have or whether the parameters
+ themselves are set to valid values for the parameter. <p>RFC 2231
+ extensions allow each media type parameter to be associated with a
+ character encoding and/or language, and support parameter values that
+ span two or more key-value pairs. Parameters making use of RFC 2231
+ extensions have names with an asterisk (&quot;<em>&quot;). Such a parameter will
+ be ignored if it is ill-formed because of RFC 2231&#39;s rules (except
+ for illegal percent-decoding or undecodable sequences for the given
+ character enoding). Examples of RFC 2231 extensions follow (both
+ examples encode the same &quot;filename&quot; parameter):</p> <p><b>inline;
+ filename</em>=utf-8&#39;en&#39;filename.txt</b></p> <p><b>inline;
+ filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p> <p>This
+ implementation ignores keys (in parameter key-value pairs) that
+ appear more than once in the content disposition. Nothing in RFCs
+ 2045, 2183, 6266, or 7231 explicitly disallows such keys, or
+ otherwise specifies error-handling behavior for such keys.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
