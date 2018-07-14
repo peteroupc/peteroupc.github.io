@@ -112,6 +112,8 @@ inserting in email headers.</li>
 </pre>
 
 <p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or
+ &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec.
+ 2.8, unrecognized disposition types should be treated as
  &quot;attachment&quot;.</p>
 
 <p><strong>Returns:</strong></p>
@@ -276,7 +278,7 @@ appear in any particular order; this is at least the case in version
  (especially since the RFC itself says that encoded words &quot;MUST NOT
  appear within a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename
  method has a basis in the RFCs to decode RFC 2047 encoded words (and
- RFC 2231 encoding) in filenames passed to this method.</p> <p>RFC
+ RFC 2231 encoding) in file names passed to this method.</p> <p>RFC
  2046 sec. 4.5.1 (<code>application/octet-stream</code> subtype in
  Content-Type header field) cites an earlier RFC 1341, which &quot;defined
  the use of a &#39;NAME&#39; parameter which gave a <i>suggested</i> file name
