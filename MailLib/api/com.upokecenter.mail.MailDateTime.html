@@ -1,0 +1,144 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.MailDateTime</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.mail.MailDateTime</h1>
+
+<h1>com.upokecenter.mail.MailDateTime</h1>
+
+<pre>public final class MailDateTime extends Object
+</pre>
+
+<p>Not documented yet.</p>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>static String GenerateDateString​(int[] dateTime)</code><br>
+Generates a date-time string following the Internet Message Format (RFC
+5322) from an 8-element array.</li>
+<li><code>static int[] ParseDateString​(String str)</code><br>
+Gets the date and time extracted from a date-time string following the
+Internet Message Format (RFC 5322).</li>
+<li><code>static int[] ParseDateString​(String str,
+           boolean parseObsoleteZones)</code><br>
+Gets the date and time extracted from a date-time string following the
+Internet Message Format (RFC 5322), with an option to allow obsolete
+time zone strings to appear in the date-time string.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>GenerateDateString</h3>
+
+<pre>public static String GenerateDateString​(int[] dateTime)
+</pre>
+
+<p>Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dateTime</code> - The date and time in the form of an 8-element array. See
+<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+for information on the format of this parameter.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A date-time string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter &quot;dateTime&quot; is null or
+invalid.</li>
+</ul>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString​(String str, boolean parseObsoleteZones)
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322), with an option to allow obsolete
+ time zone strings to appear in the date-time string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - String.</p></li>
+<li><p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
+obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and
+certain three-letter combinations) to appear in the date-time string.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An 8-element array containing the date and time, or <code>null</code> if
+<code>str</code> is null, empty, or syntactically invalid, or if the
+string&#39;s year would overflow the range of a 32-bit signed integer. If
+an array is returned, element of that array (starting from 0) is as
+follows:</li>
+</ul>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString​(String str)
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322). However, this method does not
+ allow obsolete time zone strings to appear in the date-time string.
+ See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+ for information on the format of this method&#39;s return value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - String.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An 8-element array containing the date and time, or <code>null</code> if
+<code>str</code> is null, empty, or syntactically invalid, or if the
+string&#39;s year would overflow the range of a 32-bit signed integer.</li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = xExtra(document).getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+}
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>
