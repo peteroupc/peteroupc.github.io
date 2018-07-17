@@ -1,0 +1,120 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.MailDateTime</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.Mail.MailDateTime</h1>
+
+<h2>PeterO.Mail.MailDateTime</h2>
+
+<pre>public static class MailDateTime
+</pre>
+
+<p>Not documented yet.</p>
+
+<h3>GenerateDateString</h3>
+
+<pre>public static string GenerateDateString(
+    int[] dateTime);
+</pre>
+
+<p>Generates a date-time string following the nternet Message Format (RFC 5322) from an 8-element array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>dateTime</i>: The date and time in the form of an 8-element array. Seefor information on the format of this parameter.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A date-time string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter &quot;dateTime&quot; is null or invalid.</li>
+</ul>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString(
+    string str);
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. Seefor information on the format of this method&#39;s return value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: String.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An 8-element array containing the date and time, or  <code>null</code>  if <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString(
+    string str,
+    bool parseObsoleteZones);
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the nternet Message Format (RFC 5322), with an option to allow obsolete time one strings to appear in the date-time string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: String.</p></li>
+<li><p><i>parseObsoleteZones</i>: If set to  <code>true</code> , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An 8-element array containing the date and time, or  <code>null</code>  if <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer. If an array is returned, element of that array (starting from 0) is as follows:</p>
+
+<ul>
+<li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
+<li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p>2 - Day of the month, from 1 through 31.</p></li>
+<li><p>3 - Hour of the day, from 0 through 23.</p></li>
+<li><p>4 - Minute of the hour, from 0 through 59.</p></li>
+<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
+<li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
+</ul>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = xExtra(document).getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+}
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>
