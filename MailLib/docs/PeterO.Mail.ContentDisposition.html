@@ -124,7 +124,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The adapted file name in the form of a string. Returns &quot;_&quot; if there is no &quot;filename&quot; parameter or that parameter is empty.</p>
+<p>The adapted file name in the form of a string. Returns the empty string if there is no &quot;filename&quot; parameter or that parameter is empty.</p>
 
 <h3>GetHashCode</h3>
 
@@ -222,7 +222,7 @@ is empty.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; spaces and tabs are collapsed to a single space; leading and trailing spaces and tabs are removed; and the filename is truncated if it would otherwise be too long. The returned string will be in normalization form C. Returns &quot;_&quot; if &quot;str&quot; is null or empty.</p>
+<p>A string with the converted version of the file name. Among other things, encoded words under RFC 2047 are decoded (since they occur so frequently in Content-Disposition filenames); the value is decoded under RFC 2231 if possible; characters unsuitable for use in a filename (including the directory separators slash and backslash) are replaced with underscores; spaces and tabs are collapsed to a single space; leading and trailing spaces and tabs are removed; and the filename is truncated if it would otherwise be too long. The returned string will be in normalization form C. Returns the empty string if &quot;str&quot; is null or empty.</p>
 
 <h3>Parse</h3>
 
