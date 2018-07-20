@@ -72,6 +72,20 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 
 <h2>Release Notes</h2>
 
+<p>Version 0.12.0:</p>
+
+<ul>
+<li>The internal code for parsing and generating message headers was extensively refactored.  Much of the refactoring improves conformance with RFCs that define the message format and MIME.</li>
+<li>As a result of the refactoring, the message generation can better ensure, when possible, that each line of a generated message is no more than 76 characters long, as recommended by those RFCs.</li>
+<li>Many bugs were fixed, including those relating to downgrading header fields containing non-ASCII characters to ASCII in the Generate method.  Another bug involves an infinite decoding loop involving certain Content-Type and Content-Disposition strings.</li>
+<li>One additional deviation to RFC 2047 (encoded words) is noted in the documentation for the Message class.  I think the deviation shows a weakness in that RFC.</li>
+<li>At least three methods added to ContentDisposition class, including ToSingleLineString.</li>
+<li>ToSingleLineString method added to MediaType class.</li>
+<li>GenerateBytes method added to Message class.</li>
+<li>Added MailDateTime class.</li>
+<li>MakeFilename class in ContentDisposition is now idempotent and shows better. performance in some common cases of file names.</li>
+</ul>
+
 <p>Version 0.11.0:</p>
 
 <ul>
@@ -83,51 +97,6 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 <li>Updated Encoding library used</li>
 <li>Supported parsing several new header fields</li>
 <li>Bug fixes</li>
-</ul>
-
-<p>Version 0.10.0:</p>
-
-<ul>
-<li>Character encoding conversion library moved out of this library (see <a href="https://github.com/peteroupc/Encoding">PeterO.Encoding</a>; currently uses version 0.2.0 of that library.</li>
-<li>Updated normalization and IDNA data to Unicode 9.0</li>
-<li>Normalization implementation renamed to NormalizerInput from NormalizerCharacterInput; the latter class is now deprecated</li>
-<li>Add GetHeaderArray, SetDate, and GetDate methods of Message class</li>
-<li>Add support for parsing several new header fields</li>
-<li>Date header field is included in generated messages</li>
-<li>Improve MakeFilename method of ContentDisposition class</li>
-<li>Fix bugs in Unicode normalization implementation</li>
-<li>Fixed several bugs and addressed corner cases in message generation, such as Quoted-Printable encoding</li>
-<li>In the .NET version of the source code, documentation is moved out of the source code and placed into a consolidated XML file</li>
-<li>SetBody method of Message class now returns the Message object that was edited</li>
-<li>Other bug fixes</li>
-</ul>
-
-<p>Version 0.9.2:</p>
-
-<ul>
-<li>Removed dependencies (.NET version)</li>
-</ul>
-
-<p>Version 0.9.1:</p>
-
-<ul>
-<li>Removed a reference to OpenCover that was apparently left in version 0.9 (.NET version)</li>
-</ul>
-
-<p>Version 0.9:</p>
-
-<ul>
-<li>The C# version of the library now also targets &quot;dotnet&quot;, which should make it compatible with platform .NET runtime
-environments such as the upcoming cross-platform &quot;coreclr&quot; runtime.</li>
-<li>Bug fixes to ensure number-format independence in some cases</li>
-<li>ContentDisposition.MakeFilename implementation was improved</li>
-<li>Another overload for GetEncoding was added</li>
-<li>Additional fixes in character encodings</li>
-<li>Known issue: The library implements character encodings based on the Encoding Standard
-candidate recommendation.  But several issues have emerged with that spec in the meantime.
-For example, GB18030 currently uses a problematic range table, so that for certain code points designed
-for that table, round-tripping is not possible.  As a result, tests on GB18030 are disabled
-for now.</li>
 </ul>
 
 <p>See <a href="https://github.com/peteroupc/MailLib/tree/master/History.md">History.md</a>
