@@ -15,59 +15,104 @@
 
 <ul>
 <li><code>static CBOREncodeOptions NoDuplicateKeys</code><br>
-Disallow duplicate keys when reading CBOR objects from a data stream.</li>
+Deprecated.
+Use UseDuplicateKeys instead.
+Use UseDuplicateKeys instead.</li>
 <li><code>static CBOREncodeOptions NoIndefLengthStrings</code><br>
-Always encode strings with a definite-length encoding.</li>
+Deprecated.
+Use UseIndefLengthStrings instead.
+Use UseIndefLengthStrings instead.</li>
 <li><code>static CBOREncodeOptions None</code><br>
-No special options for encoding/decoding.</li>
+Deprecated.
+Use UseIndefLengthStrings instead.
+Use UseIndefLengthStrings instead.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>CBOREncodeOptions()</code><br></li>
+<li><code>CBOREncodeOptions​(boolean useIndefLengthStrings,
+             boolean useDuplicateKeys)</code><br></li>
 </ul>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>CBOREncodeOptions And​(CBOREncodeOptions o)</code><br>
-Returns an options object containing the flags shared by this and another
-options object.</li>
+Deprecated.
+May be removed in a later version.
+May be removed in a later version.</li>
+<li><code>boolean getUseDuplicateKeys()</code><br></li>
+<li><code>boolean getUseIndefLengthStrings()</code><br></li>
 <li><code>int getValue()</code><br>
-Gets this options object&#39;s value.</li>
+Deprecated.
+Option classes in this library will follow the form seen in JSONOptions in a
+later version; the approach used in this class is too complicated.
+Option classes in this library will follow the form seen in JSONOptions in a
+later version; the approach used in this class is too complicated.</li>
 <li><code>CBOREncodeOptions Or​(CBOREncodeOptions o)</code><br>
-Returns an options object containing the combined flags of this and another
-options object.</li>
+Deprecated.
+May be removed in a later version.
+May be removed in a later version.</li>
 </ul>
 
 <h2>Field Details</h2>
 
 <h3>None</h3>
 
-<pre>public static final CBOREncodeOptions None
+<pre>@Deprecated public static final CBOREncodeOptions None
 </pre>
 
-<p>No special options for encoding/decoding. Value: 0.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use UseIndefLengthStrings instead. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
 
 <h3>NoIndefLengthStrings</h3>
 
-<pre>public static final CBOREncodeOptions NoIndefLengthStrings
+<pre>@Deprecated public static final CBOREncodeOptions NoIndefLengthStrings
 </pre>
 
-<p>Always encode strings with a definite-length encoding. Used only when
- encoding CBOR objects. Value: 1.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use UseIndefLengthStrings instead. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
 
 <h3>NoDuplicateKeys</h3>
 
-<pre>public static final CBOREncodeOptions NoDuplicateKeys
+<pre>@Deprecated public static final CBOREncodeOptions NoDuplicateKeys
 </pre>
 
-<p>Disallow duplicate keys when reading CBOR objects from a data stream. Used
- only when decoding CBOR objects. Value: 2.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use UseDuplicateKeys instead. Option classes in this library will follow the
+ form seen in JSONOptions in a later version; the approach used in this
+ class is too complicated.</div>
 
 <h2>Method Details</h2>
 
-<h3>getValue</h3>
+<h3>getUseIndefLengthStrings</h3>
 
-<pre>public final int getValue()
+<pre>public final boolean getUseIndefLengthStrings()
 </pre>
 
-<p>Gets this options object&#39;s value.</p>
+<h3>getUseDuplicateKeys</h3>
+
+<pre>public final boolean getUseDuplicateKeys()
+</pre>
+
+<h3>getValue</h3>
+
+<pre>@Deprecated public final int getValue()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Option classes in this library will follow the form seen in JSONOptions in a
+ later version; the approach used in this class is too complicated.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -77,11 +122,14 @@ options object.</li>
 
 <h3>Or</h3>
 
-<pre>public CBOREncodeOptions Or​(CBOREncodeOptions o)
+<pre>@Deprecated public CBOREncodeOptions Or​(CBOREncodeOptions o)
 </pre>
 
-<p>Returns an options object containing the combined flags of this and another
- options object.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -97,11 +145,14 @@ options object.</li>
 
 <h3>And</h3>
 
-<pre>public CBOREncodeOptions And​(CBOREncodeOptions o)
+<pre>@Deprecated public CBOREncodeOptions And​(CBOREncodeOptions o)
 </pre>
 
-<p>Returns an options object containing the flags shared by this and another
- options object.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
+ follow the form seen in JSONOptions in a later version; the approach used
+ in this class is too complicated.</div>
 
 <p><strong>Parameters:</strong></p>
 
