@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on July 3, 2018.</p>
+<p>Begun on June 4, 2017; last updated on July 25, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -2150,9 +2150,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p>If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>  or <em>randomness extraction</em> methods that it is outside the scope of this document to describe.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.</p>
+<p><small><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.</p>
 
-<p>Note that if <code>MODULUS</code> is a power of 2 (for example, 256 or 2<sup>32</sup>), the <code>RNDINT</code> implementation given may leave unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</small></p>
+<p>Note that if <code>MODULUS</code> is a power of 2 (for example, 256 or 2<sup>32</sup>), the <code>RNDINT</code> implementation given in the pseudocode may leave unused bits (for example, when truncating a random number to <code>wordBits</code> bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page&#39;s scope.</small></p>
 
 <p><small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by swapping the bits of a number equal to that number&#39;s absolute value minus 1.</small></p>
 
