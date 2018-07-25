@@ -160,12 +160,15 @@ is null.</li>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
-<p>The following example (C#) converts a number in the orm of a hex string to a big integer.    public static arbitrary-precision integer HexToBigInteger(string
-    hexString) {  // Parse the hexadecimal string as a big integer. Will  //
-    throw a FormatException if the parsing fails var bigInteger =
-    arbitrary-precision integer.fromRadixString(hexString, 16);  // Optional:
-    Check if the parsed integer is negative if (bigInteger.Sign &lt; 0) {
-    throw new FormatException(&quot;negative hex string&quot;); } return bigInteger; }</p>
+<p>The following example (C#) converts a number in the orm of a hex string to a big integer.</p>
+
+<pre>public static arbitrary-precision integer HexToBigInteger(string
+hexString) {  // Parse the hexadecimal string as a big integer. Will  //
+throw a FormatException if the parsing fails var bigInteger =
+arbitrary-precision integer.fromRadixString(hexString, 16);  // Optional:
+Check if the parsed integer is negative if (bigInteger.Sign &lt; 0) {
+throw new FormatException(&quot;negative hex string&quot;); } return bigInteger; }
+</pre>
 
 <p><b>Parameters:</b></p>
 
