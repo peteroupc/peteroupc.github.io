@@ -16,24 +16,26 @@
 <ul>
 <li><code>static CBOREncodeOptions NoDuplicateKeys</code><br>
 Deprecated.
-Use UseDuplicateKeys instead.
-Use UseDuplicateKeys instead.</li>
+Use &#39;new CBOREncodeOptions(true,false)&#39; instead.
+Use &#39;new CBOREncodeOptions(true,false)&#39; instead.</li>
 <li><code>static CBOREncodeOptions NoIndefLengthStrings</code><br>
 Deprecated.
-Use UseIndefLengthStrings instead.
-Use UseIndefLengthStrings instead.</li>
+Use &#39;new CBOREncodeOptions(false,true)&#39; instead.
+Use &#39;new CBOREncodeOptions(false,true)&#39; instead.</li>
 <li><code>static CBOREncodeOptions None</code><br>
 Deprecated.
-Use UseIndefLengthStrings instead.
-Use UseIndefLengthStrings instead.</li>
+Use &#39;new CBOREncodeOptions(true,true)&#39; instead.
+Use &#39;new CBOREncodeOptions(true,true)&#39; instead.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBOREncodeOptions()</code><br></li>
+<li><code>CBOREncodeOptions()</code><br>
+Initializes a new instance of the CBOREncodeOptions class.</li>
 <li><code>CBOREncodeOptions​(boolean useIndefLengthStrings,
-             boolean useDuplicateKeys)</code><br></li>
+             boolean useDuplicateKeys)</code><br>
+Initializes a new instance of the CBOREncodeOptions class.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -43,8 +45,10 @@ Use UseIndefLengthStrings instead.</li>
 Deprecated.
 May be removed in a later version.
 May be removed in a later version.</li>
-<li><code>boolean getUseDuplicateKeys()</code><br></li>
-<li><code>boolean getUseIndefLengthStrings()</code><br></li>
+<li><code>boolean getUseDuplicateKeys()</code><br>
+Gets a value not documented yet.</li>
+<li><code>boolean getUseIndefLengthStrings()</code><br>
+Gets a value not documented yet.</li>
 <li><code>int getValue()</code><br>
 Deprecated.
 Option classes in this library will follow the form seen in JSONOptions in a
@@ -66,9 +70,9 @@ May be removed in a later version.</li>
 
 <p>Deprecated.</p>
 
-<div class='deprecationComment'>Use UseIndefLengthStrings instead. Option classes in this library will
- follow the form seen in JSONOptions in a later version; the approach used
- in this class is too complicated.</div>
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,true)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.</div>
 
 <h3>NoIndefLengthStrings</h3>
 
@@ -77,9 +81,9 @@ May be removed in a later version.</li>
 
 <p>Deprecated.</p>
 
-<div class='deprecationComment'>Use UseIndefLengthStrings instead. Option classes in this library will
- follow the form seen in JSONOptions in a later version; the approach used
- in this class is too complicated.</div>
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(false,true)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.</div>
 
 <h3>NoDuplicateKeys</h3>
 
@@ -88,9 +92,9 @@ May be removed in a later version.</li>
 
 <p>Deprecated.</p>
 
-<div class='deprecationComment'>Use UseDuplicateKeys instead. Option classes in this library will follow the
- form seen in JSONOptions in a later version; the approach used in this
- class is too complicated.</div>
+<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,false)' instead. Option classes in this
+ library will follow the form seen in JSONOptions in a later version; the
+ approach used in this class is too complicated.</div>
 
 <h2>Method Details</h2>
 
@@ -99,10 +103,26 @@ May be removed in a later version.</li>
 <pre>public final boolean getUseIndefLengthStrings()
 </pre>
 
+<p>Gets a value not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value not documented yet.</li>
+</ul>
+
 <h3>getUseDuplicateKeys</h3>
 
 <pre>public final boolean getUseDuplicateKeys()
 </pre>
+
+<p>Gets a value not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value not documented yet.</li>
+</ul>
 
 <h3>getValue</h3>
 

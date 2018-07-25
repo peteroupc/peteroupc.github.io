@@ -2692,15 +2692,17 @@ code point.</p></li>
  options for controlling how the object is encoded to CBOR data
  format. If the object is convertible to a CBOR map or a CBOR object
  that contains CBOR maps, the keys to those maps are written out to
- the data stream in an undefined order. Currently, the following
- objects are supported: <ul> <li>Lists of CBORObject.</li> <li>Maps of
- CBORObject. The keys to the map are written out to the data stream in
- an undefined order.</li> <li>Null.</li> <li>Byte arrays, which will
- always be written as definite-length byte strings.</li> <li>String
- objects, which will be written as indefinite-length text strings if
- their size exceeds a certain threshold (this behavior may change in
- future versions of this library).</li> <li>Any object accepted by the
- FromObject static methods.</li></ul></p>
+ the data stream in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.WriteTo(System.IO.InputStream)'/> can be
+ used to write out certain keys of a CBOR map in a given order.
+ Currently, the following objects are supported: <ul> <li>Lists of
+ CBORObject.</li> <li>Maps of CBORObject. The keys to the map are
+ written out to the data stream in an undefined order.</li>
+ <li>Null.</li> <li>Byte arrays, which will always be written as
+ definite-length byte strings.</li> <li>String objects, which will be
+ written as indefinite-length text strings if their size exceeds a
+ certain threshold (this behavior may change in future versions of
+ this library).</li> <li>Any object accepted by the FromObject static
+ methods.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2728,7 +2730,10 @@ output</code> is null.</p></li>
  (JSON) format, as in the ToJSONString method, and writes that string
  to a data stream in UTF-8. If the object is convertible to a CBOR
  map, or to a CBOR object that contains CBOR maps, the keys to those
- maps are written out to the JSON string in an undefined order.</p>
+ maps are written out to the JSON string in an undefined order. The
+ example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ can be used to write out certain keys of a CBOR map in a given order
+ to a JSON string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3433,7 +3438,8 @@ if the given key is not found or this object is not a map.</li>
 <p>Writes the binary representation of this CBOR object and returns a byte
  array of that representation. If the CBOR object contains CBOR maps,
  or is a CBOR map itself, the keys to the map are written out to the
- byte array in an undefined order.</p>
+ byte array in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.WriteTo(System.IO.InputStream)'/> can be
+ used to write out certain keys of a CBOR map in a given order.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3450,7 +3456,8 @@ if the given key is not found or this object is not a map.</li>
  array of that representation, using the specified options for
  encoding the object to CBOR format. If the CBOR object contains CBOR
  maps, or is a CBOR map itself, the keys to the map are written out to
- the byte array in an undefined order.</p>
+ the byte array in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.WriteTo(System.IO.InputStream)'/> can be
+ used to write out certain keys of a CBOR map in a given order.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3850,8 +3857,13 @@ valueOb</code> has an unsupported type.</p></li>
 
 <p>Converts this object to a string in JavaScript Object Notation (JSON)
  format, using the specified options to control the encoding process.
- See the overload to JSONString taking a JSONOptions argument.
- <returns>A text string containing the converted object.</returns></p>
+ See the overload to JSONString taking a JSONOptions argument. <p> If
+ the CBOR object contains CBOR maps, or is a CBOR map itself, the keys
+ to the map are written out to the JSON string in an undefined order.
+ The example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ can be used to write out certain keys of a CBOR map in a given order
+ to a JSON string.</p> <returns>A text string containing the converted
+ object.</returns></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3892,7 +3904,28 @@ valueOb</code> has an unsupported type.</p></li>
  to null.)</li> <li>Simple values other than true and false will be
  converted to null. (This doesn&#39;t include floating-point
  numbers.)</li> <li>Infinity and not-a-number will be converted to
- null.</li></ul></p>
+ null.</li></ul> The example code given below can be used to write out
+ certain keys of a CBOR map in a given order to a JSON string. <code>
+  // Generates a JSON string of &#39;mapObj&#39; whose keys are in the order
+ given in &#39;keys&#39;. Only keys  // found in &#39;keys&#39; will be written if they
+ exist in &#39;mapObj&#39;. private static string KeysToJSONMap(CBORObject
+ mapObj, IList&lt;CBORObject&gt; keys) { if (mapObj == null) {
+ throw new
+ NullPointerException(&quot;mapObj&quot;);
+ } if (keys==null) {
+ throw new
+ NullPointerException(&quot;keys&quot;);
+ } if (obj.getType()!=CBORType.Map) {
+ throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } var builder=new
+ StringBuilder(); var first=true; builder.Append(&quot;{&quot;); for (CBORObject
+ key in keys)[ if (mapObj.ContainsKey(key)) {
+ if (!first) {
+ builder.Append(&quot;, &quot;);
+ } var
+ keyString=(key.getCBORType() == CBORType.String) ? key.AsString() :
+ key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
+ .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj.get(key).ToJSONString());
+ first=false; } } return builder.Append(&quot;}&quot;).toString(); } </code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3969,7 +4002,9 @@ object to JSON.</li>
  format, as in the ToJSONString method, and writes that string to a
  data stream in UTF-8. If the CBOR object contains CBOR maps, or is a
  CBOR map, the keys to the map are written out to the JSON string in
- an undefined order.</p>
+ an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ can be used to write out certain keys of a CBOR map in a given order
+ to a JSON string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3995,7 +4030,9 @@ null.</p></li>
  data stream in UTF-8, using the given JSON options to control the
  encoding process. If the CBOR object contains CBOR maps, or is a CBOR
  map, the keys to the map are written out to the JSON string in an
- undefined order.</p>
+ undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ can be used to write out certain keys of a CBOR map in a given order
+ to a JSON string.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4020,7 +4057,26 @@ null.</p></li>
 
 <p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR
  maps, or is a CBOR map, the keys to the map are written out to the
- data stream in an undefined order.</p>
+ data stream in an undefined order. The example method given below
+ (written in C# for the .NET version) can be used to write out certain
+ keys of a CBOR map in a given order: <code>  // Writes each key of
+ &#39;mapObj&#39; to &#39;outputStream&#39;in the order given in &#39;keys&#39;. Only keys //
+ found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. private
+ static void WriteKeysToIndefMap(CBORObject mapObj,
+ IList&lt;CBORObject&gt; keys, InputStream outputStream) { if (mapObj == null) {
+ throw new NullPointerException(&quot;mapObj&quot;);
+ } if (keys==null) {
+ throw
+ new NullPointerException(&quot;keys&quot;);
+ } if (outputStream==null) {
+ throw
+ new NullPointerException(&quot;outputStream&quot;);
+ }
+ if (obj.getType()!=CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not
+ a map.&quot;); } outputStream.write((byte)0xBF); for (CBORObject key in
+ keys)[ if (mapObj.ContainsKey(key)) { key.WriteTo(outputStream);
+ mapObj.get(key).WriteTo(outputStream); } }
+ outputStream.write((byte)0xbf); } </code></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4043,7 +4099,8 @@ null.</p></li>
 <p>Writes this CBOR object to a data stream, using the specified options for
  encoding the data to CBOR format. If the CBOR object contains CBOR
  maps, or is a CBOR map, the keys to the map are written out to the
- data stream in an undefined order.</p>
+ data stream in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.WriteTo(System.IO.InputStream)'/> can be
+ used to write out certain keys of a CBOR map in a given order.</p>
 
 <p><strong>Parameters:</strong></p>
 
