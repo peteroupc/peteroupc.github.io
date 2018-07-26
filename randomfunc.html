@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on July 25, 2018.</p>
+<p>Begun on June 4, 2017; last updated on July 26, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -218,8 +218,9 @@ END METHOD
 
 METHOD RndIntHelperPowerOfTwo(maxInclusive)
         // NOTE: Finds the number of bits minus 1 needed
-        // to represent MODULUS. This will be a constant
-        // here, though.
+        // to represent MODULUS (in other words, the number
+        // of random bits returned by RNG() ). This will
+        // be a constant here, though.
         modBits = ln(MODULUS)/ln(2)
         // Calculate the bit count of maxInclusive
         bitCount = 0
@@ -375,7 +376,12 @@ END METHOD
 
 <h3><code>RNDU01</code>: Random Numbers in [0, 1]</h3>
 
-<p>The idiom <code>RNDINT(X) / X</code> (called <strong><code>RNDU01()</code></strong> in this document), generates a <strong>random number in the interval [0, 1]</strong>, where <code>X</code> is the number of <em>maximum even parts</em>.</p>
+<p><strong><code>RNDU01()</code></strong> generates a <strong>random number in the interval [0, 1]</strong>.  It can be implemented by one of the following, where <code>X</code> is the number of <em>maximum even parts</em>:</p>
+
+<ul>
+<li><code>RNDINT(X) / X</code>.</li>
+<li><code>RNDINT(X) * INVX</code>, where <code>INVX</code> is the constant 1 divided by <code>X</code>.</li>
+</ul>
 
 <p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU01()</code> can be used instead.  It&#39;s based on a <a href="http://allendowney.com/research/rand/"><strong>technique devised by Allen Downey</strong></a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
 
@@ -407,7 +413,7 @@ END METHOD
 END
 </pre>
 
-<p>For fixed-point or floating-point number formats with fixed precision (such as Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDU01()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
+<p>For fixed-point or floating-point number formats with fixed precision (such as Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
@@ -495,30 +501,37 @@ END METHOD
 <h3><code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers in [0, 1), (0, 1], or (0, 1)</h3>
 
 <p>Three methods related to <code>RNDU01()</code> can be implemented as follows, where
-<code>X</code> is the number of <em>maximum even parts</em>.</p>
+<code>X</code> is the number of <em>maximum even parts</em> and <code>INVX</code> is the constant 1 divided
+by <code>X</code>.  For each method below, the alternatives are ordered from most preferred to least.</p>
 
 <ul>
-<li><p><strong><code>RNDU01OneExc()</code>, interval [0, 1)</strong>, can be implemented in one of the following ways:</p>
+<li><p><strong><code>RNDU01OneExc()</code>, interval [0, 1)</strong>:</p>
 
 <ul>
-<li>Generate <code>RNDU01()</code> in a loop until a number other than 1.0 is generated this way.  This is preferred.</li>
+<li>Generate <code>RNDU01()</code> in a loop until a number other than 1.0 is generated this way.</li>
+<li><code>RNDINT(X - 1) * INVX</code>.</li>
+<li><code>RNDINTEXC(X) * INVX</code>.</li>
 <li><code>RNDINT(X - 1) / X</code>.</li>
 <li><code>RNDINTEXC(X) / X</code>.</li>
 </ul>
 
 <p>Note that <code>RNDU01OneExc()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.</p></li>
-<li><strong><code>RNDU01ZeroExc()</code>, interval (0, 1]</strong>, can be implemented in one of the following ways:
+<li><strong><code>RNDU01ZeroExc()</code>, interval (0, 1]</strong>:
 
 <ul>
-<li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.  This is preferred.</li>
+<li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.</li>
+<li><code>(RNDINT(X - 1) + 1) * INVX</code>.</li>
+<li><code>(RNDINTEXC(X) + 1) * INVX</code>.</li>
 <li><code>(RNDINT(X - 1) + 1) / X</code>.</li>
 <li><code>(RNDINTEXC(X) + 1) / X</code>.</li>
 <li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers <code>RNDU01OneExc()</code> could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
 </ul></li>
-<li><strong><code>RNDU01ZeroOneExc()</code>, interval (0, 1)</strong>, can be implemented in one of the following ways:
+<li><strong><code>RNDU01ZeroOneExc()</code>, interval (0, 1)</strong>:
 
 <ul>
-<li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.</li>
+<li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 or 1.0 is generated this way.</li>
+<li><code>(RNDINT(X - 2) + 1) * INVX</code>.</li>
+<li><code>(RNDINTEXC(X - 1) + 1) * INVX</code>.</li>
 <li><code>(RNDINT(X - 2) + 1) / X</code>.</li>
 <li><code>(RNDINTEXC(X - 1) + 1) / X</code>.</li>
 </ul></li>
@@ -992,7 +1005,7 @@ END METHOD
 </ol>
 </blockquote>
 
-<p>In all the examples above, the weights sum to 21.  However, the weights do not mean that, say, when 21 items are selected, the index for &quot;apples&quot; will be chosen exactly 3 times, or the index for &quot;oranges&quot; exactly 15 times, for example.  Each number generated by <code>WeightedChoice</code> is independent from the others, and each weight indicates only a <em>likelihood</em> that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn&#39;t change no matter how many times <code>WeightedChoice</code> is given the same weights.  This is called a weighted choice <em>with replacement</em>, which can be thought of as drawing a ball, then putting it back.</p>
+<p>In all the examples above, the weights sum to 21.  However, when 21 items are selected, the index for &quot;apples&quot; will not necessarily be chosen exactly 3 times, or the index for &quot;oranges&quot; exactly 15 times, for example.  Each number generated by <code>WeightedChoice</code> is independent from the others, and each weight indicates only a <em>likelihood</em> that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn&#39;t change no matter how many times <code>WeightedChoice</code> is given the same weights.  This is called a weighted choice <em>with replacement</em>, which can be thought of as drawing a ball, then putting it back.</p>
 
 <p><a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a></p>
 
@@ -1947,12 +1960,13 @@ END METHOD
 <li>To generate two correlated uniform variables with a Gaussian copula, generate <code>GaussianCopula([[1, rho], [rho, 1]])</code>, where <code>rho</code> is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that <a href="https://en.wikipedia.org/wiki/Rank_correlation"><strong><em>rank correlation</em></strong></a> parameters, which can be converted to <code>rho</code>, can better describe the correlation than <code>rho</code> itself. For example, for a two-variable Gaussian copula, the Spearman coefficient <code>srho</code> can be converted to <code>rho</code> by <code>rho = sin(srho * pi / 6) * 2</code>.  Rank correlation parameters are not further discussed in this document.)</li>
 <li><p>The following example generates two random numbers that follow a Gaussian copula with exponential marginals (<code>rho</code> is the Pearson correlation coefficient, and <code>rate1</code> and <code>rate2</code> are the rates of the two exponential marginals).</p>
 
-<p>METHOD CorrelatedExpo(rho, rate1, rate2)
-       copula = GaussianCopula([[1, rho], [rho, 1]])
-       // Transform to exponentials using that
-       // distribution&#39;s inverse CDF
-       return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
-   END METHOD</p></li>
+<pre>METHOD CorrelatedExpo(rho, rate1, rate2)
+   copula = GaussianCopula([[1, rho], [rho, 1]])
+   // Transform to exponentials using that
+   // distribution&#39;s inverse CDF
+   return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
+END METHOD
+</pre></li>
 </ol>
 </blockquote>
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on July 25, 2018.
+Begun on June 4, 2017; last updated on July 26, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -160,8 +160,9 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating i
 
     METHOD RndIntHelperPowerOfTwo(maxInclusive)
             // NOTE: Finds the number of bits minus 1 needed
-            // to represent MODULUS. This will be a constant
-            // here, though.
+            // to represent MODULUS (in other words, the number
+            // of random bits returned by RNG() ). This will
+            // be a constant here, though.
             modBits = ln(MODULUS)/ln(2)
             // Calculate the bit count of maxInclusive
             bitCount = 0
@@ -300,7 +301,10 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 <a id=RNDU01_Random_Numbers_in_0_1></a>
 ### `RNDU01`: Random Numbers in [0, 1]
 
-The idiom `RNDINT(X) / X` (called **`RNDU01()`** in this document), generates a **random number in the interval [0, 1]**, where `X` is the number of _maximum even parts_.
+**`RNDU01()`** generates a **random number in the interval [0, 1]**.  It can be implemented by one of the following, where `X` is the number of _maximum even parts_:
+
+- `RNDINT(X) / X`.
+- `RNDINT(X) * INVX`, where `INVX` is the constant 1 divided by `X`.
 
 For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of digits the format can represent without loss; e.g., 53 for Java's `double`).
 
@@ -329,7 +333,7 @@ The na&iuml;ve way of generating a **random number in the interval \[`minInclusi
         return minInclusive + (maxInclusive - minInclusive) * RNDU01()
     END
 
-For fixed-point or floating-point number formats with fixed precision (such as Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDU01()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
+For fixed-point or floating-point number formats with fixed precision (such as Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDNUMRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
 
     METHOD RNDNUMRANGE(minInclusive, maxInclusive)
        if minInclusive > maxInclusive: return error
@@ -401,21 +405,28 @@ For fixed-point or floating-point number formats with fixed precision (such as J
 ### `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers in [0, 1), (0, 1], or (0, 1)
 
 Three methods related to `RNDU01()` can be implemented as follows, where
-`X` is the number of _maximum even parts_.
+`X` is the number of _maximum even parts_ and `INVX` is the constant 1 divided
+by `X`.  For each method below, the alternatives are ordered from most preferred to least.
 
-- **`RNDU01OneExc()`, interval [0, 1)**, can be implemented in one of the following ways:
-    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.  This is preferred.
+- **`RNDU01OneExc()`, interval [0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
+    - `RNDINT(X - 1) * INVX`.
+    - `RNDINTEXC(X) * INVX`.
     - `RNDINT(X - 1) / X`.
     - `RNDINTEXC(X) / X`.
 
     Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.
-- **`RNDU01ZeroExc()`, interval (0, 1]**, can be implemented in one of the following ways:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.  This is preferred.
+- **`RNDU01ZeroExc()`, interval (0, 1]**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
+    - `(RNDINT(X - 1) + 1) * INVX`.
+    - `(RNDINTEXC(X) + 1) * INVX`.
     - `(RNDINT(X - 1) + 1) / X`.
     - `(RNDINTEXC(X) + 1) / X`.
     - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
-- **`RNDU01ZeroOneExc()`, interval (0, 1)**, can be implemented in one of the following ways:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.  This is preferred.
+- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
+    - `(RNDINT(X - 2) + 1) * INVX`.
+    - `(RNDINTEXC(X - 1) + 1) * INVX`.
     - `(RNDINT(X - 2) + 1) / X`.
     - `(RNDINTEXC(X - 1) + 1) / X`.
 
@@ -795,7 +806,7 @@ The following pseudocode takes a single list `weights`, and returns the index of
 > 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random number can be chosen from that range using code like the following: `number = RNDNUMEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
 > 3. Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDNUMEXCRANGE(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
 
-In all the examples above, the weights sum to 21.  However, the weights do not mean that, say, when 21 items are selected, the index for "apples" will be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `WeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `WeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+In all the examples above, the weights sum to 21.  However, when 21 items are selected, the index for "apples" will not necessarily be chosen exactly 3 times, or the index for "oranges" exactly 15 times, for example.  Each number generated by `WeightedChoice` is independent from the others, and each weight indicates only a _likelihood_ that the corresponding index will be chosen rather than the other indices.  And this likelihood doesn't change no matter how many times `WeightedChoice` is given the same weights.  This is called a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
@@ -1615,12 +1626,12 @@ Each of the resulting uniform numbers will be in the interval [0, 1], and each o
 > 1. To generate two correlated uniform variables with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Note that [**_rank correlation_**](https://en.wikipedia.org/wiki/Rank_correlation) parameters, which can be converted to `rho`, can better describe the correlation than `rho` itself. For example, for a two-variable Gaussian copula, the Spearman coefficient `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Rank correlation parameters are not further discussed in this document.)
 > 2. The following example generates two random numbers that follow a Gaussian copula with exponential marginals (`rho` is the Pearson correlation coefficient, and `rate1` and `rate2` are the rates of the two exponential marginals).
 >
->        METHOD CorrelatedExpo(rho, rate1, rate2)
+>         METHOD CorrelatedExpo(rho, rate1, rate2)
 >            copula = GaussianCopula([[1, rho], [rho, 1]])
 >            // Transform to exponentials using that
 >            // distribution's inverse CDF
 >            return [-ln(copula[0]) / rate1, -ln(copula[1]) / rate2]
->        END METHOD
+>         END METHOD
 
 Other kinds of copulas describe different kinds of correlation between random numbers.  Examples of other copulas are&mdash;
 
