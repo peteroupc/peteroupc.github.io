@@ -15,17 +15,24 @@
 
 <pre>public CBOREncodeOptions(
     bool useIndefLengthStrings,
-    bool useDuplicateKeys);
+    bool allowDuplicateKeys);
 </pre>
 
-<p>Initializes a new instance of the CBOREncodeOptions class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>useIndefLengthStrings</i>: A Boolean object.</p></li>
-<li><p><i>useDuplicateKeys</i>: Another Boolean object.</p></li>
+<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
+<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
 </ul>
+
+<h3>Default</h3>
+
+<pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
+</pre>
+
+<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding. These are recommended settings for the options that may be adopted by certain CBORObject methods in the next major version.</p>
 
 <h3>NoDuplicateKeys</h3>
 
@@ -48,27 +55,27 @@
 
 <p>No special options for encoding/decoding. Value: 0.</p>
 
-<h3>UseDuplicateKeys</h3>
+<h3>AllowDuplicateKeys</h3>
 
-<pre>public bool UseDuplicateKeys { get; }
+<pre>public bool AllowDuplicateKeys { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
 
 <h3>UseIndefLengthStrings</h3>
 
 <pre>public bool UseIndefLengthStrings { get; }
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether to always encode strings with a definite-length encoding.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A value not documented yet.</p>
+<p>A value indicating whether to always encode strings with a definite-length encoding.</p>
 
 <h3>Value</h3>
 
