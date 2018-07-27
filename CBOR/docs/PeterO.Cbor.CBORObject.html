@@ -1126,6 +1126,8 @@ Key is null.</li>
     byte[] data);
 </pre>
 
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
 <p>Generates a CBOR object from an array of CBOR-encoded bytes.</p>
 
 <p><b>Parameters:</b></p>
@@ -1156,7 +1158,7 @@ is null.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from an array of CBOR-encoded bytes.</p>
+<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1234,6 +1236,8 @@ is null.</li>
 <pre>public byte[] EncodeToBytes();
 </pre>
 
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
 <p>Writes the binary representation of this CBOR object and returns a byte array of that representation. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order. The example code given in <strong>PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong> can be used to write out certain keys of a CBOR map in a given order.</p>
 
 <p><b>Return Value:</b></p>
@@ -1283,7 +1287,11 @@ is an arbitrary object.</li>
     string str);
 </pre>
 
-<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</p>
+
+<p>If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1312,7 +1320,7 @@ The string is not in JSON format.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding proces.By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2507,6 +2515,8 @@ is a CBOR object.</p></li>
     System.IO.Stream stream);
 </pre>
 
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
 <p>Reads an object in CBOR format from a data stream. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
 
 <p><b>Parameters:</b></p>
@@ -2536,7 +2546,7 @@ There was an error in reading or parsing the data.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Reads an object in CBOR format from a data stream. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
+<p>Reads an object in CBOR format from a data stream, using the specified options to control the decoding process. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2597,7 +2607,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3066,6 +3076,8 @@ is null.</p></li>
     System.IO.Stream stream);
 </pre>
 
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
 <p>Writes a CBOR object to a CBOR data stream. See the three-parameter Write method that takes a CBOREncodeOptions.</p>
 
 <p><b>Parameters:</b></p>
@@ -3394,6 +3406,8 @@ An I/O error occurred.</p></li>
     System.IO.Stream stream);
 </pre>
 
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
 <p>Writes a string in CBOR format to a data stream. The string will be encoded using indefinite-length encoding if its length exceeds a certain threshold (this behavior may change in future versions of this library).</p>
 
 <p><b>Parameters:</b></p>
@@ -3421,7 +3435,7 @@ An I/O error occurred.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Writes a string in CBOR format to a data stream.</p>
+<p>Writes a string in CBOR format to a data stream, using the given options to control the encoding process.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3569,6 +3583,8 @@ is null.</p></li>
 <pre>public void WriteTo(
     System.IO.Stream stream);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a CBOREncodeOptions object. The object  <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
 
 <p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. The example method given below (written in C# for the .NET version) can be used to write out certain keys of a CBOR map in a given order:</p>
 

@@ -14,6 +14,8 @@
 <h2>Fields</h2>
 
 <ul>
+<li><code>static CBOREncodeOptions Default</code><br>
+Default options for CBOR objects.</li>
 <li><code>static CBOREncodeOptions NoDuplicateKeys</code><br>
 Deprecated.
 Use &#39;new CBOREncodeOptions(true,false)&#39; instead.
@@ -31,10 +33,10 @@ Use &#39;new CBOREncodeOptions(true,true)&#39; instead.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBOREncodeOptions()</code><br>
+<li><code>CBOREncodeOptions() CBOREncodeOptions</code><br>
 Initializes a new instance of the CBOREncodeOptions class.</li>
 <li><code>CBOREncodeOptions​(boolean useIndefLengthStrings,
-             boolean useDuplicateKeys)</code><br>
+             boolean allowDuplicateKeys) CBOREncodeOptions</code><br>
 Initializes a new instance of the CBOREncodeOptions class.</li>
 </ul>
 
@@ -45,10 +47,12 @@ Initializes a new instance of the CBOREncodeOptions class.</li>
 Deprecated.
 May be removed in a later version.
 May be removed in a later version.</li>
-<li><code>boolean getUseDuplicateKeys()</code><br>
-Gets a value not documented yet.</li>
+<li><code>boolean getAllowDuplicateKeys()</code><br>
+Gets a value indicating whether to disallow duplicate keys when reading CBOR
+objects from a data stream.</li>
 <li><code>boolean getUseIndefLengthStrings()</code><br>
-Gets a value not documented yet.</li>
+Gets a value indicating whether to always encode strings with a
+definite-length encoding.</li>
 <li><code>int getValue()</code><br>
 Deprecated.
 Option classes in this library will follow the form seen in JSONOptions in a
@@ -72,7 +76,19 @@ May be removed in a later version.</li>
 
 <div class='deprecationComment'>Use 'new CBOREncodeOptions(true,true)' instead. Option classes in this
  library will follow the form seen in JSONOptions in a later version; the
- approach used in this class is too complicated.</div>
+ approach used in this class is too complicated.
+'CBOREncodeOptions.Default' contains recommended default options that may
+ be adopted by certain CBORObject methods in the next major version.</div>
+
+<h3>Default</h3>
+
+<pre>public static final CBOREncodeOptions Default
+</pre>
+
+<p>Default options for CBOR objects. Disallow duplicate keys, and always encode
+ strings using definite-length encoding. These are recommended
+ settings for the options that may be adopted by certain CBORObject
+ methods in the next major version.</p>
 
 <h3>NoIndefLengthStrings</h3>
 
@@ -103,25 +119,29 @@ May be removed in a later version.</li>
 <pre>public final boolean getUseIndefLengthStrings()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether to always encode strings with a
+ definite-length encoding.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li>A value indicating whether to always encode strings with a
+definite-length encoding.</li>
 </ul>
 
-<h3>getUseDuplicateKeys</h3>
+<h3>getAllowDuplicateKeys</h3>
 
-<pre>public final boolean getUseDuplicateKeys()
+<pre>public final boolean getAllowDuplicateKeys()
 </pre>
 
-<p>Gets a value not documented yet.</p>
+<p>Gets a value indicating whether to disallow duplicate keys when reading CBOR
+ objects from a data stream. Used only when decoding CBOR objects.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A value not documented yet.</li>
+<li>A value indicating whether to disallow duplicate keys when reading
+CBOR objects from a data stream.</li>
 </ul>
 
 <h3>getValue</h3>
