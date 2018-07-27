@@ -77,7 +77,7 @@ Gets the date and time extracted from this content disposition&#39;s &quot;read-
 parameter, which specifies the date at which a file was last read
 (RFC 2183 sec.</li>
 <li><code>int hashCode()</code><br>
-Returns the hash code for this instance.</li>
+Calculates the hash code of this object.</li>
 <li><code>boolean isAttachment()</code><br>
 Gets a value indicating whether the disposition type is attachment.</li>
 <li><code>boolean isInline()</code><br>
@@ -165,7 +165,8 @@ or &quot;attachment&quot;.</li>
 <pre>public int hashCode()
 </pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
