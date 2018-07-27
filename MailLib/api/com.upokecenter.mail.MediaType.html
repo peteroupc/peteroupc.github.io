@@ -66,7 +66,7 @@ Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; 
 Gets the top level type and subtype of this media type, separated by a
 slash; for example, &quot;text/plain&quot;.</li>
 <li><code>int hashCode()</code><br>
-Returns the hash code for this instance.</li>
+Calculates the hash code of this object.</li>
 <li><code>boolean isMultipart()</code><br>
 Gets a value indicating whether this is a multipart media type.</li>
 <li><code>boolean isText()</code><br>
@@ -167,7 +167,8 @@ email headers.</li>
 <pre>public int hashCode()
 </pre>
 
-<p>Returns the hash code for this instance.</p>
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
