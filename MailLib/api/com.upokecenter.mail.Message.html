@@ -103,11 +103,31 @@ class.</li>
 <li><code>Message​(InputStream stream) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         MediaType mediaType)</code><br>
+Not documented yet.</li>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         MediaType mediaType,
+         String filename)</code><br>
+Not documented yet.</li>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         String filename)</code><br>
+Not documented yet.</li>
 <li><code>Message AddHeader​(String name,
      String value)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddHeader​(Map.Entry&lt;String,String&gt; header)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
+<li><code>Message AddInline​(InputStream inputStream,
+     MediaType mediaType)</code><br>
+Not documented yet.</li>
+<li><code>Message AddInline​(InputStream inputStream,
+     MediaType mediaType,
+     String filename)</code><br>
+Not documented yet.</li>
+<li><code>Message AddInline​(InputStream inputStream,
+     String filename)</code><br>
+Not documented yet.</li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
@@ -1081,6 +1101,128 @@ html</code> is null.</li>
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>AddAttachment</h3>
+
+<pre>public Message AddAttachment​(InputStream inputStream, MediaType mediaType)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>mediaType</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddAttachment</h3>
+
+<pre>public Message AddAttachment​(InputStream inputStream, String filename)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>filename</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddAttachment</h3>
+
+<pre>public Message AddAttachment​(InputStream inputStream, MediaType mediaType, String filename)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>mediaType</code> - Not documented yet.</p></li>
+<li><p><code>filename</code> - Not documented yet. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddInline</h3>
+
+<pre>public Message AddInline​(InputStream inputStream, MediaType mediaType)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>mediaType</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddInline</h3>
+
+<pre>public Message AddInline​(InputStream inputStream, String filename)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>filename</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddInline</h3>
+
+<pre>public Message AddInline​(InputStream inputStream, MediaType mediaType, String filename)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>inputStream</code> - Not documented yet.</p></li>
+<li><p><code>mediaType</code> - Not documented yet.</p></li>
+<li><p><code>filename</code> - Not documented yet. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
