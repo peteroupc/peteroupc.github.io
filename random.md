@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jul. 2, 2018.
+Begun on Mar. 5, 2016; last updated on Jul. 29, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -61,6 +61,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
         - [**Noise**](#Noise)
 - [**Programming Language APIs**](#Programming_Language_APIs)
 - [**Advice for New Programming Language APIs**](#Advice_for_New_Programming_Language_APIs)
+- [**Using Random Number Generators**](#Using_Random_Number_Generators)
 - [**Shuffling**](#Shuffling)
     - [**Shuffling Method**](#Shuffling_Method)
     - [**Choosing from Among All Permutations**](#Choosing_from_Among_All_Permutations)
@@ -114,14 +115,14 @@ The PRNG's _state length_ must be at least 128 bits and should be at least 256 b
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
 - must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
-- may be mixed with arbitrary data other than the seed as long as the result is no easier to predict.
+- may be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
 
 The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.
 
 <a id=Nondeterministic_Sources></a>
 ### Nondeterministic Sources
 
-A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ for random number generation.<sup>[**(2)**](#Note2)</sup>  Examples of nondeterministic sources are&mdash;
+A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ for random number generation.<sup>[**(3)**](#Note3)</sup>  Examples of nondeterministic sources are&mdash;
 
 - disk access timings,
 - keystroke timings,
@@ -168,7 +169,7 @@ The PRNG's _state length_ must be at least 64 bits, should be at least 128 bits,
 
 Before an instance of the RNG generates a random number, it must have been initialized ("seeded") with a seed described as follows. The seed&mdash;
 - must have as many bits as the PRNG's _state length_,
-- must consist of data that ultimately derives from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(3)**](#Note3)</sup>, and
+- must consist of data that ultimately derives from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_<sup>[**(4)**](#Note4)</sup>, and
 - may be mixed with arbitrary data other than the seed.
 
 The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG's period's square root or less.
@@ -281,7 +282,7 @@ One process to generate verifiable random numbers is described in [**RFC 3797**]
 
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(4)**](#Note4)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  Wherever feasible, procedural noise implementations should **use an RNG to generate the additional data** for the noise function in advance.  The additional data may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded data as the seed).  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(5)**](#Note5)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  Wherever feasible, procedural noise implementations should **use an RNG to generate the additional data** for the noise function in advance.  The additional data may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded data as the seed).  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
@@ -291,13 +292,8 @@ Randomly generated numbers can serve as _noise_, that is, a randomized variation
 The following table lists application programming interfaces (APIs) for
 cryptographic and statistical RNGs for popular programming languages. Note the following:
 
-- In single-threaded applications, for each kind of RNG, it's encouraged to create a single instance of the RNG on application startup and use that instance throughout the application.
-- In multithreaded applications, for each kind of RNG, it's encouraged to either&mdash;
-    - create a single thread-safe instance of the RNG on application startup and use that instance throughout the application, or
-    - store separate and independently-initialized instances of the RNG in thread-local storage, so that each thread accesses a different instance<sup>[**(5)**](#Note5)</sup> (this might not always be ideal for cryptographic RNG implementations)
 - Methods and libraries mentioned in the "Statistical" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
-- The mention of a third-party library in this section does not imply sponsorship or endorsement
-of that library, or imply a preference of that library over others. The list is not comprehensive.
+- The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.
 
 | Language   | Cryptographic   | Statistical | Other |
  --------|-----------------------------------------------|------|------|
@@ -349,6 +345,22 @@ ten uniform random number methods; in my opinion, a new programming language's s
 those ten methods separately for cryptographic and for statistical RNGs. That document also
 discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
 as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.
+
+<a id=Using_Random_Number_Generators></a>
+## Using Random Number Generators
+
+To reduce the chance of correlated random numbers or identical random number sequences, an application is encouraged to create&mdash;
+- one thread-safe instance of an RNG for the entire application to use, or
+- one instance of an RNG for each thread of the application, where each instance is independently initialized and stored in thread-local storage.
+
+An application that generates random numbers in parallel can also do one or both of&mdash;
+
+- using a different conforming RNG scheme for each instance, in addition to using independently-initialized instances, and
+- using a conforming RNG scheme specially designed for parallel random number generation.
+
+If an application uses more than one kind of RNG (cryptographic, statistical, seeded), the advice above applies separately to each such kind of RNG.
+
+(Many questions on Stack Overflow highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
 
 <a id=Shuffling></a>
 ## Shuffling
@@ -482,18 +494,13 @@ Comments on any aspect of the document are welcome, but answers to the following
 
 <small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_ or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
 
-<small><sup id=Note2>(2)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small>
+<small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or instance of the RNG.  See also NIST SP800-90A and (Ristenpart and Yilek 2010).</small>
 
-<small><sup id=Note3>(3)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
+<small><sup id=Note3>(3)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small>
 
-<small><sup id=Note4>(4)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
+<small><sup id=Note4>(4)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small>
 
-<small><sup id=Note5>(5)</sup> An application that generates random numbers in parallel can also&mdash;
-
-- use a different conforming RNG method for each instance, in addition to using independently-initialized instances, or
-- use a conforming RNG method specially designed for parallel random number generation,
-
-or both, to reduce the chance of correlations between the generated random numbers.</small>
+<small><sup id=Note5>(5)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
 <small><sup id=Note6>(6)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
