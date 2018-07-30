@@ -2777,7 +2777,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
       var builder=new StringBuilder();
       var first=true;
       builder.Append(&quot;{&quot;);
-      for(CBORObject key in keys)[
+      for(CBORObject key in keys){
         if(mapObj.ContainsKey(key)){
           if(!first)builder.Append(&quot;, &quot;);
           var keyString=(key.CBORType==CBORType.String) ?
