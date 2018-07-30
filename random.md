@@ -6,6 +6,19 @@ Begun on Mar. 5, 2016; last updated on Jul. 29, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
+<a id=Request_for_Comments></a>
+## Request for Comments
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/random.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/random.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1083372/Random-Number-Generator-Recommendations-for-Applic) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+**Comments on any aspect of this document are welcome, but especially answers to the following questions:**
+
+- **Have I characterized the randomness needs of applications properly?**
+- **Did I cover the vast majority of applications that require randomness?**
+- **Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?**
+- **Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?**
+- **In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?**
+
 <a id=Introduction_and_Summary></a>
 ## Introduction and Summary
 
@@ -39,6 +52,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 <a id=Contents></a>
 ## Contents
 
+- [**Request for Comments**](#Request_for_Comments)
 - [**Introduction and Summary**](#Introduction_and_Summary)
 - [**Contents**](#Contents)
 - [**Definitions**](#Definitions)
@@ -69,7 +83,6 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 - [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Motivation**](#Motivation)
 - [**Conclusion**](#Conclusion)
-    - [**Request for Comments**](#Request_for_Comments)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -475,19 +488,6 @@ In addition, this document recommends using cryptographic RNGs in many cases, es
 I acknowledge&mdash;
 - the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including "Cryptonite" and member 3027120, and
 - Lee Daniel Crocker, who reviewed this document and gave comments.
-
-<a id=Request_for_Comments></a>
-### Request for Comments
-
-Feel free to send comments. They could help improve this page.
-
-Comments on any aspect of the document are welcome, but answers to the following would be particularly appreciated.
-
--  Have I characterized the randomness needs of applications properly?
--  Did I cover the vast majority of applications that require randomness?
--  Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?
--  Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?
-- In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?
 
 <a id=Notes></a>
 ## Notes

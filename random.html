@@ -10,6 +10,22 @@
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
+<p><a id=Request_for_Comments></a></p>
+
+<h2>Request for Comments</h2>
+
+<p><strong>This is an open-source document; for an updated version, see the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/raw/master/random.md"><strong>source code</strong></a> <strong>or its</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/random.md"><strong>rendering on GitHub</strong></a><strong>.  You can send comments on this document either on</strong> <a href="https://www.codeproject.com/Articles/1083372/Random-Number-Generator-Recommendations-for-Applic"><strong>CodeProject</strong></a> <strong>or on the</strong> <a href="https://github.com/peteroupc/peteroupc.github.io/issues"><strong>GitHub issues page</strong></a><strong>.</strong></p>
+
+<p><strong>Comments on any aspect of this document are welcome, but especially answers to the following questions:</strong></p>
+
+<ul>
+<li><strong>Have I characterized the randomness needs of applications properly?</strong></li>
+<li><strong>Did I cover the vast majority of applications that require randomness?</strong></li>
+<li><strong>Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?</strong></li>
+<li><strong>Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?</strong></li>
+<li><strong>In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?</strong></li>
+</ul>
+
 <p><a id=Introduction_and_Summary></a></p>
 
 <h2>Introduction and Summary</h2>
@@ -70,6 +86,7 @@
 <h2>Contents</h2>
 
 <ul>
+<li><a href="#Request_for_Comments"><strong>Request for Comments</strong></a></li>
 <li><a href="#Introduction_and_Summary"><strong>Introduction and Summary</strong></a></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#Definitions"><strong>Definitions</strong></a></li>
@@ -114,11 +131,7 @@
 <li><a href="#Hash_Functions"><strong>Hash Functions</strong></a></li>
 <li><a href="#GPU_Programming_Environments"><strong>GPU Programming Environments</strong></a></li>
 <li><a href="#Motivation"><strong>Motivation</strong></a></li>
-<li><a href="#Conclusion"><strong>Conclusion</strong></a>
-
-<ul>
-<li><a href="#Request_for_Comments"><strong>Request for Comments</strong></a></li>
-</ul></li>
+<li><a href="#Conclusion"><strong>Conclusion</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -675,22 +688,6 @@ def stateLengthDecks(numDecks, numCards):
 <ul>
 <li>the commenters to the CodeProject version of this page (as well as a similar article of mine on CodeProject), including &quot;Cryptonite&quot; and member 3027120, and</li>
 <li>Lee Daniel Crocker, who reviewed this document and gave comments.</li>
-</ul>
-
-<p><a id=Request_for_Comments></a></p>
-
-<h3>Request for Comments</h3>
-
-<p>Feel free to send comments. They could help improve this page.</p>
-
-<p>Comments on any aspect of the document are welcome, but answers to the following would be particularly appreciated.</p>
-
-<ul>
-<li> Have I characterized the randomness needs of applications properly?</li>
-<li> Did I cover the vast majority of applications that require randomness?</li>
-<li> Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?</li>
-<li> Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?</li>
-<li>In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?</li>
 </ul>
 
 <p><a id=Notes></a></p>
