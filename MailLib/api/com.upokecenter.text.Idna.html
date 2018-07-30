@@ -21,68 +21,6 @@
  class for the permission notice for the Unicode Character
  Database.</p></p>
 
-<h2>Methods</h2>
-
-<ul>
-<li><code>static String EncodeDomainName​(String value)</code><br>
-Tries to encode each label of a domain name into Punycode.</li>
-<li><code>static boolean IsValidDomainName​(String str,
-             boolean lookupRules)</code><br>
-Determines whether the given string is a syntactically valid domain name.</li>
-</ul>
-
-<h2>Method Details</h2>
-
-<h3>EncodeDomainName</h3>
-
-<pre>public static String EncodeDomainName​(String value)
-</pre>
-
-<p>Tries to encode each label of a domain name into Punycode.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>value</code> - A domain name.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The domain name where each label with code points outside the Basic
-Latin range (U + 0000 to U + 007F) is encoded into Punycode. Labels where
-this is not possible remain unchanged.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - Value is null.</li>
-</ul>
-
-<h3>IsValidDomainName</h3>
-
-<pre>public static boolean IsValidDomainName​(String str, boolean lookupRules)
-</pre>
-
-<p>Determines whether the given string is a syntactically valid domain name.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
-<li><p><code>lookupRules</code> - If true, uses rules to apply when looking up the string
-as a domain name. If false, uses rules to apply when registering the
-string as a domain name.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if the given string is a syntactically valid domain
-name; otherwise; false.</li>
-</ul>
-
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
