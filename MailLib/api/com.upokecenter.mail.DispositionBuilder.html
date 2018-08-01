@@ -11,6 +11,274 @@
 
 <p>Description of DispositionBuilder.</p>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>DispositionBuilder() DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the disposition
+type &quot;attachment&quot;.</li>
+<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the data from
+the given content disposition.</li>
+<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the given
+disposition type.</li>
+<li><code>String getDispositionType()</code><br>
+Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
+<li><code>boolean isMultipart()</code><br>
+Deprecated.
+Irrelevant for content dispositions; will be removed in the future.
+Irrelevant for content dispositions; will be removed in the future.</li>
+<li><code>boolean isText()</code><br>
+Deprecated.
+Irrelevant for content dispositions; will be removed in the future.
+Irrelevant for content dispositions; will be removed in the future.</li>
+<li><code>DispositionBuilder RemoveParameter​(String name)</code><br>
+Removes a parameter from this content disposition.</li>
+<li><code>void setDispositionType​(String value)</code><br></li>
+<li><code>DispositionBuilder SetDispositionType​(String str)</code><br>
+Sets the disposition type, such as &quot;inline&quot;.</li>
+<li><code>DispositionBuilder SetParameter​(String name,
+        String value)</code><br>
+Sets a parameter of this content disposition.</li>
+<li><code>ContentDisposition ToDisposition()</code><br>
+Converts this object to an immutable ContentDisposition object.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>DispositionBuilder() DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the disposition
+type &quot;attachment&quot;.</li>
+<li><code>DispositionBuilder​(ContentDisposition mt) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the data from
+the given content disposition.</li>
+<li><code>DispositionBuilder​(String type) DispositionBuilder</code><br>
+Initializes a new instance of the DispositionBuilder class using the given
+disposition type.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>DispositionBuilder</h3>
+
+<pre>public DispositionBuilder()
+</pre>
+
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the disposition
+ type &quot;attachment&quot;.</p>
+
+<h3>DispositionBuilder</h3>
+
+<pre>public DispositionBuilder​(ContentDisposition mt)
+</pre>
+
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the data from
+ the given content disposition.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mt</code> - The parameter <code>mt</code> is a ContentDisposition object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>mt</code> is null.</li>
+</ul>
+
+<h3>DispositionBuilder</h3>
+
+<pre>public DispositionBuilder​(String type)
+</pre>
+
+<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the given
+ disposition type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>type</code> - The parameter <code>type</code> is a text string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>type</code> is null.</li>
+</ul>
+
+<h3>getDispositionType</h3>
+
+<pre>public final String getDispositionType()
+</pre>
+
+<p>Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
+</ul>
+
+<h3>setDispositionType</h3>
+
+<pre>public final void setDispositionType​(String value)
+</pre>
+
+<h3>isText</h3>
+
+<pre>@Deprecated public final boolean isText()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Irrelevant for content dispositions; will be removed in the future.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isMultipart</h3>
+
+<pre>@Deprecated public final boolean isMultipart()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Irrelevant for content dispositions; will be removed in the future.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>ToDisposition</h3>
+
+<pre>public ContentDisposition ToDisposition()
+</pre>
+
+<p>Converts this object to an immutable ContentDisposition object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A MediaType object.</li>
+</ul>
+
+<h3>SetDispositionType</h3>
+
+<pre>public DispositionBuilder SetDispositionType​(String str)
+</pre>
+
+<p>Sets the disposition type, such as &quot;inline&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>RemoveParameter</h3>
+
+<pre>public DispositionBuilder RemoveParameter​(String name)
+</pre>
+
+<p>Removes a parameter from this content disposition. Does nothing if the
+ parameter&#39;s name doesn&#39;t exist.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - The parameter to remove. The name is compared using a basic
+case-insensitive comparison. (Two strings are equal in such a
+comparison, if they match after converting the basic upper-case
+letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+</ul>
+
+<h3>SetParameter</h3>
+
+<pre>public DispositionBuilder SetParameter​(String name, String value)
+</pre>
+
+<p>Sets a parameter of this content disposition.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>name</code> - Name of the parameter to set. If this name already exists
+(compared using a basic case-insensitive comparison), it will be
+overwritten. (Two strings are equal in a basic case-insensitive
+comparison, if they match after converting the basic upper-case
+letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</p></li>
+<li><p><code>value</code> - Value of the parameter to set.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - Either <code>value</code> or <code>name</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty, or it
+isn&#39;t a well-formed parameter name.</p></li>
+</ul>
+
+<h3>toString</h3>
+
+<pre>public String toString()
+</pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

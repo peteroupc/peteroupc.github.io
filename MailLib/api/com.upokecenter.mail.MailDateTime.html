@@ -12,6 +12,106 @@
 <p>Contains methods for parsing and generating date-time strings following the
  Internet Message Format (RFC 5322).</p>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>static String GenerateDateString​(int[] dateTime)</code><br>
+Generates a date-time string following the Internet Message Format (RFC
+5322) from an 8-element array.</li>
+<li><code>static int[] ParseDateString​(String str)</code><br>
+Gets the date and time extracted from a date-time string following the
+Internet Message Format (RFC 5322).</li>
+<li><code>static int[] ParseDateString​(String str,
+           boolean parseObsoleteZones)</code><br>
+Gets the date and time extracted from a date-time string following the
+Internet Message Format (RFC 5322), with an option to allow obsolete
+time zone strings to appear in the date-time string.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>GenerateDateString</h3>
+
+<pre>public static String GenerateDateString​(int[] dateTime)
+</pre>
+
+<p>Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>dateTime</code> - The date and time in the form of an 8-element array. See
+<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+for information on the format of this parameter.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A date-time string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter &quot;dateTime&quot; is null or
+invalid.</li>
+</ul>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString​(String str, boolean parseObsoleteZones)
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322), with an option to allow obsolete
+ time zone strings to appear in the date-time string.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - String.</p></li>
+<li><p><code>parseObsoleteZones</code> - If set to <code>true</code>, this method allows
+obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and
+certain three-letter combinations) to appear in the date-time string.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An 8-element array containing the date and time, or <code>null</code> if
+<code>str</code> is null, empty, or syntactically invalid, or if the
+string&#39;s year would overflow the range of a 32-bit signed integer. If
+an array is returned, element of that array (starting from 0) is as
+follows:</li>
+</ul>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString​(String str)
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the
+ Internet Message Format (RFC 5322). However, this method does not
+ allow obsolete time zone strings to appear in the date-time string.
+ See <see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+ for information on the format of this method&#39;s return value.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - String.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An 8-element array containing the date and time, or <code>null</code> if
+<code>str</code> is null, empty, or syntactically invalid, or if the
+string&#39;s year would overflow the range of a 32-bit signed integer.</li>
+</ul>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

@@ -27,6 +27,391 @@
  <code>multipart/mixed</code> and unrecognized media types as the media type
  <code>application/octet-stream</code>.</p></p>
 
+<h2>Fields</h2>
+
+<ul>
+<li><code>static MediaType ApplicationOctetStream</code><br>
+Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
+binary data.</li>
+<li><code>static MediaType MessageRfc822</code><br>
+Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
+<li><code>static MediaType TextPlainAscii</code><br>
+Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
+&quot;US-ASCII&quot;, used for plain text data.</li>
+<li><code>static MediaType TextPlainUtf8</code><br>
+Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
+used for plain text data that may contain characters outside the
+basic Latin range (U + 0000 to U + 007F).</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>boolean equals​(Object obj)</code><br>
+Determines whether this object and another object are equal.</li>
+<li><code>String GetCharset()</code><br>
+Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
+to represent text in the data that uses this media type.</li>
+<li><code>String GetParameter​(String name)</code><br>
+Gets the value of a parameter in this media type, such as &quot;charset&quot; or
+&quot;format&quot;.</li>
+<li><code>Map&lt;String,String&gt; getParameters()</code><br>
+Gets a list of the parameters contained in this media type object.</li>
+<li><code>String getSubType()</code><br>
+Gets this media type&#39;s subtype.</li>
+<li><code>String getTopLevelType()</code><br>
+Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
+&quot;audio&quot;).</li>
+<li><code>String getTypeAndSubType()</code><br>
+Gets the top level type and subtype of this media type, separated by a
+slash; for example, &quot;text/plain&quot;.</li>
+<li><code>int hashCode()</code><br>
+Calculates the hash code of this object.</li>
+<li><code>boolean isMultipart()</code><br>
+Gets a value indicating whether this is a multipart media type.</li>
+<li><code>boolean isText()</code><br>
+Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
+<li><code>static MediaType Parse​(String mediaTypeValue)</code><br>
+Parses a media type string and returns a media type object.</li>
+<li><code>static MediaType Parse​(String str,
+ MediaType defaultValue)</code><br>
+Parses a media type string and returns a media type object, or the default
+value if the string is invalid.</li>
+<li><code>String ToSingleLineString()</code><br>
+Converts this media type to a text string form suitable for inserting in
+HTTP headers.</li>
+<li><code>String toString()</code><br>
+Converts this media type to a text string form suitable for inserting in
+email headers.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>TextPlainAscii</h3>
+
+<pre>public static final MediaType TextPlainAscii
+</pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
+ &quot;US-ASCII&quot;, used for plain text data.</p>
+
+<h3>TextPlainUtf8</h3>
+
+<pre>public static final MediaType TextPlainUtf8
+</pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
+ used for plain text data that may contain characters outside the
+ basic Latin range (U + 0000 to U + 007F).</p>
+
+<h3>MessageRfc822</h3>
+
+<pre>public static final MediaType MessageRfc822
+</pre>
+
+<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
+
+<h3>ApplicationOctetStream</h3>
+
+<pre>public static final MediaType ApplicationOctetStream
+</pre>
+
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
+ binary data.</p>
+
+<h2>Method Details</h2>
+
+<h3>getTopLevelType</h3>
+
+<pre>public final String getTopLevelType()
+</pre>
+
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
+ &quot;audio&quot;).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The name of this media type&#39;s top-level type (such as &quot;text&quot; or
+&quot;audio&quot;.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre>public boolean equals​(Object obj)
+</pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
+</ul>
+
+<h3>hashCode</h3>
+
+<pre>public int hashCode()
+</pre>
+
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>getSubType</h3>
+
+<pre>public final String getSubType()
+</pre>
+
+<p>Gets this media type&#39;s subtype.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This media type&#39;s subtype.</li>
+</ul>
+
+<h3>isText</h3>
+
+<pre>public final boolean isText()
+</pre>
+
+<p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isMultipart</h3>
+
+<pre>public final boolean isMultipart()
+</pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>getParameters</h3>
+
+<pre>public final Map&lt;String,String&gt; getParameters()
+</pre>
+
+<p>Gets a list of the parameters contained in this media type object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of the parameters contained in this media type object; the
+names of each parameter appear in an undefined order. NOTE: Previous
+versions erroneously stated that the list will be sorted by name. In
+fact, the names will not be guaranteed to appear in any particular
+order; this is at least the case in version 0.10.0.</li>
+</ul>
+
+<h3>toString</h3>
+
+<pre>public String toString()
+</pre>
+
+<p>Converts this media type to a text string form suitable for inserting in
+ email headers. Notably, the string contains the value of a
+ Content-Type header field (without the text necessarily starting with
+ &quot;Content-Type&quot; followed by a space), and consists of one or more
+ lines.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string form of this media type.</li>
+</ul>
+
+<h3>ToSingleLineString</h3>
+
+<pre>public String ToSingleLineString()
+</pre>
+
+<p>Converts this media type to a text string form suitable for inserting in
+ HTTP headers. Notably, the string contains the value of a
+ Content-Type header field (without the text necessarily starting with
+ &quot;Content-Type&quot; followed by a space), and consists of a single line.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string form of this media type.</li>
+</ul>
+
+<h3>GetCharset</h3>
+
+<pre>public String GetCharset()
+</pre>
+
+<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
+ to represent text in the data that uses this media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>If the &quot;charset&quot; parameter is present and non-empty, returns the
+result of the Encodings.ResolveAliasForEmail method for that
+parameter, except that result&#39;s basic upper-case letters A to Z
+(U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot;
+parameter is absent or empty, returns the default value, if any, for
+that parameter given the media type (e.g., &quot;us-ascii&quot; if the media
+type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is
+none.</li>
+</ul>
+
+<h3>GetParameter</h3>
+
+<pre>public String GetParameter​(String name)
+</pre>
+
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
+ &quot;format&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - Name of the parameter to get. The name is compared using a basic
+case-insensitive comparison. (Two strings are equal in such a
+comparison, if they match after converting the basic upper-case
+letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The value of the parameter as a string, or null if the parameter
+doesn&#39;t exist.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+</ul>
+
+<h3>getTypeAndSubType</h3>
+
+<pre>public final String getTypeAndSubType()
+</pre>
+
+<p>Gets the top level type and subtype of this media type, separated by a
+ slash; for example, &quot;text/plain&quot;.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The top level type and subtype of this media type, separated by a
+slash; for example, &quot;text/plain&quot;.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre>public static MediaType Parse​(String mediaTypeValue)
+</pre>
+
+<p>Parses a media type string and returns a media type object. For further
+ information, see the overload taking a MediaType parameter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mediaTypeValue</code> - A text string representing a media type. This media
+type can include parameters.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A media type object, or MediaType.TextPlainAscii if <code>
+mediaTypeValue</code> is empty or syntactically invalid.</li>
+</ul>
+
+<h3>Parse</h3>
+
+<pre>public static MediaType Parse​(String str, MediaType defaultValue)
+</pre>
+
+<p>Parses a media type string and returns a media type object, or the default
+ value if the string is invalid. This method checks the syntactic
+ validity of the string, but not whether it has all parameters it&#39;s
+ required to have or whether the parameters themselves are set to
+ valid values for the parameter. <p>RFC 2231 extensions allow each
+ media type parameter to be associated with a character encoding
+ and/or language, and support parameter values that span two or more
+ key-value pairs. Parameters making use of RFC 2231 extensions have
+ names with an asterisk (&quot;<em>&quot;). Such a parameter will be ignored if it
+ is ill-formed because of RFC 2231&#39;s rules (except for illegal
+ percent-decoding or undecodable sequences for the given character
+ enoding). Examples of RFC 2231 extensions follow (both examples
+ encode the same &quot;filename&quot; parameter):</p> <p><b>text/example;
+ filename</em>=utf-8&#39;en&#39;filename.txt</b></p> <p><b>text/example;
+ filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p> <p>This
+ implementation ignores keys (in parameter key-value pairs) that
+ appear more than once in the media type. Nothing in RFCs 2045, 2183,
+ 6266, or 7231 explicitly disallows such keys, or otherwise specifies
+ error-handling behavior for such keys.</p></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - A text string representing a media type. This media type can
+include parameters.</p></li>
+<li><p><code>defaultValue</code> - The media type to return if the string is syntactically
+invalid. Can be null.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A MediaType object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

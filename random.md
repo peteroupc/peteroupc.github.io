@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jul. 29, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 1, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -221,7 +221,7 @@ An application should use a PRNG with a seed it specifies (rather than an automa
     - is derived from user-entered data,
     - is known to the application and was generated using a [**cryptographic**](#Cryptographic_RNGs) or [**statistical**](#Statistical_RNGs) RNG (as defined earlier),
     - is a [**verifiable random number**](#Verifiable_Random_Numbers) (as defined later), or
-    - is based on a timestamp (but only if the reproducible result is not intended to vary during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for a result that varies only daily),
+    - is based on a timestamp (but only if the "random" content will remain the same during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for content that varies only daily),
 2. the application might need to generate the same "random" result multiple times,
 3. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
@@ -347,17 +347,16 @@ Wherever possible, applications should use existing libraries and techniques tha
     and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and
 - a statistical RNG implementation can use a PRNG algorithm mentioned as an example in the [**statistical RNGs**](#Statistical_RNGs) section.
 
-If existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.  For instance, a C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise. Any programming language API that implements such RNGs by filling a byte buffer ought to run in amortized linear time on the number of random bytes the API will generate.
+If existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.
+
+> **Example:** A C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 
 Cryptographic and statistical RNG implementations&mdash;
 - should be reasonably fast for most applications, and
 - should be safe for concurrent use by multiple threads, whenever convenient.
 
 My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on
-ten uniform random number methods; in my opinion, a new programming language's standard library ought to include
-those ten methods separately for cryptographic and for statistical RNGs. That document also
-discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such
-as a normal, geometric, binomial, or discrete weighted distribution) or fall within a given range.
+ten uniform random number methods; in my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
 
 <a id=Using_Random_Number_Generators></a>
 ## Using Random Number Generators
@@ -373,7 +372,7 @@ An application that generates random numbers in parallel can also do one or both
 
 If an application uses more than one kind of RNG (cryptographic, statistical, seeded), the advice above applies separately to each such kind of RNG.
 
-(Many questions on Stack Overflow highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
+(Many questions on _Stack Overflow_ highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
 
 <a id=Shuffling></a>
 ## Shuffling

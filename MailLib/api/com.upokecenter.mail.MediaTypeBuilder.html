@@ -11,6 +11,312 @@
 
 <p>A mutable media type object.</p>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class, using the type
+&quot;application/octet-stream&quot;.</li>
+<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class using the data from
+another media type.</li>
+<li><code>MediaTypeBuilder​(String type,
+            String subtype) MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class.</li>
+<li><code>String getSubType()</code><br>
+Gets this value&#39;s subtype.</li>
+<li><code>String getTopLevelType()</code><br>
+Gets this value&#39;s top-level type.</li>
+<li><code>boolean isMultipart()</code><br>
+Gets a value indicating whether this is a multipart media type.</li>
+<li><code>boolean isText()</code><br>
+Gets a value indicating whether this is a text media type.</li>
+<li><code>MediaTypeBuilder RemoveParameter​(String name)</code><br>
+Removes a parameter from this builder object.</li>
+<li><code>MediaTypeBuilder SetParameter​(String name,
+        String value)</code><br>
+Sets a parameter&#39;s name and value for this media type.</li>
+<li><code>void setSubType​(String value)</code><br></li>
+<li><code>MediaTypeBuilder SetSubType​(String str)</code><br>
+Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
+<li><code>void setTopLevelType​(String value)</code><br></li>
+<li><code>MediaTypeBuilder SetTopLevelType​(String str)</code><br>
+Sets this media type&#39;s top-level type.</li>
+<li><code>MediaType ToMediaType()</code><br>
+Converts this builder to an immutable media type object.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class, using the type
+&quot;application/octet-stream&quot;.</li>
+<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class using the data from
+another media type.</li>
+<li><code>MediaTypeBuilder​(String type,
+            String subtype) MediaTypeBuilder</code><br>
+Initializes a new instance of the MediaTypeBuilder class.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>MediaTypeBuilder</h3>
+
+<pre>public MediaTypeBuilder()
+</pre>
+
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class, using the type
+ &quot;application/octet-stream&quot;.</p>
+
+<h3>MediaTypeBuilder</h3>
+
+<pre>public MediaTypeBuilder​(MediaType mt)
+</pre>
+
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class using the data from
+ another media type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mt</code> - The parameter <code>mt</code> is a MediaType object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>mt</code> is null.</li>
+</ul>
+
+<h3>MediaTypeBuilder</h3>
+
+<pre>public MediaTypeBuilder​(String type, String subtype)
+</pre>
+
+<p>Initializes a new instance of the <code>MediaTypeBuilder</code> class.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>type</code> - The media type&#39;s top-level type.</p></li>
+<li><p><code>subtype</code> - The media type&#39;s subtype.</p></li>
+</ul>
+
+<h3>getTopLevelType</h3>
+
+<pre>public final String getTopLevelType()
+</pre>
+
+<p>Gets this value&#39;s top-level type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s top-level type.</li>
+</ul>
+
+<h3>setTopLevelType</h3>
+
+<pre>public final void setTopLevelType​(String value)
+</pre>
+
+<h3>getSubType</h3>
+
+<pre>public final String getSubType()
+</pre>
+
+<p>Gets this value&#39;s subtype.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s subtype.</li>
+</ul>
+
+<h3>setSubType</h3>
+
+<pre>public final void setSubType​(String value)
+</pre>
+
+<h3>isText</h3>
+
+<pre>public final boolean isText()
+</pre>
+
+<p>Gets a value indicating whether this is a text media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>isMultipart</h3>
+
+<pre>public final boolean isMultipart()
+</pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this is a multipart media type; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>ToMediaType</h3>
+
+<pre>public MediaType ToMediaType()
+</pre>
+
+<p>Converts this builder to an immutable media type object.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A MediaType object.</li>
+</ul>
+
+<h3>SetTopLevelType</h3>
+
+<pre>public MediaTypeBuilder SetTopLevelType​(String str)
+</pre>
+
+<p>Sets this media type&#39;s top-level type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string naming a top-level type, such as &quot;text&quot; or &quot;audio&quot;.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is syntactically
+invalid for a top-level type.</p></li>
+</ul>
+
+<h3>RemoveParameter</h3>
+
+<pre>public MediaTypeBuilder RemoveParameter​(String name)
+</pre>
+
+<p>Removes a parameter from this builder object. Does nothing if the
+ parameter&#39;s name doesn&#39;t exist.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>name</code> - Name of the parameter to remove. The name is compared using a
+basic case-insensitive comparison. (Two strings are equal in such a
+comparison, if they match after converting the basic upper-case
+letters A to Z (U + 0041 to U + 005A) in both strings to lower case.).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+</ul>
+
+<h3>SetParameter</h3>
+
+<pre>public MediaTypeBuilder SetParameter​(String name, String value)
+</pre>
+
+<p>Sets a parameter&#39;s name and value for this media type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>name</code> - Name of the parameter to set, such as &quot;charset&quot;. The name is
+compared using a basic case-insensitive comparison. (Two strings are
+equal in such a comparison, if they match after converting the basic
+upper-case letters A to Z (U + 0041 to U + 005A) in both strings to lower
+case.).</p></li>
+<li><p><code>value</code> - A text string giving the parameter&#39;s value.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>value</code> or <code>
+name</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty or
+syntactically invalid.</p></li>
+</ul>
+
+<h3>SetSubType</h3>
+
+<pre>public MediaTypeBuilder SetSubType​(String str)
+</pre>
+
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string naming a media subtype.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> is empty or
+syntactically invalid.</p></li>
+</ul>
+
+<h3>toString</h3>
+
+<pre>public String toString()
+</pre>
+
+<p>Converts this object to a text string.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string representation of this object.</li>
+</ul>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
