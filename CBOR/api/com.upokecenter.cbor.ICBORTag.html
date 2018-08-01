@@ -12,6 +12,54 @@
 <p>Implemented by classes that validate CBOR objects belonging to a specific
  tag.</p>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>CBORTypeFilter GetTypeFilter()</code><br>
+Gets a type filter specifying what kinds of CBOR objects are supported by
+this tag.</li>
+<li><code>CBORObject ValidateObject​(CBORObject obj)</code><br>
+Generates a CBOR object based on the data of another object.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>GetTypeFilter</h3>
+
+<pre>CBORTypeFilter GetTypeFilter()
+</pre>
+
+<p>Gets a type filter specifying what kinds of CBOR objects are supported by
+ this tag.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR type filter.</li>
+</ul>
+
+<h3>ValidateObject</h3>
+
+<pre>CBORObject ValidateObject​(CBORObject obj)
+</pre>
+
+<p>Generates a CBOR object based on the data of another object. If the data is
+ not valid, should throw a CBORException.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - A CBOR object with the corresponding tag handled by the ICBORTag
+object.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object. Note that this method may choose to return the
+same object as the parameter.</li>
+</ul>
+
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

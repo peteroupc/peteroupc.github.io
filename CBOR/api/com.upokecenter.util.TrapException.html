@@ -13,6 +13,113 @@
 
 <div class='deprecationComment'>Use ETrapException from PeterO.Numbers/com.upokecenter.numbers.</div>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>TrapException​(int flag,
+         PrecisionContext ctx,
+         Object result) TrapException</code><br>
+Deprecated. Initializes a new instance of the TrapException
+class.</li>
+<li><code>PrecisionContext getContext()</code><br>
+Deprecated. Gets the precision context used during the operation that triggered the
+trap.</li>
+<li><code>int getError()</code><br>
+Deprecated. Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX).</li>
+<li><code>Object getResult()</code><br>
+Deprecated. Gets the defined result of the operation that caused the trap.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>TrapException​(int flag,
+         PrecisionContext ctx,
+         Object result) TrapException</code><br>
+Deprecated. Initializes a new instance of the TrapException
+class.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>TrapException</h3>
+
+<pre>public TrapException​(int flag, PrecisionContext ctx, Object result)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>flag</code> - A flag that specifies the kind of error
+(PrecisionContext.FlagXXX). This will only be one flag, such as
+FlagInexact or FlagSubnormal.</p></li>
+<li><p><code>ctx</code> - A context object for arbitrary-precision arithmetic settings.</p></li>
+<li><p><code>result</code> - The desired result of the operation that caused the trap, such
+as an <code>ExtendedDecimal</code> or <code>ExtendedFloat</code>.</p></li>
+</ul>
+
+<h3>TrapException</h3>
+
+<pre>public TrapException​(int flag, PrecisionContext ctx, Object result)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>flag</code> - A flag that specifies the kind of error
+(PrecisionContext.FlagXXX). This will only be one flag, such as
+FlagInexact or FlagSubnormal.</p></li>
+<li><p><code>ctx</code> - A context object for arbitrary-precision arithmetic settings.</p></li>
+<li><p><code>result</code> - The desired result of the operation that caused the trap, such
+as an <code>ExtendedDecimal</code> or <code>ExtendedFloat</code>.</p></li>
+</ul>
+
+<h3>getContext</h3>
+
+<pre>public final PrecisionContext getContext()
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The precision context used during the operation that triggered the
+trap. May be null.</li>
+</ul>
+
+<h3>getResult</h3>
+
+<pre>public final Object getResult()
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The defined result of the operation that caused the trap.</li>
+</ul>
+
+<h3>getError</h3>
+
+<pre>public final int getError()
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The flag that specifies the kind of error
+(PrecisionContext.FlagXXX). This will only be one flag, such as
+FlagInexact or FlagSubnormal.</li>
+</ul>
+
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
