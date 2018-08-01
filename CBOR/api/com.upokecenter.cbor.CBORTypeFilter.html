@@ -14,6 +14,536 @@
  inherited; this is a change in version 2.0 from previous versions,
  where the class was inadvertently left inheritable.</p>
 
+<h2>Fields</h2>
+
+<ul>
+<li><code>static CBORTypeFilter Any</code><br>
+A filter that allows any CBOR object.</li>
+<li><code>static CBORTypeFilter ByteString</code><br>
+A filter that allows byte strings.</li>
+<li><code>static CBORTypeFilter NegativeInteger</code><br>
+A filter that allows negative integers.</li>
+<li><code>static CBORTypeFilter None</code><br>
+A filter that allows no CBOR types.</li>
+<li><code>static CBORTypeFilter TextString</code><br>
+A filter that allows text strings.</li>
+<li><code>static CBORTypeFilter UnsignedInteger</code><br>
+A filter that allows unsigned integers.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>CBORTypeFilter()</code><br></li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>boolean ArrayIndexAllowed​(int index)</code><br>
+Determines whether this type filter allows CBOR arrays and the given array
+index is allowed under this type filter.</li>
+<li><code>boolean ArrayLengthMatches​(int length)</code><br>
+Returns whether an array&#39;s length is allowed under this filter.</li>
+<li><code>boolean ArrayLengthMatches​(long length)</code><br>
+Returns whether an array&#39;s length is allowed under a filter.</li>
+<li><code>boolean ArrayLengthMatches​(com.upokecenter.numbers.EInteger bigLength)</code><br>
+Returns whether an array&#39;s length is allowed under a filter.</li>
+<li><code>CBORTypeFilter GetSubFilter​(int index)</code><br>
+Gets the type filter for this array filter by its index.</li>
+<li><code>CBORTypeFilter GetSubFilter​(long index)</code><br>
+Gets the type filter for this array filter by its index.</li>
+<li><code>boolean MajorTypeMatches​(int type)</code><br>
+Returns whether the given CBOR major type matches a major type allowed by
+this filter.</li>
+<li><code>boolean NonFPSimpleValueAllowed()</code><br>
+Returns whether this filter allows simple values that are not floating-point
+numbers.</li>
+<li><code>boolean TagAllowed​(int tag)</code><br>
+Gets a value indicating whether CBOR objects can have the given tag number.</li>
+<li><code>boolean TagAllowed​(long longTag)</code><br>
+Gets a value indicating whether CBOR objects can have the given tag number.</li>
+<li><code>boolean TagAllowed​(com.upokecenter.numbers.EInteger bigTag)</code><br>
+Gets a value indicating whether CBOR objects can have the given tag number.</li>
+<li><code>CBORTypeFilter WithArrayAnyLength()</code><br>
+Copies this filter and includes arrays of any length in the new filter.</li>
+<li><code>CBORTypeFilter WithArrayExactLength​(int arrayLength,
+                CBORTypeFilter... elements)</code><br>
+Copies this filter and includes CBOR arrays with an exact length to the new
+filter.</li>
+<li><code>CBORTypeFilter WithArrayMinLength​(int arrayLength,
+              CBORTypeFilter... elements)</code><br>
+Copies this filter and includes CBOR arrays with at least a given length to
+the new filter.</li>
+<li><code>CBORTypeFilter WithByteString()</code><br>
+Copies this filter and includes byte strings in the new filter.</li>
+<li><code>CBORTypeFilter WithFloatingPoint()</code><br>
+Copies this filter and includes floating-point numbers in the new filter.</li>
+<li><code>CBORTypeFilter WithMap()</code><br>
+Copies this filter and includes maps in the new filter.</li>
+<li><code>CBORTypeFilter WithNegativeInteger()</code><br>
+Copies this filter and includes negative integers in the new filter.</li>
+<li><code>CBORTypeFilter WithTags​(int... tags)</code><br>
+Copies this filter and includes a set of valid CBOR tags in the new filter.</li>
+<li><code>CBORTypeFilter WithTextString()</code><br>
+Copies this filter and includes text strings in the new filter.</li>
+<li><code>CBORTypeFilter WithUnsignedInteger()</code><br>
+Copies this filter and includes unsigned integers in the new filter.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>Any</h3>
+
+<pre>public static final CBORTypeFilter Any
+</pre>
+
+<p>A filter that allows any CBOR object.</p>
+
+<h3>ByteString</h3>
+
+<pre>public static final CBORTypeFilter ByteString
+</pre>
+
+<p>A filter that allows byte strings.</p>
+
+<h3>NegativeInteger</h3>
+
+<pre>public static final CBORTypeFilter NegativeInteger
+</pre>
+
+<p>A filter that allows negative integers.</p>
+
+<h3>None</h3>
+
+<pre>public static final CBORTypeFilter None
+</pre>
+
+<p>A filter that allows no CBOR types.</p>
+
+<h3>TextString</h3>
+
+<pre>public static final CBORTypeFilter TextString
+</pre>
+
+<p>A filter that allows text strings.</p>
+
+<h3>UnsignedInteger</h3>
+
+<pre>public static final CBORTypeFilter UnsignedInteger
+</pre>
+
+<p>A filter that allows unsigned integers.</p>
+
+<h2>Method Details</h2>
+
+<h3>ArrayIndexAllowed</h3>
+
+<pre>public boolean ArrayIndexAllowed​(int index)
+</pre>
+
+<p>Determines whether this type filter allows CBOR arrays and the given array
+ index is allowed under this type filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - An array index, starting from 0.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this type filter allows CBOR arrays and the given
+array index is allowed under this type filter; otherwise, <code>
+false</code>.</li>
+</ul>
+
+<h3>ArrayLengthMatches</h3>
+
+<pre>public boolean ArrayLengthMatches​(int length)
+</pre>
+
+<p>Returns whether an array&#39;s length is allowed under this filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>length</code> - The length of a CBOR array.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under this filter; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>ArrayLengthMatches</h3>
+
+<pre>public boolean ArrayLengthMatches​(long length)
+</pre>
+
+<p>Returns whether an array&#39;s length is allowed under a filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>length</code> - The length of a CBOR array.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under a filter; otherwise, <code>false</code> .</li>
+</ul>
+
+<h3>ArrayLengthMatches</h3>
+
+<pre>public boolean ArrayLengthMatches​(com.upokecenter.numbers.EInteger bigLength)
+</pre>
+
+<p>Returns whether an array&#39;s length is allowed under a filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigLength</code> - An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this filter allows CBOR arrays and an array&#39;s length
+is allowed under a filter; otherwise, <code>false</code> .</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigLength</code> is
+null.</li>
+</ul>
+
+<h3>GetSubFilter</h3>
+
+<pre>public CBORTypeFilter GetSubFilter​(int index)
+</pre>
+
+<p>Gets the type filter for this array filter by its index.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - A zero-based index of the filter to retrieve.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Returns None if the index is out of range, or Any if this filter
+doesn&#39;t filter an array. Returns the appropriate filter for the array
+index otherwise.</li>
+</ul>
+
+<h3>GetSubFilter</h3>
+
+<pre>public CBORTypeFilter GetSubFilter​(long index)
+</pre>
+
+<p>Gets the type filter for this array filter by its index.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - A zero-based index of the filter to retrieve.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Returns None if the index is out of range, or Any if this filter
+doesn&#39;t filter an array. Returns the appropriate filter for the array
+index otherwise.</li>
+</ul>
+
+<h3>MajorTypeMatches</h3>
+
+<pre>public boolean MajorTypeMatches​(int type)
+</pre>
+
+<p>Returns whether the given CBOR major type matches a major type allowed by
+ this filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>type</code> - A CBOR major type from 0 to 7.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given CBOR major type matches a major type
+allowed by this filter; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>NonFPSimpleValueAllowed</h3>
+
+<pre>public boolean NonFPSimpleValueAllowed()
+</pre>
+
+<p>Returns whether this filter allows simple values that are not floating-point
+ numbers.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this filter allows simple values that are not
+floating-point numbers; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>TagAllowed</h3>
+
+<pre>public boolean TagAllowed​(int tag)
+</pre>
+
+<p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>tag</code> - A tag number. Returns false if this is less than 0.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>TagAllowed</h3>
+
+<pre>public boolean TagAllowed​(long longTag)
+</pre>
+
+<p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longTag</code> - A tag number. Returns false if this is less than 0.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>TagAllowed</h3>
+
+<pre>public boolean TagAllowed​(com.upokecenter.numbers.EInteger bigTag)
+</pre>
+
+<p>Gets a value indicating whether CBOR objects can have the given tag number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigTag</code> - A tag number. Returns false if this is less than 0.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if CBOR objects can have the given tag number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigTag</code> is null.</li>
+</ul>
+
+<h3>WithArrayAnyLength</h3>
+
+<pre>public CBORTypeFilter WithArrayAnyLength()
+</pre>
+
+<p>Copies this filter and includes arrays of any length in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithArrayExactLength</h3>
+
+<pre>public CBORTypeFilter WithArrayExactLength​(int arrayLength, CBORTypeFilter... elements)
+</pre>
+
+<p>Copies this filter and includes CBOR arrays with an exact length to the new
+ filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>arrayLength</code> - The desired maximum length of an array.</p></li>
+<li><p><code>elements</code> - An array containing the allowed types for each element in
+the array. There must be at least as many elements here as given in
+the arrayLength parameter.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter elements is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter elements has fewer elements
+than specified in arrayLength.</p></li>
+</ul>
+
+<h3>WithArrayMinLength</h3>
+
+<pre>public CBORTypeFilter WithArrayMinLength​(int arrayLength, CBORTypeFilter... elements)
+</pre>
+
+<p>Copies this filter and includes CBOR arrays with at least a given length to
+ the new filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>arrayLength</code> - The desired minimum length of an array.</p></li>
+<li><p><code>elements</code> - An array containing the allowed types for each element in
+the array. There must be at least as many elements here as given in
+the arrayLength parameter.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter arrayLength is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter elements is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter elements has fewer elements
+than specified in arrayLength.</p></li>
+</ul>
+
+<h3>WithByteString</h3>
+
+<pre>public CBORTypeFilter WithByteString()
+</pre>
+
+<p>Copies this filter and includes byte strings in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithFloatingPoint</h3>
+
+<pre>public CBORTypeFilter WithFloatingPoint()
+</pre>
+
+<p>Copies this filter and includes floating-point numbers in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithMap</h3>
+
+<pre>public CBORTypeFilter WithMap()
+</pre>
+
+<p>Copies this filter and includes maps in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithNegativeInteger</h3>
+
+<pre>public CBORTypeFilter WithNegativeInteger()
+</pre>
+
+<p>Copies this filter and includes negative integers in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithTags</h3>
+
+<pre>public CBORTypeFilter WithTags​(int... tags)
+</pre>
+
+<p>Copies this filter and includes a set of valid CBOR tags in the new filter.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>tags</code> - An array of the CBOR tags to add to the new filter.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithTextString</h3>
+
+<pre>public CBORTypeFilter WithTextString()
+</pre>
+
+<p>Copies this filter and includes text strings in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
+<h3>WithUnsignedInteger</h3>
+
+<pre>public CBORTypeFilter WithUnsignedInteger()
+</pre>
+
+<p>Copies this filter and includes unsigned integers in the new filter.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORTypeFilter object.</li>
+</ul>
+
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>

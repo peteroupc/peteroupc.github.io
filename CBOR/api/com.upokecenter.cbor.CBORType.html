@@ -11,6 +11,138 @@
 
 <p>Represents a type that a CBOR object can have.</p>
 
+<h2>Enum Constants</h2>
+
+<ul>
+<li><code>Array</code><br>
+An array of CBOR objects.</li>
+<li><code>Boolean</code><br>
+The simple values true and false.</li>
+<li><code>ByteString</code><br>
+An array of bytes.</li>
+<li><code>Map</code><br>
+A map of CBOR objects.</li>
+<li><code>Number</code><br>
+A number of any kind, including integers, big integers, floating point
+numbers, and decimal numbers.</li>
+<li><code>SimpleValue</code><br>
+A &quot;simple value&quot; other than floating point values, true, and
+false.</li>
+<li><code>TextString</code><br>
+A text string.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>static CBORType valueOf​(String name)</code><br>
+Returns the enum constant of this type with the specified name.</li>
+<li><code>static CBORType[] values()</code><br>
+Returns an array containing the constants of this enum type, in
+the order they are declared.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>Number</h3>
+
+<pre>public static final CBORType Number
+</pre>
+
+<h3>Boolean</h3>
+
+<pre>public static final CBORType Boolean
+</pre>
+
+<h3>SimpleValue</h3>
+
+<pre>public static final CBORType SimpleValue
+</pre>
+
+<h3>ByteString</h3>
+
+<pre>public static final CBORType ByteString
+</pre>
+
+<h3>TextString</h3>
+
+<pre>public static final CBORType TextString
+</pre>
+
+<h3>Array</h3>
+
+<pre>public static final CBORType Array
+</pre>
+
+<h3>Map</h3>
+
+<pre>public static final CBORType Map
+</pre>
+
+<h3>values</h3>
+
+<pre>public static CBORType[] values()
+</pre>
+
+<h3>valueOf</h3>
+
+<pre>public static CBORType valueOf​(String name)
+</pre>
+
+<h2>Enum Constant Details</h2>
+
+<h3>Number</h3>
+
+<pre>public static final CBORType Number
+</pre>
+
+<p>A number of any kind, including integers, big integers, floating point
+ numbers, and decimal numbers. The floating-point value Not-a-Number
+ is also included in the Number type.</p>
+
+<h3>Boolean</h3>
+
+<pre>public static final CBORType Boolean
+</pre>
+
+<p>The simple values true and false.</p>
+
+<h3>SimpleValue</h3>
+
+<pre>public static final CBORType SimpleValue
+</pre>
+
+<p>A &#x22;simple value&#x22; other than floating point values, true, and
+ false.</p>
+
+<h3>ByteString</h3>
+
+<pre>public static final CBORType ByteString
+</pre>
+
+<p>An array of bytes.</p>
+
+<h3>TextString</h3>
+
+<pre>public static final CBORType TextString
+</pre>
+
+<p>A text string.</p>
+
+<h3>Array</h3>
+
+<pre>public static final CBORType Array
+</pre>
+
+<p>An array of CBOR objects.</p>
+
+<h3>Map</h3>
+
+<pre>public static final CBORType Map
+</pre>
+
+<p>A map of CBOR objects.</p>
+
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
