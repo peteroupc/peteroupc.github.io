@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on July 26, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Aug. 1, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -39,13 +39,7 @@
 
 <p><a href="https://peteroupc.github.io/randomgen.zip"><strong>Sample Python code</strong></a> that implements many of the methods in this document is available.</p>
 
-<p>All the random number methods presented on this page&mdash;</p>
-
-<ul>
-<li>assume the existence of an underlying RNG,</li>
-<li>make no assumptions on the underlying RNG&#39;s implementation (e.g., whether that RNG is a deterministic RNG or some other kind), and</li>
-<li>make no assumptions on the statistical quality or predictability of the underlying RNG.</li>
-</ul>
+<p>All the random number methods presented on this page are ultimately based on an underlying RNG; however, the methods make no assumptions on that RNG&#39;s implementation (e.g., whether that RNG is a deterministic RNG or some other kind) or on that RNG&#39;s statistical quality or predictability.</p>
 
 <p><strong>In general, this document does not cover:</strong></p>
 
@@ -413,7 +407,7 @@ END METHOD
 END
 </pre>
 
-<p>For fixed-point or floating-point number formats with fixed precision (such as Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
+<p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
@@ -478,7 +472,7 @@ END
 
 <h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
 
-<p><strong><code>RNDINTEXCRANGE</code></strong> returns a <strong>random integer in the interval</strong> <strong>[<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.  It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><strong><code>RNDINTRANGE</code></strong></a>, as the following pseudocode demonstrates.</p>
+<p><strong><code>RNDINTEXCRANGE</code></strong> returns a <strong>random integer in the interval</strong> <strong>[<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.  It can be implemented using <a href="#RNDINTRANGE_Random_Integers_in_N_M"><strong><code>RNDINTRANGE</code></strong></a>, as the following pseudocode demonstrates.</p>
 
 <pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error

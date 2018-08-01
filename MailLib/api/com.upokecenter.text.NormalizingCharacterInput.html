@@ -13,6 +13,436 @@
 
 <div class='deprecationComment'>Renamed to NormalizerInput.</div>
 
+<h2>Methods</h2>
+
+<ul>
+<li><code>NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput input) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput stream,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str,
+                     int index,
+                     int length,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList)</code><br>
+Deprecated.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList,
+                     Normalization form)</code><br>
+Deprecated.</li>
+<li><code>static List&lt;Integer&gt; GetChars​(com.upokecenter.text.ICharacterInput chars,
+    Normalization form)</code><br>
+Deprecated.
+Instead of this method, create a NormalizerInput on the input and call
+ReadChar to get the normalized String&#39;s code points.
+Instead of this method, create a NormalizerInput on the input and call
+ReadChar to get the normalized String&#39;s code points.</li>
+<li><code>static List&lt;Integer&gt; GetChars​(String str,
+    Normalization form)</code><br>
+Deprecated.
+Instead of this method, create a NormalizerInput on the String and call
+ReadChar to get the normalized String&#39;s code points.
+Instead of this method, create a NormalizerInput on the String and call
+ReadChar to get the normalized String&#39;s code points.</li>
+<li><code>static boolean IsNormalized​(int[] charArray,
+        Normalization form)</code><br>
+Deprecated.
+Either convert the array to a String or wrap it in an ICharacterInput and
+call the corresponding overload instead.
+Either convert the array to a String or wrap it in an ICharacterInput and
+call the corresponding overload instead.</li>
+<li><code>static boolean IsNormalized​(com.upokecenter.text.ICharacterInput chars,
+        Normalization form)</code><br>
+Deprecated. Determines whether the text provided by a character input is normalized.</li>
+<li><code>static boolean IsNormalized​(String str,
+        Normalization form)</code><br>
+Deprecated. Determines whether the given string is in the given Unicode normalization
+form.</li>
+<li><code>static boolean IsNormalized​(List&lt;Integer&gt; charList,
+        Normalization form)</code><br>
+Deprecated.
+Either convert the list to a String or wrap it in an ICharacterInput and
+call the corresponding overload instead.
+Either convert the list to a String or wrap it in an ICharacterInput and
+call the corresponding overload instead.</li>
+<li><code>static String Normalize​(String str,
+     Normalization form)</code><br>
+Deprecated. Converts a string to the given Unicode normalization form.</li>
+<li><code>int Read​(int[] chars,
+int index,
+int length)</code><br>
+Deprecated. Reads a sequence of Unicode code points from a data source.</li>
+<li><code>int ReadChar()</code><br>
+Deprecated. Reads a Unicode character from a data source.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput input) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput stream,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str,
+                     int index,
+                     int length,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(String str,
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList)</code><br>
+Deprecated.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList,
+                     Normalization form)</code><br>
+Deprecated.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(String str)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+</ul>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput input)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>input</code> - The parameter <code>input</code> is a public object.</li>
+</ul>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(List&lt;Integer&gt; characterList)
+</pre>
+
+<p>Deprecated.</p>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(List&lt;Integer&gt; characterList, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(String str, int index, int length, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is a public object.</p></li>
+<li><p><code>index</code> - The parameter <code>index</code> is a 32-bit signed integer.</p></li>
+<li><p><code>length</code> - The parameter <code>length</code> is a 32-bit signed integer.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+</ul>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(String str, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or &quot;input&quot; or
+&quot;charArray&quot; is null.</li>
+</ul>
+
+<h3>NormalizingCharacterInput</h3>
+
+<pre>public NormalizingCharacterInput​(com.upokecenter.text.ICharacterInput stream, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>stream</code> - The parameter <code>stream</code> is a public object.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre>public static boolean IsNormalized​(com.upokecenter.text.ICharacterInput chars, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - A object that implements a streamable character input.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to check.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the text is normalized; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+</ul>
+
+<h3>Normalize</h3>
+
+<pre>public static String Normalize​(String str, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - An arbitrary string.</p></li>
+<li><p><code>form</code> - The Unicode normalization form to convert to.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The parameter <code>str</code> converted to the given normalization form.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>str</code> contains an
+unpaired surrogate code point.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre>public static boolean IsNormalized​(String str, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - An arbitrary string.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given string is in the given Unicode
+normalization form; otherwise, <code>false</code>. Returns <code>false</code>
+if the string contains an unpaired surrogate code point.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>GetChars</h3>
+
+<pre>@Deprecated public static List&lt;Integer&gt; GetChars​(String str, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Instead of this method, create a NormalizerInput on the String and call
+ReadChar to get the normalized String's code points.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of the normalized Unicode characters.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>GetChars</h3>
+
+<pre>@Deprecated public static List&lt;Integer&gt; GetChars​(com.upokecenter.text.ICharacterInput chars, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Instead of this method, create a NormalizerInput on the input and call
+ReadChar to get the normalized String's code points.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - An object that implements a stream of Unicode characters.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of the normalized Unicode characters.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>chars</code> is null.</li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre>@Deprecated public static boolean IsNormalized​(int[] charArray, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Either convert the array to a String or wrap it in an ICharacterInput and
+ call the corresponding overload instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>charArray</code> - An array of Unicode code points.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given list of characters is in the given Unicode
+normalization form; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;charList&quot; is null.</li>
+</ul>
+
+<h3>IsNormalized</h3>
+
+<pre>@Deprecated public static boolean IsNormalized​(List&lt;Integer&gt; charList, Normalization form)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Either convert the list to a String or wrap it in an ICharacterInput and
+ call the corresponding overload instead.</div>
+
+<h3>ReadChar</h3>
+
+<pre>public int ReadChar()
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>ReadChar</code>&nbsp;in interface&nbsp;<code>com.upokecenter.text.ICharacterInput</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to
+0x10ffff), or the value -1 indicating the end of the source.</li>
+</ul>
+
+<h3>Read</h3>
+
+<pre>public int Read​(int[] chars, int index, int length)
+</pre>
+
+<p>Deprecated.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>Read</code>&nbsp;in interface&nbsp;<code>com.upokecenter.text.ICharacterInput</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>chars</code> - Output buffer.</p></li>
+<li><p><code>index</code> - A zero-based index showing where the desired portion of <code>
+chars</code> begins.</p></li>
+<li><p><code>length</code> - The number of elements in the desired portion of <code>chars</code>
+(but not more than <code>chars</code> &#39;s length).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of Unicode code points read, or 0 if the end of the
+source is reached.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>chars</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>index</code> or <code>length</code> is
+less than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code>
+&#39; s length minus <code>index</code> is less than <code>length</code>.</p></li>
+</ul>
+
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
