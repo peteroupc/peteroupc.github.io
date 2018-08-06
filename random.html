@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 1, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 6, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -539,7 +539,7 @@ ten uniform random number methods; in my opinion, a new programming language&#39
 
 <ul>
 <li>one thread-safe instance of an RNG for the entire application to use, or</li>
-<li>one instance of an RNG for each thread of the application, where each instance is independently initialized and stored in thread-local storage.</li>
+<li>one instance of an RNG for each thread of the application, where each instance is independently initialized and is accessible to only one thread (such as with thread-local storage).</li>
 </ul>
 
 <p>An application that generates random numbers in parallel can also do one or both of&mdash;</p>
