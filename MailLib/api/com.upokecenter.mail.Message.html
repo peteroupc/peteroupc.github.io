@@ -141,8 +141,12 @@ Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
 Generates this message&#39;s data as a byte array, using the same algorithm as
 the Generate method.</li>
+<li><code>List&lt;NamedAddress&gt; GetAddresses​(String headerName)</code><br>
+Not documented yet.</li>
 <li><code>List&lt;NamedAddress&gt; getBccAddresses()</code><br>
-Gets a list of addresses found in the BCC header field or fields.</li>
+Deprecated.
+Use GetAddresses(\Bcc) instead.
+Use GetAddresses(\Bcc) instead.</li>
 <li><code>byte[] GetBody()</code><br>
 Gets the byte array for this message&#39;s body.</li>
 <li><code>Message GetBodyMessage()</code><br>
@@ -150,7 +154,9 @@ Returns the mail message contained in this message&#39;s body.</li>
 <li><code>String getBodyString()</code><br>
 Gets the body of this message as a text string.</li>
 <li><code>List&lt;NamedAddress&gt; getCCAddresses()</code><br>
-Gets a list of addresses found in the CC header field or fields.</li>
+Deprecated.
+Use GetAddresses(\Cc) instead.
+Use GetAddresses(\Cc) instead.</li>
 <li><code>ContentDisposition getContentDisposition()</code><br>
 Gets this message&#39;s content disposition.</li>
 <li><code>MediaType getContentType()</code><br>
@@ -162,7 +168,9 @@ value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 Gets a file name suggested by this message for saving the message&#39;s body
 to a file.</li>
 <li><code>List&lt;NamedAddress&gt; getFromAddresses()</code><br>
-Gets a list of addresses found in the From header field or fields.</li>
+Deprecated.
+Use GetAddresses(\From) instead.
+Use GetAddresses(\From) instead.</li>
 <li><code>Map.Entry&lt;String,String&gt; GetHeader​(int index)</code><br>
 Gets the name and value of a header field by index.</li>
 <li><code>String GetHeader​(String name)</code><br>
@@ -179,7 +187,9 @@ Gets a list of all the parts of this message.</li>
 <li><code>String getSubject()</code><br>
 Gets this message&#39;s subject.</li>
 <li><code>List&lt;NamedAddress&gt; getToAddresses()</code><br>
-Gets a list of addresses found in the To header field or fields.</li>
+Deprecated.
+Use GetAddresses(\To) instead.
+Use GetAddresses(\To) instead.</li>
 <li><code>static Message NewBodyPart()</code><br>
 Not documented yet.</li>
 <li><code>Message RemoveHeader​(int index)</code><br>
@@ -314,10 +324,12 @@ class.</li>
 
 <h3>getBccAddresses</h3>
 
-<pre>public final List&lt;NamedAddress&gt; getBccAddresses()
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getBccAddresses()
 </pre>
 
-<p>Gets a list of addresses found in the BCC header field or fields.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use GetAddresses(\Bcc\) instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -350,10 +362,12 @@ supported.</li>
 
 <h3>getCCAddresses</h3>
 
-<pre>public final List&lt;NamedAddress&gt; getCCAddresses()
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getCCAddresses()
 </pre>
 
-<p>Gets a list of addresses found in the CC header field or fields.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use GetAddresses(\Cc\) instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -428,12 +442,33 @@ no filename suggested by the content type or content disposition, or
 if that filename is an empty string.</li>
 </ul>
 
-<h3>getFromAddresses</h3>
+<h3>GetAddresses</h3>
 
-<pre>public final List&lt;NamedAddress&gt; getFromAddresses()
+<pre>public List&lt;NamedAddress&gt; GetAddresses​(String headerName)
 </pre>
 
-<p>Gets a list of addresses found in the From header field or fields.</p>
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>headerName</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An List(NamedAddress) object.</li>
+</ul>
+
+<h3>getFromAddresses</h3>
+
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getFromAddresses()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use GetAddresses(\From\) instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -493,10 +528,12 @@ will only be used if the message is a multipart message.</li>
 
 <h3>getToAddresses</h3>
 
-<pre>public final List&lt;NamedAddress&gt; getToAddresses()
+<pre>@Deprecated public final List&lt;NamedAddress&gt; getToAddresses()
 </pre>
 
-<p>Gets a list of addresses found in the To header field or fields.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use GetAddresses(\To\) instead.</div>
 
 <p><strong>Returns:</strong></p>
 
@@ -587,16 +624,16 @@ syntactically invalid.</p></li>
  same name, and the address set to
  <code>me@[header-name]-address.invalid</code> as the address (a
  <code>.invalid</code> address is a reserved address that can never belong
- to anyone). (An exception is that the Resent-From and Resent-Sender
- header fields may appear more than once.) The generated message
- should always have a From header field.</p> <p>If a Date and/or
- Message-ID header field doesn&#39;t exist, a field with that name will be
- generated (using the current local time for the Date field).</p>
- <p>When encoding the message&#39;s body, if the message has a text
- content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage
- return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or
- LF alone. If the message has any other content type, only CR followed
- by LF is considered a line break.</p></p>
+ to anyone). (An exception is that the Resent-* header fields may
+ appear more than once.) The generated message should always have a
+ From header field.</p> <p>If a Date and/or Message-ID header field
+ doesn&#39;t exist, a field with that name will be generated (using the
+ current local time for the Date field).</p> <p>When encoding the
+ message&#39;s body, if the message has a text content type (&quot;text/*&quot;),
+ the line breaks are a CR byte (carriage return, 0x0d) followed by an
+ LF byte (line feed, 0x0a), CR alone, or LF alone. If the message has
+ any other content type, only CR followed by LF is considered a line
+ break.</p></p>
 
 <p><strong>Returns:</strong></p>
 

@@ -141,7 +141,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>If the &quot;charset&quot; parameter exists, returns that parameter with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower case. Returns  <code>&quot;us-ascii&quot;</code>  instead if the media type is ill-formed (RFC2045 sec. 5.2), or if the media type is &quot;text/plain&quot; and doesn&#39;t have a &quot;charset&quot; parameter (see RFC2046), or the default value for that parameter, if any, for the media type if the &quot;charset&quot; parameter is absent. Returns an empty string in all other cases.</p>
+<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is absent or empty, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
 
 <h3>GetHashCode</h3>
 
@@ -206,13 +206,15 @@ is null.</li>
     PeterO.Mail.MediaType defaultValue);
 </pre>
 
-<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it&#39;s required to have or whether the parameters themselves are set to valid values for the parameter.RFC 2231 extensions allow each media type parameter to be associated with a character encoding and/or language, and support parameter values that span two or more key-value pairs. Parameters making use of RFC 2231 extensions have names with an asterisk (&quot;*&quot;). Such a parameter will be ignored if it is ill-formed because of RFC 2231&#39;s rules (except for illegal percent-decoding or undecodable sequences for the given character enoding). Examples of RFC 2231 extensions follow (both examples encode the same &quot;filename&quot; parameter):</p>
+<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it&#39;s required to have or whether the parameters themselves are set to valid values for the parameter.This method assumes the given media type string was directly extracted from the Content-Type header field (as defined for email messages) and follows the syntax given in RFC 2045. Accordingly, among other things, the media type string can contain comments (delimited by parentheses).</p>
+
+<p>RFC 2231 extensions allow each media type parameter to be associated with a character encoding and/or language, and support parameter values that span two or more key-value pairs. Parameters making use of RFC 2231 extensions have names with an asterisk (&quot;*&quot;). Such a parameter will be ignored if it is ill-formed because of RFC 2231&#39;s rules (except for illegal percent-decoding or undecodable sequences for the given character enoding). Examples of RFC 2231 extensions follow (both examples encode the same &quot;filename&quot; parameter):</p>
 
 <p><b>text/example; filename*=utf-8&#39;en&#39;filename.txt</b></p>
 
 <p><b>text/example; filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p>
 
-<p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
+<p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -254,6 +256,17 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A text string form of this media type.</p>
+
+<h3>ToUriSafeString</h3>
+
+<pre>public string ToUriSafeString();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A string object.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
