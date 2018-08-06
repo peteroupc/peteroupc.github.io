@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 1, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 6, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -363,7 +363,7 @@ ten uniform random number methods; in my opinion, a new programming language's s
 
 To reduce the chance of correlated random numbers or identical random number sequences, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
-- one instance of an RNG for each thread of the application, where each instance is independently initialized and stored in thread-local storage.
+- one instance of an RNG for each thread of the application, where each instance is independently initialized and is accessible to only one thread (such as with thread-local storage).
 
 An application that generates random numbers in parallel can also do one or both of&mdash;
 
