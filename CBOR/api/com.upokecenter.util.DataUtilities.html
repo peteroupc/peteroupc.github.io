@@ -88,6 +88,9 @@ Reads a string in UTF-8 encoding from a data stream and returns that string.</li
 <li><code>static String ToLowerCaseAscii​(String str)</code><br>
 Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
 converted to lower-case.</li>
+<li><code>static String ToUpperCaseAscii​(String str)</code><br>
+Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A)
+converted to upper-case.</li>
 <li><code>static int WriteUtf8​(String str,
      int offset,
      int length,
@@ -287,7 +290,9 @@ replace</code> is false.</li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns the replacement character (U + FFFD) if the previous character
-is an unpaired surrogate code point.</li>
+is an unpaired surrogate code point. NOTE: If the return value is
+65536 (0x10000) or greater, this indicates a supplemental code point
+that takes up two <code>char</code>s rather than one.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -320,7 +325,10 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns a value as specified under <code>surrogateBehavior</code> if the
-previous character is an unpaired surrogate code point.</li>
+previous character is an unpaired surrogate code point. NOTE: If the
+return value is 65536 (0x10000) or greater, this indicates a
+supplemental code point that takes up two <code>char</code>s rather than
+one.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -349,7 +357,9 @@ previous character is an unpaired surrogate code point.</li>
 <li>The Unicode code point at the given position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 the replacement character (U + FFFD) if the current character is an
-unpaired surrogate code point.</li>
+unpaired surrogate code point. NOTE: If the return value is 65536
+(0x10000) or greater, this indicates a supplemental code point that
+takes up two <code>char</code>s rather than one.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -382,7 +392,9 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the current position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 a value as specified under <code>surrogateBehavior</code> if the previous
-character is an unpaired surrogate code point.</li>
+character is an unpaired surrogate code point. NOTE: If the return
+value is 65536 (0x10000) or greater, this indicates a supplemental
+code point that takes up two <code>char</code>s rather than one.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -398,6 +410,26 @@ character is an unpaired surrogate code point.</li>
 
 <p>Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
  converted to lower-case. Other characters remain unchanged.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The parameter <code>str</code> is a text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The converted string, or null if <code>str</code> is null.</li>
+</ul>
+
+<h3>ToUpperCaseAscii</h3>
+
+<pre>public static String ToUpperCaseAscii​(String str)
+</pre>
+
+<p>Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A)
+ converted to upper-case. Other characters remain unchanged.</p>
 
 <p><strong>Parameters:</strong></p>
 
