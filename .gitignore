@@ -19,6 +19,7 @@
 .pmd
 .project
 .settings/
+.vs/
 CBORTest/OpenCover/
 CBORTest/ProfilingSessions/
 CBORTest/bin/
