@@ -508,7 +508,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <ul>
 <li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
-<li>call the <code>BCryptGenRandom</code> API in recent Windows-based systems,</li>
+<li>call the <code>BCryptGenRandom</code> API in recent versions of Windows,</li>
 </ul>
 
 <p>and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and</p></li>
@@ -543,7 +543,7 @@ ten uniform random number methods; in my opinion, a new programming language&#39
 
 <ul>
 <li>is accessible to only one thread (such as with thread-local storage), and</li>
-<li>is initialized with a seed that is preferably unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs).</li>
+<li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs).</li>
 </ul></li>
 </ul>
 
