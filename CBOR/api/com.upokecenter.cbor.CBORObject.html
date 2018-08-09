@@ -190,6 +190,7 @@ Returns whether this object&#39;s value, truncated to an integer, would be
 <li><code>boolean CanTruncatedIntFitInInt64()</code><br>
 Returns whether this object&#39;s value, truncated to an integer, would be
 -(2^63) or greater, and less than 2^63.</li>
+<li><code>void Clear()</code><br></li>
 <li><code>int compareTo​(CBORObject other)</code><br>
 Compares two CBOR objects.</li>
 <li><code>int CompareToIgnoreTags​(CBORObject other)</code><br>
@@ -418,6 +419,9 @@ value of a CBORObject object.</li>
 <li><code>boolean Remove​(CBORObject obj)</code><br>
 If this object is an array, removes the first instance of the specified item
 from the array.</li>
+<li><code>boolean Remove​(Object obj)</code><br>
+Not documented yet.</li>
+<li><code>boolean RemoveAt​(int index)</code><br></li>
 <li><code>void set​(int index,
 CBORObject value)</code><br></li>
 <li><code>void set​(CBORObject key,
@@ -3822,6 +3826,35 @@ otherwise, <code>false</code>.</li>
 <ul>
 <li><code>IllegalStateException</code> - This object&#39;s type is not a number type.</li>
 </ul>
+
+<h3>Clear</h3>
+
+<pre>public void Clear()
+</pre>
+
+<h3>Remove</h3>
+
+<pre>public boolean Remove​(Object obj)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Boolean object.</li>
+</ul>
+
+<h3>RemoveAt</h3>
+
+<pre>public boolean RemoveAt​(int index)
+</pre>
 
 <h3>Remove</h3>
 

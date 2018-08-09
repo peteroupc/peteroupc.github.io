@@ -136,6 +136,7 @@ readable stream, and with the given media type and file name.</li>
      String filename)</code><br>
 Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given file name.</li>
+<li><code>Message ClearHeaders()</code><br></li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
@@ -838,6 +839,11 @@ empty if no header field has that name.</li>
 <ul>
 <li><code>NullPointerException</code> - Name is null.</li>
 </ul>
+
+<h3>ClearHeaders</h3>
+
+<pre>public Message ClearHeaders()
+</pre>
 
 <h3>RemoveHeader</h3>
 

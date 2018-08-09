@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 6, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 9, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -363,11 +363,13 @@ ten uniform random number methods; in my opinion, a new programming language's s
 
 To reduce the chance of correlated random numbers or identical random number sequences, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
-- one instance of an RNG for each thread of the application, where each instance is independently initialized and is accessible to only one thread (such as with thread-local storage).
+- one instance of an RNG for each thread of the application, where each instance&mdash;
+    - is accessible to only one thread (such as with thread-local storage), and
+    - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs).
 
 An application that generates random numbers in parallel can also do one or both of&mdash;
 
-- using a different conforming RNG scheme for each instance, in addition to using independently-initialized instances, and
+- using a different conforming RNG scheme for each instance, and
 - using a conforming RNG scheme specially designed for parallel random number generation.
 
 If an application uses more than one kind of RNG (cryptographic, statistical, seeded), the advice above applies separately to each such kind of RNG.
@@ -387,11 +389,16 @@ The first consideration touches on the shuffling method.  The [**Fisher&ndash;Ya
 <a id=Choosing_from_Among_All_Permutations></a>
 ### Choosing from Among All Permutations
 
-The second consideration is present if the application uses PRNGs for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+The second consideration is present if PRNGs are used for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
 The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items.)
 
-Formulas suggesting state lengths for PRNGs are implemented below in Python.  For example, to shuffle a 52-item list, a PRNG with state length 226 or more is suggested, and to shuffle two 52-item lists of identical contents together, a PRNG with state length 500 or more is suggested.
+The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example, to shuffle&mdash;
+
+- a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), or
+- two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).
+
+---
 
     def fac(x):
         """ Calculates factorial of x. """
@@ -413,31 +420,26 @@ Formulas suggesting state lengths for PRNGs are implemented below in Python.  Fo
         return ret
 
     def stateLengthN(n):
-      """ Suggested state length for PRNGs that shuffle
+      """ Suggested state length (or bits of entropy)
+         for PRNGs that shuffle
         a list of n items. """
       return ceillog2(fac(n))
 
     def stateLengthNChooseK(n, k):
-      """ Suggested state length for PRNGs that choose k
+      """ Suggested state length/entropy for PRNGs that choose k
        different items randomly from a list of n items
        (see RFC 3797, sec. 3.3) """
       return ceillog2(fac(n)/(fac(k)*fac(n-k)))
 
     def stateLengthDecks(numDecks, numCards):
-      """ Suggested state length for PRNGs that shuffle
+      """ Suggested state length/entropy for PRNGs that shuffle
         multiple decks of cards in one. """
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
 
-Whenever a [**statistical RNG implementation**](#Statistical_RNGs) or [**seeded PRNG**](#Seeded_PRNGs) is otherwise called for, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), where the choice of PRNG is based on&mdash;
+Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use, that state length could be 525 or more (`stateLengthN(100)`).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
 
-- the maximum size of lists the application is expected to shuffle, if that number is less than 100; otherwise,
-- the average size of such lists; or, if the application chooses,
-- the application shuffling 100-item lists (which usually means a state length of 525 or greater).
-
-(Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.  See also "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).)
-
-The PRNG chosen this way should meet or exceed the quality requirements of a statistical RNG implementation.
+The PRNG chosen this way should have at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
