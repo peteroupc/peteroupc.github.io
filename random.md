@@ -342,7 +342,7 @@ Wherever possible, applications should use existing libraries and techniques tha
 - a cryptographic RNG implementation can&mdash;
     - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
     - call the `getentropy` method on OpenBSD, or
-    - call the `BCryptGenRandom` API in recent Windows-based systems,
+    - call the `BCryptGenRandom` API in recent versions of Windows,
 
     and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and
 - a statistical RNG implementation can use a PRNG algorithm mentioned as an example in the [**statistical RNGs**](#Statistical_RNGs) section.
