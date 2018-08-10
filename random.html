@@ -578,11 +578,11 @@ ten uniform random number methods; in my opinion, a new programming language&#39
 
 <p>The number of distinct permutations is the <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a> <em>m</em>! / (<em>w</em><sub>1</sub>! &times; <em>w</em><sub>2</sub>! &times; ... &times; <em>w</em><sub><em>n</em></sub>!), where <em>m</em> is the list&#39;s size, <em>n</em> is the number of different items in the list, <em>x</em>! means &quot;<em>x</em> <a href="https://en.wikipedia.org/wiki/Factorial"><strong>factorial</strong></a>&quot;, and <em>w</em><sub><em>i</em></sub> is the number of times the item identified by <em>i</em> appears in the list. (This reduces to <em>n</em>!, if the list consists of <em>n</em> different items.)</p>
 
-<p>The following Python code suggests how many bits of <a href="#Nondeterministic_Sources"><strong><em>entropy</em></strong></a> (randomness) are needed for shuffling. (See also &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html"><strong>BigDeal document by van Staveren</strong></a>.) For example, to shuffle&mdash;</p>
+<p>The following Python code suggests how many bits of <a href="#Nondeterministic_Sources"><strong><em>entropy</em></strong></a> (randomness) are needed for shuffling. (See also &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html"><strong>BigDeal document by van Staveren</strong></a>.) For example&mdash;</p>
 
 <ul>
-<li>a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (<code>stateLengthN(52)</code>), or</li>
-<li>two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (<code>stateLengthDecks(2, 52)</code>).</li>
+<li>to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (<code>stateLengthN(52)</code>), and</li>
+<li>to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (<code>stateLengthDecks(2, 52)</code>).</li>
 </ul>
 
 <hr>
@@ -625,7 +625,7 @@ def stateLengthDecks(numDecks, numCards):
       (fac(numDecks)**numCards))
 </pre>
 
-<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use, that state length could be 525 or more (<code>stateLengthN(100)</code>).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
+<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
 
 <p>The PRNG chosen this way should have at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.</p>
 
