@@ -1020,6 +1020,11 @@ This object&#39;s value exceeds the range of a 64-bit unsigned integer.</p></li>
 
 <p><code>true</code>  if this object&#39;s value, truncated to an integer, would be -(2^63) or greater, and less than 2^63; otherwise,  <code>false</code> .</p>
 
+<h3>Clear</h3>
+
+<pre>public void Clear();
+</pre>
+
 <h3>CompareTo</h3>
 
 <pre>public sealed int CompareTo(
@@ -2658,6 +2663,25 @@ is a CBOR object.</p></li>
 <h3>Remove</h3>
 
 <pre>public bool Remove(
+    object obj);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
+
+<h3>Remove</h3>
+
+<pre>public bool Remove(
     PeterO.Cbor.CBORObject obj);
 </pre>
 
@@ -2682,6 +2706,12 @@ is null (as opposed to CBORObject.Null).</p></li>
 <li><p>System.InvalidOperationException:
 The object is not an array or map.</p></li>
 </ul>
+
+<h3>RemoveAt</h3>
+
+<pre>public bool RemoveAt(
+    int index);
+</pre>
 
 <h3>Set</h3>
 

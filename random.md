@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 9, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 10, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -361,13 +361,13 @@ ten uniform random number methods; in my opinion, a new programming language's s
 <a id=Using_Random_Number_Generators></a>
 ## Using Random Number Generators
 
-To reduce the chance of correlated random numbers or identical random number sequences, an application is encouraged to create&mdash;
+To **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
 - one instance of an RNG for each thread of the application, where each instance&mdash;
     - is accessible to only one thread (such as with thread-local storage), and
     - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs).
 
-An application that generates random numbers in parallel can also do one or both of&mdash;
+An application that generates **random numbers in parallel** can also do one or both of&mdash;
 
 - using a different conforming RNG scheme for each instance, and
 - using a conforming RNG scheme specially designed for parallel random number generation.
@@ -439,7 +439,7 @@ The following Python code suggests how many bits of [**_entropy_**](#Nondetermin
 
 Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
 
-The PRNG chosen this way should have at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.
+The PRNG chosen this way should meet at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
