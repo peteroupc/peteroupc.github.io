@@ -462,7 +462,8 @@ if that filename is an empty string.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An IList(NamedAddress) object.</li>
+<li>A list of addresses, in the order in which they appear in this
+message&#39;s header fields of the given name.</li>
 </ul>
 
 <h3>getFromAddresses</h3>
@@ -1181,7 +1182,7 @@ html</code> is null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1211,13 +1212,16 @@ html</code> is null.</li>
 has one of certain extensions (such as &quot;.html&quot;), an appropriate media
 type will be assigned to the attachment based on that extension;
 otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can
-be null or empty, in which case no file name is assigned.</p></li>
+be null or empty, in which case no file name is assigned. Only the
+file name portion of this parameter is used, which in this case means
+the portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either
+character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1244,13 +1248,16 @@ be null or empty, in which case no file name is assigned.</p></li>
 <li><p><code>inputStream</code> - A readable data stream.</p></li>
 <li><p><code>mediaType</code> - A media type to assign to the attachment.</p></li>
 <li><p><code>filename</code> - A file name to assign to the attachment. Can be null or
-empty, in which case no file name is assigned.</p></li>
+empty, in which case no file name is assigned. Only the file name
+portion of this parameter is used, which in this case means the
+portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either character
+exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1282,7 +1289,7 @@ empty, in which case no file name is assigned.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1312,13 +1319,16 @@ empty, in which case no file name is assigned.</p></li>
 one of certain extensions (such as &quot;.html&quot;), an appropriate media
 type will be assigned to the body part based on that extension;
 otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can
-be null or empty, in which case no file name is assigned.</p></li>
+be null or empty, in which case no file name is assigned. Only the
+file name portion of this parameter is used, which in this case means
+the portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either
+character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1350,7 +1360,7 @@ be null or empty, in which case no file name is assigned.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
