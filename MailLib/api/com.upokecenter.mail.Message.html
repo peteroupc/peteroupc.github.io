@@ -402,8 +402,11 @@ supported.</li>
 <pre>public final MediaType getContentType()
 </pre>
 
-<p>Gets this message&#39;s media type. Cannot be set to null. If set to a media
- type, updates the Content-Type header field as appropriate.</p>
+<p>Gets this message&#39;s media type. When getting, the media type may differ in
+ certain cases from the value of the Content-Type header field, if
+ any, and may have a value even if the Content-Type header field is
+ absent from this message. If set to a media type, updates the
+ Content-Type header field as appropriate. Cannot be set to null.</p>
 
 <p><strong>Returns:</strong></p>
 
