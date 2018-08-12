@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 10, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 11, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -32,13 +32,13 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 
 - Statistical and cryptographic RNGs, as well as recommendations on their use and properties.
 - A discussion on when an application that needs numbers that "seem" random should specify their own "seed" (the initial state that the numbers are based on).
-- An explanation of what programming language interfaces implement statistical and cryptographic RNGs, as well as advice on implementing them in programming languages.
+- An explanation of how to implement RNGs in programming code, including APIs that help in doing so.
 - Issues on shuffling with an RNG.
 
 **This document does not cover:**
 
 - Testing an RNG implementation for correctness or adequate random number generation.
-- Generation of random numbers or keying material based at least in part on a password.
+- Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_, _password authenticated key exchange_).
 - Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
 
 **The following table summarizes the kinds of RNGs covered in this document:**
@@ -73,14 +73,14 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
         - [**Unit Testing**](#Unit_Testing)
         - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
         - [**Noise**](#Noise)
-- [**Programming Language APIs**](#Programming_Language_APIs)
-- [**Advice for New Programming Language APIs**](#Advice_for_New_Programming_Language_APIs)
-- [**Using Random Number Generators**](#Using_Random_Number_Generators)
-- [**Shuffling**](#Shuffling)
-    - [**Shuffling Method**](#Shuffling_Method)
-    - [**Choosing from Among All Permutations**](#Choosing_from_Among_All_Permutations)
+- [**Implementing RNGs in Programming Languages**](#Implementing_RNGs_in_Programming_Languages)
+- [**RNG Topics**](#RNG_Topics)
+    - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
+    - [**Shuffling**](#Shuffling)
+        - [**Shuffling Method**](#Shuffling_Method)
+        - [**Choosing from Among All Permutations**](#Choosing_from_Among_All_Permutations)
+    - [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Hash Functions**](#Hash_Functions)
-- [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Motivation**](#Motivation)
 - [**Conclusion**](#Conclusion)
 - [**Notes**](#Notes)
@@ -299,8 +299,10 @@ Randomly generated numbers can serve as _noise_, that is, a randomized variation
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
-<a id=Programming_Language_APIs></a>
-## Programming Language APIs
+<a id=Implementing_RNGs_in_Programming_Languages></a>
+## Implementing RNGs in Programming Languages
+
+As much as possible, **applications should use existing libraries and techniques** that already meet the requirements for cryptographic and statistical RNGs.
 
 The following table lists application programming interfaces (APIs) for
 cryptographic and statistical RNGs for popular programming languages. Note the following:
@@ -317,49 +319,40 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
 | PHP | `random_int()` (since PHP 7) |  | `mt_rand()` (A) |
 
-<small>
+<small>(A) General RNG implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.</small>
 
-(A) General RNG implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.
+<small>(B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.</small>
 
-(B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.
+<small>(C) A cryptographic RNG implementation can&mdash;
+   - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
+   - call the `getentropy` method on OpenBSD, or
+   - call the `BCryptGenRandom` API in recent versions of Windows,</small>
 
-(C) See [**"Advice for New Programming Language APIs"**](#Advice_for_New_Programming_Language_APIs) for implementation notes for cryptographic RNG implementations.
+<small>and only use other techniques if the existing ones are inadequate for the application.</small>
 
-(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical RNG requirements.  However, a subclass of `java.util.Random` might be implemented to meet those requirements.
+<small>(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical RNG requirements.  However, a subclass of `java.util.Random` might be implemented to meet those requirements.</small>
 
-(E) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.
+<small>(E) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.</small>
 
-(F) At least in Unix-based systems, calling the `SecureRandom` constructor that takes a byte array is recommended. The byte array should be data described in note (C).
+<small>(F) At least in Unix-based systems, calling the `SecureRandom` constructor that takes a byte array is recommended. The byte array should be data described in note (C).</small>
 
-(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.
+<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.</small>
 
-</small>
+----
 
-<a id=Advice_for_New_Programming_Language_APIs></a>
-## Advice for New Programming Language APIs
-
-Wherever possible, applications should use existing libraries and techniques that already meet the requirements for cryptographic and statistical RNGs.  For example&mdash;
-- a cryptographic RNG implementation can&mdash;
-    - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
-    - call the `getentropy` method on OpenBSD, or
-    - call the `BCryptGenRandom` API in recent versions of Windows,
-
-    and only use other techniques if the existing solutions are inadequate in certain respects or in certain circumstances, and
-- a statistical RNG implementation can use a PRNG algorithm mentioned as an example in the [**statistical RNGs**](#Statistical_RNGs) section.
-
-If existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1.
+In the uncommon cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is recommended to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.
 
 > **Example:** A C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 
-Cryptographic and statistical RNG implementations&mdash;
-- should be reasonably fast for most applications, and
-- should be safe for concurrent use by multiple threads, whenever convenient.
+My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
 
-My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on
-ten uniform random number methods; in my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
+<a id=RNG_Topics></a>
+## RNG Topics
 
-<a id=Using_Random_Number_Generators></a>
-## Using Random Number Generators
+&nbsp;
+
+<a id=How_to_Initialize_RNGs></a>
+### How to Initialize RNGs
 
 To **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
@@ -377,28 +370,26 @@ If an application uses more than one kind of RNG (cryptographic, statistical, se
 (Many questions on _Stack Overflow_ highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
 
 <a id=Shuffling></a>
-## Shuffling
+### Shuffling
 
 There are special considerations in play when applications use RNGs to shuffle a list of items.
 
 <a id=Shuffling_Method></a>
-### Shuffling Method
+#### Shuffling Method
 
-The first consideration touches on the shuffling method.  The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [**another document**](https://peteroupc.github.io/randomfunc.html).
+The first consideration touches on the **shuffling method**.  The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)"); I give a correct implementation in [**another document**](https://peteroupc.github.io/randomfunc.html).
 
 <a id=Choosing_from_Among_All_Permutations></a>
-### Choosing from Among All Permutations
+#### Choosing from Among All Permutations
 
-The second consideration is present if PRNGs are used for shuffling. If the PRNG's period is less than the number of distinct permutations (arrangements) of a list, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+The second consideration is present if PRNGs are used for shuffling. If the PRNG's period is less than the number of **distinct permutations (arrangements) of a list**, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
 The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items.)
 
-The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example&mdash;
+The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**Big Deal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example&mdash;
 
 - to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), and
 - to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).
-
----
 
     def fac(x):
         """ Calculates factorial of x. """
@@ -441,6 +432,16 @@ Whenever a PRNG is to be used for shuffling purposes, an application is encourag
 
 The PRNG chosen this way should meet at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.
 
+<a id=GPU_Programming_Environments></a>
+### GPU Programming Environments
+
+In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
+- have limited access to some system resources compared with other programming environments,
+- are designed for parallel execution, and
+- do not store state,
+
+so random number generators for such environments are often designed as [**hash functions**](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+
 <a id=Hash_Functions></a>
 ## Hash Functions
 
@@ -454,20 +455,10 @@ A hash code can be used as follows:
 
 For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive (the _one-way property_) and so is finding an unknown input that leads to a given output (_collision resistance_), and should have other information security properties depending on the application.
 
-<a id=GPU_Programming_Environments></a>
-## GPU Programming Environments
-
-In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
-- have limited access to some system resources compared with other programming environments,
-- are designed for parallel execution, and
-- do not store state,
-
-so random number generators for such environments are often designed as [**hash functions**](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
-
 <a id=Motivation></a>
 ## Motivation
 
-In this document, I made the distinction between _statistical_ and _cryptographic_ RNGs because that is how programming languages often present random number generators &mdash; they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).
+In this document, I made the distinction between _statistical_ and _cryptographic_ RNGs because that is how many programming languages present random number generators &mdash; they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).
 
 What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today&mdash;
 - specify few and weak requirements on RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
