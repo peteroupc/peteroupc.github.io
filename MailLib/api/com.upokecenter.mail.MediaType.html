@@ -84,7 +84,7 @@ HTTP headers.</li>
 Converts this media type to a text string form suitable for inserting in
 email headers.</li>
 <li><code>String ToUriSafeString()</code><br>
-Not documented yet.</li>
+Converts this media type to a text string form suitable for data URIs.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -285,12 +285,17 @@ order; this is at least the case in version 0.10.0.</li>
 <pre>public String ToUriSafeString()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this media type to a text string form suitable for data URIs.
+ Notably, the string contains the value of a Content-Type header field
+ (without the text necessarily starting with &quot;Content-Type&quot; followed
+ by a space), consists of a single line, and uses percent-encoding as
+ necessary or convenient so that the resulting string can validly
+ appear in a URI path.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A text string form of this media type.</li>
 </ul>
 
 <h3>GetCharset</h3>
