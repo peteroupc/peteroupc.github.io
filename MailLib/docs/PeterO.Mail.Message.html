@@ -93,6 +93,8 @@ is null.</li>
 <pre>public System.Collections.Generic.IList BccAddresses { get; }
 </pre>
 
+<p><b>Deprecated.</b> Use GetAddresses(&quot;Bcc&quot;) instead.</p>
+
 <p>Gets a list of addresses found in the BCC header field or fields.</p>
 
 <p><b>Returns:</b></p>
@@ -122,6 +124,8 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 <pre>public System.Collections.Generic.IList CCAddresses { get; }
 </pre>
 
+<p><b>Deprecated.</b> Use GetAddresses(&quot;Cc&quot;) instead.</p>
+
 <p>Gets a list of addresses found in the CC header field or fields.</p>
 
 <p><b>Returns:</b></p>
@@ -144,7 +148,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 <pre>public PeterO.Mail.MediaType ContentType { get; set;}
 </pre>
 
-<p>Gets or sets this message&#39;s media type. Cannot be set to null. If set to a media type, updates the Content-Type header field as appropriate.</p>
+<p>Gets or sets this message&#39;s media type. When getting, the media type may differ in certain cases from the value of the Content-Type header field, if any, and may have a value even if the Content-Type header field is absent from this message. If set to a media type, updates the Content-Type header field as appropriate. Cannot be set to null.</p>
 
 <p><b>Returns:</b></p>
 
@@ -174,6 +178,8 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <pre>public System.Collections.Generic.IList FromAddresses { get; }
 </pre>
+
+<p><b>Deprecated.</b> Use GetAddresses(&quot;From&quot;) instead.</p>
 
 <p>Gets a list of addresses found in the From header field or fields.</p>
 
@@ -219,11 +225,19 @@ This value is being set and &quot;value&quot; is null.</li>
 <pre>public System.Collections.Generic.IList ToAddresses { get; }
 </pre>
 
+<p><b>Deprecated.</b> Use GetAddresses(&quot;To&quot;) instead.</p>
+
 <p>Gets a list of addresses found in the To header field or fields.</p>
 
 <p><b>Returns:</b></p>
 
 <p>A list of addresses found in the To header field or fields.</p>
+
+<h3>AddAttachment</h3>
+
+<pre>public PeterO.Mail.Message AddAttachment(
+    PeterO.Mail.MediaType mediaType);
+</pre>
 
 <h3>AddAttachment</h3>
 
@@ -253,7 +267,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated attachment.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -279,12 +293,12 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
 <li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
-<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated attachment.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -317,12 +331,12 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>filename</i>: A file name to assign to the attachment. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the attachment based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the attachment based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated attachment.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -395,6 +409,12 @@ The header field name is too long or contains an invalid character, or the heade
 <h3>AddInline</h3>
 
 <pre>public PeterO.Mail.Message AddInline(
+    PeterO.Mail.MediaType mediaType);
+</pre>
+
+<h3>AddInline</h3>
+
+<pre>public PeterO.Mail.Message AddInline(
     System.IO.Stream inputStream,
     PeterO.Mail.MediaType mediaType);
 </pre>
@@ -420,7 +440,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated body part.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -451,7 +471,7 @@ An I/O error occurred.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated body part.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -484,12 +504,12 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>filename</i>: A file name to assign to the body part. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the body part based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned.</p></li>
+<li><p><i>filename</i>: A file name to assign to the body part. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the body part based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>This object.</p>
+<p>A Message object for the generated body part.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -500,6 +520,17 @@ The parameter &quot;inputStream&quot; is null.</p></li>
 An I/O error occurred.</p></li>
 </ul>
 
+<h3>ClearHeaders</h3>
+
+<pre>public PeterO.Mail.Message ClearHeaders();
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object.</p>
+
 <h3>Generate</h3>
 
 <pre>public string Generate();
@@ -507,7 +538,7 @@ An I/O error occurred.</p></li>
 
 <p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
-<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code>  as the address (a <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-From and Resent-Sender header fields may appear more than once.) The generated message should always have a From header field.</p>
+<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code>  as the address (a <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
 <p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with that name will be generated (using the current local time for the Date field).</p>
 
@@ -534,6 +565,25 @@ The message can&#39;t be generated.</li>
 <p><b>Return Value:</b></p>
 
 <p>The generated message as a byte array.</p>
+
+<h3>GetAddresses</h3>
+
+<pre>public System.Collections.Generic.IList GetAddresses(
+    string headerName);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>headerName</i>: The parameter  <i>headerName</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A list of addresses, in the order in which they appear in this message&#39;s header fields of the given name.</p>
 
 <h3>GetBody</h3>
 
