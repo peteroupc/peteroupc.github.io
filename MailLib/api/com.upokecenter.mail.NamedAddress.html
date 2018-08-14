@@ -34,6 +34,9 @@ class using the given name and an email address made up of its local
 part and domain.</li>
 <li><code>NamedAddress​(String groupName,
         List&lt;NamedAddress&gt; mailboxes)</code><br></li>
+<li><code>boolean AddressesEqual​(NamedAddress na)</code><br></li>
+<li><code>boolean equals​(Object obj)</code><br>
+Not documented yet.</li>
 <li><code>Address getAddress()</code><br>
 Gets the email address associated with this object.</li>
 <li><code>String getDisplayName()</code><br>
@@ -44,6 +47,8 @@ represents a group, or an empty list otherwise.</li>
 <li><code>String getName()</code><br>
 Gets the display name for this email address, or the email address&#39;s value
 if the display name is null.</li>
+<li><code>int hashCode()</code><br>
+Not documented yet.</li>
 <li><code>boolean isGroup()</code><br>
 Gets a value indicating whether this represents a group of addresses rather
 than a single address.</li>
@@ -191,6 +196,67 @@ empty.</p></li>
 
 <pre>public NamedAddress​(String groupName, List&lt;NamedAddress&gt; mailboxes)
 </pre>
+
+<h3>hashCode</h3>
+
+<pre>public int hashCode()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 32-bit signed integer.</li>
+</ul>
+
+<h3>equals</h3>
+
+<pre>public boolean equals​(Object obj)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Overrides:</strong></p>
+
+<ul>
+<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Boolean object.</li>
+</ul>
+
+<h3>AddressesEqual</h3>
+
+<pre>public boolean AddressesEqual​(NamedAddress na)
+</pre>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>na</code> - A named address object to compare with this one. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Either <code>true</code> or <code>false</code>.</li>
+</ul>
 
 <h3>getName</h3>
 

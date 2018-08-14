@@ -105,6 +105,8 @@ class.</li>
 <li><code>Message​(InputStream stream) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
+<li><code>Message AddAttachment​(MediaType mediaType)</code><br>
+Not documented yet.</li>
 <li><code>Message AddAttachment​(InputStream inputStream,
          MediaType mediaType)</code><br>
 Adds an attachment to this message in the form of data from the given
@@ -123,6 +125,8 @@ readable stream, and with the given file name.</li>
 Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddHeader​(Map.Entry&lt;String,String&gt; header)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
+<li><code>Message AddInline​(MediaType mediaType)</code><br>
+Not documented yet.</li>
 <li><code>Message AddInline​(InputStream inputStream,
      MediaType mediaType)</code><br>
 Adds an inline body part to this message in the form of data from the given
@@ -1168,6 +1172,44 @@ html</code> is null.</li>
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
+</ul>
+
+<h3>AddInline</h3>
+
+<pre>public Message AddInline​(MediaType mediaType)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mediaType</code> - The parameter <code>mediaType</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>AddAttachment</h3>
+
+<pre>public Message AddAttachment​(MediaType mediaType)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>mediaType</code> - The parameter <code>mediaType</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
 </ul>
 
 <h3>AddAttachment</h3>
