@@ -19,10 +19,11 @@ Parses a language list from a Content-Language header field.</li>
 <li><code>static List&lt;StringAndQuality&gt; GetRangeListWithQuality​(String str)</code><br>
 Parses a language range list from an Accept-Language header field.</li>
 <li><code>static boolean IsLanguageRange​(String str)</code><br>
-Not documented yet.</li>
+Returns whether the given string is a basic language range under RFC 4647.</li>
 <li><code>static boolean IsLanguageRange​(String str,
            boolean extended)</code><br>
-Not documented yet.</li>
+Returns whether the given string is a basic or extended language range under
+RFC 4647.</li>
 <li><code>static boolean IsPotentiallyValidLanguageTag​(String str)</code><br>
 Returns true if (1) the given string is a well-formed language tag under RFC
 5646 (that is, the string follows the syntax given in section 2.1 of
@@ -30,7 +31,7 @@ that RFC), and (2) the language tag contains at most one extended
 language subtag, no variant subtags with the same value, and no
 extension singleton subtags with the same value.</li>
 <li><code>static String LanguageTagCase​(String str)</code><br>
-Not documented yet.</li>
+Sets the given language tag to the case combination recommended by RFC 5646.</li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages)</code><br></li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
@@ -53,7 +54,7 @@ Not documented yet.</li>
              boolean extended)</code><br></li>
 <li><code>static boolean MatchesLanguageTag​(String range,
               String tag)</code><br>
-Not documented yet.</li>
+Determines whether the given language tag matches the given language range.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -63,18 +64,20 @@ Not documented yet.</li>
 <pre>public static boolean IsLanguageRange​(String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given string is a basic language range under RFC 4647.
+ Examples include &quot;*&quot;, &quot;en-us&quot;, and &quot;fr&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - The string to check. Can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if the given string is a basic language range;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsLanguageRange</h3>
@@ -82,19 +85,24 @@ Not documented yet.</li>
 <pre>public static boolean IsLanguageRange​(String str, boolean extended)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether the given string is a basic or extended language range under
+ RFC 4647. Examples of basic (and extended) language ranges include
+ &quot;<em>&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges include
+ &quot;</em>-de&quot; and &quot;it-*&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
-<li><p><code>extended</code> - The parameter <code>extended</code> is not documented yet.</p></li>
+<li><p><code>str</code> - The string to check. Can be null.</p></li>
+<li><p><code>extended</code> - Check whether the string is a basic language range if
+&quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if the given string is a basic language range
+(depending on the &quot;extended&quot; parameter); otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>LanguageTagCase</h3>
@@ -102,18 +110,21 @@ Not documented yet.</li>
 <pre>public static String LanguageTagCase​(String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Sets the given language tag to the case combination recommended by RFC 5646.
+ For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes
+ &quot;zh-Hant&quot;.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A string of a language tag. Can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A text string in the recommended case combination, or null if &quot;str&quot;
+is null.</li>
 </ul>
 
 <h3>GetLanguageList</h3>
@@ -171,24 +182,40 @@ order in which they appeared in the given string. Returns null if
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
 
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>matchStarAtEnd</code> - The parameter <code>matchStarAtEnd</code> is not documented
+yet.</li>
+</ul>
+
 <h3>MatchesLanguageTag</h3>
 
 <pre>public static boolean MatchesLanguageTag​(String range, String tag)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether the given language tag matches the given language range.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>range</code> - The parameter <code>range</code> is not documented yet.</p></li>
-<li><p><code>tag</code> - The parameter <code>tag</code> is not documented yet.</p></li>
+<li><p><code>range</code> - A basic language range (see the documentation for
+&quot;IsLanguageRange&quot;).</p></li>
+<li><p><code>tag</code> - A language tag.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if the language tag matches the language range by the
+filtering method under RFC 4647; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - &quot;range&quot; is not a basic language range, or &quot;tag&quot; is
+not a potentially valid language tag.</li>
 </ul>
 
 <h3>LanguageTagLookup</h3>
