@@ -4,6 +4,13 @@
 <div class="mainarea" id="top">
 <h1>PeterO.Mail.LanguageTags</h1>
 
+<h2>PeterO.Mail.LanguageTags</h2>
+
+<pre>public static class LanguageTags
+</pre>
+
+<p>Not documented yet.</p>
+
 <h3>GetLanguageList</h3>
 
 <pre>public static System.Collections.Generic.IList GetLanguageList(
@@ -15,13 +22,12 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
-is not documented yet.</li>
+<li><i>str</i>: A string following the syntax of a Content-Language header field (see RFC 3282). This is a comma-separated list of language tags. RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An IList(string) object.</p>
+<p>A list of language tags. Returns null if &quot;str&quot; is null or syntactically invalid.</p>
 
 <h3>GetRangeListWithQuality</h3>
 
@@ -34,13 +40,53 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
+<li><i>str</i>: A string following the syntax of an Accept-Language header field (see RFC 3282). This is a comma-separated list of language ranges, with an optional &quot;quality&quot; after the language tag (examples include &quot;en; q=0.5&quot; or &quot;de-DE&quot;). RFC 5322 comments (in parentheses) can appear. This parameter can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A list of language ranges with their associated qualities. The list will be sorted in descending order by quality; if two or more language ranges have the same quality, they will be sorted in the order in which they appeared in the given string. Returns null if &quot;str&quot; is null or syntactically invalid.</p>
+
+<h3>IsLanguageRange</h3>
+
+<pre>public static bool IsLanguageRange(
+    string str);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
 <li><i>str</i>: The parameter  <i>str</i>
 is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of language ranges with their associated qualities. The list will be sorted in descending order by quality; if two or more language ranges have the same quality, they will be sorted in the order in which they appeared in the given string.</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
+
+<h3>IsLanguageRange</h3>
+
+<pre>public static bool IsLanguageRange(
+    string str,
+    bool extended);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</p></li>
+<li><p><i>extended</i>: The parameter  <i>extended</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <h3>IsPotentiallyValidLanguageTag</h3>
 
@@ -59,6 +105,203 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> , if the string meets the conditions given in the summary,  <code>false</code>  otherwise.</p>
+
+<h3>LanguageTagCase</h3>
+
+<pre>public static string LanguageTagCase(
+    string str);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<h3>LanguageTagFilter</h3>
+
+<pre>public static System.Collections.Generic.IList LanguageTagFilter(
+    System.Collections.Generic.IList ranges,
+    System.Collections.Generic.IList languages);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>ranges</i>: The parameter  <i>ranges</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IList(string) object.</p>
+
+<h3>LanguageTagFilter</h3>
+
+<pre>public static System.Collections.Generic.IList LanguageTagFilter(
+    System.Collections.Generic.IList ranges,
+    System.Collections.Generic.IList languages,
+    bool extended,
+    bool matchStarAtEnd);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>ranges</i>: The parameter  <i>ranges</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+<li><p><i>extended</i>: The parameter  <i>extended</i>
+is not documented yet.</p></li>
+<li><p><i>matchStarAtEnd</i>: The parameter  <i>matchStarAtEnd</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IList(string) object.</p>
+
+<h3>LanguageTagLookup</h3>
+
+<pre>public static string LanguageTagLookup(
+    string range,
+    System.Collections.Generic.IList languages,
+    string defaultValue);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>range</i>: The parameter  <i>range</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+<li><p><i>defaultValue</i>: The parameter  <i>defaultValue</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<h3>LanguageTagLookup</h3>
+
+<pre>public static string LanguageTagLookup(
+    string range,
+    System.Collections.Generic.IList languages,
+    string defaultValue,
+    bool extended);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>range</i>: The parameter  <i>range</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+<li><p><i>defaultValue</i>: The parameter  <i>defaultValue</i>
+is not documented yet.</p></li>
+<li><p><i>extended</i>: The parameter  <i>extended</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<h3>LanguageTagLookup</h3>
+
+<pre>public static string LanguageTagLookup(
+    System.Collections.Generic.IList ranges,
+    System.Collections.Generic.IList languages,
+    string defaultValue);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>ranges</i>: The parameter  <i>ranges</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+<li><p><i>defaultValue</i>: The parameter  <i>defaultValue</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<h3>LanguageTagLookup</h3>
+
+<pre>public static string LanguageTagLookup(
+    System.Collections.Generic.IList ranges,
+    System.Collections.Generic.IList languages,
+    string defaultValue,
+    bool extended);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>ranges</i>: The parameter  <i>ranges</i>
+is not documented yet.</p></li>
+<li><p><i>languages</i>: The parameter  <i>languages</i>
+is not documented yet.</p></li>
+<li><p><i>defaultValue</i>: The parameter  <i>defaultValue</i>
+is not documented yet.</p></li>
+<li><p><i>extended</i>: The parameter  <i>extended</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
+
+<h3>MatchesLanguageTag</h3>
+
+<pre>public static bool MatchesLanguageTag(
+    string range,
+    string tag);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>range</i>: The parameter  <i>range</i>
+is not documented yet.</p></li>
+<li><p><i>tag</i>: The parameter  <i>tag</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

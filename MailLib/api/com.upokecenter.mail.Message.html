@@ -106,7 +106,8 @@ class.</li>
 Initializes a new instance of the Message
 class.</li>
 <li><code>Message AddAttachment​(MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an attachment with an empty body and with the given media type to this
+message.</li>
 <li><code>Message AddAttachment​(InputStream inputStream,
          MediaType mediaType)</code><br>
 Adds an attachment to this message in the form of data from the given
@@ -126,7 +127,8 @@ Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddHeader​(Map.Entry&lt;String,String&gt; header)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
 <li><code>Message AddInline​(MediaType mediaType)</code><br>
-Not documented yet.</li>
+Adds an inline body part with an empty body and with the given media type to
+this message.</li>
 <li><code>Message AddInline​(InputStream inputStream,
      MediaType mediaType)</code><br>
 Adds an inline body part to this message in the form of data from the given
@@ -141,14 +143,15 @@ readable stream, and with the given media type and file name.</li>
 Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given file name.</li>
 <li><code>Message ClearHeaders()</code><br>
-Not documented yet.</li>
+Deletes all header fields in this message.</li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
 Generates this message&#39;s data as a byte array, using the same algorithm as
 the Generate method.</li>
 <li><code>List&lt;NamedAddress&gt; GetAddresses​(String headerName)</code><br>
-Not documented yet.</li>
+Gets a list of addresses contained in the header fields with the given name
+in this message.</li>
 <li><code>List&lt;NamedAddress&gt; getBccAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\Bcc) instead.
@@ -196,8 +199,10 @@ Gets this message&#39;s subject.</li>
 Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
+<li><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
+                   List&lt;String&gt; languages)</code><br></li>
 <li><code>static Message NewBodyPart()</code><br>
-Not documented yet.</li>
+Creates a message object with no header fields.</li>
 <li><code>Message RemoveHeader​(int index)</code><br>
 Removes a header field by index.</li>
 <li><code>Message RemoveHeader​(String name)</code><br>
@@ -304,12 +309,12 @@ class.</li>
 <pre>public static Message NewBodyPart()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object with no header fields.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A message object with no header fields.</li>
 </ul>
 
 <h3>SetCurrentDate</h3>
@@ -456,12 +461,13 @@ if that filename is an empty string.</li>
 <pre>public List&lt;NamedAddress&gt; GetAddresses​(String headerName)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a list of addresses contained in the header fields with the given name
+ in this message.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>headerName</code> - The parameter <code>headerName</code> is not documented yet.</li>
+<li><code>headerName</code> - The name of the header fields to retrieve.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -469,6 +475,16 @@ if that filename is an empty string.</li>
 <ul>
 <li>A list of addresses, in the order in which they appear in this
 message&#39;s header fields of the given name.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>UnsupportedOperationException</code> - &quot;headerName&quot; is not supported for this method.
+Currently, the only header fields supported are To, Cc, Bcc,
+Reply-To, Sender, and From.</p></li>
+<li><p><code>NullPointerException</code> - &quot;headerName&quot; is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - &quot;headerName&quot; is empty.</p></li>
 </ul>
 
 <h3>getFromAddresses</h3>
@@ -854,12 +870,14 @@ empty if no header field has that name.</li>
 <pre>public Message ClearHeaders()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Deletes all header fields in this message. Also clears this message&#39;s
+ content disposition and resets its content type to
+ MediaType.TextPlainAscii.</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Message object.</li>
+<li>This object.</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -1179,18 +1197,21 @@ html</code> is null.</li>
 <pre>public Message AddInline​(MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an inline body part with an empty body and with the given media type to
+ this message. Before the new body part is added, if this message
+ isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot;
+ message with the current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>mediaType</code> - The parameter <code>mediaType</code> is not documented yet.</li>
+<li><code>mediaType</code> - A media type to assign to the body part.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Message object.</li>
+<li>A Message object for the generated body part.</li>
 </ul>
 
 <h3>AddAttachment</h3>
@@ -1198,18 +1219,21 @@ html</code> is null.</li>
 <pre>public Message AddAttachment​(MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an attachment with an empty body and with the given media type to this
+ message. Before the new attachment is added, if this message isn&#39;t
+ already a multipart message, it becomes a &quot;multipart/mixed&quot; message
+ with the current body converted to an inline body part.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>mediaType</code> - The parameter <code>mediaType</code> is not documented yet.</li>
+<li><code>mediaType</code> - A media type to assign to the attachment.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Message object.</li>
+<li>A Message object for the generated attachment.</li>
 </ul>
 
 <h3>AddAttachment</h3>
@@ -1421,6 +1445,11 @@ character exists, or the entire string otherwise.</p></li>
 &quot;mediaType&quot; is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
 </ul>
+
+<h3>MakeMultilingualMessage</h3>
+
+<pre>public static Message MakeMultilingualMessage​(List&lt;Message&gt; messages, List&lt;String&gt; languages)
+</pre>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
