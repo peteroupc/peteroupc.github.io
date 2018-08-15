@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.LanguageTags</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PeterO.Mail.LanguageTags</h1>
+
+<h3>GetLanguageList</h3>
+
+<pre>public static System.Collections.Generic.IList GetLanguageList(
+    string str);
+</pre>
+
+<p>Parses a language list from a Content-Language header field.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IList(string) object.</p>
+
+<h3>GetRangeListWithQuality</h3>
+
+<pre>public static System.Collections.Generic.IList GetRangeListWithQuality(
+    string str);
+</pre>
+
+<p>Parses a language range list from an Accept-Language header field.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: The parameter  <i>str</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A list of language ranges with their associated qualities. The list will be sorted in descending order by quality; if two or more language ranges have the same quality, they will be sorted in the order in which they appeared in the given string.</p>
+
+<h3>IsPotentiallyValidLanguageTag</h3>
+
+<pre>public static bool IsPotentiallyValidLanguageTag(
+    string str);
+</pre>
+
+<p>Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.1 of that RFC), and (2) the language tag contains at most one extended language subtag, no variant subtags with the same value, and no extension singleton subtags with the same value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: The string to check.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> , if the string meets the conditions given in the summary,  <code>false</code>  otherwise.</p>
+
+<p><a href="/MailLib/">Back to MailLib start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share" class="twitter-share-button" data-count="horizontal" data-lang="en">Share via Twitter</a>
+<script type="text/javascript" charset="UTF-8" src="https://platform.twitter.com/widgets.js"></script>
+<span><g:plusone size="medium"></g:plusone></span><br/>
+<span><a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a></span>
+</p>
+</div>
+</nav><script>
+if(document.location.href.indexOf("file://")!=0){
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = '//apis.google.com/js/plusone.js';
+    var s = xExtra(document).getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+}
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>
