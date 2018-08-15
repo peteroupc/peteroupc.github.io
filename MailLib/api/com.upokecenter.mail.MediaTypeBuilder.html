@@ -44,8 +44,9 @@ Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot;
 Sets this media type&#39;s top-level type.</li>
 <li><code>MediaType ToMediaType()</code><br>
 Converts this builder to an immutable media type object.</li>
-<li><code>String toString()</code><br>
-Converts this object to a text string.</li>
+<li><code>String toString() MediaType.toString</code><br>
+Converts this object to a text string of the media type it represents, in
+the same form as MediaType.toString.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -303,7 +304,8 @@ syntactically invalid.</p></li>
 <pre>public String toString()
 </pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this object to a text string of the media type it represents, in
+ the same form as <code>MediaType.toString</code>.</p>
 
 <p><strong>Overrides:</strong></p>
 

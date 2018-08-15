@@ -291,7 +291,7 @@ replace</code> is false.</li>
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns the replacement character (U + FFFD) if the previous character
 is an unpaired surrogate code point. NOTE: If the return value is
-65536 (0x10000) or greater, this indicates a supplemental code point
+65536 (0x10000) or greater, this indicates a supplementary code point
 that takes up two <code>char</code>s rather than one.</li>
 </ul>
 
@@ -327,7 +327,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 Returns a value as specified under <code>surrogateBehavior</code> if the
 previous character is an unpaired surrogate code point. NOTE: If the
 return value is 65536 (0x10000) or greater, this indicates a
-supplemental code point that takes up two <code>char</code>s rather than
+supplementary code point that takes up two <code>char</code>s rather than
 one.</li>
 </ul>
 
@@ -358,7 +358,7 @@ one.</li>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 the replacement character (U + FFFD) if the current character is an
 unpaired surrogate code point. NOTE: If the return value is 65536
-(0x10000) or greater, this indicates a supplemental code point that
+(0x10000) or greater, this indicates a supplementary code point that
 takes up two <code>char</code>s rather than one.</li>
 </ul>
 
@@ -393,7 +393,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 a value as specified under <code>surrogateBehavior</code> if the previous
 character is an unpaired surrogate code point. NOTE: If the return
-value is 65536 (0x10000) or greater, this indicates a supplemental
+value is 65536 (0x10000) or greater, this indicates a supplementary
 code point that takes up two <code>char</code>s rather than one.</li>
 </ul>
 

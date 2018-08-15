@@ -36,7 +36,7 @@ part and domain.</li>
         List&lt;NamedAddress&gt; mailboxes)</code><br></li>
 <li><code>boolean AddressesEqual​(NamedAddress na)</code><br></li>
 <li><code>boolean equals​(Object obj)</code><br>
-Not documented yet.</li>
+Determines whether this object and another object are equal.</li>
 <li><code>Address getAddress()</code><br>
 Gets the email address associated with this object.</li>
 <li><code>String getDisplayName()</code><br>
@@ -48,7 +48,7 @@ represents a group, or an empty list otherwise.</li>
 Gets the display name for this email address, or the email address&#39;s value
 if the display name is null.</li>
 <li><code>int hashCode()</code><br>
-Not documented yet.</li>
+Calculates the hash code of this object.</li>
 <li><code>boolean isGroup()</code><br>
 Gets a value indicating whether this represents a group of addresses rather
 than a single address.</li>
@@ -202,7 +202,8 @@ empty.</p></li>
 <pre>public int hashCode()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -213,7 +214,7 @@ empty.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>A 32-bit hash code.</li>
 </ul>
 
 <h3>equals</h3>
@@ -221,7 +222,7 @@ empty.</p></li>
 <pre>public boolean equals​(Object obj)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether this object and another object are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -232,13 +233,14 @@ empty.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>AddressesEqual</h3>

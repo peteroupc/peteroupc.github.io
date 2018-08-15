@@ -138,7 +138,7 @@ The RNG should be reseeded, using a newly generated seed as described earlier, t
 A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ for random number generation.<sup>[**(3)**](#Note3)</sup>  Examples of nondeterministic sources are&mdash;
 
 - disk access timings,
-- keystroke timings,
+- timings of keystrokes and other input device interactions,
 - thermal noise, and
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available.
 

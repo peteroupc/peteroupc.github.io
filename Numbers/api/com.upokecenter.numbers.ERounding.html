@@ -16,6 +16,215 @@
  group it with the other classes common to this library, particularly
  EDecimal, EFloat, and ERational.).</p>
 
+<h2>Enum Constants</h2>
+
+<ul>
+<li><code>Ceiling</code><br>
+If there is a fractional part, the number is rounded to the highest
+representable number that&#39;s closest to it.</li>
+<li><code>Down</code><br>
+The fractional part is discarded (the number is truncated).</li>
+<li><code>Floor</code><br>
+If there is a fractional part, the number is rounded to the lowest
+representable number that&#39;s closest to it.</li>
+<li><code>HalfDown</code><br>
+Rounded to the nearest number; if the fractional part is exactly half, it is
+discarded.</li>
+<li><code>HalfEven</code><br>
+Rounded to the nearest number; if the fractional part is exactly half, the
+number is rounded to the closest representable number that is even.</li>
+<li><code>HalfUp</code><br>
+Rounded to the nearest number; if the fractional part is exactly half, the
+number is rounded to the closest representable number away from zero.</li>
+<li><code>None</code><br>
+Indicates that rounding will not be used.</li>
+<li><code>Odd</code><br>
+If there is a fractional part and the whole number part is even, the number
+is rounded to the closest representable odd number away from zero.</li>
+<li><code>OddOrZeroFiveUp</code><br>
+For binary floating point numbers, this is the same as Odd.</li>
+<li><code>Up</code><br>
+If there is a fractional part, the number is rounded to the closest
+representable number away from zero.</li>
+<li><code>ZeroFiveUp</code><br>
+If there is a fractional part and if the last digit before rounding is 0 or
+half the radix, the number is rounded to the closest representable
+number away from zero; otherwise the fractional part is discarded.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>static ERounding valueOf​(String name)</code><br>
+Returns the enum constant of this type with the specified name.</li>
+<li><code>static ERounding[] values()</code><br>
+Returns an array containing the constants of this enum type, in
+the order they are declared.</li>
+</ul>
+
+<h2>Method Details</h2>
+
+<h3>None</h3>
+
+<pre>public static final ERounding None
+</pre>
+
+<h3>Up</h3>
+
+<pre>public static final ERounding Up
+</pre>
+
+<h3>Down</h3>
+
+<pre>public static final ERounding Down
+</pre>
+
+<h3>HalfUp</h3>
+
+<pre>public static final ERounding HalfUp
+</pre>
+
+<h3>HalfDown</h3>
+
+<pre>public static final ERounding HalfDown
+</pre>
+
+<h3>HalfEven</h3>
+
+<pre>public static final ERounding HalfEven
+</pre>
+
+<h3>Ceiling</h3>
+
+<pre>public static final ERounding Ceiling
+</pre>
+
+<h3>Floor</h3>
+
+<pre>public static final ERounding Floor
+</pre>
+
+<h3>Odd</h3>
+
+<pre>public static final ERounding Odd
+</pre>
+
+<h3>ZeroFiveUp</h3>
+
+<pre>public static final ERounding ZeroFiveUp
+</pre>
+
+<h3>OddOrZeroFiveUp</h3>
+
+<pre>public static final ERounding OddOrZeroFiveUp
+</pre>
+
+<h3>values</h3>
+
+<pre>public static ERounding[] values()
+</pre>
+
+<h3>valueOf</h3>
+
+<pre>public static ERounding valueOf​(String name)
+</pre>
+
+<h2>Enum Constant Details</h2>
+
+<h3>None</h3>
+
+<pre>public static final ERounding None
+</pre>
+
+<p>Indicates that rounding will not be used. If rounding is required, the
+ rounding operation will report an error.</p>
+
+<h3>Up</h3>
+
+<pre>public static final ERounding Up
+</pre>
+
+<p>If there is a fractional part, the number is rounded to the closest
+ representable number away from zero.</p>
+
+<h3>Down</h3>
+
+<pre>public static final ERounding Down
+</pre>
+
+<p>The fractional part is discarded (the number is truncated).</p>
+
+<h3>HalfUp</h3>
+
+<pre>public static final ERounding HalfUp
+</pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, the
+ number is rounded to the closest representable number away from zero.
+ This is the most familiar rounding mode for many people.</p>
+
+<h3>HalfDown</h3>
+
+<pre>public static final ERounding HalfDown
+</pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, it is
+ discarded.</p>
+
+<h3>HalfEven</h3>
+
+<pre>public static final ERounding HalfEven
+</pre>
+
+<p>Rounded to the nearest number; if the fractional part is exactly half, the
+ number is rounded to the closest representable number that is even.
+ This is sometimes also known as &#x22;banker&#x27;s rounding&#x22;.</p>
+
+<h3>Ceiling</h3>
+
+<pre>public static final ERounding Ceiling
+</pre>
+
+<p>If there is a fractional part, the number is rounded to the highest
+ representable number that&#x27;s closest to it.</p>
+
+<h3>Floor</h3>
+
+<pre>public static final ERounding Floor
+</pre>
+
+<p>If there is a fractional part, the number is rounded to the lowest
+ representable number that&#x27;s closest to it.</p>
+
+<h3>Odd</h3>
+
+<pre>public static final ERounding Odd
+</pre>
+
+<p>If there is a fractional part and the whole number part is even, the number
+ is rounded to the closest representable odd number away from zero.</p>
+
+<h3>ZeroFiveUp</h3>
+
+<pre>public static final ERounding ZeroFiveUp
+</pre>
+
+<p>If there is a fractional part and if the last digit before rounding is 0 or
+ half the radix, the number is rounded to the closest representable
+ number away from zero; otherwise the fractional part is discarded. In
+ overflow, the fractional part is always discarded.</p>
+
+<h3>OddOrZeroFiveUp</h3>
+
+<pre>public static final ERounding OddOrZeroFiveUp
+</pre>
+
+<p>For binary floating point numbers, this is the same as Odd. For other bases
+ (including decimal numbers), this is the same as ZeroFiveUp. This
+ rounding mode is useful for rounding intermediate results at a
+ slightly higher precision (at least 2 bits more for binary) than the
+ final precision.</p>
+
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
