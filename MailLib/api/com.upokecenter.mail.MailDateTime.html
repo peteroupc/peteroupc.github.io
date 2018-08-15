@@ -20,7 +20,9 @@ Generates a date-time string following the Internet Message Format (RFC
 5322) from an 8-element array.</li>
 <li><code>static String GenerateDateString​(int[] dateTime,
               boolean gmt)</code><br>
-Not documented yet.</li>
+Generates a date-time string following the Internet Message Format (RFC
+5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone
+indicator.</li>
 <li><code>static int[] ParseDateString​(String str)</code><br>
 Gets the date and time extracted from a date-time string following the
 Internet Message Format (RFC 5322).</li>
@@ -67,19 +69,32 @@ invalid.</li>
 <pre>public static String GenerateDateString​(int[] dateTime, boolean gmt)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a date-time string following the Internet Message Format (RFC
+ 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone
+ indicator.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>dateTime</code> - The parameter <code>dateTime</code> is not documented yet.</p></li>
-<li><p><code>gmt</code> - The parameter <code>gmt</code> is not documented yet.</p></li>
+<li><p><code>dateTime</code> - The date and time in the form of an 8-element array. See
+<see cref='M:PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)'/>
+for information on the format of this parameter.</p></li>
+<li><p><code>gmt</code> - If true, uses the string &quot;GMT&quot; as the time zone offset.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A date-time string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter &quot;dateTime&quot; is null or
+invalid.</p></li>
+<li><p><code>UnsupportedOperationException</code> - The time zone offset is other than 0
+and &quot;gmt&quot; is true.</p></li>
 </ul>
 
 <h3>ParseDateString</h3>

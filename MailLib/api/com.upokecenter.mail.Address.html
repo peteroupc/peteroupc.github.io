@@ -18,13 +18,13 @@
 Initializes a new instance of the Address
 class.</li>
 <li><code>boolean equals​(Object obj)</code><br>
-Not documented yet.</li>
+Determines whether this object and another object are equal.</li>
 <li><code>String getDomain()</code><br>
 Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
 <li><code>String getLocalPart()</code><br>
 Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
 <li><code>int hashCode()</code><br>
-Not documented yet.</li>
+Calculates the hash code of this object.</li>
 <li><code>String toString()</code><br>
 Converts this address object to a text string.</li>
 </ul>
@@ -94,7 +94,7 @@ contains comments (text within parentheses).</p></li>
 <pre>public boolean equals​(Object obj)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Determines whether this object and another object are equal.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -105,13 +105,14 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>getLocalPart</h3>
@@ -151,7 +152,8 @@ contains comments (text within parentheses).</p></li>
 <pre>public int hashCode()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Calculates the hash code of this object. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -162,7 +164,7 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>A 32-bit hash code.</li>
 </ul>
 
 <h3>getDomain</h3>
