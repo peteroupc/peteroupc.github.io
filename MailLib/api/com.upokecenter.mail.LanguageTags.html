@@ -9,16 +9,14 @@
 <pre>public final class LanguageTags extends Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Contains methods for parsing and matching language tags.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>class  LanguageTags.StringAndQuality</code><br>
-Not documented yet.</li>
 <li><code>static List&lt;String&gt; GetLanguageList​(String str)</code><br>
 Parses a language list from a Content-Language header field.</li>
-<li><code>static List&lt;LanguageTags.StringAndQuality&gt; GetRangeListWithQuality​(String str)</code><br>
+<li><code>static List&lt;StringAndQuality&gt; GetRangeListWithQuality​(String str)</code><br>
 Parses a language range list from an Accept-Language header field.</li>
 <li><code>static boolean IsLanguageRange​(String str)</code><br>
 Not documented yet.</li>
@@ -34,40 +32,27 @@ extension singleton subtags with the same value.</li>
 <li><code>static String LanguageTagCase​(String str)</code><br>
 Not documented yet.</li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
-             List&lt;String&gt; languages)</code><br>
-Not documented yet.</li>
+             List&lt;String&gt; languages)</code><br></li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
              boolean extended,
-             boolean matchStarAtEnd)</code><br>
-Not documented yet.</li>
+             boolean matchStarAtEnd)</code><br></li>
 <li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
-             String defaultValue)</code><br>
-Not documented yet.</li>
+             String defaultValue)</code><br></li>
 <li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
              String defaultValue,
-             boolean extended)</code><br>
-Not documented yet.</li>
+             boolean extended)</code><br></li>
 <li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
-             String defaultValue)</code><br>
-Not documented yet.</li>
+             String defaultValue)</code><br></li>
 <li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
              String defaultValue,
-             boolean extended)</code><br>
-Not documented yet.</li>
+             boolean extended)</code><br></li>
 <li><code>static boolean MatchesLanguageTag​(String range,
               String tag)</code><br>
-Not documented yet.</li>
-</ul>
-
-<h2>Nested Classes</h2>
-
-<ul>
-<li><code>class  LanguageTags.StringAndQuality</code><br>
 Not documented yet.</li>
 </ul>
 
@@ -83,13 +68,13 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - Not documented yet.</li>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>IsLanguageRange</h3>
@@ -102,14 +87,14 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>extended</code> - Not documented yet.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>extended</code> - The parameter <code>extended</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>LanguageTagCase</h3>
@@ -122,13 +107,13 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - Not documented yet.</li>
+<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string object.</li>
+<li>A text string.</li>
 </ul>
 
 <h3>GetLanguageList</h3>
@@ -141,18 +126,22 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A string following the syntax of a Content-Language header field
+(see RFC 3282). This is a comma-separated list of language tags. RFC
+5322 comments (in parentheses) can appear. This parameter can be
+null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An IList(string) object.</li>
+<li>A list of language tags. Returns null if &quot;str&quot; is null or
+syntactically invalid.</li>
 </ul>
 
 <h3>GetRangeListWithQuality</h3>
 
-<pre>public static List&lt;LanguageTags.StringAndQuality&gt; GetRangeListWithQuality​(String str)
+<pre>public static List&lt;StringAndQuality&gt; GetRangeListWithQuality​(String str)
 </pre>
 
 <p>Parses a language range list from an Accept-Language header field.</p>
@@ -160,7 +149,11 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A string following the syntax of an Accept-Language header field
+(see RFC 3282). This is a comma-separated list of language ranges,
+with an optional &quot;quality&quot; after the language tag (examples include
+&quot;en; q=0.5&quot; or &quot;de-DE&quot;). RFC 5322 comments (in parentheses) can
+appear. This parameter can be null.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -169,30 +162,14 @@ Not documented yet.</li>
 <li>A list of language ranges with their associated qualities. The list
 will be sorted in descending order by quality; if two or more
 language ranges have the same quality, they will be sorted in the
-order in which they appeared in the given string.</li>
+order in which they appeared in the given string. Returns null if
+&quot;str&quot; is null or syntactically invalid.</li>
 </ul>
 
 <h3>LanguageTagFilter</h3>
 
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>ranges</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-<li><p><code>extended</code> - Not documented yet. (3).</p></li>
-<li><p><code>matchStarAtEnd</code> - Not documented yet. (4).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An List(string) object.</li>
-</ul>
 
 <h3>MatchesLanguageTag</h3>
 
@@ -204,14 +181,14 @@ order in which they appeared in the given string.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>range</code> - Not documented yet.</p></li>
-<li><p><code>tag</code> - Not documented yet.</p></li>
+<li><p><code>range</code> - The parameter <code>range</code> is not documented yet.</p></li>
+<li><p><code>tag</code> - The parameter <code>tag</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>LanguageTagLookup</h3>
@@ -219,106 +196,25 @@ order in which they appeared in the given string.</li>
 <pre>public static String LanguageTagLookup​(String range, List&lt;String&gt; languages, String defaultValue)
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>range</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-<li><p><code>defaultValue</code> - Not documented yet. (3).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string object.</li>
-</ul>
-
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue)
 </pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>ranges</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-<li><p><code>defaultValue</code> - Not documented yet. (3).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string object.</li>
-</ul>
 
 <h3>LanguageTagFilter</h3>
 
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages)
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>ranges</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An List(string) object.</li>
-</ul>
-
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(String range, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
 
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>range</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-<li><p><code>defaultValue</code> - Not documented yet. (3).</p></li>
-<li><p><code>extended</code> - Not documented yet. (4).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string object.</li>
-</ul>
-
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>ranges</code> - Not documented yet.</p></li>
-<li><p><code>languages</code> - Not documented yet.</p></li>
-<li><p><code>defaultValue</code> - Not documented yet. (3).</p></li>
-<li><p><code>extended</code> - Not documented yet. (4).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A string object.</li>
-</ul>
 
 <h3>IsPotentiallyValidLanguageTag</h3>
 
