@@ -139,6 +139,10 @@ Not documented yet.</li>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using a given character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
+         ICharacterEncoder encoder,
+         boolean htmlFallback)</code><br>
+Not documented yet.</li>
+<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
          ICharacterEncoding encoding)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
@@ -146,6 +150,10 @@ array encoded using the given character encoder.</li>
          ICharacterEncoding enc)</code><br>
 Reads Unicode characters from a text string and writes them to a byte array
 encoded in a given character encoding.</li>
+<li><code>static byte[] EncodeToBytes​(String str,
+         ICharacterEncoding enc,
+         boolean htmlFallback)</code><br>
+Not documented yet.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
           ICharacterEncoder encoder,
           IWriter writer)</code><br>
@@ -454,6 +462,27 @@ input</code> is null.</li>
 
 <h3>EncodeToBytes</h3>
 
+<pre>public static byte[] EncodeToBytes​(ICharacterInput input, ICharacterEncoder encoder, boolean htmlFallback)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>input</code> - Not documented yet.</p></li>
+<li><p><code>encoder</code> - Not documented yet.</p></li>
+<li><p><code>htmlFallback</code> - Not documented yet. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array.</li>
+</ul>
+
+<h3>EncodeToBytes</h3>
+
 <pre>public static byte[] EncodeToBytes​(String str, ICharacterEncoding enc)
 </pre>
 
@@ -487,6 +516,27 @@ encoder and a decoder).</p></li>
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
 enc</code> is null.</li>
+</ul>
+
+<h3>EncodeToBytes</h3>
+
+<pre>public static byte[] EncodeToBytes​(String str, ICharacterEncoding enc, boolean htmlFallback)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - Not documented yet.</p></li>
+<li><p><code>enc</code> - Not documented yet.</p></li>
+<li><p><code>htmlFallback</code> - Not documented yet. (3).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A byte array.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
