@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 15, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 16, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -486,7 +486,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_ or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
 
-<small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or instance of the RNG.  See also NIST SP800-90A and (Ristenpart and Yilek 2010).</small>
+<small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and (Ristenpart and Yilek 2010).</small>
 
 <small><sup id=Note3>(3)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small>
 
