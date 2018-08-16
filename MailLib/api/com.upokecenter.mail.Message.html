@@ -144,6 +144,9 @@ Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given file name.</li>
 <li><code>Message ClearHeaders()</code><br>
 Deletes all header fields in this message.</li>
+<li><code>static String DecodeHeaderValue​(String name,
+             String value)</code><br>
+Not documented yet.</li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
@@ -207,6 +210,11 @@ Creates a message object with no header fields.</li>
 Removes a header field by index.</li>
 <li><code>Message RemoveHeader​(String name)</code><br>
 Removes all instances of the given header field from this message.</li>
+<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages)</code><br>
+Not documented yet.</li>
+<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages,
+                 boolean preferOriginals)</code><br>
+Not documented yet.</li>
 <li><code>Message SetBody​(byte[] bytes)</code><br>
 Sets the body of this message to the given byte array.</li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
@@ -1067,6 +1075,26 @@ field&#39;s value is syntactically invalid.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>value</code> is null.</p></li>
 </ul>
 
+<h3>DecodeHeaderValue</h3>
+
+<pre>public static String DecodeHeaderValue​(String name, String value)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>name</code> - Not documented yet.</p></li>
+<li><p><code>value</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string object.</li>
+</ul>
+
 <h3>SetHeader</h3>
 
 <pre>public Message SetHeader​(String name, String value)
@@ -1444,6 +1472,45 @@ character exists, or the entire string otherwise.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;inputStream&quot; or
 &quot;mediaType&quot; is null.</p></li>
 <li><p><code>MessageDataException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>SelectLanguageMessage</h3>
+
+<pre>public Message SelectLanguageMessage​(List&lt;String&gt; languages)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>languages</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>SelectLanguageMessage</h3>
+
+<pre>public Message SelectLanguageMessage​(List&lt;String&gt; languages, boolean preferOriginals)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>languages</code> - Not documented yet.</p></li>
+<li><p><code>preferOriginals</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
 </ul>
 
 <h3>MakeMultilingualMessage</h3>
