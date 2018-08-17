@@ -402,7 +402,9 @@ supported.</li>
 <p>Gets this message&#39;s content disposition. The content disposition specifies
  how a user agent should display or otherwise handle this message. Can
  be set to null. If set to a disposition or to null, updates the
- Content-Disposition header field as appropriate.</p>
+ Content-Disposition header field as appropriate. If this message was
+ generated from message data, the value will initially be unset unless
+ a MIME-Version header field appeared in the message data.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -424,7 +426,10 @@ supported.</li>
  certain cases from the value of the Content-Type header field, if
  any, and may have a value even if the Content-Type header field is
  absent from this message. If set to a media type, updates the
- Content-Type header field as appropriate. Cannot be set to null.</p>
+ Content-Type header field as appropriate. Cannot be set to null. If
+ this message was generated from message data, the value will
+ initially be &quot;text/plain;charset=us-ascii&quot; unless a MIME-Version
+ header field appeared in the message data.</p>
 
 <p><strong>Returns:</strong></p>
 
