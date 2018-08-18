@@ -284,7 +284,7 @@ Randomly generated numbers can serve as _noise_, that is, a randomized variation
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
 
-RNGs rely on nondeterministic sources to generate random numbers.  Such sources are used to help generate a _seed_ for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.
+RNGs ultimately rely on nondeterministic sources to generate random numbers.  Such sources are used to help generate a _seed_ for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.
 
 <a id=Examples_of_Nondeterministic_Sources></a>
 ### Examples of Nondeterministic Sources
