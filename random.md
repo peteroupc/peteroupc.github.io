@@ -2,22 +2,9 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 17, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 18, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
-
-<a id=Request_for_Comments></a>
-## Request for Comments
-
-**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/random.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/random.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1083372/Random-Number-Generator-Recommendations-for-Applic) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
-
-**Comments on any aspect of this document are welcome, but especially answers to the following questions:**
-
-- **Have I characterized the randomness needs of applications properly?**
-- **Did I cover the vast majority of applications that require randomness?**
-- **Are there existing programming language APIs or software libraries, not mentioned in this document, that already meet the requirements for cryptographic or statistical RNGs?**
-- **Are there certain kinds of applications that require a different kind of RNG (cryptographic, statistical, seeded, etc.) than I recommended?**
-- **In a typical computer a consumer would have today, how many random numbers per second does a typical application using RNGs generate? Are there applications that usually generate considerably more random numbers than that per second?**
 
 <a id=Introduction_and_Summary></a>
 ## Introduction and Summary
@@ -49,11 +36,16 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 | [**Statistical RNG**](#Statistical_RNGs)   | When information security is not a concern, but speed is.  See also [**"Shuffling"**](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
 | [**Seeded PRNG**](#Seeded_PRNGs)   | When generating reproducible results in a way not practical otherwise.   | High-quality PRNG with custom seed |
 
+<a id=About_This_Document></a>
+### About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/random.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/random.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1083372/Random-Number-Generator-Recommendations-for-Applic) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
 <a id=Contents></a>
 ## Contents
 
-- [**Request for Comments**](#Request_for_Comments)
 - [**Introduction and Summary**](#Introduction_and_Summary)
+    - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
 - [**Definitions**](#Definitions)
 - [**Cryptographic RNGs**](#Cryptographic_RNGs)
