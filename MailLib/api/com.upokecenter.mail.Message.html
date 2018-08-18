@@ -147,6 +147,8 @@ Deletes all header fields in this message.</li>
 <li><code>static String DecodeHeaderValue​(String name,
              String value)</code><br>
 Not documented yet.</li>
+<li><code>static Message FromMailtoUrl​(String url)</code><br>
+Not documented yet.</li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
@@ -245,6 +247,8 @@ Sets the body of this message to a multipart body with plain text and HTML
 versions of the same message.</li>
 <li><code>Message SetTextBody​(String str)</code><br>
 Sets the body of this message to the specified plain text string.</li>
+<li><code>String ToMailtoUrl()</code><br>
+Not documented yet.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -1522,6 +1526,38 @@ character exists, or the entire string otherwise.</p></li>
 
 <pre>public static Message MakeMultilingualMessage​(List&lt;Message&gt; messages, List&lt;String&gt; languages)
 </pre>
+
+<h3>FromMailtoUrl</h3>
+
+<pre>public static Message FromMailtoUrl​(String url)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>url</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object.</li>
+</ul>
+
+<h3>ToMailtoUrl</h3>
+
+<pre>public String ToMailtoUrl()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A string object.</li>
+</ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
