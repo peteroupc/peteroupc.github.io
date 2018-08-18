@@ -27,6 +27,7 @@
 <ul>
 <li>Statistical and cryptographic RNGs, as well as recommendations on their use and properties.</li>
 <li>A discussion on when an application that needs numbers that &quot;seem&quot; random should specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
+<li>Nondeterministic RNGs, entropy, and seed generation.</li>
 <li>An explanation of how to implement RNGs in programming code, including APIs that help in doing so.</li>
 <li>Issues on shuffling with an RNG.</li>
 </ul>
@@ -88,9 +89,7 @@
 <ul>
 <li><a href="#Quality"><strong>Quality</strong></a></li>
 <li><a href="#Seeding_and_Reseeding"><strong>Seeding and Reseeding</strong></a></li>
-<li><a href="#Nondeterministic_Sources"><strong>Nondeterministic Sources</strong></a></li>
 <li><a href="#Examples"><strong>Examples</strong></a></li>
-<li><a href="#Examples_of_Nondeterministic_Sources"><strong>Examples of Nondeterministic Sources</strong></a></li>
 </ul></li>
 <li><a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a>
 
@@ -112,6 +111,13 @@
 <li><a href="#Verifiable_Random_Numbers"><strong>Verifiable Random Numbers</strong></a></li>
 <li><a href="#Noise"><strong>Noise</strong></a></li>
 </ul></li>
+</ul></li>
+<li><a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>Nondeterministic Sources and Seed Generation</strong></a>
+
+<ul>
+<li><a href="#Examples_of_Nondeterministic_Sources"><strong>Examples of Nondeterministic Sources</strong></a></li>
+<li><a href="#Entropy"><strong>Entropy</strong></a></li>
+<li><a href="#Seed_Generation"><strong>Seed Generation</strong></a></li>
 </ul></li>
 <li><a href="#Implementing_RNGs_in_Programming_Languages"><strong>Implementing RNGs in Programming Languages</strong></a></li>
 <li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
@@ -184,21 +190,11 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data that ultimately derives from the output of one or more nondeterministic sources, where the output is at least as hard to predict as ideal random data with as many bits as the <em>security strength</em>, and</li>
+<li>must consist of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a>, where the output is at least as hard to predict as ideal random data with as many bits as the <em>security strength</em>, and</li>
 <li>may be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</li>
 </ul>
 
 <p>The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.</p>
-
-<p><a id=Nondeterministic_Sources></a></p>
-
-<h3>Nondeterministic Sources</h3>
-
-<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> for random number generation.<sup><a href="#Note3"><strong>(3)</strong></a></sup></p>
-
-<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.  See also RFC 4086, &quot;Randomness Requirements for Security&quot;, section 2.</p>
-
-<p>If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of entropy as the <em>security strength</em>.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of entropy as the RNG output&#39;s size in bits.</p>
 
 <p><a id=Examples></a></p>
 
@@ -213,26 +209,6 @@
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
-
-<p><a id=Examples_of_Nondeterministic_Sources></a></p>
-
-<h3>Examples of Nondeterministic Sources</h3>
-
-<p>Examples of nondeterministic sources are&mdash;</p>
-
-<ul>
-<li>disk access timings,</li>
-<li>timings of keystrokes and other input device interactions,</li>
-<li>thermal noise,</li>
-<li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
-<li>differences between two high-resolution counter values taken in quick succession (such as in S. M&uuml;ller&#39;s &quot;Jitter RNG&quot;).</li>
-</ul>
-
-<p>RFC 4086, section 3, contains a survey of nondeterministic sources.</p>
-
-<blockquote>
-<p><strong>Note:</strong> Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are not recommended if other approaches are adequate.</p>
-</blockquote>
 
 <p><a id=Statistical_RNGs></a></p>
 
@@ -267,7 +243,7 @@
 
 <ul>
 <li>must have as many bits as the PRNG&#39;s <em>state length</em>,</li>
-<li>must consist of data that ultimately derives from the output of one or more nondeterministic sources (for example, the system clock) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG&#39;s <em>state length</em><sup><a href="#Note4"><strong>(4)</strong></a></sup>, and</li>
+<li>must consist of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a> and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG&#39;s <em>state length</em>, and</li>
 <li>may be mixed with arbitrary data other than the seed.</li>
 </ul>
 
@@ -320,7 +296,7 @@
 <ul>
 <li>is hard-coded,</li>
 <li>is derived from user-entered data,</li>
-<li>is known to the application and was generated using a <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> or <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNG (as defined earlier),</li>
+<li>is known to the application and was generated randomly (other than with a PRNG with a known seed),</li>
 <li>is a <a href="#Verifiable_Random_Numbers"><strong>verifiable random number</strong></a> (as defined later), or</li>
 <li>is based on a timestamp (but only if the &quot;random&quot; content will remain the same during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for content that varies only daily),</li>
 </ul></li>
@@ -426,9 +402,55 @@
 <p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note5"><strong>(5)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  Wherever feasible, procedural noise implementations should <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  The additional data may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded data as the seed).  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
+<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note3"><strong>(3)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  Wherever feasible, procedural noise implementations should <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  The additional data may be <strong>&quot;hard-coded&quot;</strong> instead if the <a href="#Seeding_Recommendations"><strong>seeding recommendations</strong></a> apply to the noise generation (treating the hard-coded data as the seed).  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function should be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
 <li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
 </ol>
+
+<p><a id=Nondeterministic_Sources_and_Seed_Generation></a></p>
+
+<h2>Nondeterministic Sources and Seed Generation</h2>
+
+<p>RNGs rely on nondeterministic sources to generate random numbers.  Such sources are used to help generate a <em>seed</em> for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.</p>
+
+<p><a id=Examples_of_Nondeterministic_Sources></a></p>
+
+<h3>Examples of Nondeterministic Sources</h3>
+
+<p>Examples of nondeterministic sources are&mdash;</p>
+
+<ul>
+<li>disk access timings,</li>
+<li>timings of keystrokes and other input device interactions,</li>
+<li>thermal noise,</li>
+<li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
+<li>differences between two high-resolution counter values taken in quick succession (such as in S. M&uuml;ller&#39;s &quot;Jitter RNG&quot;).</li>
+</ul>
+
+<p>RFC 4086, &quot;Randomness Requirements for Security&quot;, section 3, contains a survey of nondeterministic sources.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are not recommended if other approaches are adequate.</li>
+<li>For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</li>
+<li>For general-purpose use, nondeterministic sources that enable many high-quality seeds per second to be generated are highly advantageous, especially for a cryptographic RNG.</li>
+</ol>
+</blockquote>
+
+<p><a id=Entropy></a></p>
+
+<h3>Entropy</h3>
+
+<p><em>Entropy</em> is a value that describes how hard it is to predict a nondeterministic source&#39;s output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.  See also RFC 4086 section 2.</p>
+
+<p><a id=Seed_Generation></a></p>
+
+<h3>Seed Generation</h3>
+
+<p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more.</strong></p>
+
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. NIST SP 800-90B sec. 3.1.5.1 includes &quot;vetted conditioning components&quot; (including certain <a href="#Hash_Functions"><strong>hash functions</strong></a>) for this purpose. See also RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Implementing_RNGs_in_Programming_Languages></a></p>
 
@@ -575,20 +597,23 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p>The number of distinct permutations is the <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a> <em>m</em>! / (<em>w</em><sub>1</sub>! &times; <em>w</em><sub>2</sub>! &times; ... &times; <em>w</em><sub><em>n</em></sub>!), where <em>m</em> is the list&#39;s size, <em>n</em> is the number of different items in the list, <em>x</em>! means &quot;<em>x</em> <a href="https://en.wikipedia.org/wiki/Factorial"><strong>factorial</strong></a>&quot;, and <em>w</em><sub><em>i</em></sub> is the number of times the item identified by <em>i</em> appears in the list. (This reduces to <em>n</em>!, if the list consists of <em>n</em> different items.)</p>
 
-<p>The following Python code suggests how many bits of <a href="#Nondeterministic_Sources"><strong><em>entropy</em></strong></a> (randomness) are needed for shuffling. (See also &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html"><strong>Big Deal document by van Staveren</strong></a>.) For example&mdash;</p>
+<p>The following Python code suggests how many bits of <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a> (randomness) are needed for shuffling. (See also &quot;Lack of randomness&quot; in the <a href="https://sater.home.xs4all.nl/doc.html"><strong>BigDeal document by van Staveren</strong></a>.) For example&mdash;</p>
 
 <ul>
 <li>to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (<code>stateLengthN(52)</code>), and</li>
-<li><p>to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (<code>stateLengthDecks(2, 52)</code>).</p>
+<li>to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (<code>stateLengthDecks(2, 52)</code>).</li>
+</ul>
 
-<p>def fac(x):
+<p>&nbsp;</p>
+
+<pre>def fac(x):
     &quot;&quot;&quot; Calculates factorial of x. &quot;&quot;&quot;
     if x&lt;=1: return 1
     ret=1
     for i in range(x): ret=ret*(i+1)
-    return ret</p>
+    return ret
 
-<p>def ceillog2(x):
+def ceillog2(x):
     &quot;&quot;&quot; Calculates base-2 logarithm of x, rounded up. &quot;&quot;&quot;
     ret=0
     needCeil=True
@@ -598,26 +623,26 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
        if one:
          ret+=1; needCeil=False
        ret+=1
-    return ret</p>
+    return ret
 
-<p>def stateLengthN(n):
+def stateLengthN(n):
   &quot;&quot;&quot; Suggested state length (or bits of entropy)
      for PRNGs that shuffle
     a list of n items. &quot;&quot;&quot;
-  return ceillog2(fac(n))</p>
+  return ceillog2(fac(n))
 
-<p>def stateLengthNChooseK(n, k):
+def stateLengthNChooseK(n, k):
   &quot;&quot;&quot; Suggested state length/entropy for PRNGs that choose k
    different items randomly from a list of n items
    (see RFC 3797, sec. 3.3) &quot;&quot;&quot;
-  return ceillog2(fac(n)/(fac(k)*fac(n-k)))</p>
+  return ceillog2(fac(n)/(fac(k)*fac(n-k)))
 
-<p>def stateLengthDecks(numDecks, numCards):
+def stateLengthDecks(numDecks, numCards):
   &quot;&quot;&quot; Suggested state length/entropy for PRNGs that shuffle
     multiple decks of cards in one. &quot;&quot;&quot;
-  return ceillog2(fac(numDecks<em>numCards)/ \
-      (fac(numDecks)</em>*numCards))</p></li>
-</ul>
+  return ceillog2(fac(numDecks*numCards)/ \
+      (fac(numDecks)**numCards))
+</pre>
 
 <p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
 
@@ -643,7 +668,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note6"><strong>(6)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note4"><strong>(4)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -698,13 +723,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
 
-<p><small><sup id=Note3>(3)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small></p>
+<p><small><sup id=Note3>(3)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</small></p>
-
-<p><small><sup id=Note5>(5)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
-
-<p><small><sup id=Note6>(6)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note4>(4)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 
