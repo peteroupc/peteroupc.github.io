@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 16, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 17, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -103,15 +103,15 @@ The following definitions are helpful in better understanding this document.
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
 
-Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Such RNGs are indispensable in information security contexts, such as&mdash;
+Cryptographic RNGs (also known as "cryptographically strong" or "cryptographically secure" RNGs) seek to generate random numbers that are cost-prohibitive to predict.  Applications that need random numbers for information security, such as&mdash;
 
 -  generating keying material, such as encryption keys,
 -  generating random passwords, nonces, or session identifiers,
 -  generating "salts" to vary hash codes of the same password,
 -  use in communications between two networked computers (including in data transfer, data transport, and messaging), and
--  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage.
+-  cases (such as in multiplayer networked games) when predicting future random numbers would give a player or user a significant and unfair advantage,
 
-They are also useful when the application generates random numbers so infrequently that the RNG's speed is not a concern.
+should use cryptographic RNGs to generate such numbers.  So should applications that generate random numbers so infrequently that the RNG's speed is not a concern.
 
 <a id=Quality></a>
 ### Quality
@@ -142,7 +142,9 @@ A cryptographic RNG ultimately relies on one or more _nondeterministic sources_ 
 - thermal noise, and
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available.
 
-A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.
+RFC 4086, "Randomness Requirements for Security", section 3, contains a survey of nondeterministic sources.
+
+A value called _entropy_ measures how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.  See also section 2 of RFC 4086.
 
 If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of entropy as the _security strength_.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of entropy as the RNG output's size in bits.
 
