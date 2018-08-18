@@ -97,6 +97,7 @@
 <li><a href="#Seeding_and_Reseeding"><strong>Seeding and Reseeding</strong></a></li>
 <li><a href="#Nondeterministic_Sources"><strong>Nondeterministic Sources</strong></a></li>
 <li><a href="#Examples"><strong>Examples</strong></a></li>
+<li><a href="#Examples_of_Nondeterministic_Sources"><strong>Examples of Nondeterministic Sources</strong></a></li>
 </ul></li>
 <li><a href="#Statistical_RNGs"><strong>Statistical RNGs</strong></a>
 
@@ -200,18 +201,9 @@
 
 <h3>Nondeterministic Sources</h3>
 
-<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> for random number generation.<sup><a href="#Note3"><strong>(3)</strong></a></sup>  Examples of nondeterministic sources are&mdash;</p>
+<p>A cryptographic RNG ultimately relies on one or more <em>nondeterministic sources</em> for random number generation.<sup><a href="#Note3"><strong>(3)</strong></a></sup></p>
 
-<ul>
-<li>disk access timings,</li>
-<li>timings of keystrokes and other input device interactions,</li>
-<li>thermal noise, and</li>
-<li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available.</li>
-</ul>
-
-<p>RFC 4086, &quot;Randomness Requirements for Security&quot;, section 3, contains a survey of nondeterministic sources.</p>
-
-<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.  See also section 2 of RFC 4086.</p>
+<p>A value called <em>entropy</em> measures how hard it is to predict a nondeterministic source&#39;s output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure and also details how nondeterministic sources can be used for information security.  See also RFC 4086, &quot;Randomness Requirements for Security&quot;, section 2.</p>
 
 <p>If a cryptographic RNG implementation uses a PRNG, the output of the strongest nondeterministic source used to derive a seed ought to have as many bits of entropy as the <em>security strength</em>.  If the implementation does not use a PRNG, the output of the strongest nondeterministic source used to derive an RNG output ought to have as many bits of entropy as the RNG output&#39;s size in bits.</p>
 
@@ -224,10 +216,30 @@
 <ul>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
-<li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, published in 2007, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
+<li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, by Dorrendorf et al. 2009, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
+
+<p><a id=Examples_of_Nondeterministic_Sources></a></p>
+
+<h3>Examples of Nondeterministic Sources</h3>
+
+<p>Examples of nondeterministic sources are&mdash;</p>
+
+<ul>
+<li>disk access timings,</li>
+<li>timings of keystrokes and other input device interactions,</li>
+<li>thermal noise,</li>
+<li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
+<li>differences between two high-resolution counter values taken in quick succession (such as in S. M&uuml;ller&#39;s &quot;Jitter RNG&quot;).</li>
+</ul>
+
+<p>RFC 4086, section 3, contains a survey of nondeterministic sources.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are not recommended if other approaches are adequate.</p>
+</blockquote>
 
 <p><a id=Statistical_RNGs></a></p>
 
@@ -691,7 +703,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em> or <em>randomness extraction</em> methods that it is outside the scope of this document to describe.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and (Ristenpart and Yilek 2010).</small></p>
+<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
 
 <p><small><sup id=Note3>(3)</sup> Nondeterministic sources that are reasonably fast for most applications (for instance, by enabling very many seeds to be generated per second), especially sources implemented in hardware, are highly advantageous in a cryptographic RNG.</small></p>
 
