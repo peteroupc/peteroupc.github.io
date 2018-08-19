@@ -9,7 +9,7 @@
 <pre>public interface ICharacterDecoder
 </pre>
 
-<p>Defines a method that can be implemented by classes that convert a stream of bytes to Unicode code points.</p>
+<p>Defines a method that can be implemented by classes that convert a stream f bytes to Unicode code points.</p>
 
 <h3>ReadChar</h3>
 
@@ -17,17 +17,17 @@
     PeterO.IByteReader input);
 </pre>
 
-<p>Reads bytes from an input transform until a Unicode code point is decoded or until the end of the stream is reached.If this method returns -2, indicating an error, the caller of this method can take one of a variety of actions to handle the error. For example, it can output one or more replacement code points instead (such as the Replacement Character 0xfffd), or it can throw an exception. In some cases, where the error won&#39;t cause data loss or a security problem, the caller can also ignore the decoder error.</p>
+<p>Reads bytes from an input transform until a Unicode code point is decoded r until the end of the stream is reached. If this method returns -2, indicating an error, the caller of this ethod can take one of a variety of actions to handle the error. For xample, it can output one or more replacement code points instead (such s the Replacement Character 0xfffd), or it can throw an exception. In ome cases, where the error won&#39;t cause data loss or a security problem, he caller can also ignore the decoder error.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>input</i>: Source of bytes to decode into code points. The decoder can maintain internal state, including data on bytes already read, so this parameter should not change when using the same character decoder object. It&#39;s also possible for the decoder to read no bytes but still return a code point, depending on the encoding it supports and its internal state.</li>
+<li><i>input</i>: Source of bytes to decode into code points. The decoder can maintain nternal state, including data on bytes already read, so this parameter hould not change when using the same character decoder object. It&#39;s also ossible for the decoder to read no bytes but still return a code point, epending on the encoding it supports and its internal state.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The Unicode code point decoded, from 0-0xd7ff or from 0xe000 to 0x10ffff. Returns -1 if the end of the source is reached or -2 if a decoder error occurs.</p>
+<p>The Unicode code point decoded, from 0-0xd7ff or from 0xe000 to 0x10ffff. eturns -1 if the end of the source is reached or -2 if a decoder error ccurs.</p>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
 </div><nav id="navigation"><ul>

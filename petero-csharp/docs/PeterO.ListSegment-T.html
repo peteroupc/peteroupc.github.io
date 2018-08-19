@@ -7,13 +7,13 @@
 <h2>PeterO.ListSegment<T></h2>
 
 <pre>public sealed class ListSegment&lt;T&gt; :
-    System.Collections.Generic.IList&lt;T&gt;,
-    System.Collections.Generic.ICollection&lt;T&gt;,
     System.Collections.Generic.IEnumerable&lt;T&gt;,
-    System.Collections.IEnumerable
+    System.Collections.IEnumerable,
+    System.Collections.Generic.IList&lt;T&gt;,
+    System.Collections.Generic.ICollection&lt;T&gt;
 </pre>
 
-<p>Specifies a segment of a list defined by an offset and length. This class cannot be inherited.</p>
+<p>Specifies a segment of a list defined by an offset and length. This class annot be inherited.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -29,21 +29,22 @@
     int count);
 </pre>
 
-<p>Initializes a new instance of the class.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>list</i>: An IList object.</p></li>
-<li><p><i>start</i>: A 32-bit signed integer.</p></li>
-<li><p><i>count</i>: Another 32-bit signed integer.</p></li>
+<li><p><i>list</i>: The parameter  <i>list</i>
+is an IList object.</p></li>
+<li><p><i>start</i>: The parameter  <i>start</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>count</i>: The parameter  <i>count</i>
+is a 32-bit signed integer.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>list</i>
+The parameter  <i>list</i>
 is null.</li>
 </ul>
 
@@ -65,11 +66,11 @@ is null.</li>
 
 <p>Gets a value indicating whether this list segment is read only.</p>
 
-<p>The read-only status of the list segment is the same as that of the underlying list. However, operations that would change the list segment&#39;s size, such as adding and removing items, are not supported.</p>
+<p>The read-only status of the list segment is the same as that of the nderlying list. However, operations that would change the list segment&#39;s ize, such as adding and removing items, are not supported.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this list segment is read only; otherwise,. <code>false</code> .</p>
+<p><code>true</code> If this list segment is read only; otherwise,  <code>false</code> .</p>
 
 <h3>StartIndex</h3>
 
@@ -115,7 +116,7 @@ Always thrown, because changing the size of a list segment is not supported.</li
 
 <ul>
 <li>System.NotSupportedException:
-Always thrown, because changing the size of a list segment is not supported.</li>
+Always thrown, because changing the size of a list segment is not upported.</li>
 </ul>
 
 <h3>Contains</h3>
@@ -129,12 +130,13 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Boolean object.</p>
+<p>Either  <code>true</code> or  <code>false</code> .</p>
 
 <h3>GetEnumerator</h3>
 
@@ -158,7 +160,8 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -177,15 +180,17 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: A 32-bit signed integer.</p></li>
-<li><p><i>item</i>: A T object.</p></li>
+<li><p><i>index</i>: The parameter  <i>index</i>
+is a 32-bit signed integer.</p></li>
+<li><p><i>item</i>: The parameter  <i>item</i>
+is a T object.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.NotSupportedException:
-Always thrown, because changing the size of a list segment is not supported.</li>
+Always thrown, because changing the size of a list segment is not upported.</li>
 </ul>
 
 <h3>Remove</h3>
@@ -199,18 +204,19 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Boolean object.</p>
+<p>Either  <code>true</code> or  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.NotSupportedException:
-Always thrown, because changing the size of a list segment is not supported.</li>
+Always thrown, because changing the size of a list segment is not upported.</li>
 </ul>
 
 <h3>RemoveAt</h3>
@@ -224,14 +230,15 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: A 32-bit signed integer.</li>
+<li><i>index</i>: The parameter  <i>index</i>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.NotSupportedException:
-Always thrown, because changing the size of a list segment is not supported.</li>
+Always thrown, because changing the size of a list segment is not upported.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

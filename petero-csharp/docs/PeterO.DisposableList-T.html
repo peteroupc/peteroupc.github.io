@@ -7,15 +7,15 @@
 <h2>PeterO.DisposableList<T></h2>
 
 <pre>public sealed class DisposableList&lt;T&gt; :
-    System.Collections.Generic.IList&lt;T&gt;,
-    System.Collections.Generic.ICollection&lt;T&gt;,
+    System.IDisposable,
     System.Collections.Generic.IEnumerable&lt;T&gt;,
     System.Collections.IEnumerable,
-    System.IDisposable
+    System.Collections.Generic.IList&lt;T&gt;,
+    System.Collections.Generic.ICollection&lt;T&gt;
     where T : System.IDisposableT
 </pre>
 
-<p>Holds a list of disposable objects, which can all be disposed at once when this object is disposed.</p>
+<p>Holds a list of disposable objects, which can all be disposed at once hen this object is disposed.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -28,7 +28,7 @@
 <pre>public DisposableList();
 </pre>
 
-<p>Initializes a new instance of the class.</p>
+<p>Initializes a new instance of the <a href="PeterO.DisposableList.html">PeterO.DisposableList`1</a> class.</p>
 
 <h3>Count</h3>
 
@@ -50,7 +50,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this list is read only; otherwise,. <code>false</code> .</p>
+<p><code>true</code> If this list is read only; otherwise,  <code>false</code> .</p>
 
 <h3>Add</h3>
 
@@ -63,7 +63,8 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <h3>Clear</h3>
@@ -84,12 +85,13 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Boolean object.</p>
+<p>Either  <code>true</code> or  <code>false</code> .</p>
 
 <h3>Dispose</h3>
 
@@ -120,7 +122,8 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -140,7 +143,8 @@
 
 <ul>
 <li><p><i>index</i>: Zero-based index into the list.</p></li>
-<li><p><i>item</i>: A T object.</p></li>
+<li><p><i>item</i>: The parameter  <i>item</i>
+is a T object.</p></li>
 </ul>
 
 <h3>Remove</h3>
@@ -154,12 +158,13 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>item</i>: A T object.</li>
+<li><i>item</i>: The parameter  <i>item</i>
+is a T object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Boolean object.</p>
+<p>Either  <code>true</code> or  <code>false</code> .</p>
 
 <h3>RemoveAt</h3>
 
