@@ -35,7 +35,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
  --------|--------|------|
 | [**Cryptographic RNG**](#Cryptographic_RNGs)   | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `BCryptGenRandom` |
 | [**Statistical RNG**](#Statistical_RNGs)   | When information security is not a concern, but speed is.  See also [**"Shuffling"**](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
-| [**Seeded PRNG**](#Seeded_PRNGs)   | When generating reproducible results in a way not practical otherwise.   | High-quality PRNG with custom seed |
+| [**Seeded PRNG**](#Seeded_PRNGs)   | When generating reproducible "randomness" in a way not practical otherwise.   | High-quality PRNG with custom seed |
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -358,7 +358,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 ----
 
-In the uncommon cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is recommended to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.
+In the limited cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is recommended to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.
 
 > **Example:** A C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 

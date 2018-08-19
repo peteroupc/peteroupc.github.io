@@ -17,12 +17,12 @@
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.BinaryIO.html">PeterO.BinaryIO</a> class. Initializes a new BinaryIO instance.</p>
+<p>Initializes a new instance of the<a href="PeterO.BinaryIO.html">PeterO.BinaryIO</a>class. Initializes a new BinaryIO instance.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>stream</i>: The parameter  <i>stream</i>
+<li><i>stream</i>: The parameter <i>stream</i>
 is a Stream object.</li>
 </ul>
 
@@ -30,7 +30,7 @@ is a Stream object.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 is null.</li>
 </ul>
 
@@ -43,7 +43,11 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream can be read; otherwise, .  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream can be read; otherwise, . <code>
+        false
+</code> .</p>
 
 <h3>CanSeek</h3>
 
@@ -54,7 +58,11 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream supports seeking; otherwise, <code>
+        false
+</code> .</p>
 
 <h3>CanWrite</h3>
 
@@ -65,7 +73,11 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream supports writing; otherwise, <code>
+        false
+</code> .</p>
 
 <h3>Length</h3>
 
@@ -103,10 +115,10 @@ is null.</li>
 
 <ul>
 <li><p><i>data</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>data</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
-(but not more than  <i>data</i>
+<li><p><i>length</i>: The number of elements in the desired portion of <i>data</i>
+(but not more than <i>data</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -118,15 +130,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>data</i>
-&#39;s length, or  <i>data</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
+Either <i>offset</i>
+or <i>length</i>
+is less than 0 or greater than <i>data</i>
+&#39;s length, or <i>data</i>
+&#39; s length minus <i>offset</i>
+is less than <i>length</i>
 .</p></li>
 </ul>
 
@@ -148,7 +160,7 @@ is less than  <i>length</i>
 
 <p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte ontains 7 bits of the result, starting with the least-significant bits. f the eighth (highest) bit is 1, then the byte that follows it contains 7 ore bits, and so on. Otherwise, the process stops and the resulting nteger is returned. The return value of this method can be up to 32 bits ong. If bit 32 is 1, the return value is negative; otherwise positive.</p>
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -194,7 +206,7 @@ is less than  <i>length</i>
 
 <p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte ontains 7 bits of the result, starting with the least-significant bits. f the eighth (highest) bit is 1, then the byte that follows it contains 7 ore bits, and so on. Otherwise, the process stops and the resulting nteger is returned. The return value of this method can be up to 31 bits ong and is positive.</p>
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -222,7 +234,7 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>size</i>: The parameter  <i>size</i>
+<li><i>size</i>: The parameter <i>size</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -351,7 +363,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a byte (from 0 to 255).</li>
 </ul>
 
@@ -373,7 +385,7 @@ is a byte (from 0 to 255).</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null.</li>
 </ul>
 
@@ -391,10 +403,10 @@ is null.</li>
 
 <ul>
 <li><p><i>data</i>: A byte array. (2).</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>data</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
-(but not more than  <i>data</i>
+<li><p><i>length</i>: The number of elements in the desired portion of <i>data</i>
+(but not more than <i>data</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -402,15 +414,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>data</i>
+The parameter <i>data</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>data</i>
-&#39;s length, or  <i>data</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
+Either <i>offset</i>
+or <i>length</i>
+is less than 0 or greater than <i>data</i>
+&#39;s length, or <i>data</i>
+&#39; s length minus <i>offset</i>
+is less than <i>length</i>
 .</p></li>
 </ul>
 
@@ -425,7 +437,7 @@ is less than  <i>length</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -444,7 +456,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -463,7 +475,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -482,7 +494,7 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -501,7 +513,7 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -520,7 +532,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -539,7 +551,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a byte (from 0 to 255).</li>
 </ul>
 
@@ -554,7 +566,7 @@ is a byte (from 0 to 255).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit floating-point number.</li>
 </ul>
 
@@ -569,7 +581,7 @@ is a 64-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit floating-point number.</li>
 </ul>
 
@@ -584,7 +596,7 @@ is a 32-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -599,7 +611,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -614,7 +626,7 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 16-bit signed integer.</li>
 </ul>
 
@@ -629,7 +641,7 @@ is a 16-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a byte (from 0 to 255).</li>
 </ul>
 
@@ -644,7 +656,7 @@ is a byte (from 0 to 255).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit floating-point number.</li>
 </ul>
 
@@ -659,7 +671,7 @@ is a 64-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit floating-point number.</li>
 </ul>
 
@@ -674,7 +686,7 @@ is a 32-bit floating-point number.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -689,7 +701,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -704,7 +716,7 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 16-bit signed integer.</li>
 </ul>
 

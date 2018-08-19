@@ -11,9 +11,9 @@
 
 <p><b>Deprecated.</b> Use NormalizerInput instead; that class is much more flexible than Normalizer.</p>
 
-<p>Implements the Unicode normalization algorithm and contains methods and functionality to test and convert Unicode strings for Unicode normalization.</p>
+<p>Implements the Unicode normalization algorithm and contains methods and unctionality to test and convert Unicode strings for Unicode ormalization.</p>
 
-<p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. See the documentation for the NormalizerInput class for the permission notice for the Unicode Character Database.</p>
+<p>NOTICE: While this class&#39;s source code is in the public domain, the lass uses an internal class, called NormalizationData, that includes ata derived from the Unicode Character Database. See the documentation or the NormalizerInput class for the permission notice for the Unicode haracter Database.</p>
 
 <h3>Normalizer Constructor</h3>
 
@@ -22,14 +22,14 @@
     PeterO.Text.Normalization form);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Text.Normalizer.html">PeterO.Text.Normalizer</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.Text.Normalizer.html">PeterO.Text.Normalizer</a>class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter <i>str</i>
 is a text string.</p></li>
-<li><p><i>form</i>: The parameter  <i>form</i>
+<li><p><i>form</i>: The parameter <i>form</i>
 is a Normalization object.</p></li>
 </ul>
 
@@ -46,13 +46,19 @@ is a Normalization object.</p></li>
 
 <ul>
 <li><p><i>str</i>: The string to check.</p></li>
-<li><p><i>form</i>: The parameter  <i>form</i>
+<li><p><i>form</i>: The parameter <i>form</i>
 is a Normalization object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this string is normalized; otherwise,  <code>false</code> . Returns  <code>false</code>  if the string contains an unpaired surrogate code point.</p>
+<p><code>
+        true
+</code> if this string is normalized; otherwise, <code>
+        false
+</code> . Returns <code>
+        false
+</code> if the string contains an unpaired surrogate code point.</p>
 
 <h3>Normalize</h3>
 
@@ -72,8 +78,8 @@ is a Normalization object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The parameter  <i>str</i>
- converted to the given normalization form.</p>
+<p>The parameter <i>str</i>
+converted to the given normalization form.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -103,18 +109,18 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The number of Unicode code points read, or 0 if the end of the source is reached.</p>
+<p>The number of Unicode code points read, or 0 if the end of the source is eached.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentException:
-Either  <i>index</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>chars</i>
-&#39;s length, or  <i>chars</i>
-&#39; s length minus  <i>index</i>
-is less than  <i>length</i>
+Either <i>index</i>
+or <i>length</i>
+is less than 0 or greater than <i>chars</i>
+&#39;s length, or <i>chars</i>
+&#39; s length minus <i>index</i>
+is less than <i>length</i>
 .</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>chars</i>
@@ -130,7 +136,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), or the value -1 indicating the end of the source.</p>
+<p>Either a Unicode code point (from 0-0xd7ff or from 0xe000 to 0x10ffff), r the value -1 indicating the end of the source.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

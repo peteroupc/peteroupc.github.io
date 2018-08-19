@@ -61,7 +61,7 @@
 </tr>
 <tr>
 <td><a href="#Seeded_PRNGs"><strong>Seeded PRNG</strong></a></td>
-<td>When generating reproducible results in a way not practical otherwise.</td>
+<td>When generating reproducible &quot;randomness&quot; in a way not practical otherwise.</td>
 <td>High-quality PRNG with custom seed</td>
 </tr>
 </tbody></table>
@@ -514,7 +514,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(A) General RNG implements <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</small></p>
 
-<p><small>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</small></p>
+<p><small>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</small></p>
 
 <p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 
@@ -530,13 +530,13 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> method presents a beautiful and simple API for random number generation.</small></p>
 
-<p><small>(F) At least in Unix-based systems, calling the <code>SecureRandom</code> constructor that takes a byte array is recommended. The byte array should be data described in note (C).</small></p>
+<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is recommended. The data passed to the method should be data described in note (C).</small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.</small></p>
 
 <hr>
 
-<p>In the uncommon cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is recommended to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.</p>
+<p>In the limited cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is recommended to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.</p>
 
 <blockquote>
 <p><strong>Example:</strong> A C language API for such RNGs could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where &quot;bytes&quot; is a pointer to a byte array, and &quot;size&quot; is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.</p>

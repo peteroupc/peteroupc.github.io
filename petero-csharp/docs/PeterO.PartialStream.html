@@ -11,7 +11,7 @@
     System.IDisposable
 </pre>
 
-<p>Represents a portion of another data stream. For this to work, the nderlying stream must be seekable and have a known length.</p>
+<p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
 <h3>PartialStream Constructor</h3>
 
@@ -21,16 +21,16 @@
     long length);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a>class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
+<li><p><i>stream</i>: The parameter <i>stream</i>
 is a Stream object.</p></li>
-<li><p><i>start</i>: The parameter  <i>start</i>
+<li><p><i>start</i>: The parameter <i>start</i>
 is a 64-bit signed integer.</p></li>
-<li><p><i>length</i>: The parameter  <i>length</i>
+<li><p><i>length</i>: The parameter <i>length</i>
 is a 64-bit signed integer.</p></li>
 </ul>
 
@@ -43,12 +43,12 @@ is a 64-bit signed integer.</p></li>
     bool closeOnDispose);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
+<p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a>class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>stream</i>: The parameter  <i>stream</i>
+<li><p><i>stream</i>: The parameter <i>stream</i>
 is a Stream object.</p></li>
 <li><p><i>start</i>: The start of the partial stream from the underlying stream.</p></li>
 <li><p><i>length</i>: The length of the partial stream in bytes.</p></li>
@@ -59,11 +59,11 @@ is a Stream object.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
-or  <i>stream</i>
+The parameter <i>stream</i>
+or <i>stream</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 doesn&#39;t support seeking, the length or start is less than 0 or greater han the underlying stream&#39;s length, or the partial stream would go beyond he underlying stream.</p></li>
 </ul>
 
@@ -76,7 +76,11 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports reading; otherwise,  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream supports reading; otherwise, <code>
+        false
+</code> .</p>
 
 <h3>CanSeek</h3>
 
@@ -87,7 +91,11 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream supports seeking; otherwise, <code>
+        false
+</code> .</p>
 
 <h3>CanWrite</h3>
 
@@ -98,7 +106,11 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+<p><code>
+        true
+</code> If the underlying stream supports writing; otherwise, <code>
+        false
+</code> .</p>
 
 <h3>Length</h3>
 
@@ -133,8 +145,12 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>disposing</i>: The parameter  <i>disposing</i>
-is either  <code>true</code> or  <code>false</code> .</li>
+<li><i>disposing</i>: The parameter <i>disposing</i>
+is either <code>
+    true
+</code> or <code>
+    false
+</code> .</li>
 </ul>
 
 <h3>Flush</h3>
@@ -158,10 +174,10 @@ is either  <code>true</code> or  <code>false</code> .</li>
 
 <ul>
 <li><p><i>buffer</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of <i>buffer</i>
+(but not more than <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -173,15 +189,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>buffer</i>
+The parameter <i>buffer</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i>buffer</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>count</i>
+Either <i>offset</i>
+or <i>count</i>
+is less than 0 or greater than <i>buffer</i>
+&#39;s length, or <i>buffer</i>
+&#39; s length minus <i>offset</i>
+is less than <i>count</i>
 .</p></li>
 </ul>
 
@@ -197,9 +213,9 @@ is less than  <i>count</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>offset</i>: The parameter  <i>offset</i>
+<li><p><i>offset</i>: The parameter <i>offset</i>
 is a 64-bit signed integer.</p></li>
-<li><p><i>origin</i>: The parameter  <i>origin</i>
+<li><p><i>origin</i>: The parameter <i>origin</i>
 is a SeekOrigin object.</p></li>
 </ul>
 
@@ -218,7 +234,7 @@ is a SeekOrigin object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter  <i>value</i>
+<li><i>value</i>: The parameter <i>value</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -236,10 +252,10 @@ is a 64-bit signed integer.</li>
 
 <ul>
 <li><p><i>buffer</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of <i>buffer</i>
+(but not more than <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -247,15 +263,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>buffer</i>
+The parameter <i>buffer</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i>buffer</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>count</i>
+Either <i>offset</i>
+or <i>count</i>
+is less than 0 or greater than <i>buffer</i>
+&#39;s length, or <i>buffer</i>
+&#39; s length minus <i>offset</i>
+is less than <i>count</i>
 .</p></li>
 </ul>
 
