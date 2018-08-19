@@ -11,21 +11,13 @@
 
 <p>Specifies what kind of data a message body is.</p>
 
-<p>A media type consists of a top-level type (the general category of the ata), a subtype (the specific type), and an optional list of arameters. For example, the media type <code>
-          text/plain; charset = utf-8
-</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and he parameters say that the data uses UTF-8, a Unicode character ncoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, video&quot;, and &quot;application&quot;.</p>
+<p>A media type consists of a top-level type (the general category of the ata), a subtype (the specific type), and an optional list of arameters. For example, the media type <code>text/plain; charset = utf-8</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and he parameters say that the data uses UTF-8, a Unicode character ncoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, video&quot;, and &quot;application&quot;.</p>
 
 <p>A media type is sometimes known as a &quot;MIME type&quot;, for Multipurpose nternet Mail Extensions, the standard that introduced media types.</p>
 
 <p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s reated. To create a changeable media type object, use the ediaTypeBuilder class.</p>
 
-<p><b>Note:</b>According to RFC 2049, unrecognized subtypes of the top-level type <code>
-          multipart
-</code> must be treated as <code>
-          multipart/mixed
-</code> and unrecognized media types as the media type <code>
-          application/octet-stream
-</code> .</p>
+<p><b>Note:</b>According to RFC 2049, unrecognized subtypes of the top-level type <code>multipart</code> must be treated as <code>multipart/mixed</code> and unrecognized media types as the media type <code>application/octet-stream</code> .</p>
 
 <h3>ApplicationOctetStream</h3>
 
@@ -64,11 +56,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If this is a multipart media type; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <h3>IsText</h3>
 
@@ -79,11 +67,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If this is a text media type; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <h3>Parameters</h3>
 
@@ -146,11 +130,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if this object and another object are equal; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>GetCharset</h3>
 
@@ -185,7 +165,7 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: Name of the parameter to get. The name is compared using a basic ase-insensitive comparison. (Two strings are equal in such a comparison, f they match after converting the basic upper-case letters A to Z (U+0041 o U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -211,7 +191,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include arameters.</li>
+<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -239,8 +219,8 @@ is empty or syntactically invalid.</p>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string representing a media type. This media type can include arameters.</p></li>
-<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be ull.</p></li>
+<li><p><i>str</i>: A text string representing a media type. This media type can include parameters.</p></li>
+<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

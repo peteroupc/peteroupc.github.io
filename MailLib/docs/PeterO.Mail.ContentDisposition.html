@@ -11,9 +11,7 @@
 
 <p>Specifies how a message body should be displayed or handled by a mail ser agent. This type is immutable; its contents can&#39;t be changed after t&#39;s created. To create a changeable disposition object, use the ispositionBuilder class.<b>About the &quot;filename&quot; parameter</b></p>
 
-<p>The &quot;filename&quot; parameter of a content disposition suggests a name to se when saving data to a file. For the &quot;filename&quot; parameter, the etParameter method and Parameters property ( <code>
-          getParameters
-</code> ) method in Java) do not adapt that parameter&#39;s value using the ontentDisposition.MakeFilename method. Thus, for example, the filename&quot; parameter, if any, returned by this method could have an rbitrary length, be encoded using RFC 2047 encoded words (which some mail and HTTP implementations still like to write out in headers, even hough that RFC says encoded words &quot;MUST NOT appear within a quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be usable s is as a file name.</p>
+<p>The &quot;filename&quot; parameter of a content disposition suggests a name to se when saving data to a file. For the &quot;filename&quot; parameter, the etParameter method and Parameters property ( <code>getParameters</code> ) method in Java) do not adapt that parameter&#39;s value using the ontentDisposition.MakeFilename method. Thus, for example, the filename&quot; parameter, if any, returned by this method could have an rbitrary length, be encoded using RFC 2047 encoded words (which some mail and HTTP implementations still like to write out in headers, even hough that RFC says encoded words &quot;MUST NOT appear within a quoted-string&#39;&quot;; see ContentDisposition.MakeFilename), or not be usable s is as a file name.</p>
 
 <p><b>Example:</b>An example of RFC 2047 encoded words is:</p>
 
@@ -63,11 +61,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If the disposition type is attachment; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If the disposition type is attachment; otherwise,  <code>false</code> .</p>
 
 <h3>IsInline</h3>
 
@@ -78,11 +72,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If the disposition type is inline; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If the disposition type is inline; otherwise,  <code>false</code> .</p>
 
 <h3>Parameters</h3>
 
@@ -112,11 +102,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if the objects are equal; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
 
 <h3>GetCreationDate</h3>
 
@@ -127,9 +113,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The extracted date and time as an 8-element array, or <code>
-        null
-</code> if the &quot;creation-date&quot; parameter doesn&#39;t exist, is an empty string, or is yntactically invalid, or if the parameter&#39;s year would overflow a 32-bit igned integer.</p>
+<p>The extracted date and time as an 8-element array, or <code>null</code> if the &quot;creation-date&quot; parameter doesn&#39;t exist, is an empty string, or is yntactically invalid, or if the parameter&#39;s year would overflow a 32-bit igned integer.</p>
 
 <h3>GetFilename</h3>
 
@@ -162,9 +146,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The extracted date and time as an 8-element array, or <code>
-        null
-</code> if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty string, r is syntactically invalid, or if the parameter&#39;s year would overflow a 2-bit signed integer.</p>
+<p>The extracted date and time as an 8-element array, or <code>null</code> if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty string, r is syntactically invalid, or if the parameter&#39;s year would overflow a 2-bit signed integer.</p>
 
 <h3>GetParameter</h3>
 
@@ -177,7 +159,7 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic ase-insensitive comparison. (Two strings are equal in such a comparison, f they match after converting the basic upper-case letters A to Z (U+0041 o U+005A) in both strings to lower case.). Can&#39;t be null.</li>
+<li><i>name</i>: The name of the parameter to get. The name will be matched using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.). Can&#39;t be null.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -204,9 +186,7 @@ is empty.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The extracted date and time as an 8-element array, or <code>
-        null
-</code> if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or is yntactically invalid, or if the parameter&#39;s year would overflow a 32-bit igned integer.</p>
+<p>The extracted date and time as an 8-element array, or <code>null</code> if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or is yntactically invalid, or if the parameter&#39;s year would overflow a 32-bit igned integer.</p>
 
 <h3>MakeFilename</h3>
 
@@ -216,45 +196,23 @@ is empty.</p></li>
 
 <p>Converts a file name from the Content-Disposition header to a suitable ame for saving data to a file. This method is idempotent; that is, alling the method again on the result doesn&#39;t change that result.Examples:</p>
 
-<p><code>
-          &quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;
-</code> (RFC 2047 encoding)</p>
+<p><code>&quot;=?utf-8?q?hello=2Etxt?=&quot; -&gt; &quot;hello.txt&quot;</code> (RFC 2047 encoding)</p>
 
-<p><code>
-          &quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;
-</code> (RFC 2047 encoding)</p>
+<p><code>&quot;=?utf-8?q?long_filename?=&quot; -&gt; &quot;long filename&quot;</code> (RFC 2047 encoding)</p>
 
-<p><code>
-          &quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;
-</code> (RFC 2231 encoding)</p>
+<p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code> (RFC 2231 encoding)</p>
 
-<p><code>
-          &quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;
-</code> (Reserved name)</p>
+<p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code> (Reserved name)</p>
 
-<p><code>
-          &quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;
-</code> (Directory separators)</p>
+<p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code> (Directory separators)</p>
 
-<p><b>Remark:</b>Email and HTTP headers may specify suggested filenames using the ontent-Disposition header field&#39;s <code>
-          filename
-</code> parameter or, in practice, the Content-Type header field&#39;s <code>
-          name
-</code> parameter.</p>
+<p><b>Remark:</b>Email and HTTP headers may specify suggested filenames using the ontent-Disposition header field&#39;s <code>filename</code> parameter or, in practice, the Content-Type header field&#39;s <code>name</code> parameter.</p>
 
 <p>Although RFC 2047 encoded words appearing in both parameters are ritten out by some implementations, this practice is discouraged by ome (especially since the RFC itself says that encoded words &quot;MUST NOT ppear within a &#39;quoted-string&#39;&quot;). Nevertheless, the MakeFilename method as a basis in the RFCs to decode RFC 2047 encoded words (and RFC 2231 ncoding) in file names passed to this method.</p>
 
-<p>RFC 2046 sec. 4.5.1 ( <code>
-          application/octet-stream
-</code> subtype in Content-Type header field) cites an earlier RFC 1341, which defined the use of a &#39;NAME&#39; parameter which gave a<i>suggested</i>file name to be used if the data were written to a file&quot;. Also, RFC 183 sec. 2.3 ( <code>
-          filename
-</code> parameter in Content-Disposition) confirms that the &quot;<i>suggested</i>filename&quot; in the <code>
-          filename
-</code> parameter &quot;should be<i>used as a basis</i>for the actual filename, where possible&quot;, and that that file name hould &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which iscusses the use of that parameter in Hypertext Transfer Protocol HTTP).</p>
+<p>RFC 2046 sec. 4.5.1 ( <code>application/octet-stream</code> subtype in Content-Type header field) cites an earlier RFC 1341, which defined the use of a &#39;NAME&#39; parameter which gave a<i>suggested</i>file name to be used if the data were written to a file&quot;. Also, RFC 183 sec. 2.3 ( <code>filename</code> parameter in Content-Disposition) confirms that the &quot;<i>suggested</i>filename&quot; in the <code>filename</code> parameter &quot;should be<i>used as a basis</i>for the actual filename, where possible&quot;, and that that file name hould &quot;not [be] blindly use[d]&quot;. See also RFC 6266, section 4.3, which iscusses the use of that parameter in Hypertext Transfer Protocol HTTP).</p>
 
-<p>To the extent that the &quot;name&quot; parameter is not allowed in message odies other than those with the media type &quot;application/octet-stream&quot; r treated as that media-type, this is a deviation of RFC 2045 and 2046 see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally eaningful parameters that apply to all media types&quot;). (Some email mplementations may still write out the &quot;name&quot; parameter, even in media ypes other than <code>
-          application/octet-stream
-</code> and even though RFC 2046 has deprecated that parameter.)</p>
+<p>To the extent that the &quot;name&quot; parameter is not allowed in message odies other than those with the media type &quot;application/octet-stream&quot; r treated as that media-type, this is a deviation of RFC 2045 and 2046 see also RFC 2045 sec. 5, which says that &quot;[t]here are NO globally eaningful parameters that apply to all media types&quot;). (Some email mplementations may still write out the &quot;name&quot; parameter, even in media ypes other than <code>application/octet-stream</code> and even though RFC 2046 has deprecated that parameter.)</p>
 
 <p><b>Parameters:</b></p>
 
@@ -286,8 +244,8 @@ is empty.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dispositionValue</i>: A text string that should be the value of a Content-Disposition header ield.</p></li>
-<li><p><i>defaultValue</i>: The value to return in case the disposition value is syntactically nvalid. Can be null.</p></li>
+<li><p><i>dispositionValue</i>: A text string that should be the value of a Content-Disposition header field.</p></li>
+<li><p><i>defaultValue</i>: The value to return in case the disposition value is syntactically invalid. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

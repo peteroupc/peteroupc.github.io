@@ -17,7 +17,7 @@
     PeterO.Mail.ContentDisposition mt);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a>class using the data from the given content disposition.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the data from the given content disposition.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -40,7 +40,7 @@ is null.</li>
     string type);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a>class using the given disposition type.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the given disposition type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -62,7 +62,7 @@ is null.</li>
 <pre>public DispositionBuilder();
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a>class using the disposition type &quot;attachment&quot;.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type &quot;attachment&quot;.</p>
 
 <h3>DispositionType</h3>
 
@@ -86,11 +86,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If this is a multipart media type; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <h3>IsText</h3>
 
@@ -103,11 +99,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If this is a text media type; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <h3>RemoveParameter</h3>
 
@@ -120,7 +112,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: The parameter to remove. The name is compared using a basic ase-insensitive comparison. (Two strings are equal in such a comparison, f they match after converting the basic upper-case letters A to Z (U+0041 o U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: The parameter to remove. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -174,7 +166,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared using basic case-insensitive comparison), it will be overwritten. (Two strings re equal in a basic case-insensitive comparison, if they match after onverting the basic upper-case letters A to Z (U+0041 to U+005A) in both trings to lower case.).</p></li>
+<li><p><i>name</i>: Name of the parameter to set. If this name already exists (compared using a basic case-insensitive comparison), it will be overwritten. (Two strings are equal in a basic case-insensitive comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</p></li>
 <li><p><i>value</i>: Value of the parameter to set.</p></li>
 </ul>
 

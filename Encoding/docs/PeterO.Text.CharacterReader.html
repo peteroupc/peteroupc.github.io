@@ -18,7 +18,7 @@
     string str);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class using a Unicode 16-bit string; if the string begins with a yte-order mark (U+FEFF), it won&#39;t be skipped, and any unpaired surrogate ode points (U+D800 to U+DFFF) in the string are replaced with replacement haracters (U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; if the string begins with a byte-order mark (U+FEFF), it won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -41,13 +41,13 @@ is null.</li>
     bool skipByteOrderMark);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class using a Unicode 16-bit string; any unpaired surrogate code points U+D800 to U+DFFF) in the string are replaced with replacement characters U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string; any unpaired surrogate code points (U+D800 to U+DFFF) in the string are replaced with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The string to read.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -66,14 +66,14 @@ is null.</li>
     bool errorThrow);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class using a Unicode 16-bit string.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class using a Unicode 16-bit string.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: The string to read.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
-<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points U+D800 to U+DFFF) are found in the string. If false, replaces those byte equences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points (U+D800 to U+DFFF) are found in the string. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -92,7 +92,7 @@ is null.</li>
     int length);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -116,7 +116,7 @@ begins.</p></li>
     bool errorThrow);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -128,8 +128,8 @@ begins.</p></li>
 <li><p><i>length</i>: The number of elements in the desired portion of <i>str</i>
 (but not more than <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
-<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points U+D800 to U+DFFF) are found in the string. If false, replaces those byte equences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points (U+D800 to U+DFFF) are found in the string. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -146,7 +146,7 @@ is null.</li>
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) f it appears first in the stream, and replace invalid byte sequences with eplacement characters (U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will read the stream as UTF-8, skip the byte-order mark (U+FEFF) if it appears first in the stream, and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -169,13 +169,13 @@ is null.</li>
     int mode);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class; will skip the byte-order mark (U+FEFF) if it appears first in the tream and replace invalid byte sequences with replacement characters U+FFFD).</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream and replace invalid byte sequences with replacement characters (U+FFFD).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
@@ -201,13 +201,13 @@ is null.</li>
     bool errorThrow);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class; will skip the byte-order mark (U+FEFF) if it appears first in the tream.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class; will skip the byte-order mark (U+FEFF) if it appears first in the stream.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
@@ -218,7 +218,7 @@ is null.</li>
 <p>.</p>
 
 <ul>
-<li><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the etected encoding) are found in the byte stream. If false, replaces those yte sequences with replacement characters (U+FFFD) as the stream is read.</li>
+<li><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
@@ -238,13 +238,13 @@ is null.</li>
     bool dontSkipUtf8Bom);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a>class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Text.CharacterReader.html">PeterO.Text.CharacterReader</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
 <li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
@@ -255,10 +255,8 @@ is null.</li>
 <p>.</p>
 
 <ul>
-<li><p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the etected encoding) are found in the byte stream. If false, replaces those yte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
-<li><p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 and this parameter is <code>
-    true
-</code> , won&#39;t skip the BOM character if it occurs at the start of the stream.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 and this parameter is <code>true</code> , won&#39;t skip the BOM character if it occurs at the start of the stream.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
