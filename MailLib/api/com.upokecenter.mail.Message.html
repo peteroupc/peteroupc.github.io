@@ -146,9 +146,10 @@ readable stream, and with the given file name.</li>
 Deletes all header fields in this message.</li>
 <li><code>static String DecodeHeaderValue​(String name,
              String value)</code><br>
-Not documented yet.</li>
+Decodes RFC 2047 encoded words from the given header field value and returns
+a string with those words decoded.</li>
 <li><code>static Message FromMailtoUrl​(String url)</code><br>
-Not documented yet.</li>
+Creates a message object from a MailTo URL.</li>
 <li><code>String Generate()</code><br>
 Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
@@ -1081,12 +1082,16 @@ field&#39;s value is syntactically invalid.</p></li>
 <pre>public static String DecodeHeaderValue​(String name, String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Decodes RFC 2047 encoded words from the given header field value and returns
+ a string with those words decoded. For an example of encoded words,
+ see the constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>name</code> - Not documented yet.</p></li>
+<li><p><code>name</code> - Name of the header field. This determines the syntax of the
+&quot;value&quot; parameter and is necessary to help this method interpret
+encoded words properly.</p></li>
 <li><p><code>value</code> - Not documented yet.</p></li>
 </ul>
 
@@ -1495,7 +1500,15 @@ character exists, or the entire string otherwise.</p></li>
 <pre>public static Message FromMailtoUrl​(String url)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object from a MailTo URL. The URL can contain key-value
+ pairs that follow a question-mark, as in the following example:
+ &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example,
+ &quot;subject&quot; is the subject of the email address. Only certain keys are
+ supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;,
+ &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field
+ names that will be used to set the returned message&#39;s corresponding
+ header fields. The last, &quot;body&quot;, sets the body of the message to the
+ given text. Keys other than these eight will be ignored.</p>
 
 <h3>ToMailtoUrl</h3>
 
