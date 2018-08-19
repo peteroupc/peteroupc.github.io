@@ -296,14 +296,21 @@ ReadChar to get the normalized String's code points.</div>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>form</code> - Not documented yet.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An List(int) object.</li>
+<li>A list of the normalized Unicode characters.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>GetChars</h3>
@@ -349,14 +356,22 @@ text.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>charArray</code> - Not documented yet.</p></li>
-<li><p><code>form</code> - Not documented yet.</p></li>
+<li><p><code>charArray</code> - An array of Unicode code points.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if the given list of characters is in the given Unicode
+normalization form; otherwise, <code>false</code> .</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;charList&quot; is null.</li>
 </ul>
 
 <h3>IsNormalized</h3>
@@ -368,19 +383,6 @@ text.</p></li>
 
 <div class='deprecationComment'>Either convert the list to a String or wrap it in an ICharacterInput and
  call the corresponding overload instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>charList</code> - Not documented yet.</p></li>
-<li><p><code>form</code> - Not documented yet.</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A Boolean object.</li>
-</ul>
 
 <h3>ReadChar</h3>
 

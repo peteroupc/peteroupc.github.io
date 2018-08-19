@@ -9,7 +9,7 @@
 <pre>public static class CBORDataUtilities
 </pre>
 
-<p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
+<p>Contains methods useful for reading and writing data, with a focus on BOR.</p>
 
 <h3>ParseJSONNumber</h3>
 
@@ -17,17 +17,17 @@
     string str);
 </pre>
 
-<p>Parses a number whose format follows the JSON specification. See #ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
+<p>Parses a number whose format follows the JSON specification. See ParseJSONNumber(String, integersOnly, parseOnly) for more information.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A string to parse. The string is not allowed to contain white space characters, including spaces.</li>
+<li><i>str</i>: A string to parse. The string is not allowed to contain white space haracters, including spaces.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns positive zero if he number is a zero that starts with a minus sign (such as &quot;-0&quot; or -0.0&quot;). Returns null if the parsing fails, including if the string is ull or empty.</p>
 
 <h3>ParseJSONNumber</h3>
 
@@ -37,19 +37,19 @@
     bool positiveOnly);
 </pre>
 
-<p>Parses a number whose format follows the JSON specification (RFC 8259). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
+<p>Parses a number whose format follows the JSON specification (RFC 8259). oughly speaking, a valid number consists of an optional minus sign, one r more basic digits (starting with 1 to 9 unless the only digit is 0), an ptional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and n optional letter E or e with an optional plus or minus sign and one or ore basic digits (the exponent).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string to parse. The string is not allowed to contain white space characters, including spaces.</p></li>
+<li><p><i>str</i>: A string to parse. The string is not allowed to contain white space haracters, including spaces.</p></li>
 <li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string.</p></li>
-<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
+<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is isallowed).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns positive zero if he number is a zero that starts with a minus sign (such as &quot;-0&quot; or -0.0&quot;). Returns null if the parsing fails, including if the string is ull or empty.</p>
 
 <h3>ParseJSONNumber</h3>
 
@@ -60,20 +60,20 @@
     bool preserveNegativeZero);
 </pre>
 
-<p>Parses a number whose format follows the JSON specification (RFC 8259). Roughly speaking, a valid number consists of an optional minus sign, one or more basic digits (starting with 1 to 9 unless the only digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an optional letter E or e with an optional plus or minus sign and one or more basic digits (the exponent).</p>
+<p>Parses a number whose format follows the JSON specification (RFC 8259). oughly speaking, a valid number consists of an optional minus sign, one r more basic digits (starting with 1 to 9 unless the only digit is 0), an ptional decimal point (&quot;.&quot;, full stop) with one or more basic digits, and n optional letter E or e with an optional plus or minus sign and one or ore basic digits (the exponent).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A string to parse. The string is not allowed to contain white space characters, including spaces.</p></li>
+<li><p><i>str</i>: A string to parse. The string is not allowed to contain white space haracters, including spaces.</p></li>
 <li><p><i>integersOnly</i>: If true, no decimal points or exponents are allowed in the string.</p></li>
-<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is disallowed).</p></li>
-<li><p><i>preserveNegativeZero</i>: If true, returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Otherwise, returns negative zero in this case.</p></li>
+<li><p><i>positiveOnly</i>: If true, only positive numbers are allowed (the leading minus is isallowed).</p></li>
+<li><p><i>preserveNegativeZero</i>: If true, returns positive zero if the number is a zero that starts with a inus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Otherwise, returns negative zero in his case.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object that represents the parsed number. Returns null if the parsing fails, including if the string is null or empty.</p>
+<p>A CBOR object that represents the parsed number. Returns null if the arsing fails, including if the string is null or empty.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

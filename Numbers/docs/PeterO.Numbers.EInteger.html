@@ -11,9 +11,9 @@
     System.IEquatable
 </pre>
 
-<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.) Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for extended&quot;, and has this prefix to group it with the other classes common o this library, particularly EDecimal, EFloat, and ERational.)Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
-<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.) Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same value are interchangeable, but they should be compared using the &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p>
+<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for extended&quot;, and has this prefix to group it with the other classes common o this library, particularly EDecimal, EFloat, and ERational.)Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
 <h3>IsEven</h3>
 
@@ -26,7 +26,7 @@
 
 <p><code>
         true
-</code> if this value is even; otherwise,  <code>
+</code> if this value is even; otherwise, <code>
         false
 </code> .</p>
 
@@ -41,7 +41,7 @@
 
 <p><code>
         true
-</code> if this object&#39;s value is a power of two; otherwise,  <code>
+</code> if this object&#39;s value is a power of two; otherwise, <code>
         false
 </code> .</p>
 
@@ -56,7 +56,7 @@
 
 <p><code>
         true
-</code> if this value is 0; otherwise,  <code>
+</code> if this value is 0; otherwise, <code>
         false
 </code> .</p>
 
@@ -137,7 +137,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bigintAugend</i>
+The parameter <i>bigintAugend</i>
 is null.</li>
 </ul>
 
@@ -150,7 +150,7 @@ is null.</li>
 
 <p>Does an AND operation between two arbitrary-precision integer values.</p>
 
-<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) for the purposes of this operator.</p>
 
@@ -169,8 +169,8 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>a</i>
-or  <i>b</i>
+The parameter <i>a</i>
+or <i>b</i>
 is null.</li>
 </ul>
 
@@ -201,7 +201,7 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 
 <p><b>Deprecated.</b> Renamed to ToInt32Unchecked.</p>
 
-<p>Converts this object&#39;s value to a 32-bit signed integer. If the value an&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s wo&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value an&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s wo&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) (in which case the return value might have a different sign than this bject&#39;s value).</p>
 
@@ -236,7 +236,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Deprecated.</b> Renamed to ToInt64Unchecked.</p>
 
-<p>Converts this object&#39;s value to a 64-bit signed integer. If the value an&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s wo&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value an&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s wo&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) (in which case the return value might have a different sign than this bject&#39;s value).</p>
 
@@ -255,7 +255,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><code>
         true
-</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise,  <code>
+</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise, <code>
         false
 </code> .</p>
 
@@ -270,7 +270,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><code>
         true
-</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise,  <code>
+</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise, <code>
         false
 </code> .</p>
 
@@ -314,10 +314,10 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <ul>
 <li><p>System.DivideByZeroException:
-The parameter  <i>bigintDivisor</i>
+The parameter <i>bigintDivisor</i>
 is zero.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>bigintDivisor</i>
+The parameter <i>bigintDivisor</i>
 is null.</p></li>
 </ul>
 
@@ -361,7 +361,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
@@ -369,7 +369,7 @@ is an arbitrary object.</li>
 
 <p><code>
         true
-</code> if this object and another object are equal; otherwise,  <code>
+</code> if this object and another object are equal; otherwise, <code>
         false
 </code> .</p>
 
@@ -391,7 +391,7 @@ is an arbitrary object.</li>
 
 <p><code>
         true
-</code> if this object and another object are equal; otherwise,  <code>
+</code> if this object and another object are equal; otherwise, <code>
         false
 </code> .</p>
 
@@ -425,22 +425,22 @@ is an arbitrary object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
      &#x22;Forms of numbers&#x22;
   </a>) of the arbitrary-precision integer to create. The byte array is encoded sing the following rules:</p></li>
 <li><p>Positive numbers have the first byte&#39;s highest bit cleared, and egative numbers have the bit set.</p></li>
-<li><p>The last byte contains the lowest 8-bits, the next-to-last contains he next lowest 8 bits, and so on. For example, the number 300 can be ncoded as  <code>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains he next lowest 8 bits, and so on. For example, the number 300 can be ncoded as <code>
         0x01, 0x2C
-</code> and 200 as  <code>
+</code> and 200 as <code>
         0x00, 0xC8
-</code> . (Note that the second example contains a set high bit in  <code>
+</code> . (Note that the second example contains a set high bit in <code>
         0xC8
 </code> , so an additional 0 is added at the start to ensure it&#39;s interpreted s positive.)</p></li>
-<li><p>To encode negative numbers, take the absolute value of the number, ubtract by 1, encode the number into bytes, and toggle each bit of ach byte. Any further bits that appear beyond the most significant it of the number will be all ones. For example, the number -450 can e encoded as  <code>
+<li><p>To encode negative numbers, take the absolute value of the number, ubtract by 1, encode the number into bytes, and toggle each bit of ach byte. Any further bits that appear beyond the most significant it of the number will be all ones. For example, the number -450 can e encoded as <code>
         0xfe, 0x70
-</code> and -52869 as  <code>
+</code> and -52869 as <code>
         0xff, 0x31, 0x7B
-</code> . (Note that the second example contains a cleared high bit in  <code>
+</code> . (Note that the second example contains a cleared high bit in <code>
         0x31, 0x7B
 </code> , so an additional 0xff is added at the start to ensure it&#39;s nterpreted as negative.)</p></li>
 </ul>
@@ -461,7 +461,7 @@ is an arbitrary object.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
+The parameter <i>bytes</i>
 is null.</li>
 </ul>
 
@@ -494,7 +494,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter  <i>intValue</i>
+<li><i>intValue</i>: The parameter <i>intValue</i>
 is a 32-bit signed integer.</li>
 </ul>
 
@@ -513,7 +513,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>longerValue</i>: The parameter  <i>longerValue</i>
+<li><i>longerValue</i>: The parameter <i>longerValue</i>
 is a 64-bit signed integer.</li>
 </ul>
 
@@ -545,7 +545,7 @@ is a 64-bit signed integer.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</li>
 </ul>
 
@@ -577,13 +577,13 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is less than 0,  <i>endIndex</i>
-is less than 0, or either is greater than the string&#39;s length, or  <i>endIndex</i>
-is less than  <i>index</i>
+The parameter <i>index</i>
+is less than 0, <i>endIndex</i>
+is less than 0, or either is greater than the string&#39;s length, or <i>endIndex</i>
+is less than <i>index</i>
 .</p></li>
 <li><p>System.FormatException:
 The string portion is empty or in an invalid format.</p></li>
@@ -629,10 +629,10 @@ The string portion is empty or in an invalid format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.FormatException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is in an invalid format.</p></li>
 </ul>
 
@@ -662,13 +662,13 @@ is in an invalid format.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>index</i>
-is less than 0,  <i>endIndex</i>
-is less than 0, or either is greater than the string&#39;s length, or  <i>endIndex</i>
-is less than  <i>index</i>
+The parameter <i>index</i>
+is less than 0, <i>endIndex</i>
+is less than 0, or either is greater than the string&#39;s length, or <i>endIndex</i>
+is less than <i>index</i>
 .</p></li>
 <li><p>System.FormatException:
 The string portion is empty or in an invalid format.</p></li>
@@ -726,7 +726,7 @@ The string portion is empty or in an invalid format.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of  <i>ulongValue</i>
+<p>The value of <i>ulongValue</i>
 as an arbitrary-precision integer.</p>
 
 <h3>Gcd</h3>
@@ -751,7 +751,7 @@ as an arbitrary-precision integer.</p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bigintSecond</i>
+The parameter <i>bigintSecond</i>
 is null.</li>
 </ul>
 
@@ -802,7 +802,7 @@ is null.</li>
 <pre>public int GetLowBit();
 </pre>
 
-<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also e the lowest set bit in the number&#39;s two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also e the lowest set bit in the number&#39;s two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>).).</p>
 
@@ -815,7 +815,7 @@ is null.</li>
 <pre>public PeterO.Numbers.EInteger GetLowBitAsEInteger();
 </pre>
 
-<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also e the lowest set bit in the number&#39;s two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also e the lowest set bit in the number&#39;s two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>).).</p>
 
@@ -829,7 +829,7 @@ is null.</li>
     int index);
 </pre>
 
-<p>Returns whether a bit is set in the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Returns whether a bit is set in the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) of this object&#39; s value.</p>
 
@@ -843,9 +843,9 @@ is null.</li>
 
 <p><code>
         true
-</code> if a bit is set in the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+</code> if a bit is set in the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
-      </a>) of this object&#39; s value; otherwise,  <code>
+      </a>) of this object&#39; s value; otherwise, <code>
         false
 </code> .</p>
 
@@ -924,10 +924,10 @@ is null.</li>
 
 <ul>
 <li><p>System.ArithmeticException:
-The parameter  <i>divisor</i>
+The parameter <i>divisor</i>
 is negative.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>divisor</i>
+The parameter <i>divisor</i>
 is null.</p></li>
 </ul>
 
@@ -949,18 +949,18 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value (  <code>
+<p>The value ( <code>
         this
-</code> ^  <i>pow</i>
-)%  <i>mod</i>
+</code> ^ <i>pow</i>
+)% <i>mod</i>
 .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>pow</i>
-or  <i>mod</i>
+The parameter <i>pow</i>
+or <i>mod</i>
 is null.</li>
 </ul>
 
@@ -984,16 +984,16 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value (  <i>bigintValue</i>
-^  <i>pow</i>
-)%  <i>mod</i>
+<p>The value ( <i>bigintValue</i>
+^ <i>pow</i>
+)% <i>mod</i>
 .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bigintValue</i>
+The parameter <i>bigintValue</i>
 is null.</li>
 </ul>
 
@@ -1019,7 +1019,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bigintMult</i>
+The parameter <i>bigintMult</i>
 is null.</li>
 </ul>
 
@@ -1056,7 +1056,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>valueA</i>
+The parameter <i>valueA</i>
 is null.</li>
 </ul>
 
@@ -1084,7 +1084,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -1097,7 +1097,7 @@ is null.</li>
 
 <p>Does an AND operation between two arbitrary-precision integer values.</p>
 
-<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) for the purposes of this operator.</p>
 
@@ -1128,7 +1128,7 @@ The parameter &quot;a&quot; or &quot;b&quot; is null.</li>
 
 <p>Does an OR operation between two arbitrary-precision integer instances.</p>
 
-<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) for the purposes of this operator.</p>
 
@@ -1174,7 +1174,7 @@ The parameter &quot;first&quot; or &quot;second&quot; is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>dividend</i>
+The parameter <i>dividend</i>
 is null.</li>
 </ul>
 
@@ -1185,7 +1185,7 @@ is null.</li>
     PeterO.Numbers.EInteger b);
 </pre>
 
-<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
            &#x22;Forms of numbers&#x22;
         </a>) for the purposes of this operator.</p>
 
@@ -1204,8 +1204,8 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>a</i>
-or  <i>b</i>
+The parameter <i>a</i>
+or <i>b</i>
 is null.</li>
 </ul>
 
@@ -1229,9 +1229,9 @@ is null.</li>
 
 <p><code>
         true
-</code> if  <i>thisValue</i>
-is greater than  <i>otherValue</i>
-; otherwise,  <code>
+</code> if <i>thisValue</i>
+is greater than <i>otherValue</i>
+; otherwise, <code>
         false
 </code> .</p>
 
@@ -1255,9 +1255,9 @@ is greater than  <i>otherValue</i>
 
 <p><code>
         true
-</code> if  <i>thisValue</i>
-is at least  <i>otherValue</i>
-; otherwise,  <code>
+</code> if <i>thisValue</i>
+is at least <i>otherValue</i>
+; otherwise, <code>
         false
 </code> .</p>
 
@@ -1285,7 +1285,7 @@ is at least  <i>otherValue</i>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -1309,9 +1309,9 @@ is null.</li>
 
 <p><code>
         true
-</code> if  <i>thisValue</i>
-is less than  <i>otherValue</i>
-; otherwise,  <code>
+</code> if <i>thisValue</i>
+is less than <i>otherValue</i>
+; otherwise, <code>
         false
 </code> .</p>
 
@@ -1335,9 +1335,9 @@ is less than  <i>otherValue</i>
 
 <p><code>
         true
-</code> if  <i>thisValue</i>
-is up to  <i>otherValue</i>
-; otherwise,  <code>
+</code> if <i>thisValue</i>
+is up to <i>otherValue</i>
+; otherwise, <code>
         false
 </code> .</p>
 
@@ -1365,7 +1365,7 @@ is up to  <i>otherValue</i>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>dividend</i>
+The parameter <i>dividend</i>
 is null.</li>
 </ul>
 
@@ -1393,7 +1393,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>operand1</i>
+The parameter <i>operand1</i>
 is null.</li>
 </ul>
 
@@ -1419,7 +1419,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>thisValue</i>
+The parameter <i>thisValue</i>
 is null.</li>
 </ul>
 
@@ -1432,7 +1432,7 @@ is null.</li>
 
 <p>Shifts the bits of an arbitrary-precision integer to the right.</p>
 
-<p>For this operation, the arbitrary-precision integer is treated as a wo&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>For this operation, the arbitrary-precision integer is treated as a wo&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>). Thus, for negative values, the arbitrary-precision integer is ign-extended.</p>
 
@@ -1440,7 +1440,7 @@ is null.</li>
 
 <ul>
 <li><p><i>bthis</i>: Another arbitrary-precision integer.</p></li>
-<li><p><i>smallValue</i>: The parameter  <i>smallValue</i>
+<li><p><i>smallValue</i>: The parameter <i>smallValue</i>
 is a 32-bit signed integer.</p></li>
 </ul>
 
@@ -1452,7 +1452,7 @@ is a 32-bit signed integer.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -1480,7 +1480,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bthis</i>
+The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
@@ -1506,7 +1506,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>bigValue</i>
+The parameter <i>bigValue</i>
 is null.</li>
 </ul>
 
@@ -1519,7 +1519,7 @@ is null.</li>
 
 <p>Does an OR operation between two arbitrary-precision integer instances.</p>
 
-<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) for the purposes of this operator.</p>
 
@@ -1538,8 +1538,8 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>first</i>
-or  <i>second</i>
+The parameter <i>first</i>
+or <i>second</i>
 is null.</li>
 </ul>
 
@@ -1559,14 +1559,14 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result. Returns 1 if  <i>powerSmall</i>
+<p>The result. Returns 1 if <i>powerSmall</i>
 is 0.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentException:
-The parameter  <i>powerSmall</i>
+The parameter <i>powerSmall</i>
 is less than 0.</li>
 </ul>
 
@@ -1586,17 +1586,17 @@ is less than 0.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The result. Returns 1 if  <i>power</i>
+<p>The result. Returns 1 if <i>power</i>
 is 0.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>power</i>
+The parameter <i>power</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The parameter  <i>power</i>
+The parameter <i>power</i>
 is less than 0.</p></li>
 </ul>
 
@@ -1622,7 +1622,7 @@ is less than 0.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>divisor</i>
+The parameter <i>divisor</i>
 is null.</p></li>
 <li><p>System.DivideByZeroException:
 Attempted to divide by zero.</p></li>
@@ -1652,7 +1652,7 @@ Attempted to divide by zero.</p></li>
     int numberBits);
 </pre>
 
-<p>Returns an arbitrary-precision integer with the bits shifted to the ight. For this operation, the arbitrary-precision integer is treated as a wo&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Returns an arbitrary-precision integer with the bits shifted to the ight. For this operation, the arbitrary-precision integer is treated as a wo&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>). Thus, for negative values, the arbitrary-precision integer is ign-extended.</p>
 
@@ -1710,7 +1710,7 @@ Attempted to divide by zero.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>subtrahend</i>
+The parameter <i>subtrahend</i>
 is null.</li>
 </ul>
 
@@ -1738,9 +1738,9 @@ This value is less than 0 or greater than 255.</li>
     bool littleEndian);
 </pre>
 
-<p>Returns a byte array of this integer&#39;s value. The byte array will take he number&#39;s two&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Returns a byte array of this integer&#39;s value. The byte array will take he number&#39;s two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
-      </a>), using the fewest bytes necessary to store its value unambiguously. If his value is negative, the bits that appear beyond the most significant it of the number will be all ones. The resulting byte array can be passed o the  <code>
+      </a>), using the fewest bytes necessary to store its value unambiguously. If his value is negative, the bits that appear beyond the most significant it of the number will be all ones. The resulting byte array can be passed o the <code>
         FromBytes()
 </code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
 
@@ -1817,7 +1817,7 @@ This object&#39;s value is too big to fit a 32-bit signed integer.</li>
 <pre>public int ToInt32Unchecked();
 </pre>
 
-<p>Converts this object&#39;s value to a 32-bit signed integer. If the value an&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s wo&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value an&#39;t fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s wo&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) (in which case the return value might have a different sign than this bject&#39;s value).</p>
 
@@ -1848,7 +1848,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <pre>public long ToInt64Unchecked();
 </pre>
 
-<p>Converts this object&#39;s value to a 64-bit signed integer. If the value an&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s wo&#39; s-complement form (see <a href="PeterO.Numbers.EDecimal.html">
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value an&#39;t fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s wo&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
       </a>) (in which case the return value might have a different sign than this bject&#39;s value).</p>
 
@@ -2015,7 +2015,7 @@ This value is outside the range of a 64-bit signed integer.</li>
     PeterO.Numbers.EInteger b);
 </pre>
 
-<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects. Each arbitrary-precision integer is treated as a two&#39;s-complement form see <a href="PeterO.Numbers.EDecimal.html">
+<p>Finds the exclusive &quot;or&quot; of two arbitrary-precision integer objects.Each arbitrary-precision integer is treated as a two&#39;s-complement form see<a href="PeterO.Numbers.EDecimal.html">
            &#x22;Forms of numbers&#x22;
         </a>) for the purposes of this operator.</p>
 
@@ -2034,8 +2034,8 @@ This value is outside the range of a 64-bit signed integer.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>a</i>
-or  <i>b</i>
+The parameter <i>a</i>
+or <i>b</i>
 is null.</li>
 </ul>
 
