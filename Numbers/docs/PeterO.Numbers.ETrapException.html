@@ -12,7 +12,7 @@
     System.Runtime.Serialization.ISerializable
 </pre>
 
-<p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).</p>
+<p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for extended&quot;, and has this prefix to group it with the other classes common o this library, particularly EDecimal, EFloat, and ERational.).</p>
 
 <h3>ETrapException Constructor</h3>
 
@@ -22,12 +22,16 @@
     object result);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.ETrapException.html">PeterO.Numbers.ETrapException</a>class.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flag</i>: A flag that specifies the kind of error ( <code>EContext.FlagXXYY</code>  ). This will only be one flag, such as <code>FlagInexact</code>  or FlagSubnormal.</p></li>
+<li><p><i>flag</i>: A flag that specifies the kind of error (  <code>
+    EContext.FlagXXYY
+</code> ). This will only be one flag, such as  <code>
+    FlagInexact
+</code> or FlagSubnormal.</p></li>
 <li><p><i>ctx</i>: A context object for arbitrary-precision arithmetic settings.</p></li>
 <li><p><i>result</i>: The parameter  <i>result</i>
 is an arbitrary object.</p></li>
@@ -38,22 +42,26 @@ is an arbitrary object.</p></li>
 <pre>public PeterO.Numbers.EContext Context { get; }
 </pre>
 
-<p>Gets the arithmetic context used during the operation that triggered the trap. May be null.</p>
+<p>Gets the arithmetic context used during the operation that triggered the rap. May be null.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The arithmetic context used during the operation that triggered the trap. May be null.</p>
+<p>The arithmetic context used during the operation that triggered the trap. ay be null.</p>
 
 <h3>Error</h3>
 
 <pre>public int Error { get; }
 </pre>
 
-<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as <code>FlagInexact</code>  or FlagSubnormal.</p>
+<p>Gets the flag that specifies the kind of error (EContext.FlagXXX). This ill only be one flag, such as  <code>
+        FlagInexact
+</code> or FlagSubnormal.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as. <code>FlagInexact</code>  or FlagSubnormal.</p>
+<p>The flag that specifies the kind of error (EContext.FlagXXX). This will nly be one flag, such as.  <code>
+        FlagInexact
+</code> or FlagSubnormal.</p>
 
 <h3>Result</h3>
 

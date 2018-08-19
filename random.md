@@ -339,7 +339,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(A) General RNG implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.</small>
 
-<small>(B) JavaScript's `Math.random` is implemented using `xorshift128+` in the latest V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.</small>
+<small>(B) JavaScript's `Math.random` is implemented using `xorshift128+` in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
    - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
@@ -352,7 +352,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(E) In my opinion, Ruby's `Random#rand` method presents a beautiful and simple API for random number generation.</small>
 
-<small>(F) At least in Unix-based systems, calling the `SecureRandom` constructor that takes a byte array is recommended. The byte array should be data described in note (C).</small>
+<small>(F) Calling the `setSeed` method of `SecureRandom` before use is recommended. The data passed to the method should be data described in note (C).</small>
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.</small>
 

@@ -10,7 +10,7 @@
     PeterO.Text.ICharacterInput
 </pre>
 
-<p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.</p>
+<p>A general-purpose character input for reading text from byte streams and ext strings. When reading byte streams, this class supports the UTF-8 haracter encoding by default, but can be configured to support UTF-16 and TF-32 as well.</p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -30,7 +30,7 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</li>
 </ul>
 
@@ -47,14 +47,14 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: The string to read.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</li>
 </ul>
 
@@ -72,15 +72,15 @@ is null.</li>
 
 <ul>
 <li><p><i>str</i>: The string to read.</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
-<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points (U+D800 to U+DFFF) are found in the string. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points U+D800 to U+DFFF) are found in the string. If false, replaces those byte equences with replacement characters (U+FFFD) as the stream is read.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</li>
 </ul>
 
@@ -128,15 +128,15 @@ begins.</p></li>
 <li><p><i>length</i>: The number of elements in the desired portion of  <i>str</i>
 (but not more than  <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip that code point as it reads the string.</p></li>
-<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points (U+D800 to U+DFFF) are found in the string. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>skipByteOrderMark</i>: If true and the string begins with a byte-order mark (U+FEFF), will skip hat code point as it reads the string.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if unpaired surrogate code points U+D800 to U+DFFF) are found in the string. If false, replaces those byte equences with replacement characters (U+FFFD) as the stream is read.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
+The parameter  <i>str</i>
 is null.</li>
 </ul>
 
@@ -158,7 +158,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>stream</i>
+The parameter  <i>stream</i>
 is null.</li>
 </ul>
 
@@ -175,12 +175,12 @@ is null.</li>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
@@ -189,7 +189,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>stream</i>
+The parameter  <i>stream</i>
 is null.</li>
 </ul>
 
@@ -207,25 +207,25 @@ is null.</li>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
 
 <ul>
-<li><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</li>
+<li><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the etected encoding) are found in the byte stream. If false, replaces those yte sequences with replacement characters (U+FFFD) as the stream is read.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>stream</i>
+The parameter  <i>stream</i>
 is null.</li>
 </ul>
 
@@ -244,18 +244,18 @@ is null.</li>
 
 <ul>
 <li><p><i>stream</i>: A readable byte stream.</p></li>
-<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
+<li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte tream. This usually involves checking whether the stream begins with a yte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 o U+007F) before reading the rest of the stream. This value can be one of he following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
 
 <ul>
-<li><p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the detected encoding) are found in the byte stream. If false, replaces those byte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
+<li><p><i>errorThrow</i>: If true, will throw an exception if invalid byte sequences (in the etected encoding) are found in the byte stream. If false, replaces those yte sequences with replacement characters (U+FFFD) as the stream is read.</p></li>
 <li><p><i>dontSkipUtf8Bom</i>: If the stream is detected as UTF-8 and this parameter is  <code>true</code> , won&#39;t skip the BOM character if it occurs at the start of the stream.</p></li>
 </ul>
 
@@ -263,7 +263,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>stream</i>
+The parameter  <i>stream</i>
 is null.</li>
 </ul>
 
@@ -291,13 +291,13 @@ begins.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The number of code points read from the stream. This can be less than the  <i>length</i>
- parameter if the end of the stream is reached.</p>
+parameter if the end of the stream is reached.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>chars</i>
+The parameter  <i>chars</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>index</i>
