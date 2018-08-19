@@ -223,7 +223,7 @@ Meeting recommendation 4 is aided by using _stable_ PRNGs; see [**"Definitions"*
 <a id=Recommendations_for_Seeded_PRNGs></a>
 ### Recommendations for Seeded PRNGs
 
-Which PRNG to use for generating reproducible results depends on the application. But as recommendations, any PRNG algorithm selected for producing reproducible results&mdash;
+Which PRNG to use for generating reproducible "randomness" depends on the application. But as recommendations, any PRNG algorithm selected for producing such "randomness"&mdash;
 
 - should meet or exceed the quality requirements of a statistical RNG,
 - should be reasonably fast, and
