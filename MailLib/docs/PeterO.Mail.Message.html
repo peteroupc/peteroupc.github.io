@@ -26,23 +26,11 @@
 <li><p>If the transfer encoding is absent and the content type is message/rfc822&quot;, bytes with values greater than 127 (called &quot;8-bit ytes&quot; in the rest of this summary) are still allowed, despite the efault value of &quot;7bit&quot; for &quot;Content-Transfer-Encoding&quot;.</p></li>
 <li><p>In the following cases, if the transfer encoding is absent, declared s 7bit, or treated as 7bit, 8-bit bytes are still allowed:</p></li>
 <li><p>(a) The preamble and epilogue of multipart messages, which will be gnored.</p></li>
-<li><p>(b) If the charset is declared to be <code>
-        utf-8
-</code> .</p></li>
-<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to e <code>
-        us-ascii
-</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte ncodings).</p></li>
+<li><p>(b) If the charset is declared to be <code>utf-8</code> .</p></li>
+<li><p>(c) If the content type is &quot;text/html&quot; and the charset is declared to e <code>us-ascii</code> , &quot;windows-1252&quot;, &quot;windows-1251&quot;, or &quot;iso-8859-*&quot; (all single byte ncodings).</p></li>
 <li><p>(d) In non-MIME message bodies and in text/plain message bodies. Any -bit bytes are replaced with the substitute character byte (0x1a).</p></li>
 <li><p>If the message starts with the word &quot;From&quot; (and no other case ariations of that word) followed by one or more space (U+0020) not ollowed by colon, that text and the rest of the text is skipped up to nd including a line feed (U+000A). (See also RFC 4155, which escribes the so-called &quot;mbox&quot; convention with &quot;From&quot; lines of this ind.)</p></li>
-<li><p>The name <code>
-        ascii
-</code> is treated as a synonym for <code>
-        us-ascii
-</code> , despite being a reserved name under RFC 2046. The name <code>
-        cp1252
-</code> is treated as a synonym for <code>
-        windows-1252
-</code> , even though it&#39;s not an IANA registered alias.</p></li>
+<li><p>The name <code>ascii</code> is treated as a synonym for <code>us-ascii</code> , despite being a reserved name under RFC 2046. The name <code>cp1252</code> is treated as a synonym for <code>windows-1252</code> , even though it&#39;s not an IANA registered alias.</p></li>
 <li><p>The following deviations involve encoded words under RFC 2047:</p></li>
 <li><p>(a) If a sequence of encoded words decodes to a string with a CTL haracter (U+007F, or a character less than U+0020 and not TAB) after eing converted to Unicode, the encoded words are left un-decoded.</p></li>
 <li><p>(b) This implementation can decode encoded words regardless of the haracter length of the line in which they appear. This implementation an generate a header field line with one or more encoded words even f that line is more than 76 characters long. (This implementation ollows the recommendation in RFC 5322 to limit header field lines to o more than 78 characters, where possible.)</p></li>
@@ -62,7 +50,7 @@
     byte[] bytes);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a>class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -84,7 +72,7 @@ is null.</li>
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a>class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -128,7 +116,7 @@ is null.</li>
 
 <ul>
 <li>System.NotSupportedException:
-Either this message is a multipart message, so it doesn&#39;t have its own ody text, or this message has no character encoding declared or assumed or it (which is usually the case for non-text messages), or the character ncoding is not supported.</li>
+Either this message is a multipart message, so it doesn&#39;t have its own body text, or this message has no character encoding declared or assumed for it (which is usually the case for non-text messages), or the character encoding is not supported.</li>
 </ul>
 
 <h3>CCAddresses</h3>
@@ -180,11 +168,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Gets a file name suggested by this message for saving the message&#39;s ody to a file. For more information on the algorithm, see ontentDisposition.MakeFilename.</p>
 
-<p>This method generates a file name based on the <code>
-          filename
-</code> parameter of the Content-Disposition header field, if it exists, or on he <code>
-          name
-</code> parameter of the Content-Type header field, otherwise.</p>
+<p>This method generates a file name based on the <code>filename</code> parameter of the Content-Disposition header field, if it exists, or on he <code>name</code> parameter of the Content-Type header field, otherwise.</p>
 
 <p><b>Returns:</b></p>
 
@@ -318,7 +302,7 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
 <li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
-<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which ase no file name is assigned. Only the file name portion of this arameter is used, which in this case means the portion of the string fter the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire tring otherwise.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -354,7 +338,7 @@ sg.AddAttachment(fs,filename); } }
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>filename</i>: A file name to assign to the attachment. If the file name has one of ertain extensions (such as &quot;.html&quot;), an appropriate media type will be ssigned to the attachment based on that extension; otherwise, the media ype &quot;application/octet-stream&quot; is assigned. Can be null or empty, in hich case no file name is assigned. Only the file name portion of this arameter is used, which in this case means the portion of the string fter the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire tring otherwise.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the attachment based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -398,7 +382,7 @@ The parameter <i>name</i>
 or <i>value</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or he header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -412,7 +396,7 @@ The header field name is too long or contains an invalid character, or he header
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; r &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
+<li><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -426,7 +410,7 @@ The header field name is too long or contains an invalid character, or he header
 The key or value of <i>header</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or he header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 </ul>
 
 <h3>AddInline</h3>
@@ -534,7 +518,7 @@ sg.AddInline(fs,filename); } }
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>filename</i>: A file name to assign to the body part. If the file name has one of ertain extensions (such as &quot;.html&quot;), an appropriate media type will be ssigned to the body part based on that extension; otherwise, the media ype &quot;application/octet-stream&quot; is assigned. Can be null or empty, in hich case no file name is assigned. Only the file name portion of this arameter is used, which in this case means the portion of the string fter the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire tring otherwise.</p></li>
+<li><p><i>filename</i>: A file name to assign to the body part. If the file name has one of certain extensions (such as &quot;.html&quot;), an appropriate media type will be assigned to the body part based on that extension; otherwise, the media type &quot;application/octet-stream&quot; is assigned. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -568,18 +552,25 @@ An I/O error occurred.</p></li>
     string value);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Decodes RFC 2047 encoded words from the given header field value and eturns a string with those words decoded. For an example of encoded ords, see the constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Not documented yet.</p></li>
-<li><p><i>value</i>: Not documented yet.</p></li>
+<li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
+<li><p><i>value</i>: A header field value that could contain encoded words. For example, if the name parameter is &quot;From&quot;, this parameter could be &quot;=?utf-8?q?me?= <a href="mailto:me@example.com">me@example.com</a>&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>The header field value with valid encoded words decoded.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+&quot;name&quot; is null.</li>
+</ul>
 
 <h3>FromMailtoUrl</h3>
 
@@ -587,7 +578,7 @@ An I/O error occurred.</p></li>
     string url);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object from a MailTo URL. The URL can contain key-value airs that follow a question-mark, as in the following example: mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is he subject of the email address. Only certain keys are supported, namely, to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and body&quot;. The first seven are header field names that will be used to set he returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets he body of the message to the given text. Keys other than these eight ill be ignored.</p>
 
 <h3>Generate</h3>
 
@@ -596,11 +587,7 @@ An I/O error occurred.</p></li>
 
 <p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U+0000 to +007F), and the transfer encoding will always be 7bit, uoted-printable, or base64 (the declared transfer encoding for this essage will be ignored).</p>
 
-<p>The following applies to the following header fields: From, To, Cc, cc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, nd Resent-Sender. If the header field exists, but has an invalid yntax, has no addresses, or appears more than once, this method will enerate a synthetic header field with the display-name set to the ontents of all of the header fields with the same name, and the address et to <code>
-          me@[header-name]-address.invalid
-</code> as the address (a <code>
-          .invalid
-</code> address is a reserved address that can never belong to anyone). (An xception is that the Resent-* header fields may appear more than once.) he generated message should always have a From header field.</p>
+<p>The following applies to the following header fields: From, To, Cc, cc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, nd Resent-Sender. If the header field exists, but has an invalid yntax, has no addresses, or appears more than once, this method will enerate a synthetic header field with the display-name set to the ontents of all of the header fields with the same name, and the address et to <code>me@[header-name]-address.invalid</code> as the address (a <code>.invalid</code> address is a reserved address that can never belong to anyone). (An xception is that the Resent-* header fields may appear more than once.) he generated message should always have a From header field.</p>
 
 <p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with hat name will be generated (using the current local time for the Date ield).</p>
 
@@ -650,7 +637,7 @@ The message can&#39;t be generated.</li>
 
 <ul>
 <li><p>System.NotSupportedException:
-&quot;headerName&quot; is not supported for this method. Currently, the only header ields supported are To, Cc, Bcc, Reply-To, Sender, and From.</p></li>
+&quot;headerName&quot; is not supported for this method. Currently, the only header fields supported are To, Cc, Bcc, Reply-To, Sender, and From.</p></li>
 <li><p>System.ArgumentNullException:
 &quot;headerName&quot; is null.</p></li>
 <li><p>System.ArgumentException:
@@ -773,13 +760,13 @@ Name is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Generates a multilingual message (see RFC 8255) from a list of messages nd a list of language strings.</p>
+<p>Generates a multilingual message ( <code>multipart/multilingual</code> , see RFC 8255) from a list of messages and a list of language strings.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. ach message should have the same content, but be in a different language. ach message must have a From header field and use the same email address n that field as the other messages. The messages should be ordered in escending preference of language.</p></li>
-<li><p><i>languages</i>: A list of language strings corresponding to the messages given in the messages&quot; parameter. A language string at a given index corresponds to he message at the same index. Each language string must follow the syntax f the Content-Language header field (see LanguageTags.GetLanguageList).</p></li>
+<li><p><i>messages</i>: A list of messages forming the parts of the multilingual message object. Each message should have the same content, but be in a different language. Each message must have a From header field and use the same email address in that field as the other messages. The messages should be ordered in descending preference of language.</p></li>
+<li><p><i>languages</i>: A list of language strings corresponding to the messages given in the &quot;messages&quot; parameter. A language string at a given index corresponds to the message at the same index. Each language string must follow the syntax of the Content-Language header field (see LanguageTags.GetLanguageList).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -792,7 +779,7 @@ Name is null.</li>
 <li><p>System.ArgumentNullException:
 &quot;messages&quot; or &quot;languages&quot; is null.</p></li>
 <li><p>System.ArgumentException:
-&quot;messages&quot; or &quot;languages&quot; is empty, their lengths don&#39;t match, at least ne message is &quot;null&quot;, each message doesn&#39;t contain the same email ddresses in their From header fields, &quot;languages&quot; contains a yntactically invalid language tag list, &quot;languages&quot; contains the language ag &quot;zzx&quot; not appearing alone or at the end of the language tag list, or he first message contains no From header field.</p></li>
+&quot;messages&quot; or &quot;languages&quot; is empty, their lengths don&#39;t match, at least one message is &quot;null&quot;, each message doesn&#39;t contain the same email addresses in their From header fields, &quot;languages&quot; contains a syntactically invalid language tag list, &quot;languages&quot; contains the language tag &quot;zzx&quot; not appearing alone or at the end of the language tag list, or the first message contains no From header field.</p></li>
 </ul>
 
 <h3>NewBodyPart</h3>
@@ -864,17 +851,24 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>languages</i>: Not documented yet.</li>
+<li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>The best matching body part for the given languages. If the body part has o subject, then the top-level subject is used. If this message is not a ultipart/multilingual message or has fewer than two body parts, returns his object. If no body part matches the given languages, returns the last ody part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+&quot;languages&quot; is null.</li>
+</ul>
 
 <h3>SelectLanguageMessage</h3>
 
@@ -883,18 +877,25 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list and original-language reference.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>languages</i>: Not documented yet.</p></li>
-<li><p><i>preferOriginals</i>: Not documented yet.</p></li>
+<li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
+<li><p><i>preferOriginals</i>: If true, a body part marked as the original language version is chosen if it matches one of the given language ranges, even if the original language has a lower priority than another language with a matching body part.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>The best matching body part for the given languages. If the body part has o subject, then the top-level subject is used. If this message is not a ultipart/multilingual message or has fewer than two body parts, returns his object. If no body part matches the given languages, returns the last ody part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+&quot;languages&quot; is null.</li>
+</ul>
 
 <h3>SetBody</h3>
 
@@ -944,7 +945,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting rom 0) is as follows:</p></li>
+<li><p><i>dateTime</i>: An array containing eight elements. Each element of the array (starting from 0) is as follows:</p></li>
 <li><p>0 - The year. For example, the value 2000 means 2000 C.E.</p></li>
 <li><p>1 - Month of the year, from 1 (January) through 12 (December).</p></li>
 <li><p>2 - Day of the month, from 1 through 31.</p></li>
@@ -1050,7 +1051,7 @@ is null.</p></li>
 
 <ul>
 <li><p><i>index</i>: Zero-based index of the header field to set.</p></li>
-<li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; r &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
+<li><p><i>header</i>: A key/value pair. The key is the name of the header field, such as &quot;From&quot; or &quot;Content-ID&quot;. The value is the header field&#39;s value.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1092,7 +1093,7 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or he header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>name</i>
 or <i>value</i>
@@ -1185,7 +1186,11 @@ is null.</li>
 <pre>public string ToMailtoUrl();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a &quot;mailto:&quot; URL corresponding to this message. The following eader fields, and only these, are used to generate the URL: To, Cc, Bcc, eply-To, Subject, Keywords, Comments. The message body is included in the RL only if this message has a text content type and uses a supported charset&quot; parameter. The To header field is included in the URL only if it as display names or group syntax.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A &quot;mailto:&quot; URL corresponding to this message.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

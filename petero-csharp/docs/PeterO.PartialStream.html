@@ -11,7 +11,7 @@
     System.IDisposable
 </pre>
 
-<p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
+<p>Represents a portion of another data stream. For this to work, the nderlying stream must be seekable and have a known length.</p>
 
 <h3>PartialStream Constructor</h3>
 
@@ -21,7 +21,7 @@
     long length);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a>class.</p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -43,7 +43,7 @@ is a 64-bit signed integer.</p></li>
     bool closeOnDispose);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.PartialStream.html">PeterO.PartialStream</a>class.</p>
+<p>Initializes a new instance of the <a href="PeterO.PartialStream.html">PeterO.PartialStream</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -76,11 +76,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If the underlying stream supports reading; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If the underlying stream supports reading; otherwise,  <code>false</code> .</p>
 
 <h3>CanSeek</h3>
 
@@ -91,11 +87,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If the underlying stream supports seeking; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
 
 <h3>CanWrite</h3>
 
@@ -106,11 +98,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> If the underlying stream supports writing; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
 
 <h3>Length</h3>
 
@@ -146,11 +134,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater han t
 
 <ul>
 <li><i>disposing</i>: The parameter <i>disposing</i>
-is either <code>
-    true
-</code> or <code>
-    false
-</code> .</li>
+is either <code>true</code> or <code>false</code> .</li>
 </ul>
 
 <h3>Flush</h3>

@@ -76,7 +76,7 @@
 <pre>public static readonly PeterO.ExtendedFloat SignalingNaN;
 </pre>
 
-<p>A not-a-number value that signals an invalid operation flag when it&#39;s assed as an argument to any arithmetic operation in arbitrary-precision inary float.</p>
+<p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</p>
 
 <h3>Ten</h3>
 
@@ -97,7 +97,7 @@
 <pre>public PeterO.BigInteger Exponent { get; }
 </pre>
 
-<p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if he exponent is positive or zero.</p>
+<p>Gets this object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
 
 <p><b>Returns:</b></p>
 
@@ -110,7 +110,7 @@
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Gets a value indicating whether this object is negative, including egative zero.</p>
+<p>Gets a value indicating whether this object is negative, including negative zero.</p>
 
 <p><b>Returns:</b></p>
 
@@ -225,7 +225,7 @@ is null.</li>
     object obj);
 </pre>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those f another object and that other object is an arbitrary-precision decimal umber.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object and that other object is an arbitrary-precision decimal number.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -246,7 +246,7 @@ is an arbitrary object.</li>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those f another object.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -274,7 +274,7 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Determines whether this object&#39;s mantissa and exponent are equal to those f another object.</p>
+<p>Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -323,7 +323,7 @@ is null.</li>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Creates a binary float from a text string that represents a number. Note hat if the string contains a negative exponent, the resulting value might ot be exact, in which case the resulting binary float will be an pproximation of this decimal number&#39;s value. (NOTE: This documentation reviously said the binary float will contain enough precision to ccurately convert it to a 32-bit or 64-bit floating point number. Due to ouble rounding, this will generally not be the case for certain numbers onverted from decimal to ExtendedFloat via this method and in turn onverted to <code>double</code> or <code>float</code> .)The format of the string generally consists of:</p>
+<p>Creates a binary float from a text string that represents a number. Note that if the string contains a negative exponent, the resulting value might not be exact, in which case the resulting binary float will be an approximation of this decimal number&#39;s value. (NOTE: This documentation previously said the binary float will contain enough precision to accurately convert it to a 32-bit or 64-bit floating point number. Due to double rounding, this will generally not be the case for certain numbers converted from decimal to ExtendedFloat via this method and in turn converted to <code>double</code> or <code>float</code> .)The format of the string generally consists of:</p>
 
 <ul>
 <li><p>An optional plus sign (&quot;+&quot; , U+002B) or minus sign (&quot;-&quot;, U+002D) (if -&#39; , the value is negative.)</p></li>
@@ -345,7 +345,7 @@ begins.</p></li>
 <li><p><i>length</i>: The length, in code units, of the desired portion of <i>str</i>
 (but not more than <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and xponent range to apply to the parsed number. Can be null.</p></li>
+<li><p><i>ctx</i>: A PrecisionContext object specifying the precision, rounding, and exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -373,7 +373,7 @@ is less than <i>length</i>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates this object&#39;s hash code. No application or process IDs are sed in the hash code calculation.</p>
+<p>Calculates this object&#39;s hash code. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -384,7 +384,7 @@ is less than <i>length</i>
 <pre>public bool IsInfinity();
 </pre>
 
-<p>Gets a value indicating whether this object is positive or negative nfinity.</p>
+<p>Gets a value indicating whether this object is positive or negative infinity.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -434,7 +434,7 @@ is less than <i>length</i>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Gets a value indicating whether this object is a quiet not-a-number alue.</p>
+<p>Gets a value indicating whether this object is a quiet not-a-number value.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -447,7 +447,7 @@ is less than <i>length</i>
 
 <p><b>Deprecated.</b> Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</p>
 
-<p>Gets a value indicating whether this object is a signaling not-a-number alue.</p>
+<p>Gets a value indicating whether this object is a signaling not-a-number value.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -462,7 +462,7 @@ is less than <i>length</i>
 
 <p><b>Return Value:</b></p>
 
-<p>A string representation of this object. The value is converted to decimal nd the decimal form of this number&#39;s value is returned.</p>
+<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

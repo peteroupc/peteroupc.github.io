@@ -292,7 +292,7 @@ RNGs ultimately rely on nondeterministic sources to generate random numbers.  Su
 Examples of nondeterministic sources are&mdash;
 
 - disk access timings,
-- timings of keystrokes and other input device interactions,
+- timings of keystrokes and/or other input device interactions,
 - thermal noise,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
 - differences between two high-resolution counter values taken in quick succession (such as in S. M&uuml;ller's "Jitter RNG").
@@ -404,7 +404,7 @@ The second consideration is present if PRNGs are used for shuffling. If the PRNG
 
 The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items.)
 
-The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**BigDeal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example&mdash;
+The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**Big Deal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example&mdash;
 
 - to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), and
 - to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).

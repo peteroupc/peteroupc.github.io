@@ -24,11 +24,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> if this value is even; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this value is even; otherwise,  <code>false</code> .</p>
 
 <h3>IsPowerOfTwo</h3>
 
@@ -39,11 +35,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> if this object&#39;s value is a power of two; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object&#39;s value is a power of two; otherwise,  <code>false</code> .</p>
 
 <h3>IsZero</h3>
 
@@ -54,11 +46,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>
-        true
-</code> if this value is 0; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this value is 0; otherwise,  <code>false</code> .</p>
 
 <h3>One</h3>
 
@@ -253,11 +241,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object&#39;s value is from -2147483648 through 2147483647; otherwise,  <code>false</code> .</p>
 
 <h3>CanFitInInt64</h3>
 
@@ -268,11 +252,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object&#39;s value is from -9223372036854775808 through 223372036854775807; otherwise,  <code>false</code> .</p>
 
 <h3>CompareTo</h3>
 
@@ -367,11 +347,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if this object and another object are equal; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>Equals</h3>
 
@@ -389,11 +365,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if this object and another object are equal; otherwise, <code>
-        false
-</code> .</p>
+<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>FromByte</h3>
 
@@ -429,20 +401,8 @@ is an arbitrary object.</li>
      &#x22;Forms of numbers&#x22;
   </a>) of the arbitrary-precision integer to create. The byte array is encoded sing the following rules:</p></li>
 <li><p>Positive numbers have the first byte&#39;s highest bit cleared, and egative numbers have the bit set.</p></li>
-<li><p>The last byte contains the lowest 8-bits, the next-to-last contains he next lowest 8 bits, and so on. For example, the number 300 can be ncoded as <code>
-        0x01, 0x2C
-</code> and 200 as <code>
-        0x00, 0xC8
-</code> . (Note that the second example contains a set high bit in <code>
-        0xC8
-</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted s positive.)</p></li>
-<li><p>To encode negative numbers, take the absolute value of the number, ubtract by 1, encode the number into bytes, and toggle each bit of ach byte. Any further bits that appear beyond the most significant it of the number will be all ones. For example, the number -450 can e encoded as <code>
-        0xfe, 0x70
-</code> and -52869 as <code>
-        0xff, 0x31, 0x7B
-</code> . (Note that the second example contains a cleared high bit in <code>
-        0x31, 0x7B
-</code> , so an additional 0xff is added at the start to ensure it&#39;s nterpreted as negative.)</p></li>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains he next lowest 8 bits, and so on. For example, the number 300 can be ncoded as <code>0x01, 0x2C</code> and 200 as <code>0x00, 0xC8</code> . (Note that the second example contains a set high bit in <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted s positive.)</p></li>
+<li><p>To encode negative numbers, take the absolute value of the number, ubtract by 1, encode the number into bytes, and toggle each bit of ach byte. Any further bits that appear beyond the most significant it of the number will be all ones. For example, the number -450 can e encoded as <code>0xfe, 0x70</code> and -52869 as <code>0xff, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in <code>0x31, 0x7B</code> , so an additional 0xff is added at the start to ensure it&#39;s nterpreted as negative.)</p></li>
 </ul>
 
 <p>For little-endian, the byte order is reversed from the byte order just iscussed.</p>
@@ -450,7 +410,7 @@ is an arbitrary object.</li>
 <p>.</p>
 
 <ul>
-<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte irst. If false, the byte order is big-endian, or most-significant-byte irst.</li>
+<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -534,7 +494,7 @@ is a 64-bit signed integer.</li>
 
 <ul>
 <li><p><i>str</i>: A string described by the FromRadixSubstring method.</p></li>
-<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic igits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 o U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -563,10 +523,10 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string. The desired portion of the string must contain only haracters allowed by the given radix, except that it may start with a inus sign (&quot;-&quot;, U+002D) to indicate a negative number. The desired ortion is not allowed to contain white space characters, including paces.</p></li>
-<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic igits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 o U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
+<li><p><i>str</i>: A text string. The desired portion of the string must contain only characters allowed by the given radix, except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is not allowed to contain white space characters, including spaces.</p></li>
+<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
 <li><p><i>index</i>: The index of the string that starts the string portion.</p></li>
-<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be ndex + endIndex - 1.</p></li>
+<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be index + endIndex - 1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -618,7 +578,7 @@ The string portion is empty or in an invalid format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: A text string. The string must contain only basic digits 0 to 9 (U+0030 o U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to ndicate a negative number. The string is not allowed to contain white pace characters, including spaces.</li>
+<li><i>str</i>: A text string. The string must contain only basic digits 0 to 9 (U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The string is not allowed to contain white space characters, including spaces.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -649,9 +609,9 @@ is in an invalid format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string. The desired portion of the string must contain only basic igits 0 to 9 (U+0030 to U+0039), except that it may start with a minus ign (&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is ot allowed to contain white space characters, including spaces.</p></li>
+<li><p><i>str</i>: A text string. The desired portion of the string must contain only basic digits 0 to 9 (U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The desired portion is not allowed to contain white space characters, including spaces.</p></li>
 <li><p><i>index</i>: The index of the string that starts the string portion.</p></li>
-<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be ndex + endIndex - 1.</p></li>
+<li><p><i>endIndex</i>: The index of the string that ends the string portion. The length will be index + endIndex - 1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -767,8 +727,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>index</i>: Zero-based index of the first bit to retrieve, where 0 is the east-significant bit of the number.</p></li>
-<li><p><i>numberBits</i>: The number of bits to retrieve, starting with the first. Must be from 0 hrough 64.</p></li>
+<li><p><i>index</i>: Zero-based index of the first bit to retrieve, where 0 is the least-significant bit of the number.</p></li>
+<li><p><i>numberBits</i>: The number of bits to retrieve, starting with the first. Must be from 0 through 64.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -841,13 +801,9 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if a bit is set in the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
+<p><code>true</code> if a bit is set in the two&#39;s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
-      </a>) of this object&#39; s value; otherwise, <code>
-        false
-</code> .</p>
+      </a>) of this object&#39; s value; otherwise,  <code>false</code> .</p>
 
 <h3>GetSignedBitLength</h3>
 
@@ -876,9 +832,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if a bit is set in this number&#39;s absolute value.</p>
+<p><code>true</code> if a bit is set in this number&#39;s absolute value.</p>
 
 <h3>GetUnsignedBitLength</h3>
 
@@ -949,9 +903,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>The value ( <code>
-        this
-</code> ^ <i>pow</i>
+<p>The value ( <code>this</code> ^ <i>pow</i>
 )% <i>mod</i>
 .</p>
 
@@ -1227,13 +1179,9 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if <i>thisValue</i>
+<p><code>true</code> if <i>thisValue</i>
 is greater than <i>otherValue</i>
-; otherwise, <code>
-        false
-</code> .</p>
+; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&gt;=</code></h3>
 
@@ -1253,13 +1201,9 @@ is greater than <i>otherValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if <i>thisValue</i>
+<p><code>true</code> if <i>thisValue</i>
 is at least <i>otherValue</i>
-; otherwise, <code>
-        false
-</code> .</p>
+; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&lt;&lt;</code></h3>
 
@@ -1274,7 +1218,7 @@ is at least <i>otherValue</i>
 
 <ul>
 <li><p><i>bthis</i>: The arbitrary-precision integer to shift left.</p></li>
-<li><p><i>bitCount</i>: The number of bits to shift. Can be negative, in which case this is the ame as shiftRight with the absolute value of this parameter.</p></li>
+<li><p><i>bitCount</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of this parameter.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1307,13 +1251,9 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if <i>thisValue</i>
+<p><code>true</code> if <i>thisValue</i>
 is less than <i>otherValue</i>
-; otherwise, <code>
-        false
-</code> .</p>
+; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>&lt;=</code></h3>
 
@@ -1333,13 +1273,9 @@ is less than <i>otherValue</i>
 
 <p><b>Return Value:</b></p>
 
-<p><code>
-        true
-</code> if <i>thisValue</i>
+<p><code>true</code> if <i>thisValue</i>
 is up to <i>otherValue</i>
-; otherwise, <code>
-        false
-</code> .</p>
+; otherwise,  <code>false</code> .</p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -1639,7 +1575,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>numberBits</i>: The number of bits to shift. Can be negative, in which case this is the ame as shiftRight with the absolute value of this parameter.</li>
+<li><i>numberBits</i>: The number of bits to shift. Can be negative, in which case this is the same as shiftRight with the absolute value of this parameter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1740,14 +1676,12 @@ This value is less than 0 or greater than 255.</li>
 
 <p>Returns a byte array of this integer&#39;s value. The byte array will take he number&#39;s two&#39; s-complement form (see<a href="PeterO.Numbers.EDecimal.html">
          &#x22;Forms of numbers&#x22;
-      </a>), using the fewest bytes necessary to store its value unambiguously. If his value is negative, the bits that appear beyond the most significant it of the number will be all ones. The resulting byte array can be passed o the <code>
-        FromBytes()
-</code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
+      </a>), using the fewest bytes necessary to store its value unambiguously. If his value is negative, the bits that appear beyond the most significant it of the number will be all ones. The resulting byte array can be passed o the <code>FromBytes()</code> method (with the same byte order) to reconstruct this integer&#39;s value.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte irst. If false, the byte order is big-endian, or most-significant-byte irst.</li>
+<li><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1867,7 +1801,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>radix</i>: A radix from 2 through 36. For example, to generate a hexadecimal base-16) string, specify 16. To generate a decimal (base-10) string, pecify 10.</li>
+<li><i>radix</i>: A radix from 2 through 36. For example, to generate a hexadecimal (base-16) string, specify 16. To generate a decimal (base-10) string, specify 10.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1878,7 +1812,7 @@ This object&#39;s value is too big to fit a 64-bit signed integer.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or ither is greater than the string&#39;s length, or &quot;endIndex&quot; is less than index&quot; ; or radix is less than 2 or greater than 36.</li>
+The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</li>
 </ul>
 
 <h3>ToSByteChecked</h3>

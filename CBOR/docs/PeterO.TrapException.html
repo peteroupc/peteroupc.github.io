@@ -31,7 +31,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>flag</i>: A flag that specifies the kind of error (PrecisionContext.FlagXXX). This ill only be one flag, such as FlagInexact or FlagSubnormal.</p></li>
+<li><p><i>flag</i>: A flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p></li>
 <li><p><i>ctx</i>: A context object for arbitrary-precision arithmetic settings.</p></li>
 <li><p><i>result</i>: The desired result of the operation that caused the trap, such as an <code>ExtendedDecimal</code> or <code>ExtendedFloat</code> .</p></li>
 </ul>
@@ -41,7 +41,7 @@
 <pre>public PeterO.PrecisionContext Context { get; }
 </pre>
 
-<p>Gets the precision context used during the operation that triggered the rap. May be null.</p>
+<p>Gets the precision context used during the operation that triggered the trap. May be null.</p>
 
 <p><b>Returns:</b></p>
 
@@ -52,7 +52,7 @@
 <pre>public int Error { get; }
 </pre>
 
-<p>Gets the flag that specifies the kind of error PrecisionContext.FlagXXX). This will only be one flag, such as lagInexact or FlagSubnormal.</p>
+<p>Gets the flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
 
 <p><b>Returns:</b></p>
 
