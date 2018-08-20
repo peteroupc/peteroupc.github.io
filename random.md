@@ -452,7 +452,7 @@ The following Python code suggests how many bits of [**_entropy_**](#Nondetermin
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
 
-Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
+Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`), such as with `xorshift1024*` or `ranlux48`.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
 
 The PRNG chosen this way should meet at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.
 
