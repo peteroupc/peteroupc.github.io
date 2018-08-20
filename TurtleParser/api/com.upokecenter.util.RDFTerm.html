@@ -19,7 +19,7 @@ Predicate for RDF types.</li>
 <li><code>static int BLANK</code><br>
 Type value for a blank node.</li>
 <li><code>static RDFTerm FALSE</code><br>
-Object for false.</li>
+object for false.</li>
 <li><code>static RDFTerm FIRST</code><br>
 Predicate for the first object in a list.</li>
 <li><code>static int IRI</code><br>
@@ -27,11 +27,11 @@ Type value for an IRI (Internationalized Resource Identifier.).</li>
 <li><code>static int LANGSTRING</code><br>
 Type value for a string with a language tag.</li>
 <li><code>static RDFTerm NIL</code><br>
-Object for nil, the end of a list, or an empty list.</li>
+object for nil, the end of a list, or an empty list.</li>
 <li><code>static RDFTerm REST</code><br>
 Predicate for the remaining objects in a list.</li>
 <li><code>static RDFTerm TRUE</code><br>
-Object for true.</li>
+object for true.</li>
 <li><code>static int TYPEDSTRING</code><br>
 Type value for a piece of data serialized to a string.</li>
 </ul>
@@ -62,7 +62,7 @@ Gets the IRI, blank node identifier, or lexical form of an RDF literal.</li>
 <li><code>int hashCode()</code><br>
 Not documented yet.</li>
 <li><code>boolean isBlank()</code><br>
-Gets whether this term is a blank node.</li>
+Gets a value indicating whether this term is a blank node.</li>
 <li><code>boolean isIRI​(String str)</code><br>
 Not documented yet.</li>
 <li><code>boolean isOrdinaryString()</code><br>
@@ -120,7 +120,7 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <pre>public static final RDFTerm NIL
 </pre>
 
-<p>Object for nil, the end of a list, or an empty list.</p>
+<p>object for nil, the end of a list, or an empty list.</p>
 
 <h3>REST</h3>
 
@@ -134,14 +134,14 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <pre>public static final RDFTerm FALSE
 </pre>
 
-<p>Object for false.</p>
+<p>object for false.</p>
 
 <h3>TRUE</h3>
 
 <pre>public static final RDFTerm TRUE
 </pre>
 
-<p>Object for true.</p>
+<p>object for true.</p>
 
 <h2>Method Details</h2>
 
@@ -167,7 +167,8 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code></p></li>
 </ul>
 
 <h3>fromIRI</h3>
@@ -218,8 +219,9 @@ Gets a string representation of this RDF term in N-Triples format.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
-languageTag</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+languageTag</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code></p></li>
 </ul>
 
 <h3>fromTypedString</h3>
@@ -264,8 +266,9 @@ languageTag</code> is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
-iri</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+iri</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code></p></li>
 </ul>
 
 <h3>equals</h3>
@@ -357,7 +360,7 @@ iri</code> is null.</li>
 <pre>public boolean isBlank()
 </pre>
 
-<p>Gets whether this term is a blank node.</p>
+<p>Gets a value indicating whether this term is a blank node.</p>
 
 <p><strong>Returns:</strong></p>
 

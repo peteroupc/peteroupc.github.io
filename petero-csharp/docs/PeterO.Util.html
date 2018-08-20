@@ -55,27 +55,22 @@ is null.</li>
     TValue value);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows: <code>dict.AddIfMissing&lt;TKey, TValue&gt;(key, value)</code> . If the object&#39;s class already has a AddIfMissing<TKey, TValue> method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dict</i>: The parameter <i>dict</i>
-is an IDictionary object.</p></li>
-<li><p><i>key</i>: The parameter <i>key</i>
-is a TKey object.</p></li>
-<li><p><i>value</i>: The parameter <i>value</i>
-is a TValue object.</p></li>
-<li><p>&lt;TKey&gt;: Object type for keys.</p></li>
-<li><p>&lt;TValue&gt;: Object type for values.</p></li>
+<li><p><i>dict</i>: The parameter  <i>dict</i>
+is not documented yet.</p></li>
+<li><p><i>key</i>: The parameter  <i>key</i>
+is not documented yet.</p></li>
+<li><p><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>dict</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>AddOverwrite</h3>
@@ -114,28 +109,22 @@ The parameter is null.</li>
     this System.Collections.Generic.IEnumerable&lt;T&gt; col);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>col.AllSame&lt;T&gt;()</code> . If the object&#39;s class already has a AllSame<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>col.AllSame&lt;T&gt;()</code> . If the object&#39;s class already has a <code>AllSame&lt;T&gt;</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>col</i>: The parameter <i>col</i>
-is an IEnumerable object.</p></li>
-<li><p>&lt;T&gt;: Any object type.</p></li>
+<li><i>col</i>: The parameter  <i>col</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>col</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>AllSame</h3>
@@ -145,30 +134,24 @@ is null.</li>
     System.Func&lt;TContainer, TItem&gt; func);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>containers.AllSame&lt;TContainer, TItem&gt;(func)</code> . If the object&#39;s class already has a AllSame<TContainer, TItem> method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>containers</i>: The parameter <i>containers</i>
-is an IEnumerable object.</p></li>
-<li><p><i>func</i>: The parameter <i>func</i>
-is a Func object.</p></li>
-<li><p>&lt;TContainer&gt;: Object type representing containers of items. Can also be the same type as TItem.</p></li>
-<li><p>&lt;TItem&gt;: Object type representing items stored in each container.</p></li>
+<li><p><i>containers</i>: The parameter  <i>containers</i>
+is not documented yet.</p></li>
+<li><p><i>func</i>: The parameter  <i>func</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>containers</i>
-or <i>func</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>ArrayToString</h3>
@@ -177,16 +160,11 @@ is null.</li>
     this System.Collections.Generic.IEnumerable&lt;T&gt; array);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>array.ArrayToString&lt;T&gt;()</code> . If the object&#39;s class already has a ArrayToString<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>array.ArrayToString&lt;T&gt;()</code> . If the object&#39;s class already has a  <code>ArrayToString&lt;T&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>array</i>: The parameter  <i>array</i>
-is not documented yet.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><i>array</i>: The parameter  <i>array</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -201,27 +179,22 @@ is not documented yet.</p></li>
     System.IO.Stream output);
 </pre>
 
-<p>Copies a certain number of bytes from one stream to another.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows: <code>input.CopyStream(length, output)</code> . If the object&#39;s class already has a CopyStream method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>input</i>: The parameter <i>input</i>
-is a Stream object.</p></li>
-<li><p><i>length</i>: The parameter <i>length</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>output</i>: The parameter <i>output</i>
-is a Stream object.</p></li>
+<li><p><i>input</i>: The parameter  <i>input</i>
+is not documented yet.</p></li>
+<li><p><i>length</i>: The parameter  <i>length</i>
+is not documented yet.</p></li>
+<li><p><i>output</i>: The parameter  <i>output</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>input</i>
-or <i>output</i>
-is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
+<li>System.ArgumentNullException:
+The parameter is null.</li>
 </ul>
 
 <h3>CopyStream</h3>
@@ -231,24 +204,20 @@ is null.</p></li>
     System.IO.Stream output);
 </pre>
 
-<p>Copies all bytes from one stream to another.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows: <code>input.CopyStream(output)</code> . If the object&#39;s class already has a CopyStream method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>input</i>: The parameter <i>input</i>
-is a Stream object.</p></li>
-<li><p><i>output</i>: The parameter <i>output</i>
-is a Stream object.</p></li>
+<li><p><i>input</i>: The parameter  <i>input</i>
+is not documented yet.</p></li>
+<li><p><i>output</i>: The parameter  <i>output</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>input</i>
-or <i>output</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>CopyStructure</h3>
@@ -258,16 +227,11 @@ is null.</li>
     where T : new(), PeterO.IStructureT;
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing T and can be called as follows:  <code>structure.CopyStructure&lt;T&gt;()</code> . If the object&#39;s class already has a CopyStructure<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing T and can be called as follows:  <code>structure.CopyStructure&lt;T&gt;()</code> . If the object&#39;s class already has a  <code>CopyStructure&lt;T&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>structure</i>: The parameter  <i>structure</i>
-is not documented yet.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><i>structure</i>: The parameter  <i>structure</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -278,8 +242,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>structure</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>EachWithIndex</h3>
@@ -293,7 +256,10 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li>&lt;T&gt;: Type parameter not documented yet.</li>
+<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -340,20 +306,15 @@ The parameter is null.</li>
     int count);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows: <code>list.GetSegment&lt;T&gt;(start, count)</code> . If the object&#39;s class already has a GetSegment<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IList and can be called as follows: <code>list.GetSegment&lt;T&gt;(start, count)</code> . If the object&#39;s class already has a <code>GetSegment&lt;T&gt;</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>list</i>: The parameter <i>list</i>
-is an IList object.</p></li>
-<li><p><i>start</i>: The parameter <i>start</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>count</i>: The parameter <i>count</i>
-is a 32-bit signed integer.</p></li>
-<li><p>&lt;T&gt;: Any object type.</p></li>
+<li><p><i>list</i>: The parameter  <i>list</i>
+is not documented yet.</p></li>
+<li><p><i>start</i>: The parameter  <i>start</i>
+is not documented yet.</p></li>
+<li><p><i>count</i>: The parameter  <i>count</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -364,8 +325,7 @@ is a 32-bit signed integer.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>list</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>HasUnique</h3>
@@ -374,16 +334,11 @@ is null.</li>
     this System.Collections.Generic.IEnumerable&lt;T&gt; col);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>col.HasUnique&lt;T&gt;()</code> . If the object&#39;s class already has a HasUnique<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>col.HasUnique&lt;T&gt;()</code> . If the object&#39;s class already has a  <code>HasUnique&lt;T&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>col</i>: The parameter  <i>col</i>
-is not documented yet.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><i>col</i>: The parameter  <i>col</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -394,8 +349,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>col</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>HasUnique</h3>
@@ -405,30 +359,24 @@ is null.</li>
     System.Func&lt;TContainer, TItem&gt; func);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>containers.HasUnique&lt;TContainer, TItem&gt;(func)</code> . If the object&#39;s class already has a HasUnique<TContainer, TItem> method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>containers</i>: The parameter <i>containers</i>
-is an IEnumerable object.</p></li>
-<li><p><i>func</i>: The parameter <i>func</i>
-is a Func object.</p></li>
-<li><p>&lt;TContainer&gt;: Object type representing containers of items. Can also be the same type as TItem.</p></li>
-<li><p>&lt;TItem&gt;: Object type representing items stored in each container.</p></li>
+<li><p><i>containers</i>: The parameter  <i>containers</i>
+is not documented yet.</p></li>
+<li><p><i>func</i>: The parameter  <i>func</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>containers</i>
-or <i>func</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>Implode</h3>
@@ -534,17 +482,13 @@ The parameter is null.</li>
     TSecond s);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>f</i>: The parameter <i>f</i>
-is a TFirst object.</p></li>
-<li><p><i>s</i>: The parameter <i>s</i>
-is a TSecond object.</p></li>
-<li><p>&lt;TFirst&gt;: Any object type.</p></li>
-<li><p>&lt;TSecond&gt;: Any object type.</p></li>
+<li><p><i>f</i>: The parameter  <i>f</i>
+is not documented yet.</p></li>
+<li><p><i>s</i>: The parameter  <i>s</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -558,16 +502,11 @@ is a TSecond object.</p></li>
     where T : System.IComparable&lt;T&gt;T;
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>coll.MaxOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a MaxOrDefault<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>coll.MaxOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a <code>MaxOrDefault&lt;T&gt;</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>coll</i>: The parameter <i>coll</i>
-is an IEnumerable object.</p></li>
-<li><p>&lt;T&gt;: Any object type that implements IComparable<T>.</p></li>
+<li><i>coll</i>: The parameter  <i>coll</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -578,8 +517,7 @@ is an IEnumerable object.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>coll</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>MinOrDefault</h3>
@@ -589,16 +527,11 @@ is null.</li>
     where T : System.IComparable&lt;T&gt;T;
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>coll.MinOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a MinOrDefault<T> method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>coll.MinOrDefault&lt;T&gt;()</code> . If the object&#39;s class already has a  <code>MinOrDefault&lt;T&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>coll</i>: The parameter  <i>coll</i>
-is not documented yet.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><i>coll</i>: The parameter  <i>coll</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -609,8 +542,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>coll</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>RemoveAll</h3>
@@ -746,9 +678,9 @@ is not documented yet.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
+<li><p>System.ArgumentException:</p></li>
 <li><p>System.ArgumentNullException:
 The parameter is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <h3>SetValue</h3>
@@ -778,9 +710,9 @@ is not documented yet.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
+<li><p>System.ArgumentException:</p></li>
 <li><p>System.ArgumentNullException:
 The parameter is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <h3>StructureSize</h3>
@@ -789,15 +721,11 @@ The parameter is null.</p></li>
     this PeterO.IStructure s);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IStructure and can be called as follows: <code>s.StructureSize()</code> . If the object&#39;s class already has a StructureSize method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing IStructure and can be called as follows: <code>s.StructureSize()</code> . If the object&#39;s class already has a <code>StructureSize</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>s</i>: The parameter <i>s</i>
-is an IStructure object.</li>
+<li><i>s</i>: The parameter  <i>s</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -808,8 +736,7 @@ is an IStructure object.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>s</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>Sum</h3>
@@ -842,16 +769,13 @@ is not documented yet.</p></li>
     System.Func&lt;TInput, TOutput&gt; func);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows: <code>containers.Transform&lt;TInput, TOutput&gt;(func)</code> . If the object&#39;s class already has a Transform<TInput, TOutput> method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>containers</i>: The parameter <i>containers</i>
-is an IEnumerable object.</p></li>
-<li><p><i>func</i>: The parameter <i>func</i>
-is a Func object.</p></li>
-<li><p>&lt;TOutput&gt;: Output type.</p></li>
+<li><p><i>containers</i>: The parameter  <i>containers</i>
+is not documented yet.</p></li>
+<li><p><i>func</i>: The parameter  <i>func</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -865,29 +789,18 @@ is a Func object.</p></li>
     int maxValue);
 </pre>
 
-<p>Creates an iterator of integers starting at a minimum value and ending at one less than the maximum.In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows: <code>minValue.UpToExcluding(maxValue)</code> . If the object&#39;s class already has a UpToExcluding method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows: <code>minValue.UpToExcluding(maxValue)</code> . If the object&#39;s class already has a <code>UpToExcluding</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>minValue</i>: The parameter <i>minValue</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>maxValue</i>: The parameter <i>maxValue</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>minValue</i>: The parameter  <i>minValue</i>
+is not documented yet.</p></li>
+<li><p><i>maxValue</i>: The parameter  <i>maxValue</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IEnumerable(int) object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-The parameter <em>minValue</em> is greater than <em>maxValue</em>.</li>
-</ul>
 
 <h3>UpToIncluding</h3>
 
@@ -896,28 +809,18 @@ The parameter <em>minValue</em> is greater than <em>maxValue</em>.</li>
     int maxValue);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows: <code>minValue.UpToIncluding(maxValue)</code> . If the object&#39;s class already has a UpToIncluding method with the same parameters, that method takes precedence over this extension method.</p>
-
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing Int32 and can be called as follows: <code>minValue.UpToIncluding(maxValue)</code> . If the object&#39;s class already has a <code>UpToIncluding</code> method with the same parameters, that method takes precedence over this xtension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>minValue</i>: The parameter <i>minValue</i>
-is a 32-bit signed integer.</p></li>
-<li><p><i>maxValue</i>: The parameter <i>maxValue</i>
-is a 32-bit signed integer.</p></li>
+<li><p><i>minValue</i>: The parameter  <i>minValue</i>
+is not documented yet.</p></li>
+<li><p><i>maxValue</i>: The parameter  <i>maxValue</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IEnumerable(int) object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
 
 <h3>ValueOrDefault</h3>
 
@@ -945,9 +848,9 @@ is not documented yet.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
+<li><p>System.ArgumentException:</p></li>
 <li><p>System.ArgumentNullException:
 The parameter is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

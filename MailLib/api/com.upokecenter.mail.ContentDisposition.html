@@ -70,8 +70,7 @@ modification of a file (RFC 2183 sec.</li>
 <li><code>String GetParameter​(String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>Map&lt;String,String&gt; getParameters()</code><br>
-Gets a list of parameter names associated with this object and their
-values.</li>
+Gets a list of parameter names associated with this object and their values.</li>
 <li><code>int[] GetReadDate()</code><br>
 Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot;
 parameter, which specifies the date at which a file was last read
@@ -190,8 +189,9 @@ or &quot;attachment&quot;.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If the disposition type is inline; otherwise, <code>
-false</code>.</li>
+<li><code>true</code> if the disposition type is inline; otherwise,
+<code>false</code>. <code>true</code> If the disposition type is inline;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>isAttachment</h3>
@@ -204,8 +204,9 @@ false</code>.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If the disposition type is attachment; otherwise,
-<code>false</code>.</li>
+<li><code>true</code> if the disposition type is attachment; otherwise,
+<code>false</code>. <code>true</code> If the disposition type is attachment;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -213,19 +214,19 @@ false</code>.</li>
 <pre>public final Map&lt;String,String&gt; getParameters()
 </pre>
 
-<p>Gets a list of parameter names associated with this object and their
- values.<p>For the &quot;filename&quot; parameter, the value of that parameter
- is not adapted with the ContentDisposition.MakeFilename method; see
- the documentation for the ContentDisposition class.</p></p>
+<p>Gets a list of parameter names associated with this object and their values.
+ <p>For the &quot;filename&quot; parameter, the value of that parameter is not
+ adapted with the ContentDisposition.MakeFilename method; see the
+ documentation for the ContentDisposition class.</p></p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A read-only list of parameter names associated with this object and
-their values.getNOTE(): Previous versions erroneously stated that the list
-will be sorted by name. In fact, the names will not be guaranteed to
-appear in any particular order; this is at least the case in version
-0.10.0.</li>
+their values. NOTE: Previous versions erroneously stated that the
+list will be sorted by name. In fact, the names will not be
+guaranteed to appear in any particular order; this is at least the
+case in version 0.10.0.</li>
 </ul>
 
 <h3>toString</h3>
@@ -297,7 +298,7 @@ appear in any particular order; this is at least the case in version
  the use of a &#39;NAME&#39; parameter which gave a <i>suggested</i> file name
  to be used if the data were written to a file&quot;. Also, RFC 2183 sec.
  2.3 (<code>filename</code> parameter in Content-Disposition) confirms that
- the &quot;<i>suggested</i> filename&quot; in the <code>filename</code> parameter
+ the &quot; <i>suggested</i> filename&quot; in the <code>filename</code> parameter
  &quot;should be <i>used as a basis</i> for the actual filename, where
  possible&quot;, and that that file name should &quot;not [be] blindly use[d]&quot;.
  See also RFC 6266, section 4.3, which discusses the use of that
@@ -309,7 +310,7 @@ appear in any particular order; this is at least the case in version
  parameters that apply to all media types&quot;). (Some email
  implementations may still write out the &quot;name&quot; parameter, even in
  media types other than <code>application/octet-stream</code> and even
- though RFC 2046 has deprecated that parameter.) </p> </p></p>
+ though RFC 2046 has deprecated that parameter.)</p></p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -329,7 +330,7 @@ replaced with underscores; spaces and tabs are collapsed to a single
 space; leading and trailing spaces and tabs are removed; and the
 filename is truncated if it would otherwise be too long. The returned
 string will be in normalization form C. Returns the empty string if
-&quot;str&quot; is null or empty.</li>
+<code>str</code> is null or empty.</li>
 </ul>
 
 <h3>GetFilename</h3>

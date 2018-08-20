@@ -13,13 +13,13 @@
 
 <p><b>Deprecated.</b> Use EDecimal from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called  <code>PeterO.Numbers.EDecimal</code>  in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or  <code>com.upokecenter.numbers.EDecimal</code>  in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code>  method (by including the new library in your code, among other things).</b></p>
+<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EDecimal</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EDecimal</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
 
 <p>Represents an arbitrary-precision decimal floating-point number.<b>About decimal arithmetic</b></p>
 
 <p>Decimal (base-10) arithmetic, such as that provided by this class, is appropriate for calculations involving such real-world data as prices and other sums of money, tax rates, and measurements. These calculations often involve multiplying or dividing one decimal with another decimal, or performing other operations on decimal numbers. Many of these calculations also rely on rounding behavior in which the result after rounding is a decimal number (for example, multiplying a price by a premium rate, then rounding, should result in a decimal amount of money).</p>
 
-<p>On the other hand, most implementations of  <code>float</code>  and <code>double</code> , including in C# and Java, store numbers in a binary (base-2) floating-point format and use binary floating-point arithmetic. Many decimal numbers can&#39;t be represented exactly in binary floating-point format (regardless of its length). Applying binary arithmetic to numbers intended to be decimals can sometimes lead to unintuitive results, as is shown in the description for the FromDouble() method of this class.</p>
+<p>On the other hand, most implementations of <code>float</code> and <code>double</code> , including in C# and Java, store numbers in a binary (base-2) loating-point format and use binary floating-point arithmetic. Many ecimal numbers can&#39;t be represented exactly in binary floating-point ormat (regardless of its length). Applying binary arithmetic to numbers ntended to be decimals can sometimes lead to unintuitive results, as is hown in the description for the FromDouble() method of this class.</p>
 
 <p><b>About ExtendedDecimal instances</b></p>
 
@@ -29,7 +29,7 @@
 
 <p>The mantissa and exponent format preserves trailing zeros in the number&#39;s value. This may give rise to multiple ways to store the same value. For example, 1.00 and 1 would be stored differently, even though they have the same value. In the first case, 100 * 10^-2 (100 with decimal point moved left by 2), and in the second case, 1 * 10^0 (1 with decimal point moved 0).</p>
 
-<p>This class also supports values for negative zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b> is generally used when a negative number is rounded to 0; it has the same mathematical value as positive zero. <b>Infinity</b> is generally used when a non-zero number is divided by zero, or when a very high number can&#39;t be represented in a given exponent range.<b>Not-a-number</b> is generally used to signal errors.</p>
+<p>This class also supports values for negative zero, not-a-number (NaN) values, and infinity.<b>Negative zero</b>is generally used when a negative number is rounded to 0; it has the ame mathematical value as positive zero.<b>Infinity</b>is generally used when a non-zero number is divided by zero, or when a ery high number can&#39;t be represented in a given exponent range.<b>Not-a-number</b>is generally used to signal errors.</p>
 
 <p><b>Errors and Exceptions</b></p>
 
@@ -37,7 +37,7 @@
 
 <p>Passing a quiet NaN to any arithmetic operation shown here will return a quiet NaN, unless noted otherwise. Invalid operations will also return a quiet NaN, as stated in the individual methods.</p>
 
-<p>Unless noted otherwise, passing a null arbitrary-precision decimal argument to any method here will throw an exception.</p>
+<p>Unless noted otherwise,passing a null arbitrary-precision decimal argument to any method here will throw an exception.</p>
 
 <p>When an arithmetic operation signals the flag FlagInvalid, FlagOverflow, or FlagDivideByZero, it will not throw an exception too, unless the flag&#39;s trap is enabled in the precision context (see EContext&#39;s Traps property).</p>
 
@@ -138,7 +138,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this object is negative, including negative zero; otherwise, <c>false</c>. <code>true</code>  If this object is negative, including negative zero; otherwise,  <code>false</code> .</p>
+<p><code>true</code> If this object is negative, including negative zero; otherwise,  <code>false</code> .</p>
 
 <h3>Mantissa</h3>
 
@@ -186,7 +186,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
+<li><i>other</i>: The parameter <i>other</i>
 is an ExtendedDecimal object.</li>
 </ul>
 
@@ -219,7 +219,7 @@ is an ExtendedDecimal object.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>mantissa</i>
-or  <i>exponent</i>
+or <i>exponent</i>
 is null.</li>
 </ul>
 
@@ -234,13 +234,13 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
+<li><i>obj</i>: The parameter <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if the objects are equal; otherwise, <code>false</code> .</p>
+<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
 
 <h3>Equals</h3>
 
@@ -260,7 +260,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object&#39;s mantissa and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+<p><code>true</code> if this object&#39;s mantissa and exponent are equal to those of another bject; otherwise,  <code>false</code> .</p>
 
 <h3>FromString</h3>
 
@@ -268,8 +268,7 @@ is an arbitrary object.</li>
     string str);
 </pre>
 
-<p>Creates a decimal number from a text string that represents a number. See  <code>FromString(String, int, int,
-            EContext)</code>  for more information.</p>
+<p>Creates a decimal number from a text string that represents a number. See <code>FromString(String, int, int, EContext)</code> for more information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -288,7 +287,7 @@ is an arbitrary object.</li>
 The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.FormatException:
-The parameter  <i>str</i>
+The parameter <i>str</i>
 is not a correctly formatted number string.</p></li>
 </ul>
 
@@ -312,7 +311,7 @@ is not a correctly formatted number string.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
+<p><code>true</code> if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
 
 <h3>IsNaN</h3>
 
@@ -323,7 +322,7 @@ is not a correctly formatted number string.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object is not a number (NaN); otherwise,  <code>false</code> .</p>
+<p><code>true</code> if this object is not a number (NaN); otherwise,  <code>false</code> .</p>
 
 <h3>IsQuietNaN</h3>
 
@@ -336,7 +335,7 @@ is not a correctly formatted number string.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
+<p><code>true</code> if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
 
 <h3>ToDouble</h3>
 

@@ -64,7 +64,7 @@ is null or invalid.</li>
 The parameter <i>dateTime</i>
 is null or invalid.</p></li>
 <li><p>System.NotSupportedException:
-The time zone offset is other than 0 and <i>gmt</i>
+The time zone offset is other than 0 and  <i>gmt</i>
 is true.</p></li>
 </ul>
 
@@ -84,8 +84,8 @@ is true.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>An 8-element array containing the date and time, or <code>null</code> if <i>str</i>
-is null, empty, or syntactically invalid, or if the string&#39;s year would verflow the range of a 32-bit signed integer.</p>
+<p>An 8-element array containing the date and time, or <code>null</code>  if  <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
 
 <h3>ParseDateString</h3>
 
@@ -102,22 +102,22 @@ is null, empty, or syntactically invalid, or if the string&#39;s year would verf
 <li><p>2 - Day of the month, from 1 through 31.</p></li>
 <li><p>3 - Hour of the day, from 0 through 23.</p></li>
 <li><p>4 - Minute of the hour, from 0 through 59.</p></li>
-<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 0 to accommodate leap seconds). (Leap seconds are additional seconds dded to adjust international atomic time, or TAI, to an approximation astronomical time known as coordinated universal time, or UTC.)</p></li>
+<li><p>5 - Second of the minute, from 0 through 60 (this value can go up to 60 to accommodate leap seconds). (Leap seconds are additional seconds added to adjust international atomic time, or TAI, to an approximation of astronomical time known as coordinated universal time, or UTC.)</p></li>
 <li><p>6 - Milliseconds of the second, from 0 through 999. Will always be 0.</p></li>
-<li><p>7 - Number of minutes to subtract from this date and time to get lobal time. This number can be positive or negative.</p></li>
+<li><p>7 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative.</p></li>
 </ul>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: String.</p></li>
-<li><p><i>parseObsoleteZones</i>: If set to <code>true</code> , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
+<li><p><i>parseObsoleteZones</i>: If set to  <code>true</code> , this method allows obsolete time zones (single-letter time zones, &quot;GMT&quot;, &quot;UT&quot;, and certain three-letter combinations) to appear in the date-time string.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An 8-element array containing the date and time, or <code>null</code> if <i>str</i>
-is null, empty, or syntactically invalid, or if the string&#39;s year would verflow the range of a 32-bit signed integer.</p>
+<p>An 8-element array containing the date and time, or <code>null</code>  if  <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

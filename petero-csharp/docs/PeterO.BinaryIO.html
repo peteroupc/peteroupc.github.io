@@ -17,8 +17,6 @@
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.BinaryIO.html">PeterO.BinaryIO</a> class. Initializes a new BinaryIO instance.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -30,8 +28,7 @@ is a Stream object.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>CanRead</h3>
@@ -39,55 +36,35 @@ is null.</li>
 <pre>public bool CanRead { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream can be read.</p>
-
-<p><b>Returns:</b></p>
-
-<p><c>true</c> if the underlying stream can be read; otherwise, <c>false</c>. <code>true</code> If the underlying stream can be read; otherwise, . <code>false</code> .</p>
+<p>Not documented yet.</p>
 
 <h3>CanSeek</h3>
 
 <pre>public bool CanSeek { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports seeking.</p>
-
-<p><b>Returns:</b></p>
-
-<p><c>true</c> if the underlying stream supports seeking; otherwise, <c>false</c>. <code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
+<p>Not documented yet.</p>
 
 <h3>CanWrite</h3>
 
 <pre>public bool CanWrite { get; }
 </pre>
 
-<p>Gets a value indicating whether the underlying stream supports writing.</p>
-
-<p><b>Returns:</b></p>
-
-<p><c>true</c> if the underlying stream supports writing; otherwise, <c>false</c>. <code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+<p>Not documented yet.</p>
 
 <h3>Length</h3>
 
 <pre>public long Length { get; }
 </pre>
 
-<p>Gets the length of the underlying stream.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The length of the underlying stream.</p>
+<p>Not documented yet.</p>
 
 <h3>Position</h3>
 
 <pre>public long Position { get; set;}
 </pre>
 
-<p>Gets or sets the position of the underlying stream.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The position of the underlying stream.</p>
+<p>Not documented yet.</p>
 
 <h3>Read</h3>
 
@@ -97,16 +74,15 @@ is null.</li>
     int length);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>data</i>
+<li><p><i>data</i>: The parameter  <i>data</i>
+is not documented yet.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of <i>data</i>
-(but not more than <i>data</i>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
+(but not more than  <i>data</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -118,24 +94,15 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>data</i>
-is null.</p></li>
+The parameter is null.</p></li>
 <li><p>System.ArgumentException:
-Either <i>offset</i>
-or <i>length</i>
-is less than 0 or greater than <i>data</i>
-&#39;s length, or <i>data</i>
-&#39; s length minus <i>offset</i>
-is less than <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;data&quot;&#39;s length, or &quot;data&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 </ul>
 
 <h3>Read7BitEncodedInt32BE</h3>
 
 <pre>public int Read7BitEncodedInt32BE();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -146,10 +113,6 @@ is less than <i>length</i>
 <pre>public int Read7BitEncodedInt32LE();
 </pre>
 
-<p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
-
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
@@ -158,8 +121,6 @@ is less than <i>length</i>
 
 <pre>public long Read7BitEncodedInt64BE();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -170,8 +131,6 @@ is less than <i>length</i>
 <pre>public long Read7BitEncodedInt64LE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
@@ -180,8 +139,6 @@ is less than <i>length</i>
 
 <pre>public int Read7BitEncodedUInt32BE();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -192,10 +149,6 @@ is less than <i>length</i>
 <pre>public int Read7BitEncodedUInt32LE();
 </pre>
 
-<p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
-
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
@@ -204,8 +157,6 @@ is less than <i>length</i>
 
 <pre>public byte ReadByte();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -217,31 +168,21 @@ is less than <i>length</i>
     int size);
 </pre>
 
-<p>Reads data from a stream into a byte array.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>size</i>: The parameter <i>size</i>
-is a 32-bit signed integer.</li>
+<li><i>size</i>: The parameter  <i>size</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A byte array containing the data read.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
+<p>A byte array.</p>
 
 <h3>ReadDoubleBE</h3>
 
 <pre>public double ReadDoubleBE();
 </pre>
-
-<p>Reads a 64-bit floating-point number in big-endian byte order.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -252,8 +193,6 @@ is a 32-bit signed integer.</li>
 <pre>public double ReadDoubleLE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit floating-point number.</p>
@@ -262,8 +201,6 @@ is a 32-bit signed integer.</li>
 
 <pre>public short ReadInt16BE();
 </pre>
-
-<p>Reads a 16-bit signed integer in big-endian byte order (2 bytes).</p>
 
 <p><b>Return Value:</b></p>
 
@@ -274,8 +211,6 @@ is a 32-bit signed integer.</li>
 <pre>public short ReadInt16LE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 16-bit signed integer.</p>
@@ -284,8 +219,6 @@ is a 32-bit signed integer.</li>
 
 <pre>public int ReadInt32BE();
 </pre>
-
-<p>Reads a 32-bit signed integer in big-endian byte order (4 bytes).</p>
 
 <p><b>Return Value:</b></p>
 
@@ -296,8 +229,6 @@ is a 32-bit signed integer.</li>
 <pre>public int ReadInt32LE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
@@ -306,8 +237,6 @@ is a 32-bit signed integer.</li>
 
 <pre>public long ReadInt64BE();
 </pre>
-
-<p>Reads a 64-bit signed integer in big-endian byte order (8 bytes).</p>
 
 <p><b>Return Value:</b></p>
 
@@ -318,8 +247,6 @@ is a 32-bit signed integer.</li>
 <pre>public long ReadInt64LE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
@@ -329,8 +256,6 @@ is a 32-bit signed integer.</li>
 <pre>public float ReadSingleBE();
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit floating-point number.</p>
@@ -339,8 +264,6 @@ is a 32-bit signed integer.</li>
 
 <pre>public float ReadSingleLE();
 </pre>
-
-<p>Not documented yet.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -352,13 +275,11 @@ is a 32-bit signed integer.</li>
     byte value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a byte (from 0 to 255).</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>Write</h3>
@@ -367,20 +288,18 @@ is a byte (from 0 to 255).</li>
     byte[] data);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>data</i>: A byte array to write to the stream.</li>
+<li><i>data</i>: The parameter  <i>data</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>data</i>
-is null.</li>
+The parameter is null.</li>
 </ul>
 
 <h3>Write</h3>
@@ -391,16 +310,15 @@ is null.</li>
     int length);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>: A byte array.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>data</i>
+<li><p><i>data</i>: The parameter  <i>data</i>
+is not documented yet.</p></li>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>data</i>
 begins.</p></li>
-<li><p><i>length</i>: The number of elements in the desired portion of <i>data</i>
-(but not more than <i>data</i>
+<li><p><i>length</i>: The number of elements in the desired portion of  <i>data</i>
+(but not more than  <i>data</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -408,16 +326,9 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>data</i>
-is null.</p></li>
+The parameter is null.</p></li>
 <li><p>System.ArgumentException:
-Either <i>offset</i>
-or <i>length</i>
-is less than 0 or greater than <i>data</i>
-&#39;s length, or <i>data</i>
-&#39; s length minus <i>offset</i>
-is less than <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;data&quot;&#39;s length, or &quot;data&quot;&#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 </ul>
 
 <h3>Write7BitEncodedInt32BE</h3>
@@ -426,13 +337,11 @@ is less than <i>length</i>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -445,13 +354,11 @@ is a 32-bit signed integer.</li>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -464,13 +371,11 @@ is a 32-bit signed integer.</li>
     long value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -483,13 +388,11 @@ is a 64-bit signed integer.</li>
     long value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -502,24 +405,16 @@ is a 64-bit signed integer.</li>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
 
 <h3>Write7BitEncodedUInt32LE</h3>
 
@@ -527,38 +422,28 @@ is a 32-bit signed integer.</li>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
 
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
-
 <h3>WriteBE</h3>
 
 <pre>public void WriteBE(
     byte value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a byte (from 0 to 255).</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteBE</h3>
@@ -567,13 +452,11 @@ is a byte (from 0 to 255).</li>
     double value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteBE</h3>
@@ -582,13 +465,11 @@ is a 64-bit floating-point number.</li>
     float value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteBE</h3>
@@ -597,13 +478,11 @@ is a 32-bit floating-point number.</li>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteBE</h3>
@@ -612,13 +491,11 @@ is a 32-bit signed integer.</li>
     long value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteBE</h3>
@@ -627,13 +504,11 @@ is a 64-bit signed integer.</li>
     short value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 16-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -642,13 +517,11 @@ is a 16-bit signed integer.</li>
     byte value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a byte (from 0 to 255).</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -657,13 +530,11 @@ is a byte (from 0 to 255).</li>
     double value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -672,13 +543,11 @@ is a 64-bit floating-point number.</li>
     float value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit floating-point number.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -687,13 +556,11 @@ is a 32-bit floating-point number.</li>
     int value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 32-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -702,13 +569,11 @@ is a 32-bit signed integer.</li>
     long value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 64-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <h3>WriteLE</h3>
@@ -717,13 +582,11 @@ is a 64-bit signed integer.</li>
     short value);
 </pre>
 
-<p>Not documented yet.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
-is a 16-bit signed integer.</li>
+<li><i>value</i>: The parameter  <i>value</i>
+is not documented yet.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>
