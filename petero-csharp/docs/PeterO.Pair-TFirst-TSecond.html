@@ -31,9 +31,9 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>first</i>: The parameter <i>first</i>
+<li><p><i>first</i>: The parameter  <i>first</i>
 is a TFirst object.</p></li>
-<li><p><i>second</i>: The parameter <i>second</i>
+<li><p><i>second</i>: The parameter  <i>second</i>
 is a TSecond object.</p></li>
 </ul>
 
@@ -42,14 +42,26 @@ is a TSecond object.</p></li>
 <pre>public TFirst First { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the first object in the pair.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The first object in the pair.</p>
 
 <h3>Second</h3>
 
 <pre>public TSecond Second { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the second object in the pair.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The second object in the pair.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A TSecond object.</p>
 
 <h3>Equals</h3>
 
@@ -57,21 +69,25 @@ is a TSecond object.</p></li>
     object obj);
 </pre>
 
+<p>Determines whether this object and another object are equal.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>obj</i>: The parameter  <i>obj</i>
-is not documented yet.</li>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either  <code>true</code>  or  <code>false</code> .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
 </pre>
+
+<p>Returns the hash code for this instance.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -81,6 +97,8 @@ is not documented yet.</li>
 
 <pre>public override string ToString();
 </pre>
+
+<p>Converts this object to a text string.</p>
 
 <p><b>Return Value:</b></p>
 

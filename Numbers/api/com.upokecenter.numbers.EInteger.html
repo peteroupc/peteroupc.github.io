@@ -15,13 +15,15 @@
  of this class are immutable, so they are inherently safe for use by
  multiple threads. Multiple instances of this object with the same
  value are interchangeable, but they should be compared using the
- &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p></p>
+ &quot;Equals&quot; method rather than the &quot;==&quot; operator. </p></p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>EInteger Abs()</code><br></li>
-<li><code>EInteger Add​(EInteger bigintAugend)</code><br></li>
+<li><code>EInteger Abs()</code><br>
+Returns the absolute value of this object&#39;s value.</li>
+<li><code>EInteger Add​(EInteger bigintAugend)</code><br>
+Adds this object and another object.</li>
 <li><code>int AsInt32Checked()</code><br>
 Deprecated.
 Renamed to ToInt32Checked.
@@ -38,69 +40,145 @@ Renamed to ToInt64Checked.</li>
 Deprecated.
 Renamed to ToInt64Unchecked.
 Renamed to ToInt64Unchecked.</li>
-<li><code>boolean CanFitInInt32()</code><br></li>
-<li><code>boolean CanFitInInt64()</code><br></li>
-<li><code>int compareTo​(EInteger other)</code><br></li>
-<li><code>EInteger Divide​(EInteger bigintDivisor)</code><br></li>
-<li><code>EInteger[] DivRem​(EInteger divisor)</code><br></li>
-<li><code>boolean equals​(Object obj)</code><br></li>
-<li><code>static EInteger FromByte​(byte inputByte)</code><br></li>
+<li><code>boolean CanFitInInt32()</code><br>
+Returns whether this object&#39;s value can fit in a 32-bit signed integer.</li>
+<li><code>boolean CanFitInInt64()</code><br>
+Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
+<li><code>int compareTo​(EInteger other)</code><br>
+Compares an arbitrary-precision integer with this instance.</li>
+<li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
+Divides this instance by the value of an arbitrary-precision integer.</li>
+<li><code>EInteger[] DivRem​(EInteger divisor)</code><br>
+Divides this object by another arbitrary-precision integer and returns the
+quotient and remainder.</li>
+<li><code>boolean equals​(Object obj)</code><br>
+Determines whether this object and another object are equal and have the
+same type.</li>
+<li><code>static EInteger FromByte​(byte inputByte)</code><br>
+Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromBytes​(byte[] bytes,
-     boolean littleEndian)</code><br></li>
-<li><code>static EInteger FromInt16​(short inputInt16)</code><br></li>
-<li><code>static EInteger FromInt32​(int intValue)</code><br></li>
-<li><code>static EInteger FromInt64​(long longerValue)</code><br></li>
+     boolean littleEndian)</code><br>
+Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code>static EInteger FromInt16​(short inputInt16)</code><br>
+Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromInt32​(int intValue)</code><br>
+Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromInt64​(long longerValue)</code><br>
+Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromRadixString​(String str,
-           int radix)</code><br></li>
+           int radix)</code><br>
+Converts a string to an arbitrary-precision integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring​(String str,
               int radix,
               int index,
-              int endIndex)</code><br></li>
-<li><code>static EInteger FromString​(String str)</code><br></li>
+              int endIndex)</code><br>
+Converts a portion of a string to an arbitrary-precision integer in a given
+radix.</li>
+<li><code>static EInteger FromString​(String str)</code><br>
+Converts a string to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromSubstring​(String str,
          int index,
-         int endIndex)</code><br></li>
-<li><code>EInteger Gcd​(EInteger bigintSecond)</code><br></li>
-<li><code>int GetDigitCount()</code><br></li>
-<li><code>int GetLowBit()</code><br></li>
-<li><code>EInteger GetLowBitAsEInteger()</code><br></li>
-<li><code>static EInteger getOne()</code><br></li>
-<li><code>boolean GetSignedBit​(int index)</code><br></li>
-<li><code>int GetSignedBitLength()</code><br></li>
-<li><code>static EInteger getTen()</code><br></li>
-<li><code>boolean GetUnsignedBit​(int index)</code><br></li>
-<li><code>int GetUnsignedBitLength()</code><br></li>
-<li><code>EInteger GetUnsignedBitLengthAsEInteger()</code><br></li>
-<li><code>static EInteger getZero()</code><br></li>
-<li><code>int hashCode()</code><br></li>
-<li><code>boolean isEven()</code><br></li>
-<li><code>boolean isPowerOfTwo()</code><br></li>
-<li><code>boolean isZero()</code><br></li>
-<li><code>EInteger Mod​(EInteger divisor)</code><br></li>
+         int endIndex)</code><br>
+Converts a portion of a string to an arbitrary-precision integer.</li>
+<li><code>EInteger Gcd​(EInteger bigintSecond)</code><br>
+Returns the greatest common divisor of this integer and the given integer.</li>
+<li><code>int GetDigitCount()</code><br>
+Returns the number of decimal digits used by this integer.</li>
+<li><code>int GetLowBit()</code><br>
+Gets the lowest set bit in this number&#39;s absolute value.</li>
+<li><code>EInteger GetLowBitAsEInteger()</code><br>
+Gets the lowest set bit in this number&#39;s absolute value.</li>
+<li><code>static EInteger getOne()</code><br>
+Gets the number 1 as an arbitrary-precision integer.</li>
+<li><code>boolean GetSignedBit​(int index) &quot;Forms of numbers&quot;</code><br>
+Returns whether a bit is set in the two&#39;s-complement form (see &quot;Forms of numbers&quot;) of this
+object&#39; s value.</li>
+<li><code>int GetSignedBitLength()</code><br>
+Finds the minimum number of bits needed to represent this object&#39;s value,
+except for its sign.</li>
+<li><code>static EInteger getTen()</code><br>
+Gets the number 10 as an arbitrary-precision integer.</li>
+<li><code>boolean GetUnsignedBit​(int index)</code><br>
+Returns whether a bit is set in this number&#39;s absolute value.</li>
+<li><code>int GetUnsignedBitLength()</code><br>
+Finds the minimum number of bits needed to represent this number&#39;s absolute
+value.</li>
+<li><code>EInteger GetUnsignedBitLengthAsEInteger()</code><br>
+Finds the minimum number of bits needed to represent this number&#39;s absolute
+value.</li>
+<li><code>static EInteger getZero()</code><br>
+Gets the number zero as an arbitrary-precision integer.</li>
+<li><code>int hashCode()</code><br>
+Returns the hash code for this instance.</li>
+<li><code>boolean isEven()</code><br>
+Gets a value indicating whether this value is even.</li>
+<li><code>boolean isPowerOfTwo()</code><br>
+Gets a value indicating whether this object&#39;s value is a power of two.</li>
+<li><code>boolean isZero()</code><br>
+Gets a value indicating whether this value is 0.</li>
+<li><code>EInteger Mod​(EInteger divisor)</code><br>
+Finds the modulus remainder that results when this instance is divided by
+the value of an arbitrary-precision integer.</li>
 <li><code>EInteger ModPow​(EInteger pow,
-  EInteger mod)</code><br></li>
-<li><code>EInteger Multiply​(EInteger bigintMult)</code><br></li>
-<li><code>EInteger Negate()</code><br></li>
-<li><code>EInteger Pow​(int powerSmall)</code><br></li>
-<li><code>EInteger PowBigIntVar​(EInteger power)</code><br></li>
-<li><code>EInteger Remainder​(EInteger divisor)</code><br></li>
-<li><code>EInteger ShiftLeft​(int numberBits)</code><br></li>
-<li><code>EInteger ShiftRight​(int numberBits)</code><br></li>
-<li><code>int signum()</code><br></li>
-<li><code>EInteger Sqrt()</code><br></li>
-<li><code>EInteger[] SqrtRem()</code><br></li>
-<li><code>EInteger Subtract​(EInteger subtrahend)</code><br></li>
-<li><code>byte ToByteChecked()</code><br></li>
-<li><code>byte[] ToBytes​(boolean littleEndian)</code><br></li>
-<li><code>byte ToByteUnchecked()</code><br></li>
-<li><code>short ToInt16Checked()</code><br></li>
-<li><code>short ToInt16Unchecked()</code><br></li>
-<li><code>int ToInt32Checked()</code><br></li>
-<li><code>int ToInt32Unchecked()</code><br></li>
-<li><code>long ToInt64Checked()</code><br></li>
-<li><code>long ToInt64Unchecked()</code><br></li>
-<li><code>String ToRadixString​(int radix)</code><br></li>
-<li><code>String toString()</code><br></li>
+  EInteger mod)</code><br>
+Calculates the remainder when this arbitrary-precision integer raised to a
+certain power is divided by another arbitrary-precision integer.</li>
+<li><code>EInteger Multiply​(EInteger bigintMult)</code><br>
+Multiplies this instance by the value of an arbitrary-precision integer
+object.</li>
+<li><code>EInteger Negate()</code><br>
+Gets the value of this object with the sign reversed.</li>
+<li><code>EInteger Pow​(int powerSmall)</code><br>
+Raises an arbitrary-precision integer to a power.</li>
+<li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
+Raises an arbitrary-precision integer to a power, which is given as another
+arbitrary-precision integer.</li>
+<li><code>EInteger Remainder​(EInteger divisor)</code><br>
+Finds the remainder that results when this instance is divided by the value
+of an arbitrary-precision integer.</li>
+<li><code>EInteger ShiftLeft​(int numberBits)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the left by
+a number of bits.</li>
+<li><code>EInteger ShiftRight​(int numberBits)</code><br>
+Returns an arbitrary-precision integer with the bits shifted to the right.</li>
+<li><code>int signum()</code><br>
+Gets the sign of this object&#39;s value.</li>
+<li><code>EInteger Sqrt()</code><br>
+Finds the square root of this instance&#39;s value, rounded down.</li>
+<li><code>EInteger[] SqrtRem()</code><br>
+Calculates the square root and the remainder.</li>
+<li><code>EInteger Subtract​(EInteger subtrahend)</code><br>
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+integer.</li>
+<li><code>byte ToByteChecked()</code><br>
+Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+byte (from 0 to 255).</li>
+<li><code>byte[] ToBytes​(boolean littleEndian)</code><br>
+Returns a byte array of this integer&#39;s value.</li>
+<li><code>byte ToByteUnchecked()</code><br>
+Converts this number to a byte (from 0 to 255), returning the
+least-significant bits of this number&#39;s two&#39;s-complement form.</li>
+<li><code>short ToInt16Checked()</code><br>
+Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+16-bit signed integer.</li>
+<li><code>short ToInt16Unchecked()</code><br>
+Converts this number to a 16-bit signed integer, returning the
+least-significant bits of this number&#39;s two&#39;s-complement form.</li>
+<li><code>int ToInt32Checked()</code><br>
+Converts this object&#39;s value to a 32-bit signed integer, throwing an
+exception if it can&#39;t fit.</li>
+<li><code>int ToInt32Unchecked()</code><br>
+Converts this object&#39;s value to a 32-bit signed integer.</li>
+<li><code>long ToInt64Checked()</code><br>
+Converts this object&#39;s value to a 64-bit signed integer, throwing an
+exception if it can&#39;t fit.</li>
+<li><code>long ToInt64Unchecked()</code><br>
+Converts this object&#39;s value to a 64-bit signed integer.</li>
+<li><code>String ToRadixString​(int radix)</code><br>
+Generates a string representing the value of this object, in the given
+radix.</li>
+<li><code>String toString()</code><br>
+Converts this object to a text string in base 10.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -110,40 +188,100 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public static EInteger getOne()
 </pre>
 
+<p>Gets the number 1 as an arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 1 as an arbitrary-precision integer.</li>
+</ul>
+
 <h3>getTen</h3>
 
 <pre>public static EInteger getTen()
 </pre>
+
+<p>Gets the number 10 as an arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number 10 as an arbitrary-precision integer.</li>
+</ul>
 
 <h3>getZero</h3>
 
 <pre>public static EInteger getZero()
 </pre>
 
+<p>Gets the number zero as an arbitrary-precision integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number zero as an arbitrary-precision integer.</li>
+</ul>
+
 <h3>isEven</h3>
 
 <pre>public final boolean isEven()
 </pre>
+
+<p>Gets a value indicating whether this value is even.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this value is even; otherwise, <code>false</code>.</li>
+</ul>
 
 <h3>isPowerOfTwo</h3>
 
 <pre>public final boolean isPowerOfTwo()
 </pre>
 
+<p>Gets a value indicating whether this object&#39;s value is a power of two.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value is a power of two; otherwise,
+<code>false</code>. <code>true</code> if this object&#39;s value is a power of two;
+otherwise, <code>false</code> .</li>
+</ul>
+
 <h3>isZero</h3>
 
 <pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this value is 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this value is 0; otherwise, <code>false</code>.</li>
+</ul>
 
 <h3>signum</h3>
 
 <pre>public final int signum()
 </pre>
 
+<p>Gets the sign of this object&#39;s value.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sign of this object&#39;s value.</li>
+</ul>
+
 <h3>FromBytes</h3>
 
 <pre>public static EInteger FromBytes​(byte[] bytes, boolean littleEndian)
 </pre>
+
+<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -161,13 +299,15 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
 </ul>
 
 <h3>FromInt32</h3>
 
 <pre>public static EInteger FromInt32​(int intValue)
 </pre>
+
+<p>Converts a 32-bit signed integer to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -178,13 +318,16 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer with the same value as the 64-bit
+number.</li>
 </ul>
 
 <h3>FromInt64</h3>
 
 <pre>public static EInteger FromInt64​(long longerValue)
 </pre>
+
+<p>Converts a 64-bit signed integer to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -195,13 +338,16 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer with the same value as the 64-bit
+number.</li>
 </ul>
 
 <h3>FromRadixString</h3>
 
 <pre>public static EInteger FromRadixString​(String str, int radix)
 </pre>
+
+<p>Converts a string to an arbitrary-precision integer in a given radix.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -219,13 +365,16 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>FromRadixSubstring</h3>
 
 <pre>public static EInteger FromRadixSubstring​(String str, int radix, int index, int endIndex)
 </pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer in a given
+ radix.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -245,13 +394,18 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NumberFormatException</code> - The string portion is empty or in an invalid
+format.</p></li>
+<li><p><code>IllegalArgumentException</code> - &quot;Doesn&#39;t satisfy (endIndex - index) % 4 == 0&quot;.</p></li>
 </ul>
 
 <h3>FromString</h3>
 
 <pre>public static EInteger FromString​(String str)
 </pre>
+
+<p>Converts a string to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -262,19 +416,24 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer with the same value as given in the
+string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><p><code>NumberFormatException</code> - The parameter <code>str</code> is in an invalid
+format.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>FromSubstring</h3>
 
 <pre>public static EInteger FromSubstring​(String str, int index, int endIndex)
 </pre>
+
+<p>Converts a portion of a string to an arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -287,19 +446,25 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer with the same value as given in the
+string portion.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>index</code> is less than 0,
+<code>endIndex</code> is less than 0, or either is greater than the
+string&#39;s length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
 <h3>Abs</h3>
 
 <pre>public EInteger Abs()
 </pre>
+
+<p>Returns the absolute value of this object&#39;s value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -312,6 +477,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger Add​(EInteger bigintAugend)
 </pre>
 
+<p>Adds this object and another object.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -321,13 +488,13 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The sum of the two objects.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is null.</li>
 </ul>
 
 <h3>AsInt32Checked</h3>
@@ -343,6 +510,13 @@ Renamed to ToInt64Unchecked.</li>
 
 <ul>
 <li>A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
 </ul>
 
 <h3>AsInt32Unchecked</h3>
@@ -375,6 +549,13 @@ Renamed to ToInt64Unchecked.</li>
 <li>A 64-bit signed integer.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
 <h3>AsInt64Unchecked</h3>
 
 <pre>@Deprecated public long AsInt64Unchecked()
@@ -395,10 +576,13 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public boolean CanFitInInt32()
 </pre>
 
+<p>Returns whether this object&#39;s value can fit in a 32-bit signed integer.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li>True if this object&#39;s value can fit in a 32-bit signed integer;
+otherwise, false.</li>
 </ul>
 
 <h3>CanFitInInt64</h3>
@@ -406,16 +590,21 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public boolean CanFitInInt64()
 </pre>
 
+<p>Returns whether this object&#39;s value can fit in a 64-bit signed integer.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li>True if this object&#39;s value can fit in a 64-bit signed integer;
+otherwise, false.</li>
 </ul>
 
 <h3>compareTo</h3>
 
 <pre>public int compareTo​(EInteger other)
 </pre>
+
+<p>Compares an arbitrary-precision integer with this instance.</p>
 
 <p><strong>Specified by:</strong></p>
 
@@ -432,13 +621,20 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
 </ul>
 
 <h3>Divide</h3>
 
 <pre>public EInteger Divide​(EInteger bigintDivisor)
 </pre>
+
+<p>Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -449,13 +645,14 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The quotient of the two objects.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+null.</p></li>
 <li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
 </ul>
 
@@ -463,6 +660,9 @@ Renamed to ToInt64Unchecked.</li>
 
 <pre>public EInteger[] DivRem​(EInteger divisor)
 </pre>
+
+<p>Divides this object by another arbitrary-precision integer and returns the
+ quotient and remainder.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -473,20 +673,24 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger[] object.</li>
+<li>An array with two arbitrary-precision integers: the first is the
+quotient, and the second is the remainder.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter is null.</p></li>
-<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+<li><p><code>ArithmeticException</code> - The parameter divisor is 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
 <h3>equals</h3>
 
 <pre>public boolean equals​(Object obj)
 </pre>
+
+<p>Determines whether this object and another object are equal and have the
+ same type.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -503,13 +707,18 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object and another object are equal; otherwise,
+<code>false</code>.</li>
 </ul>
 
 <h3>Gcd</h3>
 
 <pre>public EInteger Gcd​(EInteger bigintSecond)
 </pre>
+
+<p>Returns the greatest common divisor of this integer and the given integer.
+ The greatest common divisor (GCD) is also known as the greatest
+ common factor (GCF).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -520,19 +729,21 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>bigintSecond</code> is null.</li>
 </ul>
 
 <h3>GetDigitCount</h3>
 
 <pre>public int GetDigitCount()
 </pre>
+
+<p>Returns the number of decimal digits used by this integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -544,6 +755,9 @@ Renamed to ToInt64Unchecked.</li>
 
 <pre>public int hashCode()
 </pre>
+
+<p>Returns the hash code for this instance. No application or process IDs are
+ used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -562,6 +776,9 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public int GetLowBit()
 </pre>
 
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
+ the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
@@ -572,6 +789,9 @@ Renamed to ToInt64Unchecked.</li>
 
 <pre>public EInteger GetLowBitAsEInteger()
 </pre>
+
+<p>Gets the lowest set bit in this number&#39;s absolute value. (This will also be
+ the lowest set bit in the number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -584,6 +804,9 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public boolean GetSignedBit​(int index)
 </pre>
 
+<p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
+ object&#39; s value.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -593,13 +816,19 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if a bit is set in the two&#39;s-complement form (see
+<code>EDecimal</code>) of this object&#39; s value;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>GetSignedBitLength</h3>
 
 <pre>public int GetSignedBitLength()
 </pre>
+
+<p>Finds the minimum number of bits needed to represent this object&#39;s value,
+ except for its sign. If the value is negative, finds the number of
+ bits in the value equal to this object&#39;s absolute value minus 1.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -612,6 +841,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public boolean GetUnsignedBit​(int index)
 </pre>
 
+<p>Returns whether a bit is set in this number&#39;s absolute value.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -621,13 +852,16 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if a bit is set in this number&#39;s absolute value.</li>
 </ul>
 
 <h3>GetUnsignedBitLengthAsEInteger</h3>
 
 <pre>public EInteger GetUnsignedBitLengthAsEInteger()
 </pre>
+
+<p>Finds the minimum number of bits needed to represent this number&#39;s absolute
+ value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -640,6 +874,9 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public int GetUnsignedBitLength()
 </pre>
 
+<p>Finds the minimum number of bits needed to represent this number&#39;s absolute
+ value.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
@@ -651,6 +888,12 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger Mod​(EInteger divisor)
 </pre>
 
+<p>Finds the modulus remainder that results when this instance is divided by
+ the value of an arbitrary-precision integer. The modulus remainder is
+ the same as the normal remainder if the normal remainder is positive,
+ and equals divisor plus normal remainder if the normal remainder is
+ negative.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -660,19 +903,22 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</li>
 </ul>
 
 <h3>ModPow</h3>
 
 <pre>public EInteger ModPow​(EInteger pow, EInteger mod)
 </pre>
+
+<p>Calculates the remainder when this arbitrary-precision integer raised to a
+ certain power is divided by another arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -690,13 +936,17 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>pow</code> or <code>
+mod</code> is null.</li>
 </ul>
 
 <h3>Multiply</h3>
 
 <pre>public EInteger Multiply​(EInteger bigintMult)
 </pre>
+
+<p>Multiplies this instance by the value of an arbitrary-precision integer
+ object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -707,19 +957,21 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The product of the two numbers.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is null.</li>
 </ul>
 
 <h3>Negate</h3>
 
 <pre>public EInteger Negate()
 </pre>
+
+<p>Gets the value of this object with the sign reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -732,6 +984,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger Pow​(int powerSmall)
 </pre>
 
+<p>Raises an arbitrary-precision integer to a power.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -741,13 +995,16 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The result. Returns 1 if <code>powerSmall</code> is 0.</li>
 </ul>
 
 <h3>PowBigIntVar</h3>
 
 <pre>public EInteger PowBigIntVar​(EInteger power)
 </pre>
+
+<p>Raises an arbitrary-precision integer to a power, which is given as another
+ arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -758,19 +1015,26 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The result. Returns 1 if <code>power</code> is 0.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>power</code> is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>power</code> is null.</p></li>
 </ul>
 
 <h3>Remainder</h3>
 
 <pre>public EInteger Remainder​(EInteger divisor)
 </pre>
+
+<p>Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision integer. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -781,14 +1045,14 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The remainder of the two numbers.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter is null.</p></li>
 <li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
 <h3>ShiftLeft</h3>
@@ -796,6 +1060,10 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger ShiftLeft​(int numberBits)
 </pre>
 
+<p>Returns an arbitrary-precision integer with the bits shifted to the left by
+ a number of bits. A value of 1 doubles this value, a value of 2
+ multiplies it by 4, a value of 3 by 8, a value of 4 by 16, and so on.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -805,7 +1073,7 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer.</li>
 </ul>
 
 <h3>ShiftRight</h3>
@@ -813,6 +1081,11 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger ShiftRight​(int numberBits)
 </pre>
 
+<p>Returns an arbitrary-precision integer with the bits shifted to the right.
+ For this operation, the arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>). Thus, for negative values, the
+ arbitrary-precision integer is sign-extended.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -822,13 +1095,15 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>An arbitrary-precision integer.</li>
 </ul>
 
 <h3>Sqrt</h3>
 
 <pre>public EInteger Sqrt()
 </pre>
+
+<p>Finds the square root of this instance&#39;s value, rounded down.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -841,6 +1116,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger[] SqrtRem()
 </pre>
 
+<p>Calculates the square root and the remainder.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
@@ -852,6 +1129,9 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public EInteger Subtract​(EInteger subtrahend)
 </pre>
 
+<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -861,19 +1141,27 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>The difference of the two objects.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is null.</li>
 </ul>
 
 <h3>ToBytes</h3>
 
 <pre>public byte[] ToBytes​(boolean littleEndian)
 </pre>
+
+<p>Returns a byte array of this integer&#39;s value. The byte array will take the
+ number&#39;s two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
+ fewest bytes necessary to store its value unambiguously. If this
+ value is negative, the bits that appear beyond the most significant
+ bit of the number will be all ones. The resulting byte array can be
+ passed to the <code>FromBytes()</code> method (with the same byte order) to
+ reconstruct this integer&#39;s value.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -884,7 +1172,8 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>A byte array. If this value is 0, returns a byte array with the
+single element 0.</li>
 </ul>
 
 <h3>ToInt32Checked</h3>
@@ -892,16 +1181,31 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public int ToInt32Checked()
 </pre>
 
+<p>Converts this object&#39;s value to a 32-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A 32-bit signed integer.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+32-bit signed integer.</li>
+</ul>
+
 <h3>ToInt32Unchecked</h3>
 
 <pre>public int ToInt32Unchecked()
 </pre>
+
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
+ fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -914,16 +1218,31 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public long ToInt64Checked()
 </pre>
 
+<p>Converts this object&#39;s value to a 64-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A 64-bit signed integer.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This object&#39;s value is too big to fit a
+64-bit signed integer.</li>
+</ul>
+
 <h3>ToInt64Unchecked</h3>
 
 <pre>public long ToInt64Unchecked()
 </pre>
+
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
+ fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
+ two&#39; s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -936,6 +1255,9 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public String ToRadixString​(int radix)
 </pre>
 
+<p>Generates a string representing the value of this object, in the given
+ radix.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -945,13 +1267,20 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string object.</li>
+<li>A string representing the value of this object. If this value is 0,
+returns &quot;0&quot;. If negative, the string will begin with a minus sign
+(&quot;-&quot;, U+002D). Depending on the radix, the string will use the basic
+digits 0 to 9 (U + 0030 to U + 0039) and then the basic letters A to Z
+(U + 0041 to U + 005A). For example, 0-9 in radix 10, and 0-9, then A-F
+in radix 16.</li>
 </ul>
 
 <h3>toString</h3>
 
 <pre>public String toString()
 </pre>
+
+<p>Converts this object to a text string in base 10.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -970,16 +1299,29 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public byte ToByteChecked()
 </pre>
 
+<p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
+ byte (from 0 to 255).</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A Byte object.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is less than 0 or greater than
+255.</li>
+</ul>
+
 <h3>ToByteUnchecked</h3>
 
 <pre>public byte ToByteUnchecked()
 </pre>
+
+<p>Converts this number to a byte (from 0 to 255), returning the
+ least-significant bits of this number&#39;s two&#39;s-complement form.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -992,6 +1334,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public static EInteger FromByte​(byte inputByte)
 </pre>
 
+<p>Converts a byte (from 0 to 255) to an arbitrary-precision integer.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -1001,7 +1345,7 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>This number&#39;s value as an arbitrary-precision integer.</li>
 </ul>
 
 <h3>ToInt16Checked</h3>
@@ -1009,16 +1353,29 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public short ToInt16Checked()
 </pre>
 
+<p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
+ 16-bit signed integer.</p>
+
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A 16-bit signed integer.</li>
 </ul>
 
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>ArithmeticException</code> - This value is less than -32768 or greater
+than 32767.</li>
+</ul>
+
 <h3>ToInt16Unchecked</h3>
 
 <pre>public short ToInt16Unchecked()
 </pre>
+
+<p>Converts this number to a 16-bit signed integer, returning the
+ least-significant bits of this number&#39;s two&#39;s-complement form.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1031,6 +1388,8 @@ Renamed to ToInt64Unchecked.</li>
 <pre>public static EInteger FromInt16​(short inputInt16)
 </pre>
 
+<p>Converts a 16-bit signed integer to an arbitrary-precision integer.</p>
+
 <p><strong>Parameters:</strong></p>
 
 <ul>
@@ -1040,7 +1399,7 @@ Renamed to ToInt64Unchecked.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EInteger object.</li>
+<li>This number&#39;s value as an arbitrary-precision integer.</li>
 </ul>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>

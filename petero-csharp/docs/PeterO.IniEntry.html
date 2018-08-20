@@ -17,10 +17,12 @@
     PeterO.IniEntry entry);
 </pre>
 
+<p>Initializes a new instance of the <a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>entry</i>: The parameter <i>entry</i>
+<li><i>entry</i>: The parameter  <i>entry</i>
 is an IniEntry object.</li>
 </ul>
 
@@ -28,7 +30,8 @@ is an IniEntry object.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter is null.</li>
+The parameter <i>entry</i>
+is null.</li>
 </ul>
 
 <h3>IniEntry Constructor</h3>
@@ -37,10 +40,12 @@ The parameter is null.</li>
     string comment);
 </pre>
 
+<p>Initializes a new instance of the <a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>comment</i>: The parameter <i>comment</i>
+<li><i>comment</i>: The parameter  <i>comment</i>
 is a text string.</li>
 </ul>
 
@@ -48,7 +53,8 @@ is a text string.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter is null.</li>
+The parameter <i>comment</i>
+is null.</li>
 </ul>
 
 <h3>IniEntry Constructor</h3>
@@ -58,12 +64,14 @@ The parameter is null.</li>
     string value);
 </pre>
 
+<p>Initializes a new instance of the <a href="PeterO.IniEntry.html">PeterO.IniEntry</a> class.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>key</i>: The parameter <i>key</i>
+<li><p><i>key</i>: The parameter  <i>key</i>
 is a text string.</p></li>
-<li><p><i>value</i>: The parameter <i>value</i>
+<li><p><i>value</i>: The parameter  <i>value</i>
 is a text string.</p></li>
 </ul>
 
@@ -71,7 +79,9 @@ is a text string.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter is null.</li>
+The parameter <i>key</i>
+or  <i>value</i>
+is null.</li>
 </ul>
 
 <h3>IsComment</h3>
@@ -79,26 +89,40 @@ The parameter is null.</li>
 <pre>public bool IsComment { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value indicating whether this entry is a comment line.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this entry is a comment line; otherwise,  <code>false</code> .</p>
 
 <h3>Key</h3>
 
 <pre>public string Key { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value not documented yet.</p>
 
 <h3>Value</h3>
 
 <pre>public string Value { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value not documented yet.</p>
 
 <h3>ToString</h3>
 
 <pre>public override string ToString();
 </pre>
+
+<p>Converts this object to a text string.</p>
 
 <p><b>Return Value:</b></p>
 
