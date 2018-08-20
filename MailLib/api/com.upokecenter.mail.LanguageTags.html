@@ -37,7 +37,8 @@ Sets the given language tag to the case combination recommended by RFC 5646.</li
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
              boolean extended,
-             boolean matchStarAtEnd)</code><br></li>
+             boolean matchStarAtEnd)</code><br>
+Finds the language tags that match a priority list of language ranges.</li>
 <li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
              String defaultValue)</code><br></li>
@@ -77,7 +78,7 @@ Determines whether the given language tag matches the given language range.</li>
 
 <ul>
 <li><code>true</code> if the given string is a basic language range;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsLanguageRange</h3>
@@ -102,7 +103,8 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if the given string is a basic language range
-(depending on the &quot;extended&quot; parameter); otherwise, <code>false</code> .</li>
+(depending on the <code>extended</code> parameter); otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>LanguageTagCase</h3>
@@ -123,8 +125,8 @@ otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string in the recommended case combination, or null if &quot;str&quot;
-is null.</li>
+<li>A text string in the recommended case combination, or null if <code>
+str</code> is null.</li>
 </ul>
 
 <h3>GetLanguageList</h3>
@@ -146,8 +148,9 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A list of language tags. Returns an empty list if &quot;str&quot; is null or
-the empty string, or null if &quot;str&quot; syntactically invalid.</li>
+<li>A list of language tags. Returns an empty list if <code>str</code> is
+null or the empty string, or null if <code>str</code> syntactically
+invalid.</li>
 </ul>
 
 <h3>GetRangeListWithQuality</h3>
@@ -174,13 +177,42 @@ appear. This parameter can be null.</li>
 will be sorted in descending order by quality; if two or more
 language ranges have the same quality, they will be sorted in the
 order in which they appeared in the given string. Returns null if
-&quot;str&quot; is null or syntactically invalid.</li>
+<code>str</code> is null or syntactically invalid.</li>
 </ul>
 
 <h3>LanguageTagFilter</h3>
 
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
+
+<p>Finds the language tags that match a priority list of language ranges.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - Not documented yet.</p></li>
+<li><p><code>languages</code> - Not documented yet.</p></li>
+<li><p><code>extended</code> - Not documented yet. (3).</p></li>
+<li><p><code>matchStarAtEnd</code> - Not documented yet. (4).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic or extended language range, or <code>
+languages</code> contains a value that is not a potentially valid language
+tag.</p></li>
+</ul>
 
 <h3>MatchesLanguageTag</h3>
 
@@ -207,8 +239,9 @@ filtering method under RFC 4647; otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - &quot;range&quot; is not a basic language range, or
-&quot;tag&quot; is not a potentially valid language tag.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>range</code> is not a basic
+language range, or <code>tag</code> is not a potentially valid language
+tag.</li>
 </ul>
 
 <h3>LanguageTagLookup</h3>
@@ -256,7 +289,7 @@ filtering method under RFC 4647; otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> , if the string meets the conditions given in the
+<li><code>true</code>, if the string meets the conditions given in the
 summary, <code>false</code> otherwise.</li>
 </ul>
 

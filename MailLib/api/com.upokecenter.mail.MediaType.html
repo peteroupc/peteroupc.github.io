@@ -207,7 +207,9 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
+<li><code>true</code> if this is a text media type (&quot;text/*&quot;); otherwise,
+<code>false</code>. <code>true</code> If this is a text media type; otherwise,
+<code>false</code> .</li>
 </ul>
 
 <h3>isMultipart</h3>
@@ -220,8 +222,9 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If this is a multipart media type; otherwise, <code>
-false</code>.</li>
+<li><code>true</code> if this is a multipart media type; otherwise,
+<code>false</code>. <code>true</code> If this is a multipart media type;
+otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>getParameters</h3>
@@ -346,7 +349,8 @@ doesn&#39;t exist.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code></p></li>
 </ul>
 
 <h3>getTypeAndSubType</h3>

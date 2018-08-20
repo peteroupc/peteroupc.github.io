@@ -290,9 +290,7 @@ replace</code> is false.</li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns the replacement character (U + FFFD) if the previous character
-is an unpaired surrogate code point. NOTE: If the return value is
-65536 (0x10000) or greater, this indicates a supplementary code point
-that takes up two <code>char</code>s rather than one.</li>
+is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -325,10 +323,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the previous position. Returns -1 if
 <code>index</code> is 0 or less, or is greater than the string&#39;s length.
 Returns a value as specified under <code>surrogateBehavior</code> if the
-previous character is an unpaired surrogate code point. NOTE: If the
-return value is 65536 (0x10000) or greater, this indicates a
-supplementary code point that takes up two <code>char</code>s rather than
-one.</li>
+previous character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -357,9 +352,7 @@ one.</li>
 <li>The Unicode code point at the given position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 the replacement character (U + FFFD) if the current character is an
-unpaired surrogate code point. NOTE: If the return value is 65536
-(0x10000) or greater, this indicates a supplementary code point that
-takes up two <code>char</code>s rather than one.</li>
+unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -392,9 +385,7 @@ surrogate code point; if neither 0 nor 1, return -1.</p></li>
 <li>The Unicode code point at the current position. Returns -1 if <code>
 index</code> is less than 0, or is the string&#39;s length or greater. Returns
 a value as specified under <code>surrogateBehavior</code> if the previous
-character is an unpaired surrogate code point. NOTE: If the return
-value is 65536 (0x10000) or greater, this indicates a supplementary
-code point that takes up two <code>char</code>s rather than one.</li>
+character is an unpaired surrogate code point.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
