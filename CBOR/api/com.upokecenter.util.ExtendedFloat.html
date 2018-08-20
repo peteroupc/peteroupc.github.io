@@ -49,25 +49,27 @@ Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 
 <ul>
 <li><code>int compareTo​(ExtendedFloat other)</code><br>
-Deprecated.</li>
+Deprecated. Compares this extended float to another.</li>
 <li><code>static ExtendedFloat Create​(int mantissaSmall,
   int exponentSmall)</code><br>
-Deprecated.</li>
+Deprecated. Creates a number with the value exponent*2^mantissa.</li>
 <li><code>static ExtendedFloat Create​(BigInteger mantissa,
   BigInteger exponent)</code><br>
-Deprecated.</li>
+Deprecated. Creates a number with the value exponent*2^mantissa.</li>
 <li><code>boolean equals​(ExtendedFloat other)</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>boolean equals​(Object obj)</code><br>
-Deprecated.</li>
+Deprecated. Determines whether this object&#39;s mantissa and exponent are equal to those of
+another object and that other object is an arbitrary-precision
+decimal number.</li>
 <li><code>boolean EqualsInternal​(ExtendedFloat otherValue)</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>static ExtendedFloat FromString​(String str)</code><br>
-Deprecated.</li>
+Deprecated. Creates a binary float from a text string that represents a number.</li>
 <li><code>static ExtendedFloat FromString​(String str,
       int offset,
       int length,
@@ -76,17 +78,18 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>BigInteger getExponent()</code><br>
-Deprecated.</li>
+Deprecated. Gets this object&#39;s exponent.</li>
 <li><code>BigInteger getMantissa()</code><br>
-Deprecated.</li>
+Deprecated. Gets this object&#39;s un-scaled value.</li>
 <li><code>BigInteger getUnsignedMantissa()</code><br>
-Deprecated.</li>
+Deprecated. Gets the absolute value of this object&#39;s un-scaled value.</li>
 <li><code>int hashCode()</code><br>
-Deprecated.</li>
+Deprecated. Calculates this object&#39;s hash code.</li>
 <li><code>boolean IsInfinity()</code><br>
-Deprecated.</li>
+Deprecated. Gets a value indicating whether this object is positive or negative
+infinity.</li>
 <li><code>boolean IsNaN()</code><br>
-Deprecated.</li>
+Deprecated. Returns whether this object is a not-a-number value.</li>
 <li><code>boolean isNegative()</code><br>
 Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
@@ -112,7 +115,7 @@ Deprecated.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.
 Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</li>
 <li><code>String toString()</code><br>
-Deprecated.</li>
+Deprecated. Converts this value to a string.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -190,6 +193,13 @@ Deprecated.</li>
 
 <p>Deprecated.</p>
 
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s exponent. This object&#39;s value will be an integer if
+the exponent is positive or zero.</li>
+</ul>
+
 <h3>getUnsignedMantissa</h3>
 
 <pre>public final BigInteger getUnsignedMantissa()
@@ -197,12 +207,25 @@ Deprecated.</li>
 
 <p>Deprecated.</p>
 
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The absolute value of this object&#39;s un-scaled value.</li>
+</ul>
+
 <h3>getMantissa</h3>
 
 <pre>public final BigInteger getMantissa()
 </pre>
 
 <p>Deprecated.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This object&#39;s un-scaled value. Will be negative if this object&#39;s
+value is negative (including a negative NaN).</li>
+</ul>
 
 <h3>EqualsInternal</h3>
 
@@ -216,19 +239,21 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - Not documented yet.</li>
+<li><code>otherValue</code> - An arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object&#39;s mantissa and exponent are equal to
+those of another object; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>otherValue</code> is
+null.</li>
 </ul>
 
 <h3>equals</h3>
@@ -243,19 +268,20 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - Not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object&#39;s mantissa and exponent are equal to
+those of another object; otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
 <h3>equals</h3>
@@ -274,13 +300,13 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - Not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -299,7 +325,7 @@ Deprecated.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>This object&#39;s hash code.</li>
 </ul>
 
 <h3>Create</h3>
@@ -312,14 +338,14 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissaSmall</code> - Not documented yet.</p></li>
-<li><p><code>exponentSmall</code> - Not documented yet.</p></li>
+<li><p><code>mantissaSmall</code> - The un-scaled value.</p></li>
+<li><p><code>exponentSmall</code> - The binary exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>An arbitrary-precision binary float.</li>
 </ul>
 
 <h3>Create</h3>
@@ -332,20 +358,21 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>mantissa</code> - Not documented yet.</p></li>
-<li><p><code>exponent</code> - Not documented yet.</p></li>
+<li><p><code>mantissa</code> - The un-scaled value.</p></li>
+<li><p><code>exponent</code> - The binary exponent.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>An arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>mantissa</code> or
+<code>exponent</code> is null.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -360,27 +387,28 @@ Deprecated.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
 str</code> (but not more than <code>str</code> &#39;s length).</p></li>
-<li><p><code>ctx</code> - Not documented yet.</p></li>
+<li><p><code>ctx</code> - A PrecisionContext object specifying the precision, rounding, and
+exponent range to apply to the parsed number. Can be null.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0 or
-greater than &quot;str&quot;&#39;s length, or &quot;str&quot;&#39;s length minus &quot;offset&quot; is less
-than &quot;length&quot;.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+length minus <code>offset</code> is less than <code>length</code> .</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -393,13 +421,13 @@ than &quot;length&quot;.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - Not documented yet.</li>
+<li><code>str</code> - A text string containing the number to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An ExtendedFloat object.</li>
+<li>The parsed number, converted to arbitrary-precision binary float.</li>
 </ul>
 
 <h3>toString</h3>
@@ -418,7 +446,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string object.</li>
+<li>A string representation of this object. The value is converted to
+decimal and the decimal form of this number&#39;s value is returned.</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -433,7 +462,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is negative infinity; otherwise, <code>
+false</code> .</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -448,7 +478,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is positive infinity; otherwise, <code>
+false</code> .</li>
 </ul>
 
 <h3>IsNaN</h3>
@@ -461,7 +492,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is a not-a-number value; otherwise,
+<code>false</code> .</li>
 </ul>
 
 <h3>IsInfinity</h3>
@@ -474,7 +506,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is positive or negative infinity;
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -485,6 +518,13 @@ than &quot;length&quot;.</p></li>
 <p>Deprecated.</p>
 
 <div class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this object is negative, including negative zero;
+otherwise, <code>false</code> .</li>
+</ul>
 
 <h3>IsQuietNaN</h3>
 
@@ -498,7 +538,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is a quiet not-a-number value;
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>IsSignalingNaN</h3>
@@ -513,7 +554,8 @@ than &quot;length&quot;.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A Boolean object.</li>
+<li><code>true</code> if this object is a signaling not-a-number value;
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>compareTo</h3>
@@ -532,13 +574,14 @@ than &quot;length&quot;.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - Not documented yet.</li>
+<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>Less than 0 if this value is less than, 0 if equal to, or greater
+than 0 if greater than the other value.</li>
 </ul>
 
 <h3>signum</h3>
@@ -549,6 +592,12 @@ than &quot;length&quot;.</p></li>
 <p>Deprecated.</p>
 
 <div class='deprecationComment'>Use EFloat from PeterO.Numbers/com.upokecenter.numbers.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

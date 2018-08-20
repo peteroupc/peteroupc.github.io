@@ -21,22 +21,21 @@
     bool clampNormalExponents);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class. <code>HasFlags</code> will be set to false.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.  <code>HasFlags</code>  will be set to false.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>precision</i>: The maximum number of digits a number can have, or 0 for an unlimited number of digits.</p></li>
-<li><p><i>rounding</i>: The rounding mode to use when a number can&#39;t fit the given precision.</p></li>
-<li><p><i>exponentMinSmall</i>: The minimum exponent.</p></li>
-<li><p><i>exponentMaxSmall</i>: The maximum exponent.</p></li>
-<li><p><i>clampNormalExponents</i>: Whether to clamp a number&#39;s significand to the given maximum precision (if it isn&#39;t zero) while remaining within the exponent range.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
+<li><p><i>precision</i>: The parameter  <i>precision</i>
+is not documented yet.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMinSmall</i>: The parameter  <i>exponentMinSmall</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMaxSmall</i>: The parameter  <i>exponentMaxSmall</i>
+is not documented yet.</p></li>
+<li><p><i>clampNormalExponents</i>: The parameter  <i>clampNormalExponents</i>
+is not documented yet.</p></li>
 </ul>
 
 <h3>Basic</h3>
@@ -219,7 +218,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The highest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
+<p>The highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMax of 100, the maximum value possible is 9.99E + 100. (This is not the same as the highest possible Exponent property.) If HasExponentRange is false, this value will be 0.</p>
 
 <h3>EMin</h3>
 
@@ -230,18 +229,19 @@
 
 <p><b>Returns:</b></p>
 
-<p>The lowest exponent possible when a converted number is expressed in scientific notation with one digit before the decimal point.</p>
+<p>The lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point. For example, with a precision of 3 and an EMin of -100, the next value that comes after 0 is 0.001E-100. (If AdjustExponent is false, this property specifies the lowest possible Exponent property instead.) If HasExponentRange is false, this value will be 0.</p>
 
 <h3>Flags</h3>
 
 <pre>public int Flags { get; set;}
 </pre>
 
-<p>Gets or sets the flags that are set from converting numbers according to this arithmetic context. If <code>HasFlags</code> is false, this value will be 0. This value is a combination of bit ields. To retrieve a particular flag, use the AND operation on the return alue of this method. For example: <code>(this.Flags &amp; EContext.FlagInexact) != 0</code> returns <code>true</code> if the Inexact flag is set.</p>
+<p>Gets or sets the flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
+            EContext.FlagInexact) != 0</code>  returns  <code>true</code>  if the Inexact flag is set.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flags that are set from converting numbers according to this arithmetic context. If. <code>HasFlags</code> is false, this value will be 0.</p>
+<p>The flags that are set from converting numbers according to this arithmetic context. If <c>HasFlags</c> is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example: <c>(this.Flags &amp; EContext.FlagInexact) != 0</c> returns <c>true</c> if the Inexact flag is set.</p>
 
 <h3>HasExponentRange</h3>
 
@@ -263,7 +263,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context has a mutable Flags field; otherwise, <c>false</c>. <code>true</code> if this context has a mutable Flags field; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this context has a mutable Flags field; otherwise, <c>false</c>.</p>
 
 <h3>HasMaxPrecision</h3>
 
@@ -274,7 +274,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context defines a maximum precision; otherwise, <c>false</c>. <code>true</code> if this context defines a maximum precision; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this context defines a maximum precision; otherwise, <c>false</c>.</p>
 
 <h3>IsPrecisionInBits</h3>
 
@@ -307,7 +307,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The maximum length of a converted number in digits, ignoring the radix point and exponent.</p>
+<p>The maximum length of a converted number in digits, ignoring the radix point and exponent. For example, if precision is 3, a converted number&#39;s mantissa (significand) can range from 0 to 999 (up to three digits long). If 0, converted numbers can have any precision.</p>
 
 <h3>Rounding</h3>
 
@@ -329,7 +329,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>The traps that are set for each flag in the context.</p>
+<p>The traps that are set for each flag in the context. Whenever a flag is signaled, even if <c>HasFlags</c> is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException. <para>For example, if Traps equals <c>FlagInexact</c> and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal). </para>.</p>
 
 <h3>Copy</h3>
 
@@ -340,7 +340,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <h3>ExponentWithinRange</h3>
 
@@ -353,18 +353,19 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>exponent</i>: An arbitrary-precision integer indicating the desired exponent.</li>
+<li><i>exponent</i>: The parameter  <i>exponent</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if a number can have the given Exponent property under this arithmetic ontext; otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context; otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>exponent</i>
+The parameter  <i>exponent</i>
 is null.</li>
 </ul>
 
@@ -379,7 +380,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>precision</i>: Maximum number of digits (precision).</li>
+<li><i>precision</i>: The parameter  <i>precision</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -398,14 +400,15 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>precision</i>: Maximum number of digits (precision).</p></li>
-<li><p><i>rounding</i>: The parameter <i>rounding</i>
-is an ERounding object.</p></li>
+<li><p><i>precision</i>: The parameter  <i>precision</i>
+is not documented yet.</p></li>
+<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <h3>ForRounding</h3>
 
@@ -418,7 +421,8 @@ is an ERounding object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>rounding</i>: The rounding mode for the new precision context.</li>
+<li><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -434,7 +438,7 @@ is an ERounding object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A string representation of this object.</p>
+<p>A text string.</p>
 
 <h3>WithAdjustExponent</h3>
 
@@ -447,7 +451,8 @@ is an ERounding object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>adjustExponent</i>: The new value of the &quot;AdjustExponent&quot; property for the copy.</li>
+<li><i>adjustExponent</i>: The parameter  <i>adjustExponent</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -466,13 +471,15 @@ is an ERounding object.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponentMin</i>: Desired minimum exponent (EMin).</p></li>
-<li><p><i>exponentMax</i>: Desired maximum exponent (EMax).</p></li>
+<li><p><i>exponentMin</i>: The parameter  <i>exponentMin</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMax</i>: The parameter  <i>exponentMax</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -480,10 +487,8 @@ is an ERounding object.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>exponentMin</i>
 is null.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter <i>exponentMax</i>
-is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
+<li><p>System.ArgumentException:
+&quot;ExponentMin greater than exponentMax&quot;.</p></li>
 </ul>
 
 <h3>WithBigPrecision</h3>
@@ -497,7 +502,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintPrecision</i>: Desired precision. 0 means unlimited precision.</li>
+<li><i>bigintPrecision</i>: The parameter  <i>bigintPrecision</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -507,10 +513,9 @@ is null.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>bigintPrecision</i>
-is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
+<li>System.ArgumentNullException:
+The parameter  <i>bigintPrecision</i>
+is null.</li>
 </ul>
 
 <h3>WithBlankFlags</h3>
@@ -518,11 +523,11 @@ is null.</p></li>
 <pre>public PeterO.Numbers.EContext WithBlankFlags();
 </pre>
 
-<p>Copies this EContext with <code>HasFlags</code> set to true and a Flags value of 0.</p>
+<p>Copies this EContext with  <code>HasFlags</code>  set to true and a Flags value of 0.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <h3>WithExponentClamp</h3>
 
@@ -535,7 +540,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>clamp</i>: The desired value of the &quot;ClampNormalExponents&quot; flag.</li>
+<li><i>clamp</i>: The parameter  <i>clamp</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -554,30 +560,26 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>exponentMinSmall</i>: Desired minimum exponent (EMin).</p></li>
-<li><p><i>exponentMaxSmall</i>: Desired maximum exponent (EMax).</p></li>
+<li><p><i>exponentMinSmall</i>: The parameter  <i>exponentMinSmall</i>
+is not documented yet.</p></li>
+<li><p><i>exponentMaxSmall</i>: The parameter  <i>exponentMaxSmall</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
+<p>An EContext object.</p>
 
 <h3>WithNoFlags</h3>
 
 <pre>public PeterO.Numbers.EContext WithNoFlags();
 </pre>
 
-<p>Copies this EContext with <code>HasFlags</code> set to false and a Flags value of 0.</p>
+<p>Copies this EContext with  <code>HasFlags</code>  set to false and a Flags value of 0.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <h3>WithPrecision</h3>
 
@@ -590,18 +592,13 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>precision</i>: Desired precision. 0 means unlimited precision.</li>
+<li><i>precision</i>: The parameter  <i>precision</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>A context object for arbitrary-precision arithmetic settings.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:</li>
-</ul>
 
 <h3>WithPrecisionInBits</h3>
 
@@ -614,7 +611,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>isPrecisionBits</i>: The new value of the &quot;IsPrecisionInBits&quot; property for the copy.</li>
+<li><i>isPrecisionBits</i>: The parameter  <i>isPrecisionBits</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -632,7 +630,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>rounding</i>: Desired value of the Rounding property.</li>
+<li><i>rounding</i>: The parameter  <i>rounding</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -650,7 +649,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>simplified</i>: Desired value of the IsSimplified property.</li>
+<li><i>simplified</i>: The parameter  <i>simplified</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -668,7 +668,8 @@ is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>traps</i>: Flags representing the traps to enable. See the property &quot;Traps&quot;.</li>
+<li><i>traps</i>: The parameter  <i>traps</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -684,7 +685,7 @@ is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A context object for arbitrary-precision arithmetic settings.</p>
+<p>An EContext object.</p>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

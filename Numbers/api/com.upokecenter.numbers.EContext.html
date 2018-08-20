@@ -466,8 +466,8 @@ HasExponentRange is false, this value will be 0.</li>
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol>
 
 <p><strong>Returns:</strong></p>
@@ -479,8 +479,8 @@ arithmetic context. If <code>HasFlags</code> is false, this value will be
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
-!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
+0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol></li>
 </ul>
 
@@ -620,7 +620,7 @@ represented in the given precision and exponent range.</li>
  Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException
  will be thrown if an operation&#39;s return value is not the same as the
  exact result (FlagInexact) or if the return value&#39;s exponent is lower
- than the lowest allowed (FlagSubnormal).</p></p>
+ than the lowest allowed (FlagSubnormal). </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -645,7 +645,7 @@ than the lowest allowed (FlagSubnormal). </para>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>precision</code> - Not documented yet.</li>
+<li><code>precision</code> - The parameter <code>precision</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -665,8 +665,8 @@ than the lowest allowed (FlagSubnormal). </para>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>precision</code> - Not documented yet.</p></li>
-<li><p><code>rounding</code> - Not documented yet.</p></li>
+<li><p><code>precision</code> - The parameter <code>precision</code> is not documented yet.</p></li>
+<li><p><code>rounding</code> - The parameter <code>rounding</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -686,7 +686,7 @@ than the lowest allowed (FlagSubnormal). </para>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>rounding</code> - Not documented yet.</li>
+<li><code>rounding</code> - The parameter <code>rounding</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -719,7 +719,7 @@ than the lowest allowed (FlagSubnormal). </para>.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>exponent</code> - Not documented yet.</li>
+<li><code>exponent</code> - The parameter <code>exponent</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -754,7 +754,7 @@ any exponent less than EMax.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A string object.</li>
+<li>A text string.</li>
 </ul>
 
 <h3>WithAdjustExponent</h3>
@@ -768,7 +768,8 @@ any exponent less than EMax.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>adjustExponent</code> - Not documented yet.</li>
+<li><code>adjustExponent</code> - The parameter <code>adjustExponent</code> is not documented
+yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -787,8 +788,8 @@ any exponent less than EMax.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>exponentMin</code> - Not documented yet.</p></li>
-<li><p><code>exponentMax</code> - Not documented yet.</p></li>
+<li><p><code>exponentMin</code> - The parameter <code>exponentMin</code> is not documented yet.</p></li>
+<li><p><code>exponentMax</code> - The parameter <code>exponentMax</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -815,7 +816,8 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigintPrecision</code> - Not documented yet.</li>
+<li><code>bigintPrecision</code> - The parameter <code>bigintPrecision</code> is not
+documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -827,7 +829,8 @@ null.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>bigintPrecision</code>
+is null.</li>
 </ul>
 
 <h3>WithBlankFlags</h3>
@@ -855,7 +858,7 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>clamp</code> - Not documented yet.</li>
+<li><code>clamp</code> - The parameter <code>clamp</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -874,8 +877,10 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>exponentMinSmall</code> - Not documented yet.</p></li>
-<li><p><code>exponentMaxSmall</code> - Not documented yet.</p></li>
+<li><p><code>exponentMinSmall</code> - The parameter <code>exponentMinSmall</code> is not
+documented yet.</p></li>
+<li><p><code>exponentMaxSmall</code> - The parameter <code>exponentMaxSmall</code> is not
+documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -908,7 +913,7 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>precision</code> - Not documented yet.</li>
+<li><code>precision</code> - The parameter <code>precision</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -928,7 +933,8 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>isPrecisionBits</code> - Not documented yet.</li>
+<li><code>isPrecisionBits</code> - The parameter <code>isPrecisionBits</code> is not
+documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -947,7 +953,7 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>rounding</code> - Not documented yet.</li>
+<li><code>rounding</code> - The parameter <code>rounding</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -967,7 +973,7 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>simplified</code> - Not documented yet.</li>
+<li><code>simplified</code> - The parameter <code>simplified</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -986,7 +992,7 @@ null.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>traps</code> - Not documented yet.</li>
+<li><code>traps</code> - The parameter <code>traps</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

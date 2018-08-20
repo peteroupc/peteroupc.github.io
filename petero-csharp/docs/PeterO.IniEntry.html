@@ -52,9 +52,11 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>comment</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Value is not a comment.; Characters in comment are not valid.</p></li>
 </ul>
 
 <h3>IniEntry Constructor</h3>
@@ -70,18 +72,20 @@ is null.</li>
 
 <ul>
 <li><p><i>key</i>: The parameter  <i>key</i>
-is a text string.</p></li>
+is not documented yet.</p></li>
 <li><p><i>value</i>: The parameter  <i>value</i>
-is a text string.</p></li>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
-The parameter <i>key</i>
+<li><p>System.ArgumentNullException:
+The parameter  <i>key</i>
 or  <i>value</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Characters in key are not valid.; Characters in value are not valid.</p></li>
 </ul>
 
 <h3>IsComment</h3>
@@ -93,7 +97,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If this entry is a comment line; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this entry is a comment line; otherwise, <c>false</c>.</p>
 
 <h3>Key</h3>
 
