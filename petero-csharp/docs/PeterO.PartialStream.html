@@ -27,11 +27,11 @@
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
-is a Stream object.</p></li>
+is not documented yet.</p></li>
 <li><p><i>start</i>: The parameter  <i>start</i>
-is a 64-bit signed integer.</p></li>
+is not documented yet.</p></li>
 <li><p><i>length</i>: The parameter  <i>length</i>
-is a 64-bit signed integer.</p></li>
+is not documented yet.</p></li>
 </ul>
 
 <h3>PartialStream Constructor</h3>
@@ -49,22 +49,25 @@ is a 64-bit signed integer.</p></li>
 
 <ul>
 <li><p><i>stream</i>: The parameter  <i>stream</i>
-is a Stream object.</p></li>
-<li><p><i>start</i>: The start of the partial stream from the underlying stream.</p></li>
-<li><p><i>length</i>: The length of the partial stream in bytes.</p></li>
-<li><p><i>closeOnDispose</i>: If true, closes the underlying stream when disposing the partial stream.</p></li>
+is not documented yet.</p></li>
+<li><p><i>start</i>: The parameter  <i>start</i>
+is not documented yet.</p></li>
+<li><p><i>length</i>: The parameter  <i>length</i>
+is not documented yet.</p></li>
+<li><p><i>closeOnDispose</i>: The parameter  <i>closeOnDispose</i>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>stream</i>
-or  <i>stream</i>
-is null.</p></li>
 <li><p>System.ArgumentException:
 The parameter <i>stream</i>
 doesn&#39;t support seeking, the length or start is less than 0 or greater than the underlying stream&#39;s length, or the partial stream would go beyond the underlying stream.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>stream</i>
+or  <i>stream</i>
+is null.</p></li>
 </ul>
 
 <h3>CanRead</h3>
@@ -76,7 +79,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If the underlying stream supports reading; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If the underlying stream supports reading; otherwise, .  <code>false</code> .</p>
 
 <h3>CanSeek</h3>
 
@@ -87,7 +90,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If the underlying stream supports seeking; otherwise, .  <code>false</code> .</p>
 
 <h3>CanWrite</h3>
 
@@ -98,7 +101,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If the underlying stream supports writing; otherwise, .  <code>false</code> .</p>
 
 <h3>Length</h3>
 
@@ -134,7 +137,7 @@ doesn&#39;t support seeking, the length or start is less than 0 or greater than 
 
 <ul>
 <li><i>disposing</i>: The parameter  <i>disposing</i>
-is either  <code>true</code>  or  <code>false</code> .</li>
+is not documented yet.</li>
 </ul>
 
 <h3>Flush</h3>
@@ -157,7 +160,8 @@ is either  <code>true</code>  or  <code>false</code> .</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: A byte array.</p></li>
+<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+is not documented yet.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
 <li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
@@ -172,9 +176,6 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>buffer</i>
-is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>count</i>
@@ -183,6 +184,9 @@ is less than 0 or greater than  <i>buffer</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>count</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>buffer</i>
+is null.</p></li>
 </ul>
 
 <h3>Seek</h3>
@@ -198,9 +202,9 @@ is less than  <i>count</i>
 
 <ul>
 <li><p><i>offset</i>: The parameter  <i>offset</i>
-is a 64-bit signed integer.</p></li>
+is not documented yet.</p></li>
 <li><p><i>origin</i>: The parameter  <i>origin</i>
-is a SeekOrigin object.</p></li>
+is not documented yet.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -219,7 +223,7 @@ is a SeekOrigin object.</p></li>
 
 <ul>
 <li><i>value</i>: The parameter  <i>value</i>
-is a 64-bit signed integer.</li>
+is not documented yet.</li>
 </ul>
 
 <h3>Write</h3>
@@ -235,7 +239,8 @@ is a 64-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: A byte array.</p></li>
+<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+is not documented yet.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
 begins.</p></li>
 <li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
@@ -254,7 +259,7 @@ Either  <i>offset</i>
 or  <i>count</i>
 is less than 0 or greater than  <i>buffer</i>
 &#39;s length, or  <i>buffer</i>
-&#39; s length minus  <i>offset</i>
+&#39;s length minus  <i>offset</i>
 is less than  <i>count</i>
 .</p></li>
 </ul>

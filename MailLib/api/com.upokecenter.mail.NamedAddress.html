@@ -53,8 +53,7 @@ Calculates the hash code of this object.</li>
 Gets a value indicating whether this represents a group of addresses rather
 than a single address.</li>
 <li><code>static List&lt;NamedAddress&gt; ParseAddresses​(String addressValue)</code><br>
-Generates a list of NamedAddress objects from a comma-separated list of
-addresses.</li>
+Not documented yet.</li>
 <li><code>String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
@@ -91,11 +90,13 @@ part and domain.</li>
 </pre>
 
 <p>Initializes a new instance of the <code>NamedAddress</code>
- class. Examples: <ul> <li><code><a href="mailto:john@example.com">john@example.com</a></code></li> <li><code>&quot;John
- Doe&quot; &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
- <li><code>=?utf-8?q?John = 27s_Office?= &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li>
- <li><code>John &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code></li> <li><code>&quot;Group&quot; : Tom
- &lt;<a href="mailto:tom@example.com">tom@example.com</a>&gt;, Jane &lt;<a href="mailto:jane@example.com">jane@example.com</a>&gt;;</code></li></ul></p>
+ class. Examples: <ul> <li> <code><a href="mailto:john@example.com">john@example.com</a></code> </li> <li>
+ <code>&quot;John Doe&quot; &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code> </li> <li>
+ <code>=?utf-8?q?John</code> <code>=</code> <code>27s_Office?=
+ &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code> </li> <li> <code>John
+ &lt;<a href="mailto:john@example.com">john@example.com</a>&gt;</code> </li> <li> <code>&quot;Group&quot; : Tom
+ &lt;<a href="mailto:tom@example.com">tom@example.com</a>&gt;, Jane &lt;<a href="mailto:jane@example.com">jane@example.com</a>&gt;;</code> </li>
+ </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -104,16 +105,16 @@ part and domain.</li>
 of email addresses. Comments, or text within parentheses, can appear.
 Multiple email addresses are not allowed unless they appear in the
 group syntax given above. Encoded words under RFC 2047 that appear
-within comments or display names will be decoded. <p>An RFC 2047
+within comments or display names will be decoded. <p> An RFC 2047
 encoded word consists of &quot;=?&quot;, a character encoding name, such as
-<code>utf-8</code>, either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a
+<code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a
 series of bytes in the character encoding, further encoded using B or
 Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q
 encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and
 most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the
 basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to
 &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s
-maximum length is 75 characters. See the third example.</p>.</li>
+maximum length is 75 characters. See the third example. </p> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -204,22 +205,7 @@ empty.</p></li>
 <pre>public static List&lt;NamedAddress&gt; ParseAddresses​(String addressValue)
 </pre>
 
-<p>Generates a list of NamedAddress objects from a comma-separated list of
- addresses. Each address must follow the syntax accepted by the
- one-argument constructor of NamedAddress.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addressValue</code> - The parameter <code>addressValue</code> is not documented
-yet.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An IList(NamedAddress) object.</li>
-</ul>
+<p>Not documented yet.</p>
 
 <h3>hashCode</h3>
 
@@ -264,7 +250,7 @@ yet.</li>
 
 <ul>
 <li><code>true</code> if this object and another object are equal; otherwise,
-<code>false</code>.</li>
+<code>false</code> .</li>
 </ul>
 
 <h3>AddressesEqual</h3>
@@ -281,7 +267,7 @@ yet.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li>Either <code>true</code> or <code>false</code> .</li>
 </ul>
 
 <h3>getName</h3>
@@ -338,9 +324,8 @@ this object represents a group of addresses instead.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this represents a group of addresses rather than a
-single address; otherwise, <code>false</code>. <code>true</code> if this
-represents a group of addresses; otherwise, <code>false</code>.</li>
+<li><code>true</code> If this represents a group of addresses; otherwise,
+<code>false</code> .</li>
 </ul>
 
 <h3>toString</h3>

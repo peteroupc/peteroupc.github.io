@@ -331,10 +331,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 | Language   | Cryptographic   | Statistical | Other |
  --------|-----------------------------------------------|------|------|
-| .NET (incl. C# and VB.NET) | `System.Security.Cryptography.RNGCryptoServiceProvider` |  |   |
-| C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [frostburn/jkiss](https://github.com/frostburn/jkiss) library |
+| .NET (incl. C# and VB.NET) (H) | `System.Security.Cryptography.RNGCryptoServiceProvider` | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |   |
+| C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
-| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
+| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (KISS32Random, KISS64Random) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
 | JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
 | Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
 | PHP | `random_int()` (since PHP 7) |  | `mt_rand()` (A) |
@@ -358,8 +358,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` should only be used to supplement other techniques for random number generation.</small>
 
-<small>(D) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so doesn't meet the statistical RNG requirements.  However, a subclass of `System.Random` might be implemented to meet those requirements.</small>
-
+<small>(H) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so doesn't meet the statistical RNG requirements.  However, a subclass of `System.Random` might be implemented to meet those requirements.</small>
 
 ----
 
@@ -478,7 +477,13 @@ A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
 - If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.
 
-For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called _avalanche property_).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive (the _one-way property_) and so is finding an unknown input that leads to a given output (_collision resistance_), and should have other information security properties depending on the application.
+Useful properties of some hash functions include&mdash;
+
+- the _avalanche property_ (every bit of the input affects every bit of the output without a clear preference for 0 or 1),
+- the _one-way property_ (finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive), and
+- _collision resistance_ (finding an unknown input that leads to a given output is cost-prohibitive).
+
+Applications should choose hash functions with the avalanche property.  Hash functions used for information security should also have the collision resistance and one-way properties.
 
 <a id=Motivation></a>
 ## Motivation

@@ -11,11 +11,11 @@
 
 <p>Specifies what kind of data a message body is.</p>
 
-<p>A media type consists of a top-level type (the general category of the data), a subtype (the specific type), and an optional list of parameters. For example, the media type <code>text/plain; charset = utf-8</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and he parameters say that the data uses UTF-8, a Unicode character ncoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, video&quot;, and &quot;application&quot;.</p>
+<p>A media type consists of a top-level type (the general category of the ata), a subtype (the specific type), and an optional list of arameters. For example, the media type <code>text/plain; charset = utf-8</code> is a text media type (&quot;text&quot;), namely, a plain text type (&quot;plain&quot;), and he parameters say that the data uses UTF-8, a Unicode character ncoding (&quot;charset = utf-8&quot;). Other top-level types include &quot;audio&quot;, video&quot;, and &quot;application&quot;.</p>
 
-<p>A media type is sometimes known as a &quot;MIME type&quot;, for Multipurpose Internet Mail Extensions, the standard that introduced media types.</p>
+<p>A media type is sometimes known as a &quot;MIME type&quot;, for Multipurpose nternet Mail Extensions, the standard that introduced media types.</p>
 
-<p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s created. To create a changeable media type object, use the MediaTypeBuilder class.</p>
+<p>This type is immutable, meaning its values can&#39;t be changed once it&#39; s reated. To create a changeable media type object, use the ediaTypeBuilder class.</p>
 
 <p><b>Note:</b>According to RFC 2049, unrecognized subtypes of the top-level type <code>multipart</code> must be treated as <code>multipart/mixed</code> and unrecognized media types as the media type <code>application/octet-stream</code> .</p>
 
@@ -24,28 +24,28 @@
 <pre>public static readonly PeterO.Mail.MediaType ApplicationOctetStream;
 </pre>
 
-<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.</p>
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary inary data.</p>
 
 <h3>MessageRfc822</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType MessageRfc822;
 </pre>
 
-<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
+<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail essages.</p>
 
 <h3>TextPlainAscii</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType TextPlainAscii;
 </pre>
 
-<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data.</p>
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter US-ASCII&quot;, used for plain text data.</p>
 
 <h3>TextPlainUtf8</h3>
 
 <pre>public static readonly PeterO.Mail.MediaType TextPlainUtf8;
 </pre>
 
-<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U+0000 to U+007F).</p>
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter utf-8&quot;, used for plain text data that may contain characters outside the asic Latin range (U+0000 to U+007F).</p>
 
 <h3>IsMultipart</h3>
 
@@ -56,7 +56,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this is a multipart media type; otherwise, <c>false</c>. <code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
+<p><code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <h3>IsText</h3>
 
@@ -67,7 +67,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this is a text media type (&quot;text/*&quot;); otherwise, <c>false</c>. <code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
+<p><code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <h3>Parameters</h3>
 
@@ -78,7 +78,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>A list of the parameters contained in this media type object; the names of each parameter appear in an undefined order.NOTE: Previous versions erroneously stated that the list will be sorted by name. In fact, the names will not be guaranteed to appear in any particular order; this is at least the case in version 0.10.0.</p>
+<p>A list of the parameters contained in this media type object; the names f each parameter appear in an undefined order.NOTE: Previous versions erroneously stated that the list will be sorted y name. In fact, the names will not be guaranteed to appear in any articular order; this is at least the case in version 0.10.0.</p>
 
 <h3>SubType</h3>
 
@@ -96,7 +96,7 @@
 <pre>public string TopLevelType { get; }
 </pre>
 
-<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or &quot;audio&quot;).</p>
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or audio&quot;).</p>
 
 <p><b>Returns:</b></p>
 
@@ -107,11 +107,11 @@
 <pre>public string TypeAndSubType { get; }
 </pre>
 
-<p>Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+<p>Gets the top level type and subtype of this media type, separated by a lash; for example, &quot;text/plain&quot;.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+<p>The top level type and subtype of this media type, separated by a slash; or example, &quot;text/plain&quot;.</p>
 
 <h3>Equals</h3>
 
@@ -137,18 +137,18 @@ is an arbitrary object.</li>
 <pre>public string GetCharset();
 </pre>
 
-<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</p>
+<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding sed to represent text in the data that uses this media type.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is absent or empty, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
+<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result f the Encodings.ResolveAliasForEmail method for that parameter, except hat result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are onverted to lower case. If the &quot;charset&quot; parameter is absent or empty, eturns the default value, if any, for that parameter given the media type e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the mpty string if there is none.</p>
 
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. No application or process IDs re used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -160,25 +160,24 @@ is an arbitrary object.</li>
     string name);
 </pre>
 
-<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</p>
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or format&quot;.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic ase-insensitive comparison. (Two strings are equal in such a comparison, f they match after converting the basic upper-case letters A to Z (U+0041 o U+005A) in both strings to lower case.).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The value of the parameter as a string, or null if the parameter doesn&#39;t exist.</p>
+<p>The value of the parameter as a string, or null if the parameter doesn&#39;t xist.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li>System.ArgumentNullException:
 The parameter <i>name</i>
-is null.</p></li>
-<li><p>System.ArgumentException:</p></li>
+is null.</li>
 </ul>
 
 <h3>Parse</h3>
@@ -187,12 +186,12 @@ is null.</p></li>
     string mediaTypeValue);
 </pre>
 
-<p>Parses a media type string and returns a media type object. For further information, see the overload taking a MediaType parameter.</p>
+<p>Parses a media type string and returns a media type object. For further nformation, see the overload taking a MediaType parameter.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include parameters.</li>
+<li><i>mediaTypeValue</i>: A text string representing a media type. This media type can include arameters.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -207,21 +206,21 @@ is empty or syntactically invalid.</p>
     PeterO.Mail.MediaType defaultValue);
 </pre>
 
-<p>Parses a media type string and returns a media type object, or the default value if the string is invalid. This method checks the syntactic validity of the string, but not whether it has all parameters it&#39;s required to have or whether the parameters themselves are set to valid values for the parameter.This method assumes the given media type string was directly extracted from the Content-Type header field (as defined for email messages) and follows the syntax given in RFC 2045. Accordingly, among other things, the media type string can contain comments (delimited by parentheses).</p>
+<p>Parses a media type string and returns a media type object, or the efault value if the string is invalid. This method checks the syntactic alidity of the string, but not whether it has all parameters it&#39;s equired to have or whether the parameters themselves are set to valid alues for the parameter.This method assumes the given media type string was directly extracted rom the Content-Type header field (as defined for email messages) and ollows the syntax given in RFC 2045. Accordingly, among other things, he media type string can contain comments (delimited by parentheses).</p>
 
-<p>RFC 2231 extensions allow each media type parameter to be associated with a character encoding and/or language, and support parameter values that span two or more key-value pairs. Parameters making use of RFC 2231 extensions have names with an asterisk (&quot;*&quot;). Such a parameter will be ignored if it is ill-formed because of RFC 2231&#39;s rules (except for illegal percent-decoding or undecodable sequences for the given character enoding). Examples of RFC 2231 extensions follow (both examples encode the same &quot;filename&quot; parameter):</p>
+<p>RFC 2231 extensions allow each media type parameter to be associated ith a character encoding and/or language, and support parameter values hat span two or more key-value pairs. Parameters making use of RFC 2231 xtensions have names with an asterisk (&quot;*&quot;). Such a parameter will be gnored if it is ill-formed because of RFC 2231&#39;s rules (except for llegal percent-decoding or undecodable sequences for the given haracter enoding). Examples of RFC 2231 extensions follow (both xamples encode the same &quot;filename&quot; parameter):</p>
 
 <p><b>text/example; filename*=utf-8&#39;en&#39;filename.txt</b></p>
 
 <p><b>text/example; filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p>
 
-<p>This implementation ignores keys (in parameter key-value pairs) that appear more than once in the media type. Nothing in RFCs 2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or otherwise specifies error-handling behavior for such keys.</p>
+<p>This implementation ignores keys (in parameter key-value pairs) that ppear more than once in the media type. Nothing in RFCs 2045, 2183, 231, 6266, or 7231 explicitly disallows such keys, or otherwise pecifies error-handling behavior for such keys.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: A text string representing a media type. This media type can include parameters.</p></li>
-<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be null.</p></li>
+<li><p><i>str</i>: A text string representing a media type. This media type can include arameters.</p></li>
+<li><p><i>defaultValue</i>: The media type to return if the string is syntactically invalid. Can be ull.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -241,7 +240,7 @@ is null.</li>
 <pre>public string ToSingleLineString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of a single line.</p>
+<p>Converts this media type to a text string form suitable for inserting in TTP headers. Notably, the string contains the value of a Content-Type eader field (without the text necessarily starting with &quot;Content-Type&quot; ollowed by a space), and consists of a single line.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -252,7 +251,7 @@ is null.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for inserting in email headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of one or more lines.</p>
+<p>Converts this media type to a text string form suitable for inserting in mail headers. Notably, the string contains the value of a Content-Type eader field (without the text necessarily starting with &quot;Content-Type&quot; ollowed by a space), and consists of one or more lines.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -263,7 +262,7 @@ is null.</li>
 <pre>public string ToUriSafeString();
 </pre>
 
-<p>Converts this media type to a text string form suitable for data URIs. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), consists of a single line, and uses percent-encoding as necessary or convenient so that the resulting string can validly appear in a URI path.</p>
+<p>Converts this media type to a text string form suitable for data URIs. otably, the string contains the value of a Content-Type header field without the text necessarily starting with &quot;Content-Type&quot; followed by a pace), consists of a single line, and uses percent-encoding as necessary r convenient so that the resulting string can validly appear in a URI ath.</p>
 
 <p><b>Return Value:</b></p>
 

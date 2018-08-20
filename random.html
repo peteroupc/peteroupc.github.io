@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 19, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 20, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -276,6 +276,7 @@
 
 <ul>
 <li>Any <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>linear congruential generator</strong></a> with modulus 2<sup>63</sup> or less (such as <code>java.util.Random</code> and C++&#39;s <code>std::minstd_rand</code> and <code>std::minstd_rand0</code> engines) has a <em>state length</em> of less than 64 bits.</li>
+<li> System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.</li>
 </ul>
 
 <p><a id=Seeded_PRNGs></a></p>
@@ -475,9 +476,15 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 </thead><tbody>
 <tr>
+<td>.NET (incl. C# and VB.NET) (H)</td>
+<td><code>System.Security.Cryptography.RNGCryptoServiceProvider</code></td>
+<td><a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (XorShift1024Star, XorShift128Plus, XoroShiro128Plus)</td>
+<td></td>
+</tr>
+<tr>
 <td>C/C++ (G)</td>
 <td>(C)</td>
-<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128plus.c</code></strong></a> (128-bit nonzero seed); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><strong><code>xorshift128plus.c</code></strong></a> (128-bit nonzero seed)</td>
+<td><a href="http://xoroshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128plus.c</code></strong></a> (128-bit nonzero seed); <a href="http://xoroshiro.di.unimi.it/xorshift128plus.c"><strong><code>xorshift128plus.c</code></strong></a> (128-bit nonzero seed); <a href="https://github.com/frostburn/jkiss"><strong>frostburn/jkiss</strong></a> library</td>
 <td></td>
 </tr>
 <tr>
@@ -489,8 +496,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <tr>
 <td>Java (D)</td>
 <td>(C); <code>java.security.SecureRandom</code> (F)</td>
-<td><a href="https://github.com/grunka/xorshift"><strong>grunka/xorshift</strong></a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>)</td>
-<td></td>
+<td><a href="https://github.com/grunka/xorshift"><strong>grunka/xorshift</strong></a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>); <a href="https://github.com/jenetics/prngine"><strong>jenetics/prngine</strong></a> (KISS32Random, KISS64Random)</td>
+<td>prngine library (<code>MT19937_32Random</code>, <code>MT19937_64Random</code>)</td>
 </tr>
 <tr>
 <td>JavaScript</td>
@@ -532,7 +539,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is recommended. The data passed to the method should be data described in note (C).</small></p>
 
-<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.</small></p>
+<p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> should only be used to supplement other techniques for random number generation.</small></p>
+
+<p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>System.Random</code> might be implemented to meet those requirements.</small></p>
 
 <hr>
 
@@ -677,7 +686,15 @@ def stateLengthDecks(numDecks, numCards):
 <li>If a number of random bits is needed, and the hash code has at least that many bits, then that many bits can instead be taken directly from the hash code.</li>
 </ul>
 
-<p>For such purposes, applications should choose hash functions designed such that every bit of the input affects every bit of the output without a clear preference for 0 or 1 (the so-called <em>avalanche property</em>).  Hash functions used in information security contexts should be designed such that finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive (the <em>one-way property</em>) and so is finding an unknown input that leads to a given output (<em>collision resistance</em>), and should have other information security properties depending on the application.</p>
+<p>Useful properties of some hash functions include&mdash;</p>
+
+<ul>
+<li>the <em>avalanche property</em> (every bit of the input affects every bit of the output without a clear preference for 0 or 1),</li>
+<li>the <em>one-way property</em> (finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive), and</li>
+<li><em>collision resistance</em> (finding an unknown input that leads to a given output is cost-prohibitive).</li>
+</ul>
+
+<p>Applications should choose hash functions with the avalanche property.  Hash functions used for information security should also have the collision resistance and one-way properties.</p>
 
 <p><a id=Motivation></a></p>
 
