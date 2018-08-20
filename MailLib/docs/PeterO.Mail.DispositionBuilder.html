@@ -52,9 +52,10 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>type</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <h3>DispositionBuilder Constructor</h3>
@@ -69,7 +70,7 @@ is null.</li>
 <pre>public string DispositionType { get; set;}
 </pre>
 
-<p>Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or attachment&quot;.</p>
+<p>Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
 
 <p><b>Returns:</b></p>
 
@@ -86,7 +87,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this is a multipart media type; otherwise, <c>false</c>. <code>true</code> If this is a multipart media type; otherwise,  <code>false</code> .</p>
 
 <h3>IsText</h3>
 
@@ -99,7 +100,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this is a text media type; otherwise, <c>false</c>. <code>true</code> If this is a text media type; otherwise,  <code>false</code> .</p>
 
 <h3>RemoveParameter</h3>
 
@@ -107,7 +108,7 @@ is null.</li>
     string name);
 </pre>
 
-<p>Removes a parameter from this content disposition. Does nothing if the arameter&#39;s name doesn&#39;t exist.</p>
+<p>Removes a parameter from this content disposition. Does nothing if the parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -149,9 +150,10 @@ is a text string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <h3>SetParameter</h3>

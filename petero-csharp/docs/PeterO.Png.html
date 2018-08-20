@@ -29,6 +29,12 @@ is a 32-bit signed integer.</p></li>
 is a 32-bit signed integer.</p></li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
+
 <h3>Height</h3>
 
 <pre>public int Height { get; }
@@ -70,6 +76,12 @@ is a 32-bit signed integer.</li>
 
 <p>A byte (from 0 to 255).</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
+
 <h3>GetPixel</h3>
 
 <pre>public byte[] GetPixel(
@@ -90,6 +102,12 @@ is a 32-bit signed integer.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
 
 <h3>Save</h3>
 
@@ -130,6 +148,12 @@ is null.</li>
 is a 32-bit signed integer.</p></li>
 <li><p><i>filter</i>: The parameter <i>filter</i>
 is a byte (from 0 to 255).</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
 </ul>
 
 <h3>SetPixel</h3>
@@ -181,6 +205,12 @@ is a 32-bit signed integer.</p></li>
 is a byte (from 0 to 255).</p></li>
 </ul>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
+
 <h3>SetPixel</h3>
 
 <pre>public void SetPixel(
@@ -203,9 +233,10 @@ is a 32-bit signed integer.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>pixel</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

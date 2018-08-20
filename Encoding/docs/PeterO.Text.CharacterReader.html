@@ -10,7 +10,7 @@
     PeterO.Text.ICharacterInput
 </pre>
 
-<p>A general-purpose character input for reading text from byte streams and ext strings. When reading byte streams, this class supports the UTF-8 haracter encoding by default, but can be configured to support UTF-16 and TF-32 as well.</p>
+<p>A general-purpose character input for reading text from byte streams and text strings. When reading byte streams, this class supports the UTF-8 character encoding by default, but can be configured to support UTF-16 and UTF-32 as well.</p>
 
 <h3>CharacterReader Constructor</h3>
 
@@ -135,9 +135,10 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter <i>str</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:</p></li>
 </ul>
 
 <h3>CharacterReader Constructor</h3>
@@ -178,9 +179,9 @@ is null.</li>
 <li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
@@ -210,9 +211,9 @@ is null.</li>
 <li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
@@ -247,9 +248,9 @@ is null.</li>
 <li><p><i>mode</i>: The method to use when detecting encodings other than UTF-8 in the byte stream. This usually involves checking whether the stream begins with a byte-order mark (BOM, U+FEFF) or a non-zero basic code point (NZB, U+0001 to U+007F) before reading the rest of the stream. This value can be one of the following:</p></li>
 <li><p>0: UTF-8 only.</p></li>
 <li><p>1: Detect UTF-16 using BOM or NZB, otherwise UTF-8.</p></li>
-<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to etect UTF-32 first.)</p></li>
+<li><p>2: Detect UTF-16/UTF-32 using BOM or NZB, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 <li><p>3: Detect UTF-16 using BOM, otherwise UTF-8.</p></li>
-<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect TF-32 first.)</p></li>
+<li><p>4: Detect UTF-16/UTF-32 using BOM, otherwise UTF-8. (Tries to detect UTF-32 first.)</p></li>
 </ul>
 
 <p>.</p>
