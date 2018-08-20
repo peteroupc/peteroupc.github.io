@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 19, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 20, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -187,6 +187,7 @@ The following also count as statistical RNGs, but are not preferred:
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
+-  System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
 
 <a id=Seeded_PRNGs></a>
 ## Seeded PRNGs
@@ -330,7 +331,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 | Language   | Cryptographic   | Statistical | Other |
  --------|-----------------------------------------------|------|------|
-| C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed) |
+| .NET (incl. C# and VB.NET) | `System.Security.Cryptography.RNGCryptoServiceProvider` |  |   |
+| C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [frostburn/jkiss](https://github.com/frostburn/jkiss) library |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
 | Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`) | |
 | JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
@@ -354,7 +356,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(F) Calling the `setSeed` method of `SecureRandom` before use is recommended. The data passed to the method should be data described in note (C).</small>
 
-<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.</small>
+<small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is not recommended because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` should only be used to supplement other techniques for random number generation.</small>
+
+<small>(D) The .NET Framework's `System.Random` class uses a seed of at most 32 bits, so doesn't meet the statistical RNG requirements.  However, a subclass of `System.Random` might be implemented to meet those requirements.</small>
+
 
 ----
 

@@ -18,12 +18,14 @@
     int height);
 </pre>
 
+<p>Initializes a new instance of the <a href="PeterO.Png.html">PeterO.Png</a> class.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>width</i>: The parameter <i>width</i>
+<li><p><i>width</i>: The parameter  <i>width</i>
 is a 32-bit signed integer.</p></li>
-<li><p><i>height</i>: The parameter <i>height</i>
+<li><p><i>height</i>: The parameter  <i>height</i>
 is a 32-bit signed integer.</p></li>
 </ul>
 
@@ -32,14 +34,22 @@ is a 32-bit signed integer.</p></li>
 <pre>public int Height { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value not documented yet.</p>
 
 <h3>Width</h3>
 
 <pre>public int Width { get; }
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a value not documented yet.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A value not documented yet.</p>
 
 <h3>GetFilter</h3>
 
@@ -47,11 +57,13 @@ is a 32-bit signed integer.</p></li>
     int y);
 </pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</li>
+is a 32-bit signed integer.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -65,13 +77,14 @@ is not documented yet.</li>
     int y);
 </pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is not documented yet.</p></li>
+<li><p><i>x</i>: X coordinate within the image.</p></li>
 <li><p><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</p></li>
+is a 32-bit signed integer.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -84,11 +97,21 @@ is not documented yet.</p></li>
     string filename);
 </pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><i>filename</i>: The parameter  <i>filename</i>
-is not documented yet.</li>
+is a text string.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>filename</i>
+is null.</li>
 </ul>
 
 <h3>SetFilter</h3>
@@ -98,66 +121,15 @@ is not documented yet.</li>
     byte filter);
 </pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</p></li>
+is a 32-bit signed integer.</p></li>
 <li><p><i>filter</i>: The parameter  <i>filter</i>
-is not documented yet.</p></li>
-</ul>
-
-<h3>SetPixel</h3>
-
-<pre>public void SetPixel(
-    int x,
-    int y,
-    byte r,
-    byte g,
-    byte b);
-</pre>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is not documented yet.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</p></li>
-<li><p><i>r</i>: The parameter  <i>r</i>
-is not documented yet.</p></li>
-<li><p><i>g</i>: The parameter  <i>g</i>
-is not documented yet.</p></li>
-<li><p><i>b</i>: The parameter  <i>b</i>
-is not documented yet.</p></li>
-</ul>
-
-<h3>SetPixel</h3>
-
-<pre>public void SetPixel(
-    int x,
-    int y,
-    byte r,
-    byte g,
-    byte b,
-    byte a);
-</pre>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is not documented yet.</p></li>
-<li><p><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</p></li>
-<li><p><i>r</i>: The parameter  <i>r</i>
-is not documented yet.</p></li>
-<li><p><i>g</i>: The parameter  <i>g</i>
-is not documented yet.</p></li>
-<li><p><i>b</i>: The parameter  <i>b</i>
-is not documented yet.</p></li>
-<li><p><i>a</i>: The parameter  <i>a</i>
-is not documented yet.</p></li>
+is a byte (from 0 to 255).</p></li>
 </ul>
 
 <h3>SetPixel</h3>
@@ -168,22 +140,23 @@ is not documented yet.</p></li>
     byte[] pixel);
 </pre>
 
+<p>Not documented yet.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>x</i>: The parameter  <i>x</i>
-is not documented yet.</p></li>
+<li><p><i>x</i>: X coordinate within the image.</p></li>
 <li><p><i>y</i>: The parameter  <i>y</i>
-is not documented yet.</p></li>
-<li><p><i>pixel</i>: The parameter  <i>pixel</i>
-is not documented yet.</p></li>
+is a 32-bit signed integer.</p></li>
+<li><p><i>pixel</i>: A byte array.</p></li>
 </ul>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter is null.</li>
+The parameter <i>pixel</i>
+is null.</li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

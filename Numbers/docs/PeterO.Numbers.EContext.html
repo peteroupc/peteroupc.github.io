@@ -9,7 +9,7 @@
 <pre>public sealed class EContext
 </pre>
 
-<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).<b>Thread safety:</b> With one exception, instances of this class are immutable and are safe to use among multiple threads. The one exception involves the  <code>Flags</code>  property. If the context&#39;s <code>HasFlags</code>  property (a read-only property) is  <code>true</code> , the  <code>Flags</code>  property is mutable, thus making the context mutable. This class doesn&#39;t synchronize access to such mutable contexts, so applications should provide their own synchronization if a context with the  <code>HasFlags</code>  property set to  <code>true</code> will be shared among multiple threads and at least one of those threads needs to write the  <code>Flags</code>  property (which can happen, for example, by passing the context to most methods of <code>EDecimal</code>  such as  <code>Add</code>  ).</p>
+<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).<b>Thread safety:</b>With one exception, instances of this class are immutable and are safe o use among multiple threads. The one exception involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code> property (a read-only property) is <code>true</code> , the <code>Flags</code> property is mutable, thus making the context mutable. This class oesn&#39;t synchronize access to such mutable contexts, so applications hould provide their own synchronization if a context with the <code>HasFlags</code> property set to <code>true</code> will be shared among multiple threads and at least one of those threads eeds to write the <code>Flags</code> property (which can happen, for example, by passing the context to most ethods of <code>EDecimal</code> such as <code>Add</code> ).</p>
 
 <h3>EContext Constructor</h3>
 
@@ -21,7 +21,7 @@
     bool clampNormalExponents);
 </pre>
 
-<p>Initializes a new instance of the<a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class.  <code>HasFlags</code>  will be set to false.</p>
+<p>Initializes a new instance of the <a href="PeterO.Numbers.EContext.html">PeterO.Numbers.EContext</a> class. <code>HasFlags</code> will be set to false.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -86,7 +86,9 @@
 <pre>public static readonly PeterO.Numbers.EContext CliDecimal;
 </pre>
 
-<p>An arithmetic context for the .NET Framework decimal format (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ), 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven. (The  <code>&quot;Cli&quot;</code>  stands for &quot;Common Language Infrastructure&quot;, which defined this format as the .NET Framework decimal format in version 1, but leaves it unspecified in later versions.).</p>
+<p>An arithmetic context for the .NET Framework decimal format (see<a href="PeterO.Numbers.EDecimal.html">
+        &#x22;Forms of numbers&#x22;
+      </a>), 96 bits precision, and a valid exponent range of -28 to 0. The default ounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common Language Infrastructure&quot;, which defined this format as he .NET Framework decimal format in version 1, but leaves it unspecified n later versions.).</p>
 
 <h3>Decimal128</h3>
 
@@ -195,7 +197,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property; otherwise, <c>false</c>.. The default value is true, meaning that EMax and EMin refer to the adjusted exponent. Setting this value to false (using WithAdjustExponent) is useful for modeling floating point representations with an integer mantissa (significand) and an integer exponent, such as Java&#39;s BigDecimal.  <code>true</code>  if the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or false if they refer to just the number&#39;s Exponent property.</p>
+<p><c>true</c> if the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property; otherwise, <c>false</c>.. The default value is true, meaning that EMax and EMin refer to the adjusted exponent. Setting this value to false (using WithAdjustExponent) is useful for modeling floating point representations with an integer mantissa (significand) and an integer exponent, such as Java&#39;s BigDecimal. <code>true</code> if the EMax and EMin properties refer to the number&#39;s Exponent property djusted to the number&#39;s precision, or false if they refer to just the umber&#39;s Exponent property.</p>
 
 <h3>ClampNormalExponents</h3>
 
@@ -235,12 +237,11 @@
 <pre>public int Flags { get; set;}
 </pre>
 
-<p>Gets or sets the flags that are set from converting numbers according to this arithmetic context. If  <code>HasFlags</code>  is false, this value will be 0. This value is a combination of bit fields. To retrieve a particular flag, use the AND operation on the return value of this method. For example:  <code>(this.Flags &amp;
-            EContext.FlagInexact) != 0</code>  returns  <code>true</code>  if the Inexact flag is set.</p>
+<p>Gets or sets the flags that are set from converting numbers according to this arithmetic context. If <code>HasFlags</code> is false, this value will be 0. This value is a combination of bit ields. To retrieve a particular flag, use the AND operation on the return alue of this method. For example: <code>(this.Flags &amp; EContext.FlagInexact) != 0</code> returns <code>true</code> if the Inexact flag is set.</p>
 
 <p><b>Returns:</b></p>
 
-<p>The flags that are set from converting numbers according to this arithmetic context. If.  <code>HasFlags</code>  is false, this value will be 0.</p>
+<p>The flags that are set from converting numbers according to this arithmetic context. If. <code>HasFlags</code> is false, this value will be 0.</p>
 
 <h3>HasExponentRange</h3>
 
@@ -251,7 +252,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context defines a minimum and maximum exponent; otherwise, <c>false</c>.. If false, converted exponents can have any exponent and operations can&#39;t cause overflow or underflow.  <code>true</code>  if this context defines a minimum and maximum exponent; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this context defines a minimum and maximum exponent; otherwise, <c>false</c>.. If false, converted exponents can have any exponent and operations can&#39;t cause overflow or underflow. <code>true</code> if this context defines a minimum and maximum exponent; otherwise,  <code>false</code> .</p>
 
 <h3>HasFlags</h3>
 
@@ -262,7 +263,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context has a mutable Flags field; otherwise, <c>false</c>.  <code>true</code>  if this context has a mutable Flags field; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this context has a mutable Flags field; otherwise, <c>false</c>. <code>true</code> if this context has a mutable Flags field; otherwise,  <code>false</code> .</p>
 
 <h3>HasMaxPrecision</h3>
 
@@ -273,7 +274,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context defines a maximum precision; otherwise, <c>false</c>.  <code>true</code>  if this context defines a maximum precision; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if this context defines a maximum precision; otherwise, <c>false</c>. <code>true</code> if this context defines a maximum precision; otherwise,  <code>false</code> .</p>
 
 <h3>IsPrecisionInBits</h3>
 
@@ -284,7 +285,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this context&#39;s Precision property is in bits, rather than digits; otherwise, <c>false</c>.. The default is false.  <code>true</code>  if this context&#39;s Precision property is in bits, rather than digits; otherwise,  <code>false</code> . The default is false.</p>
+<p><c>true</c> if this context&#39;s Precision property is in bits, rather than digits; otherwise, <c>false</c>.. The default is false. <code>true</code> if this context&#39;s Precision property is in bits, rather than digits; otherwise,  <code>false</code> . The default is false.</p>
 
 <h3>IsSimplified</h3>
 
@@ -295,7 +296,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if to use a &quot;simplified&quot; arithmetic; otherwise, <c>false</c>.. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href='http://speleotrove.com/decimal/dax3274.html'> <c><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></c> </a>.  <code>true</code>  if a &quot;simplified&quot; arithmetic will be used; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if to use a &quot;simplified&quot; arithmetic; otherwise, <c>false</c>.. In the simplified arithmetic, infinity, not-a-number, and subnormal numbers are not allowed, and negative zero is treated the same as positive zero. For further details, see <a href='http://speleotrove.com/decimal/dax3274.html'> <c><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></c> </a>. <code>true</code> if a &quot;simplified&quot; arithmetic will be used; otherwise,  <code>false</code> .</p>
 
 <h3>Precision</h3>
 
@@ -324,7 +325,7 @@
 <pre>public int Traps { get; }
 </pre>
 
-<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if  <code>HasFlags</code>  is false, and the flag&#39;s trap is enabled, the operation will throw a TrapException.For example, if Traps equals  <code>FlagInexact</code>  and FlagSubnormal, a TrapException will be thrown if an operation&#39;s return value is not the same as the exact result (FlagInexact) or if the return value&#39;s exponent is lower than the lowest allowed (FlagSubnormal).</p>
+<p>Gets the traps that are set for each flag in the context. Whenever a flag is signaled, even if <code>HasFlags</code> is false, and the flag&#39;s trap is enabled, the operation will throw a rapException.For example, if Traps equals <code>FlagInexact</code> and FlagSubnormal, a TrapException will be thrown if an operation&#39;s eturn value is not the same as the exact result (FlagInexact) or if the eturn value&#39;s exponent is lower than the lowest allowed FlagSubnormal).</p>
 
 <p><b>Returns:</b></p>
 
@@ -357,7 +358,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if a number can have the given Exponent property under this arithmetic context; otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
+<p><code>true</code> if a number can have the given Exponent property under this arithmetic ontext; otherwise,  <code>false</code> . If this context allows unlimited precision, returns true for the exponent EMax and any exponent less than EMax.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -398,7 +399,7 @@ is null.</li>
 
 <ul>
 <li><p><i>precision</i>: Maximum number of digits (precision).</p></li>
-<li><p><i>rounding</i>: The parameter  <i>rounding</i>
+<li><p><i>rounding</i>: The parameter <i>rounding</i>
 is an ERounding object.</p></li>
 </ul>
 
@@ -517,7 +518,7 @@ is null.</p></li>
 <pre>public PeterO.Numbers.EContext WithBlankFlags();
 </pre>
 
-<p>Copies this EContext with  <code>HasFlags</code>  set to true and a Flags value of 0.</p>
+<p>Copies this EContext with <code>HasFlags</code> set to true and a Flags value of 0.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -572,7 +573,7 @@ is null.</p></li>
 <pre>public PeterO.Numbers.EContext WithNoFlags();
 </pre>
 
-<p>Copies this EContext with  <code>HasFlags</code>  set to false and a Flags value of 0.</p>
+<p>Copies this EContext with <code>HasFlags</code> set to false and a Flags value of 0.</p>
 
 <p><b>Return Value:</b></p>
 
