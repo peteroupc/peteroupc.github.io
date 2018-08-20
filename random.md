@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 18, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 19, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 

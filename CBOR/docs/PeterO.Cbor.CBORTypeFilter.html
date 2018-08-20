@@ -69,7 +69,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this type filter allows CBOR arrays and the given array index is llowed under this type filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this type filter allows CBOR arrays and the given array index is allowed under this type filter; otherwise, <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -87,7 +87,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this filter allows CBOR arrays and an array&#39;s length is allowed under his filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under this filter; otherwise, <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -105,7 +105,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this filter allows CBOR arrays and an array&#39;s length is allowed under filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -123,7 +123,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this filter allows CBOR arrays and an array&#39;s length is allowed under filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this filter allows CBOR arrays and an array&#39;s length is allowed under a filter; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -185,7 +185,13 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if the given CBOR major type matches a major type allowed by this filter; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if the given CBOR major type matches a major type allowed by this filter; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
 
 <h3>NonFPSimpleValueAllowed</h3>
 
@@ -196,7 +202,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this filter allows simple values that are not floating-point numbers; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this filter allows simple values that are not floating-point numbers; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -214,7 +220,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -232,7 +238,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <h3>TagAllowed</h3>
 
@@ -250,7 +256,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -270,6 +276,12 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
 
 <h3>WithArrayExactLength</h3>
 

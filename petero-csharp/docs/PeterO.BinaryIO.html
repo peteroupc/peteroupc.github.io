@@ -43,7 +43,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream can be read; otherwise, . <code>false</code> .</p>
+<p><c>true</c> if the underlying stream can be read; otherwise, <c>false</c>. <code>true</code> If the underlying stream can be read; otherwise, . <code>false</code> .</p>
 
 <h3>CanSeek</h3>
 
@@ -54,7 +54,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if the underlying stream supports seeking; otherwise, <c>false</c>. <code>true</code> If the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
 
 <h3>CanWrite</h3>
 
@@ -65,7 +65,7 @@ is null.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+<p><c>true</c> if the underlying stream supports writing; otherwise, <c>false</c>. <code>true</code> If the underlying stream supports writing; otherwise,  <code>false</code> .</p>
 
 <h3>Length</h3>
 
@@ -148,7 +148,7 @@ is less than <i>length</i>
 
 <p>Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte ontains 7 bits of the result, starting with the least-significant bits. f the eighth (highest) bit is 1, then the byte that follows it contains 7 ore bits, and so on. Otherwise, the process stops and the resulting nteger is returned. The return value of this method can be up to 32 bits ong. If bit 32 is 1, the return value is negative; otherwise positive.</p>
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 32 bits long. If bit 32 is 1, the return value is negative; otherwise positive.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -194,7 +194,7 @@ is less than <i>length</i>
 
 <p>Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</p>
 
-<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte ontains 7 bits of the result, starting with the least-significant bits. f the eighth (highest) bit is 1, then the byte that follows it contains 7 ore bits, and so on. Otherwise, the process stops and the resulting nteger is returned. The return value of this method can be up to 31 bits ong and is positive.</p>
+<p>In 7-bit encoding, an integer is encoded in one or more bytes. Each byte contains 7 bits of the result, starting with the least-significant bits. If the eighth (highest) bit is 1, then the byte that follows it contains 7 more bits, and so on. Otherwise, the process stops and the resulting integer is returned. The return value of this method can be up to 31 bits long and is positive.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -229,6 +229,12 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>A byte array containing the data read.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
 
 <h3>ReadDoubleBE</h3>
 
@@ -390,7 +396,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>data</i>: A byte array. (2).</p></li>
+<li><p><i>data</i>: A byte array.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>data</i>
 begins.</p></li>
 <li><p><i>length</i>: The number of elements in the desired portion of <i>data</i>
@@ -509,6 +515,12 @@ is a 32-bit signed integer.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
+
 <h3>Write7BitEncodedUInt32LE</h3>
 
 <pre>public int Write7BitEncodedUInt32LE(
@@ -527,6 +539,12 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:</li>
+</ul>
 
 <h3>WriteBE</h3>
 
