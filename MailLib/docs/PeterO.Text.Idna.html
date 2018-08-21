@@ -9,9 +9,9 @@
 <pre>public static class Idna
 </pre>
 
-<p>Contains methods that implement Internationalized Domain Names in pplications (IDNA). IDNA enables using a wider range of letters, umbers, and certain other characters in domain names. This class mplements the 2008 revision of IDNA, also known as IDNA2008.</p>
+<p>Contains methods that implement Internationalized Domain Names in Applications (IDNA). IDNA enables using a wider range of letters, numbers, and certain other characters in domain names. This class implements the 2008 revision of IDNA, also known as IDNA2008.</p>
 
-<p>NOTICE: While this class&#39;s source code is in the public domain, the lass uses two internal classes, called <code>NormalizationData</code> and <code>IdnaData</code> , that include data derived from the Unicode Character Database. See he documentation for the NormalizerInput class for the permission otice for the Unicode Character Database.</p>
+<p>NOTICE: While this class&#39;s source code is in the public domain, the class uses two internal classes, called <code>NormalizationData</code> and <code>IdnaData</code> , that include data derived from the Unicode Character Database. See he documentation for the NormalizerInput class for the permission otice for the Unicode Character Database.</p>
 
 <h3>EncodeDomainName</h3>
 
@@ -29,7 +29,7 @@
 
 <p><b>Return Value:</b></p>
 
-<p>The domain name where each label with code points outside the Basic Latin ange (U+0000 to U+007F) is encoded into Punycode. Labels where this is ot possible remain unchanged.</p>
+<p>The domain name where each label with code points outside the Basic Latin range (U+0000 to U+007F) is encoded into Punycode. Labels where this is not possible remain unchanged.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -52,7 +52,7 @@ Value is null.</li>
 <ul>
 <li><p><i>str</i>: The parameter <i>str</i>
 is a text string.</p></li>
-<li><p><i>lookupRules</i>: If true, uses rules to apply when looking up the string as a domain name. f false, uses rules to apply when registering the string as a domain ame.</p></li>
+<li><p><i>lookupRules</i>: If true, uses rules to apply when looking up the string as a domain name. If false, uses rules to apply when registering the string as a domain name.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
