@@ -9,7 +9,7 @@
 <pre>public class NamedAddress
 </pre>
 
-<p>Represents an email address and a name for that address. Can represent a roup of email addresses instead.</p>
+<p>Represents an email address and a name for that address. Can represent a group of email addresses instead.</p>
 
 <h3>NamedAddress Constructor</h3>
 
@@ -31,7 +31,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A text string identifying a single email address or a group of email ddresses. Comments, or text within parentheses, can appear. Multiple mail addresses are not allowed unless they appear in the group syntax iven above. Encoded words under RFC 2047 that appear within comments or isplay names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, uch as <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in he character encoding, further encoded using B or Q encoding, and inally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are hanged to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than he basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z 0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their -digit hexadecimal form. An encoded word&#39;s maximum length is 75 haracters. See the third example.</li>
+<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in he character encoding, further encoded using B or Q encoding, and inally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are hanged to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than he basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z 0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their -digit hexadecimal form. An encoded word&#39;s maximum length is 75 haracters. See the third example.</li>
 </ul>
 
 <p>.</p>
@@ -58,7 +58,7 @@ The named address has an invalid syntax.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded ords under RFC 2047 will not be decoded.</p></li>
+<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
 <li><p><i>address</i>: An email address.</p></li>
 </ul>
 
@@ -82,7 +82,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded ords under RFC 2047 will not be decoded.</p></li>
+<li><p><i>displayName</i>: The display name of the email address. Can be null or empty. Encoded words under RFC 2047 will not be decoded.</p></li>
 <li><p><i>address</i>: An email address.</p></li>
 </ul>
 
@@ -160,14 +160,14 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p>The email address associated with this object. This value is null if this bject represents a group of addresses instead.</p>
+<p>The email address associated with this object. This value is null if this object represents a group of addresses instead.</p>
 
 <h3>DisplayName</h3>
 
 <pre>public string DisplayName { get; }
 </pre>
 
-<p>Gets the display name for this email address. Returns null if the display ame is absent.</p>
+<p>Gets the display name for this email address. Returns null if the display name is absent.</p>
 
 <p><b>Returns:</b></p>
 
@@ -178,29 +178,29 @@ is empty, or an item in the list is itself a group.</p></li>
 <pre>public System.Collections.Generic.IList GroupAddresses { get; }
 </pre>
 
-<p>Gets a read-only list of addresses that make up the group, if this object epresents a group, or an empty list otherwise.</p>
+<p>Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
 <p><b>Returns:</b></p>
 
-<p>A list of addresses that make up the group, if this object represents a roup, or an empty list otherwise.</p>
+<p>A list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</p>
 
 <h3>IsGroup</h3>
 
 <pre>public bool IsGroup { get; }
 </pre>
 
-<p>Gets a value indicating whether this represents a group of addresses ather than a single address.</p>
+<p>Gets a value indicating whether this represents a group of addresses rather than a single address.</p>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If this represents a group of addresses; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  If this represents a group of addresses; otherwise,.  <code>false</code> .</p>
 
 <h3>Name</h3>
 
 <pre>public string Name { get; }
 </pre>
 
-<p>Gets the display name for this email address, or the email address&#39;s alue if the display name is null. Returns an empty string if the address nd display name are null.</p>
+<p>Gets the display name for this email address, or the email address&#39;s value if the display name is null. Returns an empty string if the address and display name are null.</p>
 
 <p><b>Returns:</b></p>
 
@@ -246,7 +246,7 @@ is an arbitrary object.</li>
 <pre>public override int GetHashCode();
 </pre>
 
-<p>Calculates the hash code of this object. No application or process IDs re used in the hash code calculation.</p>
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -259,6 +259,16 @@ is an arbitrary object.</li>
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>addressValue</i>: Not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An IList(NamedAddress) object.</p>
 
 <h3>ToString</h3>
 

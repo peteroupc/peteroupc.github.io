@@ -1790,7 +1790,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
    generation (including by extracting uniformly distributed bits from two or more such sources), or
 - have two or more of the foregoing properties.
 
-If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_  or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
+If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_, which are outside the scope of this document.</small>
 
 <small><sup id=Note2>(2)</sup> For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 20, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 21, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -112,7 +112,7 @@ should use cryptographic RNGs to generate such numbers.  So should applications 
 <a id=Quality></a>
 ### Quality
 
-A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see "Seeding and Reseeding".)
+A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG.
 
 <a id=Seeding_and_Reseeding></a>
 ### Seeding and Reseeding
@@ -126,7 +126,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
 - may be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
 
-The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.
+The RNG may reseed itself from time to time, using a newly generated seed as described earlier. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.
 
 <a id=Examples></a>
 ### Examples
@@ -136,6 +136,7 @@ Examples of cryptographic RNG implementations include the following:
 - The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
 - The `BCryptGenRandom` method in recent versions of Windows. (An independent analysis, by Dorrendorf et al. 2009, showed flaws in an earlier version of `CryptGenRandom`.)
 - Two-source extractors, multi-source extractors, or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.
+- A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog.
 - An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the "Cryptographic RNGs" section.
 
 <a id=Statistical_RNGs></a>
@@ -167,7 +168,7 @@ Before an instance of the RNG generates a random number, it must have been initi
 - must consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_, and
 - may be mixed with arbitrary data other than the seed.
 
-The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a _state length_ less than 238 bits.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG's period's square root or less.
+The RNG may reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG's period's square root or less.
 
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
@@ -178,7 +179,7 @@ Examples of statistical RNGs include the following:
 - `Lehmer128` (state length 128 bits).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `JKISS` on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
+- `JKISS` by David Jones, on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 
 The following also count as statistical RNGs, but are not preferred:
@@ -314,9 +315,9 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 <a id=Seed_Generation></a>
 ### Seed Generation
 
-In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more.**
+In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. NIST SP 800-90B sec. 3.1.5.1 includes "vetted conditioning components" (including certain [**hash functions**](#Hash_Functions)) for this purpose. See also RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or "cascade" hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Implementing_RNGs_in_Programming_Languages></a>
 ## Implementing RNGs in Programming Languages
@@ -514,7 +515,7 @@ I acknowledge&mdash;
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_ or _randomness extraction_ methods that it is outside the scope of this document to describe.</small>
+<small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009 for further discussion).</small>
 
 <small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small>
 

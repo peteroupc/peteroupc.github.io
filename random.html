@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 20, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 21, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -176,7 +176,7 @@
 
 <h3>Quality</h3>
 
-<p>A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess either prior or future unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG. (If the sequence was generated directly by a PRNG, ensuring future bits are unguessable this way should be done wherever the implementation finds it feasible; for example, see &quot;Seeding and Reseeding&quot;.)</p>
+<p>A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG.</p>
 
 <p><a id=Seeding_and_Reseeding></a></p>
 
@@ -194,7 +194,7 @@
 <li>may be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</li>
 </ul>
 
-<p>The RNG should be reseeded, using a newly generated seed as described earlier, to help ensure the unguessability of its output. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.</p>
+<p>The RNG may reseed itself from time to time, using a newly generated seed as described earlier. If the implementation reseeds, it should do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold should be 2<sup>67</sup> or less.</p>
 
 <p><a id=Examples></a></p>
 
@@ -207,6 +207,7 @@
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
 <li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, by Dorrendorf et al. 2009, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
+<li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
 
@@ -247,7 +248,7 @@
 <li>may be mixed with arbitrary data other than the seed.</li>
 </ul>
 
-<p>The implementation is encouraged to reseed itself from time to time (using a newly generated seed as described earlier), especially if the PRNG has a <em>state length</em> less than 238 bits.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG&#39;s period&#39;s square root or less.</p>
+<p>The RNG may reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold should be the PRNG&#39;s period&#39;s square root or less.</p>
 
 <p><a id=Examples_and_Non_Examples></a></p>
 
@@ -261,7 +262,7 @@
 <li><code>Lehmer128</code> (state length 128 bits).</li>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
-<li><code>JKISS</code> on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
+<li><code>JKISS</code> by David Jones, on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 </ul>
 
@@ -449,9 +450,9 @@
 
 <h3>Seed Generation</h3>
 
-<p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more.</strong></p>
+<p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. NIST SP 800-90B sec. 3.1.5.1 includes &quot;vetted conditioning components&quot; (including certain <a href="#Hash_Functions"><strong>hash functions</strong></a>) for this purpose. See also RFC 4086 sec. 4.2 and 5.2.</p>
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Implementing_RNGs_in_Programming_Languages></a></p>
 
@@ -653,7 +654,7 @@ def stateLengthDecks(numDecks, numCards):
       (fac(numDecks)**numCards))
 </pre>
 
-<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>).  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
+<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>), such as with <code>xorshift1024*</code> or <code>ranlux48</code>.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
 
 <p>The PRNG chosen this way should meet at least the quality requirements of a statistical RNG implementation, and should be initialized with a full-length seed.</p>
 
@@ -736,7 +737,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em> or <em>randomness extraction</em> methods that it is outside the scope of this document to describe.</small></p>
+<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em> (see RFC 4086 sec. 4 or Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009 for further discussion).</small></p>
 
 <p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
 

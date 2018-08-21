@@ -15,7 +15,7 @@
  form of the Unicode Standard which uses one byte to encode the most
  basic characters and two to four bytes to encode other characters.
  For example, the <code>GetUtf8</code> method converts a text string to an
- array of bytes in UTF-8.</p> <p>In C# and Java, text strings are
+ array of bytes in UTF-8. </p> <p>In C# and Java, text strings are
  represented as sequences of 16-bit values called <code>char</code> s. These
  sequences are well-formed under UTF-16, a 16-bit encoding form of
  Unicode, except if they contain unpaired surrogate code points. (A
@@ -26,8 +26,8 @@
  not appearing in a surrogate pair.) Many of the methods in this class
  allow setting the behavior to follow when unpaired surrogate code
  points are found in text strings, such as throwing an error or
- treating the unpaired surrogate as a replacement character
- (U + FFFD).</p></p>
+ treating the unpaired surrogate as a replacement character (U + FFFD).
+ </p></p>
 
 <h2>Methods</h2>
 
@@ -604,7 +604,7 @@ is not valid UTF-8 and <code>replace</code> is false.</li>
 <code>builder</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - The parameter <code>offset</code> is less than
 0, <code>bytesCount</code> is less than 0, or offset plus bytesCount is
-greater than the length of <code>data</code>.</p></li>
+greater than the length of <code>data</code> .</p></li>
 </ul>
 
 <h3>ReadUtf8ToString</h3>

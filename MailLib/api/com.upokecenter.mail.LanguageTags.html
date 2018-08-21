@@ -102,7 +102,8 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if the given string is a basic language range
-(depending on the &quot;extended&quot; parameter); otherwise, <code>false</code> .</li>
+(depending on the <code>extended</code> parameter); otherwise, <code>
+false</code>.</li>
 </ul>
 
 <h3>LanguageTagCase</h3>
@@ -123,8 +124,8 @@ otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string in the recommended case combination, or null if &quot;str&quot;
-is null.</li>
+<li>A text string in the recommended case combination, or null if <code>
+str</code> is null.</li>
 </ul>
 
 <h3>GetLanguageList</h3>
@@ -146,8 +147,9 @@ null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A list of language tags. Returns an empty list if &quot;str&quot; is null or
-the empty string, or null if &quot;str&quot; syntactically invalid.</li>
+<li>A list of language tags. Returns an empty list if <code>str</code> is
+null or the empty string, or null if <code>str</code> syntactically
+invalid.</li>
 </ul>
 
 <h3>GetRangeListWithQuality</h3>
@@ -174,7 +176,7 @@ appear. This parameter can be null.</li>
 will be sorted in descending order by quality; if two or more
 language ranges have the same quality, they will be sorted in the
 order in which they appeared in the given string. Returns null if
-&quot;str&quot; is null or syntactically invalid.</li>
+<code>str</code> is null or syntactically invalid.</li>
 </ul>
 
 <h3>LanguageTagFilter</h3>
@@ -207,8 +209,9 @@ filtering method under RFC 4647; otherwise, <code>false</code> .</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IllegalArgumentException</code> - &quot;range&quot; is not a basic language range, or
-&quot;tag&quot; is not a potentially valid language tag.</li>
+<li><code>IllegalArgumentException</code> - The parameter <code>range</code> is not a basic
+language range, or <code>tag</code> is not a potentially valid language
+tag.</li>
 </ul>
 
 <h3>LanguageTagLookup</h3>
