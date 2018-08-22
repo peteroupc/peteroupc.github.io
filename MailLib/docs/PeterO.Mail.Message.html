@@ -260,7 +260,7 @@ This value is being set and &quot;value&quot; is null.</li>
 
 <p>Adds an attachment to this message in the form of data from the given readable stream, and with the given media type. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<p>The following example (written in C# for the .NET ersion) is an extension method that adds an attachment rom a byte array to a message.</p>
+<p>The following example (written in C# for the .NET version) is an extension method that adds an attachment from a byte array to a message.</p>
 
 <pre>public static Message AddAttachmentFromBytes(this Message msg,
              byte[]
@@ -329,6 +329,19 @@ An I/O error occurred.</p></li>
     System.IO.Stream inputStream,
     string filename);
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>inputStream</i>: Not documented yet.</p></li>
+<li><p><i>filename</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object.</p>
 
 <h3>AddHeader</h3>
 
@@ -416,7 +429,7 @@ The header field name is too long or contains an invalid character, or the heade
 
 <p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
-<p>The following example (written in C# for the .NET ersion) is an extension method that adds an inline ody part from a byte array to a message.</p>
+<p>The following example (written in C# for the .NET version) is an extension method that adds an inline body part from a byte array to a message.</p>
 
 <pre>public static Message AddInlineFromBytes(this Message msg, byte[]
              bytes, MediaType mediaType) { using(MemoryStream fs = new MemoryStream(bytes)) {
@@ -487,6 +500,17 @@ An I/O error occurred.</p></li>
 
 <p>Not documented yet.</p>
 
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>inputStream</i>: Not documented yet.</p></li>
+<li><p><i>filename</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object.</p>
+
 <h3>ClearHeaders</h3>
 
 <pre>public PeterO.Mail.Message ClearHeaders();
@@ -529,7 +553,8 @@ An I/O error occurred.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: Not documented yet.</li>
+<li><i>url</i>: The parameter  <i>url</i>
+is not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1142,7 +1167,7 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A string object.</p>
+<p>A text string.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

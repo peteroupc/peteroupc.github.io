@@ -397,6 +397,8 @@
 
 <p>One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of <a href="#Hash_Functions"><strong>hash functions</strong></a> stronger than MD5 (see the last paragraph of section 3.3 of that RFC).</p>
 
+<p>Another way is to hash publicly known inputs using <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify.  They were first formally defined in a 2018 paper by Boneh, Bonneau, and others.  See also Lenstra&dash;Wesolowski 2015.</p>
+
 <p><a id=Noise></a></p>
 
 <h4>Noise</h4>
@@ -452,7 +454,7 @@
 
 <p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Implementing_RNGs_in_Programming_Languages></a></p>
 
@@ -478,7 +480,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </thead><tbody>
 <tr>
 <td>.NET (incl. C# and VB.NET) (H)</td>
-<td><code>System.Security.Cryptography.RNGCryptoServiceProvider</code></td>
+<td><code>RNGCryptoServiceProvider</code> in <code>System.Security.Cryptography</code> namespace</td>
 <td><a href="https://github.com/airbreather/Airbreather.Common"><strong>airbreather/AirBreather.Common library</strong></a> (XorShift1024Star, XorShift128Plus, XoroShiro128Plus)</td>
 <td></td>
 </tr>
@@ -497,7 +499,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <tr>
 <td>Java (D)</td>
 <td>(C); <code>java.security.SecureRandom</code> (F)</td>
-<td><a href="https://github.com/grunka/xorshift"><strong>grunka/xorshift</strong></a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>); <a href="https://github.com/jenetics/prngine"><strong>jenetics/prngine</strong></a> (KISS32Random, KISS64Random)</td>
+<td><a href="https://github.com/grunka/xorshift"><strong>grunka/xorshift</strong></a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>); <a href="https://github.com/jenetics/prngine"><strong>jenetics/prngine</strong></a> (<code>KISS32Random</code>, <code>KISS64Random</code>)</td>
 <td>prngine library (<code>MT19937_32Random</code>, <code>MT19937_64Random</code>)</td>
 </tr>
 <tr>
