@@ -24,9 +24,9 @@ Extracts the data from a data URL in the form of a byte array.</li>
 Extracts the media type from a data URL.</li>
 <li><code>static String MakeDataUrl​(byte[] bytes,
        MediaType mediaType)</code><br>
-Not documented yet.</li>
+Encodes data with the given media type in a data URL.</li>
 <li><code>static String MakeDataUrl​(String textString)</code><br>
-Not documented yet.</li>
+Encodes text as a data URL.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -41,14 +41,14 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - The parameter <code>url</code> is not documented yet.</li>
+<li><code>url</code> - A data URL string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The media type. Returns null if &quot;url&quot; is null, is syntactically
-invalid, or is not a data URL.</li>
+<li>The media type. Returns null if <code>url</code> is null, is
+syntactically invalid, or is not a data URL.</li>
 </ul>
 
 <h3>DataUrlBytes</h3>
@@ -61,13 +61,13 @@ invalid, or is not a data URL.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - The parameter <code>url</code> is not documented yet.</li>
+<li><code>url</code> - A data URL string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The data as a byte array. Returns null if &quot;url&quot; is null, is
+<li>The data as a byte array. Returns null if <code>url</code> is null, is
 syntactically invalid, or is not a data URL.</li>
 </ul>
 
@@ -76,18 +76,24 @@ syntactically invalid, or is not a data URL.</li>
 <pre>public static String MakeDataUrl​(String textString)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes text as a data URL.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>textString</code> - The parameter <code>textString</code> is not documented yet.</li>
+<li><code>textString</code> - A text string to encode as a data URL.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A data URL that encodes the given text.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>textString</code> is null.</li>
 </ul>
 
 <h3>MakeDataUrl</h3>
@@ -95,19 +101,19 @@ syntactically invalid, or is not a data URL.</li>
 <pre>public static String MakeDataUrl​(byte[] bytes, MediaType mediaType)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes data with the given media type in a data URL.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bytes</code> - The parameter <code>bytes</code> is not documented yet.</p></li>
-<li><p><code>mediaType</code> - The parameter <code>mediaType</code> is not documented yet.</p></li>
+<li><p><code>bytes</code> - A byte array containing the data to encode in a data URL.</p></li>
+<li><p><code>mediaType</code> - A media type to assign to the data.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A data URL that encodes the given data and media type.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

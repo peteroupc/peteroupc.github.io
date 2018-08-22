@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 21, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 22, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -188,7 +188,7 @@ The following also count as statistical RNGs, but are not preferred:
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
--  System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
+- `System.Random`, as implemented in the .NET Framework 4.7, can take a seed of at most 32 bits, so has a state length of at most 32 bits.
 
 <a id=Seeded_PRNGs></a>
 ## Seeded PRNGs

@@ -54,10 +54,10 @@ Wraps an output stream into a writer object.</li>
 <p>Wraps a byte array into a byte reader. The reader will start at the
  beginning of the byte array. <p>In the .NET implementation, this
  method is implemented as an extension method to any byte array object
- and can be called as follows: <code>bytes.ToByteReader()</code>. If the
+ and can be called as follows: <code>bytes.ToByteReader()</code> . If the
  object&#39;s class already has a ToByteReader method with the same
- parameters, that method takes precedence over this extension
- method.</p></p>
+ parameters, that method takes precedence over this extension method.
+ </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -85,9 +85,9 @@ Wraps an output stream into a writer object.</li>
 <p>Wraps a portion of a byte array into a byte reader object. <p>In the .NET
  implementation, this method is implemented as an extension method to
  any byte array object and can be called as follows:
- <code>bytes.ToByteReader(offset, length)</code>. If the object&#39;s class
+ <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class
  already has a ToByteReader method with the same parameters, that
- method takes precedence over this extension method.</p></p>
+ method takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -111,7 +111,7 @@ not more than &quot;bytes&quot; &#39;s length).</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
-&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+&#39; s length minus <code>offset</code> is less than <code>length</code> .</p></li>
 </ul>
 
 <h3>ToReader</h3>
@@ -123,9 +123,9 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
  the input stream, the reader object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
- called as follows: <code>input.ToByteReader()</code>. If the object&#39;s class
- already has a ToByteReader method with the same parameters, that
- method takes precedence over this extension method.</p></p>
+ called as follows: <code>input.ToByteReader()</code> . If the object&#39;s
+ class already has a ToByteReader method with the same parameters,
+ that method takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -230,9 +230,9 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
  the input stream, the writer object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
- called as follows: <code>output.ToWriter()</code>. If the object&#39;s class
+ called as follows: <code>output.ToWriter()</code> . If the object&#39;s class
  already has a ToWriter method with the same parameters, that method
- takes precedence over this extension method.</p></p>
+ takes precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -261,9 +261,9 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
  (one that also implements a three-parameter Read method.) <p>In the
  .NET implementation, this method is implemented as an extension
  method to any object implementing IByteWriter and can be called as
- follows: <code>output.ToWriter()</code>. If the object&#39;s class already has
+ follows: <code>output.ToWriter()</code> . If the object&#39;s class already has
  a ToWriter method with the same parameters, that method takes
- precedence over this extension method.</p></p>
+ precedence over this extension method. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
