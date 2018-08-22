@@ -274,6 +274,8 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 
 One process to generate verifiable random numbers is described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [**hash functions**](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
 
+Another way is to hash publicly known inputs using _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify.  They were first formally defined in a 2018 paper by Boneh, Bonneau, and others.  See also Lenstra&dash;Wesolowski 2015.
+
 <a id=Noise></a>
 #### Noise
 
@@ -317,7 +319,7 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or "cascade" hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or "cascade" hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Implementing_RNGs_in_Programming_Languages></a>
 ## Implementing RNGs in Programming Languages
@@ -332,10 +334,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 | Language   | Cryptographic   | Statistical | Other |
  --------|-----------------------------------------------|------|------|
-| .NET (incl. C# and VB.NET) (H) | `System.Security.Cryptography.RNGCryptoServiceProvider` | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |   |
+| .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |   |
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
-| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (KISS32Random, KISS64Random) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
+| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
 | JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
 | Ruby | (C); `SecureRandom` class (`require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
 | PHP | `random_int()` (since PHP 7) |  | `mt_rand()` (A) |
