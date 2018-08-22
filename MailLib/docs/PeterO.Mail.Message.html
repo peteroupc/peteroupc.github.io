@@ -336,7 +336,6 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
 <li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the attachment based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
@@ -349,8 +348,7 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>inputStream</i>
-or  <i>mediaType</i>
-is null.</p></li>
+or &quot;mediaType&quot; is null.</p></li>
 <li><p>PeterO.Mail.MessageDataException:
 An I/O error occurred.</p></li>
 </ul>
@@ -516,7 +514,6 @@ An I/O error occurred.</p></li>
 
 <ul>
 <li><p><i>inputStream</i>: A readable data stream.</p></li>
-<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
 <li><p><i>filename</i>: A file name to assign to the inline body part. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the body part based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
@@ -529,8 +526,7 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>inputStream</i>
-or  <i>mediaType</i>
-is null.</p></li>
+or &quot;mediaType&quot; is null.</p></li>
 <li><p>PeterO.Mail.MessageDataException:
 An I/O error occurred.</p></li>
 </ul>
@@ -590,7 +586,8 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object created from the given MailTo URL. Returs null if &quot;url&quot; is null, is syntactically invalid, or is not a MailTo URL.</p>
+<p>A Message object created from the given MailTo URL. Returs null if  <i>url</i>
+ is null, is syntactically invalid, or is not a MailTo URL.</p>
 
 <h3>Generate</h3>
 
