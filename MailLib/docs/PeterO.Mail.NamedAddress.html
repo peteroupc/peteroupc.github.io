@@ -258,25 +258,24 @@ is an arbitrary object.</li>
     string addressValue);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a list of NamedAddress objects from a comma-separated list of addresses. Each address must follow the syntax accepted by the one-argument constructor of NamedAddress.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>addressValue</i>: The parameter  <i>addressValue</i>
-is not documented yet.</li>
+<li><i>addressValue</i>: A comma-separate list of addresses in the form of a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An IList(NamedAddress) object.</p>
+<p>A list of addresses generated from the &quot;addressValue&quot; parameter.</p>
 
 <h3>ToString</h3>
 
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this object to a text string. This will generally be the form of this NamedAddress object as it could appear in a &quot;To&quot; header field.</p>
 
 <p><b>Return Value:</b></p>
 

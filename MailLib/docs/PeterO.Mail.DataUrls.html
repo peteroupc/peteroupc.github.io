@@ -29,13 +29,13 @@ data:application/octet-stream;base64,AAAAAA==
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: The parameter  <i>url</i>
-is not documented yet.</li>
+<li><i>url</i>: A data URL string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The data as a byte array. Returns null if &quot;url&quot; is null, is syntactically invalid, or is not a data URL.</p>
+<p>The data as a byte array. Returns null if  <i>url</i>
+ is null, is syntactically invalid, or is not a data URL.</p>
 
 <h3>DataUrlMediaType</h3>
 
@@ -48,13 +48,13 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: The parameter  <i>url</i>
-is not documented yet.</li>
+<li><i>url</i>: A data URL string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The media type. Returns null if &quot;url&quot; is null, is syntactically invalid, or is not a data URL.</p>
+<p>The media type. Returns null if  <i>url</i>
+ is null, is syntactically invalid, or is not a data URL.</p>
 
 <h3>MakeDataUrl</h3>
 
@@ -63,20 +63,18 @@ is not documented yet.</li>
     PeterO.Mail.MediaType mediaType);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes data with the given media type in a data URL.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: The parameter  <i>bytes</i>
-is not documented yet.</p></li>
-<li><p><i>mediaType</i>: The parameter  <i>mediaType</i>
-is not documented yet.</p></li>
+<li><p><i>bytes</i>: A byte array containing the data to encode in a data URL.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the data.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>A data URL that encodes the given data and media type.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -93,18 +91,25 @@ is null.</li>
     string textString);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Encodes text as a data URL.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>textString</i>: The parameter  <i>textString</i>
-is not documented yet.</li>
+<li><i>textString</i>: A text string to encode as a data URL.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>A data URL that encodes the given text.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>textString</i>
+is null.</li>
+</ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

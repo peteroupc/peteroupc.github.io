@@ -53,7 +53,8 @@ Calculates the hash code of this object.</li>
 Gets a value indicating whether this represents a group of addresses rather
 than a single address.</li>
 <li><code>static List&lt;NamedAddress&gt; ParseAddresses​(String addressValue)</code><br>
-Not documented yet.</li>
+Generates a list of NamedAddress objects from a comma-separated list of
+addresses.</li>
 <li><code>String toString()</code><br>
 Converts this object to a text string.</li>
 </ul>
@@ -204,19 +205,22 @@ empty.</p></li>
 <pre>public static List&lt;NamedAddress&gt; ParseAddresses​(String addressValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a list of NamedAddress objects from a comma-separated list of
+ addresses. Each address must follow the syntax accepted by the
+ one-argument constructor of NamedAddress.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>addressValue</code> - The parameter <code>addressValue</code> is not documented
-yet.</li>
+<li><code>addressValue</code> - A comma-separate list of addresses in the form of a text
+string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An IList(NamedAddress) object.</li>
+<li>A list of addresses generated from the <code>addressValue</code>
+parameter.</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -345,7 +349,8 @@ this object represents a group of addresses instead.</li>
 <pre>public String toString()
 </pre>
 
-<p>Converts this object to a text string.</p>
+<p>Converts this object to a text string. This will generally be the form of
+ this NamedAddress object as it could appear in a &quot;To&quot; header field.</p>
 
 <p><strong>Overrides:</strong></p>
 

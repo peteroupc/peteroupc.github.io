@@ -330,18 +330,30 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an attachment to this message in the form of data from the given readable stream, and with the given file name. Before the new attachment is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>: Not documented yet.</p></li>
-<li><p><i>filename</i>: Not documented yet.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
+<li><p><i>filename</i>: A file name to assign to the attachment. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the attachment based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>A Message object for the generated attachment.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>inputStream</i>
+or  <i>mediaType</i>
+is null.</p></li>
+<li><p>PeterO.Mail.MessageDataException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>AddHeader</h3>
 
@@ -498,18 +510,30 @@ An I/O error occurred.</p></li>
     string filename);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name. Before the new body part is added, if this message isn&#39;t already a multipart message, it becomes a &quot;multipart/mixed&quot; message with the current body converted to an inline body part.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>inputStream</i>: Not documented yet.</p></li>
-<li><p><i>filename</i>: Not documented yet.</p></li>
+<li><p><i>inputStream</i>: A readable data stream.</p></li>
+<li><p><i>mediaType</i>: A media type to assign to the attachment.</p></li>
+<li><p><i>filename</i>: A file name to assign to the inline body part. Can be null or empty, in which case no file name is assigned. Only the file name portion of this parameter is used, which in this case means the portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character exists, or the entire string otherwise An appropriate media type (or &quot;application/octet-stream&quot;) will be assigned to the body part based on this file name&#39;s extension. If the file name has an extension .txt, .text, .htm, .html, .shtml, .asc, .brf, .pot, .rst, .md, .markdown, or .srt, the media type will have a &quot;charset&quot; of &quot;utf-8&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>A Message object for the generated body part.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>inputStream</i>
+or  <i>mediaType</i>
+is null.</p></li>
+<li><p>PeterO.Mail.MessageDataException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>ClearHeaders</h3>
 
@@ -529,18 +553,26 @@ An I/O error occurred.</p></li>
     string value);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded. For an example of encoded words, see the constructor for PeterO.Mail.NamedAddress.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>name</i>: Not documented yet.</p></li>
-<li><p><i>value</i>: Not documented yet.</p></li>
+<li><p><i>name</i>: Name of the header field. This determines the syntax of the &quot;value&quot; parameter and is necessary to help this method interpret encoded words properly.</p></li>
+<li><p><i>value</i>: A header field value that could contain encoded words. For example, if the name parameter is &quot;From&quot;, this parameter could be &quot;=?utf-8?q?me?= <a href="mailto:me@example.com">me@example.com</a>&quot;.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>The header field value with valid encoded words decoded.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>name</i>
+is null.</li>
+</ul>
 
 <h3>FromMailtoUrl</h3>
 
@@ -548,18 +580,17 @@ An I/O error occurred.</p></li>
     string url);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Creates a message object from a MailTo URL. The URL can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: The parameter  <i>url</i>
-is not documented yet.</li>
+<li><i>url</i>: A string representing a MailTo URL.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>A Message object created from the given MailTo URL. Returs null if &quot;url&quot; is null, is syntactically invalid, or is not a MailTo URL.</p>
 
 <h3>Generate</h3>
 
@@ -842,17 +873,25 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>languages</i>: Not documented yet.</li>
+<li><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>languages</i>
+is null.</li>
+</ul>
 
 <h3>SelectLanguageMessage</h3>
 
@@ -861,18 +900,26 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list and original-language reference.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>languages</i>: Not documented yet.</p></li>
-<li><p><i>preferOriginals</i>: Not documented yet.</p></li>
+<li><p><i>languages</i>: A list of basic language ranges, sorted in descending order of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
+<li><p><i>preferOriginals</i>: If true, a body part marked as the original language version is chosen if it matches one of the given language ranges, even if the original language has a lower priority than another language with a matching body part.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object.</p>
+<p>The best matching body part for the given languages. If the body part has no subject, then the top-level subject is used. If this message is not a multipart/multilingual message or has fewer than two body parts, returns this object. If no body part matches the given languages, returns the last body part if its language is &quot;zxx&quot;, or the second body part otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>languages</i>
+is null.</li>
+</ul>
 
 <h3>SetBody</h3>
 
@@ -1163,11 +1210,11 @@ is null.</li>
 <pre>public string ToMailtoUrl();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Generates a &quot;mailto:&quot; URL corresponding to this message. The following header fields, and only these, are used to generate the URL: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URL only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URL only if it has display names or group syntax.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>A &quot;mailto:&quot; URL corresponding to this message.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
