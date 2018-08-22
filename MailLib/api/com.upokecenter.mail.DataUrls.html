@@ -9,15 +9,19 @@
 <pre>public final class DataUrls extends Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Contains methods for parsing and generating data URLs. Data URLs are
+ described in RFC 2397. Examples for data URLs follow.
+ <pre>data:, hello%20world </pre>
+ <pre>data:text/markdown, hello%20world </pre>
+ <pre>data:application/octet-stream;base64, AAAAAA== </pre></p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>static byte[] DataUrlBytes​(String url)</code><br>
-Not documented yet.</li>
+Extracts the data from a data URL in the form of a byte array.</li>
 <li><code>static MediaType DataUrlMediaType​(String url)</code><br>
-Not documented yet.</li>
+Extracts the media type from a data URL.</li>
 <li><code>static String MakeDataUrl​(byte[] bytes,
        MediaType mediaType)</code><br>
 Not documented yet.</li>
@@ -32,7 +36,7 @@ Not documented yet.</li>
 <pre>public static MediaType DataUrlMediaType​(String url)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the media type from a data URL.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -43,7 +47,8 @@ Not documented yet.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A MediaType object.</li>
+<li>The media type. Returns null if &quot;url&quot; is null, is syntactically
+invalid, or is not a data URL.</li>
 </ul>
 
 <h3>DataUrlBytes</h3>
@@ -51,7 +56,7 @@ Not documented yet.</li>
 <pre>public static byte[] DataUrlBytes​(String url)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the data from a data URL in the form of a byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -62,7 +67,8 @@ Not documented yet.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>The data as a byte array. Returns null if &quot;url&quot; is null, is
+syntactically invalid, or is not a data URL.</li>
 </ul>
 
 <h3>MakeDataUrl</h3>
