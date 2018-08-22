@@ -497,9 +497,10 @@ input</code> is null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>input</code> - Not documented yet.</p></li>
-<li><p><code>encoder</code> - Not documented yet.</p></li>
-<li><p><code>htmlFallback</code> - Not documented yet. (3).</p></li>
+<li><p><code>input</code> - The parameter <code>input</code> is not documented yet.</p></li>
+<li><p><code>encoder</code> - The parameter <code>encoder</code> is not documented yet.</p></li>
+<li><p><code>htmlFallback</code> - The parameter <code>htmlFallback</code> is not documented
+yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -511,8 +512,8 @@ input</code> is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>input</code>
-is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -526,7 +527,7 @@ is null.</li>
  character (U + FFFD), and when writing to the byte array, any
  characters that can&#39;t be encoded are replaced with the byte 0x3f (the
  question mark character). <p>In the .NET implementation, this method
- is implemented as an extension method to any string object and can be
+ is implemented as an extension method to any String object and can be
  called as follows: <code>str.EncodeToBytes(enc)</code>. If the object&#39;s
  class already has a EncodeToBytes method with the same parameters,
  that method takes precedence over this extension method.</p> <p>In
@@ -572,9 +573,10 @@ enc</code> is null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - Not documented yet.</p></li>
-<li><p><code>enc</code> - Not documented yet.</p></li>
-<li><p><code>htmlFallback</code> - Not documented yet. (3).</p></li>
+<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>enc</code> - The parameter <code>enc</code> is not documented yet.</p></li>
+<li><p><code>htmlFallback</code> - The parameter <code>htmlFallback</code> is not documented
+yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -586,8 +588,8 @@ enc</code> is null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>enc</code> is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+enc</code> is null.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
@@ -670,7 +672,7 @@ input</code> is null.</li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -778,7 +780,7 @@ input</code> is null.</p></li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -1130,13 +1132,15 @@ alias to <code>windows-1252</code> as specified in the Encoding Standard.
 The coded character set&#39;s code points match those in the Unicode
 Standard&#39;s Basic Latin and Latin-1 Supplement blocks (0-255 or U+0000
 to U + 00FF). </li> <li> <code>UTF-7</code> - UTF-7 (7-bit universal coded
-character set). The name <code>unicode-1-1-utf-7</code> is an alias to
-<code>UTF-7</code> , even though both encodings are defined in different
-RFCs (1642 and 2152, respectively), and even though they are linked
-to Unicode versions with nonoverlapping character repertoires (1.1
-and 2.0, respectively). </li> </ul> . In previous versions of this
-method, the name <code>iso-2022-jp-2</code> was also aliased to <code>
-ISO-2022-JP</code> , which is no longer the case.</li>
+character set). The name <code>unicode-1-1-utf-7</code> is not supported
+and is not treated an alias to <code>UTF-7</code>, even though it uses the
+same encoding as UTF-7, because RFC 1642, which defined the former
+UTF-7, is linked to a different Uicode version with an incompatible
+character repertoire (notably, the Hangul syllables have different
+code point assignments in Unicode 1.1 and earlier than in Unicode 2.0
+and later). </li> </ul> . In previous versions of this method, the
+name <code>iso-2022-jp-2</code> was also aliased to <code>ISO-2022-JP</code> ,
+which is no longer the case.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1240,7 +1244,7 @@ str</code> is null.</li>
  code point, among other things. When reading the string, any unpaired
  surrogate characters are replaced with the replacement character
  (U + FFFD). <p>In the .NET implementation, this method is implemented
- as an extension method to any string object and can be called as
+ as an extension method to any String object and can be called as
  follows: <code>str.StringToInput(offset, length)</code>. If the object&#39;s
  class already has a StringToInput method with the same parameters,
  that method takes precedence over this extension method.</p> <p>In
@@ -1278,7 +1282,7 @@ str</code> is null.</li>
  string code point by code point, among other things. When reading the
  string, any unpaired surrogate characters are replaced with the
  replacement character (U + FFFD). <p>In the .NET implementation, this
- method is implemented as an extension method to any string object and
+ method is implemented as an extension method to any String object and
  can be called as follows: <code>str.StringToInput(offset, length)</code>.
  If the object&#39;s class already has a StringToInput method with the
  same parameters, that method takes precedence over this extension
