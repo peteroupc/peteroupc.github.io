@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 22, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 23, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -510,7 +510,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 <tr>
 <td>Ruby</td>
-<td>(C); <code>SecureRandom</code> class (<code>require &#39;securerandom&#39;</code>)</td>
+<td>(C); <code>SecureRandom.rand()</code> (ranges from 0 through 1) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>)</td>
 <td></td>
 <td><code>Random#rand()</code> (ranges from 0 through 1) (A) (E); <code>Random#rand(N)</code> (integer) (A) (E); <code>Random.new(seed)</code> (default seed uses nondeterministic data)</td>
 </tr>
@@ -538,7 +538,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</small></p>
 
-<p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> method presents a beautiful and simple API for random number generation.</small></p>
+<p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation.</small></p>
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is recommended. The data passed to the method should be data described in note (C).</small></p>
 
