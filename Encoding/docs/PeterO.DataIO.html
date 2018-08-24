@@ -35,7 +35,8 @@
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;bytes&quot; is null.</li>
+The parameter <i>bytes</i>
+is null.</li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -48,13 +49,12 @@ The parameter &quot;bytes&quot; is null.</li>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a portion of a byte array into a byte reader.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: The parameter  <i>bytes</i>
-is not documented yet.</p></li>
+<li><p><i>bytes</i>: The byte array to wrap into a byte reader.</p></li>
 <li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>bytes</i>
 begins.</p></li>
 <li><p><i>length</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
@@ -70,9 +70,16 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter &quot;bytes&quot; is null.</p></li>
+The parameter <i>bytes</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -99,7 +106,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;stream&quot; is null.</li>
+The parameter <i>input</i>
+is null.</li>
 </ul>
 
 <h3>ToReader</h3>
@@ -124,7 +132,8 @@ The parameter &quot;stream&quot; is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;bytes&quot; is null. .</li>
+The parameter <i>bytes</i>
+is null.</li>
 </ul>
 
 <h3>ToReader</h3>
@@ -153,9 +162,16 @@ The parameter &quot;bytes&quot; is null. .</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter &quot;bytes&quot; is null. .</p></li>
+The parameter <i>bytes</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s length minus &quot;offset&quot; is less than &quot;length&quot; . .</p></li>
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39; s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
 </ul>
 
 <h3>ToReader</h3>
@@ -180,7 +196,8 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;input&quot; is null. .</li>
+The parameter <i>input</i>
+is null.</li>
 </ul>
 
 <h3>ToWriter</h3>
@@ -205,7 +222,8 @@ The parameter &quot;input&quot; is null. .</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;output&quot; is null. .</li>
+The parameter <i>output</i>
+is null.</li>
 </ul>
 
 <h3>ToWriter</h3>
@@ -230,7 +248,8 @@ The parameter &quot;output&quot; is null. .</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;output&quot; is null. .</li>
+The parameter <i>output</i>
+is null.</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

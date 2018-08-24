@@ -50,7 +50,7 @@
     byte[] bytes);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given byte array to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -63,7 +63,7 @@
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>bytes</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>Message Constructor</h3>
@@ -72,7 +72,7 @@ is null.</li>
     System.IO.Stream stream);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
+<p>Initializes a new instance of the<a href="PeterO.Mail.Message.html">PeterO.Mail.Message</a> class. Reads from the given Stream object to initialize the message.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -85,7 +85,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>stream</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>BccAddresses</h3>
@@ -116,7 +116,7 @@ is null.</li>
 
 <ul>
 <li>System.NotSupportedException:
-Either this message is a multipart message, so it doesn&#39;t have its own body text, or this message has no character encoding declared or assumed for it (which is usually the case for non-text messages), or the character encoding is not supported.</li>
+Either this message is a multipart message, so it doesn&#39;t have its own body text, or this message has no character encoding declared or assumed for it (which is usually the case for non-text messages), or the character encoding is not supported. .</li>
 </ul>
 
 <h3>CCAddresses</h3>
@@ -158,7 +158,7 @@ Either this message is a multipart message, so it doesn&#39;t have its own body 
 
 <ul>
 <li>System.ArgumentNullException:
-This value is being set and &quot;value&quot; is null.</li>
+This value is being set and &quot;value&quot; is null. .</li>
 </ul>
 
 <h3>FileName</h3>
@@ -378,10 +378,10 @@ An I/O error occurred.</p></li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>name</i>
-or <i>value</i>
-is null.</p></li>
+or  <i>value</i>
+is null. .</p></li>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 </ul>
 
 <h3>AddHeader</h3>
@@ -406,10 +406,10 @@ The header field name is too long or contains an invalid character, or the heade
 
 <ul>
 <li><p>System.ArgumentNullException:
-The key or value of <i>header</i>
-is null.</p></li>
+The key or value of  <i>header</i>
+is null. .</p></li>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 </ul>
 
 <h3>AddInline</h3>
@@ -567,7 +567,7 @@ An I/O error occurred.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>name</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>FromMailtoUrl</h3>
@@ -596,7 +596,7 @@ is null.</li>
 
 <p>Generates this message&#39;s data in text form.The generated message will have only Basic Latin code points (U+0000 to U+007F), and the transfer encoding will always be 7bit, quoted-printable, or base64 (the declared transfer encoding for this message will be ignored).</p>
 
-<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code> as the address (a <code>.invalid</code> address is a reserved address that can never belong to anyone). (An xception is that the Resent-* header fields may appear more than once.) he generated message should always have a From header field.</p>
+<p>The following applies to the following header fields: From, To, Cc, Bcc, Reply-To, Sender, Resent-To, Resent-From, Resent-Cc, Resent-Bcc, and Resent-Sender. If the header field exists, but has an invalid syntax, has no addresses, or appears more than once, this method will generate a synthetic header field with the display-name set to the contents of all of the header fields with the same name, and the address set to <code>me@[header-name]-address.invalid</code>  as the address (a <code>.invalid</code>  address is a reserved address that can never belong to anyone). (An exception is that the Resent-* header fields may appear more than once.) The generated message should always have a From header field.</p>
 
 <p>If a Date and/or Message-ID header field doesn&#39;t exist, a field with that name will be generated (using the current local time for the Date field).</p>
 
@@ -610,7 +610,7 @@ is null.</li>
 
 <ul>
 <li>PeterO.Mail.MessageDataException:
-The message can&#39;t be generated.</li>
+The message can&#39;t be generated. .</li>
 </ul>
 
 <h3>GenerateBytes</h3>
@@ -711,7 +711,7 @@ is empty.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-Name is null.</li>
+Name is null. .</li>
 </ul>
 
 <h3>GetHeader</h3>
@@ -737,7 +737,7 @@ Name is null.</li>
 <ul>
 <li>System.ArgumentException:
 The parameter <i>index</i>
-is 0 or at least as high as the number of header fields.</li>
+is 0 or at least as high as the number of header fields. .</li>
 </ul>
 
 <h3>GetHeaderArray</h3>
@@ -762,7 +762,7 @@ is 0 or at least as high as the number of header fields.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-Name is null.</li>
+Name is null. .</li>
 </ul>
 
 <h3>MakeMultilingualMessage</h3>
@@ -835,7 +835,7 @@ contains the language tag &quot;zzx&quot; not appearing alone or at the end of t
 <ul>
 <li>System.ArgumentException:
 The parameter <i>index</i>
-is 0 or at least as high as the number of header fields.</li>
+is 0 or at least as high as the number of header fields. .</li>
 </ul>
 
 <h3>RemoveHeader</h3>
@@ -861,7 +861,7 @@ is 0 or at least as high as the number of header fields.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>name</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>SelectLanguageMessage</h3>
@@ -870,7 +870,7 @@ is null.</li>
     System.Collections.Generic.IList languages);
 </pre>
 
-<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code>  ) according to the given language priority list.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -887,7 +887,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>languages</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>SelectLanguageMessage</h3>
@@ -897,7 +897,7 @@ is null.</li>
     bool preferOriginals);
 </pre>
 
-<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code> ) according to the given language priority list and original-language reference.</p>
+<p>Selects a body part for a multiple-language message ( <code>multipart/multilingual</code>  ) according to the given language priority list and original-language preference.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -915,7 +915,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>languages</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>SetBody</h3>
@@ -941,7 +941,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>bytes</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>SetCurrentDate</h3>
@@ -988,10 +988,10 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter <i>dateTime</i>
-contains fewer than eight elements, contains invalid values, or contains year less than 0.</p></li>
+contains fewer than eight elements, contains invalid values, or contains a year less than 0. .</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>dateTime</i>
-is null.</p></li>
+is null. .</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1021,11 +1021,11 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header ield name is too long or contains an invalid character, or the header ield&#39;s value is syntactically invalid.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>name</i>
-or <i>value</i>
-is null.</p></li>
+or  <i>value</i>
+is null. .</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1053,10 +1053,10 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header ield name is too long or contains an invalid character, or the header ield&#39;s value is syntactically invalid.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>value</i>
-is null.</p></li>
+is null. .</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1084,10 +1084,10 @@ is null.</p></li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter <i>index</i>
-is 0 or at least as high as the number of header fields; or, the header ield name is too long or contains an invalid character, or the header ield&#39;s value is syntactically invalid.</p></li>
+is 0 or at least as high as the number of header fields; or, the header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 <li><p>System.ArgumentNullException:
-The key or value of <i>header</i>
-is null.</p></li>
+The key or value of  <i>header</i>
+is null. .</p></li>
 </ul>
 
 <h3>SetHeader</h3>
@@ -1114,11 +1114,11 @@ is null.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid.</p></li>
+The header field name is too long or contains an invalid character, or the header field&#39;s value is syntactically invalid. .</p></li>
 <li><p>System.ArgumentNullException:
 The parameter <i>name</i>
-or <i>value</i>
-is null.</p></li>
+or  <i>value</i>
+is null. .</p></li>
 </ul>
 
 <h3>SetHtmlBody</h3>
@@ -1144,7 +1144,7 @@ is null.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>str</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>SetTextAndHtml</h3>
@@ -1172,8 +1172,8 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>text</i>
-or <i>html</i>
-is null.</li>
+or  <i>html</i>
+is null. .</li>
 </ul>
 
 <h3>SetTextBody</h3>
@@ -1199,7 +1199,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>str</i>
-is null.</li>
+is null. .</li>
 </ul>
 
 <h3>ToMailtoUrl</h3>

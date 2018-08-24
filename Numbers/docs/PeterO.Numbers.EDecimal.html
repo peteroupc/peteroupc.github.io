@@ -219,7 +219,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value equals 0; otherwise, <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
 
 <h3>Mantissa</h3>
 
@@ -340,7 +340,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
+<li><i>other</i>: The parameter <i>other</i>
 is not documented yet.</li>
 </ul>
 
@@ -519,7 +519,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>other</i>: The parameter  <i>other</i>
+<li><i>other</i>: The parameter <i>other</i>
 is not documented yet.</li>
 </ul>
 
@@ -568,9 +568,9 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mantissa</i>: The parameter  <i>mantissa</i>
+<li><p><i>mantissa</i>: The parameter <i>mantissa</i>
 is not documented yet.</p></li>
-<li><p><i>exponent</i>: The parameter  <i>exponent</i>
+<li><p><i>exponent</i>: The parameter <i>exponent</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -618,13 +618,13 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>diag</i>: The parameter  <i>diag</i>
+<li><p><i>diag</i>: The parameter <i>diag</i>
 is not documented yet.</p></li>
-<li><p><i>signaling</i>: The parameter  <i>signaling</i>
+<li><p><i>signaling</i>: The parameter <i>signaling</i>
 is not documented yet.</p></li>
-<li><p><i>negative</i>: The parameter  <i>negative</i>
+<li><p><i>negative</i>: The parameter <i>negative</i>
 is not documented yet.</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -1097,7 +1097,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -1150,12 +1150,12 @@ is not documented yet.</li>
     double dbl);
 </pre>
 
-<p>Creates a decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling <code>ExtendedDecimal.FromDouble(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal number, use FromString instead in most cases (for example: <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates a decimal number from a 64-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 64-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling <code>ExtendedDecimal.FromDouble(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers in the example given, the resulting arbitrary-precision decimal will be he value of the closest &quot;double&quot; to 0.1, not 0.1 exactly). To create an rbitrary-precision decimal number from a decimal number, use FromString nstead in most cases (for example: <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dbl</i>: The parameter  <i>dbl</i>
+<li><i>dbl</i>: The parameter <i>dbl</i>
 is not documented yet.</li>
 </ul>
 
@@ -1174,7 +1174,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigfloat</i>: The parameter  <i>bigfloat</i>
+<li><i>bigfloat</i>: The parameter <i>bigfloat</i>
 is not documented yet.</li>
 </ul>
 
@@ -1310,12 +1310,12 @@ is not documented yet.</li>
     float flt);
 </pre>
 
-<p>Creates a decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling <code>ExtendedDecimal.FromSingle(0.1f)</code>  ), since not all decimal numbers can be converted to exact binary numbers (in the example given, the resulting arbitrary-precision decimal will be the the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create an arbitrary-precision decimal number from a decimal number, use FromString instead in most cases (for example: <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code>  ).</p>
+<p>Creates a decimal number from a 32-bit binary floating-point number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the floating point number to a string first. Remember, though, that the exact value of a 32-bit binary floating-point number is not always the value that results when passing a literal decimal number (for example, calling <code>ExtendedDecimal.FromSingle(0.1f)</code> ), since not all decimal numbers can be converted to exact binary numbers in the example given, the resulting arbitrary-precision decimal will be he the value of the closest &quot;float&quot; to 0.1, not 0.1 exactly). To create n arbitrary-precision decimal number from a decimal number, use romString instead in most cases (for example: <code>ExtendedDecimal.FromString(&quot;0.1&quot;)</code> ).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>flt</i>: The parameter  <i>flt</i>
+<li><i>flt</i>: The parameter <i>flt</i>
 is not documented yet.</li>
 </ul>
 
@@ -1329,13 +1329,12 @@ is not documented yet.</li>
     string str);
 </pre>
 
-<p>Creates a decimal number from a text string that represents a number. See  <code>FromString(String, int, int,
-            EContext)</code>  for more information.</p>
+<p>Creates a decimal number from a text string that represents a number. See <code>FromString(String, int, int, EContext)</code> for more information.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>str</i>: The parameter  <i>str</i>
+<li><i>str</i>: The parameter <i>str</i>
 is not documented yet.</li>
 </ul>
 
@@ -1358,18 +1357,17 @@ The parameter &quot;str&quot; is not a correctly formatted number string.</li>
     int length);
 </pre>
 
-<p>Creates a decimal number from a text string that represents a number. See  <code>FromString(String, int, int,
-            EContext)</code>  for more information.</p>
+<p>Creates a decimal number from a text string that represents a number. See <code>FromString(String, int, int, EContext)</code> for more information.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter <i>str</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>str</i>
 begins.</p></li>
-<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
+<li><p><i>length</i>: The length, in code units, of the desired portion of <i>str</i>
+(but not more than <i>str</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -1412,14 +1410,14 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter <i>str</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>str</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>str</i>
 begins.</p></li>
-<li><p><i>length</i>: The length, in code units, of the desired portion of  <i>str</i>
-(but not more than  <i>str</i>
+<li><p><i>length</i>: The length, in code units, of the desired portion of <i>str</i>
+(but not more than <i>str</i>
 &#39;s length).</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -1443,15 +1441,14 @@ Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &
     PeterO.Numbers.EContext ctx);
 </pre>
 
-<p>Creates a decimal number from a text string that represents a number. See  <code>FromString(String, int, int,
-            EContext)</code>  for more information.</p>
+<p>Creates a decimal number from a text string that represents a number. See <code>FromString(String, int, int, EContext)</code> for more information.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>str</i>: The parameter  <i>str</i>
+<li><p><i>str</i>: The parameter <i>str</i>
 is not documented yet.</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -1608,7 +1605,7 @@ The parameter &quot;str&quot; is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -1627,7 +1624,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -1834,7 +1831,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>places</i>: The parameter  <i>places</i>
+<li><i>places</i>: The parameter <i>places</i>
 is not documented yet.</li>
 </ul>
 
@@ -1875,7 +1872,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigPlaces</i>: The parameter  <i>bigPlaces</i>
+<li><i>bigPlaces</i>: The parameter <i>bigPlaces</i>
 is not documented yet.</li>
 </ul>
 
@@ -1916,7 +1913,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>places</i>: The parameter  <i>places</i>
+<li><i>places</i>: The parameter <i>places</i>
 is not documented yet.</li>
 </ul>
 
@@ -1957,7 +1954,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigPlaces</i>: The parameter  <i>bigPlaces</i>
+<li><i>bigPlaces</i>: The parameter <i>bigPlaces</i>
 is not documented yet.</li>
 </ul>
 
@@ -2088,11 +2085,11 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>op</i>: The parameter  <i>op</i>
+<li><p><i>op</i>: The parameter <i>op</i>
 is not documented yet.</p></li>
-<li><p><i>subtrahend</i>: The parameter  <i>subtrahend</i>
+<li><p><i>subtrahend</i>: The parameter <i>subtrahend</i>
 is not documented yet.</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</p></li>
 </ul>
 
@@ -2148,7 +2145,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -2167,7 +2164,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -2377,7 +2374,7 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -2396,7 +2393,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -2982,7 +2979,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -3083,7 +3080,7 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -3104,7 +3101,7 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>ctx</i>: The parameter  <i>ctx</i>
+<li><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</li>
 </ul>
 
@@ -3143,9 +3140,9 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>otherValue</i>: The parameter  <i>otherValue</i>
+<li><p><i>otherValue</i>: The parameter <i>otherValue</i>
 is not documented yet.</p></li>
-<li><p><i>ctx</i>: The parameter  <i>ctx</i>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
 is not documented yet.</p></li>
 </ul>
 

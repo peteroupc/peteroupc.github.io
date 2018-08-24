@@ -425,11 +425,14 @@ Not documented yet.</li>
 <li><code>boolean RemoveAt​(int index)</code><br>
 Not documented yet.</li>
 <li><code>void set​(int index,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Sets the value of a CBOR object by integer index in this array.</li>
 <li><code>void set​(CBORObject key,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Sets the value of a CBOR object in this map, using a CBOR object as the key.</li>
 <li><code>void set​(String key,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Sets the value of a CBOR object in this map, using a string as the key.</li>
 <li><code>CBORObject Set​(Object key,
 Object valueOb)</code><br>
 Maps an object to a key in this CBOR map, or adds the value if the key
@@ -484,13 +487,17 @@ Writes a 16-bit signed integer in CBOR format to a data stream.</li>
  OutputStream stream)</code><br>
 Writes a CBOR object to a CBOR data stream.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EDecimal bignum,
- OutputStream stream)</code><br>
+ OutputStream stream) double double</code><br>
 Writes a decimal floating-point number in CBOR format to a data stream, as
-follows:  If the value is null, writes the byte 0xF6.</li>
+follows:  If the value is null, writes the byte 0xF6.
+If the value is negative zero, infinity, or NaN, converts the
+number to a double and writes that double.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EFloat bignum,
- OutputStream stream)</code><br>
+ OutputStream stream) double double</code><br>
 Writes a binary floating-point number in CBOR format to a data stream as
-follows:  If the value is null, writes the byte 0xF6.</li>
+follows:  If the value is null, writes the byte 0xF6.
+If the value is negative zero, infinity, or NaN, converts the
+number to a double and writes that double.</li>
 <li><code>static void Write​(com.upokecenter.numbers.EInteger bigint,
  OutputStream stream)</code><br>
 Writes a big integer in CBOR format to a data stream.</li>
@@ -549,8 +556,7 @@ Converts this object to a string in JavaScript Object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8, using the given JSON options to control the
 encoding process.</li>
-<li><code>void WriteTo​(OutputStream stream) CBOREncodeOptions</code><br>
-At the moment, use the overload of this method that takes a CBOREncodeOptions object.</li>
+<li><code>void WriteTo​(OutputStream stream)</code><br></li>
 <li><code>void WriteTo​(OutputStream stream,
    CBOREncodeOptions options)</code><br>
 Writes this CBOR object to a data stream, using the specified options for
@@ -943,6 +949,22 @@ opposed to CBORObject.Null).</p></li>
 <pre>public void set​(int index, CBORObject value)
 </pre>
 
+<p>Sets the value of a CBOR object by integer index in this array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - Zero-based index of the element.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
+<li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
+opposed to CBORObject.Null).</p></li>
+</ul>
+
 <h3>get</h3>
 
 <pre>public CBORObject get​(CBORObject key)
@@ -975,6 +997,22 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <pre>public void set​(CBORObject key, CBORObject value)
 </pre>
 
+<p>Sets the value of a CBOR object in this map, using a CBOR object as the key.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The key is null (as opposed to
+CBORObject.Null); or the set method is called and the value is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+</ul>
+
 <h3>get</h3>
 
 <pre>public CBORObject get​(String key)
@@ -1005,6 +1043,21 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 
 <pre>public void set​(String key, CBORObject value)
 </pre>
+
+<p>Sets the value of a CBOR object in this map, using a string as the key.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>key</code> - A key that points to the desired value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The key is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+</ul>
 
 <h3>AddConverter</h3>
 
@@ -1121,9 +1174,9 @@ than 0 or greater than (2^64-1).</p></li>
 <p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
  <code>CBOREncodeOptions.Default</code> contains recommended settings for
  CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major version.</b>
- </p> <p>Generates a CBOR object from an array of CBOR-encoded bytes.
- </p>
+ (without a CBOREncodeOptions argument) in the next major
+ version.</b></p> <p>Generates a CBOR object from an array of
+ CBOR-encoded bytes.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1206,11 +1259,11 @@ parameter <code>data</code> is empty.</p></li>
 <p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
  <code>CBOREncodeOptions.Default</code> contains recommended settings for
  CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major version.</b>
- </p> <p>Generates a CBOR object from a text string in JavaScript
- Object Notation (JSON) format. </p> <p>If a JSON object has the same
- key, only the last given value will be used for each duplicated key.
- </p>
+ (without a CBOREncodeOptions argument) in the next major
+ version.</b></p> <p>Generates a CBOR object from a text string in
+ JavaScript Object Notation (JSON) format.</p> <p>If a JSON object has
+ the same key, only the last given value will be used for each
+ duplicated key.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1241,7 +1294,7 @@ byte-order mark (U + FEFF).</li>
 <p>Generates a CBOR object from a text string in JavaScript Object Notation
  (JSON) format, using the specified options to control the decoding
  process. <p>By default, if a JSON object has the same key, only the
- last given value will be used for each duplicated key. </p></p>
+ last given value will be used for each duplicated key.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1907,7 +1960,7 @@ exponent, and the second must be an integer representing a mantissa.</p></li>
 
 <ul>
 <li>A CBOR object where the object <code>valueOb</code> is converted to a
-CBOR object and given the tag <code>bigintTag</code> .</li>
+CBOR object and given the tag <code>bigintTag</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1945,7 +1998,7 @@ exponent, and the second must be an integer representing a mantissa.</p></li>
 
 <ul>
 <li>A CBOR object where the object <code>valueOb</code> is converted to a
-CBOR object and given the tag <code>bigintTag</code> .</li>
+CBOR object and given the tag <code>bigintTag</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1984,7 +2037,7 @@ mantissa.</p></li>
 
 <ul>
 <li>A CBOR object where the object <code>valueObValue</code> is converted to
-a CBOR object and given the tag <code>smallTag</code> .</li>
+a CBOR object and given the tag <code>smallTag</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2082,10 +2135,11 @@ opposed to Not-a-Number, NaN).</li>
 <p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
  <code>CBOREncodeOptions.Default</code> contains recommended settings for
  CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major version.</b>
- </p> <p>Reads an object in CBOR format from a data stream. This
- method will read from the stream until the end of the CBOR object is
- reached or an error occurs, whichever happens first. </p>
+ (without a CBOREncodeOptions argument) in the next major
+ version.</b></p> <p>Reads an object in CBOR format from a data
+ stream. This method will read from the stream until the end of the
+ CBOR object is reached or an error occurs, whichever happens
+ first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2150,7 +2204,7 @@ parsing the data.</p></li>
  first character read must be a byte-order mark or a nonzero basic
  character (U + 0001 to U + 007F). (In previous versions, only UTF-8 was
  allowed.) <p>If a JSON object has the same key, only the last given
- value will be used for each duplicated key. </p></p>
+ value will be used for each duplicated key.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2188,7 +2242,7 @@ encoding or is not in JSON format.</p></li>
  character read must be a byte-order mark or a nonzero basic character
  (U + 0001 to U + 007F). (In previous versions, only UTF-8 was allowed.)
  <p>By default, if a JSON object has the same key, only the last given
- value will be used for each duplicated key. </p></p>
+ value will be used for each duplicated key.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2270,11 +2324,11 @@ opposed to Not-a-Number, NaN).</li>
 <p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
  <code>CBOREncodeOptions.Default</code> contains recommended settings for
  CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major version.</b>
- </p> <p>Writes a string in CBOR format to a data stream. The string
- will be encoded using indefinite-length encoding if its length
- exceeds a certain threshold (this behavior may change in future
- versions of this library). </p>
+ (without a CBOREncodeOptions argument) in the next major
+ version.</b></p> <p>Writes a string in CBOR format to a data stream.
+ The string will be encoded using indefinite-length encoding if its
+ length exceeds a certain threshold (this behavior may change in
+ future versions of this library).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2342,14 +2396,14 @@ opposed to Not-a-Number, NaN).</li>
 </pre>
 
 <p>Writes a binary floating-point number in CBOR format to a data stream as
- follows: <ul> <li>If the value is null, writes the byte 0xF6. </li>
+ follows: <ul> <li>If the value is null, writes the byte 0xF6.</li>
  <li>If the value is negative zero, infinity, or NaN, converts the
- number to a <code>double</code> and writes that <code>double</code> . If negative
+ number to a <code>double</code> and writes that <code>double</code>. If negative
  zero should not be written this way, use the Plus method to convert
- the value beforehand. </li> <li>If the value has an exponent of zero,
+ the value beforehand.</li> <li>If the value has an exponent of zero,
  writes the value as an unsigned integer or signed integer if the
- number can fit either type or as a big integer otherwise. </li>
- <li>In all other cases, writes the value as a big float. </li> </ul></p>
+ number can fit either type or as a big integer otherwise.</li> <li>In
+ all other cases, writes the value as a big float.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2438,15 +2492,14 @@ opposed to Not-a-Number, NaN).</li>
 </pre>
 
 <p>Writes a decimal floating-point number in CBOR format to a data stream, as
- follows: <ul> <li>If the value is null, writes the byte 0xF6. </li>
+ follows: <ul> <li>If the value is null, writes the byte 0xF6.</li>
  <li>If the value is negative zero, infinity, or NaN, converts the
- number to a <code>double</code> and writes that <code>double</code> . If negative
+ number to a <code>double</code> and writes that <code>double</code>. If negative
  zero should not be written this way, use the Plus method to convert
- the value beforehand. </li> <li>If the value has an exponent of zero,
+ the value beforehand.</li> <li>If the value has an exponent of zero,
  writes the value as an unsigned integer or signed integer if the
- number can fit either type or as a big integer otherwise. </li>
- <li>In all other cases, writes the value as a decimal number. </li>
- </ul></p>
+ number can fit either type or as a big integer otherwise.</li> <li>In
+ all other cases, writes the value as a decimal number.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2736,14 +2789,14 @@ code point.</p></li>
  the data stream in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.WriteTo(System.IO.InputStream)'/> can be
  used to write out certain keys of a CBOR map in a given order.
  Currently, the following objects are supported: <ul> <li>Lists of
- CBORObject. </li> <li>Maps of CBORObject. The keys to the map are
- written out to the data stream in an undefined order. </li> <li>Null.
- </li> <li>Byte arrays, which will always be written as
- definite-length byte strings. </li> <li>String objects, which will be
+ CBORObject.</li> <li>Maps of CBORObject. The keys to the map are
+ written out to the data stream in an undefined order.</li>
+ <li>Null.</li> <li>Byte arrays, which will always be written as
+ definite-length byte strings.</li> <li>string objects, which will be
  written as indefinite-length text strings if their size exceeds a
  certain threshold (this behavior may change in future versions of
- this library). </li> <li>Any object accepted by the FromObject static
- methods. </li> </ul></p>
+ this library).</li> <li>Any object accepted by the FromObject static
+ methods.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2850,7 +2903,7 @@ valueOb</code> has an unsupported type.</p></li>
 
 <p>Adds a new object to the end of this array. (Used to throw
  NullPointerException on a null reference, but now converts the null
- reference to CBORObject.Null, for convenience with the Object
+ reference to CBORObject.Null, for convenience with the object
  overload of this method.).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -3664,7 +3717,7 @@ if the given key is not found or this object is not a map.</li>
 
 <ul>
 <li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3693,7 +3746,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3720,7 +3773,7 @@ otherwise, <code>false</code> .</li>
 
 <ul>
 <li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3904,7 +3957,7 @@ otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the item was removed; otherwise, <code>false</code> .</li>
+<li><code>true</code> if the item was removed; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3976,48 +4029,48 @@ valueOb</code> has an unsupported type.</p></li>
 <p>Converts this object to a string in JavaScript Object Notation (JSON)
  format, using the specified options to control the encoding process.
  This function works not only with arrays and maps, but also integers,
- strings, byte arrays, and other JSON data types. Notes: <ul> <li>If
+ strings, byte arrays, and other JSON data types. Notes: <ul><li>If
  this object contains maps with non-string keys, the keys are
- converted to JSON strings before writing the map as a JSON string.
- </li> <li>If the CBOR object contains CBOR maps, or is a CBOR map
- itself, the keys to the map are written out to the JSON string in an
- undefined order. </li> <li>If a number in the form of an
+ converted to JSON strings before writing the map as a JSON
+ string.</li> <li>If the CBOR object contains CBOR maps, or is a CBOR
+ map itself, the keys to the map are written out to the JSON string in
+ an undefined order.</li> <li>If a number in the form of an
  arbitrary-precision binary float has a very high binary exponent, it
  will be converted to a double before being converted to a JSON
  string. (The resulting double could overflow to infinity, in which
- case the arbitrary-precision binary float is converted to null.)
- </li> <li>The string will not begin with a byte-order mark (U + FEFF);
- RFC 8259 (the JSON specification) forbids placing a byte-order mark
- at the beginning of a JSON string. </li> <li>Byte strings are
- converted to Base64 URL without whitespace or padding by default (see
- section 4.1 of RFC 7049). A byte string will instead be converted to
+ case the arbitrary-precision binary float is converted to null.)</li>
+ <li>The string will not begin with a byte-order mark (U + FEFF); RFC
+ 8259 (the JSON specification) forbids placing a byte-order mark at
+ the beginning of a JSON string.</li> <li>Byte strings are converted
+ to Base64 URL without whitespace or padding by default (see section
+ 4.1 of RFC 7049). A byte string will instead be converted to
  traditional base64 without whitespace or padding by default if it has
  tag 22, or base16 for tag 23. Padding will be included in the Base64
  URL or traditional base64 form if <b>Base64Padding</b> in the JSON
- options is set to <b>true</b> . </li> <li>Rational numbers will be
+ options is set to <b>true</b> .</li> <li>Rational numbers will be
  converted to their exact form, if possible, otherwise to a
  high-precision approximation. (The resulting approximation could
  overflow to infinity, in which case the rational number is converted
- to null.) </li> <li>Simple values other than true and false will be
- converted to null. (This doesn&#39;t include floating-point numbers.)
- </li> <li>Infinity and not-a-number will be converted to null. </li>
- </ul> The example code given below (written in in C# for the .NET
- version) can be used to write out certain keys of a CBOR map in a
- given order to a JSON string. <pre>  // Generates a JSON string of
- &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39;. Only keys //
+ to null.)</li> <li>Simple values other than true and false will be
+ converted to null. (This doesn&#39;t include floating-point
+ numbers.)</li> <li>Infinity and not-a-number will be converted to
+ null.</li> </ul> The example code given below (written in in C# for
+ the .NET version) can be used to write out certain keys of a CBOR map
+ in a given order to a JSON string. <pre>  // Generates a JSON string
+ of &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39;. Only keys //
  found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. private
  static string KeysToJSONMap&#x28;CBORObject mapObj,
- IList&lt;CBORObject&gt; keys&#x29;&#x7b; if (mapObj == null) { throw
+ List&lt;CBORObject&gt; keys&#x29;&#x7b; if (mapObj == null) { throw
  new NullPointerException(&quot;mapObj&quot;);} if (keys == null) { throw
- new NullPointerException(&quot;keys&quot;);} if (obj.getType()!=CBORType.Map) {
- throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
- builder=new StringBuilder(); var first=true; builder.Append(&quot;{&quot;);
- for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) {
- if (!first) {builder.Append(&quot;, &quot;);} var
- keyString=(key.getCBORType() == CBORType.String) ? key.AsString() :
- key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
- .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj.get(key).ToJSONString());
- first=false; } } return builder.Append(&quot;}&quot;).toString(); } </pre></p>
+ new NullPointerException(&quot;keys&quot;);} if (obj.getType() !=
+ CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
+ StringBuilder builder = new StringBuilder(); boolean first = true;
+ builder.append(&quot;{&quot;); for (CBORObject key in keys) { if
+ (mapObj.ContainsKey(key)) { if (!first) {builder.append(&quot;, &quot;);} var
+ keyString=(key.getCBORType() == CBORType.string) ? key.AsString() :
+ key.ToJSONString(); builder.append(CBORObject.FromObject(keyString)
+ .ToJSONString()) .append(&quot;:&quot;).append(mapObj.get(key).ToJSONString());
+ first=false; } } return builder.append(&quot;}&quot;).toString(); } </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4153,44 +4206,10 @@ null.</p></li>
 <pre>public void WriteTo​(OutputStream stream) throws IOException
 </pre>
 
-<p><p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
- <code>CBOREncodeOptions.Default</code> contains recommended settings for
- CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major version.</b>
- </p> <p>Writes this CBOR object to a data stream. If the CBOR object
- contains CBOR maps, or is a CBOR map, the keys to the map are written
- out to the data stream in an undefined order. The example method
- given below (written in C# for the .NET version) can be used to write
- out certain keys of a CBOR map in a given order: </p> <pre>  // Writes
- each key of &#39;mapObj&#39; to &#39;outputStream&#39;in the order given in &#39;keys&#39;.
- Only keys  // found in &#39;keys&#39; will be written if they exist in
- &#39;mapObj&#39;. private static void WriteKeysToIndefMap(CBORObject mapObj,
- IList&lt;CBORObject&gt; keys, OutputStream outputStream) throws java.io.IOException { if (mapObj == null) {
- throw new NullPointerException(&quot;mapObj&quot;);
- } if (keys==null) {
- throw
- new NullPointerException(&quot;keys&quot;);
- } if (outputStream==null) {
- throw
- new NullPointerException(&quot;outputStream&quot;);
- }
- if (obj.getType()!=CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not
- a map.&quot;); } outputStream.write((byte)0xBF); for (CBORObject key in
- keys)[ if (mapObj.ContainsKey(key)) { key.WriteTo(outputStream);
- mapObj.get(key).WriteTo(outputStream); } }
- outputStream.write((byte)0xbf); } </pre></p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>stream</code> - A writable data stream.</li>
-</ul>
-
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+<li><code>IOException</code></li>
 </ul>
 
 <h3>WriteTo</h3>
