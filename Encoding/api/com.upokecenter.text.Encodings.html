@@ -133,7 +133,8 @@ Reads bytes from a data source and converts the bytes from a given encoding
 to a text string.</li>
 <li><code>static String DecodeToString​(ICharacterEncoding enc,
           InputStream input)</code><br>
-Not documented yet.</li>
+Decodes data read from a data stream into a text string in the given
+character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
          ICharacterEncoder encoder)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
@@ -141,7 +142,9 @@ array encoded using a given character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
          ICharacterEncoder encoder,
          boolean htmlFallback)</code><br>
-Not documented yet.</li>
+Reads Unicode characters from a character input and writes them to a byte
+array encoded using the given character encoder and fallback
+strategy.</li>
 <li><code>static byte[] EncodeToBytes​(ICharacterInput input,
          ICharacterEncoding encoding)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
@@ -153,7 +156,9 @@ encoded in a given character encoding.</li>
 <li><code>static byte[] EncodeToBytes​(String str,
          ICharacterEncoding enc,
          boolean htmlFallback)</code><br>
-Not documented yet.</li>
+Reads Unicode characters from a text string and writes them to a byte array
+encoded in a given character encoding and using the given encoder
+fallback strategy.</li>
 <li><code>static void EncodeToWriter​(ICharacterInput input,
           ICharacterEncoder encoder,
           IWriter writer)</code><br>
@@ -190,7 +195,8 @@ Converts a character encoding into a character input stream, given a
 streamable source of bytes.</li>
 <li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
            InputStream input)</code><br>
-Not documented yet.</li>
+Converts a character encoding into a character input stream, given a data
+stream.</li>
 <li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
                   IByteReader stream)</code><br>
 Converts a character encoding into a character input stream, given a
@@ -275,8 +281,8 @@ character (U + FFFD).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; or &quot;input&quot; is
-null. .</li>
+<li><code>NullPointerException</code> - The parameter <code>encoding</code> or
+<code>input</code> is null. .</li>
 </ul>
 
 <h3>DecodeToString</h3>
@@ -284,7 +290,8 @@ null. .</li>
 <pre>public static String DecodeToString​(ICharacterEncoding enc, InputStream input)
 </pre>
 
-<p>Not documented yet. <p>In the .NET implementation, this method is
+<p>Decodes data read from a data stream into a text string in the given
+ character encoding. <p>In the .NET implementation, this method is
  implemented as an extension method to any object implementing
  ICharacterEncoding and can be called as follows:
  <code>encoding.DecodeToString(input)</code>. If the object&#39;s class already
@@ -308,8 +315,8 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; or &quot;input&quot; is
-null.</li>
+<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>DecodeToString</h3>
@@ -349,7 +356,8 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;enc&quot; or &quot;bytes&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>enc</code> or <code>
+bytes</code> is null.</li>
 </ul>
 
 <h3>DecodeToString</h3>
@@ -394,10 +402,11 @@ bytes</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;enc&quot; or &quot;bytes&quot; is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
-or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s length minus
-&quot;offset&quot; is less than &quot;length&quot;.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>enc</code> or <code>
+bytes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
+&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -409,11 +418,6 @@ or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s le
  array encoded using the given character encoder. When writing to the
  byte array, any characters that can&#39;t be encoded are replaced with
  the byte 0x3f (the question mark character). <p>In the .NET
- implementation, this method is implemented as an extension method to
- any object implementing ICharacterInput and can be called as follows:
- <code>input.EncodeToBytes(encoding)</code>. If the object&#39;s class already
- has an EncodeToBytes method with the same parameters, that method
- takes precedence over this extension method.</p> <p>In the .NET
  implementation, this method is implemented as an extension method to
  any object implementing ICharacterInput and can be called as follows:
  <code>input.EncodeToBytes(encoding)</code>. If the object&#39;s class already
@@ -436,7 +440,7 @@ or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s le
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -475,8 +479,8 @@ or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s le
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoder&quot; or &quot;input&quot; is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -484,34 +488,38 @@ null.</li>
 <pre>public static byte[] EncodeToBytes​(ICharacterInput input, ICharacterEncoder encoder, boolean htmlFallback)
 </pre>
 
-<p>Not documented yet. <p>In the .NET implementation, this method is
- implemented as an extension method to any object implementing
- ICharacterInput and can be called as follows:
- <code>input.EncodeToBytes(encoder, htmlFallback)</code>. If the object&#39;s
- class already has a <code>EncodeToBytes</code> method with the same
- parameters, that method takes precedence over this extension
- method.</p></p>
+<p>Reads Unicode characters from a character input and writes them to a byte
+ array encoded using the given character encoder and fallback
+ strategy. <p>In the .NET implementation, this method is implemented
+ as an extension method to any object implementing ICharacterInput and
+ can be called as follows: <code>input.EncodeToBytes(encoder,
+ htmlFallback)</code>. If the object&#39;s class already has a
+ <code>EncodeToBytes</code> method with the same parameters, that method
+ takes precedence over this extension method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>input</code> - The parameter <code>input</code> is not documented yet.</p></li>
-<li><p><code>encoder</code> - The parameter <code>encoder</code> is not documented yet.</p></li>
-<li><p><code>htmlFallback</code> - The parameter <code>htmlFallback</code> is not documented
-yet.</p></li>
+<li><p><code>input</code> - An object that implements a stream of universal code points.</p></li>
+<li><p><code>encoder</code> - A character encoder that takes Unicode characters and writes
+them into bytes.</p></li>
+<li><p><code>htmlFallback</code> - If true, when the encoder encounters invalid characters
+that can&#39;t be mapped into bytes, writes the HTML decimal escape for
+the invalid characters instead. If false, writes a question mark byte
+(0x3f) upon encountering invalid characters.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>A byte array containing the encoded characters.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoder&quot; or &quot;input&quot; is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -538,7 +546,7 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is a text string.</p></li>
+<li><p><code>str</code> - A text string to encode to a byte array.</p></li>
 <li><p><code>enc</code> - An object implementing a character encoding (gives access to an
 encoder and a decoder).</p></li>
 </ul>
@@ -546,13 +554,14 @@ encoder and a decoder).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>A byte array containing the encoded text string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;str&quot; or &quot;enc&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+enc</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -560,32 +569,40 @@ encoder and a decoder).</p></li>
 <pre>public static byte[] EncodeToBytes​(String str, ICharacterEncoding enc, boolean htmlFallback)
 </pre>
 
-<p>Not documented yet. <p>In the .NET implementation, this method is
- implemented as an extension method to any object implementing string
- and can be called as follows: <code>str.EncodeToBytes(enc,
- htmlFallback)</code>. If the object&#39;s class already has a
- <code>EncodeToBytes</code> method with the same parameters, that method
- takes precedence over this extension method.</p></p>
+<p>Reads Unicode characters from a text string and writes them to a byte array
+ encoded in a given character encoding and using the given encoder
+ fallback strategy. When reading the string, any unpaired surrogate
+ characters are replaced with the replacement character (U + FFFD).
+ <p>In the .NET implementation, this method is implemented as an
+ extension method to any object implementing string and can be called
+ as follows: <code>str.EncodeToBytes(enc, htmlFallback)</code>. If the
+ object&#39;s class already has a <code>EncodeToBytes</code> method with the
+ same parameters, that method takes precedence over this extension
+ method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
-<li><p><code>enc</code> - The parameter <code>enc</code> is not documented yet.</p></li>
-<li><p><code>htmlFallback</code> - The parameter <code>htmlFallback</code> is not documented
-yet.</p></li>
+<li><p><code>str</code> - A text string to encode to a byte array.</p></li>
+<li><p><code>enc</code> - An object implementing a character encoding (gives access to an
+encoder and a decoder).</p></li>
+<li><p><code>htmlFallback</code> - If true, when the encoder encounters invalid characters
+that can&#39;t be mapped into bytes, writes the HTML decimal escape for
+the invalid characters instead. If false, writes a question mark byte
+(0x3f) upon encountering invalid characters.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte array.</li>
+<li>A byte array containing the encoded text string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;str&quot; or &quot;enc&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+enc</code> is null.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
@@ -619,7 +636,7 @@ yet.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
@@ -653,8 +670,8 @@ yet.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoder&quot; or &quot;input&quot; is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
@@ -668,7 +685,7 @@ null.</li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -690,7 +707,8 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;str&quot; or &quot;enc&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+enc</code> is null.</li>
 </ul>
 
 <h3>EncodeToWriter</h3>
@@ -724,7 +742,7 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;encoding&quot; is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>encoding</code> is null.</p></li>
 <li><p><code>IOException</code></p></li>
 </ul>
 
@@ -759,8 +777,8 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;encoder&quot; or &quot;input&quot; is
-null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</p></li>
 <li><p><code>IOException</code></p></li>
 </ul>
 
@@ -775,7 +793,7 @@ null.</p></li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -797,7 +815,8 @@ encoder and a decoder).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; or &quot;enc&quot; is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+enc</code> is null.</p></li>
 <li><p><code>IOException</code></p></li>
 </ul>
 
@@ -837,12 +856,15 @@ returning a replacement character in its place.</p></li>
 <pre>public static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding, InputStream input)
 </pre>
 
-<p>Not documented yet. <p>In the .NET implementation, this method is
- implemented as an extension method to any object implementing
- ICharacterEncoding and can be called as follows:
- <code>encoding.GetDecoderInput(input)</code>. If the object&#39;s class already
- has a GetDecoderInput method with the same parameters, that method
- takes precedence over this extension method.</p></p>
+<p>Converts a character encoding into a character input stream, given a data
+ stream. The input stream doesn&#39;t check the first few bytes for a
+ byte-order mark indicating a Unicode encoding such as UTF-8 before
+ using the character encoding&#39;s decoder. <p>In the .NET
+ implementation, this method is implemented as an extension method to
+ any object implementing ICharacterEncoding and can be called as
+ follows: <code>encoding.GetDecoderInput(input)</code>. If the object&#39;s
+ class already has a GetDecoderInput method with the same parameters,
+ that method takes precedence over this extension method.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1041,7 +1063,7 @@ string.</li>
  <p>In several Internet specifications, this name is known as a
  &quot;charset&quot; parameter. In HTML and HTTP, for example, the &quot;charset&quot;
  parameter indicates the encoding used to represent text in the HTML
- page, text file, etc.</p></p>
+ page, text file, etc. </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1052,49 +1074,50 @@ lowercase before resolving the encoding&#39;s name. The Encoding Standard
 supports only the following encodings (and defines aliases for most
 of them). <ul> <li> <code>UTF-8</code> - UTF-8 (8-bit encoding of the
 universal coded character set, the encoding recommended by the
-Encoding Standard for new data formats)</li> <li> <code>UTF-16LE</code> -
-UTF-16 little-endian (16-bit UCS)</li> <li> <code>UTF-16BE</code> - UTF-16
-big-endian (16-bit UCS)</li> <li>The special-purpose encoding <code>
-x-user-defined</code></li> <li>The special-purpose encoding <code>
-replacement</code>.</li> <li>28 legacy single-byte encodings: <ul>
+Encoding Standard for new data formats) </li> <li> <code>UTF-16LE</code> -
+UTF-16 little-endian (16-bit UCS) </li> <li> <code>UTF-16BE</code> - UTF-16
+big-endian (16-bit UCS) </li> <li>The special-purpose encoding <code>
+x-user-defined</code> </li> <li>The special-purpose encoding <code>
+replacement</code> . </li> <li>28 legacy single-byte encodings: <ul>
 <li> <code>windows-1252</code> : Western Europe (Note: The Encoding
 Standard aliases the names <code>US-ASCII</code> and <code>ISO-8859-1</code> to
-<code>windows-1252</code>, which uses a different coded character set from
-either; it differs from <code>ISO-8859-1</code> by assigning different
-characters to some bytes from 0x80 to 0x9F. The Encoding Standard
-does this for compatibility with existing Web pages.)</li> <li> <code>
-ISO-8859-2</code>, <code>windows-1250</code> : Central Europe</li> <li> <code>
-ISO-8859-10</code> : Northern Europe</li> <li> <code>ISO-8859-4</code>, <code>
-windows-1257</code> : Baltic</li> <li> <code>ISO-8859-13</code> : Estonian</li>
-<li> <code>ISO-8859-14</code> : Celtic</li> <li> <code>ISO-8859-16</code> :
-Romanian</li> <li> <code>ISO-8859-5</code>, <code>IBM-866</code>, <code>
-KOI8-R</code>, <code>windows-1251</code>, <code>x-mac-cyrillic</code> : Cyrillic</li>
-<li> <code>KOI8-U</code> : Ukrainian</li> <li> <code>ISO-8859-7</code>, <code>
-windows-1253</code> : Greek</li> <li> <code>ISO-8859-6</code>, <code>
-windows-1256</code> : Arabic</li> <li> <code>ISO-8859-8</code>, <code>
-ISO-8859-8-I</code>, <code>windows-1255</code> : Hebrew</li> <li> <code>
-ISO-8859-3</code> : Latin 3</li> <li> <code>ISO-8859-15</code>, <code>
-windows-1254</code> : Turkish</li> <li> <code>windows-874</code> : Thai</li>
-<li> <code>windows-1258</code> : Vietnamese</li> <li> <code>macintosh</code> :
-Mac Roman</li></ul></li> <li>Three legacy Japanese encodings: <code>
-Shift_JIS</code>, <code>EUC-JP</code>, <code>ISO-2022-JP</code></li> <li>Two legacy
-simplified Chinese encodings: <code>GBK</code> and <code>gb18030</code></li>
-<li> <code>Big5</code> : legacy traditional Chinese encoding</li>
-<li> <code>EUC-KR</code> : legacy Korean encoding</li></ul> <p>The <code>
-UTF-8</code>, <code>UTF-16LE</code>, and <code>UTF-16BE</code> encodings don&#39;t encode
-a byte-order mark at the start of the text (doing so is not
-recommended for <code>UTF-8</code>, while in <code>UTF-16LE</code> and <code>
-UTF-16BE</code>, the byte-order mark character U + FEFF is treated as an
-ordinary character, unlike in the UTF-16 encoding form). The Encoding
-Standard aliases <code>UTF-16</code> to <code>UTF-16LE</code> &quot;to deal with
-deployed content&quot;.</p>.</li>
+<code>windows-1252</code> , which uses a different coded character set
+from either; it differs from <code>ISO-8859-1</code> by assigning
+different characters to some bytes from 0x80 to 0x9F. The Encoding
+Standard does this for compatibility with existing Web pages.) </li>
+<li> <code>ISO-8859-2</code> , <code>windows-1250</code> : Central Europe </li>
+<li> <code>ISO-8859-10</code> : Northern Europe </li> <li> <code>
+ISO-8859-4</code> , <code>windows-1257</code> : Baltic </li> <li> <code>
+ISO-8859-13</code> : Estonian </li> <li> <code>ISO-8859-14</code> : Celtic </li>
+<li> <code>ISO-8859-16</code> : Romanian </li> <li> <code>ISO-8859-5</code> ,
+<code>IBM-866</code> , <code>KOI8-R</code> , <code>windows-1251</code> , <code>
+x-mac-cyrillic</code> : Cyrillic </li> <li> <code>KOI8-U</code> : Ukrainian </li>
+<li> <code>ISO-8859-7</code> , <code>windows-1253</code> : Greek </li>
+<li> <code>ISO-8859-6</code> , <code>windows-1256</code> : Arabic </li>
+<li> <code>ISO-8859-8</code> , <code>ISO-8859-8-I</code> , <code>windows-1255</code>
+: Hebrew </li> <li> <code>ISO-8859-3</code> : Latin 3 </li> <li> <code>
+ISO-8859-15</code> , <code>windows-1254</code> : Turkish </li> <li> <code>
+windows-874</code> : Thai </li> <li> <code>windows-1258</code> : Vietnamese </li>
+<li> <code>macintosh</code> : Mac Roman </li> </ul> </li> <li>Three legacy
+Japanese encodings: <code>Shift_JIS</code> , <code>EUC-JP</code> , <code>
+ISO-2022-JP</code> </li> <li>Two legacy simplified Chinese encodings:
+<code>GBK</code> and <code>gb18030</code> </li> <li> <code>Big5</code> : legacy
+traditional Chinese encoding </li> <li> <code>EUC-KR</code> : legacy Korean
+encoding </li> </ul> <p>The <code>UTF-8</code> , <code>UTF-16LE</code> , and
+<code>UTF-16BE</code> encodings don&#39;t encode a byte-order mark at the
+start of the text (doing so is not recommended for <code>UTF-8</code> ,
+while in <code>UTF-16LE</code> and <code>UTF-16BE</code> , the byte-order mark
+character U + FEFF is treated as an ordinary character, unlike in the
+UTF-16 encoding form). The Encoding Standard aliases <code>UTF-16</code>
+to <code>UTF-16LE</code> &quot;to deal with deployed content&quot;. </p> .</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A standardized name for the encoding. Returns the empty string if
-&quot;name&quot; is null or empty, or if the encoding name is unsupported.</li>
+<code>name</code> is null or empty, or if the encoding name is
+unsupported.</li>
 </ul>
 
 <h3>ResolveAliasForEmail</h3>
@@ -1113,8 +1136,8 @@ modified version of the rules in the Encoding Standard to better
 conform, in some cases, to email standards like MIME. Encoding names
 and aliases not registered with the Internet Assigned Numbers
 Authority (IANA) are not supported, with the exception of <code>
-ascii</code>, <code>utf8</code>, <code>cp1252</code>, and names 10 characters or
-longer starting with <code>iso-8859-</code>. Also, the following
+ascii</code> , <code>utf8</code> , <code>cp1252</code> , and names 10 characters or
+longer starting with <code>iso-8859-</code> . Also, the following
 additional encodings are supported. Note that the case combination
 <code>GB18030</code>, the combination registered with IANA, rather than
 <code>gb18030</code> can be retured by this method. <ul> <li> <code>
@@ -1122,32 +1145,33 @@ US-ASCII</code> - ASCII single-byte encoding, rather than an alias to
 <code>windows-1252</code> as specified in the Encoding Standard. The coded
 character set&#39;s code points match those in the Unicode Standard&#39;s
 Basic Latin block (0-127 or U + 0000 to U + 007F). The name <code>ascii</code>
-is an alias.</li> <li> <code>ISO-8859-1</code> - Latin-1 single-byte
+is an alias. </li> <li> <code>ISO-8859-1</code> - Latin-1 single-byte
 encoding, rather than an alias to <code>windows-1252</code> as specified
 in the Encoding Standard. The coded character set&#39;s code points match
 those in the Unicode Standard&#39;s Basic Latin and Latin-1 Supplement
-blocks (0-255 or U + 0000 to U + 00FF).</li> <li> <code>UTF-16</code> - UTF-16
+blocks (0-255 or U + 0000 to U + 00FF). </li> <li> <code>UTF-16</code> - UTF-16
 without a fixed byte order, rather than an alias to <code>UTF-16LE</code>
 as specified in the Encoding Standard. The byte order is little
 endian if the byte stream starts with 0xff 0xfe; otherwise, big
 endian. A leading 0xff 0xfe or 0xfe 0xff in the byte stream is
-skipped.</li> <li> <code>UTF-7</code> - UTF-7 (7-bit universal coded
+skipped. </li> <li> <code>UTF-7</code> - UTF-7 (7-bit universal coded
 character set). The name <code>unicode-1-1-utf-7</code> is not supported
 and is not treated as an alias to <code>UTF-7</code>, even though it uses
 the same character encoding scheme as UTF-7, because RFC 1642, which
 defined the former UTF-7, is linked to a different Unicode version
 with an incompatible character repertoire (notably, the Hangul
 syllables have different code point assignments in Unicode 1.1 and
-earlier than in Unicode 2.0 and later).</li></ul>. In previous
+earlier than in Unicode 2.0 and later). </li> </ul> . In previous
 versions of this method, the name <code>iso-2022-jp-2</code> was also
-aliased to <code>ISO-2022-JP</code>, which is no longer the case.</li>
+aliased to <code>ISO-2022-JP</code> , which is no longer the case.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A standardized name for the encoding. Returns the empty string if
-&quot;name&quot; is null or empty, or if the encoding name is unsupported.</li>
+<code>name</code> is null or empty, or if the encoding name is
+unsupported.</li>
 </ul>
 
 <h3>StringToBytes</h3>
@@ -1189,7 +1213,7 @@ encoding.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoding&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoding</code> is null.</li>
 </ul>
 
 <h3>StringToBytes</h3>
@@ -1229,8 +1253,8 @@ encoding.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;encoder&quot; or &quot;str&quot; is
-null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+str</code> is null.</li>
 </ul>
 
 <h3>StringToInput</h3>
@@ -1243,7 +1267,7 @@ null.</li>
  code point, among other things. When reading the string, any unpaired
  surrogate characters are replaced with the replacement character
  (U + FFFD). <p>In the .NET implementation, this method is implemented
- as an extension method to any string object and can be called as
+ as an extension method to any String object and can be called as
  follows: <code>str.StringToInput(offset, length)</code>. If the object&#39;s
  class already has a StringToInput method with the same parameters,
  that method takes precedence over this extension method.</p> <p>In
@@ -1268,7 +1292,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>StringToInput</h3>
@@ -1281,7 +1305,7 @@ null.</li>
  string code point by code point, among other things. When reading the
  string, any unpaired surrogate characters are replaced with the
  replacement character (U + FFFD). <p>In the .NET implementation, this
- method is implemented as an extension method to any string object and
+ method is implemented as an extension method to any String object and
  can be called as follows: <code>str.StringToInput(offset, length)</code>.
  If the object&#39;s class already has a StringToInput method with the
  same parameters, that method takes precedence over this extension
@@ -1311,10 +1335,10 @@ str</code> (but not more than <code>str</code> &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter &quot;str&quot; is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - Either &quot;offset&quot; or &quot;length&quot; is less than 0
-or greater than &quot;str&quot; &#39;s length, or &quot;str&quot; &#39; s length minus &quot;offset&quot;
-is less than &quot;length&quot;.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
+less than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39; s
+length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
