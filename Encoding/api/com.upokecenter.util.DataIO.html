@@ -191,13 +191,19 @@ or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s len
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>input</code> - The parameter <code>input</code> is not documented yet.</li>
+<li><code>input</code> - The data stream to wrap into a byte reader.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An IByteReader object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;stream&quot; is null.</li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -212,13 +218,19 @@ or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s len
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bytes</code> - The parameter <code>bytes</code> is not documented yet.</li>
+<li><code>bytes</code> - The byte array to wrap into a byte reader.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>An IByteReader object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter &quot;bytes&quot; is null.</li>
 </ul>
 
 <h3>ToWriter</h3>

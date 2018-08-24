@@ -19,18 +19,25 @@
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a byte array into a byte reader.In the .NET implementation, this method is implemented as an extension method to any object implementing byte[] and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bytes</i>: The parameter  <i>bytes</i>
-is not documented yet.</li>
+<li><i>bytes</i>: The byte array to wrap into a byte reader.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IByteReader object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>bytes</i>
+is null.</li>
+</ul>
 
 <h3>ToByteReader</h3>
 
@@ -64,16 +71,9 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>bytes</i>
-is null.</p></li>
+The parameter &quot;bytes&quot; is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>bytes</i>
-&#39;s length, or  <i>bytes</i>
-&#39;s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -84,18 +84,25 @@ is less than  <i>length</i>
 
 <p><b>Deprecated.</b> Use ToReader instead.</p>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
+<p>Wraps a data stream into a byte reader.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>input</i>: The parameter  <i>input</i>
-is not documented yet.</li>
+<li><i>input</i>: The data stream to wrap into a byte reader.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p>An IByteReader object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</li>
+</ul>
 
 <h3>ToReader</h3>
 
@@ -103,7 +110,7 @@ is not documented yet.</li>
     this byte[] bytes);
 </pre>
 
-<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows: <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same arameters, that method takes precedence over this extension method.</p>
+<p>Wraps a byte array into a byte reader. The reader will start at the beginning of the byte array.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -119,8 +126,7 @@ is not documented yet.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>bytes</i>
-is null.</li>
+The parameter &quot;bytes&quot; is null. .</li>
 </ul>
 
 <h3>ToReader</h3>
@@ -131,7 +137,7 @@ is null.</li>
     int length);
 </pre>
 
-<p>Wraps a portion of a byte array into a byte reader object.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows: <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same arameters, that method takes precedence over this extension method.</p>
+<p>Wraps a portion of a byte array into a byte reader object.In the .NET implementation, this method is implemented as an extension method to any byte array object and can be called as follows:  <code>bytes.ToByteReader(offset, length)</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -149,16 +155,9 @@ is null.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>bytes</i>
-is null.</p></li>
+The parameter &quot;bytes&quot; is null. .</p></li>
 <li><p>System.ArgumentException:
-Either <i>offset</i>
-or <i>length</i>
-is less than 0 or greater than <i>bytes</i>
-&#39;s length, or <i>bytes</i>
-&#39; s length minus <i>offset</i>
-is less than <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;bytes&quot; &#39;s length, or &quot;bytes&quot; &#39; s length minus &quot;offset&quot; is less than &quot;length&quot; . .</p></li>
 </ul>
 
 <h3>ToReader</h3>
@@ -167,7 +166,7 @@ is less than <i>length</i>
     this System.IO.Stream input);
 </pre>
 
-<p>Wraps an input stream into a reader object. If an IOException is thrown by the input stream, the reader object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows: <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same arameters, that method takes precedence over this extension method.</p>
+<p>Wraps an input stream into a reader object. If an IOException is thrown by the input stream, the reader object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>input.ToByteReader()</code> . If the object&#39;s class already has a ToByteReader method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -183,8 +182,7 @@ is less than <i>length</i>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>input</i>
-is null.</li>
+The parameter &quot;input&quot; is null. .</li>
 </ul>
 
 <h3>ToWriter</h3>
@@ -193,7 +191,7 @@ is null.</li>
     this PeterO.IByteWriter output);
 </pre>
 
-<p>Wraps a byte writer (one that only implements a ReadByte method) to a writer (one that also implements a three-parameter Read method.)In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows: <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same arameters, that method takes precedence over this extension method.</p>
+<p>Wraps a byte writer (one that only implements a ReadByte method) to a writer (one that also implements a three-parameter Read method.)In the .NET implementation, this method is implemented as an extension method to any object implementing IByteWriter and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -209,8 +207,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>output</i>
-is null.</li>
+The parameter &quot;output&quot; is null. .</li>
 </ul>
 
 <h3>ToWriter</h3>
@@ -219,7 +216,7 @@ is null.</li>
     this System.IO.Stream output);
 </pre>
 
-<p>Wraps an output stream into a writer object. If an IOException is thrown by the input stream, the writer object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows: <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same arameters, that method takes precedence over this extension method.</p>
+<p>Wraps an output stream into a writer object. If an IOException is thrown by the input stream, the writer object throws InvalidOperationException instead.In the .NET implementation, this method is implemented as an extension method to any object implementing Stream and can be called as follows:  <code>output.ToWriter()</code> . If the object&#39;s class already has a ToWriter method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -235,8 +232,7 @@ is null.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>output</i>
-is null.</li>
+The parameter &quot;output&quot; is null. .</li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>
