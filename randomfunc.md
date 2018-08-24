@@ -2,21 +2,9 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Aug. 1, 2018.
+Begun on June 4, 2017; last updated on Aug. 24, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
-
-<a id=Request_for_Comments></a>
-## Request for Comments
-
-**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randomfunc.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-and-Sampling-Methods) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
-
-**Comments on any aspect of this document are welcome, but especially comments on the following:**
-
-- **Corrections to any method given on this page.**
-- **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
-- **If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.**
-- **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
 
 <a id=Introduction></a>
 ## Introduction
@@ -36,11 +24,23 @@ All the random number methods presented on this page are ultimately based on an 
 - Techniques that are specific to certain kinds of RNGs.  This includes generating sequences of unique integers using specific kinds of deterministic RNGs.
 - Seemingly random numbers that are specifically generated using [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions), including pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its "seed"), then that RNG is generally within the scope of this document.
 
+<a id=About_This_Document></a>
+### About This Document
+
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/randomfunc.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/randomfunc.md)**.  You can send comments on this document either on** [**CodeProject**](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-and-Sampling-Methods) **or on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.**
+
+**Comments on any aspect of this document are welcome, but especially comments on the following:**
+
+- **Corrections to any method given on this page.**
+- **Requests to provide an implementation of any method given here in other programming languages, in addition to Python.**
+- **If there is enough interest by readers, I may discuss approaches to generate random mazes, graphs, matrices, or paths.**
+- **Suggestions to trim the size of this document, such as by limiting it to the most common and most useful methods for generating random numbers.**
+
 <a id=Contents></a>
 ## Contents
 
-- [**Request for Comments**](#Request_for_Comments)
 - [**Introduction**](#Introduction)
+    - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
 - [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Uniform Random Numbers**](#Uniform_Random_Numbers)
@@ -743,7 +743,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 >
 > 1.  A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
 > 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
-> 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (the random time is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump.)
+> 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (the random time is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump).
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
