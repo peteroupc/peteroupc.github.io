@@ -112,7 +112,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this object is finite (not infinity or NaN); otherwise, <c>false</c>.</p>
+<p><code>true</code>  if this object is finite (not infinity or NaN); otherwise,  <code>false</code> .</p>
 
 <h3>IsNegative</h3>
 
@@ -123,7 +123,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this object is negative, including negative zero; otherwise, <c>false</c>.</p>
+<p><code>true</code>  if this object is negative, including negative zero; otherwise,  <code>false</code> .</p>
 
 <h3>IsZero</h3>
 
@@ -134,7 +134,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><c>true</c> if this object&#39;s value equals 0; otherwise, <c>false</c>. <code>true</code> if this object&#39;s value equals 0; otherwise, . <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value equals 0; otherwise, <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
 
 <h3>Mantissa</h3>
 
@@ -261,8 +261,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if  <i>other</i>
- is null, or 0 if both values are equal.</p>
+<p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if &quot;other&quot; is null, or 0 if both values are equal.</p>
 
 <h3>CompareToSignal</h3>
 
@@ -421,8 +420,7 @@ is not documented yet.</li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>other</i>
-is null.</li>
+The parameter &quot;other&quot; is null.</li>
 </ul>
 
 <h3>Create</h3>
@@ -473,8 +471,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter &quot;mantissa (significand)&quot; or  <i>exponent</i>
-is null.</li>
+The parameter &quot;mantissa (significand)&quot; or &quot;exponent&quot; is null.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -500,8 +497,7 @@ is not documented yet.</li>
 
 <ul>
 <li>System.ArgumentException:
-The parameter <i>diag</i>
-is less than 0.</li>
+The parameter &quot;diag&quot; is less than 0.</li>
 </ul>
 
 <h3>CreateNaN</h3>
@@ -536,8 +532,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>diag</i>
-is null.</li>
+The parameter &quot;diag&quot; is null.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -912,8 +907,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+<p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>FromByte</h3>
 
@@ -951,8 +945,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary float with the same value as  <i>dbl</i>
-.</p>
+<p>A binary float with the same value as &quot;dbl&quot;.</p>
 
 <h3>FromEInteger</h3>
 
@@ -1065,8 +1058,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A binary float with the same value as  <i>flt</i>
-.</p>
+<p>A binary float with the same value as &quot;flt&quot;.</p>
 
 <h3>FromString</h3>
 
@@ -1118,16 +1110,9 @@ begins.</p></li>
 
 <ul>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot; &#39;s length, or &quot;str&quot; &#39; s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>str</i>
-is null.</p></li>
+The parameter &quot;str&quot; is null.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1149,7 +1134,7 @@ is null.</p></li>
 
 <p>The string can also be &quot;-INF&quot;, &quot;-Infinity&quot;, &quot;Infinity&quot;, &quot;INF&quot;, quiet NaN (&quot;NaN&quot;) followed by any number of digits, or signaling NaN (&quot;sNaN&quot;) followed by any number of digits, all in any combination of upper and lower case.</p>
 
-<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U+0030 to U+0039). The string is not allowed to contain white space characters, including spaces.</p>
+<p>All characters mentioned above are the corresponding characters in the Basic Latin range. In particular, the digits must be the basic digits 0 to 9 (U + 0030 to U + 0039). The string is not allowed to contain white space characters, including spaces.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1173,16 +1158,9 @@ is not documented yet.</p></li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</p></li>
+The parameter &quot;str&quot; is null.</p></li>
 <li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>length</i>
-is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
-&#39;s length minus  <i>offset</i>
-is less than <i>length</i>
-.</p></li>
+Either &quot;offset&quot; or &quot;length&quot; is less than 0 or greater than &quot;str&quot; &#39;s length, or &quot;str&quot; &#39;s length minus &quot;offset&quot; is less than &quot;length&quot;.</p></li>
 </ul>
 
 <h3>FromString</h3>
@@ -1212,8 +1190,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</li>
+The parameter &quot;str&quot; is null.</li>
 </ul>
 
 <h3>FromUInt16</h3>
@@ -1364,8 +1341,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Ln(this object). Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the result would be a complex number with a real part equal to Ln of this object&#39;s absolute value and an imaginary part equal to pi, but the return value is still NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0). Signals no flags and returns negative infinity if this object&#39;s value is 0.</p>
+<p>Ln(this object). Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the result would be a complex number with a real part equal to Ln of this object&#39;s absolute value and an imaginary part equal to pi, but the return value is still NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0). Signals no flags and returns negative infinity if this object&#39;s value is 0.</p>
 
 <h3>Log10</h3>
 
@@ -1384,8 +1360,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+<p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>Max</h3>
 
@@ -1592,8 +1567,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A number whose exponent is decreased by  <i>places</i>
-, but not to more than 0.</p>
+<p>A number whose exponent is decreased by &quot;places&quot;, but not to more than 0.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1634,8 +1608,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A number whose exponent is decreased by  <i>bigPlaces</i>
-, but not to more than 0.</p>
+<p>A number whose exponent is decreased by &quot;bigPlaces&quot;, but not to more than 0.</p>
 
 <h3>MovePointLeft</h3>
 
@@ -1676,8 +1649,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A number whose exponent is increased by  <i>places</i>
-, but not to more than 0.</p>
+<p>A number whose exponent is increased by &quot;places&quot;, but not to more than 0.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1718,8 +1690,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A number whose exponent is increased by  <i>bigPlaces</i>
-, but not to more than 0.</p>
+<p>A number whose exponent is increased by &quot;bigPlaces&quot;, but not to more than 0.</p>
 
 <h3>MovePointRight</h3>
 
@@ -1860,9 +1831,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter  <i>op</i>
-or  <i>subtrahend</i>
-is null.</li>
+The parameter &quot;op&quot; or &quot;subtrahend&quot; is null.</li>
 </ul>
 
 <h3>Negate</h3>
@@ -1912,9 +1881,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
- is null, the precision is 0, or <i>ctx</i>
- has an unlimited exponent range.</p>
+<p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</p>
 
 <h3>NextPlus</h3>
 
@@ -1933,9 +1900,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns the smallest value that&#39;s greater than the given value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter  <i>ctx</i>
- is null, the precision is 0, or <i>ctx</i>
- has an unlimited exponent range.</p>
+<p>Returns the smallest value that&#39;s greater than the given value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</p>
 
 <h3>NextToward</h3>
 
@@ -2143,8 +2108,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The constant π rounded to the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+<p>The constant π rounded to the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>Plus</h3>
 
@@ -2163,8 +2127,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if <i>ctx</i>
- is null or the precision and exponent range are unlimited.</p>
+<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if &quot;ctx&quot; is null or the precision and exponent range are unlimited.</p>
 
 <h3>Pow</h3>
 
@@ -2646,8 +2609,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if <i>ctx</i>
- is null or the precision and exponent range are unlimited.</p>
+<p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if &quot;ctx&quot; is null or the precision and exponent range are unlimited.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2707,8 +2669,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A number whose exponent is increased by  <i>bigPlaces</i>
-.</p>
+<p>A number whose exponent is increased by &quot;bigPlaces&quot;.</p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2749,8 +2710,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>SquareRoot</h3>
 
@@ -2771,8 +2731,7 @@ is not documented yet.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter <i>ctx</i>
- is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+<p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
 <h3>Subtract</h3>
 
@@ -2819,8 +2778,7 @@ is not documented yet.</p></li>
 
 <ul>
 <li>System.ArgumentNullException:
-The parameter <i>otherValue</i>
-is null.</li>
+The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
 <h3>ToByteChecked</h3>

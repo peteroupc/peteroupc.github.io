@@ -433,8 +433,8 @@ Can&#39;t be null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null. .</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty. .</p></li>
 </ul>
 
 <h3>Parse</h3>
@@ -462,7 +462,7 @@ Can&#39;t be null.</li>
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>dispoValue</code> is
-null.</li>
+null. .</li>
 </ul>
 
 <h3>Parse</h3>
@@ -479,21 +479,21 @@ null.</li>
  from the Content-Disposition header field (as defined for email
  messages) and follows the syntax given in RFC 2183. Accordingly,
  among other things, the content disposition string can contain
- comments (delimited by parentheses). </p> <p>RFC 2231 extensions
- allow each content disposition parameter to be associated with a
- character encoding and/or language, and support parameter values that
- span two or more key-value pairs. Parameters making use of RFC 2231
- extensions have names with an asterisk (&quot;<em>&quot;). Such a parameter will
- be ignored if it is ill-formed because of RFC 2231&#39;s rules (except
- for illegal percent-decoding or undecodable sequences for the given
- character enoding). Examples of RFC 2231 extensions follow (both
- examples encode the same &quot;filename&quot; parameter): </p> <p><b>inline;
- filename</em>=utf-8&#39;en&#39;filename.txt</b> </p> <p><b>inline;
- filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b> </p> <p>This
+ comments (delimited by parentheses).</p> <p>RFC 2231 extensions allow
+ each content disposition parameter to be associated with a character
+ encoding and/or language, and support parameter values that span two
+ or more key-value pairs. Parameters making use of RFC 2231 extensions
+ have names with an asterisk (&quot;<em>&quot;). Such a parameter will be ignored
+ if it is ill-formed because of RFC 2231&#39;s rules (except for illegal
+ percent-decoding or undecodable sequences for the given character
+ enoding). Examples of RFC 2231 extensions follow (both examples
+ encode the same &quot;filename&quot; parameter):</p> <p><b>inline;
+ filename</em>=utf-8&#39;en&#39;filename.txt</b></p> <p><b>inline;
+ filename<em>0</em>=utf-8&#39;en&#39;file; filename<em>1</em>=name%2Etxt</b></p> <p>This
  implementation ignores keys (in parameter key-value pairs) that
  appear more than once in the content disposition. Nothing in RFCs
  2045, 2183, 2231, 6266, or 7231 explicitly disallows such keys, or
- otherwise specifies error-handling behavior for such keys. </p></p>
+ otherwise specifies error-handling behavior for such keys.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -514,7 +514,7 @@ syntactically invalid. Can be null.</p></li>
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>dispositionValue</code>
-is null.</li>
+is null. .</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
