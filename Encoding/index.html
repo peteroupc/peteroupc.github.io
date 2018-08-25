@@ -60,7 +60,7 @@ group ID (<code>com.github.peteroupc</code>), artifact ID (<code>encoding</code>
 <pre>    // Reads text from a SHIFT-JIS stream, but uses UTF-8/UTF-16
     // instead if it detects byte order marks
       using (var stream = new FileStream(filename, FileMode.Open)) {
-        return Encodings.GetEncoding(&quot;shift-jis&quot;)
+        return Encodings.GetEncoding(&quot;shift_jis&quot;)
            .GetDecoderInputSkipBom(stream).InputToString();
       }
 </pre>
@@ -79,7 +79,9 @@ group ID (<code>com.github.peteroupc</code>), artifact ID (<code>encoding</code>
 <ul>
 <li>Separate aliases and encodings for email are used, for better conformance to MIME.</li>
 <li>New methods added to Encodings class.</li>
-<li>Endian-independent UTF-16 encoded added for email.</li>
+<li>Endian-independent UTF-16 encoding added for email.</li>
+<li>ISO-2022-JP-2 encoding added for email.</li>
+<li>.NET 2 and .NET 4 assemblies added to NuGet package.</li>
 </ul>
 
 <p>Version 0.4.0:</p>
