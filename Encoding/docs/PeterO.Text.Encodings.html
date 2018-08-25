@@ -761,9 +761,8 @@ is null or empty, or if the encoding name is unsupported.</p>
 <li><p><code>ISO-8859-1</code> - Latin-1 single-byte encoding, rather than an alias to <code>windows-1252</code> as specified in the Encoding Standard. The coded character set&#39;s code oints match those in the Unicode Standard&#39;s Basic Latin and Latin-1 upplement blocks (0-255 or U+0000 to U+00FF).</p></li>
 <li><p><code>UTF-16</code> - UTF-16 without a fixed byte order, rather than an alias to <code>UTF-16LE</code> as specified in the Encoding Standard. The byte order is little endian if the byte stream starts with 0xFF 0xFE; otherwise, big endian. A leading 0xFF 0xFE or 0xFE 0xFF in the byte stream is skipped.</p></li>
 <li><p><code>UTF-7</code> - UTF-7 (7-bit universal coded character set). The name <code>unicode-1-1-utf-7</code> is not supported and is not treated as an alias to <code>UTF-7</code> , even though it uses the same character encoding scheme as UTF-7, because RFC 1642, which defined the former UTF-7, is linked to a different Unicode version with an incompatible character repertoire (notably, the Hangul syllables have different code point assignments in Unicode 1.1 and earlier than in Unicode 2.0 and later).</p></li>
+<li><p><code>ISO-2022-JP-2</code> - similar to &quot;ISO-2022-JP&quot;, except that the decoder supports additional character sets.</p></li>
 </ul>
-
-<p>. In previous versions of this method, the name <code>iso-2022-jp-2</code> was also aliased to <code>ISO-2022-JP</code> , which is no longer the case.</p>
 
 <p><b>Return Value:</b></p>
 
