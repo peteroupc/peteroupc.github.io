@@ -20,8 +20,7 @@ All the random number methods presented on this page are ultimately based on an 
 
 **In general, this document does not cover:**
 - How to choose an underlying RNG for a particular application, including in terms of security, performance, and quality. I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
-- Techniques that are specific to an application programming interface.
-- Techniques that are specific to certain kinds of RNGs.  This includes generating sequences of unique integers using specific kinds of deterministic RNGs.
+- Techniques that are specific to certain kinds of RNGs or application programming interfaces.
 - Seemingly random numbers that are specifically generated using [**hash functions**](https://peteroupc.github.io/random.html#Hash_Functions), including pseudorandom functions (as opposed to RNGs).  But if such a number is used to initialize a deterministic RNG (that is, to serve as its "seed"), then that RNG is generally within the scope of this document.
 
 <a id=About_This_Document></a>
@@ -579,7 +578,7 @@ To generate a random string of characters:
 >
 > 1. If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).
-> 3. Often applications need to generate a string of characters that's not only random, but also unique.  The best way to ensure uniqueness in this case is to store a list (such as a hash table) of strings already generated and to check newly generated strings against that list.  _Random number generators alone should not be relied on to deliver unique results._  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
+> 3. Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
 > 4. Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
 
 > **Examples of character lists:**
@@ -608,7 +607,7 @@ There are several techniques for choosing `k` unique items or values uniformly a
 6. **If `n - k` is much smaller than `n`, and the order in which the items are sampled need not be random:**
      - **If the items are stored in a list whose order can be changed**, then proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
      - Otherwise, **if `n` is not very large**, then proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
-7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  Performance considerations involved in storing data in hash tables or red&ndash;black trees, and in retrieving data from them, are outside the scope of this document.
+7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  J. Preshing discusses [**different ways**](http://preshing.com/20121224/how-to-generate-a-sequence-of-unique-random-integers/) to generate unique random integers.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -1025,8 +1024,9 @@ If a probability distribution's **PDF is known**, one of the following technique
         END METHOD
 
 If both **a PDF and a uniform random variable in the interval \[0, 1\) (`randomVariable`)** are given, then the following technique, among other possible techniques, can be used: Do the same process as method 1, given earlier, except&mdash;
-    - divide the weights in the `weights` list by the sum of all weights, and
-    - use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number.
+
+- divide the weights in the `weights` list by the sum of all weights, and
+- use a modified version of [**`ContinuousWeightedChoice`**](#Continuous_Weighted_Choice) that uses `randomVariable` rather than generating a new random number.
 
 If the distribution's **CDF is known**, an approach called [**_inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) can be used: Generate `ICDF(RNDU01ZeroOneExc())`, where `ICDF(X)` is the distribution's _inverse CDF_.  The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) includes `from_interp` and `numbers_from_cdf` methods that implement this approach numerically.
 
