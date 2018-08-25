@@ -425,14 +425,11 @@ Not documented yet.</li>
 <li><code>boolean RemoveAt​(int index)</code><br>
 Not documented yet.</li>
 <li><code>void set​(int index,
-CBORObject value)</code><br>
-Sets the value of a CBOR object by integer index in this array.</li>
+CBORObject value)</code><br></li>
 <li><code>void set​(CBORObject key,
-CBORObject value)</code><br>
-Sets the value of a CBOR object in this map, using a CBOR object as the key.</li>
+CBORObject value)</code><br></li>
 <li><code>void set​(String key,
-CBORObject value)</code><br>
-Sets the value of a CBOR object in this map, using a string as the key.</li>
+CBORObject value)</code><br></li>
 <li><code>CBORObject Set​(Object key,
 Object valueOb)</code><br>
 Maps an object to a key in this CBOR map, or adds the value if the key
@@ -556,7 +553,8 @@ Converts this object to a string in JavaScript Object Notation (JSON)
 format, as in the ToJSONString method, and writes that string to a
 data stream in UTF-8, using the given JSON options to control the
 encoding process.</li>
-<li><code>void WriteTo​(OutputStream stream)</code><br></li>
+<li><code>void WriteTo​(OutputStream stream) CBOREncodeOptions</code><br>
+At the moment, use the overload of this method that takes a CBOREncodeOptions object.</li>
 <li><code>void WriteTo​(OutputStream stream,
    CBOREncodeOptions options)</code><br>
 Writes this CBOR object to a data stream, using the specified options for
@@ -949,22 +947,6 @@ opposed to CBORObject.Null).</p></li>
 <pre>public void set​(int index, CBORObject value)
 </pre>
 
-<p>Sets the value of a CBOR object by integer index in this array.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>index</code> - Zero-based index of the element.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
-opposed to CBORObject.Null).</p></li>
-</ul>
-
 <h3>get</h3>
 
 <pre>public CBORObject get​(CBORObject key)
@@ -997,22 +979,6 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <pre>public void set​(CBORObject key, CBORObject value)
 </pre>
 
-<p>Sets the value of a CBOR object in this map, using a CBOR object as the key.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The key is null (as opposed to
-CBORObject.Null); or the set method is called and the value is null.</p></li>
-<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
-</ul>
-
 <h3>get</h3>
 
 <pre>public CBORObject get​(String key)
@@ -1043,21 +1009,6 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 
 <pre>public void set​(String key, CBORObject value)
 </pre>
-
-<p>Sets the value of a CBOR object in this map, using a string as the key.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>key</code> - A key that points to the desired value.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The key is null.</p></li>
-<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
-</ul>
 
 <h3>AddConverter</h3>
 
@@ -2792,7 +2743,7 @@ code point.</p></li>
  CBORObject.</li> <li>Maps of CBORObject. The keys to the map are
  written out to the data stream in an undefined order.</li>
  <li>Null.</li> <li>Byte arrays, which will always be written as
- definite-length byte strings.</li> <li>string objects, which will be
+ definite-length byte strings.</li> <li>String objects, which will be
  written as indefinite-length text strings if their size exceeds a
  certain threshold (this behavior may change in future versions of
  this library).</li> <li>Any object accepted by the FromObject static
@@ -2903,7 +2854,7 @@ valueOb</code> has an unsupported type.</p></li>
 
 <p>Adds a new object to the end of this array. (Used to throw
  NullPointerException on a null reference, but now converts the null
- reference to CBORObject.Null, for convenience with the object
+ reference to CBORObject.Null, for convenience with the Object
  overload of this method.).</p>
 
 <p><strong>Parameters:</strong></p>
@@ -4057,12 +4008,12 @@ valueOb</code> has an unsupported type.</p></li>
  null.</li> </ul> The example code given below (written in in C# for
  the .NET version) can be used to write out certain keys of a CBOR map
  in a given order to a JSON string. <pre>  // Generates a JSON string
- of &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39;. Only keys //
- found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. private
+ of &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39; . Only keys
+  // found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. private
  static string KeysToJSONMap&#x28;CBORObject mapObj,
  List&lt;CBORObject&gt; keys&#x29;&#x7b; if (mapObj == null) { throw
- new NullPointerException(&quot;mapObj&quot;);} if (keys == null) { throw
- new NullPointerException(&quot;keys&quot;);} if (obj.getType() !=
+ new NullPointerException&#x29;nameof(mapObj));} if (keys == null) {
+ throw new NullPointerException&#x29;nameof(keys));} if (obj.getType() !=
  CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
  StringBuilder builder = new StringBuilder(); boolean first = true;
  builder.append(&quot;{&quot;); for (CBORObject key in keys) { if
@@ -4206,10 +4157,41 @@ null.</p></li>
 <pre>public void WriteTo​(OutputStream stream) throws IOException
 </pre>
 
+<p><p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
+ <code>CBOREncodeOptions.Default</code> contains recommended settings for
+ CBOREncodeOptions, and those settings may be adopted by this overload
+ (without a CBOREncodeOptions argument) in the next major version.</b>
+ </p> <p>Writes this CBOR object to a data stream. If the CBOR object
+ contains CBOR maps, or is a CBOR map, the keys to the map are written
+ out to the data stream in an undefined order. The example method
+ given below (written in C# for the .NET version) can be used to write
+ out certain keys of a CBOR map in a given order:</p> <pre>  // Writes
+ each key of &#39;mapObj&#39; to &#39;outputStream&#39;in the order given in &#39;keys&#39;.
+ Only keys  // found in &#39;keys&#39; will be written if they exist in
+ &#39;mapObj&#39;. private static void WriteKeysToIndefMap&#x29;CBORObject
+ mapObj, List&lt;CBORObject&gt; keys, OutputStream outputStream) {
+ if&#x29;mapObj == null) throw new
+ NullPointerException&#x29;nameof(mapObj)); if&#x29;keys == null) throw
+ new NullPointerException&#x29;nameof(keys));
+ if&#x29;outputStream == null) throw new
+ NullPointerException&#x29;nameof(outputStream));
+ if&#x29;obj.getType()!=CBORType.Map) { throw new IllegalArgumentException(&quot;&#39;obj&#39;
+ is not a map.&quot;); } outputStream.write((byte)0xBF); for (CBORObject
+ key in keys) { if&#x29;mapObj.ContainsKey(key)) {
+ key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); } }
+ outputStream.write((byte)0xbf); } </pre></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>stream</code> - A writable data stream.</li>
+</ul>
+
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>IOException</code></li>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null. .</p></li>
+<li><p><code>IOException</code> - An I/O error occurred. .</p></li>
 </ul>
 
 <h3>WriteTo</h3>

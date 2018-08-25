@@ -120,7 +120,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 </pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
- the input stream, the reader object throws IllegalStateException
+ the input stream, the reader object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
  called as follows: <code>input.ToByteReader()</code>. If the object&#39;s class
@@ -239,7 +239,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 </pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by
- the input stream, the writer object throws IllegalStateException
+ the input stream, the writer object throws InvalidOperationException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
  called as follows: <code>output.ToWriter()</code>. If the object&#39;s class
