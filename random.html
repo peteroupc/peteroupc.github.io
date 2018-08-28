@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 23, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Aug. 28, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -566,7 +566,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h3>How to Initialize RNGs</h3>
 
-<p>To <strong>reduce the chance of correlated random numbers or identical random number sequences</strong>, an application is encouraged to create&mdash;</p>
+<p>For cryptographic RNGs, an application should use only one thread-safe instance of the RNG for the entire application to use.</p>
+
+<p>For statistical and seeded RNGs, to <strong>reduce the chance of correlated random numbers or identical random number sequences</strong>, an application is encouraged to create&mdash;</p>
 
 <ul>
 <li>one thread-safe instance of an RNG for the entire application to use, or</li>
@@ -582,10 +584,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <ul>
 <li>using a different conforming RNG scheme for each instance, and</li>
-<li>using a conforming RNG scheme specially designed for parallel random number generation.</li>
+<li>using a conforming RNG scheme specially designed for parallel random number generation (such as so-called &quot;splittable&quot; PRNGs).</li>
 </ul>
-
-<p>If an application uses more than one kind of RNG (cryptographic, statistical, seeded), the advice above applies separately to each such kind of RNG.</p>
 
 <p>(Many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator <code>System.Random</code>.)</p>
 

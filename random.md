@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 23, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 28, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -379,7 +379,9 @@ My document on [**random number generation methods**](https://peteroupc.github.i
 <a id=How_to_Initialize_RNGs></a>
 ### How to Initialize RNGs
 
-To **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
+For cryptographic RNGs, an application should use only one thread-safe instance of the RNG for the entire application to use.
+
+For statistical and seeded RNGs, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
 - one instance of an RNG for each thread of the application, where each instance&mdash;
     - is accessible to only one thread (such as with thread-local storage), and
@@ -388,9 +390,7 @@ To **reduce the chance of correlated random numbers or identical random number s
 An application that generates **random numbers in parallel** can also do one or both of&mdash;
 
 - using a different conforming RNG scheme for each instance, and
-- using a conforming RNG scheme specially designed for parallel random number generation.
-
-If an application uses more than one kind of RNG (cryptographic, statistical, seeded), the advice above applies separately to each such kind of RNG.
+- using a conforming RNG scheme specially designed for parallel random number generation (such as so-called "splittable" PRNGs).
 
 (Many questions on _Stack Overflow_ highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
 
