@@ -28,7 +28,7 @@
             boolean lookupRules)</code><br>
 Not documented yet.</li>
 <li><code>static String EncodeDomainName​(String value)</code><br>
-Tries to encode each label of a domain name into Punycode.</li>
+Tries to encode each label of a domain name into an ASCII-compatible label.</li>
 <li><code>static boolean IsValidDomainName​(String str,
              boolean lookupRules)</code><br>
 Determines whether the given string is a syntactically valid domain name.</li>
@@ -67,7 +67,7 @@ Determines whether the given string is a syntactically valid domain name.</li>
 <pre>public static String EncodeDomainName​(String value)
 </pre>
 
-<p>Tries to encode each label of a domain name into Punycode.</p>
+<p>Tries to encode each label of a domain name into an ASCII-compatible label.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -79,8 +79,9 @@ Determines whether the given string is a syntactically valid domain name.</li>
 
 <ul>
 <li>The domain name where each label with code points outside the Basic
-Latin range (U + 0000 to U + 007F) is encoded into Punycode. Labels where
-this is not possible remain unchanged.</li>
+Latin range (U + 0000 to U + 007F) is encoded into an ASCII-compatible
+label called an A-label. Labels where this is not possible remain
+unchanged.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
