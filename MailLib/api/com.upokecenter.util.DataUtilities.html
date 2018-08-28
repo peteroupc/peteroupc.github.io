@@ -50,7 +50,7 @@ Gets the Unicode code point just before the given index of the string.</li>
             String strB)</code><br>
 Compares two strings in Unicode code point order.</li>
 <li><code>static int CodePointLength​(String str)</code><br>
-Not documented yet.</li>
+Finds the number of Unicode code points in the given text string.</li>
 <li><code>static byte[] GetUtf8Bytes​(String str,
         boolean replace)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
@@ -149,18 +149,20 @@ replace</code> is false.</p></li>
 <pre>public static int CodePointLength​(String str)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Finds the number of Unicode code points in the given text string. Unpaired
+ surrogate code points increase this number by 1. This is not
+ necessarily the length of the string in &quot;char&quot; s.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>The number of Unicode code points in the given string.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
