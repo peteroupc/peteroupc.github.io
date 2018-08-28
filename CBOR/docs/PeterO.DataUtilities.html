@@ -159,6 +159,32 @@ is null.</li>
 
 <p>A value indicating which string is &quot; less&quot; or &quot; greater&quot; . 0: Both strings are equal or null. Less than 0: a is null and b isn&#39;t; or the first code point that&#39;s different is less in A than in B; or b starts with a and is longer than a. Greater than 0: b is null and a isn&#39;t; or the first code point that&#39;s different is greater in A than in B; or a starts with b and is longer than b.</p>
 
+<h3>CodePointLength</h3>
+
+<pre>public static int CodePointLength(
+    string str);
+</pre>
+
+<p>Finds the number of Unicode code points in the given text string. Unpaired surrogate code points increase this number by 1. This is not necessarily the length of the string in &quot;char&quot; s.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A text string.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of Unicode code points in the given string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>str</i>
+is null.</li>
+</ul>
+
 <h3>GetUtf8Bytes</h3>
 
 <pre>public static byte[] GetUtf8Bytes(
