@@ -72,6 +72,28 @@ using(var file = new System.IO.FileStream(&quot;email.eml&quot;,System.IO.FileMo
 
 <h2>Release Notes</h2>
 
+<p>Version 0.13.0:</p>
+
+<ul>
+<li>The code for parsing and generating message headers and bodies was again
+rewritten in many places to improve robustness and conformance with RFCs that define
+the message format and MIME.  For instance, parsed messages with an unknown character
+encoding have their ContentType property set to &quot;application/octet-stream&quot;. (The original
+Content-Type header value is still available.)</li>
+<li>Added methods to parse and generate Data URIs.</li>
+<li>Added methods to parse and generate Mailto URIs.</li>
+<li>Added ClearHeaders method to Message class.</li>
+<li>Added public APIs to handle language tags.</li>
+<li>Changed behavior of MakeFilename in a corner case.</li>
+<li>Added ProtocolStrings class for checking protocol strings.</li>
+<li>Added public APIs to process and generate multiple-language messages (multipart/multilingual).</li>
+<li>Deprecated ToAddresses, FromAddresses, CcAddresses, and BccAddresses properties in Message.</li>
+<li>Added convenience methods in Message class for creating attachments and inline body parts.</li>
+<li>Updated Encoding library reference to 0.5.0.</li>
+<li>Add several methods to DataUtilities class</li>
+<li>Bug fixes</li>
+</ul>
+
 <p>Version 0.12.0:</p>
 
 <ul>
@@ -104,7 +126,7 @@ for release notes for older versions.</p>
 
 <h2>About</h2>
 
-<p>Written in 2013-2014 by Peter O.</p>
+<p>Written in 2013-2018 by Peter O.</p>
 
 <p>Any copyright is dedicated to the Public Domain.
 <a href="http://creativecommons.org/publicdomain/zero/1.0/">http://creativecommons.org/publicdomain/zero/1.0/</a>

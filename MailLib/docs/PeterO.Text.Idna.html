@@ -16,38 +16,10 @@
 <h3>DecodeDomainName</h3>
 
 <pre>public static string DecodeDomainName(
-    string value,
-    bool lookupRules);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>value</i>: Not documented yet.</p></li>
-<li><p><i>lookupRules</i>: Not documented yet.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A string object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>value</i>
-is null.</li>
-</ul>
-
-<h3>EncodeDomainName</h3>
-
-<pre>public static string EncodeDomainName(
     string value);
 </pre>
 
-<p>Tries to encode each label of a domain name into Punycode.</p>
+<p>Tries to encode each XN-label (Basic Latin label starting with &quot;xn--&quot;) of the given domain name into Unicode. This method does not check the syntactic validity of the domain name before proceeding.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -57,13 +29,38 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The domain name where each label with code points outside the Basic Latin range (U+0000 to U+007F) is encoded into Punycode. Labels where this is not possible remain unchanged.</p>
+<p>The domain name where each XN-label is encoded into Unicode. Labels where this is not possible remain unchanged.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentNullException:
-Value is null.</li>
+&quot;value&quot; is null.</li>
+</ul>
+
+<h3>EncodeDomainName</h3>
+
+<pre>public static string EncodeDomainName(
+    string value);
+</pre>
+
+<p>Tries to encode each label of a domain name with code points outside the Basic Latin range (U+0000 to U+007F) into an XN-label (a label starting with &quot;xn--&quot; and having only basic letters, basic digits, and/or &quot;-&quot;). This method does not check the syntactic validity of the domain name before proceeding.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A domain name.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The domain name where each label with code points outside the Basic Latin range (U+0000 to U+007F) is encoded into an XN-label. Labels where this is not possible remain unchanged.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+&quot;value&quot; is null.</li>
 </ul>
 
 <h3>IsValidDomainName</h3>
@@ -73,7 +70,7 @@ Value is null.</li>
     bool lookupRules);
 </pre>
 
-<p>Determines whether the given string is a syntactically valid domain name.</p>
+<p>Determines whether the given string is a domain name containing only U-labels (labels meeting IDNA2008 requirements for labels with characters outside the Basic Latin range, U+0000 to U+007F), A-labels (labels starting with &quot;xn--&quot; and convertible to U-labels), NR-LDH labels (as defined in RFC 5890), or any combination of these, separated by dots (&quot;.&quot;). See RFC 5890 and 5891 (IDNA).</p>
 
 <p><b>Parameters:</b></p>
 

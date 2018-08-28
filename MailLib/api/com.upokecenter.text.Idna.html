@@ -24,36 +24,46 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static String DecodeDomainName​(String value,
-            boolean lookupRules)</code><br>
-Not documented yet.</li>
+<li><code>static String DecodeDomainName​(String value)</code><br>
+Tries to encode each XN-label (Basic Latin label starting with &quot;xn--&quot;) of
+the given domain name into Unicode.</li>
 <li><code>static String EncodeDomainName​(String value)</code><br>
-Tries to encode each label of a domain name into an ASCII-compatible label.</li>
+Tries to encode each label of a domain name with code points outside the
+Basic Latin range (U + 0000 to U + 007F) into an XN-label (a label
+starting with &quot;xn--&quot; and having only basic letters, basic digits,
+and/or &quot;-&quot;).</li>
 <li><code>static boolean IsValidDomainName​(String str,
              boolean lookupRules)</code><br>
-Determines whether the given string is a syntactically valid domain name.</li>
+Determines whether the given string is a domain name containing only
+U-labels (labels meeting IDNA2008 requirements for labels with
+characters outside the Basic Latin range, U + 0000 to U + 007F), A-labels
+(labels starting with &quot;xn--&quot; and convertible to U-labels), NR-LDH
+labels (as defined in RFC 5890), or any combination of these,
+separated by dots (&quot;.&quot;).</li>
 </ul>
 
 <h2>Method Details</h2>
 
 <h3>DecodeDomainName</h3>
 
-<pre>public static String DecodeDomainName​(String value, boolean lookupRules)
+<pre>public static String DecodeDomainName​(String value)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Tries to encode each XN-label (Basic Latin label starting with &quot;xn--&quot;) of
+ the given domain name into Unicode. This method does not check the
+ syntactic validity of the domain name before proceeding.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>value</code> - The parameter <code>value</code> is not documented yet.</p></li>
-<li><p><code>lookupRules</code> - The parameter <code>lookupRules</code> is not documented yet.</p></li>
+<li><code>value</code> - A domain name.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>The domain name where each XN-label is encoded into Unicode. Labels
+where this is not possible remain unchanged.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -67,7 +77,11 @@ Determines whether the given string is a syntactically valid domain name.</li>
 <pre>public static String EncodeDomainName​(String value)
 </pre>
 
-<p>Tries to encode each label of a domain name into an ASCII-compatible label.</p>
+<p>Tries to encode each label of a domain name with code points outside the
+ Basic Latin range (U + 0000 to U + 007F) into an XN-label (a label
+ starting with &quot;xn--&quot; and having only basic letters, basic digits,
+ and/or &quot;-&quot;). This method does not check the syntactic validity of the
+ domain name before proceeding.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -79,15 +93,14 @@ Determines whether the given string is a syntactically valid domain name.</li>
 
 <ul>
 <li>The domain name where each label with code points outside the Basic
-Latin range (U + 0000 to U + 007F) is encoded into an ASCII-compatible
-label called an A-label. Labels where this is not possible remain
-unchanged.</li>
+Latin range (U + 0000 to U + 007F) is encoded into an XN-label. Labels
+where this is not possible remain unchanged.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - Value is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>value</code> is null.</li>
 </ul>
 
 <h3>IsValidDomainName</h3>
@@ -95,7 +108,12 @@ unchanged.</li>
 <pre>public static boolean IsValidDomainName​(String str, boolean lookupRules)
 </pre>
 
-<p>Determines whether the given string is a syntactically valid domain name.</p>
+<p>Determines whether the given string is a domain name containing only
+ U-labels (labels meeting IDNA2008 requirements for labels with
+ characters outside the Basic Latin range, U + 0000 to U + 007F), A-labels
+ (labels starting with &quot;xn--&quot; and convertible to U-labels), NR-LDH
+ labels (as defined in RFC 5890), or any combination of these,
+ separated by dots (&quot;.&quot;). See RFC 5890 and 5891 (IDNA).</p>
 
 <p><strong>Parameters:</strong></p>
 
