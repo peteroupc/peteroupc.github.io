@@ -24,7 +24,7 @@ Gets the domain of this email address (the part after the &quot;@&quot; sign).</
 <li><code>String getLocalPart()</code><br>
 Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
 <li><code>int hashCode()</code><br>
-Not documented yet.</li>
+Returns a hash code for this address object.</li>
 <li><code>String toString()</code><br>
 Converts this address object to a text string.</li>
 </ul>
@@ -152,7 +152,8 @@ contains comments (text within parentheses).</p></li>
 <pre>public int hashCode()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a hash code for this address object. No application or process
+ identifiers are used in the hash code calculation.</p>
 
 <p><strong>Overrides:</strong></p>
 
@@ -163,7 +164,7 @@ contains comments (text within parentheses).</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>A hash code for this instance.</li>
 </ul>
 
 <h3>getDomain</h3>

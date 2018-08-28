@@ -49,6 +49,8 @@ Gets the Unicode code point just before the given index of the string.</li>
 <li><code>static int CodePointCompare​(String strA,
             String strB)</code><br>
 Compares two strings in Unicode code point order.</li>
+<li><code>static int CodePointLength​(String str)</code><br>
+Finds the number of Unicode code points in the given text string.</li>
 <li><code>static byte[] GetUtf8Bytes​(String str,
         boolean replace)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
@@ -140,6 +142,33 @@ seen.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - The string is not valid UTF-8 and <code>
 replace</code> is false.</p></li>
+</ul>
+
+<h3>CodePointLength</h3>
+
+<pre>public static int CodePointLength​(String str)
+</pre>
+
+<p>Finds the number of Unicode code points in the given text string. Unpaired
+ surrogate code points increase this number by 1. This is not
+ necessarily the length of the string in &quot;char&quot; s.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A text string.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of Unicode code points in the given string.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>str</code> is null.</li>
 </ul>
 
 <h3>GetUtf8String</h3>
