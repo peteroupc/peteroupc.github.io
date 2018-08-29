@@ -425,11 +425,14 @@ Not documented yet.</li>
 <li><code>boolean RemoveAt​(int index)</code><br>
 Not documented yet.</li>
 <li><code>void set​(int index,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Gets the value of a CBOR object by integer index in this array.</li>
 <li><code>void set​(CBORObject key,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Gets the value of a CBOR object in this map, using a CBOR object as the key.</li>
 <li><code>void set​(String key,
-CBORObject value)</code><br></li>
+CBORObject value)</code><br>
+Gets the value of a CBOR object in this map, using a string as the key.</li>
 <li><code>CBORObject Set​(Object key,
 Object valueOb)</code><br>
 Maps an object to a key in this CBOR map, or adds the value if the key
@@ -947,6 +950,22 @@ opposed to CBORObject.Null).</p></li>
 <pre>public void set​(int index, CBORObject value)
 </pre>
 
+<p>Gets the value of a CBOR object by integer index in this array.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>index</code> - Zero-based index of the element.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
+<li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
+opposed to CBORObject.Null).</p></li>
+</ul>
+
 <h3>get</h3>
 
 <pre>public CBORObject get​(CBORObject key)
@@ -979,6 +998,22 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <pre>public void set​(CBORObject key, CBORObject value)
 </pre>
 
+<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The key is null (as opposed to
+CBORObject.Null); or the set method is called and the value is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+</ul>
+
 <h3>get</h3>
 
 <pre>public CBORObject get​(String key)
@@ -1009,6 +1044,21 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 
 <pre>public void set​(String key, CBORObject value)
 </pre>
+
+<p>Gets the value of a CBOR object in this map, using a string as the key.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>key</code> - A key that points to the desired value.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The key is null.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+</ul>
 
 <h3>AddConverter</h3>
 

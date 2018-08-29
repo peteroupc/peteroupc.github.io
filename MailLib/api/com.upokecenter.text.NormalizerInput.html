@@ -22,18 +22,17 @@
  forms </i> that convert strings to a single equivalent form: </p>
 
 <p><ul> <li><b>NFD</b> (Normalization Form D) decomposes combined forms
- to their constituent characters (E plus acute, for example). This is
- called canonical decomposition. </li> <li><b>NFC</b> does canonical
+ to their constituent characters (E plus acute, for example), then
+ reorders combining marks to a standardized order. This is called
+ canonical decomposition. </li> <li><b>NFC</b> does canonical
  decomposition, then combines certain constituent characters to their
  composites (E-acute, for example). This is called canonical
  composition. </li> <li>Two normalization forms, <b>NFKC</b> and
  <b>NFKD</b> , are similar to NFC and NFD, except they also
  &quot;decompose&quot; certain characters, such as ligatures, font or positional
  variants, and subscripts, whose visual distinction can matter in some
- contexts. This is called compatibility decomposition. </li> <li>The
- four normalization forms also enforce a standardized order for
- combining marks, since they can otherwise appear in an arbitrary
- order. </li> </ul> <p>For more information, see Standard Annex 15 at
+ contexts. This is called compatibility decomposition. </li> </ul>
+ <p>For more information, see Standard Annex 15 at
  <code><a href="http://www.unicode.org/reports/tr15/">http://www.unicode.org/reports/tr15/</a></code> . </p> <p><b>Thread
  safety:</b> This class is mutable; its properties can be changed.
  None of its instance methods are designed to be thread safe.
