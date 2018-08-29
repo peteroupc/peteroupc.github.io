@@ -259,14 +259,11 @@ characters entered by a user.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An opaque string prepared under the OpaqueString profile in RFC
-
-<ol>
-<li>Returns null if that string is invalid under that profile
-(including if <code>str</code> is null or empty). For comparison purposes,
-return values of this method should be compared code point by code
-point (see RFC 8265, sec. 4.2.3).</li>
-</ol></li>
+<li>A string prepared under the OpaqueString profile in RFC 8265.
+Returns null if that string is invalid under that profile (including
+if <code>str</code> is null or empty). For comparison purposes, return
+values of this method should be compared code point by code point
+(see RFC 8265, sec. 4.2.3).</li>
 </ul>
 
 <h3>NicknameEnforce</h3>
