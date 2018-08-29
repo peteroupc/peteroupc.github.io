@@ -11,6 +11,20 @@
 
 <p>Contains methods that implement Internationalized Domain Names in Applications (IDNA). IDNA enables using a wider range of letters, numbers, and certain other characters in domain names. This class implements the 2008 revision of IDNA, also known as IDNA2008.</p>
 
+<p>The following summarizes the rules for domain names in IDNA2008; see RFC5890 for more information and additional terminology.</p>
+
+<p>A domain name is divided into one or more strings separated by dots (&quot;.&quot;), called <b>labels</b>. For IDNA2008&#39;s purposes, a valid label can be an <b>NR-LDH label</b>, an <b>A-label</b>, or a <b>U-label</b>.</p>
+
+<p>An LDH label contains only basic letters, basic digits, and/or &quot;-&quot;, and neither begins nor ends with &quot;-&quot;. For example, &quot;exa-mple&quot; and &quot;1example&quot; are LDH labels, but not &quot;-example&quot;.</p>
+
+<p>An NR-LDH label is an LDH label whose third and fourth characters are not both &quot;-&quot;. For example, &quot;ex--ample&quot; is not an NR-LDH label.</p>
+
+<p>A U-label contains one or more characters outside the Basic Latin range (U+0000 to U+007F) and meets IDNA2008 requirements for labels with such characters. An example is &quot;eá&quot;.</p>
+
+<p>An A-label is an LDH label beginning with &quot;xn--&quot; in any combination of case, and is convertible to a U-label. An example is &quot;xn--e-ufa&quot;.</p>
+
+<p>An XN-label is an LDH label beginning with &quot;xn--&quot; in any combination of case.</p>
+
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses two internal classes, called <code>NormalizationData</code> and <code>IdnaData</code> , that include data derived from the Unicode Character Database. See he documentation for the NormalizerInput class for the permission otice for the Unicode Character Database.</p>
 
 <h3>DecodeDomainName</h3>
@@ -19,7 +33,7 @@
     string value);
 </pre>
 
-<p>Tries to encode each XN-label (Basic Latin label starting with &quot;xn--&quot;) of the given domain name into Unicode. This method does not check the syntactic validity of the domain name before proceeding.</p>
+<p>Tries to encode each XN-label of the given domain name into Unicode. This method does not check the syntactic validity of the domain name before proceeding.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -45,7 +59,7 @@ is null.</li>
     string value);
 </pre>
 
-<p>Tries to encode each label of a domain name with code points outside the Basic Latin range (U+0000 to U+007F) into an XN-label (a label starting with &quot;xn--&quot; and having only basic letters, basic digits, and/or &quot;-&quot;). This method does not check the syntactic validity of the domain name before proceeding.</p>
+<p>Tries to encode each label of a domain name with code points outside the Basic Latin range (U+0000 to U+007F) into an XN-label. This method does not check the syntactic validity of the domain name before proceeding.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -72,7 +86,7 @@ is null.</li>
     bool lookupRules);
 </pre>
 
-<p>Determines whether the given string is a domain name containing only U-labels (labels meeting IDNA2008 requirements for labels with characters outside the Basic Latin range, U+0000 to U+007F), A-labels (labels starting with &quot;xn--&quot; and convertible to U-labels), NR-LDH labels (as defined in RFC 5890), or any combination of these, separated by dots (&quot;.&quot;). See RFC 5890 and 5891 (IDNA).</p>
+<p>Determines whether the given string is a domain name containing only U-labels, A-labels, NR-LDH labels, or any combination of these, separated by dots (&quot;.&quot;).</p>
 
 <p><b>Parameters:</b></p>
 
