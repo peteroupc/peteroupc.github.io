@@ -191,7 +191,8 @@ Returns whether this object&#39;s value, truncated to an integer, would be
 Returns whether this object&#39;s value, truncated to an integer, would be
 -(2^63) or greater, and less than 2^63.</li>
 <li><code>void Clear()</code><br>
-Not documented yet.</li>
+Removes all items from this CBOR array or all keys and values from this CBOR
+map.</li>
 <li><code>int compareTo​(CBORObject other)</code><br>
 Compares two CBOR objects.</li>
 <li><code>int CompareToIgnoreTags​(CBORObject other)</code><br>
@@ -562,6 +563,24 @@ Not documented yet.</li>
    CBOREncodeOptions options)</code><br>
 Writes this CBOR object to a data stream, using the specified options for
 encoding the data to CBOR format.</li>
+<li><code>static int WriteValue​(OutputStream outputStream,
+      int majorType,
+      int value)</code><br>
+Writes a CBOR major type number and a nonnegative integer associated with it
+to a data stream, where that integer is passed to this method as a
+32-bit signed integer.</li>
+<li><code>static int WriteValue​(OutputStream outputStream,
+      int majorType,
+      long value)</code><br>
+Writes a CBOR major type number and a nonnegative integer associated with it
+to a data stream, where that integer is passed to this method as a
+64-bit signed integer.</li>
+<li><code>static int WriteValue​(OutputStream outputStream,
+      int majorType,
+      com.upokecenter.numbers.EInteger bigintValue)</code><br>
+Writes a CBOR major type number and a nonnegative integer associated with it
+to a data stream, where that integer is passed to this method as an
+arbitrary-precision integer.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -3900,7 +3919,15 @@ otherwise, <code>false</code> .</li>
 <pre>public void Clear()
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes all items from this CBOR array or all keys and values from this CBOR
+ map.</p>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>InvalidOperationException</code> - This object is not a CBOR array or CBOR
+map.</li>
+</ul>
 
 <h3>Remove</h3>
 
@@ -4057,9 +4084,9 @@ valueOb</code> has an unsupported type.</p></li>
  </li> <li>Infinity and not-a-number will be converted to null. </li>
  </ul> The example code given below (written in in C# for the .NET
  version) can be used to write out certain keys of a CBOR map in a
- given order to a JSON string. <pre>  // Generates a JSON string of
- &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39; . Only keys //
- found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. private
+ given order to a JSON string. <pre>/* Generates a JSON string of
+ &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39; . Only keys
+ found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. &#x2a;&#x2f; private
  static string KeysToJSONMap&#x28;CBORObject mapObj,
  IList&lt;CBORObject&gt; keys&#x29;&#x7b; if (mapObj == null) { throw
  new NullPointerException&#x29;nameof(mapObj));} if (keys == null) {
@@ -4200,6 +4227,138 @@ object to JSON.</p></li>
 <li><p><code>IOException</code> - An I/O error occurred.</p></li>
 <li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is
 null.</p></li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue​(OutputStream outputStream, int majorType, long value) throws IOException
+</pre>
+
+<p>Writes a CBOR major type number and a nonnegative integer associated with it
+ to a data stream, where that integer is passed to this method as a
+ 64-bit signed integer. This is a low-level method that is useful for
+ implementing custom CBOR encoding methodologies. This method encodes
+ the given major type and value in the shortest form allowed for the
+ major type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>majorType</code> - The CBOR major type to write. This is a number from 0
+through 7 as follows. 0: positive integer; 1: negative integer; 2:
+byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7:
+simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><code>value</code> - A nonnegative integer associated with the major type, as
+follows. 0: positive integer; 1: the negative integer&#39;s absolute
+value is this number plus 1; 2: length in bytes of the byte string;
+3: length in bytes of the UTF-8 text string; 4: number of items in
+the array; 5: number of key-value pairs in the map; 6: tag number; 7:
+simple value number, which must be in the interval [0, 23] or [32,
+255].</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue​(OutputStream outputStream, int majorType, int value) throws IOException
+</pre>
+
+<p>Writes a CBOR major type number and a nonnegative integer associated with it
+ to a data stream, where that integer is passed to this method as a
+ 32-bit signed integer. This is a low-level method that is useful for
+ implementing custom CBOR encoding methodologies. This method encodes
+ the given major type and value in the shortest form allowed for the
+ major type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>majorType</code> - The CBOR major type to write. This is a number from 0
+through 7 as follows. 0: positive integer; 1: negative integer; 2:
+byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7:
+simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><code>value</code> - A nonnegative integer associated with the major type, as
+follows. 0: positive integer; 1: the negative integer&#39;s absolute
+value is this number plus 1; 2: length in bytes of the byte string;
+3: length in bytes of the UTF-8 text string; 4: number of items in
+the array; 5: number of key-value pairs in the map; 6: tag number; 7:
+simple value number, which must be in the interval [0, 23] or [32,
+255].</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - Value is from 24 to 31 and major type is 7.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue​(OutputStream outputStream, int majorType, com.upokecenter.numbers.EInteger bigintValue) throws IOException
+</pre>
+
+<p>Writes a CBOR major type number and a nonnegative integer associated with it
+ to a data stream, where that integer is passed to this method as an
+ arbitrary-precision integer. This is a low-level method that is
+ useful for implementing custom CBOR encoding methodologies. This
+ method encodes the given major type and value in the shortest form
+ allowed for the major type.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>outputStream</code> - A writable data stream.</p></li>
+<li><p><code>majorType</code> - The CBOR major type to write. This is a number from 0
+through 7 as follows. 0: positive integer; 1: negative integer; 2:
+byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7:
+simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><code>bigintValue</code> - A nonnegative integer associated with the major type, as
+follows. 0: positive integer; 1: the negative integer&#39;s absolute
+value is this number plus 1; 2: length in bytes of the byte string;
+3: length in bytes of the UTF-8 text string; 4: number of items in
+the array; 5: number of key-value pairs in the map; 6: tag number; 7:
+simple value number, which must be in the interval [0, 23] or [32,
+255]. For major types 0 to 6, this number may not be greater than
+2^64 - 1 (18446744073709551615).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The number of bytes ordered to be written to the data stream.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>majorType</code> is 7 and
+value is greater than 255.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>outputStream</code> or <code>
+bigintValue</code> is null.</p></li>
+<li><p><code>IOException</code></p></li>
 </ul>
 
 <h3>WriteTo</h3>
