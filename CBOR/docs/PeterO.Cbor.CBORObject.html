@@ -3727,19 +3727,19 @@ An I/O error occurred.</p></li>
 
 <p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
 
-<pre>CBORObject.WriteValue(stream, 4, 3); /* array, length 3 */
-            CBORObject.Write(&quot;hello world&quot;, stream); /* item 1 */
-            CBORObject.Write(25, stream); /* item 2 */
-            CBORObject.Write(false, stream); /* item 3 */
+<pre>CBORObject.WriteValue(stream, 4, 3);  // array, length 3
+            CBORObject.Write(&quot;hello world&quot;, stream);  // item 1
+            CBORObject.Write(25, stream);  // item 2
+            CBORObject.Write(false, stream);  // item 3
 </pre>
 
 <p>In the following example, a map consisting of two key-value pairs is written as CBOR to a data stream.</p>
 
-<pre>CBORObject.WriteValue(stream, 5, 2); /* map, 2 pairs */
-            CBORObject.Write(&quot;number&quot;, stream); /* key 1 */
-            CBORObject.Write(25, stream); /* value 1 */
-            CBORObject.Write(&quot;string&quot;, stream); /* key 2 */
-            CBORObject.Write(&quot;hello&quot;, stream); /* value 2 */
+<pre>CBORObject.WriteValue(stream, 5, 2);  // map, 2 pairs
+            CBORObject.Write(&quot;number&quot;, stream);  // key 1
+            CBORObject.Write(25, stream);  // value 1
+            CBORObject.Write(&quot;string&quot;, stream);  // key 2
+            CBORObject.Write(&quot;hello&quot;, stream);  // value 2
 </pre>
 
 <p><b>Parameters:</b></p>
