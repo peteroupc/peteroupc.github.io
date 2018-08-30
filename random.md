@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 28, 2018.
+Begun on Mar. 5, 2016; last updated on Aug. 30, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -58,7 +58,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
     - [**Seeding and Reseeding**](#Seeding_and_Reseeding_2)
     - [**Examples and Non-Examples**](#Examples_and_Non_Examples)
 - [**Seeded PRNGs**](#Seeded_PRNGs)
-    - [**Seeding Recommendations**](#Seeding_Recommendations)
+    - [**When to Use a Seeded PRNG**](#When_to_Use_a_Seeded_PRNG)
     - [**Recommendations for Seeded PRNGs**](#Recommendations_for_Seeded_PRNGs)
     - [**Examples**](#Examples_2)
         - [**Games**](#Games)
@@ -180,7 +180,8 @@ Examples of statistical RNGs include the following:
 - `Lehmer128` (state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `JKISS` by David Jones, on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
+- `JKISS` by David Jones, on top of page 3 of Jones 2007/2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
+- `JKISS32`, mentioned on bottom of page 3 of Jones 2007/2010 (state length 127 bits; nonzero seed).
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 
@@ -198,8 +199,8 @@ Non-examples include the following:
 
 In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparent randomness, starting from a known initial state, or "seed". Such applications usually care about reproducible results. (Note that in the definitions for [**cryptographic**](#Cryptographic_RNGs) and [**statistical**](#Statistical_RNGs) RNGs given earlier, the PRNGs involved are automatically seeded before use.)
 
-<a id=Seeding_Recommendations></a>
-### Seeding Recommendations
+<a id=When_to_Use_a_Seeded_PRNG></a>
+### When to Use a Seeded PRNG
 
 An application should use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if&mdash;
 
@@ -284,7 +285,7 @@ Another way is to hash publicly known inputs using _verifiable delay functions_,
 
 Randomly generated numbers can serve as _noise_, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(3)**](#Note3)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  Wherever feasible, procedural noise implementations should **use an RNG to generate the additional data** for the noise function in advance.  The additional data may be **"hard-coded"** instead if the [**seeding recommendations**](#Seeding_Recommendations) apply to the noise generation (treating the hard-coded data as the seed).  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(3)**](#Note3)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  Wherever feasible, procedural noise implementations should **use an RNG to generate the additional data** for the noise function in advance.  If using a [**custom-seeded PRNG**](#When_to_Use_a_Seeded_PRNG) is appropriate for the application, the additional data may be **"hard-coded"** instead.  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function should be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
 
