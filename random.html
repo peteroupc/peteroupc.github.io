@@ -257,22 +257,22 @@
 <p>Examples of statistical RNGs include the following:</p>
 
 <ul>
-<li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256 star star</strong></a> (state length 256 bits; nonzero seed).</li>
-<li><code>xoroshiro128+</code> (state length 128 bits; nonzero seed &mdash; but see note in the <a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong>source code</strong></a> about the lowest bit of the PRNG&#39;s outputs).</li>
+<li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256&#x2a;&#x2a;</strong></a> (state length 256 bits; nonzero seed).</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128starstar.c"><strong>xoroshiro128&#x2a;&#x2a;</strong></a> (state length 128 bits; nonzero seed).</li>
 <li><code>Lehmer64</code> (state length 128 bits; odd seed, so effectively 127 bits state length).</li>
 <li><code>Lehmer128</code> (state length 128 bits; odd seed, so effectively 127 bits state length).</li>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
 <li><code>JKISS</code> by David Jones, on top of page 3 of Jones 2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
-<li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a [<strong>critique by S. Vigna</strong>].</li>
+<li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
 </ul>
 
 <p>The following also count as statistical RNGs, but are not preferred:</p>
 
 <ul>
-<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoroshiro128+</code> website.)</li>
-<li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a [<strong>critique by S. Vigna</strong>].</li>
+<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoshiro/xoroshiro</code> website.)</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a> and <code>xoshiro256+</code> (state length 128 or 256 bits; nonzero seed).</li>
 <li><code>xorshift128+</code> (state length 128 bits; nonzero seed).  Its output&#39;s lower 32 bits, reversed, fails MatrixRank and LinearComp systematically, according to D. Lemire.</li>
 </ul>
 
