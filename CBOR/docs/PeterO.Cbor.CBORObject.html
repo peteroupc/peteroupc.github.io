@@ -1027,7 +1027,14 @@ This object&#39;s value exceeds the range of a 64-bit unsigned integer.</p></li>
 <pre>public void Clear();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes all items from this CBOR array or all keys and values from this CBOR map.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a CBOR array or CBOR map.</li>
+</ul>
 
 <h3>CompareTo</h3>
 
@@ -2826,9 +2833,9 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 
 <p>The example code given below (written in in C# for the .NET version) can e used to write out certain keys of a CBOR map in a given order to a JSON tring.</p>
 
-<pre>// Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
-        in &#39;keys&#39; . Only keys // found in &#39;keys&#39; will be written if they exist
-        in &#39;mapObj&#39;. private static string KeysToJSONMap(CBORObject mapObj,
+<pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
+        in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist
+        in &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
         IList&lt;CBORObject&gt; keys){ if (mapObj == null) { throw new
         ArgumentNullException)nameof(mapObj));} if (keys == null) { throw
         new ArgumentNullException)nameof(keys));} if (obj.Type !=
@@ -3677,6 +3684,144 @@ is null.</p></li>
 An I/O error occurred.</p></li>
 <li><p>System.ArgumentException:
 &quot;Unexpected data type&quot;.</p></li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue(
+    System.IO.Stream outputStream,
+    int majorType,
+    int value);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: Not documented yet.</p></li>
+<li><p><i>majorType</i>: Not documented yet.</p></li>
+<li><p><i>value</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+Value is from 24 to 31 and major type is 7.</li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue(
+    System.IO.Stream outputStream,
+    int majorType,
+    long value);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: Not documented yet.</p></li>
+<li><p><i>majorType</i>: Not documented yet.</p></li>
+<li><p><i>value</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+Value is from 24 to 31 and major type is 7.</li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue(
+    System.IO.Stream outputStream,
+    int majorType,
+    PeterO.Numbers.EInteger bigintValue);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: Not documented yet.</p></li>
+<li><p><i>majorType</i>: Not documented yet.</p></li>
+<li><p><i>bigintValue</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+MajorType is 7 and value is greater than 255.</li>
+</ul>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue(
+    System.IO.Stream outputStream,
+    int majorType,
+    uint value);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: Not documented yet.</p></li>
+<li><p><i>majorType</i>: Not documented yet.</p></li>
+<li><p><i>value</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<h3>WriteValue</h3>
+
+<pre>public static int WriteValue(
+    System.IO.Stream outputStream,
+    int majorType,
+    ulong value);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: Not documented yet.</p></li>
+<li><p><i>majorType</i>: Not documented yet.</p></li>
+<li><p><i>value</i>: Not documented yet. (3).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+MajorType is 7 and value is greater than 255.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
