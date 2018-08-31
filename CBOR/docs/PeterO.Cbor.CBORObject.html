@@ -1072,7 +1072,7 @@ This object is not a CBOR array or CBOR map.</li>
 
 <ul>
 <li>System.ArgumentException:
-&quot;Unexpected data type&quot;; &quot;doesn&#39;t satisfy typeOrderA == 0&quot;; &quot;doesn&#39;t satisfy typeOrderB == 0&quot;.</li>
+An internal error occurred.</li>
 </ul>
 
 <h3>CompareToIgnoreTags</h3>
@@ -2692,18 +2692,27 @@ is a CBOR object.</p></li>
     object obj);
 </pre>
 
-<p>Not documented yet.</p>
+<p>If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array. If this object is a map, removes the item with the given key (once converted to a CBOR object) from the map.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter <i>obj</i>
-is not documented yet.</li>
+<li><i>obj</i>: The item or key (once converted to a CBOR object) to remove.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p><code>true</code>  if the item was removed; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>obj</i>
+is null (as opposed to CBORObject.Null).</p></li>
+<li><p>System.InvalidOperationException:
+The object is not an array or map.</p></li>
+</ul>
 
 <h3>Remove</h3>
 
@@ -2739,18 +2748,24 @@ The object is not an array or map.</p></li>
     int index);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes the item at the given index of this CBOR array.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>index</i>: The parameter  <i>index</i>
-is not documented yet.</li>
+<li><i>index</i>: The index, starting at 0, of the item to remove.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the given index is less than 0, or equals or is greater than the number of items in the array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a CBOR array.</li>
+</ul>
 
 <h3>Set</h3>
 
@@ -3649,26 +3664,63 @@ is null.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a>object. The object <code>CBOREncodeOptions.Default</code> contains recommended settings for CBOREncodeOptions, and those ettings may be adopted by this overload (without a CBOREncodeOptions rgument) in the next major version.</b></p>
+<p><b>At the moment, use the overload of this method that takes a <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object  <code>CBOREncodeOptions.Default</code> contains recommended ettings for CBOREncodeOptions, and those settings may be adopted y this overload (without a CBOREncodeOptions argument) in the next ajor version.</b></p>
 
-<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. The example method given below (written in C# for the .NET version) can be used to write out certain keys of a CBOR map in a given order:</p>
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (written in C# for the .NET version) for ways to write out certain keys of a CBOR map in a given order.</p>
 
-<pre>/* Writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;in the order given in
-        &#39;keys&#39;. Only keys found in &#39;keys&#39; will be written if they exist in
-        &#39;mapObj&#39;.*/ private static void WriteKeysToIndefMap(CBORObject
-        mapObj, IList&lt;CBORObject&gt; keys, Stream outputStream){
-        if(mapObj==null) throw new
-        ArgumentNullException(nameof(mapObj));
-        if(keys==null){throw new
-        ArgumentNullException(nameof(keys));}
-        if(outputStream==null){throw new
-        ArgumentNullException(nameof(outputStream));}
-        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
-        is not a map.&quot;); } outputStream.WriteByte((byte)0xBF);
-        for(CBORObject key in keys) {
-        if(mapObj.ContainsKey(key)){ key.WriteTo(outputStream);
-        mapObj[key].WriteTo(outputStream); } }
-        outputStream.WriteByte((byte)0xBF); }
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>definite-length map</b>. Only keys found in &#39;keys&#39; will be written if they exist n &#39;mapObj&#39;.</p>
+
+<pre>private static void WriteKeysToMap(CBORObject
+                    mapObj, IList&lt;CBORObject&gt; keys, Stream outputStream){
+                    if(mapObj==null){ throw new
+                    ArgumentNullException(nameof(mapObj));}
+                    if(keys==null){throw new
+                    ArgumentNullException(nameof(keys));}
+                    if(outputStream==null){throw new
+                    ArgumentNullException(nameof(outputStream));}
+                    if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+                    is not a map.&quot;); }
+                    int keyCount = 0;
+                    for(CBORObject key in keys) {
+                    if(mapObj.ContainsKey(key)){ keyCount++;
+                    } }
+                    CBORObject.WriteValue(outputStream, 5, keyCount);
+                    for(CBORObject key in keys) {
+                    if(mapObj.ContainsKey(key)){ key.WriteTo(outputStream);
+                    mapObj[key].WriteTo(outputStream); } }
+                    }
+</pre>
+
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR <b>indefinite-length map</b>. Only keys found in &#39;keys&#39; will be written if they exist n &#39;mapObj&#39;.</p>
+
+<pre>private static void WriteKeysToIndefMap(CBORObject
+                    mapObj, IList&lt;CBORObject&gt; keys, Stream outputStream){
+                    if(mapObj==null){ throw new
+                    ArgumentNullException(nameof(mapObj));}
+                    if(keys==null){throw new
+                    ArgumentNullException(nameof(keys));}
+                    if(outputStream==null){throw new
+                    ArgumentNullException(nameof(outputStream));}
+                    if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+                    is not a map.&quot;); } outputStream.WriteByte((byte)0xBF);
+                    for(CBORObject key in keys) {
+                    if(mapObj.ContainsKey(key)){ key.WriteTo(outputStream);
+                    mapObj[key].WriteTo(outputStream); } }
+                    outputStream.WriteByte((byte)0xFF); }
+</pre>
+
+<p>The following example shows a method that writes out a list of objects to &#39;outputStream&#39; as an <b>indefinite-length CBOR array</b>.</p>
+
+<pre>private static void WriteToIndefArray(
+                     IList&lt;object&gt; list, Stream outputStream){
+                    if(list==null){ throw new
+                    ArgumentNullException(nameof(list));}
+                    if(outputStream==null){throw new
+                    ArgumentNullException(nameof(outputStream));}
+                    outputStream.WriteByte((byte)0x9F);
+                    for(object item in list) {
+                    new CBORObject(item).WriteTo(outputStream); }
+                    outputStream.WriteByte((byte)0xFF); }
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -3727,9 +3779,9 @@ An I/O error occurred.</p></li>
 
 <p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
 
-<pre>CBORObject.WriteValue(stream, 4, 3);  // array, length 3
-            CBORObject.Write(&quot;hello world&quot;, stream);  // item 1
-            CBORObject.Write(25, stream);  // item 2
+<pre>CBORObject.WriteValue(stream, 4, 3);  /* array, length 3 */
+            CBORObject.Write(&quot;hello world&quot;, stream);  /* item 1 */
+            CBORObject.Write(25, stream);  /* item 2 */
             CBORObject.Write(false, stream);  // item 3
 </pre>
 
@@ -3742,12 +3794,20 @@ An I/O error occurred.</p></li>
             CBORObject.Write(&quot;hello&quot;, stream);  // value 2
 </pre>
 
+<p>In the following example (written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
+
+<pre>string str = &quot;hello world&quot;;
+byte[] bytes = DataUtilities.GetUtf8Bytes(str, true);
+CBORObject.WriteValue(stream, 4, bytes.Length);
+stream.Write(bytes, 0, bytes.Length);
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
-<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is this number plus 1; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3779,7 +3839,7 @@ is null.</p></li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
-<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is this number plus 1; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3811,7 +3871,7 @@ is null.</p></li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
-<li><p><i>bigintValue</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is this number plus 1; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255]. For major types 0 to 6, this number may not be greater than 2^64 - 1.</p></li>
+<li><p><i>bigintValue</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255]. For major types 0 to 6, this number may not be greater than 2^64 - 1.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3845,7 +3905,7 @@ is null.</p></li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
-<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is this number plus 1; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3875,7 +3935,7 @@ is null.</li>
 <ul>
 <li><p><i>outputStream</i>: A writable data stream.</p></li>
 <li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
-<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is this number plus 1; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>

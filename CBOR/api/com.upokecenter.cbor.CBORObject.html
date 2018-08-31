@@ -422,9 +422,10 @@ value of a CBORObject object.</li>
 If this object is an array, removes the first instance of the specified item
 from the array.</li>
 <li><code>boolean Remove​(Object obj)</code><br>
-Not documented yet.</li>
+If this object is an array, removes the first instance of the specified item
+(once converted to a CBOR object) from the array.</li>
 <li><code>boolean RemoveAt​(int index)</code><br>
-Not documented yet.</li>
+Removes the item at the given index of this CBOR array.</li>
 <li><code>void set​(int index,
 CBORObject value)</code><br>
 Gets the value of a CBOR object by integer index in this array.</li>
@@ -3934,18 +3935,29 @@ map.</li>
 <pre>public boolean Remove​(Object obj)
 </pre>
 
-<p>Not documented yet.</p>
+<p>If this object is an array, removes the first instance of the specified item
+ (once converted to a CBOR object) from the array. If this object is a
+ map, removes the item with the given key (once converted to a CBOR
+ object) from the map.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is not documented yet.</li>
+<li><code>obj</code> - The item or key (once converted to a CBOR object) to remove.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code> .</li>
+<li><code>true</code> if the item was removed; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>obj</code> is null (as
+opposed to CBORObject.Null).</p></li>
+<li><p><code>IllegalStateException</code> - The object is not an array or map.</p></li>
 </ul>
 
 <h3>RemoveAt</h3>
@@ -3953,18 +3965,26 @@ map.</li>
 <pre>public boolean RemoveAt​(int index)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Removes the item at the given index of this CBOR array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - The parameter <code>index</code> is not documented yet.</li>
+<li><code>index</code> - The index, starting at 0, of the item to remove.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the
+given index is less than 0, or is at least the number
+of items in the array.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>InvalidOperationException</code> - This object is not a CBOR array.</li>
 </ul>
 
 <h3>Remove</h3>
@@ -4251,7 +4271,7 @@ through 7 as follows. 0: integer 0 or greater; 1: negative integer;
 simple value. See RFC 7049 for details on these major types.</p></li>
 <li><p><code>value</code> - An integer 0 or greater associated with the major type, as
 follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute
-value is this number plus 1; 2: length in bytes of the byte string;
+value is 1 plus this number; 2: length in bytes of the byte string;
 3: length in bytes of the UTF-8 text string; 4: number of items in
 the array; 5: number of key-value pairs in the map; 6: tag number; 7:
 simple value number, which must be in the interval [0, 23] or [32,
@@ -4305,7 +4325,7 @@ through 7 as follows. 0: integer 0 or greater; 1: negative integer;
 simple value. See RFC 7049 for details on these major types.</p></li>
 <li><p><code>value</code> - An integer 0 or greater associated with the major type, as
 follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute
-value is this number plus 1; 2: length in bytes of the byte string;
+value is 1 plus this number; 2: length in bytes of the byte string;
 3: length in bytes of the UTF-8 text string; 4: number of items in
 the array; 5: number of key-value pairs in the map; 6: tag number; 7:
 simple value number, which must be in the interval [0, 23] or [32,
@@ -4348,7 +4368,7 @@ through 7 as follows. 0: integer 0 or greater; 1: negative integer;
 simple value. See RFC 7049 for details on these major types.</p></li>
 <li><p><code>bigintValue</code> - An integer 0 or greater associated with the major type,
 as follows. 0: integer 0 or greater; 1: the negative integer&#39;s
-absolute value is this number plus 1; 2: length in bytes of the byte
+absolute value is 1 plus this number; 2: length in bytes of the byte
 string; 3: length in bytes of the UTF-8 text string; 4: number of
 items in the array; 5: number of key-value pairs in the map; 6: tag
 number; 7: simple value number, which must be in the interval [0, 23]
@@ -4402,7 +4422,7 @@ bigintValue</code> is null.</p></li>
  &#x7b;
  } if&#x28;mapObj.ContainsKey(key))&#x7b;
  key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); &#x7d;
- &#x7d; outputStream.write((byte)0xbf); &#x7d; </pre></p>
+ &#x7d; outputStream.write((byte)0xff); &#x7d; </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
