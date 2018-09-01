@@ -183,7 +183,7 @@ replace</code> is false.</p></li>
 <ul>
 <li><p><code>bytes</code> - A byte array containing text encoded in UTF-8.</p></li>
 <li><p><code>offset</code> - Offset into the byte array to start reading.</p></li>
-<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 string.</p></li>
+<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 text string.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
 character (U + FFFD). If false, stops processing when invalid UTF-8 is
 seen.</p></li>
@@ -609,9 +609,9 @@ unpaired surrogate code point and <code>replace</code> is false.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>data</code> - A byte array containing a UTF-8 string.</p></li>
+<li><p><code>data</code> - A byte array containing a UTF-8 text string.</p></li>
 <li><p><code>offset</code> - Offset into the byte array to start reading.</p></li>
-<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 string.</p></li>
+<li><p><code>bytesCount</code> - Length, in bytes, of the UTF-8 text string.</p></li>
 <li><p><code>builder</code> - A string builder object where the resulting string will be
 stored.</p></li>
 <li><p><code>replace</code> - If true, replaces invalid encoding with the replacement
