@@ -4417,9 +4417,8 @@ value is greater than 255.</p></li>
  be written if they exist in 'mapObj'.</p> <pre>private static void
  WriteKeysToMap&#x28;CBORObject mapObj, List&lt;CBORObject&gt; keys,
  OutputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw
- new NullPointerException&#x28;nameof(mapObj));&#x7d;
- if&#x28;keys == null)&#x7b;throw new
- NullPointerException&#x28;nameof(keys));&#x7d;
+ new NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
+ null)&#x7b;throw new NullPointerException&#x28;nameof(keys));&#x7d;
  if&#x28;outputStream == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
  if&#x28;obj.getType() != CBORType.Map)&#x7b; throw new
@@ -4438,8 +4437,8 @@ value is greater than 255.</p></li>
  keys, OutputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b;
  throw new NullPointerException&#x28;nameof(mapObj));&#x7d;
  if&#x28;keys == null)&#x7b;throw new
- NullPointerException&#x28;nameof(keys));&#x7d;
- if&#x28;outputStream == null)&#x7b;throw new
+ NullPointerException&#x28;nameof(keys));&#x7d; if&#x28;outputStream
+ == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
  if&#x28;obj.getType() != CBORType.Map)&#x7b; throw new
  IllegalArgumentException("'obj' is not a map."); &#x7d;
@@ -4452,8 +4451,8 @@ value is greater than 255.</p></li>
  .</p> <pre>private static void WriteToIndefArray&#x28;
  List&lt;object&gt; list, OutputStream outputStream)&#x7b;
  if&#x28;list == null)&#x7b; throw new
- NullPointerException&#x28;nameof(list));&#x7d;
- if&#x28;outputStream == null)&#x7b;throw new
+ NullPointerException&#x28;nameof(list));&#x7d; if&#x28;outputStream
+ == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
  outputStream.write((byte)0x9f); for (object item in list) &#x7b;
  new CBORObject(item).WriteTo(outputStream); &#x7d;
