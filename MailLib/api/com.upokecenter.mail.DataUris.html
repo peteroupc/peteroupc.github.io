@@ -1,55 +1,49 @@
-<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.DataUrls</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.DataUris</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
 <a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
 <div class="mainarea" id="top">
-<h1>com.upokecenter.mail.DataUrls</h1>
+<h1>com.upokecenter.mail.DataUris</h1>
 
-<h1>com.upokecenter.mail.DataUrls</h1>
+<h1>com.upokecenter.mail.DataUris</h1>
 
-<pre>@Deprecated public final class DataUrls extends Object
+<pre>public final class DataUris extends Object
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DataUris.</div>
+<p>Contains methods for parsing and generating Data URIs (uniform resource
+ identifiers). Data URIs are described in RFC 2397. Examples for Data
+ URIs follow. <pre>data:, hello%20world </pre>
+ <pre>data:text/markdown, hello%20world </pre>
+ <pre>data:application/octet-stream;base64, AAAAAA== </pre></p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>static byte[] DataUrlBytes​(String url)</code><br>
-Deprecated.
-Renamed to DataUriBytes.
-Renamed to DataUriBytes.</li>
-<li><code>static MediaType DataUrlMediaType​(String url)</code><br>
-Deprecated.
-Renamed to DataUriMediaType.
-Renamed to DataUriMediaType.</li>
-<li><code>static String MakeDataUrl​(byte[] bytes,
+<li><code>static byte[] DataUriBytes​(String uri)</code><br>
+Extracts the data from a Data URI (uniform resource identifier) in the form
+of a byte array.</li>
+<li><code>static MediaType DataUriMediaType​(String uri)</code><br>
+Extracts the media type from a Data URI (uniform resource identifier).</li>
+<li><code>static String MakeDataUri​(byte[] bytes,
        MediaType mediaType)</code><br>
-Deprecated.
-Renamed to MakeDataUri.
-Renamed to MakeDataUri.</li>
-<li><code>static String MakeDataUrl​(String textString)</code><br>
-Deprecated.
-Renamed to MakeDataUri.
-Renamed to MakeDataUri.</li>
+Encodes data with the given media type in a Data URI (uniform resource
+identifier).</li>
+<li><code>static String MakeDataUri​(String textString)</code><br>
+Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3>DataUrlMediaType</h3>
+<h3>DataUriMediaType</h3>
 
-<pre>@Deprecated public static MediaType DataUrlMediaType​(String url)
+<pre>public static MediaType DataUriMediaType​(String uri)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DataUriMediaType.</div>
+<p>Extracts the media type from a Data URI (uniform resource identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - A Data URI string.</li>
+<li><code>uri</code> - A string object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -59,19 +53,18 @@ Renamed to MakeDataUri.</li>
 syntactically invalid, or is not a Data URI.</li>
 </ul>
 
-<h3>DataUrlBytes</h3>
+<h3>DataUriBytes</h3>
 
-<pre>@Deprecated public static byte[] DataUrlBytes​(String url)
+<pre>public static byte[] DataUriBytes​(String uri)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to DataUriBytes.</div>
+<p>Extracts the data from a Data URI (uniform resource identifier) in the form
+ of a byte array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - A Data URI string.</li>
+<li><code>uri</code> - A string object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -81,14 +74,12 @@ syntactically invalid, or is not a Data URI.</li>
 syntactically invalid, or is not a data URI.</li>
 </ul>
 
-<h3>MakeDataUrl</h3>
+<h3>MakeDataUri</h3>
 
-<pre>@Deprecated public static String MakeDataUrl​(String textString)
+<pre>public static String MakeDataUri​(String textString)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to MakeDataUri.</div>
+<p>Encodes text as a Data URI (uniform resource identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -109,14 +100,13 @@ syntactically invalid, or is not a data URI.</li>
 null.</li>
 </ul>
 
-<h3>MakeDataUrl</h3>
+<h3>MakeDataUri</h3>
 
-<pre>@Deprecated public static String MakeDataUrl​(byte[] bytes, MediaType mediaType)
+<pre>public static String MakeDataUri​(byte[] bytes, MediaType mediaType)
 </pre>
 
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Renamed to MakeDataUri.</div>
+<p>Encodes data with the given media type in a Data URI (uniform resource
+ identifier).</p>
 
 <p><strong>Parameters:</strong></p>
 
