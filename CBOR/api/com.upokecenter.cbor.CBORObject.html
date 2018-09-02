@@ -3976,8 +3976,8 @@ opposed to CBORObject.Null).</p></li>
 
 <ul>
 <li>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the
-given index is less than 0, or equals or is greater than the number
-of items in the array.</li>
+given index is less than 0, or is at least the number of items in the
+array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4101,9 +4101,9 @@ valueOb</code> has an unsupported type.</p></li>
  to null.) </li> <li>Simple values other than true and false will be
  converted to null. (This doesn&#39;t include floating-point numbers.)
  </li> <li>Infinity and not-a-number will be converted to null. </li>
- </ul> The example code given below (written in in C# for the .NET
- version) can be used to write out certain keys of a CBOR map in a
- given order to a JSON string. <pre>/* Generates a JSON string of
+ </ul> The example code given below (originally written in C# for the
+ .NET version) can be used to write out certain keys of a CBOR map in
+ a given order to a JSON string. <pre>/* Generates a JSON string of
  &#39;mapObj&#39; whose keys are in the order given in &#39;keys&#39; . Only keys
  found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;. &#x2a;&#x2f; private
  static string KeysToJSONMap&#x28;CBORObject mapObj,
@@ -4313,8 +4313,8 @@ null.</p></li>
  pairs CBORObject.Write(&quot;number&quot;, stream);  // key 1
  CBORObject.Write(25, stream);  // value 1 CBORObject.Write(&quot;string&quot;,
  stream);  // key 2 CBORObject.Write(&quot;hello&quot;, stream);  // value 2
- </pre> <p>In the following example (written in C# for the .NET
- Framework version), a text string is written as CBOR to a data
+ </pre> <p>In the following example (originally written in C# for the
+ .NET Framework version), a text string is written as CBOR to a data
  stream.</p> <pre>string str = &quot;hello world&quot;; byte[] bytes =
  DataUtilities.GetUtf8Bytes(str, true); CBORObject.WriteValue(stream,
  4, bytes.length); stream.write(bytes, 0, bytes.length); </pre> </p></p>
@@ -4410,14 +4410,14 @@ value is greater than 255.</p></li>
  contains CBOR maps, or is a CBOR map, the keys to the map are written
  out to the data stream in an undefined order. See the examples
  (written in C# for the .NET version) for ways to write out certain
- keys of a CBOR map in a given order.</p><p> <p>The following example
+ keys of a CBOR map in a given order.</p><p><p>The following example
  shows a method that writes each key of 'mapObj' to 'outputStream', in
  the order given in 'keys', where 'mapObj' is written out in the form
  of a CBOR <b>definite-length map</b> . Only keys found in 'keys' will
  be written if they exist in 'mapObj'.</p> <pre>private static void
- WriteKeysToMap&#x28;CBORObject mapObj, List&lt;CBORObject&gt; keys,
- OutputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw
- new NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
+ WriteKeysToMap&#x28;CBORObject mapObj, IList&lt;CBORObject&gt; keys,
+ InputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw new
+ NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
  null)&#x7b;throw new NullPointerException&#x28;nameof(keys));&#x7d;
  if&#x28;outputStream == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
@@ -4427,36 +4427,35 @@ value is greater than 255.</p></li>
  if&#x28;mapObj.ContainsKey(key))&#x7b; keyCount++; &#x7d; &#x7d;
  CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key
  in keys) &#x7b; if&#x28;mapObj.ContainsKey(key))&#x7b;
- key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream);
- &#x7d; &#x7d; &#x7d; </pre> <p>The following example shows a method
- that writes each key of 'mapObj' to 'outputStream', in the order
- given in 'keys', where 'mapObj' is written out in the form of a CBOR
+ key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); &#x7d;
+ &#x7d; &#x7d; </pre> <p>The following example shows a method that
+ writes each key of 'mapObj' to 'outputStream', in the order given in
+ 'keys', where 'mapObj' is written out in the form of a CBOR
  <b>indefinite-length map</b> . Only keys found in 'keys' will be
  written if they exist in 'mapObj'.</p> <pre>private static void
- WriteKeysToIndefMap&#x28;CBORObject mapObj, List&lt;CBORObject&gt;
- keys, OutputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b;
- throw new NullPointerException&#x28;nameof(mapObj));&#x7d;
- if&#x28;keys == null)&#x7b;throw new
- NullPointerException&#x28;nameof(keys));&#x7d; if&#x28;outputStream
- == null)&#x7b;throw new
+ WriteKeysToIndefMap&#x28;CBORObject mapObj, IList&lt;CBORObject&gt;
+ keys, InputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw
+ new NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
+ null)&#x7b;throw new NullPointerException&#x28;nameof(keys));&#x7d;
+ if&#x28;outputStream == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
  if&#x28;obj.getType() != CBORType.Map)&#x7b; throw new
  IllegalArgumentException("'obj' is not a map."); &#x7d;
  outputStream.write((byte)0xbf); for (CBORObject key in keys)
  &#x7b; if&#x28;mapObj.ContainsKey(key))&#x7b;
- key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream);
- &#x7d; &#x7d; outputStream.write((byte)0xff); &#x7d; </pre>
- <p>The following example shows a method that writes out a list of
- objects to 'outputStream' as an <b>indefinite-length CBOR array</b>
- .</p> <pre>private static void WriteToIndefArray&#x28;
- List&lt;object&gt; list, OutputStream outputStream)&#x7b;
- if&#x28;list == null)&#x7b; throw new
- NullPointerException&#x28;nameof(list));&#x7d; if&#x28;outputStream
- == null)&#x7b;throw new
+ key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); &#x7d;
+ &#x7d; outputStream.write((byte)0xff); &#x7d; </pre> <p>The
+ following example shows a method that writes out a list of objects to
+ 'outputStream' as an <b>indefinite-length CBOR array</b> .</p>
+
+<p><pre>private static void WriteToIndefArray&#x28; IList&lt;object&gt;
+ list, InputStream outputStream)&#x7b; if&#x28;list == null)&#x7b; throw
+ new NullPointerException&#x28;nameof(list));&#x7d;
+ if&#x28;outputStream == null)&#x7b;throw new
  NullPointerException&#x28;nameof(outputStream));&#x7d;
  outputStream.write((byte)0x9f); for (object item in list) &#x7b;
  new CBORObject(item).WriteTo(outputStream); &#x7d;
- outputStream.write((byte)0xff); &#x7d; </pre> </p>
+ outputStream.write((byte)0xff); &#x7d; </pre> </p></p>
 
 <p><strong>Parameters:</strong></p>
 

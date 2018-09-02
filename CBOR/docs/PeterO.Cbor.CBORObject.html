@@ -2758,7 +2758,7 @@ The object is not an array or map.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the given index is less than 0, or equals or is greater than the number of items in the array.</p>
+<p>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the given index is less than 0, or is at least the number of items in the array.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2846,7 +2846,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <li><p>Infinity and not-a-number will be converted to null.</p></li>
 </ul>
 
-<p>The example code given below (written in in C# for the .NET version) can e used to write out certain keys of a CBOR map in a given order to a JSON tring.</p>
+<p>The example code given below (originally written in C# for the .NET ersion) can be used to write out certain keys of a CBOR map in a given rder to a JSON string.</p>
 
 <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
         in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
@@ -3794,7 +3794,7 @@ An I/O error occurred.</p></li>
             CBORObject.Write(&quot;hello&quot;, stream);  // value 2
 </pre>
 
-<p>In the following example (written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
+<p>In the following example (originally written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
 
 <pre>string str = &quot;hello world&quot;;
 byte[] bytes = DataUtilities.GetUtf8Bytes(str, true);
