@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Aug. 30, 2018.
+Begun on Mar. 5, 2016; last updated on Sep. 4, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -181,15 +181,14 @@ Examples of statistical RNGs include the following:
 - `Lehmer128` (state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `JKISS` by David Jones, on top of page 3 of Jones 2007/2010 (state length 128 bits; seed with four 32-bit nonzero pieces).
-- `JKISS32`, mentioned on bottom of page 3 of Jones 2007/2010 (state length 127 bits; nonzero seed).
+- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS32`, described in a work by David Jones 2007/2010.
+- `msws` (Middle Square Weyl Sequence), by B. Widynski.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 
 The following also count as statistical RNGs, but are not preferred:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoshiro/xoroshiro` website.)
-- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c) and `xoshiro256+` (state length 128 or 256 bits; nonzero seed).
-- `xorshift128+` (state length 128 bits; nonzero seed).  Its output's lower 32 bits, reversed, fails MatrixRank and LinearComp systematically, according to D. Lemire.
+- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by D. Blackman and S. Vigna in "Scrambled Linear Pseudorandom Number Generators", these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the whole output has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
@@ -460,7 +459,7 @@ The following Python code suggests how many bits of [**_entropy_**](#Nondetermin
       return ceillog2(fac(numDecks*numCards)/ \
           (fac(numDecks)**numCards))
 
-Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`), such as with `xorshift1024*` or `ranlux48`.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
+Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`), such as with `xoroshiro1024**` or `ranlux48`.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
 
 The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, and SHOULD be initialized with a full-length seed.
 
