@@ -3248,7 +3248,7 @@ including if this object is CBORObject.Null.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The closest big integer to this object.</li>
+<li>The closest 32-bit signed integer to this object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3976,8 +3976,8 @@ opposed to CBORObject.Null).</p></li>
 
 <ul>
 <li>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the
-given index is less than 0, or is at least the number of items in the
-array.</li>
+given index is less than 0, or is at least as high as the number of
+items in the array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4410,11 +4410,11 @@ value is greater than 255.</p></li>
  contains CBOR maps, or is a CBOR map, the keys to the map are written
  out to the data stream in an undefined order. See the examples
  (written in C# for the .NET version) for ways to write out certain
- keys of a CBOR map in a given order.</p><p><p>The following example
+ keys of a CBOR map in a given order. </p><p><p>The following example
  shows a method that writes each key of 'mapObj' to 'outputStream', in
  the order given in 'keys', where 'mapObj' is written out in the form
  of a CBOR <b>definite-length map</b> . Only keys found in 'keys' will
- be written if they exist in 'mapObj'.</p> <pre>private static void
+ be written if they exist in 'mapObj'. </p> <pre>private static void
  WriteKeysToMap&#x28;CBORObject mapObj, IList&lt;CBORObject&gt; keys,
  InputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw new
  NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
@@ -4432,7 +4432,7 @@ value is greater than 255.</p></li>
  writes each key of 'mapObj' to 'outputStream', in the order given in
  'keys', where 'mapObj' is written out in the form of a CBOR
  <b>indefinite-length map</b> . Only keys found in 'keys' will be
- written if they exist in 'mapObj'.</p> <pre>private static void
+ written if they exist in 'mapObj'. </p> <pre>private static void
  WriteKeysToIndefMap&#x28;CBORObject mapObj, IList&lt;CBORObject&gt;
  keys, InputStream outputStream)&#x7b; if&#x28;mapObj == null)&#x7b; throw
  new NullPointerException&#x28;nameof(mapObj));&#x7d; if&#x28;keys ==
@@ -4446,7 +4446,7 @@ value is greater than 255.</p></li>
  key.WriteTo(outputStream); mapObj.get(key).WriteTo(outputStream); &#x7d;
  &#x7d; outputStream.write((byte)0xff); &#x7d; </pre> <p>The
  following example shows a method that writes out a list of objects to
- 'outputStream' as an <b>indefinite-length CBOR array</b> .</p>
+ 'outputStream' as an <b>indefinite-length CBOR array</b> . </p>
 
 <p><pre>private static void WriteToIndefArray&#x28; IList&lt;object&gt;
  list, InputStream outputStream)&#x7b; if&#x28;list == null)&#x7b; throw

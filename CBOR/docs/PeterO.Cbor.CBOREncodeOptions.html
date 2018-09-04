@@ -27,6 +27,24 @@
 <li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
 </ul>
 
+<h3>CBOREncodeOptions Constructor</h3>
+
+<pre>public CBOREncodeOptions(
+    bool useIndefLengthStrings,
+    bool allowDuplicateKeys,
+    bool ctap2Canonical);
+</pre>
+
+<p>Initializes a new instance of the<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
+<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
+<li><p><i>ctap2Canonical</i>: A Boolean object.</p></li>
+</ul>
+
 <h3>Default</h3>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
@@ -65,6 +83,17 @@
 <p><b>Returns:</b></p>
 
 <p>A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
+
+<h3>Ctap2Canonical</h3>
+
+<pre>public bool Ctap2Canonical { get; }
+</pre>
+
+<p>Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  if CBOR objects are written out using the CTAP2 canonical CBOR encoding form; otherwise,  <code>false</code> .. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
 
 <h3>UseIndefLengthStrings</h3>
 

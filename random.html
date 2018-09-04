@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Aug. 30, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 4, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -264,8 +264,8 @@
 <li><code>Lehmer128</code> (state length 128 bits; odd seed, so effectively 127 bits state length).</li>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
-<li><code>JKISS</code> by David Jones, on top of page 3 of Jones 2007/2010 (state length 128 bits; seed with four 32-bit nonzero pieces).</li>
-<li><code>JKISS32</code>, mentioned on bottom of page 3 of Jones 2007/2010 (state length 127 bits; nonzero seed).</li>
+<li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS32</code>, described in a work by David Jones 2007/2010.</li>
+<li><code>msws</code> (Middle Square Weyl Sequence), by B. Widynski.</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 <li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
 </ul>
@@ -274,8 +274,7 @@
 
 <ul>
 <li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoshiro/xoroshiro</code> website.)</li>
-<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a> and <code>xoshiro256+</code> (state length 128 or 256 bits; nonzero seed).</li>
-<li><code>xorshift128+</code> (state length 128 bits; nonzero seed).  Its output&#39;s lower 32 bits, reversed, fails MatrixRank and LinearComp systematically, according to D. Lemire.</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by D. Blackman and S. Vigna in &quot;Scrambled Linear Pseudorandom Number Generators&quot;, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the whole output has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
 </ul>
 
 <p>Non-examples include the following:</p>
@@ -661,7 +660,7 @@ def stateLengthDecks(numDecks, numCards):
       (fac(numDecks)**numCards))
 </pre>
 
-<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>), such as with <code>xorshift1024*</code> or <code>ranlux48</code>.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
+<p>Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (<code>stateLengthN(100)</code>), such as with <code>xoroshiro1024**</code> or <code>ranlux48</code>.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)</p>
 
 <p>The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, and SHOULD be initialized with a full-length seed.</p>
 
