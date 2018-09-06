@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 4, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 6, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -103,11 +103,12 @@
 <ul>
 <li><a href="#When_to_Use_a_Seeded_PRNG"><strong>When to Use a Seeded PRNG</strong></a></li>
 <li><a href="#Recommendations_for_Seeded_PRNGs"><strong>Recommendations for Seeded PRNGs</strong></a></li>
+<li><a href="#Seed_Generation_for_Seeded_PRNGs"><strong>Seed Generation for Seeded PRNGs</strong></a></li>
 <li><a href="#Examples_2"><strong>Examples</strong></a>
 
 <ul>
 <li><a href="#Games"><strong>Games</strong></a></li>
-<li><a href="#Unit_Testing"><strong>Unit Testing</strong></a></li>
+<li><a href="#Unit_Tests"><strong>Unit Tests</strong></a></li>
 <li><a href="#Verifiable_Random_Numbers"><strong>Verifiable Random Numbers</strong></a></li>
 <li><a href="#Noise"><strong>Noise</strong></a></li>
 </ul></li>
@@ -260,21 +261,20 @@
 <ul>
 <li><a href="http://xoshiro.di.unimi.it/xoshiro256starstar.c"><strong>xoshiro256&#x2a;&#x2a;</strong></a> (state length 256 bits; nonzero seed).</li>
 <li><a href="http://xoshiro.di.unimi.it/xoroshiro128starstar.c"><strong>xoroshiro128&#x2a;&#x2a;</strong></a> (state length 128 bits; nonzero seed).</li>
-<li><code>Lehmer64</code> (state length 128 bits; odd seed, so effectively 127 bits state length).</li>
-<li><code>Lehmer128</code> (state length 128 bits; odd seed, so effectively 127 bits state length).</li>
+<li><code>Lehmer64</code> and <code>Lehmer128</code> (for each: state length 128 bits; odd seed, so effectively 127 bits state length).</li>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
 <li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS32</code>, described in a work by David Jones 2007/2010.</li>
-<li><code>msws</code> (Middle Square Weyl Sequence), by B. Widynski.</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 <li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
+<li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, B. Widynski&#39;s <code>msws</code> (Middle Square Weyl Sequence), and D. Blackman&#39;s <code>gjrand</code>.</li>
 </ul>
 
 <p>The following also count as statistical RNGs, but are not preferred:</p>
 
 <ul>
 <li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoshiro/xoroshiro</code> website.)</li>
-<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by D. Blackman and S. Vigna in &quot;Scrambled Linear Pseudorandom Number Generators&quot;, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the whole output has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by D. Blackman and S. Vigna in &quot;Scrambled Linear Pseudorandom Number Generators&quot;, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
 </ul>
 
 <p>Non-examples include the following:</p>
@@ -297,15 +297,6 @@
 <p>An application SHOULD use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if&mdash;</p>
 
 <ol>
-<li>the initial state (the seed) which the &quot;random&quot; result will be generated from&mdash;
-
-<ul>
-<li>is hard-coded,</li>
-<li>is derived from user-entered data,</li>
-<li>is known to the application and was generated randomly (other than with a PRNG with a known seed),</li>
-<li>is a <a href="#Verifiable_Random_Numbers"><strong>verifiable random number</strong></a> (as defined later), or</li>
-<li>is based on a timestamp (but only if the &quot;random&quot; content will remain the same during the time specified on the timestamp and within the timestamp&#39;s granularity; for example, a year/month/day timestamp for content that varies only daily),</li>
-</ul></li>
 <li>the application might need to generate the same &quot;random&quot; result multiple times,</li>
 <li>the application either&mdash;
 
@@ -319,10 +310,10 @@
 <li>by distributing the results or the random numbers to networked users as they are generated, and</li>
 </ul></li>
 </ul></li>
-<li>any feature using that random number generation method to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
+<li>any feature that uses such a PRNG to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
 </ol>
 
-<p>Meeting recommendation 4 is aided by using <em>stable</em> PRNGs; see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a> and the following examples:</p>
+<p>Meeting statement 3 is aided by using <em>stable</em> PRNGs; see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a> and the following examples:</p>
 
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is stable.</li>
@@ -341,6 +332,18 @@
 <li>meet or exceed the quality requirements of a statistical RNG,</li>
 <li>be reasonably fast, and</li>
 <li>have a <em>state length</em> of 64 bits or greater.</li>
+</ul>
+
+<p><a id=Seed_Generation_for_Seeded_PRNGs></a></p>
+
+<h3>Seed Generation for Seeded PRNGs</h3>
+
+<p>As much as possible, an application SHOULD generate seeds for a seeded PRNG&mdash;</p>
+
+<ul>
+<li>using a cryptographic or statistical RNG (as defined earlier),</li>
+<li>as described in <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>Nondeterministic Sources and Seed Generation</strong></a>, or</li>
+<li>otherwise using hard-to-predict data.</li>
 </ul>
 
 <p><a id=Examples_2></a></p>
@@ -366,14 +369,14 @@
 <p>In general, such a game SHOULD use a PRNG with a custom seed for such purposes only if&mdash;</p>
 
 <ol>
-<li>generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or</li>
-<li>the game makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content (see recommendations 2 and 3).</li>
+<li>generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use, or</li>
+<li>the game makes the seed (or a &quot;code&quot; or &quot;password&quot; based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.</li>
 </ol>
 
 <p>Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.</p>
 
 <blockquote>
-<p><strong>Example:</strong> Suppose a game generates a map with random terrain and shows the player a &quot;code&quot; to generate that map. Under recommendation 4, the game&mdash;</p>
+<p><strong>Example:</strong> Suppose a game generates a map with random terrain and shows the player a &quot;code&quot; to generate that map. In this case, the game&mdash;</p>
 
 <ul>
 <li>MAY change the algorithm it uses to generate random maps, but</li>
@@ -382,32 +385,23 @@
 </ul>
 </blockquote>
 
-<p><a id=Unit_Testing></a></p>
+<p><a id=Unit_Tests></a></p>
 
-<h4>Unit Testing</h4>
+<h4>Unit Tests</h4>
 
-<p>A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 4).</p>
+<p>A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test ensures backward compatibility).</p>
 
 <p><a id=Verifiable_Random_Numbers></a></p>
 
 <h4>Verifiable Random Numbers</h4>
 
-<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers&mdash;</p>
-
-<ul>
-<li>at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and</li>
-<li>some of it can be disclosed in the announcement that those numbers will be generated.</li>
-</ul>
-
-<p>One process to generate verifiable random numbers is described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a> (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of <a href="#Hash_Functions"><strong>hash functions</strong></a> stronger than MD5 (see the last paragraph of section 3.3 of that RFC).</p>
-
-<p>Another way is to hash publicly known inputs using <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify.  They were first formally defined in a 2018 paper by Boneh, Bonneau, and others.  See also Lenstra&dash;Wesolowski 2015.</p>
+<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, in Lenstra&mdash;Wesolowski 2015, in Boneh, Bonneau et al. 2018 (the latter introduces so-called <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.</p>
 
 <p><a id=Noise></a></p>
 
 <h4>Noise</h4>
 
-<p>Randomly generated numbers can serve as <em>noise</em>, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
+<p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
 <li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note3"><strong>(3)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  As much as possible, procedural noise implementations SHOULD <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  If using a <a href="#When_to_Use_a_Seeded_PRNG"><strong>custom-seeded PRNG</strong></a> is appropriate for the application, the additional data MAY be <strong>&quot;hard-coded&quot;</strong> instead.  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function SHOULD be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
@@ -520,7 +514,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 <tr>
 <td>PHP</td>
-<td><code>random_int()</code> (since PHP 7)</td>
+<td><code>random_int()</code>, <code>random_bytes()</code> (both since PHP 7)</td>
 <td></td>
 <td><code>mt_rand()</code> (A)</td>
 </tr>
@@ -716,7 +710,7 @@ def stateLengthDecks(numDecks, numCards):
 <li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
 <li>implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP&#39;s <code>mt_rand</code> as well as in Python and Ruby),</li>
 <li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
-<li>leave the default seeding fixed (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a>).</li>
+<li>leave the default seeding fixed (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a>; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>).</li>
 </ul>
 
 <p><a id=Conclusion></a></p>
@@ -745,7 +739,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em> (see RFC 4086 sec. 4 or Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009 for further discussion).</small></p>
 
-<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
+<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
 
 <p><small><sup id=Note3>(3)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
 

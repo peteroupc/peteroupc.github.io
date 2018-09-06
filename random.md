@@ -60,9 +60,10 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 - [**Seeded PRNGs**](#Seeded_PRNGs)
     - [**When to Use a Seeded PRNG**](#When_to_Use_a_Seeded_PRNG)
     - [**Recommendations for Seeded PRNGs**](#Recommendations_for_Seeded_PRNGs)
+    - [**Seed Generation for Seeded PRNGs**](#Seed_Generation_for_Seeded_PRNGs)
     - [**Examples**](#Examples_2)
         - [**Games**](#Games)
-        - [**Unit Testing**](#Unit_Testing)
+        - [**Unit Tests**](#Unit_Tests)
         - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
         - [**Noise**](#Noise)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
@@ -203,22 +204,16 @@ In addition, some applications use pseudorandom number generators (PRNGs) to gen
 
 An application SHOULD use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if&mdash;
 
-1. the initial state (the seed) which the "random" result will be generated from&mdash;
-    - is hard-coded,
-    - is derived from user-entered data,
-    - is known to the application and was generated randomly (other than with a PRNG with a known seed),
-    - is a [**verifiable random number**](#Verifiable_Random_Numbers) (as defined later), or
-    - is based on a timestamp (but only if the "random" content will remain the same during the time specified on the timestamp and within the timestamp's granularity; for example, a year/month/day timestamp for content that varies only daily),
-2. the application might need to generate the same "random" result multiple times,
-3. the application either&mdash;
+1. the application might need to generate the same "random" result multiple times,
+2. the application either&mdash;
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
     - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
         - by saving the result to a file,
         - by storing the random numbers for the feature generating the result to "replay" later, or
         - by distributing the results or the random numbers to networked users as they are generated, and
-4. any feature using that random number generation method to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
+3. any feature that uses such a PRNG to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-Meeting recommendation 4 is aided by using _stable_ PRNGs; see [**"Definitions"**](#Definitions) and the following examples:
+Meeting statement 3 is aided by using _stable_ PRNGs; see [**"Definitions"**](#Definitions) and the following examples:
 
 - [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable.
 - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified).
@@ -233,6 +228,15 @@ Which PRNG to use for generating reproducible "randomness" depends on the applic
 - meet or exceed the quality requirements of a statistical RNG,
 - be reasonably fast, and
 - have a _state length_ of 64 bits or greater.
+
+<a id=Seed_Generation_for_Seeded_PRNGs></a>
+### Seed Generation for Seeded PRNGs
+
+As much as possible, an application SHOULD generate seeds for a seeded PRNG&mdash;
+
+- using a cryptographic or statistical RNG (as defined earlier),
+- as described in [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation), or
+- otherwise using hard-to-predict data.
 
 <a id=Examples_2></a>
 ### Examples
@@ -252,21 +256,21 @@ where the game might need to generate the same content of that kind multiple tim
 
 In general, such a game SHOULD use a PRNG with a custom seed for such purposes only if&mdash;
 
-1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use (see recommendations 2 and 3), or
-2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content (see recommendations 2 and 3).
+1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use, or
+2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.
 
 Option 1 often applies to games that generate procedural terrain for game levels, since the terrain often exhibits random variations over an extended space.  Option 1 is less suitable for puzzle game boards or card shuffling, since much less data needs to be stored.
 
-> **Example:** Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. Under recommendation 4, the game&mdash;
+> **Example:** Suppose a game generates a map with random terrain and shows the player a "code" to generate that map. In this case, the game&mdash;
 >
 > - MAY change the algorithm it uses to generate random maps, but
 > - SHOULD use, in connection with the new algorithm, "codes" that can't be confused with "codes" it used for previous algorithms, and
 > - SHOULD continue to generate the same random map using an old "code" when the player enters it, even after the change to a new algorithm.
 
-<a id=Unit_Testing></a>
-#### Unit Testing
+<a id=Unit_Tests></a>
+#### Unit Tests
 
-A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the method meets recommendation 4).
+A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test ensures backward compatibility).
 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
@@ -276,7 +280,7 @@ _Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that ar
 <a id=Noise></a>
 #### Noise
 
-Randomly generated numbers can serve as _noise_, that is, a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
+_Noise_ is a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
 1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(3)**](#Note3)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  As much as possible, procedural noise implementations SHOULD **use an RNG to generate the additional data** for the noise function in advance.  If using a [**custom-seeded PRNG**](#When_to_Use_a_Seeded_PRNG) is appropriate for the application, the additional data MAY be **"hard-coded"** instead.  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function SHOULD be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
 
@@ -337,7 +341,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
 | JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
 | Ruby | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
-| PHP | `random_int()` (since PHP 7) |  | `mt_rand()` (A) |
+| PHP | `random_int()`, `random_bytes()` (both since PHP 7) |  | `mt_rand()` (A) |
 
 <small>(A) General RNG implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.</small>
 
@@ -495,7 +499,7 @@ What has motivated me to write a more rigorous definition of random number gener
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
-- leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html)).
+- leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html); see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_).
 
 <a id=Conclusion></a>
 ## Conclusion
