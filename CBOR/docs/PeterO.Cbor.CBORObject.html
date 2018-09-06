@@ -330,11 +330,11 @@ This object&#39;s type is not a number type, including the special not-a-number 
 <pre>public System.Collections.Generic.ICollection Values { get; }
 </pre>
 
-<p>Gets a collection of the values of this CBOR object. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed.</p>
+<p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an array. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed. (This method can&#39;t be used to get the bytes in a CBOR byte string; for that, use the GetByteArray method instead.)</p>
 
 <p><b>Returns:</b></p>
 
-<p>A collection of the values of this CBOR object.</p>
+<p>A collection of the values of this CBOR map or array.</p>
 
 <p><b>Exceptions:</b></p>
 

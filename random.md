@@ -59,7 +59,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
     - [**Examples and Non-Examples**](#Examples_and_Non_Examples)
 - [**Seeded PRNGs**](#Seeded_PRNGs)
     - [**When to Use a Seeded PRNG**](#When_to_Use_a_Seeded_PRNG)
-    - [**Recommendations for Seeded PRNGs**](#Recommendations_for_Seeded_PRNGs)
+    - [**Which Seeded PRNG to Use**](#Which_Seeded_PRNG_to_Use)
     - [**Seed Generation for Seeded PRNGs**](#Seed_Generation_for_Seeded_PRNGs)
     - [**Examples**](#Examples_2)
         - [**Games**](#Games)
@@ -181,7 +181,7 @@ Examples of statistical RNGs include the following:
 - `Lehmer64` and `Lehmer128` (for each: state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
-- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS32`, described in a work by David Jones 2007/2010.
+- `JKISS`, `JKISS32`, `JLKISS`, `JLKISS64`, described in a work by David Jones 2007/2010.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
 - Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, B. Widynski's `msws` (Middle Square Weyl Sequence), and D. Blackman's `gjrand`.
@@ -220,8 +220,8 @@ Meeting statement 3 is aided by using _stable_ PRNGs; see [**"Definitions"**](#D
 - C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
 - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
-<a id=Recommendations_for_Seeded_PRNGs></a>
-### Recommendations for Seeded PRNGs
+<a id=Which_Seeded_PRNG_to_Use></a>
+### Which Seeded PRNG to Use
 
 Which PRNG to use for generating reproducible "randomness" depends on the application. But it is RECOMMENDED that any PRNG algorithm selected for producing such "randomness"&mdash;
 
@@ -275,7 +275,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in Lenstra&mdash;Wesolowski 2015, in Boneh, Bonneau et al. 2018 (the latter introduces so-called _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in Lenstra&ndash;Wesolowski 2015, in Boneh, Bonneau et al. 2018 (which introduces so-called _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
 
 <a id=Noise></a>
 #### Noise
