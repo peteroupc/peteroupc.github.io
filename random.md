@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 4, 2018.
+Begun on Mar. 5, 2016; last updated on Sep. 6, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -177,18 +177,17 @@ The RNG MAY reseed itself from time to time, using a newly generated seed as des
 Examples of statistical RNGs include the following:
 - [**xoshiro256&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoshiro256starstar.c) (state length 256 bits; nonzero seed).
 - [**xoroshiro128&#x2a;&#x2a;**](http://xoshiro.di.unimi.it/xoroshiro128starstar.c) (state length 128 bits; nonzero seed).
-- `Lehmer64` (state length 128 bits; odd seed, so effectively 127 bits state length).
-- `Lehmer128` (state length 128 bits; odd seed, so effectively 127 bits state length).
+- `Lehmer64` and `Lehmer128` (for each: state length 128 bits; odd seed, so effectively 127 bits state length).
 - XorShift\* 128/64 (state length 128 bits; nonzero seed).
 - XorShift\* 64/32 (state length 64 bits; nonzero seed).
 - `JKISS`, `JKISS32`, `JLKISS`, `JLKISS32`, described in a work by David Jones 2007/2010.
-- `msws` (Middle Square Weyl Sequence), by B. Widynski.
 - C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) (state length 577 bits; nonzero seed).
 - PCG (`pcg32`, `pcg64`, and `pcg64_fast` classes), by Melissa O'Neill. See also a [**critique by S. Vigna**](http://pcg.di.unimi.it/pcg.php).
+- Other examples include B. Jenkins's "A small noncryptographic PRNG" (sometimes called `jsf`), C. Doty-Humphrey's `sfc`, B. Widynski's `msws` (Middle Square Weyl Sequence), and D. Blackman's `gjrand`.
 
 The following also count as statistical RNGs, but are not preferred:
 - Mersenne Twister shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in `BigCrush`'s LinearComp test. (See also S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", as published in the `xoshiro/xoroshiro` website.)
-- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by D. Blackman and S. Vigna in "Scrambled Linear Pseudorandom Number Generators", these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the whole output has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
+- [**`xoroshiro128+`**](http://xoshiro.di.unimi.it/xoroshiro128plus.c), `xoshiro256+`, and `xorshift128+`.  As described by D. Blackman and S. Vigna in "Scrambled Linear Pseudorandom Number Generators", these linear PRNGs use weak scramblers, so that each output's lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also [**"Testing lowest bits in isolation"**](http://xoshiro.di.unimi.it/lowcomp.php).
 
 Non-examples include the following:
 - Any [**linear congruential generator**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with modulus 2<sup>63</sup> or less (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) has a _state length_ of less than 64 bits.
@@ -272,13 +271,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, of the information used to derive such numbers&mdash;
-- at least some of it is not known by anyone until some time after the announcement is made that those numbers will be generated, but all of it will eventually be publicly available, and
-- some of it can be disclosed in the announcement that those numbers will be generated.
-
-One process to generate verifiable random numbers is described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt) (to the extent its advice is not specific to the Internet Engineering Task Force or its Nominations Committee).  Although the source code given in that RFC uses the MD5 algorithm, the process does not preclude the use of [**hash functions**](#Hash_Functions) stronger than MD5 (see the last paragraph of section 3.3 of that RFC).
-
-Another way is to hash publicly known inputs using _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify.  They were first formally defined in a 2018 paper by Boneh, Bonneau, and others.  See also Lenstra&dash;Wesolowski 2015.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in Lenstra&mdash;Wesolowski 2015, in Boneh, Bonneau et al. 2018 (the latter introduces so-called _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
 
 <a id=Noise></a>
 #### Noise
@@ -523,7 +516,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009 for further discussion).</small>
 
-<small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small>
+<small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small>
 
 <small><sup id=Note3>(3)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
