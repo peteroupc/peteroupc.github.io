@@ -74,13 +74,13 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 - [**RNG Topics**](#RNG_Topics)
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
     - [**Shuffling**](#Shuffling)
-        - [**Shuffling Method**](#Shuffling_Method)
-        - [**Choosing from Among All Permutations**](#Choosing_from_Among_All_Permutations)
     - [**GPU Programming Environments**](#GPU_Programming_Environments)
 - [**Hash Functions**](#Hash_Functions)
 - [**Motivation**](#Motivation)
 - [**Conclusion**](#Conclusion)
 - [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
+    - [**Suggested Entropy Size**](#Suggested_Entropy_Size)
 - [**License**](#License)
 
 <a id=Definitions></a>
@@ -225,9 +225,9 @@ Among other things, using seeded PRNGs only in the limited circumstances given a
 <a id=Which_Seeded_PRNG_to_Use></a>
 ### Which Seeded PRNG to Use
 
-Which PRNG to use for generating reproducible "randomness" depends on the application. But it is RECOMMENDED that any PRNG algorithm selected for producing such "randomness"&mdash;
+If an application decides to use a seeded PRNG for repeatable "randomness", that PRNG SHOULD&mdash;
 
-- meet or exceed the quality requirements of a statistical RNG,
+- meet or exceed the quality requirements of a [**statistical RNG**](#Statistical_RNGs),
 - be reasonably fast, and
 - have a _state length_ of 64 bits or greater.
 
@@ -400,67 +400,22 @@ An application that generates **random numbers in parallel** can also do one or 
 <a id=Shuffling></a>
 ### Shuffling
 
-There are special considerations in play when applications use RNGs to shuffle a list of items.
+In a list with N different items, there are N factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_.
 
-<a id=Shuffling_Method></a>
-#### Shuffling Method
+> **Note:** More generally, a list has `M! / (W_1! * W_2! * ... * W_N!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `M` is the list's size, `N` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.
 
-The first consideration touches on the **shuffling method**.  The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up; see (Atwood)<sup>[**(13)**](#Note13)</sup>.  I give a correct implementation in [**another document**](https://peteroupc.github.io/randomfunc.html).
+An application can **shuffle a list**&mdash;
 
-<a id=Choosing_from_Among_All_Permutations></a>
-#### Choosing from Among All Permutations
+- by generating a random integer as low as 0 and as high as the number of permutations minus 1, and converting that integer to a permutation, or
+- by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood)<sup>[**(13)**](#Note13)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
 
-The second consideration is present if PRNGs are used for shuffling. If the PRNG's period is less than the number of **distinct permutations (arrangements) of a list**, then there are some permutations that PRNG can't choose when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
-The number of distinct permutations is the [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html) _m_! / (_w_<sub>1</sub>! &times; _w_<sub>2</sub>! &times; ... &times; _w_<sub>_n_</sub>!), where _m_ is the list's size, _n_ is the number of different items in the list, _x_! means "_x_ [**factorial**](https://en.wikipedia.org/wiki/Factorial)", and _w_<sub>_i_</sub> is the number of times the item identified by _i_ appears in the list. (This reduces to _n_!, if the list consists of _n_ different items.)
+To give all permutations a chance, an application needs to generate data with at least **`B` bits of [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation)** (randomness), where `B` is the number of bits needed to store `P`, where `P` is the number of permutations minus 1 (e.g., `B` is 226 bits for a 52-item list); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>. (`B` can be calculated for different lists using the Python code found in the [**appendix**](#Suggested_Entropy_Size).)
 
-The following Python code suggests how many bits of [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness) are needed for shuffling. (See also "Lack of randomness" in the [**Big Deal document by van Staveren**](https://sater.home.xs4all.nl/doc.html).) For example&mdash;
+If an application will use PRNGs for shuffling, an application is encouraged to generate data with at least `B` bits of entropy, [**generate a seed**](#Seed_Generation) with that data, then pass the seed to a PRNG with state length `B` or greater.  For general-purpose use (but not when information security is involved), an application can use the number 525 instead of `B` (and so assume that lists of up to 100 items will be shuffled). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list. `xoroshiro1024**` and `ranlux48` are two examples of PRNGs with state lengths of at least 525.)
 
-- to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), and
-- to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).
-
-&nbsp;
-
-    def fac(x):
-        """ Calculates factorial of x. """
-        if x<=1: return 1
-        ret=1
-        for i in range(x): ret=ret*(i+1)
-        return ret
-
-    def ceillog2(x):
-        """ Calculates base-2 logarithm of x, rounded up. """
-        ret=0
-        needCeil=True
-        while x>1:
-           one=needCeil and ((x&1)!=0)
-           x=x>>1
-           if one:
-             ret+=1; needCeil=False
-           ret+=1
-        return ret
-
-    def stateLengthN(n):
-      """ Suggested state length (or bits of entropy)
-         for PRNGs that shuffle
-        a list of n items. """
-      return ceillog2(fac(n))
-
-    def stateLengthNChooseK(n, k):
-      """ Suggested state length/entropy for PRNGs that choose k
-       different items randomly from a list of n items
-       (see RFC 3797, sec. 3.3) """
-      return ceillog2(fac(n)/(fac(k)*fac(n-k)))
-
-    def stateLengthDecks(numDecks, numCards):
-      """ Suggested state length/entropy for PRNGs that shuffle
-        multiple decks of cards in one. """
-      return ceillog2(fac(numDecks*numCards)/ \
-          (fac(numDecks)**numCards))
-
-Whenever a PRNG is to be used for shuffling purposes, an application is encouraged to choose a PRNG with a state length suggested by the formulas above (and with the highest feasible period for that state length), depending on the size of lists the application will shuffle.  For general-purpose use (but not when information security is involved), that state length could be 525 or more (`stateLengthN(100)`), such as with `xoroshiro1024**` or `ranlux48`.  (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list.)
-
-The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, and SHOULD be initialized with a full-length seed.
+The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, SHOULD have the highest feasible period for its state length, and SHOULD be initialized with a full-length seed.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
@@ -477,7 +432,7 @@ so random number generators for such environments are often designed as [**hash 
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(14)**](#Note14)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(15)**](#Note15)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -546,7 +501,60 @@ I acknowledge&mdash;
 
 <small><sup id=Note13>(13)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
 
-<small><sup id=Note14>(14)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note14>(14)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
+
+<small><sup id=Note15>(15)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+
+<a id=Appendix></a>
+## Appendix
+
+&nbsp;
+
+<a id=Suggested_Entropy_Size></a>
+### Suggested Entropy Size
+
+The following Python code suggests how many bits of entropy are needed for shuffling.  For example&mdash;
+- to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), and
+- to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).
+
+&nbsp;
+
+    def fac(x):
+        """ Calculates factorial of x. """
+        if x<=1: return 1
+        ret=1
+        for i in range(x): ret=ret*(i+1)
+        return ret
+
+    def ceillog2(x):
+        """ Calculates base-2 logarithm of x, rounded up. """
+        ret=0
+        needCeil=True
+        while x>1:
+           one=needCeil and ((x&1)!=0)
+           x=x>>1
+           if one:
+             ret+=1; needCeil=False
+           ret+=1
+        return ret
+
+    def stateLengthN(n):
+      """ Suggested state length (or bits of entropy)
+         for PRNGs that shuffle
+        a list of n items. """
+      return ceillog2(fac(n))
+
+    def stateLengthNChooseK(n, k):
+      """ Suggested state length/entropy for PRNGs that choose k
+       different items randomly from a list of n items
+       (see RFC 3797, sec. 3.3) """
+      return ceillog2(fac(n)/(fac(k)*fac(n-k)))
+
+    def stateLengthDecks(numDecks, numCards):
+      """ Suggested state length/entropy for PRNGs that shuffle
+        multiple decks of cards in one. """
+      return ceillog2(fac(numDecks*numCards)/ \
+          (fac(numDecks)**numCards))
 
 <a id=License></a>
 ## License
