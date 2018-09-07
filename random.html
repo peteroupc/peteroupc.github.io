@@ -155,7 +155,7 @@
 <li><strong>Stable.</strong> A programming interface is <em>stable</em> if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.</li>
 <li><strong>Information security.</strong> Defined in ISO/IEC 27000.</li>
 <li><strong>Nondeterministic source.</strong> Data source that does not always return the same output for the same input.</li>
-<li><strong>MUST, SHOULD, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  As defined in RFC 2119 and RFC 8174.</li>
+<li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  As defined in RFC 2119 and RFC 8174.</li>
 </ul>
 
 <p><a id=Cryptographic_RNGs></a></p>
@@ -224,9 +224,11 @@
 <li> the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.</li>
 </ul>
 
-<p>If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>).</p>
-
 <p>A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.</p>
+
+<blockquote>
+<p><strong>Note:</strong> If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to a statistical RNG implementation (see <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>).</p>
+</blockquote>
 
 <p><a id=Quality_2></a></p>
 
@@ -294,7 +296,7 @@
 
 <h3>When to Use a Seeded PRNG</h3>
 
-<p>An application SHOULD use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if&mdash;</p>
+<p>An application SHOULD NOT use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) unless&mdash;</p>
 
 <ol>
 <li>the application might need to generate the same &quot;random&quot; result multiple times,</li>
@@ -370,7 +372,7 @@
 
 <p>where the game might need to generate the same content of that kind multiple times.</p>
 
-<p>In general, such a game SHOULD use a PRNG with a custom seed for such purposes only if&mdash;</p>
+<p>In general, such a game SHOULD NOT use a PRNG with a custom seed for such purposes unless&mdash;</p>
 
 <ol>
 <li>generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use, or</li>
@@ -595,7 +597,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h3>Shuffling</h3>
 
-<p>In a list with N different items, there are N factorial (that is, <code>1 * 2 * ... * N</code> or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em>.</p>
+<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code> or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em>.</p>
 
 <blockquote>
 <p><strong>Note:</strong> More generally, a list has <code>M! / (W_1! * W_2! * ... * W_N!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>M</code> is the list&#39;s size, <code>N</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.</p>

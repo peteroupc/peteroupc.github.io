@@ -64,8 +64,8 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
     - [**Examples**](#Examples_2)
         - [**Games**](#Games)
         - [**Unit Tests**](#Unit_Tests)
-        - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
         - [**Noise**](#Noise)
+        - [**Verifiable Random Numbers**](#Verifiable_Random_Numbers)
 - [**Nondeterministic Sources and Seed Generation**](#Nondeterministic_Sources_and_Seed_Generation)
     - [**Examples of Nondeterministic Sources**](#Examples_of_Nondeterministic_Sources)
     - [**Entropy**](#Entropy)
@@ -96,7 +96,7 @@ The following definitions are helpful in better understanding this document.
 - **Stable.** A programming interface is _stable_ if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.
 - **Information security.** Defined in ISO/IEC 27000.
 - **Nondeterministic source.** Data source that does not always return the same output for the same input.
-- **MUST, SHOULD, MAY, RECOMMENDED, NOT RECOMMENDED.**  As defined in RFC 2119 and RFC 8174.
+- **MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.**  As defined in RFC 2119 and RFC 8174.
 
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
@@ -149,9 +149,9 @@ Statistical RNGs are used, for example, in simulations, numerical integration, a
 -  information security is not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.
 
-If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to this kind of implementation (see [**"Shuffling"**](#Shuffling)).
-
 A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.
+
+> **Note:** If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to a statistical RNG implementation (see [**"Shuffling"**](#Shuffling)).
 
 <a id=Quality_2></a>
 ### Quality
@@ -202,7 +202,7 @@ In addition, some applications use pseudorandom number generators (PRNGs) to gen
 <a id=When_to_Use_a_Seeded_PRNG></a>
 ### When to Use a Seeded PRNG
 
-An application SHOULD use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) only if&mdash;
+An application SHOULD NOT use a PRNG with a seed it specifies (rather than an automatically-initialized PRNG or another kind of RNG) unless&mdash;
 
 1. the application might need to generate the same "random" result multiple times,
 2. the application either&mdash;
@@ -256,7 +256,7 @@ Many kinds of games generate game content based on apparent randomness, such as&
 
 where the game might need to generate the same content of that kind multiple times.
 
-In general, such a game SHOULD use a PRNG with a custom seed for such purposes only if&mdash;
+In general, such a game SHOULD NOT use a PRNG with a custom seed for such purposes unless&mdash;
 
 1. generating the random content uses relatively many random numbers (say, more than a few thousand), and the application finds it impractical to store or distribute the content or the numbers for later use, or
 2. the game makes the seed (or a "code" or "password" based on the seed, such as a barcode or a string of letters and digits) accessible to the player, to allow the player to regenerate the content.
@@ -274,19 +274,19 @@ Option 1 often applies to games that generate procedural terrain for game levels
 
 A custom seed is appropriate when unit testing a method that uses a seeded PRNG in place of another kind of RNG for the purpose of the test (provided the test ensures backward compatibility).
 
-<a id=Verifiable_Random_Numbers></a>
-#### Verifiable Random Numbers
-
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(8)**](#Note8)</sup>, in (Boneh et al., 2018)<sup>[**(9)**](#Note9)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
-
 <a id=Noise></a>
 #### Noise
 
 _Noise_ is a randomized variation in images, sound, and other data.  (See also Red Blob Games, [**"Noise Functions and Map Generation"**](http://www.redblobgames.com/articles/noise/introduction.html)).  For the purposes of RNG recommendations, there are two kinds of noise:
 
-1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(10)**](#Note10)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  As much as possible, procedural noise implementations SHOULD **use an RNG to generate the additional data** for the noise function in advance.  If using a [**custom-seeded PRNG**](#When_to_Use_a_Seeded_PRNG) is appropriate for the application, the additional data MAY be **"hard-coded"** instead.  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function SHOULD be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
+1.  **_Procedural noise_** is generated using a _noise function_, which is a function that outputs seemingly random numbers given an _n_-dimensional point and, optionally, additional data (such as gradients or hash values).<sup>[**(8)**](#Note8)</sup>  Procedural noise includes [**cellular noise**](https://en.wikipedia.org/wiki/Cellular_noise), [**value noise**](https://en.wikipedia.org/wiki/Value_noise), and [**gradient noise**](https://en.wikipedia.org/wiki/Gradient_noise) (such as [**Perlin noise**](https://en.wikipedia.org/wiki/Perlin_noise)).  As much as possible, procedural noise implementations SHOULD **use an RNG to generate the additional data** for the noise function in advance.  If using a [**custom-seeded PRNG**](#When_to_Use_a_Seeded_PRNG) is appropriate for the application, the additional data MAY be **"hard-coded"** instead.  If the noise function **incorporates a** [**_hash function_**](#Hash_Functions), that hash function SHOULD be reasonably fast, be _stable_ (see [**"Definitions"**](#Definitions)), and have the so-called _avalanche property_.
 
 2.  **_Nonprocedural noise_** is generated using the help of an RNG.  Nonprocedural noise includes [**colored noise**](https://en.wikipedia.org/wiki/Colors_of_noise) (including white noise and pink noise), periodic noise, and noise following a Gaussian or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions).  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.
+
+<a id=Verifiable_Random_Numbers></a>
+#### Verifiable Random Numbers
+
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(9)**](#Note9)</sup>, in (Boneh et al., 2018)<sup>[**(10)**](#Note10)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
 
 <a id=Nondeterministic_Sources_and_Seed_Generation></a>
 ## Nondeterministic Sources and Seed Generation
@@ -400,7 +400,7 @@ An application that generates **random numbers in parallel** can also do one or 
 <a id=Shuffling></a>
 ### Shuffling
 
-In a list with N different items, there are N factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_.
+In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_.
 
 > **Note:** More generally, a list has `M! / (W_1! * W_2! * ... * W_N!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `M` is the list's size, `N` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.
 
@@ -411,9 +411,9 @@ An application can **shuffle a list**&mdash;
 
 Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
 
-To give all permutations a chance, an application needs to generate data with at least **`B` bits of [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation)** (randomness), where `B` is the number of bits needed to store `P`, where `P` is the number of permutations minus 1 (e.g., `B` is 226 bits for a 52-item list); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>. (`B` can be calculated for different lists using the Python code found in the [**appendix**](#Suggested_Entropy_Size).)
+To give all permutations a chance, an application needs to gather data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness), where `B` is the number of bits needed to store `P`, where `P` is the number of permutations minus 1 (e.g., `B` is 226 bits for a 52-item list); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>. (`B` can be calculated for different lists using the Python code found in the [**appendix**](#Suggested_Entropy_Size).)
 
-If an application will use PRNGs for shuffling, an application is encouraged to generate data with at least `B` bits of entropy, [**generate a seed**](#Seed_Generation) with that data, then pass the seed to a PRNG with state length `B` or greater.  For general-purpose use (but not when information security is involved), an application can use the number 525 instead of `B` (and so assume that lists of up to 100 items will be shuffled). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list. `xoroshiro1024**` and `ranlux48` are two examples of PRNGs with state lengths of at least 525.)
+If an application will use PRNGs for shuffling, an application is encouraged to gather data with at least `B` bits of entropy, [**generate a seed**](#Seed_Generation) with that data, then pass the seed to a PRNG with state length `B` or greater.  For general-purpose use (but not when information security is involved), an application can use the number 525 instead of `B` (and so assume that lists of up to 100 items will be shuffled). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list. `xoroshiro1024**` and `ranlux48` are two examples of PRNGs with state lengths of at least 525.)
 
 The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, SHOULD have the highest feasible period for its state length, and SHOULD be initialized with a full-length seed.
 
@@ -489,11 +489,11 @@ I acknowledge&mdash;
 
 <small><sup id=Note7>(7)</sup> Blackman, D., Vigna, S. "Scrambled Linear Pseudorandom Number Generators", 2018.</small>
 
-<small><sup id=Note8>(8)</sup> Lenstra, A.K., Wesolowski, B. "A random zoo: sloth, unicorn, and trx", 2015.</small>
+<small><sup id=Note8>(8)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 
-<small><sup id=Note9>(9)</sup> Boneh, D., Bonneau, J., et al. "Verifiable Delay Functions", 2018.</small>
+<small><sup id=Note9>(9)</sup> Lenstra, A.K., Wesolowski, B. "A random zoo: sloth, unicorn, and trx", 2015.</small>
 
-<small><sup id=Note10>(10)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
+<small><sup id=Note10>(10)</sup> Boneh, D., Bonneau, J., et al. "Verifiable Delay Functions", 2018.</small>
 
 <small><sup id=Note11>(11)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
 
