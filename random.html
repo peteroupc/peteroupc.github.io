@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Sep. 6, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Sep. 7, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -306,14 +306,15 @@
 
 <ul>
 <li>by saving the result to a file,</li>
-<li>by storing the random numbers for the feature generating the result to &quot;replay&quot; later, or</li>
-<li>by distributing the results or the random numbers to networked users as they are generated, and</li>
+<li>by storing the &quot;random&quot; numbers for the feature generating the result to &quot;replay&quot; later, or</li>
+<li>by distributing the results or the &quot;random&quot; numbers to networked users as they are generated, and</li>
 </ul></li>
 </ul></li>
 <li>any feature that uses such a PRNG to generate that &quot;random&quot; result will remain backward compatible with respect to the &quot;random&quot; results it generates, for as long as that feature is still in use by the application.</li>
 </ol>
 
-<p>Meeting statement 3 is aided by using <em>stable</em> PRNGs; see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a> and the following examples:</p>
+<blockquote>
+<p><strong>Note:</strong> Meeting statement 3 is aided by using <em>stable</em> PRNGs; see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a> and the following examples:</p>
 
 <ul>
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is stable.</li>
@@ -321,6 +322,9 @@
 <li>C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, are not stable (because the algorithms they use are implementation-defined according to the specification).</li>
 <li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> is not stable (because its generation behavior could change in the future).</li>
 </ul>
+</blockquote>
+
+<p>Among other things, using seeded PRNGs only in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.</p>
 
 <p><a id=Which_Seeded_PRNG_to_Use></a></p>
 
@@ -395,7 +399,7 @@
 
 <h4>Verifiable Random Numbers</h4>
 
-<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, in (Lenstra et al., 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, in (Boneh et al., 2018)<sup><a href="#Note9"><strong>(9)</strong></a></sup> (which introduces so-called <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.</p>
+<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, in (Lenstra et al., 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, in (Boneh et al., 2018)<sup><a href="#Note9"><strong>(9)</strong></a></sup> (which introduces the concept of <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.</p>
 
 <p><a id=Noise></a></p>
 
@@ -538,7 +542,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation.</small></p>
 
-<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C).</small></p>
+<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)</small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD only be used to supplement other techniques for random number generation.</small></p>
 
@@ -678,7 +682,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -763,7 +767,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p><small><sup id=Note13>(13)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note14>(14)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 

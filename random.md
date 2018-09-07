@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 6, 2018.
+Begun on Mar. 5, 2016; last updated on Sep. 7, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -209,16 +209,18 @@ An application SHOULD use a PRNG with a seed it specifies (rather than an automa
     - makes the seed (or a "code" or "password" based on the seed) accessible to the user, or
     - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
         - by saving the result to a file,
-        - by storing the random numbers for the feature generating the result to "replay" later, or
-        - by distributing the results or the random numbers to networked users as they are generated, and
+        - by storing the "random" numbers for the feature generating the result to "replay" later, or
+        - by distributing the results or the "random" numbers to networked users as they are generated, and
 3. any feature that uses such a PRNG to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-Meeting statement 3 is aided by using _stable_ PRNGs; see [**"Definitions"**](#Definitions) and the following examples:
+> **Note:** Meeting statement 3 is aided by using _stable_ PRNGs; see [**"Definitions"**](#Definitions) and the following examples:
+>
+> - [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable.
+> - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified).
+> - C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
+> - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
-- [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is stable.
-- The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand) is not stable (because the algorithm it uses is unspecified).
-- C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
-- .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
+Among other things, using seeded PRNGs only in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.
 
 <a id=Which_Seeded_PRNG_to_Use></a>
 ### Which Seeded PRNG to Use
@@ -275,7 +277,7 @@ A custom seed is appropriate when unit testing a method that uses a seeded PRNG 
 <a id=Verifiable_Random_Numbers></a>
 #### Verifiable Random Numbers
 
-_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(8)**](#Note8)</sup>, in (Boneh et al., 2018)<sup>[**(9)**](#Note9)</sup> (which introduces so-called _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
+_Verifiable random numbers_ are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in [**RFC 3797**](https://www.rfc-editor.org/rfc/rfc3797.txt), in (Lenstra et al., 2015)<sup>[**(8)**](#Note8)</sup>, in (Boneh et al., 2018)<sup>[**(9)**](#Note9)</sup> (which introduces the concept of _verifiable delay functions_, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.
 
 <a id=Noise></a>
 #### Noise
@@ -358,7 +360,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(E) In my opinion, Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation.</small>
 
-<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C).</small>
+<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)</small>
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD only be used to supplement other techniques for random number generation.</small>
 
@@ -475,7 +477,7 @@ so random number generators for such environments are often designed as [**hash 
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a _hash code_. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup>[**(14)**](#Note14)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(14)**](#Note14)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -544,7 +546,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note13>(13)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
 
-<small><sup id=Note14>(14)</sup> Note that some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note14>(14)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
 <a id=License></a>
 ## License
