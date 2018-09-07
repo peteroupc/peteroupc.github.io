@@ -29,6 +29,18 @@ def prepareMarkdown(data)
      end
      next "<sup>[(#{newref+1})](##{newrefid})</sup>"
   }
+  data=data.gsub(/<<([^\|>]+)\|([^\|>]+)>>/){
+     noteref=$1
+     notedata=$2
+     newref=newnotetexts.length
+     newrefid="Note#{newref+1}"
+     noterefs[noteref]=newref
+     ntext=notedata
+     ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
+     newnotetexts.push("<small>"+ntext+"</small>")
+     next "(#{noteref})<sup>[(#{newref+1})](##{newrefid})</sup>"
+  }
+
   data=data.gsub(/<sup\s+id[\s\S]+?(?=\#\#|\z)/){
     next newnotetexts.join("\n\n")+"\n\n"
   }

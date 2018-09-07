@@ -207,9 +207,9 @@
 <ul>
 <li>The <code>/dev/random</code> device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness is available.</li>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by <code>/dev/random</code>.</li>
-<li>The <code>BCryptGenRandom</code> method in recent versions of Windows. (An independent analysis, by Dorrendorf et al. 2009, showed flaws in an earlier version of <code>CryptGenRandom</code>.)</li>
+<li>The <code>BCryptGenRandom</code> method in Windows 7 and later.</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
-<li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog.</li>
+<li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
 
@@ -264,17 +264,17 @@
 <li><code>Lehmer64</code> and <code>Lehmer128</code> (for each: state length 128 bits; odd seed, so effectively 127 bits state length).</li>
 <li>XorShift* 128/64 (state length 128 bits; nonzero seed).</li>
 <li>XorShift* 64/32 (state length 64 bits; nonzero seed).</li>
-<li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS64</code>, described in a work by David Jones 2007/2010.</li>
+<li><code>JKISS</code>, <code>JKISS32</code>, <code>JLKISS</code>, <code>JLKISS64</code>, described in (Jones 2007/2010)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
 <li>C++&#39;s <a href="http://www.cplusplus.com/reference/random/ranlux48/"><strong><code>std::ranlux48</code> engine</strong></a> (state length 577 bits; nonzero seed).</li>
 <li>PCG (<code>pcg32</code>, <code>pcg64</code>, and <code>pcg64_fast</code> classes), by Melissa O&#39;Neill. See also a <a href="http://pcg.di.unimi.it/pcg.php"><strong>critique by S. Vigna</strong></a>.</li>
-<li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, B. Widynski&#39;s <code>msws</code> (Middle Square Weyl Sequence), and D. Blackman&#39;s <code>gjrand</code>.</li>
+<li>Other examples include B. Jenkins&#39;s &quot;A small noncryptographic PRNG&quot; (sometimes called <code>jsf</code>), C. Doty-Humphrey&#39;s <code>sfc</code>, <code>msws</code> (Widynski 2017)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, and D. Blackman&#39;s <code>gjrand</code>.</li>
 </ul>
 
 <p>The following also count as statistical RNGs, but are not preferred:</p>
 
 <ul>
-<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, as published in the <code>xoshiro/xoroshiro</code> website.)</li>
-<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by D. Blackman and S. Vigna in &quot;Scrambled Linear Pseudorandom Number Generators&quot;, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
+<li>Mersenne Twister shows a <a href="http://xoroshiro.di.unimi.it/#quality"><strong>systematic failure</strong></a> in <code>BigCrush</code>&#39;s LinearComp test. (See also (Vigna 2016)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.)</li>
+<li><a href="http://xoshiro.di.unimi.it/xoroshiro128plus.c"><strong><code>xoroshiro128+</code></strong></a>, <code>xoshiro256+</code>, and <code>xorshift128+</code>.  As described by (Blackman and Vigna 2018)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, these linear PRNGs use weak scramblers, so that each output&#39;s lowest bits have low linear complexity even though the output as a whole has excellent statistical randomness.  See also <a href="http://xoshiro.di.unimi.it/lowcomp.php"><strong>&quot;Testing lowest bits in isolation&quot;</strong></a>.</li>
 </ul>
 
 <p>Non-examples include the following:</p>
@@ -395,7 +395,7 @@
 
 <h4>Verifiable Random Numbers</h4>
 
-<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, in Lenstra&ndash;Wesolowski 2015, in Boneh, Bonneau et al. 2018 (which introduces so-called <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.</p>
+<p><em>Verifiable random numbers</em> are random numbers (such as seeds for PRNGs) that are disclosed along with all the information necessary to verify their generation.  Usually, such information includes random numbers and/or uncertain data to be determined and publicly disclosed in the future.  Generating verifiable randomness has been described in <a href="https://www.rfc-editor.org/rfc/rfc3797.txt"><strong>RFC 3797</strong></a>, in (Lenstra et al., 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, in (Boneh et al., 2018)<sup><a href="#Note9"><strong>(9)</strong></a></sup> (which introduces so-called <em>verifiable delay functions</em>, functions whose output deliberately takes time to compute but is easy to verify), and elsewhere.</p>
 
 <p><a id=Noise></a></p>
 
@@ -404,7 +404,7 @@
 <p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note3"><strong>(3)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  As much as possible, procedural noise implementations SHOULD <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  If using a <a href="#When_to_Use_a_Seeded_PRNG"><strong>custom-seeded PRNG</strong></a> is appropriate for the application, the additional data MAY be <strong>&quot;hard-coded&quot;</strong> instead.  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function SHOULD be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
+<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note10"><strong>(10)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  As much as possible, procedural noise implementations SHOULD <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  If using a <a href="#When_to_Use_a_Seeded_PRNG"><strong>custom-seeded PRNG</strong></a> is appropriate for the application, the additional data MAY be <strong>&quot;hard-coded&quot;</strong> instead.  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function SHOULD be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
 <li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
 </ol>
 
@@ -425,7 +425,7 @@
 <li>timings of keystrokes and/or other input device interactions,</li>
 <li>thermal noise,</li>
 <li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
-<li>differences between two high-resolution counter values taken in quick succession (such as in S. M&uuml;ller&#39;s &quot;Jitter RNG&quot;).</li>
+<li>differences between two high-resolution counter values taken in quick succession (such as in &quot;Jitter RNG&quot;; see (M&uuml;ller)<sup><a href="#Note11"><strong>(11)</strong></a></sup>).</li>
 </ul>
 
 <p>RFC 4086, &quot;Randomness Requirements for Security&quot;, section 3, contains a survey of nondeterministic sources.</p>
@@ -452,7 +452,7 @@
 
 <p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Implementing_RNGs_in_Programming_Languages></a></p>
 
@@ -529,7 +529,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <ul>
 <li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
-<li>call the <code>BCryptGenRandom</code> API in recent versions of Windows,</small></li>
+<li>call the <code>BCryptGenRandom</code> API in Windows 7 and later,</small></li>
 </ul>
 
 <p><small>and only use other techniques if the existing ones are inadequate for the application.</small></p>
@@ -597,7 +597,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h4>Shuffling Method</h4>
 
-<p>The first consideration touches on the <strong>shuffling method</strong>.  The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;); I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document</strong></a>.</p>
+<p>The first consideration touches on the <strong>shuffling method</strong>.  The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> does a substantially unbiased shuffle of a list, assuming the RNG it uses can choose from among all permutations of that list.  However, that method is also easy to mess up; see (Atwood)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  I give a correct implementation in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document</strong></a>.</p>
 
 <p><a id=Choosing_from_Among_All_Permutations></a></p>
 
@@ -678,7 +678,7 @@ def stateLengthDecks(numDecks, numCards):
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note4"><strong>(4)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed size. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic.  The definition includes a PRNG that takes the input as a seed and outputs a random number of fixed size<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -737,13 +737,33 @@ def stateLengthDecks(numDecks, numCards):
 
 <h2>Notes</h2>
 
-<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em> (see RFC 4086 sec. 4 or Cliff&ndash;Boyd&ndash;Gonzalez Nieto 2009 for further discussion).</small></p>
+<p><small><sup id=Note1>(1)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em> (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small></p>
 
-<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A, (Ristenpart and Yilek 2010), and (Everspaugh et al. 2014).</small></p>
+<p><small><sup id=Note2>(2)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
-<p><small><sup id=Note3>(3)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
+<p><small><sup id=Note3>(3)</sup> Bernstein, D.J.  &quot;Fast-key-erasure random number generators&quot;, Jun. 23, 2017.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note4>(4)</sup> Jones, D., &quot;Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications&quot;, 2007/2010.</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Widynski, B., &quot;Middle Square Weyl Sequence RNG&quot;, arXiv:1704.00358v1 [cs.CR], 2017</small></p>
+
+<p><small><sup id=Note6>(6)</sup> S. Vigna, &quot;<a href="http://vigna.di.unimi.it/ftp/papers/xorshift.pdf"><strong>An experimental exploration of Marsaglia&#39;s <code>xorshift</code> generators, scrambled</strong></a>&quot;, 2016.</small></p>
+
+<p><small><sup id=Note7>(7)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2018.</small></p>
+
+<p><small><sup id=Note8>(8)</sup> Lenstra, A.K., Wesolowski, B. &quot;A random zoo: sloth, unicorn, and trx&quot;, 2015.</small></p>
+
+<p><small><sup id=Note9>(9)</sup> Boneh, D., Bonneau, J., et al. &quot;Verifiable Delay Functions&quot;, 2018.</small></p>
+
+<p><small><sup id=Note10>(10)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
+
+<p><small><sup id=Note11>(11)</sup> M&uuml;ller, S. &quot;CPU Time Jitter Based Non-Physical True Random Number Generator&quot;.</small></p>
+
+<p><small><sup id=Note12>(12)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  &quot;How to Extract and Expand Randomness: A Summary and Explanation of Existing Results&quot;, 2009.</small></p>
+
+<p><small><sup id=Note13>(13)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
+
+<p><small><sup id=Note14>(14)</sup> Note that some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=License></a></p>
 
