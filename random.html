@@ -610,7 +610,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a sufficiently large list size, can&#39;t be done by any computer in a reasonable time.)</p>
 
-<p>To give all permutations a chance, an application needs to generate data with at least <strong><code>B</code> bits of <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a></strong> (randomness), where <code>B</code> is the number of bits needed to store <code>P</code>, where <code>P</code> is the number of permutations minus 1 (e.g., <code>B</code> is 226 bits for a 52-item list); see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note15"><strong>(15)</strong></a></sup>. (<code>B</code> can be calculated for different lists using the Python code found in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>.)</p>
+<p>To give all permutations a chance, an application needs to generate data with at least <strong><code>B</code> bits of <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a></strong> (randomness), where <code>B</code> is the number of bits needed to store <code>P</code>, where <code>P</code> is the number of permutations minus 1 (e.g., <code>B</code> is 226 bits for a 52-item list); see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note14"><strong>(14)</strong></a></sup>. (<code>B</code> can be calculated for different lists using the Python code found in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>.)</p>
 
 <p>If an application will use PRNGs for shuffling, an application is encouraged to generate data with at least <code>B</code> bits of entropy, <a href="#Seed_Generation"><strong>generate a seed</strong></a> with that data, then pass the seed to a PRNG with state length <code>B</code> or greater.  For general-purpose use (but not when information security is involved), an application can use the number 525 instead of <code>B</code> (and so assume that lists of up to 100 items will be shuffled). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list. <code>xoroshiro1024**</code> and <code>ranlux48</code> are two examples of PRNGs with state lengths of at least 525.)</p>
 
@@ -636,7 +636,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note14"><strong>(14)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -721,9 +721,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small><sup id=Note13>(13)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note14>(14)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
-<p><small><sup id=Note15>(15)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
+<p><small><sup id=Note15>(15)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=Appendix></a></p>
 
