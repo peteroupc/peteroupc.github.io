@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Sep. 7, 2018.
+Begun on Mar. 5, 2016; last updated on Sep. 8, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -341,7 +341,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
 | Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
-| JavaScript | `crypto.randomBytes(byteCount)` (node.js only) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
+| JavaScript | `crypto.randomBytes(byteCount)` (node.js only); `crypto.getRandomValues()` (Web) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | `Math.random()` (ranges from 0 through 1) (B) |
 | Ruby | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
 | PHP | `random_int()`, `random_bytes()` (both since PHP 7) |  | `mt_rand()` (A) |
 
@@ -368,9 +368,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 ----
 
-In the limited cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling an output byte buffer with random bytes, where each bit in each byte will be randomly set to 0 or 1. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.
+In the limited cases where existing solutions are inadequate, a programming language API could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.
 
-> **Example:** A C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where "bytes" is a pointer to a byte array, and "size" is the number of random bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
+> **Example:** A C language API for such RNGs could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 
 My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
 
@@ -400,18 +400,16 @@ An application that generates **random numbers in parallel** can also do one or 
 <a id=Shuffling></a>
 ### Shuffling
 
-In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_.
-
-> **Note:** More generally, a list has `M! / (W_1! * W_2! * ... * W_N!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `M` is the list's size, `N` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.
+In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_<sup>[**(13)**](#Note13)</sup>.
 
 An application can **shuffle a list**&mdash;
 
 - by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or
-- by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood)<sup>[**(13)**](#Note13)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
+- by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood)<sup>[**(14)**](#Note14)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
 
 Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
-Where an application uses PRNGs for shuffling purposes, it is encouraged to&mdash;
+If an application uses PRNGs for shuffling purposes, it is encouraged to&mdash;
 
 1. choose a PRNG with a state length `B` or greater, then
 2. gather data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness), then
@@ -419,7 +417,7 @@ Where an application uses PRNGs for shuffling purposes, it is encouraged to&mdas
 4. pass the seed to the chosen PRNG, then
 5. use the PRNG to do a Fisher&ndash;Yates shuffle.
 
-Here, `B` is usually the number of bits needed for the number of permutations minus 1 to be stored, and can be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>.  For example, `B` is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for `B` and follow the steps above accordingly &mdash; for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.)
+Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(15)**](#Note15)</sup>.  For example, `B` is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for `B` and follow the steps above accordingly &mdash; for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.)
 
 The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation and SHOULD have the highest feasible period for its state length.
 
@@ -438,7 +436,7 @@ so random number generators for such environments are often designed as [**hash 
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as a sequence of bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(15)**](#Note15)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(16)**](#Note16)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -505,11 +503,13 @@ I acknowledge&mdash;
 
 <small><sup id=Note12>(12)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note13>(13)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
+<small><sup id=Note13>(13)</sup> More generally, a list has `N! / (W_1! * W_2! * ... * W_K!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `N` is the list's size, `K` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.  However, this number is never more than `N!` and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has `N!` permutations even if some of its items occur more than once.</small>
 
-<small><sup id=Note14>(14)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
+<small><sup id=Note14>(14)</sup> Atwood, Jeff. "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
 
-<small><sup id=Note15>(15)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note15>(15)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
+
+<small><sup id=Note16>(16)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -519,21 +519,17 @@ I acknowledge&mdash;
 <a id=Suggested_Entropy_Size></a>
 ### Suggested Entropy Size
 
-The following Python code suggests how many bits of entropy are needed for shuffling.  For example&mdash;
-- to shuffle a 52-item list, it is suggested to use a PRNG with state length 226 or more, initialized with a seed with at least 226 bits of entropy (`stateLengthN(52)`), and
-- to shuffle two 52-item lists of identical contents together, then the suggested state length and bits of entropy are 500 or more (`stateLengthDecks(2, 52)`).
+The following Python code suggests how many bits of entropy are needed for shuffling.  For example:
+- To shuffle an `n`-item list, the suggested bits of entropy is at least as high as the base-2 logarithm, rounded up, of `n!` (`stateLengthN(n)`).
+- To shuffle a 52-item list, at least 226 bits of entropy is suggested (`stateLengthN(52)`).
+- To shuffle two 52-item lists of identical contents together, at least 500 bits of entropy is suggested (`stateLengthDecks(2, 52)`).
 
 &nbsp;
 
-    def fac(x):
-        """ Calculates factorial of x. """
-        if x<=1: return 1
-        ret=1
-        for i in range(x): ret=ret*(i+1)
-        return ret
+    from math import factorial as fac
 
     def ceillog2(x):
-        """ Calculates base-2 logarithm of x, rounded up. """
+        """ Calculates base-2 logarithm, rounded up, of x. """
         ret=0
         needCeil=True
         while x>1:

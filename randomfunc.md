@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 5, 2018.
+Begun on June 4, 2017; last updated on Sep. 8, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -825,7 +825,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [**shuffle**](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
-> **Note:** Weighted choice without replacement can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome; e.g., "good" or "bad", and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
+> **Note:** Weighted choice without replacement can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., "good" or "bad"), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
