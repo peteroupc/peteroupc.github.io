@@ -406,16 +406,22 @@ In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * .
 
 An application can **shuffle a list**&mdash;
 
-- by generating a random integer as low as 0 and as high as the number of permutations minus 1, and converting that integer to a permutation, or
+- by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or
 - by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) (which is unfortunately easy to mess up &mdash; see (Atwood)<sup>[**(13)**](#Note13)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html)).
 
-Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a sufficiently large list size, can't be done by any computer in a reasonable time.)
+Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
-To give all permutations a chance, an application needs to gather data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness), where `B` is the number of bits needed to store `P`, where `P` is the number of permutations minus 1 (e.g., `B` is 226 bits for a 52-item list); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>. (`B` can be calculated for different lists using the Python code found in the [**appendix**](#Suggested_Entropy_Size).)
+Where an application uses PRNGs for shuffling purposes, it is encouraged to&mdash;
 
-If an application will use PRNGs for shuffling, an application is encouraged to gather data with at least `B` bits of entropy, [**generate a seed**](#Seed_Generation) with that data, then pass the seed to a PRNG with state length `B` or greater.  For general-purpose use (but not when information security is involved), an application can use the number 525 instead of `B` (and so assume that lists of up to 100 items will be shuffled). (Practically speaking, for sufficiently large list sizes, any given PRNG will not be able to randomly choose some permutations of the list. `xoroshiro1024**` and `ranlux48` are two examples of PRNGs with state lengths of at least 525.)
+1. choose a PRNG with a state length `B` or greater, then
+2. gather data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness), then
+3. [**generate a full-length seed**](#Seed_Generation) with the data gathered this way, then
+4. pass the seed to the chosen PRNG, then
+5. use the PRNG to do a Fisher&ndash;Yates shuffle.
 
-The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation, SHOULD have the highest feasible period for its state length, and SHOULD be initialized with a full-length seed.
+Here, `B` is usually the number of bits needed for the number of permutations minus 1 to be stored, and can be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(14)**](#Note14)</sup>.  For example, `B` is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for `B` and follow the steps above accordingly &mdash; for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.)
+
+The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation and SHOULD have the highest feasible period for its state length.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
