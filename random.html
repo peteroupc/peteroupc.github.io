@@ -665,8 +665,6 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h2>Motivation</h2>
 
-<p>In this document, I made the distinction between <em>statistical</em> and <em>cryptographic</em> RNGs because that is how many programming languages present random number generators &mdash; they usually offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as <code>java.security.SecureRandom</code>).</p>
-
 <p>What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today&mdash;</p>
 
 <ul>
@@ -676,6 +674,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
 <li>leave the default seeding fixed (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a>; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>).</li>
 </ul>
+
+<p>Many programming languages offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as <code>java.security.SecureRandom</code>).  Thus, a distinction between <em>statistical</em> and <em>cryptographic</em> RNGs seems natural.</p>
 
 <p><a id=Conclusion></a></p>
 

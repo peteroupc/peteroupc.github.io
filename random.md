@@ -453,14 +453,14 @@ Applications SHOULD choose hash functions with the avalanche property.  Hash fun
 <a id=Motivation></a>
 ## Motivation
 
-In this document, I made the distinction between _statistical_ and _cryptographic_ RNGs because that is how many programming languages present random number generators &mdash; they usually offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).
-
 What has motivated me to write a more rigorous definition of random number generators is the fact that many applications still use weak RNGs.  In my opinion, this is largely because most popular programming languages today&mdash;
 - specify few and weak requirements on RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
 - leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html); see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_).
+
+Many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).  Thus, a distinction between _statistical_ and _cryptographic_ RNGs seems natural.
 
 <a id=Conclusion></a>
 ## Conclusion
