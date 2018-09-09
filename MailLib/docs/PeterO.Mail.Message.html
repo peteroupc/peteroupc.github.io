@@ -570,24 +570,45 @@ The parameter <i>name</i>
 is null.</li>
 </ul>
 
+<h3>FromMailtoUri</h3>
+
+<pre>public static PeterO.Mail.Message FromMailtoUri(
+    string uri);
+</pre>
+
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>uri</i>: A string object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A Message object created from the given MailTo URI. Returs null if  <i>url</i>
+ is null, is syntactically invalid, or is not a MailTo URI.</p>
+
 <h3>FromMailtoUrl</h3>
 
 <pre>public static PeterO.Mail.Message FromMailtoUrl(
     string url);
 </pre>
 
-<p>Creates a message object from a MailTo URL. The URL can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
+<p><b>Deprecated.</b> Renamed to FromMailtoUri.</p>
+
+<p>Creates a message object from a MailTo URI (uniform resource identifier). The MailTo URI can contain key-value pairs that follow a question-mark, as in the following example: &quot;mailto:<a href="mailto:me@example.com">me@example.com</a>?subject=A%20Subject&quot;. In this example, &quot;subject&quot; is the subject of the email address. Only certain keys are supported, namely, &quot;to&quot;, &quot;cc&quot;, &quot;bcc&quot;, &quot;subject&quot;, &quot;in-reply-to&quot;, &quot;comments&quot;, &quot;keywords&quot;, and &quot;body&quot;. The first seven are header field names that will be used to set the returned message&#39;s corresponding header fields. The last, &quot;body&quot;, sets the body of the message to the given text. Keys other than these eight will be ignored.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: A string representing a MailTo URL.</li>
+<li><i>url</i>: A string representing a MailTo URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object created from the given MailTo URL. Returs null if  <i>url</i>
- is null, is syntactically invalid, or is not a MailTo URL.</p>
+<p>A Message object created from the given MailTo URI. Returs null if  <i>url</i>
+ is null, is syntactically invalid, or is not a MailTo URI.</p>
 
 <h3>Generate</h3>
 
@@ -688,6 +709,11 @@ is empty.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An array containing eight elements. Returns null if the Date header doesn&#39;t exist, if the Date field is syntactically or semantically invalid, or if the field&#39;s year would overflow a 32-bit signed integer.</p>
+
+<h3>GetFormattedBodyString</h3>
+
+<pre>public string GetFormattedBodyString();
+</pre>
 
 <h3>GetHeader</h3>
 
@@ -1202,16 +1228,29 @@ The parameter <i>str</i>
 is null.</li>
 </ul>
 
+<h3>ToMailtoUri</h3>
+
+<pre>public string ToMailtoUri();
+</pre>
+
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URI only if it has display names or group syntax.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A MailTo URI corresponding to this message.</p>
+
 <h3>ToMailtoUrl</h3>
 
 <pre>public string ToMailtoUrl();
 </pre>
 
-<p>Generates a &quot;mailto:&quot; URL corresponding to this message. The following header fields, and only these, are used to generate the URL: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URL only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URL only if it has display names or group syntax.</p>
+<p><b>Deprecated.</b> Renamed to ToMailtoUri.</p>
+
+<p>Generates a MailTo URI (uniform resource identifier) corresponding to this message. The following header fields, and only these, are used to generate the URI: To, Cc, Bcc, In-Reply-To, Subject, Keywords, Comments. The message body is included in the URI only if this message has a text media type and uses a supported character encoding (&quot;charset&quot; parameter). The To header field is included in the URI only if it has display names or group syntax.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A &quot;mailto:&quot; URL corresponding to this message.</p>
+<p>A MailTo URI corresponding to this message.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>

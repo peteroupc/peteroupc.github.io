@@ -346,7 +346,8 @@ Use the GetAllTags method instead.</li>
 <li><code>CBORType getType()</code><br>
 Gets the general data type of this CBOR object.</li>
 <li><code>Collection&lt;CBORObject&gt; getValues()</code><br>
-Gets a collection of the values of this CBOR object.</li>
+Gets a collection of the values of this CBOR object, if it&#39;s a map or an
+array.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
 <li><code>boolean HasTag​(int tagValue)</code><br>
@@ -921,15 +922,17 @@ simple value (including if the value is a floating-point number).</li>
 <pre>public final Collection&lt;CBORObject&gt; getValues()
 </pre>
 
-<p>Gets a collection of the values of this CBOR object. If this object is a
- map, returns one value for each key in the map in an undefined order.
- If this is an array, returns all the values of the array in the order
- they are listed.</p>
+<p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an
+ array. If this object is a map, returns one value for each key in the
+ map in an undefined order. If this is an array, returns all the
+ values of the array in the order they are listed. (This method can&#39;t
+ be used to get the bytes in a CBOR byte string; for that, use the
+ GetByteArray method instead.).</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A collection of the values of this CBOR object.</li>
+<li>A collection of the values of this CBOR map or array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

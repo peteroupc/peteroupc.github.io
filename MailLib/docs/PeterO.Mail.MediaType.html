@@ -85,7 +85,7 @@
 <pre>public string SubType { get; }
 </pre>
 
-<p>Gets this media type&#39;s subtype.</p>
+<p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The resulting string will be in lowercase letters.</p>
 
 <p><b>Returns:</b></p>
 
@@ -96,7 +96,7 @@
 <pre>public string TopLevelType { get; }
 </pre>
 
-<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or &quot;audio&quot;).</p>
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will be in lowercase letters.</p>
 
 <p><b>Returns:</b></p>
 
@@ -107,7 +107,7 @@
 <pre>public string TypeAndSubType { get; }
 </pre>
 
-<p>Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+<p>Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;. The resulting string will be in lowercase letters.</p>
 
 <p><b>Returns:</b></p>
 
