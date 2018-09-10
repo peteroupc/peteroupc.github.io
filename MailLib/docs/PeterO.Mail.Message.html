@@ -581,7 +581,8 @@ is null.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>uri</i>: A string object.</li>
+<li><i>uri</i>: The parameter  <i>uri</i>
+is a text string.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -714,6 +715,12 @@ is empty.</p></li>
 
 <pre>public string GetFormattedBodyString();
 </pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A string object.</p>
 
 <h3>GetHeader</h3>
 
@@ -1153,7 +1160,7 @@ is null.</p></li>
     string str);
 </pre>
 
-<p>Sets the body of this message to the specified string in HTML format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format. The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1180,7 +1187,7 @@ is null.</li>
     string html);
 </pre>
 
-<p>Sets the body of this message to a multipart body with plain text and HTML versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+<p>Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
 
 <p><b>Parameters:</b></p>
 
