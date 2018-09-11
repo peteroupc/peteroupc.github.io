@@ -587,7 +587,7 @@ is a text string.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object created from the given MailTo URI. Returs null if  <i>url</i>
+<p>A Message object created from the given MailTo URI. Returs null if  <i>uri</i>
  is null, is syntactically invalid, or is not a MailTo URI.</p>
 
 <h3>FromMailtoUrl</h3>
@@ -603,12 +603,12 @@ is a text string.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>url</i>: A string representing a MailTo URI.</li>
+<li><i>uri</i>: A string representing a MailTo URI.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A Message object created from the given MailTo URI. Returs null if  <i>url</i>
+<p>A Message object created from the given MailTo URI. Returs null if  <i>uri</i>
  is null, is syntactically invalid, or is not a MailTo URI.</p>
 
 <h3>Generate</h3>
@@ -720,7 +720,7 @@ is empty.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A string object.</p>
+<p>A text string.</p>
 
 <h3>GetHeader</h3>
 
@@ -1206,6 +1206,34 @@ is null.</li>
 <li>System.ArgumentNullException:
 The parameter <i>text</i>
 or  <i>html</i>
+is null.</li>
+</ul>
+
+<h3>SetTextAndMarkdown</h3>
+
+<pre>public PeterO.Mail.Message SetTextAndMarkdown(
+    string text,
+    string markdown);
+</pre>
+
+<p>Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message. The character sequences CR (carriage return, &quot;\r&quot; , U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line breaks. Unpaired surrogate code points will be replaced with replacement characters.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>text</i>: A string consisting of the plain text version of the message. Can be null, in which case the value of the &quot;markdown&quot; parameter is used as the plain text version.</p></li>
+<li><p><i>markdown</i>: A string consisting of the Markdown version of the message. For interoperability, this Markdown version will be converted to HTML.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>markdown</i>
 is null.</li>
 </ul>
 

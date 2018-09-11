@@ -1412,6 +1412,17 @@ is a byte (from 0 to 255).</li>
 
 <p>Generates a CBOR object from a byte array. The byte array is copied to a new byte array. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the DecodeFromBytes method instead.).</p>
 
+<p>The following example encodes a text string to a UTF-8 byte array, then uses the array to create a CBOR byte string object. It is not recommended to use  <code>Encoding.UTF8.GetBytes</code> in .NET, or he  <code>getBytes()</code> method in Java to do this. For instance, <code>Encoding.UTF8</code> begins the encoded string with a byte-order ark, and  <code>getBytes()</code> encodes text strings in an unspecified haracter encoding. Both behaviors can be undesirable. Instead, use he  <code>DataUtilities.GetUtf8Bytes</code> method to convert text trings to UTF-8.</p>
+
+<pre>/* true does character replacement of
+              invalid UTF-8; false throws an exception
+              on invalid UTF-8 */
+            byte[] bytes = DataUtilities.GetUtf8Bytes(
+              textString,
+              true);
+            CBORObject cbor = CBORObject.FromBytes(bytes);
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -1594,6 +1605,8 @@ is an arbitrary object.</li>
 <p>In the Java version, if the object is a type not specially handled by this method, this method checks the CBOR object for methods starting with the word &quot;get&quot; or &quot;is&quot; (either word followed by an upper-case A to Z) that take no parameters, and returns a CBOR map with one entry for each such method found. For each method found, the starting word &quot;get&quot; or &quot;is&quot; is deleted from its name, and the name is converted to camel case (meaning if a name starts with A to Z, that letter is lower-cased). (Passing the appropriate &quot;options&quot; parameter can be done to control whether the &quot;is&quot; prefix is removed and whether a camel-case conversion happens.) Also, Java <code>Enum</code>  objects will be converted to the result of their <code>name</code>  method.</p>
 
 <p>If the input is a byte array, the byte array is copied to a new byte array. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the DecodeFromBytes method instead.).</p>
+
+<p>If the input is a text string, a CBOR text string object will be created. To create a CBOR byte string object from a text string, see the example given in<strong>PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong>.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2915,7 +2928,7 @@ is null.</li>
 <pre>public override string ToString();
 </pre>
 
-<p>Returns this CBOR object in string form. The format is intended to be human-readable, not machine-readable, the format is not intended to be parsed, and the format may change at any time.</p>
+<p>Returns this CBOR object in string form. The format is intended to be human-readable, not machine-readable, the format is not intended to be parsed, and the format may change at any time. The returned string is not necessarily in JavaScript Object Notation (JSON); to convert CBOR objects to JSON strings, use the <strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong> method instead.</p>
 
 <p><b>Return Value:</b></p>
 

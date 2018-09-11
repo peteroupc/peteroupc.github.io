@@ -1734,9 +1734,21 @@ code point.</li>
 <pre>public static CBORObject FromObject​(byte[] bytes)
 </pre>
 
-<p>Generates a CBOR object from a byte array. The byte array is copied to a new
- byte array. (This method can&#39;t be used to decode CBOR data from a
- byte array; for that, use the DecodeFromBytes method instead.).</p>
+<p>Generates a CBOR object from a byte array. The byte array is copied to a
+ new byte array. (This method can't be used to decode CBOR data from a
+ byte array; for that, use the DecodeFromBytes method
+ instead.).</p><p> <p>The following example encodes a text string to a
+ UTF-8 byte array, then uses the array to create a CBOR byte string
+ object. It is not recommended to use <code>Encoding.UTF8.GetBytes</code> in
+ .NET, or the <code>getBytes()</code> method in Java to do this. For
+ instance, <code>Encoding.UTF8</code> begins the encoded string with a
+ byte-order mark, and <code>getBytes()</code> encodes text strings in an
+ unspecified character encoding. Both behaviors can be undesirable.
+ Instead, use the <code>DataUtilities.GetUtf8Bytes</code> method to convert
+ text strings to UTF-8.</p> <pre>/* true does character replacement
+ of invalid UTF-8; false throws an exception on invalid UTF-8 &#x2a;&#x2f;
+ byte[] bytes = DataUtilities.GetUtf8Bytes(textString,  // / true);
+ CBORObject cbor = CBORObject.FromBytes(bytes); </pre> </p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1956,7 +1968,10 @@ CBORObject.Null if the object is null.</li>
  to the result of their <code>name</code> method.</p> <p>If the input is a
  byte array, the byte array is copied to a new byte array. (This
  method can't be used to decode CBOR data from a byte array; for that,
- use the DecodeFromBytes method instead.).</p>
+ use the DecodeFromBytes method instead.).</p> <p>If the input is a
+ text string, a CBOR text string object will be created. To create a
+ CBOR byte string object from a text string, see the example given in
+ <see cref='M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])'/>.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -4169,7 +4184,10 @@ object to JSON.</li>
 
 <p>Returns this CBOR object in string form. The format is intended to be
  human-readable, not machine-readable, the format is not intended to
- be parsed, and the format may change at any time.</p>
+ be parsed, and the format may change at any time. The returned string
+ is not necessarily in JavaScript Object Notation (JSON); to convert
+ CBOR objects to JSON strings, use the <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ method instead.</p>
 
 <p><strong>Overrides:</strong></p>
 
