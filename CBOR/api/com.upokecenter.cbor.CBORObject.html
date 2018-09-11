@@ -454,6 +454,8 @@ format, using the specified options to control the encoding process.</li>
 <li><code>String ToJSONString​(JSONOptions options)</code><br>
 Converts this object to a string in JavaScript Object Notation (JSON)
 format, using the specified options to control the encoding process.</li>
+<li><code>&lt;T&gt; T ToObject()</code><br>
+Not documented yet.</li>
 <li><code>String toString()</code><br>
 Returns this CBOR object in string form.</li>
 <li><code>CBORObject Untag()</code><br>
@@ -1340,6 +1342,25 @@ byte-order mark (U + FEFF).</p></li>
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
+</ul>
+
+<h3>ToObject</h3>
+
+<pre>public &lt;T&gt; T ToObject()
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Type Parameters:</strong></p>
+
+<ul>
+<li><code>T</code> - An arbitrary object type.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The object.</li>
 </ul>
 
 <h3>FromObject</h3>
