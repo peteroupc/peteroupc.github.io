@@ -1415,11 +1415,10 @@ is a byte (from 0 to 255).</li>
 <p>The following example encodes a text string to a UTF-8 byte array, then uses the array to create a CBOR byte string object. It is not recommended to use  <code>Encoding.UTF8.GetBytes</code> in .NET, or he  <code>getBytes()</code> method in Java to do this. For instance, <code>Encoding.UTF8</code> begins the encoded string with a byte-order ark, and  <code>getBytes()</code> encodes text strings in an unspecified haracter encoding. Both behaviors can be undesirable. Instead, use he  <code>DataUtilities.GetUtf8Bytes</code> method to convert text trings to UTF-8.</p>
 
 <pre>/* true does character replacement of
-              invalid UTF-8; false throws an exception
-              on invalid UTF-8 */
+            invalid UTF-8; false throws an exception
+            on invalid UTF-8 */
             byte[] bytes = DataUtilities.GetUtf8Bytes(
-              textString,
-              true);
+            textString,  // / true);
             CBORObject cbor = CBORObject.FromBytes(bytes);
 </pre>
 
