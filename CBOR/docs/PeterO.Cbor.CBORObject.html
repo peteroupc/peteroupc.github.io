@@ -1418,7 +1418,7 @@ is a byte (from 0 to 255).</li>
             invalid UTF-8; false throws an exception
             on invalid UTF-8 */
             byte[] bytes = DataUtilities.GetUtf8Bytes(
-            textString,  // / true);
+            textString, true);
             CBORObject cbor = CBORObject.FromBytes(bytes);
 </pre>
 
@@ -1597,7 +1597,7 @@ is an arbitrary object.</li>
     PeterO.Cbor.PODOptions options);
 </pre>
 
-<p>Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects. The following types are specially handled by this method: null; primitive types; string; CBORObject; the  <code>EDecimal</code> , <code>EFloat</code> ,  <code>EInteger</code> , and  <code>ERational</code>  classes in the new<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java); the legacy  <code>ExtendedDecimal</code> , <code>ExtendedFloat</code> ,  <code>ExtendedInteger</code> , and <code>ExtendedRational</code>  classes in this library; arrays; enumerations (  <code>Enum</code>  objects); and maps. (See also the other overloads to the FromObject method.)</p>
+<p>Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects. The following types are specially handled by this method: null; primitive types; string; CBORObject; the  <code>EDecimal</code> , <code>EFloat</code> ,  <code>EInteger</code> , and  <code>ERational</code>  classes in the new<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java); the legacy  <code>ExtendedDecimal</code> , <code>ExtendedFloat</code> ,  <code>BigInteger</code> , and <code>ExtendedRational</code>  classes in this library; arrays; enumerations (  <code>Enum</code>  objects); and maps. (See also the other overloads to the FromObject method.)</p>
 
 <p>In the .NET version, if the object is a type not specially handled by this method, returns a CBOR map with the values of each of its read/write properties (or all properties in the case of a compiler-generated type). Properties are converted to their camel-case names (meaning if a name starts with A to Z, that letter is lower-cased). If the property name begins with the word &quot;Is&quot; followed by an upper-case A to Z, the &quot;Is&quot; prefix is deleted from the name. (Passing the appropriate &quot;options&quot; parameter can be done to control whether the &quot;Is&quot; prefix is removed and whether a camel-case conversion happens.) Also, .NET  <code>Enum</code>  objects will be converted to their integer values, and a multidimensional array is converted to an array of arrays.</p>
 
@@ -2907,10 +2907,65 @@ is null.</li>
 
 <h3>ToObject</h3>
 
+<pre>public object ToObject(
+    System.Type t);
+</pre>
+
+<p>Converts this CBOR object to an object of an arbitrary type.</p>
+
+<p>If the type &quot;T&quot; is CBORObject, returns this CBOR object.</p>
+
+<p>If this CBOR object is a null object, returns null, except if &quot;T&quot; is CBORObject.</p>
+
+<p>If the type &quot;T&quot; is Object, returns this CBOR object.</p>
+
+<p>If the type &quot;T&quot; is the generic List, IList, ICollection, or IEnumerable (or ArrayList, List, Collection, or Iterable in Java), and if this CBOR object is an array, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all items in this CBOR array.</p>
+
+<p>If the type &quot;T&quot; is the generic Dictionary or IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p>
+
+<p>If the type &quot;T&quot; is  <code>int</code> , returns the result of the AsInt32 method.</p>
+
+<p>If the type &quot;T&quot; is  <code>long</code> , returns the result of the AsInt64 method.</p>
+
+<p>If the type &quot;T&quot; is  <code>double</code> , returns the result of the AsDouble method.</p>
+
+<p>If the type &quot;T&quot; is String, returns the result of the AsString method.</p>
+
+<p>If the type &quot;T&quot; is  <code>byte[]</code>  and this CBOR object is a byte array, returns a byte array which this CBOR byte string&#39;s data will be copied to.</p>
+
+<p>In the .NET version, if the type &quot;T&quot; is  <code>DateTime</code>  and this CBOR object is a text string with tag 0, converts that text string to a DateTime and returns that DateTime.</p>
+
+<p>If the type &quot;T&quot; is Boolean, returns the result of the IsTrue method.</p>
+
+<p>If this object is a CBOR map, and the type &quot;T&quot; is a type not specially handled by the FromObject method, creates an object of the given type, and, for each key matching the name of a property in that object (using the rules given in CBORObject.FromObject), sets that property&#39;s value to the corresponding value for that key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.NotSupportedException:
+The given type <i>t</i>
+, or this object&#39;s CBOR type, is not supported.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>t</i>
+is null.</p></li>
+</ul>
+
+<h3>ToObject</h3>
+
 <pre>public T ToObject&lt;T&gt;();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts this CBOR object to an object of an arbitrary type. See <strong>PeterO.Cbor.CBORObject.ToObject(System.Type)</strong> for further information.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2920,7 +2975,14 @@ is null.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The object.</p>
+<p>The converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.NotSupportedException:
+The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.</li>
+</ul>
 
 <h3>ToString</h3>
 

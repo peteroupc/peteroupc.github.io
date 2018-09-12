@@ -27,6 +27,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 
 - Testing an RNG implementation for correctness or adequate random number generation.
 - Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_, _password authenticated key exchange_).
+- Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
 - Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
 
 **The following table summarizes the kinds of RNGs covered in this document:**
