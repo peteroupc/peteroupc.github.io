@@ -9,8 +9,17 @@
 <pre>public final class ProtocolStrings extends Object
 </pre>
 
-<p>Contains methods for preparing protocol strings (such as user identifiers)
- for comparison and validity checking. See RFC 8264.</p>
+<p>Contains methods for preparing user-facing protocol strings (such as user
+ identifiers) for comparison and validity checking. Such strings can
+ be <em>internationalized</em>, that is, contain characters beyond the Basic
+ Latin block (U + 0000 to U + 007F) of the Unicode Standard. See RFC 8264.
+ (Currently there are three profiles for internationalized strings:
+ one each for strings serving as user identifiers, arbitrary
+ single-line strings [such as passwords], or display names. Other
+ user-facing internationalized strings not expressly handled by this
+ class include file and directory names, domain names, profile data
+ voluntarily entered by users, and the text of article, post, and
+ message bodies.).</p>
 
 <h2>Methods</h2>
 
@@ -28,8 +37,8 @@ Prepares for comparison a string serving as a &quot;memorable, human-friendly
 name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
 identity for authentication or authorization purposes (see sec.</li>
 <li><code>static String OpaqueStringEnforce​(String str)</code><br>
-Checks the validity of a string serving as an arbitrary sequence of
-characters, such as a passphrase.</li>
+Checks the validity of a string serving as an arbitrary single-line sequence
+of characters, such as a passphrase.</li>
 <li><code>static String UsernameEnforce​(String str)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
@@ -240,8 +249,8 @@ point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 <pre>public static String OpaqueStringEnforce​(String str)
 </pre>
 
-<p>Checks the validity of a string serving as an arbitrary sequence of
- characters, such as a passphrase. This checking is done using the
+<p>Checks the validity of a string serving as an arbitrary single-line sequence
+ of characters, such as a passphrase. This checking is done using the
  OpaqueString profile in RFC 8265. (REMARK: Specifying a string as
  this method does is not ideal if the string represents a password or
  other sensitive data, since strings are immutable in .NET and Java,
@@ -252,8 +261,8 @@ point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - A string to prepare that represents an arbitrary sequence of
-characters entered by a user.</li>
+<li><code>str</code> - A string to prepare that represents an arbitrary single-line
+sequence of characters entered by a user.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

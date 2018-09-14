@@ -187,6 +187,9 @@ value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 <li><code>String getFileName()</code><br>
 Gets a file name suggested by this message for saving the message&#39;s body
 to a file.</li>
+<li><code>String GetFormattedBodyString()</code><br>
+Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text
+body.</li>
 <li><code>List&lt;NamedAddress&gt; getFromAddresses()</code><br>
 Deprecated.
 Use GetAddresses(\From) instead.
@@ -243,12 +246,17 @@ Sets the name and value of a header field by index.</li>
      String value)</code><br>
 Sets the value of this message&#39;s header field.</li>
 <li><code>Message SetHtmlBody​(String str)</code><br>
-Sets the body of this message to the specified string in HTML format.</li>
+Sets the body of this message to the specified string in Hypertext Markup
+Language (HTML) format.</li>
 <li><code>void setSubject​(String value)</code><br></li>
 <li><code>Message SetTextAndHtml​(String text,
           String html)</code><br>
-Sets the body of this message to a multipart body with plain text and HTML
-versions of the same message.</li>
+Sets the body of this message to a multipart body with plain text and
+Hypertext Markup Language (HTML) versions of the same message.</li>
+<li><code>Message SetTextAndMarkdown​(String text,
+              String markdown)</code><br>
+Sets the body of this message to a multipart body with plain text, Markdown,
+and Hypertext Markup Language (HTML) versions of the same message.</li>
 <li><code>Message SetTextBody​(String str)</code><br>
 Sets the body of this message to the specified plain text string.</li>
 <li><code>String ToMailtoUri()</code><br>
@@ -405,6 +413,39 @@ supported.</li>
 
 <ul>
 <li>A list of addresses found in the CC header field or fields.</li>
+</ul>
+
+<h3>GetFormattedBodyString</h3>
+
+<pre>public String GetFormattedBodyString()
+</pre>
+
+<p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
+ body. This method currently supports text/plain, text/plain with
+ format = flowed, text/enriched, and text/markdown (original
+ Markdown).</p><p> <p>REMARK: The Markdown implementation currently
+ supports all features of original Markdown, except that the
+ implementation--</p> <ul> <li>does not strictly check the placement
+ of "block-level HTML elements",</li> <li>does not prevent Markdown
+ content from being interpreted as such merely because it's contained
+ in a "block-level HTML element", and</li> <li>does not deliberately
+ use HTML escapes to obfuscate email addresses wrapped in
+ angle-brackets.</li></ul></p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An HTML rendering of this message&#39;s text.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>UnsupportedOperationException</code> - Either this message is a multipart
+message, so it doesn&#39;t have its own body text, or this message has no
+character encoding declared or assumed for it (which is usually the
+case for non-text messages), or the character encoding is not
+supported.</li>
 </ul>
 
 <h3>getContentDisposition</h3>
@@ -1160,11 +1201,11 @@ value</code> is null.</p></li>
 <pre>public Message SetHtmlBody​(String str)
 </pre>
 
-<p>Sets the body of this message to the specified string in HTML format. The
- character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
- feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
- breaks. Unpaired surrogate code points will be replaced with
- replacement characters.</p>
+<p>Sets the body of this message to the specified string in Hypertext Markup
+ Language (HTML) format. The character sequences CR (carriage return,
+ &quot;&#x5c;r&quot;, U+000D), LF (line feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be
+ converted to CR/LF line breaks. Unpaired surrogate code points will
+ be replaced with replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1189,11 +1230,12 @@ value</code> is null.</p></li>
 <pre>public Message SetTextAndHtml​(String text, String html)
 </pre>
 
-<p>Sets the body of this message to a multipart body with plain text and HTML
- versions of the same message. The character sequences CR (carriage
- return, &quot;&#x5c;r&quot; , U+000D), LF (line feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will
- be converted to CR/LF line breaks. Unpaired surrogate code points
- will be replaced with replacement characters.</p>
+<p>Sets the body of this message to a multipart body with plain text and
+ Hypertext Markup Language (HTML) versions of the same message. The
+ character sequences CR (carriage return, &quot;&#x5c;r&quot; , U+000D), LF (line
+ feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ breaks. Unpaired surrogate code points will be replaced with
+ replacement characters.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1213,6 +1255,41 @@ value</code> is null.</p></li>
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>text</code> or <code>
 html</code> is null.</li>
+</ul>
+
+<h3>SetTextAndMarkdown</h3>
+
+<pre>public Message SetTextAndMarkdown​(String text, String markdown)
+</pre>
+
+<p>Sets the body of this message to a multipart body with plain text, Markdown,
+ and Hypertext Markup Language (HTML) versions of the same message.
+ The character sequences CR (carriage return, &quot;&#x5c;r&quot; , U+000D), LF (line
+ feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ breaks. Unpaired surrogate code points will be replaced with
+ replacement characters.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>text</code> - A string consisting of the plain text version of the message.
+Can be null, in which case the value of the &quot;markdown&quot; parameter is
+used as the plain text version.</p></li>
+<li><p><code>markdown</code> - A string consisting of the Markdown version of the message.
+For interoperability, this Markdown version will be converted to
+HTML.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>This instance.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>markdown</code> is null.</li>
 </ul>
 
 <h3>SetTextBody</h3>
@@ -1562,14 +1639,14 @@ on this file name&#39;s extension. If the file name has an extension
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - A string representing a MailTo URI.</li>
+<li><code>url</code> - The parameter <code>url</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A Message object created from the given MailTo URI. Returs null if
-<code>url</code> is null, is syntactically invalid, or is not a MailTo
+<code>uri</code> is null, is syntactically invalid, or is not a MailTo
 URI.</li>
 </ul>
 
@@ -1607,14 +1684,14 @@ URI.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>uri</code> - A string object.</li>
+<li><code>uri</code> - The parameter <code>uri</code> is a text string.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A Message object created from the given MailTo URI. Returs null if
-<code>url</code> is null, is syntactically invalid, or is not a MailTo
+<code>uri</code> is null, is syntactically invalid, or is not a MailTo
 URI.</li>
 </ul>
 
