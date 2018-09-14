@@ -2939,10 +2939,32 @@ is null.</li>
 
 <p>If this object is a CBOR map, and the type &quot;T&quot; is a type not specially handled by the FromObject method, creates an object of the given type, and, for each key matching the name of a property in that object (using the rules given in CBORObject.FromObject), sets that property&#39;s value to the corresponding value for that key.</p>
 
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
+
+<pre>Type arrayListString = new ParameterizedType(){
+   public Type[] getActualTypeArguments(){
+     /* Contains one type parameter, String */
+     return new Type[]{ String.class };
+   }
+   public Type getRawType(){
+     /* Raw type is ArrayList */
+     return ArrayList.class; }
+   public Type getOwnerType(){ return null; }
+};
+ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
+  cborArray.ToObject(arrayListString);
+</pre>
+
+<p>By comparison, the C# version is much shorter.</p>
+
+<pre>var array = (ArrayList&lt;String&gt;)cborArray.ToObject(
+   typeof(ArrayList&lt;String&gt;));
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to.</li>
+<li><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
