@@ -2923,23 +2923,23 @@ is null.</li>
 
 <p>If the type &quot;T&quot; is the generic Dictionary or IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p>
 
-<p>If the type &quot;T&quot; is  <code>int</code> , returns the result of the AsInt32 method.</p>
+<p>If the type &quot;T&quot; is  <code>int</code> , returns the esult of the AsInt32 method.</p>
 
-<p>If the type &quot;T&quot; is  <code>long</code> , returns the result of the AsInt64 method.</p>
+<p>If the type &quot;T&quot; is <code>long</code> , returns the result of the AsInt64 method.</p>
 
-<p>If the type &quot;T&quot; is  <code>double</code> , returns the result of the AsDouble method.</p>
+<p>If the type &quot;T&quot; is  <code>double</code> , returns the result of the sDouble method.</p>
 
 <p>If the type &quot;T&quot; is String, returns the result of the AsString method.</p>
 
-<p>If the type &quot;T&quot; is  <code>byte[]</code>  and this CBOR object is a byte array, returns a byte array which this CBOR byte string&#39;s data will be copied to.</p>
+<p>If the type &quot;T&quot; is <code>byte[]</code> and this CBOR object is a byte array, returns a byte rray which this CBOR byte string&#39;s data will be copied to.</p>
 
-<p>In the .NET version, if the type &quot;T&quot; is  <code>DateTime</code>  and this CBOR object is a text string with tag 0, converts that text string to a DateTime and returns that DateTime.</p>
+<p>In the .NET version, if the type &quot;T&quot; is  <code>DateTime</code> and his CBOR object is a text string with tag 0, converts that text tring to a DateTime and returns that DateTime.</p>
 
 <p>If the type &quot;T&quot; is Boolean, returns the result of the IsTrue method.</p>
 
 <p>If this object is a CBOR map, and the type &quot;T&quot; is a type not specially handled by the FromObject method, creates an object of the given type, and, for each key matching the name of a property in that object (using the rules given in CBORObject.FromObject), sets that property&#39;s value to the corresponding value for that key.</p>
 
-<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code>  operator. The following example, written in Java, is a way to specify that the return value will be an ArrayList of String objects.</p>
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType(){
    public Type[] getActualTypeArguments(){
@@ -2957,8 +2957,8 @@ ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
 
 <p>By comparison, the C# version is much shorter.</p>
 
-<pre>var array = (ArrayList&lt;String&gt;)cborArray.ToObject(
-   typeof(ArrayList&lt;String&gt;));
+<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
+   typeof(List&lt;String&gt;));
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -2978,7 +2978,7 @@ ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
 The given type <i>t</i>
 , or this object&#39;s CBOR type, is not supported.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>t</i>
+The parameter <i>t</i>
 is null.</p></li>
 </ul>
 
