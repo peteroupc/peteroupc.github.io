@@ -717,11 +717,26 @@ is empty.</p></li>
 <pre>public string GetFormattedBodyString();
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body. This method currently supports text/plain, text/plain with format = flowed, text/enriched, and text/markdown (original Markdown).</p>
+
+<p>REMARK: The Markdown implementation currently supports all features of original Markdown, except that the implementation--</p>
+
+<ul>
+<li><p>does not strictly check the placement of &quot;block-level HTML elements&quot;,</p></li>
+<li><p>does not prevent Markdown content from being interpreted as such merely because it&#39;s contained in a &quot;block-level HTML element&quot;, and</p></li>
+<li><p>does not deliberately use HTML escapes to obfuscate email addresses wrapped in angle-brackets.</p></li>
+</ul>
 
 <p><b>Return Value:</b></p>
 
-<p>A text string.</p>
+<p>An HTML rendering of this message&#39;s text.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.NotSupportedException:
+Either this message is a multipart message, so it doesn&#39;t have its own body text, or this message has no character encoding declared or assumed for it (which is usually the case for non-text messages), or the character encoding is not supported.</li>
+</ul>
 
 <h3>GetHeader</h3>
 

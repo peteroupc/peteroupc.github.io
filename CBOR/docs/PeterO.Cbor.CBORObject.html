@@ -2942,23 +2942,23 @@ is null.</li>
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType(){
-   public Type[] getActualTypeArguments(){
-     /* Contains one type parameter, String */
-     return new Type[]{ String.class };
-   }
-   public Type getRawType(){
-     /* Raw type is ArrayList */
-     return ArrayList.class; }
-   public Type getOwnerType(){ return null; }
-};
-ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
-  cborArray.ToObject(arrayListString);
+               public Type[] getActualTypeArguments(){
+                 /* Contains one type parameter, String */
+                 return new Type[]{ String.class };
+               }
+               public Type getRawType(){
+                 /* Raw type is ArrayList */
+                 return ArrayList.class; }
+               public Type getOwnerType(){ return null; }
+            };
+            ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
+              cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-   typeof(List&lt;String&gt;));
+               typeof(List&lt;String&gt;));
 </pre>
 
 <p><b>Parameters:</b></p>

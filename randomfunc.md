@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 8, 2018.
+Begun on June 4, 2017; last updated on Sep. 15, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -113,7 +113,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [`a`, `b`] means "`a` or greater and `b` or less".
 * **Norm.** The norm of one or more real numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
-* **Maximum even parts.** The number of maximum even parts is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in a given floating-point number format.  For example&mdash;
+* **Maximum even parts.** The number of maximum even parts is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
     - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts (see "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks) for further discussion),
     - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) maximum even parts,
     - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> maximum even parts, and
