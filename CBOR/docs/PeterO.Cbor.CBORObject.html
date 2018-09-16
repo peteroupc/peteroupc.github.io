@@ -11,17 +11,19 @@
     System.IEquatable
 </pre>
 
-<p>Represents an object in Concise Binary Object Representation (CBOR) and contains methods for reading and writing CBOR data. CBOR is defined in RFC 7049.<b>Converting CBOR objects</b></p>
+<p>Represents an object in Concise Binary Object Representation (CBOR) and contains methods for reading and writing CBOR data. CBOR is defined in RFC 7049.</p>
+
+<p><b>Converting CBOR objects</b></p>
 
 <p>There are many ways to get a CBOR object, including from bytes, objects, streams and JSON, as described below.</p>
 
-<p><b>To and from byte arrays:</b>The CBORObject.DecodeToBytes method converts a byte array in CBOR ormat to a CBOR object. The EncodeToBytes method converts a CBOR object o its corresponding byte array in CBOR format.</p>
+<p><b>To and from byte arrays:</b>The CBORObject.DecodeFromBytes method converts a byte array in CBOR ormat to a CBOR object. The EncodeToBytes method converts a CBOR object o its corresponding byte array in CBOR format.</p>
 
-<p><b>To and from data streams:</b>The CBORObject.Write methods write many kinds of objects to a data tream, including numbers, CBOR objects, strings, and arrays of numbers nd strings. The CBORObject.Read method reads a CBOR object from a data tream.</p>
+<p><b>To and from data streams:</b>The CBORObject.Write methods write many kinds of objects to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a data stream.</p>
 
-<p><b>To and from other objects:</b>The CBORObject.FromObject method converts many kinds of objects to a BOR object, including numbers, strings, and arrays and maps of numbers nd strings. Methods like AsDouble, AsByte, and AsString convert a CBOR bject to different types of object.</p>
+<p><b>To and from other objects:</b>The  <code>CBORObject.FromObject</code>  method converts many kinds of objects to a CBOR object, including numbers, strings, and arrays and maps of numbers and strings. Methods like AsDouble, AsByte, and AsString convert a CBOR object to different types of object. The  <code>CBORObject.ToObject</code>  method converts a CBOR object to an object of a given type; for example, a CBOR array to a native  <code>List</code>  (or  <code>ArrayList</code>  in Java), or a CBOR integer to an  <code>int</code>  or  <code>long</code> .</p>
 
-<p><b>To and from JSON:</b>This class also doubles as a reader and writer of JavaScript Object otation (JSON). The CBORObject.FromJSONString method converts JSON to a BOR object, and the ToJSONString method converts a CBOR object to a SON string.</p>
+<p><b>To and from JSON:</b>This class also doubles as a reader and writer of JavaScript Object Notation (JSON). The CBORObject.FromJSONString method converts JSON to a CBOR object, and the ToJSONString method converts a CBOR object to a JSON string.</p>
 
 <p>In addition, the CBORObject.WriteJSON method writes many kinds of objects as JSON to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a JSON data stream.</p>
 
@@ -370,6 +372,8 @@ This object&#39;s type is not a number type.</li>
 
 <p>Adds a new key and its value to this CBOR map, or adds the value if the key doesn&#39;t exist.</p>
 
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code>  method and pass the CBOR object and the desired tag number to that method.</p>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -403,6 +407,17 @@ has an unsupported type.</p></li>
 
 <p>Converts an object to a CBOR object and adds it to the end of this array.</p>
 
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object and the desired tag number to that method.</p>
+
+<p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
+
+<pre>CBORObject obj = CBORObject.NewArray()
+              .Add(CBORObject.False)
+              .Add(5)
+              .Add(&quot;text string&quot;)
+              .Add(CBORObject.FromObjectAndTag(9999, 1));
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -430,7 +445,18 @@ is not supported.</p></li>
     PeterO.Cbor.CBORObject obj);
 </pre>
 
-<p>Adds a new object to the end of this array. (Used to throw ArgumentNullException on a null reference, but now converts the null reference to CBORObject.Null, for convenience with the Object overload of this method.).</p>
+<p>Adds a new object to the end of this array. (Used to throw ArgumentNullException on a null reference, but now converts the null reference to CBORObject.Null, for convenience with the Object overload of this method).</p>
+
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object nd the desired tag number to that method.</p>
+
+<p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
+
+<pre>CBORObject obj = CBORObject.NewArray()
+              .Add(CBORObject.False)
+              .Add(CBORObject.FromObject(5))
+              .Add(CBORObject.FromObject(&quot;text string&quot;))
+              .Add(CBORObject.FromObjectAndTag(9999, 1));
+</pre>
 
 <p><b>Parameters:</b></p>
 
@@ -2025,7 +2051,7 @@ is null.</p>
 <ul>
 <li><p><i>o</i>: The parameter <i>o</i>
 is an arbitrary object.</p></li>
-<li><p><i>tag</i>: A 64-bit unsigned integer.</p></li>
+<li><p><i>tag</i>: A 64-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2049,7 +2075,7 @@ is converted to a CBOR object and given the tag <i>tag</i>
 
 <ul>
 <li><p><i>valueOb</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
-<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object.</p></li>
+<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2083,7 +2109,7 @@ is null.</p></li>
 
 <ul>
 <li><p><i>valueOb</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
-<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object.</p></li>
+<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2117,7 +2143,7 @@ is null.</p></li>
 
 <ul>
 <li><p><i>valueObValue</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
-<li><p><i>smallTag</i>: A 32-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object.</p></li>
+<li><p><i>smallTag</i>: A 32-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2182,7 +2208,7 @@ is less than 0, greater than 255, or from 24 through 31.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A byte array.</p>
+<p>The byte array held by this CBOR object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2852,7 +2878,7 @@ Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 <li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order.</p></li>
 <li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
 <li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 8259 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
-<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace or padding by default if it has tag 22, or base16 for tag 23. Padding will be included in the Base64 URL or traditional base64 form if<b>Base64Padding</b>in the JSON options is set to<b>true</b>.</p></li>
+<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace or padding by default if it has tag 22, or base16 for tag 23. Padding will be included in the Base64 URL or traditional base64 form if<b>Base64Padding</b>in the JSON options is set to<b>true</b>. (To create a CBOR object with a given tag, call the <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object and the desired tag number to that ethod.)</p></li>
 <li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
 <li><p>Simple values other than true and false will be converted to null. (This doesn&#39;t include floating-point numbers.)</p></li>
 <li><p>Infinity and not-a-number will be converted to null.</p></li>
@@ -2923,42 +2949,36 @@ is null.</li>
 
 <p>If the type &quot;T&quot; is the generic Dictionary or IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p>
 
-<p>If the type &quot;T&quot; is  <code>int</code> , returns the esult of the AsInt32 method.</p>
+<p>If the type &quot;T&quot; is <code>int</code> , returns the result of the AsInt32 method.</p>
 
 <p>If the type &quot;T&quot; is <code>long</code> , returns the result of the AsInt64 method.</p>
 
-<p>If the type &quot;T&quot; is  <code>double</code> , returns the result of the sDouble method.</p>
+<p>If the type &quot;T&quot; is <code>double</code> , returns the result of the AsDouble method.</p>
 
 <p>If the type &quot;T&quot; is String, returns the result of the AsString method.</p>
 
-<p>If the type &quot;T&quot; is <code>byte[]</code> and this CBOR object is a byte array, returns a byte rray which this CBOR byte string&#39;s data will be copied to.</p>
+<p>If the type &quot;T&quot; is <code>byte[]</code> and this CBOR object is a byte array, returns a byte array which this BOR byte string&#39;s data will be copied to.</p>
 
-<p>In the .NET version, if the type &quot;T&quot; is  <code>DateTime</code> and his CBOR object is a text string with tag 0, converts that text tring to a DateTime and returns that DateTime.</p>
+<p>In the .NET version, if the type &quot;T&quot; is <code>DateTime</code> and this CBOR object is a text string with tag 0, converts that text tring to a DateTime and returns that DateTime.</p>
 
 <p>If the type &quot;T&quot; is Boolean, returns the result of the IsTrue method.</p>
 
 <p>If this object is a CBOR map, and the type &quot;T&quot; is a type not specially handled by the FromObject method, creates an object of the given type, and, for each key matching the name of a property in that object (using the rules given in CBORObject.FromObject), sets that property&#39;s value to the corresponding value for that key.</p>
 
-<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s <code>typeof</code> operator. The following example, written in Java, is a way to specify hat the return value will be an ArrayList of String objects.</p>
 
-<pre>Type arrayListString = new ParameterizedType(){
-               public Type[] getActualTypeArguments(){
-                 /* Contains one type parameter, String */
-                 return new Type[]{ String.class };
-               }
-               public Type getRawType(){
-                 /* Raw type is ArrayList */
-                 return ArrayList.class; }
-               public Type getOwnerType(){ return null; }
-            };
-            ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
-              cborArray.ToObject(arrayListString);
+<pre>Type arrayListString = new ParameterizedType(){ public Type[]
+        getActualTypeArguments(){ /* Contains one type parameter, String */
+        return new Type[]{ String.class }; } public Type getRawType(){ /* Raw
+        type is ArrayList */ return ArrayList.class; } public Type
+        getOwnerType(){ return null; } }; ArrayList&lt;String&gt; array =
+        (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-               typeof(List&lt;String&gt;));
+        typeof(List&lt;String&gt;));
 </pre>
 
 <p><b>Parameters:</b></p>
