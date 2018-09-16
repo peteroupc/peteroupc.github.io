@@ -412,10 +412,10 @@ has an unsupported type.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray()
-              .Add(CBORObject.False)
-              .Add(5)
-              .Add(&quot;text string&quot;)
-              .Add(CBORObject.FromObjectAndTag(9999, 1));
+            .Add(CBORObject.False)
+            .Add(5)
+            .Add(&quot;text string&quot;)
+            .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -452,10 +452,10 @@ is not supported.</p></li>
 <p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
 
 <pre>CBORObject obj = CBORObject.NewArray()
-              .Add(CBORObject.False)
-              .Add(CBORObject.FromObject(5))
-              .Add(CBORObject.FromObject(&quot;text string&quot;))
-              .Add(CBORObject.FromObjectAndTag(9999, 1));
+            .Add(CBORObject.False)
+            .Add(CBORObject.FromObject(5))
+            .Add(CBORObject.FromObject(&quot;text string&quot;))
+            .Add(CBORObject.FromObjectAndTag(9999, 1));
 </pre>
 
 <p><b>Parameters:</b></p>
