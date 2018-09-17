@@ -850,12 +850,12 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 
 <pre>CBORObject obj = CBORObject.FromInt32(99999);
 if(obj.IsIntegral &amp;&amp;
-  obj.CanTruncatedIntFitInInt32()) {
+obj.CanTruncatedIntFitInInt32()) {
  // Not an Int32; handle the error
- Console.WriteLine(&quot;Not a 32-bit integer.&quot;);
+Console.WriteLine(&quot;Not a 32-bit integer.&quot;);
 } else {
- Console.WriteLine(&quot;The value is &quot; +
-      obj.AsInt32());
+Console.WriteLine(&quot;The value is &quot; +
+obj.AsInt32());
 }
 </pre>
 
@@ -883,12 +883,12 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 
 <pre>CBORObject obj = CBORObject.FromInt64(99999);
 if(obj.IsIntegral &amp;&amp;
-  obj.CanTruncatedIntFitInInt64()) {
+obj.CanTruncatedIntFitInInt64()) {
  // Not an Int64; handle the error
- Console.WriteLine(&quot;Not a 64-bit integer.&quot;);
+Console.WriteLine(&quot;Not a 64-bit integer.&quot;);
 } else {
- Console.WriteLine(&quot;The value is &quot; +
-      obj.AsInt64());
+Console.WriteLine(&quot;The value is &quot; +
+obj.AsInt64());
 }
 </pre>
 
