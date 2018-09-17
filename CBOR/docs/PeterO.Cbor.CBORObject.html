@@ -844,7 +844,20 @@ This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
 <pre>public int AsInt32();
 </pre>
 
-<p>Converts this object to a 32-bit signed integer. Floating point values are truncated to an integer.</p>
+<p>Converts this object to a 32-bit signed integer. Non-integer number values are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the<b>CanTruncatedIntFitInInt32</b>method before calling this method. hecking whether this object&#39;s type is  <code>CBORType.Number</code> is ot sufficient. See the example.).</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
+
+<pre>CBORObject obj = CBORObject.FromInt32(99999);
+if(obj.IsIntegral &amp;&amp;
+  obj.CanTruncatedIntFitInInt32()) {
+ // Not an Int32; handle the error
+ Console.WriteLine(&quot;Not a 32-bit integer.&quot;);
+} else {
+ Console.WriteLine(&quot;The value is &quot; +
+      obj.AsInt32());
+}
+</pre>
 
 <p><b>Return Value:</b></p>
 
@@ -864,7 +877,20 @@ This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
 <pre>public long AsInt64();
 </pre>
 
-<p>Converts this object to a 64-bit signed integer. Floating point values are truncated to an integer.</p>
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the<b>CanTruncatedIntFitInInt64</b>method before calling this method. hecking whether this object&#39;s type is  <code>CBORType.Number</code> is ot sufficient. See the example.).</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
+
+<pre>CBORObject obj = CBORObject.FromInt64(99999);
+if(obj.IsIntegral &amp;&amp;
+  obj.CanTruncatedIntFitInInt64()) {
+ // Not an Int64; handle the error
+ Console.WriteLine(&quot;Not a 64-bit integer.&quot;);
+} else {
+ Console.WriteLine(&quot;The value is &quot; +
+      obj.AsInt64());
+}
+</pre>
 
 <p><b>Return Value:</b></p>
 
@@ -914,6 +940,12 @@ This object&#39;s type is not a number type.</li>
 </pre>
 
 <p>Gets the value of this object as a text string.</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows an idiom for returning a string value if a CBOR object is a text string, or  <code>null</code> if the CBOR object is CBOR null.</p>
+
+<pre>CBORObject obj = CBORObject.FromString(&quot;test&quot;);
+string str = obj.IsNull ? null : obj.AsString();
+</pre>
 
 <p><b>Return Value:</b></p>
 
@@ -1207,16 +1239,19 @@ is null.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code>  object to control the decoding process.</p>
+<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given  <code>CBOREncodeOptions</code> object to control he decoding process.</p>
 
 <p>The following example (originally written in C# for the .NET version) implements a method that decodes a text string from a CBOR byte array. It&#39;s successful only if the CBOR object contains an untagged text string.</p>
 
-<pre>private static String DecodeTextString(byte[] bytes){ if(bytes
-        == null){ throw new
-        ArgumentNullException(nameof(mapObj));} if(bytes.Length ==
-        0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new CBORException();}
-        return CBORObject.DecodeFromBytes(bytes,
-        CBOREncodeOptions.Default).AsString(); }
+<pre>private static String DecodeTextString(byte[]
+            bytes){ if(bytes
+            == null){ throw new
+            ArgumentNullException(nameof(mapObj));}
+            if(bytes.Length ==
+            0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new
+            CBORException();}
+            return CBORObject.DecodeFromBytes(bytes,
+            CBOREncodeOptions.Default).AsString(); }
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -1229,7 +1264,7 @@ is a CBOREncodeOptions object.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBOR object decoded from the given byte array</p>
+<p>A CBOR object decoded from the given byte array.</p>
 
 <p><b>Exceptions:</b></p>
 

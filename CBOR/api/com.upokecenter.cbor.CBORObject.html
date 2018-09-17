@@ -3386,8 +3386,18 @@ including if this object is CBORObject.Null.</li>
 <pre>public int AsInt32()
 </pre>
 
-<p>Converts this object to a 32-bit signed integer. Floating point values are
- truncated to an integer.</p>
+<p>Converts this object to a 32-bit signed integer. Non-integer number values
+ are truncated to an integer. (NOTE: To determine whether this method
+ call can succeed, call the <b>CanTruncatedIntFitInInt32</b> method
+ before calling this method. Checking whether this object&#39;s type is
+ <code>CBORType.Number</code> is not sufficient. See the example.).<p>
+ <p>The following example code (originally written in C# for the .NET
+ Framework) shows a way to check whether a given CBOR object stores a
+ 32-bit signed integer before getting its value.</p> <pre> CBORObject
+ obj = CBORObject.FromInt32(99999); if&#x28;obj.isIntegral() &amp;&amp;
+ obj.getCanTruncatedIntFitInInt32()&#x28;)) &#x7b;  // Not an Int32; handle
+ the error System.out.println(&quot;Not a 32-bit integer.&quot;); &#x7d; else {
+ System.out.println(&quot;The value is &quot; + obj.AsInt32()); } </pre> </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3408,8 +3418,18 @@ including if this object is CBORObject.Null.</li>
 <pre>public long AsInt64()
 </pre>
 
-<p>Converts this object to a 64-bit signed integer. Floating point values are
- truncated to an integer.</p>
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are
+ truncated to an integer. (NOTE: To determine whether this method call
+ can succeed, call the <b>CanTruncatedIntFitInInt64</b> method before
+ calling this method. Checking whether this object&#39;s type is
+ <code>CBORType.Number</code> is not sufficient. See the example.).<p>
+ <p>The following example code (originally written in C# for the .NET
+ Framework) shows a way to check whether a given CBOR object stores a
+ 64-bit signed integer before getting its value.</p> <pre> CBORObject
+ obj = CBORObject.FromInt64(99999); if&#x28;obj.isIntegral() &amp;&amp;
+ obj.getCanTruncatedIntFitInInt64()&#x28;)) &#x7b;  // Not an Int64; handle
+ the error System.out.println(&quot;Not a 64-bit integer.&quot;); &#x7d; else {
+ System.out.println(&quot;The value is &quot; + obj.AsInt64()); } </pre> </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3451,7 +3471,12 @@ value exceeds the range of a 32-bit floating point number.</li>
 <pre>public String AsString()
 </pre>
 
-<p>Gets the value of this object as a text string.</p>
+<p>Gets the value of this object as a text string.<p> <p>The following example
+ code (originally written in C# for the .NET Framework) shows an idiom
+ for returning a string value if a CBOR object is a text string, or
+ <code>null</code> if the CBOR object is a CBOR null.</p> <pre> CBORObject
+ obj = CBORObject.FromString(&quot;test&quot;); string str = obj.isNull() ? null :
+ obj.AsString(); </pre> </p></p>
 
 <p><strong>Returns:</strong></p>
 
