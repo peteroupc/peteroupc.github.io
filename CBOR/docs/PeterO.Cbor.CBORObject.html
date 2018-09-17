@@ -2241,6 +2241,60 @@ This object is not a byte string.</li>
 
 <p>An array of tags, or the empty string if this object is untagged.</p>
 
+<h3>HasMostOuterTag</h3>
+
+<pre>public bool HasMostOuterTag(
+    int tagValue);
+</pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>tagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+TagValue is less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter &quot;obj&quot; is null.</p></li>
+</ul>
+
+<h3>HasMostOuterTag</h3>
+
+<pre>public bool HasMostOuterTag(
+    PeterO.Numbers.EInteger bigTagValue);
+</pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigTagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+BigTagValue is null.</p></li>
+<li><p>System.ArgumentException:
+BigTagValue is less than 0.</p></li>
+</ul>
+
 <h3>HasTag</h3>
 
 <pre>public bool HasTag(
