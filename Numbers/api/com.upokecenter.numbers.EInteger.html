@@ -22,6 +22,8 @@
 <ul>
 <li><code>EInteger Abs()</code><br>
 Returns the absolute value of this object&#39;s value.</li>
+<li><code>EInteger Add​(int intValue)</code><br>
+Adds this object and another object.</li>
 <li><code>EInteger Add​(EInteger bigintAugend)</code><br>
 Adds this object and another object.</li>
 <li><code>int AsInt32Checked()</code><br>
@@ -44,8 +46,12 @@ Renamed to ToInt64Unchecked.</li>
 Returns whether this object&#39;s value can fit in a 32-bit signed integer.</li>
 <li><code>boolean CanFitInInt64()</code><br>
 Returns whether this object&#39;s value can fit in a 64-bit signed integer.</li>
+<li><code>int compareTo​(int intValue)</code><br>
+Compares an arbitrary-precision integer with this instance.</li>
 <li><code>int compareTo​(EInteger other)</code><br>
 Compares an arbitrary-precision integer with this instance.</li>
+<li><code>EInteger Divide​(int intValue)</code><br>
+Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EInteger Divide​(EInteger bigintDivisor)</code><br>
 Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EInteger[] DivRem​(EInteger divisor)</code><br>
@@ -123,6 +129,9 @@ the value of an arbitrary-precision integer.</li>
   EInteger mod)</code><br>
 Calculates the remainder when this arbitrary-precision integer raised to a
 certain power is divided by another arbitrary-precision integer.</li>
+<li><code>EInteger Multiply​(int intValue)</code><br>
+Multiplies this instance by the value of an arbitrary-precision integer
+object.</li>
 <li><code>EInteger Multiply​(EInteger bigintMult)</code><br>
 Multiplies this instance by the value of an arbitrary-precision integer
 object.</li>
@@ -133,6 +142,9 @@ Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
 Raises an arbitrary-precision integer to a power, which is given as another
 arbitrary-precision integer.</li>
+<li><code>EInteger Remainder​(int intValue)</code><br>
+Finds the remainder that results when this instance is divided by the value
+of an arbitrary-precision integer.</li>
 <li><code>EInteger Remainder​(EInteger divisor)</code><br>
 Finds the remainder that results when this instance is divided by the value
 of an arbitrary-precision integer.</li>
@@ -147,6 +159,9 @@ Gets the sign of this object&#39;s value.</li>
 Finds the square root of this instance&#39;s value, rounded down.</li>
 <li><code>EInteger[] SqrtRem()</code><br>
 Calculates the square root and the remainder.</li>
+<li><code>EInteger Subtract​(int intValue)</code><br>
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+integer.</li>
 <li><code>EInteger Subtract​(EInteger subtrahend)</code><br>
 Subtracts an arbitrary-precision integer from this arbitrary-precision
 integer.</li>
@@ -620,6 +635,167 @@ integer; otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Zero if the values are equal; a negative number if this instance is
+less, or a positive number if this instance is greater.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre>public EInteger Add​(int intValue)
+</pre>
+
+<p>Adds this object and another object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre>public EInteger Subtract​(int intValue)
+</pre>
+
+<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+null.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre>public EInteger Multiply​(int intValue)
+</pre>
+
+<p>Multiplies this instance by the value of an arbitrary-precision integer
+ object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+null.</li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre>public EInteger Divide​(int intValue)
+</pre>
+
+<p>Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+null.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+</ul>
+
+<h3>Remainder</h3>
+
+<pre>public EInteger Remainder​(int intValue)
+</pre>
+
+<p>Finds the remainder that results when this instance is divided by the value
+ of an arbitrary-precision integer. The remainder is the value that
+ remains when the absolute value of this object is divided by the
+ absolute value of the other object; the remainder has the same sign
+ (positive or negative) as this object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The remainder of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre>public int compareTo​(int intValue)
+</pre>
+
+<p>Compares an arbitrary-precision integer with this instance.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - A 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
