@@ -356,6 +356,10 @@ Gets a collection of the values of this CBOR object, if it&#39;s a map or an
 array.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
+<li><code>boolean HasMostOuterTag​(int tagValue)</code><br>
+Returns whether this object has a tag of the given number.</li>
+<li><code>boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
+Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(int tagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
@@ -1376,8 +1380,8 @@ byte-order mark (U + FEFF).</p></li>
  </p> <p>If the type "T" is <code>byte[]</code> and this CBOR object is a
  byte array, returns a byte array which this CBOR byte string's data
  will be copied to. </p> <p>In the .NET version, if the type "T" is
- <code>DateTime</code> and this CBOR object is a text string with tag 0,
- converts that text string to a DateTime and returns that DateTime.
+ <code>java.util.Date</code> and this CBOR object is a text string with tag 0,
+ converts that text string to a java.util.Date and returns that java.util.Date.
  </p> <p>If the type "T" is Boolean, returns the result of the IsTrue
  method. </p> <p>If this object is a CBOR map, and the type "T" is a
  type not specially handled by the FromObject method, creates an
@@ -3845,6 +3849,60 @@ if the given key is not found or this object is not a map.</li>
 
 <ul>
 <li>An array of tags, or the empty string if this object is untagged.</li>
+</ul>
+
+<h3>HasMostOuterTag</h3>
+
+<pre>public boolean HasMostOuterTag​(int tagValue)
+</pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>tagValue</code> - The tag value to search for.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - TagValue is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter &quot;obj&quot; is null.</p></li>
+</ul>
+
+<h3>HasMostOuterTag</h3>
+
+<pre>public boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)
+</pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigTagValue</code> - The tag value to search for.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
 </ul>
 
 <h3>HasTag</h3>
