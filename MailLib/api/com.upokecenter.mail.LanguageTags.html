@@ -33,25 +33,31 @@ extension singleton subtags with the same value.</li>
 <li><code>static String LanguageTagCase​(String str)</code><br>
 Sets the given language tag to the case combination recommended by RFC 5646.</li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
-             List&lt;String&gt; languages)</code><br></li>
+             List&lt;String&gt; languages)</code><br>
+Finds the language tags that match a priority list of basic language ranges.</li>
 <li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
              boolean extended,
-             boolean matchStarAtEnd)</code><br></li>
+             boolean matchStarAtEnd)</code><br>
+Finds the language tags that match a priority list of language ranges.</li>
 <li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
-             String defaultValue)</code><br></li>
+             String defaultValue)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
              String defaultValue,
-             boolean extended)</code><br></li>
+             boolean extended)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
-             String defaultValue)</code><br></li>
+             String defaultValue)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
              String defaultValue,
-             boolean extended)</code><br></li>
+             boolean extended)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
 <li><code>static boolean MatchesLanguageTag​(String range,
               String tag)</code><br>
 Determines whether the given language tag matches the given language range.</li>
@@ -184,6 +190,41 @@ order in which they appeared in the given string. Returns null if
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
 </pre>
 
+<p>Finds the language tags that match a priority list of language ranges.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - A list of language ranges (see documentation for the
+&quot;IsLanguageRange&quot; method), which should be given in order of
+descending preference.</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>extended</code> - If true, the ranges in &quot;ranges&quot; are extended language
+ranges; otherwise, they are basic language ranges.</p></li>
+<li><p><code>matchStarAtEnd</code> - If true, treats any range equaling &quot;&#x2a;&quot; as
+appearing at the end of the language priority list, no matter where
+it appears on that list.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic or extended language range, or <code>
+languages</code> contains a value that is not a potentially valid language
+tag.</p></li>
+</ul>
+
 <h3>MatchesLanguageTag</h3>
 
 <pre>public static boolean MatchesLanguageTag​(String range, String tag)
@@ -219,25 +260,180 @@ tag.</li>
 <pre>public static String LanguageTagLookup​(String range, List&lt;String&gt; languages, String defaultValue)
 </pre>
 
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>range</code> - A basic language range (see the documentation for
+&quot;IsLanguageRange&quot;).</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>defaultValue</code> - The value to return if no matching language tag was
+found.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>range</code> is not a basic
+language range, or <code>languages</code> contains a value that is not a
+potentially valid language tag.</p></li>
+</ul>
+
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - A list of basic language ranges (see documentation for the
+&quot;IsLanguageRange&quot; method), which should be given in order of
+descending preference.</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>defaultValue</code> - The value to return if no matching language tag was
+found.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic language range, or <code>languages</code>
+contains a value that is not a potentially valid language tag.</p></li>
+</ul>
 
 <h3>LanguageTagFilter</h3>
 
 <pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages)
 </pre>
 
+<p>Finds the language tags that match a priority list of basic language ranges.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - A list of basic language ranges (see documentation for the
+&quot;IsLanguageRange&quot; method), which should be given in order of
+descending preference.</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic language range, or <code>languages</code>
+contains a value that is not a potentially valid language tag.</p></li>
+</ul>
+
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(String range, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
 
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>range</code> - A language range (see the documentation for &quot;IsLanguageRange&quot;).</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>defaultValue</code> - The value to return if no matching language tag was
+found.</p></li>
+<li><p><code>extended</code> - If true, &quot;range&quot; is an extended language range; otherwise,
+it&#39;s a are basic language range.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>range</code> is not a basic
+or extended language range, or <code>languages</code> contains a value
+that is not a potentially valid language tag.</p></li>
+</ul>
+
 <h3>LanguageTagLookup</h3>
 
 <pre>public static String LanguageTagLookup​(List&lt;String&gt; ranges, List&lt;String&gt; languages, String defaultValue, boolean extended)
 </pre>
+
+<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - A list of language ranges (see documentation for the
+&quot;IsLanguageRange&quot; method), which should be given in order of
+descending preference.</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>defaultValue</code> - The value to return if no matching language tag was
+found.</p></li>
+<li><p><code>extended</code> - If true, the ranges in &quot;ranges&quot; are extended language
+ranges; otherwise, they are basic language ranges.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The matching language tag, or the parameter <code>defaultValue</code> if
+there is no matching language tag.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic or extended language range, or <code>
+languages</code> contains a value that is not a potentially valid language
+tag.</p></li>
+</ul>
 
 <h3>IsPotentiallyValidLanguageTag</h3>
 

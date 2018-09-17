@@ -214,16 +214,24 @@ Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
 <li><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
-                   List&lt;String&gt; languages)</code><br></li>
+                   List&lt;String&gt; languages)</code><br>
+Generates a multilingual message (see RFC 8255) from a list of messages and
+a list of language strings.</li>
 <li><code>static Message NewBodyPart()</code><br>
 Creates a message object with no header fields.</li>
 <li><code>Message RemoveHeader​(int index)</code><br>
 Removes a header field by index.</li>
 <li><code>Message RemoveHeader​(String name)</code><br>
 Removes all instances of the given header field from this message.</li>
-<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages)</code><br></li>
+<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages) multipart/multilingual</code><br>
+Selects a body part for a multiple-language message (
+multipart/multilingual) according to the given language
+priority list.</li>
 <li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages,
-                 boolean preferOriginals)</code><br></li>
+                 boolean preferOriginals) multipart/multilingual</code><br>
+Selects a body part for a multiple-language message (
+multipart/multilingual) according to the given language
+priority list and original-language preference.</li>
 <li><code>Message SetBody​(byte[] bytes)</code><br>
 Sets the body of this message to the given byte array.</li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
@@ -1617,15 +1625,117 @@ on this file name&#39;s extension. If the file name has an extension
 <pre>public Message SelectLanguageMessage​(List&lt;String&gt; languages)
 </pre>
 
+<p>Selects a body part for a multiple-language message (
+ <code>multipart/multilingual</code>) according to the given language
+ priority list.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>languages</code> - A list of basic language ranges, sorted in descending order
+of priority (see the LanguageTags.LanguageTagFilter method).</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The best matching body part for the given languages. If the body
+part has no subject, then the top-level subject is used. If this
+message is not a multipart/multilingual message or has fewer than two
+body parts, returns this object. If no body part matches the given
+languages, returns the last body part if its language is &quot;zxx&quot;, or
+the second body part otherwise.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>languages</code> is
+null.</li>
+</ul>
+
 <h3>SelectLanguageMessage</h3>
 
 <pre>public Message SelectLanguageMessage​(List&lt;String&gt; languages, boolean preferOriginals)
 </pre>
 
+<p>Selects a body part for a multiple-language message (
+ <code>multipart/multilingual</code>) according to the given language
+ priority list and original-language preference.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>languages</code> - A list of basic language ranges, sorted in descending order
+of priority (see the LanguageTags.LanguageTagFilter method).</p></li>
+<li><p><code>preferOriginals</code> - If true, a body part marked as the original language
+version is chosen if it matches one of the given language ranges,
+even if the original language has a lower priority than another
+language with a matching body part.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The best matching body part for the given languages. If the body
+part has no subject, then the top-level subject is used. If this
+message is not a multipart/multilingual message or has fewer than two
+body parts, returns this object. If no body part matches the given
+languages, returns the last body part if its language is &quot;zxx&quot;, or
+the second body part otherwise.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>languages</code> is
+null.</li>
+</ul>
+
 <h3>MakeMultilingualMessage</h3>
 
 <pre>public static Message MakeMultilingualMessage​(List&lt;Message&gt; messages, List&lt;String&gt; languages)
 </pre>
+
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and
+ a list of language strings.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>messages</code> - A list of messages forming the parts of the multilingual
+message object. Each message should have the same content, but be in
+a different language. Each message must have a From header field and
+use the same email address in that field as the other messages. The
+messages should be ordered in descending preference of language.</p></li>
+<li><p><code>languages</code> - A list of language strings corresponding to the messages
+given in the &quot;messages&quot; parameter. A language string at a given index
+corresponds to the message at the same index. Each language string
+must follow the syntax of the Content-Language header field (see
+LanguageTags.GetLanguageList).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Message object with the content type &quot;multipart/multilingual&quot;. It
+will begin with an explanatory body part and be followed by the
+messages given in the <code>messages</code> parameter in the order given.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>messages</code> or
+<code>languages</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>messages</code> or <code>
+languages</code> is empty, their lengths don&#39;t match, at least one message
+is &quot;null&quot;, each message doesn&#39;t contain the same email addresses in
+their From header fields, <code>languages</code> contains a syntactically
+invalid language tag list, <code>languages</code> contains the language
+tag &quot;zzx&quot; not appearing alone or at the end of the language tag list,
+or the first message contains no From header field.</p></li>
+</ul>
 
 <h3>FromMailtoUrl</h3>
 

@@ -33,7 +33,9 @@ Initializes a new instance of the NamedAddress
 class using the given name and an email address made up of its local
 part and domain.</li>
 <li><code>NamedAddress​(String groupName,
-        List&lt;NamedAddress&gt; mailboxes)</code><br></li>
+        List&lt;NamedAddress&gt; mailboxes) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 <li><code>boolean AddressesEqual​(NamedAddress na)</code><br>
 Not documented yet.</li>
 <li><code>boolean equals​(Object obj)</code><br>
@@ -81,7 +83,9 @@ Initializes a new instance of the NamedAddress
 class using the given name and an email address made up of its local
 part and domain.</li>
 <li><code>NamedAddress​(String groupName,
-        List&lt;NamedAddress&gt; mailboxes)</code><br></li>
+        List&lt;NamedAddress&gt; mailboxes) NamedAddress</code><br>
+Initializes a new instance of the NamedAddress
+class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -200,6 +204,26 @@ empty.</p></li>
 
 <pre>public NamedAddress​(String groupName, List&lt;NamedAddress&gt; mailboxes)
 </pre>
+
+<p>Initializes a new instance of the <code>NamedAddress</code>
+ class. Takes a group name and several named email addresses as
+ parameters, and forms a group with them.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>groupName</code> - The group&#39;s name.</p></li>
+<li><p><code>mailboxes</code> - A list of named addresses that make up the group.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>groupName</code> or
+<code>mailboxes</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>groupName</code> is empty,
+or an item in the list is itself a group.</p></li>
+</ul>
 
 <h3>ParseAddresses</h3>
 

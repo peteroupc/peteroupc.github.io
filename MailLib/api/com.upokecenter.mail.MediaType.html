@@ -58,10 +58,10 @@ Gets the value of a parameter in this media type, such as &quot;charset&quot; or
 <li><code>Map&lt;String,String&gt; getParameters()</code><br>
 Gets a list of the parameters contained in this media type object.</li>
 <li><code>String getSubType()</code><br>
-Gets this media type&#39;s subtype.</li>
+Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
 <li><code>String getTopLevelType()</code><br>
-Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
-&quot;audio&quot;).</li>
+Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
+&quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;).</li>
 <li><code>String getTypeAndSubType()</code><br>
 Gets the top level type and subtype of this media type, separated by a
 slash; for example, &quot;text/plain&quot;.</li>
@@ -128,8 +128,9 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <pre>public final String getTopLevelType()
 </pre>
 
-<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; or
- &quot;audio&quot;).</p>
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
+ &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will
+ be in lowercase letters.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -189,7 +190,8 @@ Converts this media type to a text string form suitable for data URIs.</li>
 <pre>public final String getSubType()
 </pre>
 
-<p>Gets this media type&#39;s subtype.</p>
+<p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The
+ resulting string will be in lowercase letters.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -357,7 +359,8 @@ doesn&#39;t exist.</li>
 </pre>
 
 <p>Gets the top level type and subtype of this media type, separated by a
- slash; for example, &quot;text/plain&quot;.</p>
+ slash; for example, &quot;text/plain&quot;. The resulting string will be in
+ lowercase letters.</p>
 
 <p><strong>Returns:</strong></p>
 

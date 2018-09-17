@@ -31,11 +31,11 @@ Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</
 <li><code>NormalizingCharacterInput​(String str,
                      Normalization form) NormalizingCharacterInput</code><br>
 Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
-<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList)</code><br>
-Deprecated.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList,
-                     Normalization form)</code><br>
-Deprecated.</li>
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>static List&lt;Integer&gt; GetChars​(com.upokecenter.text.ICharacterInput chars,
     Normalization form)</code><br>
 Deprecated.
@@ -100,11 +100,11 @@ Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</
 <li><code>NormalizingCharacterInput​(String str,
                      Normalization form) NormalizingCharacterInput</code><br>
 Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
-<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList)</code><br>
-Deprecated.</li>
+<li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
 <li><code>NormalizingCharacterInput​(List&lt;Integer&gt; characterList,
-                     Normalization form)</code><br>
-Deprecated.</li>
+                     Normalization form) NormalizingCharacterInput</code><br>
+Deprecated. Initializes a new instance of the NormalizingCharacterInput class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -142,12 +142,25 @@ Deprecated.</li>
 
 <p>Deprecated.</p>
 
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>characterList</code> - The parameter <code>characterList</code> is an IList object.</li>
+</ul>
+
 <h3>NormalizingCharacterInput</h3>
 
 <pre>public NormalizingCharacterInput​(List&lt;Integer&gt; characterList, Normalization form)
 </pre>
 
 <p>Deprecated.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>characterList</code> - The parameter <code>characterList</code> is a public object.</p></li>
+<li><p><code>form</code> - The parameter <code>form</code> is a Normalization object.</p></li>
+</ul>
 
 <h3>NormalizingCharacterInput</h3>
 
@@ -383,6 +396,27 @@ normalization form; otherwise, <code>false</code> .</li>
 
 <div class='deprecationComment'>Either convert the list to a String or wrap it in an ICharacterInput and
  call the corresponding overload instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>charList</code> - A list of Unicode code points.</p></li>
+<li><p><code>form</code> - Specifies the normalization form to use when normalizing the
+text.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given list of characters is in the given Unicode
+normalization form; otherwise, <code>false</code> .</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>charList</code> is null.</li>
+</ul>
 
 <h3>ReadChar</h3>
 
