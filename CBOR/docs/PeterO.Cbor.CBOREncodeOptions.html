@@ -9,23 +9,12 @@
 <pre>public sealed class CBOREncodeOptions
 </pre>
 
-<p>Specifies options for encoding and decoding CBOR objects.</p>
-
 <h3>CBOREncodeOptions Constructor</h3>
 
 <pre>public CBOREncodeOptions(
     bool useIndefLengthStrings,
     bool allowDuplicateKeys);
 </pre>
-
-<p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
-<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
-</ul>
 
 <h3>CBOREncodeOptions Constructor</h3>
 
@@ -35,76 +24,40 @@
     bool ctap2Canonical);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> class.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>useIndefLengthStrings</i>: A value indicating whether to always encode strings with a definite-length encoding.</p></li>
-<li><p><i>allowDuplicateKeys</i>: A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p></li>
-<li><p><i>ctap2Canonical</i>: Either  <code>true</code>  or  <code>false</code> .</p></li>
-</ul>
-
 <h3>Default</h3>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
 </pre>
-
-<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding. These are recommended settings for the options that may be adopted by certain CBORObject methods in the next major version.</p>
 
 <h3>NoDuplicateKeys</h3>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoDuplicateKeys;
 </pre>
 
-<p>Disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects. Value: 2.</p>
-
 <h3>NoIndefLengthStrings</h3>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions NoIndefLengthStrings;
 </pre>
-
-<p>Always encode strings with a definite-length encoding. Used only when encoding CBOR objects. Value: 1.</p>
 
 <h3>None</h3>
 
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions None;
 </pre>
 
-<p>No special options for encoding/decoding. Value: 0.</p>
-
 <h3>AllowDuplicateKeys</h3>
 
 <pre>public bool AllowDuplicateKeys { get; }
 </pre>
-
-<p>Gets a value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream. Used only when decoding CBOR objects.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A value indicating whether to disallow duplicate keys when reading CBOR objects from a data stream.</p>
 
 <h3>Ctap2Canonical</h3>
 
 <pre>public bool Ctap2Canonical { get; }
 </pre>
 
-<p>Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  if CBOR objects are written out using the CTAP2 canonical CBOR encoding form; otherwise,  <code>false</code> .. In this form, CBOR tags are not used, map keys are written out in a canonical order, and non-integer numbers and integers 2^63 or greater are written as 64-bit binary floating-point numbers.</p>
-
 <h3>UseIndefLengthStrings</h3>
 
 <pre>public bool UseIndefLengthStrings { get; }
 </pre>
-
-<p>Gets a value indicating whether to always encode strings with a definite-length encoding.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A value indicating whether to always encode strings with a definite-length encoding.</p>
 
 <h3>Value</h3>
 
@@ -112,12 +65,6 @@
 </pre>
 
 <p><b>Deprecated.</b> Option classes in this library will follow the form seen in JSONOptions in a later version; the approach used in this class is too complicated.</p>
-
-<p>Gets this options object&#39;s value.</p>
-
-<p><b>Returns:</b></p>
-
-<p>This options object&#39;s value.</p>
 
 <h3>And</h3>
 
@@ -127,19 +74,6 @@
 
 <p><b>Deprecated.</b> May be removed in a later version. Option classes in this library will follow the form seen in JSONOptions in a later version; the approach used in this class is too complicated.</p>
 
-<p>Returns an options object containing the flags shared by this and another options object.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>o</i>: The parameter <i>o</i>
-is a CBOREncodeOptions object.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOREncodeOptions object.</p>
-
 <h3>Or</h3>
 
 <pre>public PeterO.Cbor.CBOREncodeOptions Or(
@@ -147,19 +81,6 @@ is a CBOREncodeOptions object.</li>
 </pre>
 
 <p><b>Deprecated.</b> May be removed in a later version. Option classes in this library will follow the form seen in JSONOptions in a later version; the approach used in this class is too complicated.</p>
-
-<p>Returns an options object containing the combined flags of this and another options object.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>o</i>: The parameter <i>o</i>
-is a CBOREncodeOptions object.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A new CBOREncodeOptions object.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

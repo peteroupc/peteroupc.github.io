@@ -215,7 +215,8 @@ At the moment, use the overload of this method that takes a CBOREncodeOptions ob
 <li><code>static CBORObject DecodeFromBytes​(byte[] data,
            CBOREncodeOptions options) CBOREncodeOptions</code><br>
 Generates a CBOR object from an array of CBOR-encoded bytes, using the given
-CBOREncodeOptions object to control the decoding process.</li>
+CBOREncodeOptions object to control the decoding
+process.</li>
 <li><code>static CBORObject Divide​(CBORObject first,
   CBORObject second)</code><br>
 Divides a CBORObject object by the value of a CBORObject object.</li>
@@ -1244,11 +1245,11 @@ parameter <code>data</code> is empty.</p></li>
 </pre>
 
 <p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given
- <code>CBOREncodeOptions</code> object to control the decoding process.<p>
- <p>The following example (originally written in C# for the .NET
- version) implements a method that decodes a text string from a CBOR
- byte array. It&#39;s successful only if the CBOR object contains an
- untagged text string.</p> <pre>private static string
+ <code>CBOREncodeOptions</code> object to control the decoding
+ process.<p><p>The following example (originally written in C# for the
+ .NET version) implements a method that decodes a text string from a
+ CBOR byte array. It&#39;s successful only if the CBOR object contains an
+ untagged text string.</p> <pre>private static String
  DecodeTextString&#x28;byte[] bytes)&#x7b; if&#x28;bytes ==
  null)&#x7b; throw new
  NullPointerException&#x28;nameof(mapObj));&#x7d;
@@ -3049,12 +3050,12 @@ valueOb</code> has an unsupported type.</p></li>
 
 <p>Adds a new object to the end of this array. (Used to throw
  NullPointerException on a null reference, but now converts the null
- reference to CBORObject.Null, for convenience with the object
+ reference to CBORObject.Null, for convenience with the Object
  overload of this method).</p> <p>NOTE: This method can't be used to
  add a tag to an existing CBOR object. To create a CBOR object with a
  given tag, call the <code>CBORObject.FromObjectAndTag</code> method and
  pass the CBOR object and the desired tag number to that
- method.</p><p> <p>The following example creates a CBOR array and adds
+ method.</p><p><p>The following example creates a CBOR array and adds
  several CBOR objects, one of which has a custom CBOR tag, to that
  array. Note the chaining behavior made possible by this method.</p>
 
@@ -3089,7 +3090,7 @@ valueOb</code> has an unsupported type.</p></li>
  array.</p> <p>NOTE: This method can't be used to add a tag to an
  existing CBOR object. To create a CBOR object with a given tag, call
  the <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR
- object and the desired tag number to that method.</p><p> <p>The
+ object and the desired tag number to that method.</p><p><p>The
  following example creates a CBOR array and adds several CBOR objects,
  one of which has a custom CBOR tag, to that array. Note the chaining
  behavior made possible by this method.</p> <pre>CBORObject obj =
@@ -3390,14 +3391,14 @@ including if this object is CBORObject.Null.</li>
  are truncated to an integer. (NOTE: To determine whether this method
  call can succeed, call the <b>CanTruncatedIntFitInInt32</b> method
  before calling this method. Checking whether this object&#39;s type is
- <code>CBORType.Number</code> is not sufficient. See the example.).<p>
- <p>The following example code (originally written in C# for the .NET
+ <code>CBORType.Number</code> is not sufficient. See the example.).<p><p>The
+ following example code (originally written in C# for the .NET
  Framework) shows a way to check whether a given CBOR object stores a
- 32-bit signed integer before getting its value.</p> <pre> CBORObject
+ 32-bit signed integer before getting its value.</p> <pre>CBORObject
  obj = CBORObject.FromInt32(99999); if&#x28;obj.isIntegral() &amp;&amp;
  obj.getCanTruncatedIntFitInInt32()&#x28;)) &#x7b;  // Not an Int32; handle
- the error System.out.println(&quot;Not a 32-bit integer.&quot;); &#x7d; else {
- System.out.println(&quot;The value is &quot; + obj.AsInt32()); } </pre> </p></p>
+ the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); &#x7d; else {
+ Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); } </pre> </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3422,14 +3423,14 @@ including if this object is CBORObject.Null.</li>
  truncated to an integer. (NOTE: To determine whether this method call
  can succeed, call the <b>CanTruncatedIntFitInInt64</b> method before
  calling this method. Checking whether this object&#39;s type is
- <code>CBORType.Number</code> is not sufficient. See the example.).<p>
- <p>The following example code (originally written in C# for the .NET
+ <code>CBORType.Number</code> is not sufficient. See the example.).<p><p>The
+ following example code (originally written in C# for the .NET
  Framework) shows a way to check whether a given CBOR object stores a
- 64-bit signed integer before getting its value.</p> <pre> CBORObject
+ 64-bit signed integer before getting its value.</p> <pre>CBORObject
  obj = CBORObject.FromInt64(99999); if&#x28;obj.isIntegral() &amp;&amp;
  obj.getCanTruncatedIntFitInInt64()&#x28;)) &#x7b;  // Not an Int64; handle
- the error System.out.println(&quot;Not a 64-bit integer.&quot;); &#x7d; else {
- System.out.println(&quot;The value is &quot; + obj.AsInt64()); } </pre> </p></p>
+ the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); &#x7d; else {
+ Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); } </pre> </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3471,10 +3472,10 @@ value exceeds the range of a 32-bit floating point number.</li>
 <pre>public String AsString()
 </pre>
 
-<p>Gets the value of this object as a text string.<p> <p>The following example
+<p>Gets the value of this object as a text string.<p><p>The following example
  code (originally written in C# for the .NET Framework) shows an idiom
  for returning a string value if a CBOR object is a text string, or
- <code>null</code> if the CBOR object is a CBOR null.</p> <pre> CBORObject
+ <code>null</code> if the CBOR object is a CBOR null.</p> <pre>CBORObject
  obj = CBORObject.FromString(&quot;test&quot;); string str = obj.isNull() ? null :
  obj.AsString(); </pre> </p></p>
 

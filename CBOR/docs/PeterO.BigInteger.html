@@ -13,20 +13,10 @@
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EInteger</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EInteger</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
-
-<p>An arbitrary-precision integer.<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
-
-<p><b>This class is largely obsolete. It will be replaced by a new version of this class in a different namespace/package and library, called <code>PeterO.Numbers.EInteger</code> in the<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET), or <code>com.upokecenter.numbers.EInteger</code> in the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java). This new class can be used in the <code>CBORObject.FromObject(object)</code> method (by including the new library in your code, among other hings).</b></p>
-
-<p>An arbitrary-precision integer.<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
-
 <h3>ONE</h3>
 
 <pre>public static readonly PeterO.BigInteger ONE;
 </pre>
-
-<p>BigInteger for the number one.</p>
 
 <h3>One</h3>
 
@@ -35,12 +25,6 @@
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p>Gets the arbitrary-precision integer for one.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The arbitrary-precision integer for one.</p>
-
 <h3>Zero</h3>
 
 <pre>public static PeterO.BigInteger Zero { get; }
@@ -48,22 +32,10 @@
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p>Gets the arbitrary-precision integer for zero.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The arbitrary-precision integer for zero.</p>
-
 <h3>bitLength</h3>
 
 <pre>public int bitLength();
 </pre>
-
-<p>Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign. If the value is negative, finds the number of bits in a value equal to this object&#39;s absolute value minus 1.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0 or negative 1.</p>
 
 <h3>CompareTo</h3>
 
@@ -71,37 +43,11 @@
     PeterO.BigInteger other);
 </pre>
 
-<p>Compares this value to another.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: The parameter <i>other</i>
-is an arbitrary-precision integer.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>Less than 0 if this value is less than, 0 if equal to, or greater than 0 if greater than the other value.</p>
-
 <h3>Equals</h3>
 
 <pre>public override bool Equals(
     object obj);
 </pre>
-
-<p>Determines whether this object and another object are equal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>obj</i>: The parameter <i>obj</i>
-is an arbitrary object.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <h3>Equals</h3>
 
@@ -111,45 +57,12 @@ is an arbitrary object.</li>
 
 <p><b>Deprecated.</b> Use EInteger from PeterO.Numbers/com.upokecenter.numbers and the output of this class&#39;s ToString method.</p>
 
-<p>Returns whether this number&#39;s value equals another number&#39;s value.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>other</i>: An arbitrary-precision integer.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code> if this number&#39;s value equals another number&#39;s value; otherwise,  <code>false</code> .</p>
-
 <h3>fromBytes</h3>
 
 <pre>public static PeterO.BigInteger fromBytes(
     byte[] bytes,
     bool littleEndian);
 </pre>
-
-<p>Initializes an arbitrary-precision integer from an array of bytes.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form of the arbitrary-precision integer to create. The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, XOR each byte, and if the most-significant bit of the first byte isn&#39;t set, add an additional byte at the start with the value 255. For little-endian, the byte order is reversed from the byte order just discussed.</p></li>
-<li><p><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>An arbitrary-precision integer. Returns 0 if the byte array&#39;s length is 0.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>bytes</i>
-is null.</li>
-</ul>
 
 <h3>fromRadixString</h3>
 
@@ -158,71 +71,16 @@ is null.</li>
     int radix);
 </pre>
 
-<p>Converts a string to an arbitrary-precision integer.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>str</i>: A text string. The string must contain only characters allowed by the given radix, except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The string is not allowed to contain white space characters, including spaces.</p></li>
-<li><p><i>radix</i>: A base from 2 to 36. Depending on the radix, the string can use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>An arbitrary-precision integer with the same value as given in the string.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The parameter <i>radix</i>
-is less than 2 or greater than 36.</p></li>
-<li><p>System.FormatException:
-The string is empty or in an invalid format.</p></li>
-</ul>
-
 <h3>fromString</h3>
 
 <pre>public static PeterO.BigInteger fromString(
     string str);
 </pre>
 
-<p>Converts a string to an arbitrary-precision integer.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>str</i>: A text string. The string must contain only basic digits 0 to 9 (U+0030 to U+0039), except that it may start with a minus sign (&quot;-&quot;, U+002D) to indicate a negative number. The string is not allowed to contain white space characters, including spaces.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>An arbitrary-precision integer with the same value as given in the string.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>str</i>
-is null.</p></li>
-<li><p>System.FormatException:
-The parameter <i>str</i>
-is in an invalid format.</p></li>
-</ul>
-
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
 </pre>
-
-<p>Returns the hash code for this instance. No application or process IDs are used in the hash code calculation.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A 32-bit signed integer.</p>
 
 <h3>toBytes</h3>
 
@@ -230,72 +88,22 @@ is in an invalid format.</p></li>
     bool littleEndian);
 </pre>
 
-<p>Returns a byte array of this object&#39;s value. The byte array will take the form of the number&#39;s two&#39; s-complement representation, using the fewest bytes necessary to represent its value unambiguously. If this value is negative, the bits that appear &quot;before&quot; the most significant bit of the number will be all ones.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>littleEndian</i>: If true, the least significant bits will appear first.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A byte array. If this value is 0, returns a byte array with the single element 0.</p>
-
 <h3>toRadixString</h3>
 
 <pre>public string toRadixString(
     int radix);
 </pre>
 
-<p>Generates a string representing the value of this object, in the given radix.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>radix</i>: A radix from 2 through 36. For example, to generate a hexadecimal (base-16) string, specify 16. To generate a decimal (base-10) string, specify 10.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A string representing the value of this object. If this value is 0, returns &quot;0&quot;. If negative, the string will begin with a hyphen/minus (&quot;-&quot;). Depending on the radix, the string will use the basic digits 0 to 9 (U+0030 to U+0039) and then the basic letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and 0-9, then A-F in radix 16.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentException:
-The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</li>
-</ul>
-
 <h3>ToString</h3>
 
 <pre>public override string ToString();
 </pre>
-
-<p>Converts this object to a text string in base 10.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A string representation of this object. If negative, the string will begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic digits 0 to 9 (U+0030 to U+0039).</p>
 
 <h3>valueOf</h3>
 
 <pre>public static PeterO.BigInteger valueOf(
     long longerValue);
 </pre>
-
-<p>Converts a 64-bit signed integer to a big integer.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>longerValue</i>: The parameter <i>longerValue</i>
-is a 64-bit signed integer.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>An arbitrary-precision integer with the same value as the 64-bit number.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
