@@ -1249,7 +1249,7 @@ parameter <code>data</code> is empty.</p></li>
  process.<p><p>The following example (originally written in C# for the
  .NET version) implements a method that decodes a text string from a
  CBOR byte array. It&#39;s successful only if the CBOR object contains an
- untagged text string.</p> <pre>private static String
+ untagged text string. </p> <pre>private static String
  DecodeTextString&#x28;byte[] bytes)&#x7b; if&#x28;bytes ==
  null)&#x7b; throw new
  NullPointerException&#x28;nameof(mapObj));&#x7d;
@@ -1387,35 +1387,64 @@ byte-order mark (U + FEFF).</p></li>
  object conforming to the type, class, or interface passed to this
  method, where the object will contain all keys and values in this
  CBOR map. </p> <p>If the type "T" is <code>int</code> , returns the result
- of the AsInt32 method. </p> <p>If the type "T" is <code>long</code> ,
- returns the result of the AsInt64 method. </p> <p>If the type "T" is
- <code>double</code> , returns the result of the AsDouble method. </p> <p>If
- the type "T" is String, returns the result of the AsString method.
- </p> <p>If the type "T" is <code>byte[]</code> and this CBOR object is a
- byte array, returns a byte array which this CBOR byte string's data
- will be copied to. </p> <p>In the .NET version, if the type "T" is
- <code>java.util.Date</code> and this CBOR object is a text string with tag 0,
- converts that text string to a java.util.Date and returns that java.util.Date.
- </p> <p>If the type "T" is Boolean, returns the result of the IsTrue
- method. </p> <p>If this object is a CBOR map, and the type "T" is a
- type not specially handled by the FromObject method, creates an
- object of the given type, and, for each key matching the name of a
- property in that object (using the rules given in
- CBORObject.FromObject), sets that property's value to the
- corresponding value for that key. </p><p><p>Java offers no easy way
- to express a generic type, at least none as easy as C#'s
- <code>typeof</code> operator. The following example, written in Java, is a
- way to specify that the return value will be an ArrayList of String
- objects. </p> <pre>Type arrayListString = new ParameterizedType() {
- public Type[] getActualTypeArguments() { /* Contains one type
- parameter, String &#x2a;&#x2f; return new Type[] { String.class }; } public Type
- getRawType() { /* Raw type is ArrayList &#x2a;&#x2f; return ArrayList.class; }
- public Type getOwnerType() { return null; } }; ArrayList&lt;String&gt;
- array = (ArrayList&lt;String&gt;)
- cborArray.ToObject(arrayListString); </pre> <p>By comparison, the C#
- version is much shorter. </p> <pre>var&#x20;array =
- (List&lt;String&gt;)cborArray.ToObject(
- typeof&#x28;List&lt;String&gt;)); </pre> </p>
+ of the AsInt32 method. </p> <p>If the type "T" is <code>java.util.Date</code> (or
+ <code>Date</code> in Java) , returns a date/time object if the CBOR
+ object's outermost tag is 0 or 1. </p> <p>If the type "T" is
+ <code>long</code> , returns the result of the AsInt64 method. </p> <p>If
+ the type "T" is <code>double</code> , returns the result of the AsDouble
+ method. </p> <p>If the type "T" is String, returns the result of the
+ AsString method. </p> <p>If the type "T" is <code>byte[]</code> and this
+ CBOR object is a byte array, returns a byte array which this CBOR
+ byte string's data will be copied to. </p> <p>In the .NET version, if
+ the type "T" is <code>java.util.Date</code> and this CBOR object is a text string
+ with tag 0, converts that text string to a java.util.Date and returns that
+ java.util.Date. </p> <p>If the type "T" is Boolean, returns the result of
+ the IsTrue method. </p> <p>In the .NET version, if the object is a
+ CBOR map and the type "T" is not specially handled by this method, an
+ object of the given type is created, then this method checks the CBOR
+ object for public writable properties. For each method found, if its
+ name (with the "Is" prefix deleted and then converted to camel case)
+ matches the name of a key in this CBOR map, that property's setter is
+ invoked and the corresponding value is passed to that method. </p>
+
+<p><p>In the Java version, if the object is a CBOR map and the type &quot;T&quot;
+ is not specially handled by this method, an object of the given type
+ is created, then this method checks the CBOR object for public
+ methods starting with the word &quot;set&quot; (followed by an upper-case A to
+ Z) that take a single parameter. For each method found, if its name
+ (with the starting word &quot;set&quot; deleted and then converted to camel
+ case) matches the name of a key in this CBOR map, that method is
+ invoked and the corresponding value is passed to that method. </p>
+ <p>REMARK: The behavior of this method is likely to change in the
+ final version 3.4 of this library as well as in the next major
+ version (4.0). There are certain inconsistencies between the ToObject
+ method and the FromObject method as well as between the .NET and Java
+ versions of FromObject. For one thing, java.util.Date/Date objects are
+ converted differently between the two versions -- either as CBOR maps
+ with their &quot;get&quot; properties (Java) or as tag-0 strings (.NET) -- this
+ difference has to remain for backward compatibility with version 3.0.
+ For another thing, the treatment of properties/getters starting with
+ &quot;Is&quot; is subtly inconsistent between the .NET and Java versions of
+ FromObject, especially when using certain PODOptions. A certain
+ consistency between .NET and Java and between FromObject and ToObject
+ are sought for version 4.0. It is also hoped that-- </p> <ul> <li>the
+ ToObject method will support deserializing to objects consisting of
+ fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java,
+ and </li> <li>both FromObject and ToObject will be better designed,
+ in version 4.0, so that backward-compatible improvements are easier
+ to make. </li> </ul><p><p>Java offers no easy way to express a
+ generic type, at least none as easy as C#&#39;s <code>typeof</code> operator.
+ The following example, written in Java, is a way to specify that the
+ return value will be an ArrayList of String objects. </p> <pre>Type
+ arrayListString = new ParameterizedType() { public Type[]
+ getActualTypeArguments() { /* Contains one type parameter, String &#x2a;&#x2f;
+ return new Type[] { String.class }; } public Type getRawType() { /* Raw
+ type is ArrayList &#x2a;&#x2f; return ArrayList.class; } public Type
+ getOwnerType() { return null; } }; ArrayList&lt;String&gt; array =
+ (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+ </pre> <p>By comparison, the C# version is much shorter. </p>
+ <pre>var&#x20;array = (List&lt;String&gt;)cborArray.ToObject(
+ typeof&#x28;List&lt;String&gt;)); </pre> </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2046,6 +2075,24 @@ CBORObject.Null if the object is null.</li>
  DecodeFromBytes method instead.).</p> <p>If the input is a text
  string, a CBOR text string object will be created. To create a CBOR
  byte string object from a text string, see the example given in <see cref='M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])'/>.</p>
+
+<p><p>REMARK: The behavior of this method is likely to change in the
+ next major version (4.0). There are certain inconsistencies between
+ the ToObject method and the FromObject method as well as between the
+ .NET and Java versions of FromObject. For one thing, java.util.Date/Date
+ objects are converted differently between the two versions -- either
+ as CBOR maps with their &quot;get&quot; properties (Java) or as tag-0 strings
+ (.NET) -- this difference has to remain for backward compatibility
+ with version 3.0. For another thing, the treatment of
+ properties/getters starting with &quot;Is&quot; is subtly inconsistent between
+ the .NET and Java versions of FromObject, especially when using
+ certain PODOptions. A certain consistency between .NET and Java and
+ between FromObject and ToObject are sought for version 4.0. It is
+ also hoped that--</p><ul> <li>the ToObject method will support
+ deserializing to objects consisting of fields and not getters
+ (&quot;getX()&quot; methods), both in .NET and in Java, and</li> <li>both
+ FromObject and ToObject will be better designed, in version 4.0, so
+ that backward-compatible improvements are easier to make.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -3394,7 +3441,7 @@ including if this object is CBORObject.Null.</li>
  <code>CBORType.Number</code> is not sufficient. See the example.).<p><p>The
  following example code (originally written in C# for the .NET
  Framework) shows a way to check whether a given CBOR object stores a
- 32-bit signed integer before getting its value.</p> <pre>CBORObject
+ 32-bit signed integer before getting its value. </p> <pre>CBORObject
  obj = CBORObject.FromInt32(99999); if&#x28;obj.isIntegral() &amp;&amp;
  obj.getCanTruncatedIntFitInInt32()&#x28;)) &#x7b;  // Not an Int32; handle
  the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); &#x7d; else {
@@ -3426,7 +3473,7 @@ including if this object is CBORObject.Null.</li>
  <code>CBORType.Number</code> is not sufficient. See the example.).<p><p>The
  following example code (originally written in C# for the .NET
  Framework) shows a way to check whether a given CBOR object stores a
- 64-bit signed integer before getting its value.</p> <pre>CBORObject
+ 64-bit signed integer before getting its value. </p> <pre>CBORObject
  obj = CBORObject.FromInt64(99999); if&#x28;obj.isIntegral() &amp;&amp;
  obj.getCanTruncatedIntFitInInt64()&#x28;)) &#x7b;  // Not an Int64; handle
  the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); &#x7d; else {
@@ -4331,12 +4378,12 @@ valueOb</code> has an unsupported type.</p></li>
  number is converted to null.) </li> <li>Simple values other than true
  and false will be converted to null. (This doesn&#39;t include
  floating-point numbers.) </li> <li>Infinity and not-a-number will be
- converted to null. </li> </ul> The example code given below
+ converted to null. </li> </ul> <p>The example code given below
  (originally written in C# for the .NET version) can be used to write
  out certain keys of a CBOR map in a given order to a JSON string.
- <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the
- order given in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if
- they exist in &#39;mapObj&#39;. &#x2a;&#x2f; private static string
+ </p> <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in
+ the order given in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written
+ if they exist in &#39;mapObj&#39;. &#x2a;&#x2f; private static string
  KeysToJSONMap&#x28;CBORObject mapObj, IList&lt;CBORObject&gt;
  keys&#x29;&#x7b; if (mapObj == null) { throw new
  NullPointerException&#x29;nameof(mapObj));} if (keys == null) {

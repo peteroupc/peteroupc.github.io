@@ -21,6 +21,23 @@
 
 <p>An arbitrary-precision integer.<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
+<ul>
+<li><code> public sealed int CompareTo( PeterO.BigInteger other);</code> - Compares this value to another.</li>
+<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
+<li><code> public override int GetHashCode();</code> - Returns the hash code for this instance.</li>
+<li><code> public static readonly PeterO.BigInteger ONE;</code> - BigInteger for the number one.</li>
+<li><code> public static PeterO.BigInteger One { get; }</code> - Gets the arbitrary-precision integer for one.</li>
+<li><code> public override string ToString();</code> - Converts this object to a text string in base 10.</li>
+<li><code> public static PeterO.BigInteger Zero { get; }</code> - Gets the arbitrary-precision integer for zero.</li>
+<li><code> public int bitLength();</code> - Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign.</li>
+<li><code> public static PeterO.BigInteger fromBytes( byte[] bytes, bool littleEndian);</code> - Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code> public static PeterO.BigInteger fromRadixString( string str, int radix);</code> - Converts a string to an arbitrary-precision integer.</li>
+<li><code> public static PeterO.BigInteger fromString( string str);</code> - Converts a string to an arbitrary-precision integer.</li>
+<li><code> public byte[] toBytes( bool littleEndian);</code> - Returns a byte array of this object&#39;s value.</li>
+<li><code> public string toRadixString( int radix);</code> - Generates a string representing the value of this object, in the given radix.</li>
+<li><code> public static PeterO.BigInteger valueOf( long longerValue);</code> - Converts a 64-bit signed integer to a big integer.</li>
+</ul>
+
 <h3>ONE</h3>
 
 <pre>public static readonly PeterO.BigInteger ONE;

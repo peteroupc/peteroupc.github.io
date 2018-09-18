@@ -9,13 +9,15 @@
 <pre>public interface ICBORObjectConverter&lt;T&gt; extends ICBORConverter&lt;T&gt;
 </pre>
 
-<p>Not documented yet.</p>
+<p>Interface implemented by classes that convert objects of arbitrary types to
+ and from CBOR objects.</p>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>T FromCBORObject​(CBORObject cbor)</code><br>
-Not documented yet.</li>
+Converts a CBOR object to an object of a type supported by the implementing
+class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -25,18 +27,27 @@ Not documented yet.</li>
 <pre>T FromCBORObject​(CBORObject cbor)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a CBOR object to an object of a type supported by the implementing
+ class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>cbor</code> - The parameter <code>cbor</code> is not documented yet.</li>
+<li><code>cbor</code> - A CBOR object to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The converted object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>CBORException</code> - An error occurred in the
+conversion; for example, the conversion doesn&#39;t support the given
+CBOR object.</li>
 </ul>
 
 <h3>FromCBORObject</h3>
@@ -44,18 +55,27 @@ Not documented yet.</li>
 <pre>T FromCBORObject​(CBORObject cbor)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a CBOR object to an object of a type supported by the implementing
+ class.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>cbor</code> - The parameter <code>cbor</code> is not documented yet.</li>
+<li><code>cbor</code> - A CBOR object to convert.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The converted object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>CBORException</code> - An error occurred in the
+conversion; for example, the conversion doesn&#39;t support the given
+CBOR object.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
