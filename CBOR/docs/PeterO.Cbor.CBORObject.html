@@ -11,50 +11,116 @@
     System.IEquatable
 </pre>
 
+<p>Represents an object in Concise Binary Object Representation (CBOR) and contains methods for reading and writing CBOR data. CBOR is defined in RFC 7049.</p>
+
+<p><b>Converting CBOR objects</b></p>
+
+<p>There are many ways to get a CBOR object, including from bytes, objects, streams and JSON, as described below.</p>
+
+<p><b>To and from byte arrays:</b>The CBORObject.DecodeFromBytes method converts a byte array in CBOR ormat to a CBOR object. The EncodeToBytes method converts a CBOR object o its corresponding byte array in CBOR format.</p>
+
+<p><b>To and from data streams:</b>The CBORObject.Write methods write many kinds of objects to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a data stream.</p>
+
+<p><b>To and from other objects:</b>The  <code>CBORObject.FromObject</code>  method converts many kinds of objects to a CBOR object, including numbers, strings, and arrays and maps of numbers and strings. Methods like AsDouble, AsByte, and AsString convert a CBOR object to different types of object. The  <code>CBORObject.ToObject</code>  method converts a CBOR object to an object of a given type; for example, a CBOR array to a native  <code>List</code>  (or  <code>ArrayList</code>  in Java), or a CBOR integer to an  <code>int</code>  or  <code>long</code> .</p>
+
+<p><b>To and from JSON:</b>This class also doubles as a reader and writer of JavaScript Object Notation (JSON). The CBORObject.FromJSONString method converts JSON to a CBOR object, and the ToJSONString method converts a CBOR object to a JSON string.</p>
+
+<p>In addition, the CBORObject.WriteJSON method writes many kinds of objects as JSON to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a JSON data stream.</p>
+
+<p><b>Comparison Considerations:</b></p>
+
+<p>Instances of CBORObject should not be compared for equality using the &quot;==&quot; operator; it&#39;s possible to create two CBOR objects with the same value but not the same reference. (The &quot;==&quot; operator might only check if each side of the operator is the same instance.)</p>
+
+<p>This class&#39;s natural ordering (under the CompareTo method) is not consistent with the Equals method. This means that two values that compare as equal under the CompareTo method might not be equal under the Equals method. This is important to consider especially if an application wants to compare numbers, since the CBOR number type supports numbers of different formats, such as big integers, rational numbers, and arbitrary-precision decimal numbers.</p>
+
+<p>Another consideration is that two values that are otherwise equal may have different tags. To strip the tags from a CBOR object before comparing, use the <code>Untag</code> method.</p>
+
+<p>To compare two numbers, the CompareToIgnoreTags or CompareTo method should be used. Which method to use depends on whether two equal values should still be considered equal if they have different tags.</p>
+
+<p>Although this class is inconsistent with the Equals method, it is safe to use CBORObject instances as hash keys as long as all of the keys are untagged text strings (which means GetTags returns an empty array and the Type property, or &quot;getType()&quot; in Java, returns TextString). This is because the natural ordering of these instances is consistent with the Equals method.</p>
+
+<p><b>Thread Safety:</b></p>
+
+<p>CBOR objects that are numbers, &quot;simple values&quot;, and text strings are immutable (their values can&#39;t be changed), so they are inherently safe for use by multiple threads.</p>
+
+<p>CBOR objects that are arrays, maps, and byte strings are mutable, but this class doesn&#39;t attempt to synchronize reads and writes to those objects by multiple threads, so those objects are not thread safe without such synchronization.</p>
+
+<p>One kind of CBOR object is called a map, or a list of key-value pairs. Keys can be any kind of CBOR object, including numbers, strings, arrays, and maps. However, text strings are the most suitable to use as keys; other kinds of CBOR object are much better used as map values instead, keeping in mind that some of them are not thread safe without synchronizing reads and writes to them.</p>
+
+<p>To find the type of a CBOR object, call its Type property (or &quot;getType()&quot; in Java). The return value can be Number, Boolean, SimpleValue, or TextString for immutable CBOR objects, and Array, Map, or ByteString for mutable CBOR objects.</p>
+
+<p><b>Nesting Depth:</b></p>
+
+<p>The DecodeFromBytes and Read methods can only read objects with a limited maximum depth of arrays and maps nested within other arrays and maps. The code sets this maximum depth to 500 (allowing more than enough nesting for most purposes), but it&#39;s possible that stack overflows in some runtimes might lower the effective maximum nesting depth. When the nesting depth goes above 500, the DecodeFromBytes and Read methods throw a CBORException.</p>
+
+<p>The ReadJSON and FromJSONString methods currently have nesting depths of 1000.</p>
+
 <h3>False</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject False;
 </pre>
+
+<p>Represents the value false.</p>
 
 <h3>NaN</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NaN;
 </pre>
 
+<p>A not-a-number value.</p>
+
 <h3>NegativeInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject NegativeInfinity;
 </pre>
+
+<p>The value negative infinity.</p>
 
 <h3>Null</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Null;
 </pre>
 
+<p>Represents the value null.</p>
+
 <h3>PositiveInfinity</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject PositiveInfinity;
 </pre>
+
+<p>The value positive infinity.</p>
 
 <h3>True</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject True;
 </pre>
 
+<p>Represents the value true.</p>
+
 <h3>Undefined</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Undefined;
 </pre>
+
+<p>Represents the value undefined.</p>
 
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORObject Zero;
 </pre>
 
+<p>Gets a CBOR object for the number zero.</p>
+
 <h3>Count</h3>
 
 <pre>public int Count { get; }
 </pre>
+
+<p>Gets the number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</p>
 
 <h3>InnermostTag</h3>
 
@@ -63,65 +129,150 @@
 
 <p><b>Deprecated.</b> Use MostInnerTag instead.</p>
 
+<p>Gets the last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
+
 <h3>IsFalse</h3>
 
 <pre>public bool IsFalse { get; }
 </pre>
+
+<p>Gets a value indicating whether this value is a CBOR false value.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code> If this value is a CBOR false value; otherwise, . <code>false</code> .</p>
 
 <h3>IsFinite</h3>
 
 <pre>public bool IsFinite { get; }
 </pre>
 
+<p>Gets a value indicating whether this CBOR object represents a finite number.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this CBOR object represents a finite number; otherwise, .  <code>false</code> .</p>
+
 <h3>IsIntegral</h3>
 
 <pre>public bool IsIntegral { get; }
 </pre>
+
+<p>Gets a value indicating whether this object represents an integral number, that is, a number without a fractional part. Infinity and not-a-number are not considered integral.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this object represents an integral number, that is, a number without a fractional part; otherwise, . <code>false</code> .</p>
 
 <h3>IsNegative</h3>
 
 <pre>public bool IsNegative { get; }
 </pre>
 
+<p>Gets a value indicating whether this object is a negative number.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code> If this object is a negative number; otherwise, . <code>false</code> .</p>
+
 <h3>IsNull</h3>
 
 <pre>public bool IsNull { get; }
 </pre>
+
+<p>Gets a value indicating whether this value is a CBOR null value.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this value is a CBOR null value; otherwise, . <code>false</code> .</p>
 
 <h3>IsTagged</h3>
 
 <pre>public bool IsTagged { get; }
 </pre>
 
+<p>Gets a value indicating whether this data item has at least one tag.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this data item has at least one tag; otherwise, .  <code>false</code> .</p>
+
 <h3>IsTrue</h3>
 
 <pre>public bool IsTrue { get; }
 </pre>
+
+<p>Gets a value indicating whether this value is a CBOR true value.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this value is a CBOR true value; otherwise, . <code>false</code> .</p>
 
 <h3>IsUndefined</h3>
 
 <pre>public bool IsUndefined { get; }
 </pre>
 
+<p>Gets a value indicating whether this value is a CBOR undefined value.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this value is a CBOR undefined value; otherwise, .  <code>false</code> .</p>
+
 <h3>IsZero</h3>
 
 <pre>public bool IsZero { get; }
 </pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code> If this object&#39;s value equals 0; otherwise, . <code>false</code> .</p>
 
 <h3>Keys</h3>
 
 <pre>public System.Collections.Generic.ICollection Keys { get; }
 </pre>
 
+<p>Gets a collection of the keys of this CBOR object in an undefined order.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A collection of the keys of this CBOR object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a map.</li>
+</ul>
+
 <h3>MostInnerTag</h3>
 
 <pre>public PeterO.Numbers.EInteger MostInnerTag { get; }
 </pre>
 
+<p>Gets the last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
+
 <h3>MostOuterTag</h3>
 
 <pre>public PeterO.Numbers.EInteger MostOuterTag { get; }
 </pre>
+
+<p>Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
 
 <h3>OutermostTag</h3>
 
@@ -130,30 +281,87 @@
 
 <p><b>Deprecated.</b> Use MostOuterTag instead.</p>
 
+<p>Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
+
 <h3>Sign</h3>
 
 <pre>public int Sign { get; }
 </pre>
+
+<p>Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including the special not-a-number value (NaN).</li>
+</ul>
 
 <h3>SimpleValue</h3>
 
 <pre>public int SimpleValue { get; }
 </pre>
 
+<p>Gets the simple value ID of this object, or -1 if this object is not a simple value (including if the value is a floating-point number).</p>
+
+<p><b>Returns:</b></p>
+
+<p>The simple value ID of this object, or -1 if this object is not a simple value (including if the value is a floating-point number).</p>
+
 <h3>Type</h3>
 
 <pre>public PeterO.Cbor.CBORType Type { get; }
 </pre>
+
+<p>Gets the general data type of this CBOR object.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The general data type of this CBOR object.</p>
 
 <h3>Values</h3>
 
 <pre>public System.Collections.Generic.ICollection Values { get; }
 </pre>
 
+<p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an array. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed. (This method can&#39;t be used to get the bytes in a CBOR byte string; for that, use the GetByteArray method instead.).</p>
+
+<p><b>Returns:</b></p>
+
+<p>A collection of the values of this CBOR map or array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a map or an array.</li>
+</ul>
+
 <h3>Abs</h3>
 
 <pre>public PeterO.Cbor.CBORObject Abs();
 </pre>
+
+<p>Gets this object&#39;s absolute value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>This object&#39;s absolute without its negative sign.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type.</li>
+</ul>
 
 <h3>Add</h3>
 
@@ -162,17 +370,111 @@
     object valueOb);
 </pre>
 
+<p>Adds a new key and its value to this CBOR map, or adds the value if the key doesn&#39;t exist.</p>
+
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code>  method and pass the CBOR object and the desired tag number to that method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>key</i>: An object representing the key, which will be converted to a CBORObject. Can be null, in which case this value is converted to CBORObject.Null.</p></li>
+<li><p><i>valueOb</i>: An object representing the value, which will be converted to a CBORObject. Can be null, in which case this value is converted to CBORObject.Null.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter <i>key</i>
+already exists in this map.</p></li>
+<li><p>System.InvalidOperationException:
+This object is not a map.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>key</i>
+or  <i>valueOb</i>
+has an unsupported type.</p></li>
+</ul>
+
 <h3>Add</h3>
 
 <pre>public PeterO.Cbor.CBORObject Add(
     object obj);
 </pre>
 
+<p>Converts an object to a CBOR object and adds it to the end of this array.</p>
+
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the  <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object and the desired tag number to that method.</p>
+
+<p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
+
+<pre>CBORObject obj = CBORObject.NewArray()
+            .Add(CBORObject.False)
+            .Add(5)
+            .Add(&quot;text string&quot;)
+            .Add(CBORObject.FromObjectAndTag(9999, 1));
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is a CBOR object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object is not an array.</p></li>
+<li><p>System.ArgumentException:
+The type of  <i>obj</i>
+is not supported.</p></li>
+</ul>
+
 <h3>Add</h3>
 
 <pre>public PeterO.Cbor.CBORObject Add(
     PeterO.Cbor.CBORObject obj);
 </pre>
+
+<p>Adds a new object to the end of this array. (Used to throw ArgumentNullException on a null reference, but now converts the null reference to CBORObject.Null, for convenience with the Object overload of this method).</p>
+
+<p>NOTE: This method can&#39;t be used to add a tag to an existing CBOR object. To create a CBOR object with a given tag, call the <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object nd the desired tag number to that method.</p>
+
+<p>The following example creates a CBOR array and adds several CBOR objects, one of which has a custom CBOR tag, to that array. Note the chaining behavior made possible by this method.</p>
+
+<pre>CBORObject obj = CBORObject.NewArray()
+            .Add(CBORObject.False)
+            .Add(CBORObject.FromObject(5))
+            .Add(CBORObject.FromObject(&quot;text string&quot;))
+            .Add(CBORObject.FromObjectAndTag(9999, 1));
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter  <i>obj</i>
+is a CBOR object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not an array.</li>
+</ul>
 
 <h3>AddConverter</h3>
 
@@ -181,12 +483,56 @@
     PeterO.Cbor.ICBORConverter&lt;T&gt; converter);
 </pre>
 
+<p>Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>type</i>: A Type object specifying the type that the converter converts to CBOR objects.</p></li>
+<li><p><i>converter</i>: The parameter  <i>converter</i>
+is an ICBORConverter object.</p></li>
+<li><p>&lt;T&gt;: Must be the same as the &quot;type&quot; parameter.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>type</i>
+or  <i>converter</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+&quot;Converter doesn&#39;t contain a proper ToCBORObject method&quot;.</p></li>
+</ul>
+
 <h3>Addition</h3>
 
 <pre>public static PeterO.Cbor.CBORObject Addition(
     PeterO.Cbor.CBORObject first,
     PeterO.Cbor.CBORObject second);
 </pre>
+
+<p>Finds the sum of two CBOR numbers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
+</ul>
 
 <h3>AddTagHandler</h3>
 
@@ -197,12 +543,56 @@
 
 <p><b>Deprecated.</b> Use the EInteger version of this method.</p>
 
+<p>Registers an object that validates CBOR objects with new tags.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
+<li><p><i>handler</i>: The parameter  <i>handler</i>
+is an ICBORTag object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>bigintTag</i>
+or  <i>handler</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>bigintTag</i>
+is less than 0 or greater than (2^64-1).</p></li>
+</ul>
+
 <h3>AddTagHandler</h3>
 
 <pre>public static void AddTagHandler(
     PeterO.Numbers.EInteger bigintTag,
     PeterO.Cbor.ICBORTag handler);
 </pre>
+
+<p>Registers an object that validates CBOR objects with new tags.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
+<li><p><i>handler</i>: The parameter  <i>handler</i>
+is an ICBORTag object.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>bigintTag</i>
+or  <i>handler</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>bigintTag</i>
+is less than 0 or greater than (2^64-1).</p></li>
+</ul>
 
 <h3>AsBigInteger</h3>
 
@@ -211,45 +601,163 @@
 
 <p><b>Deprecated.</b> Use the AsEInteger method instead.</p>
 
+<p>Converts this object to an arbitrary-precision integer. Fractional values are truncated to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest big integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+</ul>
+
 <h3>AsBoolean</h3>
 
 <pre>public bool AsBoolean();
 </pre>
+
+<p>Returns false if this object is False, Null, or Undefined; otherwise,true.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>False if this object is False, Null, or Undefined; otherwise,true.</p>
 
 <h3>AsByte</h3>
 
 <pre>public byte AsByte();
 </pre>
 
+<p>Converts this object to a byte (0 to 255). Floating point values are truncated to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest byte-sized integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a byte (would be less than 0 or greater than 255 when truncated to an integer).</p></li>
+</ul>
+
 <h3>AsDecimal</h3>
 
 <pre>public System.Decimal AsDecimal();
 </pre>
+
+<p>Converts this object to a .NET decimal.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest big integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a .NET decimal.</p></li>
+</ul>
 
 <h3>AsDouble</h3>
 
 <pre>public double AsDouble();
 </pre>
 
+<p>Converts this object to a 64-bit floating point number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 64-bit floating point number to this object. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type.</li>
+</ul>
+
 <h3>AsEDecimal</h3>
 
 <pre>public PeterO.Numbers.EDecimal AsEDecimal();
 </pre>
+
+<p>Converts this object to a decimal number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A decimal number for this object&#39;s value. If this object is a rational number with a nonterminating decimal expansion, returns a decimal number rounded to 34 digits.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsEFloat</h3>
 
 <pre>public PeterO.Numbers.EFloat AsEFloat();
 </pre>
 
+<p>Converts this object to an arbitrary-precision binary floating point number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to 113 bits.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
+
 <h3>AsEInteger</h3>
 
 <pre>public PeterO.Numbers.EInteger AsEInteger();
 </pre>
 
+<p>Converts this object to an arbitrary-precision integer. Fractional values are truncated to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest big integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value is infinity or not-a-number (NaN).</p></li>
+</ul>
+
 <h3>AsERational</h3>
 
 <pre>public PeterO.Numbers.ERational AsERational();
 </pre>
+
+<p>Converts this object to a rational number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A rational number for this object&#39;s value.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsExtendedDecimal</h3>
 
@@ -258,12 +766,38 @@
 
 <p><b>Deprecated.</b> Use AsEDecimal instead.</p>
 
+<p>Converts this object to a decimal number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A decimal number for this object&#39;s value. If this object is a rational number with a nonterminating decimal expansion, returns a decimal number rounded to 34 digits.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
+
 <h3>AsExtendedFloat</h3>
 
 <pre>public PeterO.ExtendedFloat AsExtendedFloat();
 </pre>
 
 <p><b>Deprecated.</b> Use AsEFloat instead.</p>
+
+<p>Converts this object to an arbitrary-precision binary floating point number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to 113 bits.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
 
 <h3>AsExtendedRational</h3>
 
@@ -272,85 +806,283 @@
 
 <p><b>Deprecated.</b> Use AsERational instead.</p>
 
+<p>Converts this object to a rational number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A rational number for this object&#39;s value.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
+</ul>
+
 <h3>AsInt16</h3>
 
 <pre>public short AsInt16();
 </pre>
+
+<p>Converts this object to a 16-bit signed integer. Floating point values are truncated to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 16-bit signed integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a 16-bit signed integer.</p></li>
+</ul>
 
 <h3>AsInt32</h3>
 
 <pre>public int AsInt32();
 </pre>
 
+<p>Converts this object to a 32-bit signed integer. Non-integer number values are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the<b>CanTruncatedIntFitInInt32</b>method before calling this method. Checking whether this object&#39;s type is <code>CBORType.Number</code> is not sufficient. See the example.).</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 32-bit signed integer before getting its value.</p>
+
+<pre>CBORObject obj = CBORObject.FromInt32(99999); if(obj.IsIntegral
+        &amp;&amp; obj.CanTruncatedIntFitInInt32()) { // Not an Int32;
+        handle the error Console.WriteLine(&quot;Not a 32-bit integer.&quot;); } else
+        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt32()); }
+</pre>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 32-bit signed integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a 32-bit signed integer.</p></li>
+</ul>
+
 <h3>AsInt64</h3>
 
 <pre>public long AsInt64();
 </pre>
+
+<p>Converts this object to a 64-bit signed integer. Non-integer numbers are truncated to an integer. (NOTE: To determine whether this method call can succeed, call the<b>CanTruncatedIntFitInInt64</b>method before calling this method. Checking whether this object&#39;s type is <code>CBORType.Number</code> is not sufficient. See the example.).</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows a way to check whether a given CBOR object stores a 64-bit signed integer before getting its value.</p>
+
+<pre>CBORObject obj = CBORObject.FromInt64(99999); if(obj.IsIntegral
+        &amp;&amp; obj.CanTruncatedIntFitInInt64()) { // Not an Int64;
+        handle the error Console.WriteLine(&quot;Not a 64-bit integer.&quot;); } else
+        { Console.WriteLine(&quot;The value is &quot; + obj.AsInt64()); }
+</pre>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 64-bit signed integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a 64-bit signed integer.</p></li>
+</ul>
 
 <h3>AsSByte</h3>
 
 <pre>public sbyte AsSByte();
 </pre>
 
+<p>Converts this object to an 8-bit signed integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An 8-bit signed integer.</p>
+
 <h3>AsSingle</h3>
 
 <pre>public float AsSingle();
 </pre>
+
+<p>Converts this object to a 32-bit floating point number.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest 32-bit floating point number to this object. The return value can be positive infinity or negative infinity if this object&#39;s value exceeds the range of a 32-bit floating point number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type.</li>
+</ul>
 
 <h3>AsString</h3>
 
 <pre>public string AsString();
 </pre>
 
+<p>Gets the value of this object as a text string.</p>
+
+<p>The following example code (originally written in C# for the .NET Framework) shows an idiom for returning a string value if a CBOR object is a text string, or  <code>null</code> if the CBOR object is CBOR null.</p>
+
+<pre>CBORObject obj = CBORObject.FromString(&quot;test&quot;);
+            string str = obj.IsNull ? null : obj.AsString();
+</pre>
+
+<p><b>Return Value:</b></p>
+
+<p>Gets this object&#39;s string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a string, including if this object is CBORObject.Null.</li>
+</ul>
+
 <h3>AsUInt16</h3>
 
 <pre>public ushort AsUInt16();
 </pre>
+
+<p>Converts this object to a 16-bit unsigned integer. The return value will be truncated as necessary.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A 16-bit unsigned integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is outside the range of a 16-bit unsigned integer.</li>
+</ul>
 
 <h3>AsUInt32</h3>
 
 <pre>public uint AsUInt32();
 </pre>
 
+<p>Converts this object to a 32-bit unsigned integer. The return value will be truncated as necessary.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit unsigned integer.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.OverflowException:
+This object&#39;s value is outside the range of a 32-bit unsigned integer.</li>
+</ul>
+
 <h3>AsUInt64</h3>
 
 <pre>public ulong AsUInt64();
 </pre>
+
+<p>Converts this object to a 64-bit unsigned integer. Non-integer values are truncated to an integer.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest big integer to this object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object&#39;s type is not a number type.</p></li>
+<li><p>System.OverflowException:
+This object&#39;s value exceeds the range of a 64-bit unsigned integer.</p></li>
+</ul>
 
 <h3>CanFitInDouble</h3>
 
 <pre>public bool CanFitInDouble();
 </pre>
 
+<p>Returns whether this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Whether this object&#39;s value can be converted to a 64-bit floating point number without its value being rounded to another numerical value. Returns true if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 64-bit floating point number.</p>
+
 <h3>CanFitInInt32</h3>
 
 <pre>public bool CanFitInInt32();
 </pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this object&#39;s numerical value is an integer, is -(2^31) or greater, and s less than 2^31; otherwise,  <code>false</code> .</p>
 
 <h3>CanFitInInt64</h3>
 
 <pre>public bool CanFitInInt64();
 </pre>
 
+<p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this object&#39;s numerical value is an integer, is -(2^63) or greater, and s less than 2^63; otherwise,  <code>false</code> .</p>
+
 <h3>CanFitInSingle</h3>
 
 <pre>public bool CanFitInSingle();
 </pre>
+
+<p>Returns whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>Whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value. Returns true if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point number.</p>
 
 <h3>CanTruncatedIntFitInInt32</h3>
 
 <pre>public bool CanTruncatedIntFitInInt32();
 </pre>
 
+<p>Returns whether this object&#39;s value, truncated to an integer, would be -(2^31) or greater, and less than 2^31.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this object&#39;s value, truncated to an integer, would be -(2^31) or reater, and less than 2^31; otherwise,  <code>false</code> .</p>
+
 <h3>CanTruncatedIntFitInInt64</h3>
 
 <pre>public bool CanTruncatedIntFitInInt64();
 </pre>
 
+<p>Returns whether this object&#39;s value, truncated to an integer, would be -(2^63) or greater, and less than 2^63.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this object&#39;s value, truncated to an integer, would be -(2^63) or reater, and less than 2^63; otherwise,  <code>false</code> .</p>
+
 <h3>Clear</h3>
 
 <pre>public void Clear();
 </pre>
+
+<p>Removes all items from this CBOR array or all keys and values from this CBOR map.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a CBOR array or CBOR map.</li>
+</ul>
 
 <h3>CompareTo</h3>
 
@@ -358,11 +1090,56 @@
     PeterO.Cbor.CBORObject other);
 </pre>
 
+<p>Compares two CBOR objects.In this implementation:</p>
+
+<ul>
+<li><p>The null pointer (null reference) is considered less than any other object.</p></li>
+<li><p>If either object is true, false, CBORObject.Null, or the undefined value, it is treated as less than the other value. If both objects have one of these four values, then undefined is less than CBORObject.Null, which is less than false, which is less than true.</p></li>
+<li><p>If both objects are numbers, their mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p></li>
+<li><p>If both objects are simple values other than true, false, CBORObject.Null, and the undefined value, the objects are compared according to their ordinal numbers.</p></li>
+<li><p>If both objects are arrays, each element is compared. If one array is shorter than the other and the other array begins with that array (for the purposes of comparison), the shorter array is considered less than the longer array.</p></li>
+<li><p>If both objects are strings, compares each string code-point by code-point, as though by the DataUtilities.CodePointCompare method.</p></li>
+<li><p>If both objects are maps, compares each map as though each were an array with the sorted keys of that map as the array&#39;s elements. If both maps have the same keys, their values are compared in the order of the sorted keys.</p></li>
+<li><p>If each object is a different type, then they are sorted by their type number, in the order given for the CBORType enumeration.</p></li>
+<li><p>If each object has different tags and both objects are otherwise equal under this method, each element is compared as though each were an array with that object&#39;s tags listed in order from outermost to innermost.</p></li>
+</ul>
+
+<p>This method is not consistent with the Equals method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A value to compare with.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Less than 0, if this value is less than the other object; or 0, if both values are equal; or greater than 0, if this value is less than the other object or if the other object is null.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+An internal error occurred.</li>
+</ul>
+
 <h3>CompareToIgnoreTags</h3>
 
 <pre>public int CompareToIgnoreTags(
     PeterO.Cbor.CBORObject other);
 </pre>
+
+<p>Compares this object and another CBOR object, ignoring the tags they have, if any. See the CompareTo method for more information on the comparison function.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A value to compare with.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Less than 0, if this value is less than the other object; or 0, if both values are equal; or greater than 0, if this value is less than the other object or if the other object is null.</p>
 
 <h3>ContainsKey</h3>
 
@@ -370,17 +1147,80 @@
     PeterO.Cbor.CBORObject key);
 </pre>
 
+<p>Determines whether a value of the given key exists in this object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>key</i>: An object that serves as the key.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given key is found, or false if the given key is not found or this object is not a map.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Key is null (as opposed to CBORObject.Null).</li>
+</ul>
+
 <h3>ContainsKey</h3>
 
 <pre>public bool ContainsKey(
     string key);
 </pre>
 
+<p>Determines whether a value of the given key exists in this object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>key</i>: A string that serves as the key.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given key (as a CBOR object) is found, or false if the given key is not found or this object is not a map.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+Key is null.</li>
+</ul>
+
 <h3>DecodeFromBytes</h3>
 
 <pre>public static PeterO.Cbor.CBORObject DecodeFromBytes(
     byte[] data);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
+<p>Generates a CBOR object from an array of CBOR-encoded bytes.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>data</i>: A byte array in which a single CBOR object is encoded.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object decoded from the given byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter  <i>data</i>
+is empty.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>data</i>
+is null.</p></li>
+</ul>
 
 <h3>DecodeFromBytes</h3>
 
@@ -389,6 +1229,42 @@
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p>Generates a CBOR object from an array of CBOR-encoded bytes, using the given <code>CBOREncodeOptions</code> object to control the decoding process.</p>
+
+<p>The following example (originally written in C# for the .NET version) implements a method that decodes a text string from a CBOR byte array. It&#39;s successful only if the CBOR object contains an untagged text string.</p>
+
+<pre>private static String DecodeTextString(byte[] bytes){
+        if(bytes == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(bytes.Length
+        == 0 || bytes[0]&lt;0x60 || bytes[0]&gt;0x7f){throw new
+        CBORException();} return
+        CBORObject.DecodeFromBytes(bytes,
+        CBOREncodeOptions.Default).AsString(); }
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>data</i>: A byte array in which a single CBOR object is encoded.</p></li>
+<li><p><i>options</i>: The parameter <i>options</i>
+is a CBOREncodeOptions object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object decoded from the given byte array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data. This includes cases where not all of the byte array represents a CBOR object. This exception is also thrown if the parameter <i>data</i>
+is empty.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>data</i>
+is null.</p></li>
+</ul>
+
 <h3>Divide</h3>
 
 <pre>public static PeterO.Cbor.CBORObject Divide(
@@ -396,16 +1272,59 @@
     PeterO.Cbor.CBORObject second);
 </pre>
 
+<p>Divides a CBORObject object by the value of a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: The parameter <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter <i>second</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The quotient of the two objects.</p>
+
 <h3>EncodeToBytes</h3>
 
 <pre>public byte[] EncodeToBytes(
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation, using the specified options for encoding the object to CBOR format. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong>can be used to write out certain keys of a CBOR map in a given order.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>options</i>: Options for encoding the data to CBOR.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte array in CBOR format.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>options</i>
+is null.</li>
+</ul>
+
 <h3>EncodeToBytes</h3>
 
 <pre>public byte[] EncodeToBytes();
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a>object. The object <code>CBOREncodeOptions.Default</code> contains recommended settings for CBOREncodeOptions, and those ettings may be adopted by this overload (without a CBOREncodeOptions rgument) in the next major version.</b></p>
+
+<p>Writes the binary representation of this CBOR object and returns a byte array of that representation. If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the byte array in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong>can be used to write out certain keys of a CBOR map in a given order.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A byte array in CBOR format.</p>
 
 <h3>Equals</h3>
 
@@ -413,17 +1332,68 @@
     object obj);
 </pre>
 
+<p>Determines whether this object and another object are equal and have the same type. Not-a-number values can be considered equal by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter <i>obj</i>
+is an arbitrary object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
+
 <h3>Equals</h3>
 
 <pre>public sealed bool Equals(
     PeterO.Cbor.CBORObject other);
 </pre>
 
+<p>Compares the equality of two CBOR objects. Not-a-number values can be considered equal by this method.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: The object to compare.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
+
 <h3>FromJSONString</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromJSONString(
     string str);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</p>
+
+<p>If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>str</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The string is not in JSON format.</p></li>
+</ul>
 
 <h3>FromJSONString</h3>
 
@@ -432,11 +1402,47 @@
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>str</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The string is not in JSON format.</p></li>
+</ul>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     bool value);
 </pre>
+
+<p>Returns the CBOR true value or false value, depending on &quot;value&quot;.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: Either True or False.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>CBORObject.True if value is true; otherwise CBORObject.False.</p>
 
 <h3>FromObject</h3>
 
@@ -444,11 +1450,46 @@
     byte value);
 </pre>
 
+<p>Generates a CBOR object from a byte (0 to 255).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a byte (from 0 to 255).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     byte[] bytes);
 </pre>
+
+<p>Generates a CBOR object from a byte array. The byte array is copied to a new byte array. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the DecodeFromBytes method instead.).</p>
+
+<p>The following example encodes a text string to a UTF-8 byte array, then uses the array to create a CBOR byte string object. It is not recommended to use  <code>Encoding.UTF8.GetBytes</code> in .NET, or he  <code>getBytes()</code> method in Java to do this. For instance, <code>Encoding.UTF8</code> begins the encoded string with a byte-order ark, and  <code>getBytes()</code> encodes text strings in an unspecified haracter encoding. Both behaviors can be undesirable. Instead, use he  <code>DataUtilities.GetUtf8Bytes</code> method to convert text trings to UTF-8.</p>
+
+<pre>/* true does character replacement of
+            invalid UTF-8; false throws an exception
+            on invalid UTF-8 */
+            byte[] bytes = DataUtilities.GetUtf8Bytes(
+            textString, true);
+            CBORObject cbor = CBORObject.FromBytes(bytes);
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bytes</i>: A byte array. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR byte string object where each byte of the given byte array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <h3>FromObject</h3>
 
@@ -456,11 +1497,45 @@
     char value);
 </pre>
 
+<p>Generates a CBOR string object from a Unicode character.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter  <i>value</i>
+is a char object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>value</i>
+is a surrogate code point.</li>
+</ul>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     double value);
 </pre>
+
+<p>Generates a CBOR object from a 64-bit floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a 64-bit floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -468,11 +1543,37 @@
     float value);
 </pre>
 
+<p>Generates a CBOR object from a 32-bit floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a 32-bit floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     int value);
 </pre>
+
+<p>Generates a CBOR object from a 32-bit signed integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a 32-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -480,11 +1581,36 @@
     int[] array);
 </pre>
 
+<p>Generates a CBOR object from an array of 32-bit integers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>array</i>: An array of 32-bit integers.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR array object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     long value);
 </pre>
+
+<p>Generates a CBOR object from a 64-bit signed integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a 64-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -492,11 +1618,36 @@
     long[] array);
 </pre>
 
+<p>Generates a CBOR object from an array of 64-bit integers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>array</i>: An array of 64-bit integers.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR array object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     object obj);
 </pre>
+
+<p>Generates a CBORObject from an arbitrary object. See the overload of this method that takes a PODOptions argument.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter <i>obj</i>
+is an arbitrary object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
 
 <h3>FromObject</h3>
 
@@ -504,6 +1655,43 @@
     object obj,
     PeterO.Cbor.PODOptions options);
 </pre>
+
+<p>Generates a CBORObject from an arbitrary object, using the given options to control how certain objects are converted to CBOR objects. The following types are specially handled by this method: null; primitive types; string; CBORObject; the  <code>EDecimal</code> , <code>EFloat</code> ,  <code>EInteger</code> , and  <code>ERational</code>  classes in the new<a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the<a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java); the legacy  <code>ExtendedDecimal</code> , <code>ExtendedFloat</code> ,  <code>BigInteger</code> , and <code>ExtendedRational</code>  classes in this library; arrays; enumerations (  <code>Enum</code>  objects); and maps. (See also the other overloads to the FromObject method.)</p>
+
+<p>In the .NET version, if the object is a type not specially handled by this method, returns a CBOR map with the values of each of its read/write properties (or all properties in the case of a compiler-generated type). Properties are converted to their camel-case names (meaning if a name starts with A to Z, that letter is lower-cased). If the property name begins with the word &quot;Is&quot; followed by an upper-case A to Z, the &quot;Is&quot; prefix is deleted from the name. (Passing the appropriate &quot;options&quot; parameter can be done to control whether the &quot;Is&quot; prefix is removed and whether a camel-case conversion happens.) Also, .NET  <code>Enum</code>  objects will be converted to their integer values, and a multidimensional array is converted to an array of arrays.</p>
+
+<p>In the Java version, if the object is a type not specially handled by this method, this method checks the CBOR object for methods starting with the word &quot;get&quot; or &quot;is&quot; (either word followed by an upper-case A to Z) that take no parameters, and returns a CBOR map with one entry for each such method found. For each method found, the starting word &quot;get&quot; or &quot;is&quot; is deleted from its name, and the name is converted to camel case (meaning if a name starts with A to Z, that letter is lower-cased). (Passing the appropriate &quot;options&quot; parameter can be done to control whether the &quot;is&quot; prefix is removed and whether a camel-case conversion happens.) Also, Java <code>Enum</code>  objects will be converted to the result of their <code>name</code>  method.</p>
+
+<p>If the input is a byte array, the byte array is copied to a new byte array. (This method can&#39;t be used to decode CBOR data from a byte array; for that, use the DecodeFromBytes method instead.).</p>
+
+<p>If the input is a text string, a CBOR text string object will be created. To create a CBOR byte string object from a text string, see the example given in<strong>PeterO.Cbor.CBORObject.FromObject(System.Byte[])</strong>.</p>
+
+<p>REMARK: The behavior of this method is likely to change in the next major version (4.0). There are certain inconsistencies between the ToObject method and the FromObject method as well as between the .NET and Java versions of FromObject. For one thing, DateTime/Date objects are converted differently between the two versions -- either as CBOR maps with their &quot;get&quot; properties (Java) or as tag-0 strings (.NET) -- this difference has to remain for backward compatibility with version 3.0. For another thing, the treatment of properties/getters starting with &quot;Is&quot; is subtly inconsistent between the .NET and Java versions of FromObject, especially when using certain PODOptions. A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p>
+
+<ul>
+<li><p>the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java, and</p></li>
+<li><p>both FromObject and ToObject will be better designed, in version 4.0, so that backward-compatible improvements are easier to make.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>obj</i>: The parameter  <i>obj</i>
+is an arbitrary object.</p></li>
+<li><p><i>options</i>: An object containing options to control how certain objects are converted to CBOR objects.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object corresponding to the given object. Returns CBORObject.Null if the object is null.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>options</i>
+is null.</li>
+</ul>
 
 <h3>FromObject</h3>
 
@@ -513,17 +1701,54 @@
 
 <p><b>Deprecated.</b> Use the EInteger version of this method.</p>
 
+<p>Generates a CBOR object from an arbitrary-precision integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintValue</i>: An arbitrary-precision value.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     PeterO.Cbor.CBORObject value);
 </pre>
 
+<p>Generates a CBOR object from a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a CBOR object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Same as.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     PeterO.Cbor.CBORObject[] array);
 </pre>
+
+<p>Generates a CBOR object from an array of CBOR objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>array</i>: An array of CBOR objects.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <h3>FromObject</h3>
 
@@ -533,6 +1758,18 @@
 
 <p><b>Deprecated.</b> Use the EDecimal version of this method instead.</p>
 
+<p>Generates a CBOR object from a decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
@@ -540,6 +1777,18 @@
 </pre>
 
 <p><b>Deprecated.</b> Use the EFloat version of this method instead.</p>
+
+<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -549,11 +1798,35 @@
 
 <p><b>Deprecated.</b> Use the ERational version of this method instead.</p>
 
+<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     PeterO.Numbers.EDecimal otherValue);
 </pre>
+
+<p>Generates a CBOR object from a decimal number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>otherValue</i>: An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -561,11 +1834,35 @@
     PeterO.Numbers.EFloat bigValue);
 </pre>
 
+<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     PeterO.Numbers.EInteger bigintValue);
 </pre>
+
+<p>Generates a CBOR object from an arbitrary-precision integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigintValue</i>: An arbitrary-precision value.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
 
 <h3>FromObject</h3>
 
@@ -573,11 +1870,36 @@
     PeterO.Numbers.ERational bigValue);
 </pre>
 
+<p>Generates a CBOR object from a rational number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigValue</i>: A rational number.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR number.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     sbyte value);
 </pre>
+
+<p>Converts a signed 8-bit integer to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is an 8-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -585,11 +1907,43 @@
     short value);
 </pre>
 
+<p>Generates a CBOR object from a 16-bit signed integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a 16-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     string strValue);
 </pre>
+
+<p>Generates a CBOR object from a text string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>strValue</i>: A string value. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object representing the string, or CBORObject.Null if stringValue is null.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The string contains an unpaired surrogate code point.</li>
+</ul>
 
 <h3>FromObject</h3>
 
@@ -597,11 +1951,36 @@
     System.Decimal value);
 </pre>
 
+<p>Converts a .NET decimal to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: The parameter <i>value</i>
+is a Decimal object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object with the same value as the .NET decimal.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     uint value);
 </pre>
+
+<p>Converts a 32-bit unsigned integer to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 32-bit unsigned integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -609,11 +1988,35 @@
     ulong value);
 </pre>
 
+<p>Converts a 64-bit unsigned integer to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 64-bit unsigned integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject(
     ushort value);
 </pre>
+
+<p>Converts a 16-bit unsigned integer to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 16-bit unsigned integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>FromObject</h3>
 
@@ -621,11 +2024,37 @@
     System.Collections.Generic.IEnumerable&lt;T&gt; value);
 </pre>
 
+<p>Generates a CBOR object from an enumerable set of objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: An object that implements the IEnumerable interface. In the .NET version, this can be the return value of an iterator or the result of a LINQ query.</p></li>
+<li><p>&lt;T&gt;: A type convertible to CBORObject.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where each element of the given enumerable object is converted to a CBOR object and copied to a new array, or CBORObject.Null if the value is null.</p>
+
 <h3>FromObject</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObject&lt;T&gt;(
     System.Collections.Generic.IList&lt;T&gt; value);
 </pre>
+
+<p>Generates a CBOR object from a list of objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: An array of CBOR objects. Can be null.</p></li>
+<li><p>&lt;T&gt;: A type convertible to CBORObject.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where each element of the given array is converted to a CBOR object and copied to a new array, or CBORObject.Null if the value is null.</p>
 
 <h3>FromObject</h3>
 
@@ -633,12 +2062,43 @@
     System.Collections.Generic.IDictionary&lt;TKey, TValue&gt; dic);
 </pre>
 
+<p>Generates a CBOR object from a map of objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>dic</i>: A map of CBOR objects.</p></li>
+<li><p>&lt;TKey&gt;: A type convertible to CBORObject; the type of the keys.</p></li>
+<li><p>&lt;TValue&gt;: A type convertible to CBORObject; the type of the values.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where each key and value of the given map is converted to a CBOR object and copied to a new map, or CBORObject.Null if <i>dic</i>
+is null.</p>
+
 <h3>FromObjectAndTag</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObjectAndTag(
     object o,
     ulong tag);
 </pre>
+
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>o</i>: The parameter <i>o</i>
+is an arbitrary object.</p></li>
+<li><p><i>tag</i>: A 64-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where the object <i>o</i>
+is converted to a CBOR object and given the tag <i>tag</i>
+.</p>
 
 <h3>FromObjectAndTag</h3>
 
@@ -649,12 +2109,66 @@
 
 <p><b>Deprecated.</b> Use the EInteger version instead.</p>
 
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>valueOb</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
+<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where the object  <i>valueOb</i>
+is converted to a CBOR object and given the tag  <i>bigintTag</i>
+.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter <i>bigintTag</i>
+is less than 0 or greater than 2^64-1, or  <i>valueOb</i>
+&#39;s type is unsupported.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>bigintTag</i>
+is null.</p></li>
+</ul>
+
 <h3>FromObjectAndTag</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromObjectAndTag(
     object valueOb,
     PeterO.Numbers.EInteger bigintTag);
 </pre>
+
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>valueOb</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
+<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where the object  <i>valueOb</i>
+is converted to a CBOR object and given the tag  <i>bigintTag</i>
+.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter <i>bigintTag</i>
+is less than 0 or greater than 2^64-1, or  <i>valueOb</i>
+&#39;s type is unsupported.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>bigintTag</i>
+is null.</p></li>
+</ul>
 
 <h3>FromObjectAndTag</h3>
 
@@ -663,26 +2177,96 @@
     int smallTag);
 </pre>
 
+<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>valueObValue</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
+<li><p><i>smallTag</i>: A 32-bit integer that specifies a tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object where the object  <i>valueObValue</i>
+ is converted to a CBOR object and given the tag  <i>smallTag</i>
+.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>smallTag</i>
+is less than 0 or  <i>valueObValue</i>
+&#39;s type is unsupported.</li>
+</ul>
+
 <h3>FromSimpleValue</h3>
 
 <pre>public static PeterO.Cbor.CBORObject FromSimpleValue(
     int simpleValue);
 </pre>
 
+<p>Creates a CBOR object from a simple value number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>simpleValue</i>: The parameter  <i>simpleValue</i>
+is a 32-bit signed integer.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>simpleValue</i>
+is less than 0, greater than 255, or from 24 through 31.</li>
+</ul>
+
 <h3>GetAllTags</h3>
 
 <pre>public PeterO.Numbers.EInteger[] GetAllTags();
 </pre>
+
+<p>Gets a list of all tags, from outermost to innermost.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An array of tags, or the empty string if this object is untagged.</p>
 
 <h3>GetByteString</h3>
 
 <pre>public byte[] GetByteString();
 </pre>
 
+<p>Gets the byte array used in this object, if this object is a byte string, without copying the data to a new one. This method&#39;s return value can be used to modify the array&#39;s contents. Note, though, that the array&#39; s length can&#39;t be changed.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The byte array held by this CBOR object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a byte string.</li>
+</ul>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
 </pre>
+
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit hash code.</p>
 
 <h3>GetTags</h3>
 
@@ -691,11 +2275,38 @@
 
 <p><b>Deprecated.</b> Use the GetAllTags method instead.</p>
 
+<p>Gets a list of all tags, from outermost to innermost.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>An array of tags, or the empty string if this object is untagged.</p>
+
 <h3>HasMostOuterTag</h3>
 
 <pre>public bool HasMostOuterTag(
     int tagValue);
 </pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>tagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+TagValue is less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter &quot;obj&quot; is null.</p></li>
+</ul>
 
 <h3>HasMostOuterTag</h3>
 
@@ -703,11 +2314,53 @@
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigTagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+BigTagValue is null.</p></li>
+<li><p>System.ArgumentException:
+BigTagValue is less than 0.</p></li>
+</ul>
+
 <h3>HasTag</h3>
 
 <pre>public bool HasTag(
     int tagValue);
 </pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>tagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+TagValue is less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter &quot;obj&quot; is null.</p></li>
+</ul>
 
 <h3>HasTag</h3>
 
@@ -717,11 +2370,53 @@
 
 <p><b>Deprecated.</b> Use the EInteger version of this method.</p>
 
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigTagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+BigTagValue is null.</p></li>
+<li><p>System.ArgumentException:
+BigTagValue is less than 0.</p></li>
+</ul>
+
 <h3>HasTag</h3>
 
 <pre>public bool HasTag(
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
+
+<p>Returns whether this object has a tag of the given number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>bigTagValue</i>: The tag value to search for.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+BigTagValue is null.</p></li>
+<li><p>System.ArgumentException:
+BigTagValue is less than 0.</p></li>
+</ul>
 
 <h3>Insert</h3>
 
@@ -730,25 +2425,73 @@
     object valueOb);
 </pre>
 
+<p>Inserts an object at the specified position in this CBOR array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>index</i>: Zero-based index to insert at.</p></li>
+<li><p><i>valueOb</i>: An object representing the value, which will be converted to a CBORObject. Can be null, in which case this value is converted to CBORObject.Null.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object is not an array.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>valueOb</i>
+has an unsupported type; or  <i>index</i>
+is not a valid index into this array.</p></li>
+</ul>
+
 <h3>IsInfinity</h3>
 
 <pre>public bool IsInfinity();
 </pre>
+
+<p>Gets a value indicating whether this CBOR object represents infinity.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this CBOR object represents infinity; otherwise,  <code>false</code> .</p>
 
 <h3>IsNaN</h3>
 
 <pre>public bool IsNaN();
 </pre>
 
+<p>Gets a value indicating whether this CBOR object represents a not-a-number value (as opposed to whether this object&#39;s type is not a number type).</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this CBOR object represents a not-a-number value (as opposed to hether this object&#39;s type is not a number type); otherwise,  <code>false</code> .</p>
+
 <h3>IsNegativeInfinity</h3>
 
 <pre>public bool IsNegativeInfinity();
 </pre>
 
+<p>Gets a value indicating whether this CBOR object represents negative infinity.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this CBOR object represents negative infinity; otherwise,  <code>false</code> .</p>
+
 <h3>IsPositiveInfinity</h3>
 
 <pre>public bool IsPositiveInfinity();
 </pre>
+
+<p>Gets a value indicating whether this CBOR object represents positive infinity.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this CBOR object represents positive infinity; otherwise,  <code>false</code> .</p>
 
 <h3>Multiply</h3>
 
@@ -757,20 +2500,67 @@
     PeterO.Cbor.CBORObject second);
 </pre>
 
+<p>Multiplies two CBOR numbers.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The product of the two numbers.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
+</ul>
+
 <h3>Negate</h3>
 
 <pre>public PeterO.Cbor.CBORObject Negate();
 </pre>
+
+<p>Gets this object&#39;s value with the sign reversed.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The reversed-sign form of this number.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object&#39;s type is not a number type.</li>
+</ul>
 
 <h3>NewArray</h3>
 
 <pre>public static PeterO.Cbor.CBORObject NewArray();
 </pre>
 
+<p>Creates a new empty CBOR array.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A new CBOR array.</p>
+
 <h3>NewMap</h3>
 
 <pre>public static PeterO.Cbor.CBORObject NewMap();
 </pre>
+
+<p>Creates a new empty CBOR map.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A new CBOR map.</p>
 
 <h3>Operator <code>+</code></h3>
 
@@ -779,12 +2569,42 @@
     PeterO.Cbor.CBORObject b);
 </pre>
 
+<p>Adds two CBOR objects and returns their result.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: The parameter <i>a</i>
+is a CBOR object.</p></li>
+<li><p><i>b</i>: The parameter <i>b</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The sum of the two objects.</p>
+
 <h3>Operator <code>/</code></h3>
 
 <pre>public static PeterO.Cbor.CBORObject operator /(
     PeterO.Cbor.CBORObject a,
     PeterO.Cbor.CBORObject b);
 </pre>
+
+<p>Divides a CBORObject object by the value of a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: The parameter <i>a</i>
+is a CBOR object.</p></li>
+<li><p><i>b</i>: The parameter <i>b</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The quotient of the two objects.</p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -793,12 +2613,42 @@
     PeterO.Cbor.CBORObject b);
 </pre>
 
+<p>Finds the remainder that results when a CBORObject object is divided by the value of a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: The parameter <i>a</i>
+is a CBOR object.</p></li>
+<li><p><i>b</i>: The parameter <i>b</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The remainder of the two numbers.</p>
+
 <h3>Operator <code>*</code></h3>
 
 <pre>public static PeterO.Cbor.CBORObject operator *(
     PeterO.Cbor.CBORObject a,
     PeterO.Cbor.CBORObject b);
 </pre>
+
+<p>Multiplies a CBORObject object by the value of a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: The parameter <i>a</i>
+is a CBOR object.</p></li>
+<li><p><i>b</i>: The parameter <i>b</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The product of the two numbers.</p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -807,11 +2657,50 @@
     PeterO.Cbor.CBORObject b);
 </pre>
 
+<p>Subtracts a CBORObject object from a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>a</i>: The parameter <i>a</i>
+is a CBOR object.</p></li>
+<li><p><i>b</i>: The parameter <i>b</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The difference of the two objects.</p>
+
 <h3>Read</h3>
 
 <pre>public static PeterO.Cbor.CBORObject Read(
     System.IO.Stream stream);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
+<p>Reads an object in CBOR format from a data stream. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A readable data stream.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object that was read.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data.</p></li>
+</ul>
 
 <h3>Read</h3>
 
@@ -820,11 +2709,59 @@
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p>Reads an object in CBOR format from a data stream, using the specified options to control the decoding process. This method will read from the stream until the end of the CBOR object is reached or an error occurs, whichever happens first.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object that was read.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+There was an error in reading or parsing the data.</p></li>
+</ul>
+
 <h3>ReadJSON</h3>
 
 <pre>public static PeterO.Cbor.CBORObject ReadJSON(
     System.IO.Stream stream);
 </pre>
+
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The data stream contains invalid encoding or is not in JSON format.</p></li>
+</ul>
 
 <h3>ReadJSON</h3>
 
@@ -832,6 +2769,32 @@
     System.IO.Stream stream,
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
+
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.)By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A readable data stream. The sequence of bytes read from the data stream must contain a single JSON object and not multiple objects.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a CBOREncodeOptions object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The data stream contains invalid encoding or is not in JSON format.</p></li>
+</ul>
 
 <h3>Remainder</h3>
 
@@ -840,11 +2803,48 @@
     PeterO.Cbor.CBORObject second);
 </pre>
 
+<p>Finds the remainder that results when a CBORObject object is divided by the value of a CBORObject object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: The parameter <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter <i>second</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The remainder of the two numbers.</p>
+
 <h3>Remove</h3>
 
 <pre>public bool Remove(
     object obj);
 </pre>
+
+<p>If this object is an array, removes the first instance of the specified item (once converted to a CBOR object) from the array. If this object is a map, removes the item with the given key (once converted to a CBOR object) from the map.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The item or key (once converted to a CBOR object) to remove.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the item was removed; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>obj</i>
+is null (as opposed to CBORObject.Null).</p></li>
+<li><p>System.InvalidOperationException:
+The object is not an array or map.</p></li>
+</ul>
 
 <h3>Remove</h3>
 
@@ -852,11 +2852,52 @@
     PeterO.Cbor.CBORObject obj);
 </pre>
 
+<p>If this object is an array, removes the first instance of the specified item from the array. If this object is a map, removes the item with the given key from the map.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The item or key to remove.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the item was removed; otherwise,  <code>false</code> .</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>obj</i>
+is null (as opposed to CBORObject.Null).</p></li>
+<li><p>System.InvalidOperationException:
+The object is not an array or map.</p></li>
+</ul>
+
 <h3>RemoveAt</h3>
 
 <pre>public bool RemoveAt(
     int index);
 </pre>
+
+<p>Removes the item at the given index of this CBOR array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>index</i>: The index, starting at 0, of the item to remove.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Returns &quot;true&quot; if the object was removed. Returns &quot;false&quot; if the given index is less than 0, or is at least as high as the number of items in the array.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.InvalidOperationException:
+This object is not a CBOR array.</li>
+</ul>
 
 <h3>Set</h3>
 
@@ -865,6 +2906,30 @@
     object valueOb);
 </pre>
 
+<p>Maps an object to a key in this CBOR map, or adds the value if the key doesn&#39;t exist.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>key</i>: An object representing the key, which will be converted to a CBORObject. Can be null, in which case this value is converted to CBORObject.Null.</p></li>
+<li><p><i>valueOb</i>: An object representing the value, which will be converted to a CBORObject. Can be null, in which case this value is converted to CBORObject.Null.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>This instance.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.InvalidOperationException:
+This object is not a map.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>key</i>
+or  <i>valueOb</i>
+has an unsupported type.</p></li>
+</ul>
+
 <h3>Subtract</h3>
 
 <pre>public static PeterO.Cbor.CBORObject Subtract(
@@ -872,16 +2937,93 @@
     PeterO.Cbor.CBORObject second);
 </pre>
 
+<p>Finds the difference between two CBOR number objects.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>first</i>: The parameter  <i>first</i>
+is a CBOR object.</p></li>
+<li><p><i>second</i>: The parameter  <i>second</i>
+is a CBOR object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The difference of the two objects.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
+</ul>
+
 <h3>ToJSONString</h3>
 
 <pre>public string ToJSONString(
     PeterO.Cbor.JSONOptions options);
 </pre>
 
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format, using the specified options to control the encoding process. This function works not only with arrays and maps, but also integers, strings, byte arrays, and other JSON data types. Notes:</p>
+
+<ul>
+<li><p>If this object contains maps with non-string keys, the keys are converted to JSON strings before writing the map as a JSON string.</p></li>
+<li><p>If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order.</p></li>
+<li><p>If a number in the form of an arbitrary-precision binary float has a very high binary exponent, it will be converted to a double before being converted to a JSON string. (The resulting double could overflow to infinity, in which case the arbitrary-precision binary float is converted to null.)</p></li>
+<li><p>The string will not begin with a byte-order mark (U+FEFF); RFC 8259 (the JSON specification) forbids placing a byte-order mark at the beginning of a JSON string.</p></li>
+<li><p>Byte strings are converted to Base64 URL without whitespace or padding by default (see section 4.1 of RFC 7049). A byte string will instead be converted to traditional base64 without whitespace or padding by default if it has tag 22, or base16 for tag 23. Padding will be included in the Base64 URL or traditional base64 form if<b>Base64Padding</b>in the JSON options is set to<b>true</b>. (To create a CBOR object with a given tag, call the <code>CBORObject.FromObjectAndTag</code> method and pass the CBOR object and the desired tag number to that ethod.)</p></li>
+<li><p>Rational numbers will be converted to their exact form, if possible, otherwise to a high-precision approximation. (The resulting approximation could overflow to infinity, in which case the rational number is converted to null.)</p></li>
+<li><p>Simple values other than true and false will be converted to null. (This doesn&#39;t include floating-point numbers.)</p></li>
+<li><p>Infinity and not-a-number will be converted to null.</p></li>
+</ul>
+
+<p>The example code given below (originally written in C# for the .NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+
+<pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order given
+        in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
+        &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
+        IList&lt;CBORObject&gt; keys){ if (mapObj == null) { throw new
+        ArgumentNullException)nameof(mapObj));} if (keys == null) { throw
+        new ArgumentNullException)nameof(keys));} if (obj.Type !=
+        CBORType.Map) { throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); }
+        StringBuilder builder = new StringBuilder(); var first = true;
+        builder.Append(&quot;{&quot;); for (CBORObject key in keys) { if
+        (mapObj.ContainsKey(key)) { if (!first) {builder.Append(&quot;, &quot;);} var
+        keyString=(key.CBORType == CBORType.String) ? key.AsString() :
+        key.ToJSONString(); builder.Append(CBORObject.FromObject(keyString)
+        .ToJSONString()) .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString());
+        first=false; } } return builder.Append(&quot;}&quot;).ToString(); }
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>options</i>: An object containing the options to control writing the CBOR object to JSON.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string containing the converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>options</i>
+is null.</li>
+</ul>
+
 <h3>ToJSONString</h3>
 
 <pre>public string ToJSONString();
 </pre>
+
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format, using the specified options to control the encoding process. See the overload to JSONString taking a JSONOptions argument.If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A text string.</p>
 
 <h3>ToObject</h3>
 
@@ -889,25 +3031,138 @@
     System.Type t);
 </pre>
 
+<p>Converts this CBOR object to an object of an arbitrary type.</p>
+
+<p>If the type &quot;T&quot; is CBORObject, returns this CBOR object.</p>
+
+<p>If this CBOR object is a null object, returns null, except if &quot;T&quot; is CBORObject.</p>
+
+<p>If the type &quot;T&quot; is Object, returns this CBOR object.</p>
+
+<p>If the type &quot;T&quot; is the generic List, IList, ICollection, or IEnumerable (or ArrayList, List, Collection, or Iterable in Java), and if this CBOR object is an array, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all items in this CBOR array.</p>
+
+<p>If the type &quot;T&quot; is the generic Dictionary or IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p>
+
+<p>If the type &quot;T&quot; is <code>int</code> , returns the result of the AsInt32 method.</p>
+
+<p>If the type &quot;T&quot; is <code>DateTime</code> (or <code>Date</code> in Java) , returns a date/time object if the CBOR object&#39;s outermost ag is 0 or 1.</p>
+
+<p>If the type &quot;T&quot; is <code>long</code> , returns the result of the AsInt64 method.</p>
+
+<p>If the type &quot;T&quot; is <code>double</code> , returns the result of the AsDouble method.</p>
+
+<p>If the type &quot;T&quot; is String, returns the result of the AsString method.</p>
+
+<p>If the type &quot;T&quot; is <code>byte[]</code> and this CBOR object is a byte array, returns a byte array which this BOR byte string&#39;s data will be copied to.</p>
+
+<p>In the .NET version, if the type &quot;T&quot; is <code>DateTime</code> and this CBOR object is a text string with tag 0, converts that text tring to a DateTime and returns that DateTime.</p>
+
+<p>If the type &quot;T&quot; is Boolean, returns the result of the IsTrue method.</p>
+
+<p>In the .NET version, if the object is a CBOR map and the type &quot;T&quot; is not specially handled by this method, an object of the given type is created, then this method checks the CBOR object for public writable properties. For each method found, if its name (with the &quot;Is&quot; prefix deleted and then converted to camel case) matches the name of a key in this CBOR map, that property&#39;s setter is invoked and the corresponding value is passed to that method.</p>
+
+<p>In the Java version, if the object is a CBOR map and the type &quot;T&quot; is not specially handled by this method, an object of the given type is created, then this method checks the CBOR object for public methods starting with the word &quot;set&quot; (followed by an upper-case A to Z) that take a single parameter. For each method found, if its name (with the starting word &quot;set&quot; deleted and then converted to camel case) matches the name of a key in this CBOR map, that method is invoked and the corresponding value is passed to that method.</p>
+
+<p>REMARK: The behavior of this method is likely to change in the final version 3.4 of this library as well as in the next major version (4.0). There are certain inconsistencies between the ToObject method and the FromObject method as well as between the .NET and Java versions of FromObject. For one thing, DateTime/Date objects are converted differently between the two versions -- either as CBOR maps with their &quot;get&quot; properties (Java) or as tag-0 strings (.NET) -- this difference has to remain for backward compatibility with version 3.0. For another thing, the treatment of properties/getters starting with &quot;Is&quot; is subtly inconsistent between the .NET and Java versions of FromObject, especially when using certain PODOptions. A certain consistency between .NET and Java and between FromObject and ToObject are sought for version 4.0. It is also hoped that--</p>
+
+<ul>
+<li><p>the ToObject method will support deserializing to objects consisting of fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java, and</p></li>
+<li><p>both FromObject and ToObject will be better designed, in version 4.0, so that backward-compatible improvements are easier to make.</p></li>
+</ul>
+
+<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s <code>typeof</code> operator. The following example, written in Java, is a way to specify hat the return value will be an ArrayList of String objects.</p>
+
+<pre>Type arrayListString = new ParameterizedType(){ public Type[]
+        getActualTypeArguments(){ /* Contains one type parameter, String */
+        return new Type[]{ String.class }; } public Type getRawType(){ /* Raw
+        type is ArrayList */ return ArrayList.class; } public Type
+        getOwnerType(){ return null; } }; ArrayList&lt;String&gt; array =
+        (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+</pre>
+
+<p>By comparison, the C# version is much shorter.</p>
+
+<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
+        typeof(List&lt;String&gt;));
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.NotSupportedException:
+The given type <i>t</i>
+, or this object&#39;s CBOR type, is not supported.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>t</i>
+is null.</p></li>
+</ul>
+
 <h3>ToObject</h3>
 
 <pre>public T ToObject&lt;T&gt;();
 </pre>
+
+<p>Converts this CBOR object to an object of an arbitrary type. See <strong>PeterO.Cbor.CBORObject.ToObject(System.Type)</strong> for further information.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li>&lt;T&gt;: An arbitrary object type.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The converted object.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.NotSupportedException:
+The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.</li>
+</ul>
 
 <h3>ToString</h3>
 
 <pre>public override string ToString();
 </pre>
 
+<p>Returns this CBOR object in string form. The format is intended to be human-readable, not machine-readable, the format is not intended to be parsed, and the format may change at any time. The returned string is not necessarily in JavaScript Object Notation (JSON); to convert CBOR objects to JSON strings, use the <strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong> method instead.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A text representation of this object.</p>
+
 <h3>Untag</h3>
 
 <pre>public PeterO.Cbor.CBORObject Untag();
 </pre>
 
+<p>Gets an object with the same value as this one but without the tags it has, if any. If this object is an array, map, or byte string, the data will not be copied to the returned object, so changes to the returned object will be reflected in this one.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
+
 <h3>UntagOne</h3>
 
 <pre>public PeterO.Cbor.CBORObject UntagOne();
 </pre>
+
+<p>Gets an object with the same value as this one but without this object&#39;s outermost tag, if any. If this object is an array, map, or byte string, the data will not be copied to the returned object, so changes to the returned object will be reflected in this one.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <h3>Write</h3>
 
@@ -916,12 +3171,50 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a Boolean value in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     byte value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a byte (0 to 255) in CBOR format to a data stream. If the value is less than 24, writes that byte. If the value is 25 to 255, writes the byte 24, then this byte&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -930,12 +3223,53 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a Unicode character as a string in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter <i>value</i>
+is a surrogate code point.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     double value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a 64-bit floating-point number in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -944,6 +3278,25 @@
     System.IO.Stream s);
 </pre>
 
+<p>Writes a 32-bit floating-point number in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>s</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>s</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
@@ -951,12 +3304,50 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a 32-bit signed integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     long value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a 64-bit signed integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -966,12 +3357,54 @@
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
+<p>Writes an arbitrary object to a CBOR data stream, using the specified options for controlling how the object is encoded to CBOR data format. If the object is convertible to a CBOR map or a CBOR object that contains CBOR maps, the keys to those maps are written out to the data stream in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong>can be used to write out certain keys of a CBOR map in a given order. Currently, the following objects are supported:</p>
+
+<ul>
+<li><p>Lists of CBORObject.</p></li>
+<li><p>Maps of CBORObject. The keys to the map are written out to the data stream in an undefined order.</p></li>
+<li><p>Null.</p></li>
+<li><p>Byte arrays, which will always be written as definite-length byte strings.</p></li>
+<li><p>String objects, which will be written as indefinite-length text strings if their size exceeds a certain threshold (this behavior may change in future versions of this library).</p></li>
+<li><p>Any object accepted by the FromObject static methods.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>objValue</i>: The arbitrary object to be serialized. Can be null.</p></li>
+<li><p><i>output</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: CBOR options for encoding the CBOR object to bytes.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The object&#39;s type is not supported.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>options</i>
+or  <i>output</i>
+is null.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     object objValue,
     System.IO.Stream stream);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a>object. The object <code>CBOREncodeOptions.Default</code> contains recommended settings for CBOREncodeOptions, and those ettings may be adopted by this overload (without a CBOREncodeOptions rgument) in the next major version.</b></p>
+
+<p>Writes a CBOR object to a CBOR data stream. See the three-parameter Write method that takes a CBOREncodeOptions.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>objValue</i>: The parameter <i>objValue</i>
+is an arbitrary object.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -982,12 +3415,48 @@
 
 <p><b>Deprecated.</b> Pass an EInteger to the Write method instead.</p>
 
+<p>Writes a big integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigint</i>: Big integer to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     PeterO.Cbor.CBORObject value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a CBOR object to a CBOR data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</li>
+</ul>
 
 <h3>Write</h3>
 
@@ -998,6 +3467,32 @@
 
 <p><b>Deprecated.</b> Pass an EDecimal to the Write method instead.</p>
 
+<p>Writes a decimal floating-point number in CBOR format to a data stream, as follows:</p>
+
+<ul>
+<li><p>If the value is null, writes the byte 0xF6.</p></li>
+<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
+<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
+<li><p>In all other cases, writes the value as a decimal number.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bignum</i>: The arbitrary-precision decimal number to write. Can be null.</p></li>
+<li><p><i>stream</i>: Stream to write to.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
@@ -1006,6 +3501,32 @@
 </pre>
 
 <p><b>Deprecated.</b> Pass an EFloat to the Write method instead.</p>
+
+<p>Writes a binary floating-point number in CBOR format to a data stream as follows:</p>
+
+<ul>
+<li><p>If the value is null, writes the byte 0xF6.</p></li>
+<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
+<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
+<li><p>In all other cases, writes the value as a big float.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bignum</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1016,12 +3537,57 @@
 
 <p><b>Deprecated.</b> Pass an ERational to the Write method instead.</p>
 
+<p>Writes a rational number in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>rational</i>: An arbitrary-precision rational number.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     PeterO.Numbers.EDecimal bignum,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a decimal floating-point number in CBOR format to a data stream, as follows:</p>
+
+<ul>
+<li><p>If the value is null, writes the byte 0xF6.</p></li>
+<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
+<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
+<li><p>In all other cases, writes the value as a decimal number.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bignum</i>: The arbitrary-precision decimal number to write. Can be null.</p></li>
+<li><p><i>stream</i>: Stream to write to.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1030,12 +3596,57 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a binary floating-point number in CBOR format to a data stream as follows:</p>
+
+<ul>
+<li><p>If the value is null, writes the byte 0xF6.</p></li>
+<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
+<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
+<li><p>In all other cases, writes the value as a big float.</p></li>
+</ul>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bignum</i>: An arbitrary-precision binary float.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     PeterO.Numbers.EInteger bigint,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a big integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigint</i>: Big integer to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1044,12 +3655,41 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a rational number in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>rational</i>: An arbitrary-precision rational number.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     sbyte value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes an 8-bit signed integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The parameter <i>value</i>
+is an 8-bit signed integer.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1058,12 +3698,52 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a 16-bit signed integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: The value to write.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     string str,
     System.IO.Stream stream);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
+
+<p>Writes a string in CBOR format to a data stream. The string will be encoded using indefinite-length encoding if its length exceeds a certain threshold (this behavior may change in future versions of this library).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The string to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1072,6 +3752,26 @@
     System.IO.Stream stream,
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
+
+<p>Writes a string in CBOR format to a data stream, using the given options to control the encoding process.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: The string to write. Can be null.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1080,12 +3780,38 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a 32-bit unsigned integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: A 32-bit unsigned integer.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
 <h3>Write</h3>
 
 <pre>public static void Write(
     ulong value,
     System.IO.Stream stream);
 </pre>
+
+<p>Writes a 64-bit unsigned integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: A 64-bit unsigned integer.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</li>
+</ul>
 
 <h3>Write</h3>
 
@@ -1094,6 +3820,15 @@
     System.IO.Stream stream);
 </pre>
 
+<p>Writes a 16-bit unsigned integer in CBOR format to a data stream.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>value</i>: A 16-bit unsigned integer.</p></li>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+</ul>
+
 <h3>WriteJSON</h3>
 
 <pre>public static void WriteJSON(
@@ -1101,11 +3836,39 @@
     System.IO.Stream outputStream);
 </pre>
 
+<p>Converts an arbitrary object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the object is convertible to a CBOR map, or to a CBOR object that contains CBOR maps, the keys to those maps are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a SON string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>obj</i>: The parameter <i>obj</i>
+is an arbitrary object.</p></li>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+</ul>
+
 <h3>WriteJSONTo</h3>
 
 <pre>public void WriteJSONTo(
     System.IO.Stream outputStream);
 </pre>
+
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>outputStream</i>: A writable data stream.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>outputStream</i>
+is null.</p></li>
+</ul>
 
 <h3>WriteJSONTo</h3>
 
@@ -1114,11 +3877,96 @@
     PeterO.Cbor.JSONOptions options);
 </pre>
 
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format, as in the ToJSONString method, and writes that string to a data stream in UTF-8, using the given JSON options to control the encoding process. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: An object containing the options to control writing the CBOR object to JSON.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter <i>outputStream</i>
+is null.</p></li>
+</ul>
+
 <h3>WriteTo</h3>
 
 <pre>public void WriteTo(
     System.IO.Stream stream);
 </pre>
+
+<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a>object. The object <code>CBOREncodeOptions.Default</code> contains recommended settings for CBOREncodeOptions, and those ettings may be adopted by this overload (without a CBOREncodeOptions rgument) in the next major version.</b></p>
+
+<p>Writes this CBOR object to a data stream. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. See the examples (written in C# for the .NET version) for ways to write out certain keys of a CBOR map in a given order.</p>
+
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR<b>definite-length map</b>. Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
+
+<pre>private static void WriteKeysToMap(CBORObject mapObj,
+        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
+        == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(keys ==
+        null){throw new ArgumentNullException(nameof(keys));}
+        if(outputStream == null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+        is not a map.&quot;); } int keyCount = 0; for (CBORObject key in keys)
+        { if(mapObj.ContainsKey(key)){ keyCount++; } }
+        CBORObject.WriteValue(outputStream, 5, keyCount); for (CBORObject key in
+        keys) { if(mapObj.ContainsKey(key)){
+        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
+        } }
+</pre>
+
+<p>The following example shows a method that writes each key of &#39;mapObj&#39; to &#39;outputStream&#39;, in the order given in &#39;keys&#39;, where &#39;mapObj&#39; is written out in the form of a CBOR<b>indefinite-length map</b>. Only keys found in &#39;keys&#39; will be written if they exist in &#39;mapObj&#39;.</p>
+
+<pre>private static void WriteKeysToIndefMap(CBORObject mapObj,
+        IList&lt;CBORObject&gt; keys, Stream outputStream){ if(mapObj
+        == null){ throw new
+        ArgumentNullException(nameof(mapObj));} if(keys ==
+        null){throw new ArgumentNullException(nameof(keys));}
+        if(outputStream == null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        if(obj.Type!=CBORType.Map){ throw new ArgumentException(&quot;&#39;obj&#39;
+        is not a map.&quot;); } outputStream.WriteByte((byte)0xBF); for
+        (CBORObject key in keys) { if(mapObj.ContainsKey(key)){
+        key.WriteTo(outputStream); mapObj[key].WriteTo(outputStream); }
+        } outputStream.WriteByte((byte)0xff); }
+</pre>
+
+<p>The following example shows a method that writes out a list of objects to &#39;outputStream&#39; as an<b>indefinite-length CBOR array</b>.</p>
+
+<pre>private static void WriteToIndefArray( IList&lt;object&gt; list,
+        Stream outputStream){ if(list == null){ throw new
+        ArgumentNullException(nameof(list));} if(outputStream ==
+        null){throw new
+        ArgumentNullException(nameof(outputStream));}
+        outputStream.WriteByte((byte)0x9f); for (object item in list) { new
+        CBORObject(item).WriteTo(outputStream); }
+        outputStream.WriteByte((byte)0xff); }
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>stream</i>: A writable data stream.</li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+</ul>
 
 <h3>WriteTo</h3>
 
@@ -1126,6 +3974,27 @@
     System.IO.Stream stream,
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
+
+<p>Writes this CBOR object to a data stream, using the specified options for encoding the data to CBOR format. If the CBOR object contains CBOR maps, or is a CBOR map, the keys to the map are written out to the data stream in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.WriteTo(System.IO.Stream)</strong>can be used to write out certain keys of a CBOR map in a given order.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>stream</i>: A writable data stream.</p></li>
+<li><p><i>options</i>: Options for encoding the data to CBOR.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>stream</i>
+is null.</p></li>
+<li><p>System.IO.IOException:
+An I/O error occurred.</p></li>
+<li><p>System.ArgumentException:
+&quot;Unexpected data type&quot;.</p></li>
+</ul>
 
 <h3>WriteValue</h3>
 
@@ -1135,6 +4004,55 @@
     int value);
 </pre>
 
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+
+<p>In the following example, an array of three objects is written as CBOR to a data stream.</p>
+
+<pre>CBORObject.WriteValue(stream, 4, 3);  /* array, length 3 */
+            CBORObject.Write(&quot;hello world&quot;, stream);  /* item 1 */
+            CBORObject.Write(25, stream);  /* item 2 */
+            CBORObject.Write(false, stream);  // item 3
+</pre>
+
+<p>In the following example, a map consisting of two key-value pairs is written as CBOR to a data stream.</p>
+
+<pre>CBORObject.WriteValue(stream, 5, 2);  // map, 2 pairs
+            CBORObject.Write(&quot;number&quot;, stream);  // key 1
+            CBORObject.Write(25, stream);  // value 1
+            CBORObject.Write(&quot;string&quot;, stream);  // key 2
+            CBORObject.Write(&quot;hello&quot;, stream);  // value 2
+</pre>
+
+<p>In the following example (originally written in C# for the .NET Framework version), a text string is written as CBOR to a data stream.</p>
+
+<pre>string str = &quot;hello world&quot;;
+byte[] bytes = DataUtilities.GetUtf8Bytes(str, true);
+CBORObject.WriteValue(stream, 4, bytes.Length);
+stream.Write(bytes, 0, bytes.Length);
+</pre>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+Value is from 24 to 31 and major type is 7.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</p></li>
+</ul>
+
 <h3>WriteValue</h3>
 
 <pre>public static int WriteValue(
@@ -1142,6 +4060,30 @@
     int majorType,
     long value);
 </pre>
+
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit signed integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+Value is from 24 to 31 and major type is 7.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</p></li>
+</ul>
 
 <h3>WriteValue</h3>
 
@@ -1151,6 +4093,32 @@
     PeterO.Numbers.EInteger bigintValue);
 </pre>
 
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as an arbitrary-precision integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><i>bigintValue</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255]. For major types 0 to 6, this number may not be greater than 2^64 - 1.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter <i>majorType</i>
+is 7 and value is greater than 255.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+or  <i>bigintValue</i>
+is null.</p></li>
+</ul>
+
 <h3>WriteValue</h3>
 
 <pre>public static int WriteValue(
@@ -1159,6 +4127,28 @@
     uint value);
 </pre>
 
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</li>
+</ul>
+
 <h3>WriteValue</h3>
 
 <pre>public static int WriteValue(
@@ -1166,6 +4156,31 @@
     int majorType,
     ulong value);
 </pre>
+
+<p>Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit unsigned integer. This is a low-level method that is useful for implementing custom CBOR encoding methodologies. This method encodes the given major type and value in the shortest form allowed for the major type.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>outputStream</i>: A writable data stream.</p></li>
+<li><p><i>majorType</i>: The CBOR major type to write. This is a number from 0 through 7 as follows. 0: integer 0 or greater; 1: negative integer; 2: byte string; 3: UTF-8 text string; 4: array; 5: map; 6: tag; 7: simple value. See RFC 7049 for details on these major types.</p></li>
+<li><p><i>value</i>: An integer 0 or greater associated with the major type, as follows. 0: integer 0 or greater; 1: the negative integer&#39;s absolute value is 1 plus this number; 2: length in bytes of the byte string; 3: length in bytes of the UTF-8 text string; 4: number of items in the array; 5: number of key-value pairs in the map; 6: tag number; 7: simple value number, which must be in the interval [0, 23] or [32, 255].</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The number of bytes ordered to be written to the data stream.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentException:
+The parameter <i>majorType</i>
+is 7 and value is greater than 255.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>outputStream</i>
+is null.</p></li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

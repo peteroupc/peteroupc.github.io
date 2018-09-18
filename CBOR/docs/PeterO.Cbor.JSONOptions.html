@@ -9,21 +9,41 @@
 <pre>public sealed class JSONOptions
 </pre>
 
+<p>Includes options to control how CBOR objects are converted to JSON.</p>
+
 <h3>JSONOptions Constructor</h3>
 
 <pre>public JSONOptions(
     bool base64Padding);
 </pre>
 
+<p>Initializes a new instance of the <a href="PeterO.Cbor.JSONOptions.html">PeterO.Cbor.JSONOptions</a> class with the given values for the options.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>base64Padding</i>: Whether padding is included when writing data in base64url or traditional base64 format to JSON.</li>
+</ul>
+
 <h3>Default</h3>
 
 <pre>public static readonly PeterO.Cbor.JSONOptions Default;
 </pre>
 
+<p>The default options for converting CBOR objects to JSON.</p>
+
 <h3>Base64Padding</h3>
 
 <pre>public bool Base64Padding { get; }
 </pre>
+
+<p>Gets a value indicating whether padding is written out when writing base64url or traditional base64 to JSON.</p>
+
+<p>The padding character is &#39;=&#39;.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The default is false, no padding.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
