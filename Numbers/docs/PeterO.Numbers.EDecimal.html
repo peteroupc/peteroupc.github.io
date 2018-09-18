@@ -121,141 +121,143 @@
 
 <p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
-<li><code> public PeterO.Numbers.EDecimal Abs();</code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
-<li><code> public PeterO.Numbers.EDecimal Add( PeterO.Numbers.EDecimal otherValue);</code> - Adds this object and another decimal number and returns the result.</li>
-<li><code> public sealed int CompareTo( PeterO.Numbers.EDecimal other);</code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
-<li><code> public int CompareToBinary( PeterO.Numbers.EFloat other);</code> - Compares an arbitrary-precision binary float with this instance.</li>
-<li><code> public PeterO.Numbers.EDecimal CompareToSignal( PeterO.Numbers.EDecimal other, PeterO.Numbers.EContext ctx);</code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
-<li><code> public int CompareToTotal( PeterO.Numbers.EDecimal other, PeterO.Numbers.EContext ctx);</code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
-<li><code> public int CompareToTotalMagnitude( PeterO.Numbers.EDecimal other);</code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code> public PeterO.Numbers.EDecimal CompareToWithContext( PeterO.Numbers.EDecimal other, PeterO.Numbers.EContext ctx);</code> - Compares the mathematical values of this object and another object.</li>
-<li><code> public PeterO.Numbers.EDecimal CopySign( PeterO.Numbers.EDecimal other);</code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code> public static PeterO.Numbers.EDecimal Create( int mantissaSmall, int exponentSmall);</code> - Creates a number with the valueexponent<em>10^mantissa Creates a number with the valueexponent</em>10^mantissa</li>
-<li><code> public static PeterO.Numbers.EDecimal CreateNaN( PeterO.Numbers.EInteger diag);</code> - Creates a not-a-number arbitrary-precision decimal number.</li>
-<li><code> public PeterO.Numbers.EDecimal[] DivRemNaturalScale( PeterO.Numbers.EDecimal divisor);</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code> public PeterO.Numbers.EDecimal Divide( PeterO.Numbers.EDecimal divisor);</code> - Divides this object by another decimal number and returns the result.</li>
-<li><code> public PeterO.Numbers.EDecimal[] DivideAndRemainderNaturalScale( PeterO.Numbers.EDecimal divisor);</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code> public PeterO.Numbers.EDecimal DivideToExponent( PeterO.Numbers.EDecimal divisor, long desiredExponentSmall, PeterO.Numbers.EContext ctx);</code> - Divides two arbitrary-precision decimal numbers, and gives a particular exponent to the result.</li>
-<li><code> public PeterO.Numbers.EDecimal DivideToIntegerNaturalScale( PeterO.Numbers.EDecimal divisor);</code> - Divides two arbitrary-precision decimal numbers, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code> public PeterO.Numbers.EDecimal DivideToIntegerZeroScale( PeterO.Numbers.EDecimal divisor, PeterO.Numbers.EContext ctx);</code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
-<li><code> public PeterO.Numbers.EDecimal DivideToSameExponent( PeterO.Numbers.EDecimal divisor, PeterO.Numbers.ERounding rounding);</code> - Divides this object by another decimal number and returns a result with the same exponent as this object (the dividend).</li>
-<li><code> public sealed bool Equals( PeterO.Numbers.EDecimal other);</code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
-<li><code> public PeterO.Numbers.EDecimal Exp( PeterO.Numbers.EContext ctx);</code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal Abs()</code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
+<li><code>PeterO.Numbers.EDecimal Add(PeterO.Numbers.EDecimal)</code> - Adds this object and another decimal number and returns the result.</li>
+<li><code>int CompareTo(PeterO.Numbers.EDecimal)</code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
+<li><code>int CompareToBinary(PeterO.Numbers.EFloat)</code> - Compares an arbitrary-precision binary float with this instance.</li>
+<li><code>PeterO.Numbers.EDecimal CompareToSignal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
+<li><code>int CompareToTotal(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code>int CompareToTotalMagnitude(PeterO.Numbers.EDecimal)</code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code>PeterO.Numbers.EDecimal CompareToWithContext(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Compares the mathematical values of this object and another object.</li>
+<li><code>PeterO.Numbers.EDecimal CopySign(PeterO.Numbers.EDecimal)</code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
+<li><code>PeterO.Numbers.EDecimal Create(int, int)</code> - Creates a number with the valueexponent<em>10^mantissa Creates a number with the valueexponent</em>10^mantissa</li>
+<li><code>PeterO.Numbers.EDecimal CreateNaN(PeterO.Numbers.EInteger)</code> - Creates a not-a-number arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal[] DivRemNaturalScale(PeterO.Numbers.EDecimal)</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code>PeterO.Numbers.EDecimal Divide(PeterO.Numbers.EDecimal)</code> - Divides this object by another decimal number and returns the result.</li>
+<li><code>PeterO.Numbers.EDecimal[] DivideAndRemainderNaturalScale(PeterO.Numbers.EDecimal)</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code>PeterO.Numbers.EDecimal DivideToExponent(PeterO.Numbers.EDecimal, long, PeterO.Numbers.EContext)</code> - Divides two arbitrary-precision decimal numbers, and gives a particular exponent to the result.</li>
+<li><code>PeterO.Numbers.EDecimal DivideToIntegerNaturalScale(PeterO.Numbers.EDecimal)</code> - Divides two arbitrary-precision decimal numbers, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
+<li><code>PeterO.Numbers.EDecimal DivideToIntegerZeroScale(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
+<li><code>PeterO.Numbers.EDecimal DivideToSameExponent(PeterO.Numbers.EDecimal, PeterO.Numbers.ERounding)</code> - Divides this object by another decimal number and returns a result with the same exponent as this object (the dividend).</li>
+<li><code>bool Equals(PeterO.Numbers.EDecimal)</code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
+<li><code>PeterO.Numbers.EDecimal Exp(PeterO.Numbers.EContext)</code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code> public PeterO.Numbers.EInteger Exponent { get; }</code> - Gets this object&#39;s exponent.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromByte( byte inputByte);</code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromDecimal( System.Decimal dec);</code> - Converts adecimalunder the Common Language Infrastructure (seePeterO.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromDouble( double dbl);</code> - Creates a decimal number from a 64-bit binary floating-point number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromEFloat( PeterO.Numbers.EFloat bigfloat);</code> - Creates a decimal number from an arbitrary-precision binary floating-point number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromEInteger( PeterO.Numbers.EInteger bigint);</code> - Converts an arbitrary-precision integer to an arbitrary precision decimal.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromExtendedFloat( PeterO.Numbers.EFloat ef);</code> - Converts an arbitrary-precision binary floating-point number to an arbitrary precision decimal.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromInt16( short inputInt16);</code> - Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromInt32( int valueSmaller);</code> - Creates a decimal number from a 32-bit signed integer.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromInt64( long valueSmall);</code> - Creates a decimal number from a 64-bit signed integer.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromSByte( sbyte inputSByte);</code> - Converts an 8-bit signed integer to an arbitrary-precision decimal number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromSingle( float flt);</code> - Creates a decimal number from a 32-bit binary floating-point number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromString( string str);</code> - Creates a decimal number from a text string that represents a number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromUInt16( ushort inputUInt16);</code> - Converts a 16-bit unsigned integer to an arbitrary-precision decimal number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromUInt32( uint inputUInt32);</code> - Converts a 32-bit signed integer to an arbitrary-precision decimal number.</li>
-<li><code> public static PeterO.Numbers.EDecimal FromUInt64( ulong inputUInt64);</code> - Converts a 64-bit unsigned integer to an arbitrary-precision decimal number.</li>
-<li><code> public override int GetHashCode();</code> - Calculates this object&#39;s hash code.</li>
+<li><code>PeterO.Numbers.EDecimal FromByte(byte)</code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal FromDecimal(System.Decimal)</code> - Converts adecimalunder the Common Language Infrastructure (seePeterO.</li>
+<li><code>PeterO.Numbers.EDecimal FromDouble(double)</code> - Creates a decimal number from a 64-bit binary floating-point number.</li>
+<li><code>PeterO.Numbers.EDecimal FromEFloat(PeterO.Numbers.EFloat)</code> - Creates a decimal number from an arbitrary-precision binary floating-point number.</li>
+<li><code>PeterO.Numbers.EDecimal FromEInteger(PeterO.Numbers.EInteger)</code> - Converts an arbitrary-precision integer to an arbitrary precision decimal.</li>
+<li><code>PeterO.Numbers.EDecimal FromExtendedFloat(PeterO.Numbers.EFloat)</code> - Converts an arbitrary-precision binary floating-point number to an arbitrary precision decimal.</li>
+<li><code>PeterO.Numbers.EDecimal FromInt16(short)</code> - Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal FromInt32(int)</code> - Creates a decimal number from a 32-bit signed integer.</li>
+<li><code>PeterO.Numbers.EDecimal FromInt64(long)</code> - Creates a decimal number from a 64-bit signed integer.</li>
+<li><code>PeterO.Numbers.EDecimal FromSByte(sbyte)</code> - Converts an 8-bit signed integer to an arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal FromSingle(float)</code> - Creates a decimal number from a 32-bit binary floating-point number.</li>
+<li><code>PeterO.Numbers.EDecimal FromString(string)</code> - Creates a decimal number from a text string that represents a number.</li>
+<li><code>PeterO.Numbers.EDecimal FromUInt16(ushort)</code> - Converts a 16-bit unsigned integer to an arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal FromUInt32(uint)</code> - Converts a 32-bit signed integer to an arbitrary-precision decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal FromUInt64(ulong)</code> - Converts a 64-bit unsigned integer to an arbitrary-precision decimal number.</li>
+<li><code>int GetHashCode()</code> - Calculates this object&#39;s hash code.</li>
 <li><code> public bool IsFinite { get; }</code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
-<li><code> public bool IsInfinity();</code> - Gets a value indicating whether this object is positive or negative infinity.</li>
-<li><code> public bool IsNaN();</code> - Gets a value indicating whether this object is not a number (NaN).</li>
+<li><code>bool IsInfinity()</code> - Gets a value indicating whether this object is positive or negative infinity.</li>
+<li><code>bool IsNaN()</code> - Gets a value indicating whether this object is not a number (NaN).</li>
 <li><code> public bool IsNegative { get; }</code> - Gets a value indicating whether this object is negative, including negative zero.</li>
-<li><code> public bool IsNegativeInfinity();</code> - Returns whether this object is negative infinity.</li>
-<li><code> public bool IsPositiveInfinity();</code> - Returns whether this object is positive infinity.</li>
-<li><code> public bool IsQuietNaN();</code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
-<li><code> public bool IsSignalingNaN();</code> - Gets a value indicating whether this object is a signaling not-a-number value.</li>
+<li><code>bool IsNegativeInfinity()</code> - Returns whether this object is negative infinity.</li>
+<li><code>bool IsPositiveInfinity()</code> - Returns whether this object is positive infinity.</li>
+<li><code>bool IsQuietNaN()</code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
+<li><code>bool IsSignalingNaN()</code> - Gets a value indicating whether this object is a signaling not-a-number value.</li>
 <li><code> public bool IsZero { get; }</code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code> public PeterO.Numbers.EDecimal Log( PeterO.Numbers.EContext ctx);</code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EDecimal Log10( PeterO.Numbers.EContext ctx);</code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal Log(PeterO.Numbers.EContext)</code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal Log10(PeterO.Numbers.EContext)</code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
 <li><code> public PeterO.Numbers.EInteger Mantissa { get; }</code> - Gets this object&#39;s unscaled value.</li>
-<li><code> public static PeterO.Numbers.EDecimal Max( PeterO.Numbers.EDecimal first, PeterO.Numbers.EDecimal second, PeterO.Numbers.EContext ctx);</code> - Gets the greater value between two decimal numbers.</li>
-<li><code> public static PeterO.Numbers.EDecimal MaxMagnitude( PeterO.Numbers.EDecimal first, PeterO.Numbers.EDecimal second, PeterO.Numbers.EContext ctx);</code> - Gets the greater value between two values, ignoring their signs.</li>
-<li><code> public static PeterO.Numbers.EDecimal Min( PeterO.Numbers.EDecimal first, PeterO.Numbers.EDecimal second, PeterO.Numbers.EContext ctx);</code> - Gets the lesser value between two decimal numbers.</li>
-<li><code> public static PeterO.Numbers.EDecimal MinMagnitude( PeterO.Numbers.EDecimal first, PeterO.Numbers.EDecimal second, PeterO.Numbers.EContext ctx);</code> - Gets the lesser value between two values, ignoring their signs.</li>
-<li><code> public PeterO.Numbers.EDecimal MovePointLeft( int places);</code> - Returns a number similar to this number but with the decimal point moved to the left.</li>
-<li><code> public PeterO.Numbers.EDecimal MovePointRight( int places);</code> - Returns a number similar to this number but with the decimal point moved to the right.</li>
-<li><code> public PeterO.Numbers.EDecimal Multiply( PeterO.Numbers.EDecimal otherValue);</code> - Multiplies two decimal numbers.</li>
-<li><code> public PeterO.Numbers.EDecimal MultiplyAndAdd( PeterO.Numbers.EDecimal multiplicand, PeterO.Numbers.EDecimal augend);</code> - Multiplies by one decimal number, and then adds another decimal number.</li>
-<li><code> public PeterO.Numbers.EDecimal MultiplyAndSubtract( PeterO.Numbers.EDecimal op, PeterO.Numbers.EDecimal subtrahend, PeterO.Numbers.EContext ctx);</code> - Multiplies by one value, and then subtracts another value.</li>
+<li><code>PeterO.Numbers.EDecimal Max(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Gets the greater value between two decimal numbers.</li>
+<li><code>PeterO.Numbers.EDecimal MaxMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Gets the greater value between two values, ignoring their signs.</li>
+<li><code>PeterO.Numbers.EDecimal Min(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Gets the lesser value between two decimal numbers.</li>
+<li><code>PeterO.Numbers.EDecimal MinMagnitude(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Gets the lesser value between two values, ignoring their signs.</li>
+<li><code>PeterO.Numbers.EDecimal MovePointLeft(int)</code> - Returns a number similar to this number but with the decimal point moved to the left.</li>
+<li><code>PeterO.Numbers.EDecimal MovePointRight(int)</code> - Returns a number similar to this number but with the decimal point moved to the right.</li>
+<li><code>PeterO.Numbers.EDecimal Multiply(PeterO.Numbers.EDecimal)</code> - Multiplies two decimal numbers.</li>
+<li><code>PeterO.Numbers.EDecimal MultiplyAndAdd(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Multiplies by one decimal number, and then adds another decimal number.</li>
+<li><code>PeterO.Numbers.EDecimal MultiplyAndSubtract(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Multiplies by one value, and then subtracts another value.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal NaN;</code> - A not-a-number value.</li>
-<li><code> public PeterO.Numbers.EDecimal Negate();</code> - Gets an object with the same value as this one, but with the sign reversed.</li>
+<li><code>PeterO.Numbers.EDecimal Negate()</code> - Gets an object with the same value as this one, but with the sign reversed.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal NegativeInfinity;</code> - Negative infinity, less than any other number.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal NegativeZero;</code> - Represents the number negative zero.</li>
-<li><code> public PeterO.Numbers.EDecimal NextMinus( PeterO.Numbers.EContext ctx);</code> - Finds the largest value that&#39;s smaller than the given value.</li>
-<li><code> public PeterO.Numbers.EDecimal NextPlus( PeterO.Numbers.EContext ctx);</code> - Finds the smallest value that&#39;s greater than the given value.</li>
-<li><code> public PeterO.Numbers.EDecimal NextToward( PeterO.Numbers.EDecimal otherValue, PeterO.Numbers.EContext ctx);</code> - Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal NextMinus(PeterO.Numbers.EContext)</code> - Finds the largest value that&#39;s smaller than the given value.</li>
+<li><code>PeterO.Numbers.EDecimal NextPlus(PeterO.Numbers.EContext)</code> - Finds the smallest value that&#39;s greater than the given value.</li>
+<li><code>PeterO.Numbers.EDecimal NextToward(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal One;</code> - Represents the number 1.</li>
-<li><code> public static PeterO.Numbers.EDecimal PI( PeterO.Numbers.EContext ctx);</code> - Finds the constant π, the circumference of a circle divided by its diameter.</li>
-<li><code> public PeterO.Numbers.EDecimal Plus( PeterO.Numbers.EContext ctx);</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
+<li><code>PeterO.Numbers.EDecimal PI(PeterO.Numbers.EContext)</code> - Finds the constant π, the circumference of a circle divided by its diameter.</li>
+<li><code>PeterO.Numbers.EDecimal Plus(PeterO.Numbers.EContext)</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal PositiveInfinity;</code> - Positive infinity, greater than any other number.</li>
-<li><code> public PeterO.Numbers.EDecimal Pow( PeterO.Numbers.EDecimal exponent, PeterO.Numbers.EContext ctx);</code> - Raises this object&#39;s value to the given exponent.</li>
-<li><code> public PeterO.Numbers.EInteger Precision();</code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
-<li><code> public PeterO.Numbers.EDecimal Quantize( PeterO.Numbers.EInteger desiredExponent, PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value but a new exponent.</li>
-<li><code> public PeterO.Numbers.EDecimal Reduce( PeterO.Numbers.EContext ctx);</code> - Removes trailing zeros from this object&#39;s mantissa (significand).</li>
-<li><code> public PeterO.Numbers.EDecimal Remainder( PeterO.Numbers.EDecimal divisor, PeterO.Numbers.EContext ctx);</code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers.</li>
-<li><code> public PeterO.Numbers.EDecimal RemainderNaturalScale( PeterO.Numbers.EDecimal divisor);</code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
-<li><code> public PeterO.Numbers.EDecimal RemainderNear( PeterO.Numbers.EDecimal divisor, PeterO.Numbers.EContext ctx);</code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToExponent( PeterO.Numbers.EInteger exponent, PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to a new exponent if necessary.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToExponentExact( PeterO.Numbers.EInteger exponent, PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToIntegerExact( PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToIntegerNoRoundedFlag( PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to an integer, without adding theFlagInexact or FlagRounded flags.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToIntegralExact( PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToIntegralNoRoundedFlag( PeterO.Numbers.EContext ctx);</code> - Returns a decimal number with the same value as this object but rounded to an integer, without adding theFlagInexact or FlagRounded flags.</li>
-<li><code> public PeterO.Numbers.EDecimal RoundToPrecision( PeterO.Numbers.EContext ctx);</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</li>
-<li><code> public PeterO.Numbers.EDecimal ScaleByPowerOfTen( int places);</code> - Returns a number similar to this number but with the scale adjusted.</li>
+<li><code>PeterO.Numbers.EDecimal Pow(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Raises this object&#39;s value to the given exponent.</li>
+<li><code>PeterO.Numbers.EInteger Precision()</code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
+<li><code>PeterO.Numbers.EDecimal Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value but a new exponent.</li>
+<li><code>PeterO.Numbers.EDecimal Reduce(PeterO.Numbers.EContext)</code> - Removes trailing zeros from this object&#39;s mantissa (significand).</li>
+<li><code>PeterO.Numbers.EDecimal Remainder(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Finds the remainder that results when dividing two arbitrary-precision decimal numbers.</li>
+<li><code>PeterO.Numbers.EDecimal RemainderNaturalScale(PeterO.Numbers.EDecimal)</code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
+<li><code>PeterO.Numbers.EDecimal RemainderNear(PeterO.Numbers.EDecimal, PeterO.Numbers.EContext)</code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to a new exponent if necessary.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToIntegerExact(PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToIntegerNoRoundedFlag(PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to an integer, without adding theFlagInexact or FlagRounded flags.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToIntegralExact(PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToIntegralNoRoundedFlag(PeterO.Numbers.EContext)</code> - Returns a decimal number with the same value as this object but rounded to an integer, without adding theFlagInexact or FlagRounded flags.</li>
+<li><code>PeterO.Numbers.EDecimal RoundToPrecision(PeterO.Numbers.EContext)</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</li>
+<li><code>PeterO.Numbers.EDecimal ScaleByPowerOfTen(int)</code> - Returns a number similar to this number but with the scale adjusted.</li>
 <li><code> public int Sign { get; }</code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal SignalingNaN;</code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision decimal.</li>
-<li><code> public PeterO.Numbers.EDecimal Sqrt( PeterO.Numbers.EContext ctx);</code> - Finds the square root of this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EDecimal SquareRoot( PeterO.Numbers.EContext ctx);</code> - Finds the square root of this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EDecimal Subtract( PeterO.Numbers.EDecimal otherValue);</code> - Subtracts an arbitrary-precision decimal number from this instance and returns the result.</li>
+<li><code>PeterO.Numbers.EDecimal Sqrt(PeterO.Numbers.EContext)</code> - Finds the square root of this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal SquareRoot(PeterO.Numbers.EContext)</code> - Finds the square root of this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EDecimal Subtract(PeterO.Numbers.EDecimal)</code> - Subtracts an arbitrary-precision decimal number from this instance and returns the result.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal Ten;</code> - Represents the number 10.</li>
-<li><code> public byte ToByteChecked();</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
-<li><code> public byte ToByteIfExact();</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
-<li><code> public byte ToByteUnchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
-<li><code> public System.Decimal ToDecimal();</code> - Converts this value to adecimalunder the Common Language Infrastructure (seePeterO.</li>
-<li><code> public double ToDouble();</code> - Converts this value to its closest equivalent as a 64-bit floating-point number.</li>
-<li><code> public PeterO.Numbers.EFloat ToEFloat();</code> - Creates a binary floating-point number from this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EInteger ToEInteger();</code> - Converts this value to an arbitrary-precision integer.</li>
-<li><code> public PeterO.Numbers.EInteger ToEIntegerExact();</code> - Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</li>
-<li><code> public PeterO.Numbers.EInteger ToEIntegerIfExact();</code> - Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</li>
-<li><code> public string ToEngineeringString();</code> - Same as ToString(), except that when an exponent is used it will be a multiple of 3.</li>
-<li><code> public PeterO.Numbers.EFloat ToExtendedFloat();</code> - Creates a binary floating-point number from this object&#39;s value.</li>
-<li><code> public short ToInt16Checked();</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
-<li><code> public short ToInt16IfExact();</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
-<li><code> public short ToInt16Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
-<li><code> public int ToInt32Checked();</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code> public int ToInt32IfExact();</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code> public int ToInt32Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code> public long ToInt64Checked();</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
-<li><code> public long ToInt64IfExact();</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
-<li><code> public long ToInt64Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
-<li><code> public string ToPlainString();</code> - Converts this value to a string, but without using exponential notation.</li>
-<li><code> public sbyte ToSByteChecked();</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
-<li><code> public sbyte ToSByteIfExact();</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
-<li><code> public sbyte ToSByteUnchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
-<li><code> public float ToSingle();</code> - Converts this value to its closest equivalent as a 32-bit floating-point number.</li>
-<li><code> public override string ToString();</code> - Converts this value to a string.</li>
-<li><code> public ushort ToUInt16Checked();</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
-<li><code> public ushort ToUInt16IfExact();</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code> public ushort ToUInt16Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
-<li><code> public uint ToUInt32Checked();</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code> public uint ToUInt32IfExact();</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code> public uint ToUInt32Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code> public ulong ToUInt64Checked();</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
-<li><code> public ulong ToUInt64IfExact();</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code> public ulong ToUInt64Unchecked();</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
-<li><code> public PeterO.Numbers.EDecimal Ulp();</code> - Returns the unit in the last place.</li>
+<li><code>byte ToByteChecked()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
+<li><code>byte ToByteIfExact()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
+<li><code>byte ToByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
+<li><code>System.Decimal ToDecimal()</code> - Converts this value to adecimalunder the Common Language Infrastructure (seePeterO.</li>
+<li><code>double ToDouble()</code> - Converts this value to its closest equivalent as a 64-bit floating-point number.</li>
+<li><code>PeterO.Numbers.EFloat ToEFloat()</code> - Creates a binary floating-point number from this object&#39;s value.</li>
+<li><code>PeterO.Numbers.EInteger ToEInteger()</code> - Converts this value to an arbitrary-precision integer.</li>
+<li><code>PeterO.Numbers.EInteger ToEIntegerExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</li>
+<li><code>PeterO.Numbers.EInteger ToEIntegerIfExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the fractional part of the value would be lost.</li>
+<li><code>string ToEngineeringString()</code> - Same as ToString(), except that when an exponent is used it will be a multiple of 3.</li>
+<li><code>PeterO.Numbers.EFloat ToExtendedFloat()</code> - Creates a binary floating-point number from this object&#39;s value.</li>
+<li><code>short ToInt16Checked()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
+<li><code>short ToInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
+<li><code>short ToInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
+<li><code>int ToInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code>int ToInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code>int ToInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code>long ToInt64Checked()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
+<li><code>long ToInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
+<li><code>long ToInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
+<li><code>string ToPlainString()</code> - Converts this value to a string, but without using exponential notation.</li>
+<li><code>sbyte ToSByteChecked()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
+<li><code>sbyte ToSByteIfExact()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
+<li><code>sbyte ToSByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
+<li><code>float ToSingle()</code> - Converts this value to its closest equivalent as a 32-bit floating-point number.</li>
+<li><code>string ToString()</code> - Converts this value to a string.</li>
+<li><code>ushort ToUInt16Checked()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
+<li><code>ushort ToUInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code>ushort ToUInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
+<li><code>uint ToUInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code>uint ToUInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code>uint ToUInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code>ulong ToUInt64Checked()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
+<li><code>ulong ToUInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code>ulong ToUInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
+<li><code>PeterO.Numbers.EDecimal Ulp()</code> - Returns the unit in the last place.</li>
 <li><code> public PeterO.Numbers.EInteger UnsignedMantissa { get; }</code> - Gets the absolute value of this object&#39;s unscaled value.</li>
 <li><code> public static readonly PeterO.Numbers.EDecimal Zero;</code> - Represents the number 0.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator +( PeterO.Numbers.EDecimal bthis, PeterO.Numbers.EDecimal otherValue);</code> - Adds two arbitrary-precision decimal floating-point numbers and returns the result.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator /( PeterO.Numbers.EDecimal dividend, PeterO.Numbers.EDecimal divisor);</code> - Divides this object by another decimal number and returns the result.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator %( PeterO.Numbers.EDecimal dividend, PeterO.Numbers.EDecimal divisor);</code> - Finds the remainder when dividing one arbitrary-precision decimal number by another.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator *( PeterO.Numbers.EDecimal operand1, PeterO.Numbers.EDecimal operand2);</code> - Multiplies two decimal numbers.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator -( PeterO.Numbers.EDecimal bthis, PeterO.Numbers.EDecimal subtrahend);</code> - Subtracts one arbitrary-precision decimal number from another and returns the result.</li>
-<li><code> public static PeterO.Numbers.EDecimal operator -( PeterO.Numbers.EDecimal bigValue);</code> - Gets an arbitrary-precision decimal number with the same value as the given one, but with the sign reversed.</li>
+<li><code> operator +(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Adds two arbitrary-precision decimal floating-point numbers and returns the result.</li>
+<li><code> operator /(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Divides this object by another decimal number and returns the result.</li>
+<li><code> operator %(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Finds the remainder when dividing one arbitrary-precision decimal number by another.</li>
+<li><code> operator *(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Multiplies two decimal numbers.</li>
+<li><code> operator -(PeterO.Numbers.EDecimal, PeterO.Numbers.EDecimal)</code> - Subtracts one arbitrary-precision decimal number from another and returns the result.</li>
+<li><code> operator -(PeterO.Numbers.EDecimal)</code> - Gets an arbitrary-precision decimal number with the same value as the given one, but with the sign reversed.</li>
 </ul>
 
 <h3>NaN</h3>

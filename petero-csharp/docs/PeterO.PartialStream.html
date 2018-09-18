@@ -13,18 +13,20 @@
 
 <p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
 <li><code> public override bool CanRead { get; }</code> - Gets a value indicating whether the underlying stream supports reading.</li>
 <li><code> public override bool CanSeek { get; }</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
 <li><code> public override bool CanWrite { get; }</code> - Gets a value indicating whether the underlying stream supports writing.</li>
-<li><code> protected override void Dispose( bool disposing);</code> - Not documented yet.</li>
-<li><code> public override void Flush();</code> - Not documented yet.</li>
+<li><code>void Dispose(bool)</code> - Not documented yet.</li>
+<li><code>void Flush()</code> - Not documented yet.</li>
 <li><code> public override long Length { get; }</code> - Gets the partial stream&#39;s length in bytes.</li>
 <li><code> public override long Position { get; set;}</code> - Gets the partial stream&#39;s current byte position.</li>
-<li><code> public override int Read( byte[] buffer, int offset, int count);</code> - Not documented yet.</li>
-<li><code> public override long Seek( long offset, System.IO.SeekOrigin origin);</code> - Not documented yet.</li>
-<li><code> public override void SetLength( long value);</code> - Not documented yet.</li>
-<li><code> public override void Write( byte[] buffer, int offset, int count);</code> - Not documented yet.</li>
+<li><code>int Read(byte[], int, int)</code> - Not documented yet.</li>
+<li><code>long Seek(long, System.IO.SeekOrigin)</code> - Not documented yet.</li>
+<li><code>void SetLength(long)</code> - Not documented yet.</li>
+<li><code>void Write(byte[], int, int)</code> - Not documented yet.</li>
 </ul>
 
 <h3>PartialStream Constructor</h3>

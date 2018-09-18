@@ -11,9 +11,13 @@
 
 <p>Contains methods useful for reading and writing data, with a focus on CBOR.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public static PeterO.Cbor.CBORObject ParseJSONNumber( string str);</code> - Parses a number whose format follows the JSON specification.</li>
+<li><code><a href="#ParseJSONNumber_string">ParseJSONNumber(string)</a></code> - Parses a number whose format follows the JSON specification.</li>
 </ul>
+
+<p><a id="ParseJSONNumber_string"></a></p>
 
 <h3>ParseJSONNumber</h3>
 
@@ -32,6 +36,8 @@
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
+
+<p><a id="ParseJSONNumber_string_bool_bool"></a></p>
 
 <h3>ParseJSONNumber</h3>
 
@@ -54,6 +60,8 @@
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object that represents the parsed number. Returns positive zero if the number is a zero that starts with a minus sign (such as &quot;-0&quot; or &quot;-0.0&quot;). Returns null if the parsing fails, including if the string is null or empty.</p>
+
+<p><a id="ParseJSONNumber_string_bool_bool_bool"></a></p>
 
 <h3>ParseJSONNumber</h3>
 

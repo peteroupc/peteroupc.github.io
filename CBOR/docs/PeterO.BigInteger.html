@@ -21,22 +21,26 @@
 
 <p>An arbitrary-precision integer.<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same alue are interchangeable, but they should be compared using the Equals&quot; method rather than the &quot;==&quot; operator.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public sealed int CompareTo( PeterO.BigInteger other);</code> - Compares this value to another.</li>
-<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
-<li><code> public override int GetHashCode();</code> - Returns the hash code for this instance.</li>
-<li><code> public static readonly PeterO.BigInteger ONE;</code> - BigInteger for the number one.</li>
-<li><code> public static PeterO.BigInteger One { get; }</code> - Gets the arbitrary-precision integer for one.</li>
-<li><code> public override string ToString();</code> - Converts this object to a text string in base 10.</li>
-<li><code> public static PeterO.BigInteger Zero { get; }</code> - Gets the arbitrary-precision integer for zero.</li>
-<li><code> public int bitLength();</code> - Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign.</li>
-<li><code> public static PeterO.BigInteger fromBytes( byte[] bytes, bool littleEndian);</code> - Initializes an arbitrary-precision integer from an array of bytes.</li>
-<li><code> public static PeterO.BigInteger fromRadixString( string str, int radix);</code> - Converts a string to an arbitrary-precision integer.</li>
-<li><code> public static PeterO.BigInteger fromString( string str);</code> - Converts a string to an arbitrary-precision integer.</li>
-<li><code> public byte[] toBytes( bool littleEndian);</code> - Returns a byte array of this object&#39;s value.</li>
-<li><code> public string toRadixString( int radix);</code> - Generates a string representing the value of this object, in the given radix.</li>
-<li><code> public static PeterO.BigInteger valueOf( long longerValue);</code> - Converts a 64-bit signed integer to a big integer.</li>
+<li><code><a href="#CompareTo_PeterO_BigInteger">CompareTo(PeterO.BigInteger)</a></code> - Compares this value to another.</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
+<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns the hash code for this instance.</li>
+<li><code><a href="#ONE">public static readonly PeterO.BigInteger ONE;</a></code> - BigInteger for the number one.</li>
+<li><code><a href="#One">One</a></code> - Gets the arbitrary-precision integer for one.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string in base 10.</li>
+<li><code><a href="#Zero">Zero</a></code> - Gets the arbitrary-precision integer for zero.</li>
+<li><code><a href="#bitLength">bitLength()</a></code> - Finds the minimum number of bits needed to represent this object&#39;s value, except for its sign.</li>
+<li><code><a href="#fromBytes_byte_bool">fromBytes(byte[], bool)</a></code> - Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code><a href="#fromRadixString_string_int">fromRadixString(string, int)</a></code> - Converts a string to an arbitrary-precision integer.</li>
+<li><code><a href="#fromString_string">fromString(string)</a></code> - Converts a string to an arbitrary-precision integer.</li>
+<li><code><a href="#toBytes_bool">toBytes(bool)</a></code> - Returns a byte array of this object&#39;s value.</li>
+<li><code><a href="#toRadixString_int">toRadixString(int)</a></code> - Generates a string representing the value of this object, in the given radix.</li>
+<li><code><a href="#valueOf_long">valueOf(long)</a></code> - Converts a 64-bit signed integer to a big integer.</li>
 </ul>
+
+<p><a id="ONE"></a></p>
 
 <h3>ONE</h3>
 
@@ -44,6 +48,8 @@
 </pre>
 
 <p>BigInteger for the number one.</p>
+
+<p><a id="One"></a></p>
 
 <h3>One</h3>
 
@@ -58,6 +64,8 @@
 
 <p>The arbitrary-precision integer for one.</p>
 
+<p><a id="Zero"></a></p>
+
 <h3>Zero</h3>
 
 <pre>public static PeterO.BigInteger Zero { get; }
@@ -71,6 +79,8 @@
 
 <p>The arbitrary-precision integer for zero.</p>
 
+<p><a id="bitLength"></a></p>
+
 <h3>bitLength</h3>
 
 <pre>public int bitLength();
@@ -81,6 +91,8 @@
 <p><b>Return Value:</b></p>
 
 <p>The number of bits in this object&#39;s value. Returns 0 if this object&#39;s value is 0 or negative 1.</p>
+
+<p><a id="CompareTo_PeterO_BigInteger"></a></p>
 
 <h3>CompareTo</h3>
 
@@ -101,6 +113,8 @@ is an arbitrary-precision integer.</li>
 
 <p>Less than 0 if this value is less than, 0 if equal to, or greater than 0 if greater than the other value.</p>
 
+<p><a id="Equals_object"></a></p>
+
 <h3>Equals</h3>
 
 <pre>public override bool Equals(
@@ -119,6 +133,8 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="Equals_PeterO_BigInteger"></a></p>
 
 <h3>Equals</h3>
 
@@ -139,6 +155,8 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this number&#39;s value equals another number&#39;s value; otherwise,  <code>false</code> .</p>
+
+<p><a id="fromBytes_byte_bool"></a></p>
 
 <h3>fromBytes</h3>
 
@@ -167,6 +185,8 @@ is an arbitrary object.</li>
 The parameter <i>bytes</i>
 is null.</li>
 </ul>
+
+<p><a id="fromRadixString_string_int"></a></p>
 
 <h3>fromRadixString</h3>
 
@@ -201,6 +221,8 @@ is less than 2 or greater than 36.</p></li>
 The string is empty or in an invalid format.</p></li>
 </ul>
 
+<p><a id="fromString_string"></a></p>
+
 <h3>fromString</h3>
 
 <pre>public static PeterO.BigInteger fromString(
@@ -230,6 +252,8 @@ The parameter <i>str</i>
 is in an invalid format.</p></li>
 </ul>
 
+<p><a id="GetHashCode"></a></p>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
@@ -240,6 +264,8 @@ is in an invalid format.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="toBytes_bool"></a></p>
 
 <h3>toBytes</h3>
 
@@ -258,6 +284,8 @@ is in an invalid format.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A byte array. If this value is 0, returns a byte array with the single element 0.</p>
+
+<p><a id="toRadixString_int"></a></p>
 
 <h3>toRadixString</h3>
 
@@ -284,6 +312,8 @@ is in an invalid format.</p></li>
 The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less than 0, or either is greater than the string&#39;s length, or &quot;endIndex&quot; is less than &quot;index&quot; ; or radix is less than 2 or greater than 36.</li>
 </ul>
 
+<p><a id="ToString"></a></p>
+
 <h3>ToString</h3>
 
 <pre>public override string ToString();
@@ -294,6 +324,8 @@ The parameter &quot;index&quot; is less than 0, &quot;endIndex&quot; is less tha
 <p><b>Return Value:</b></p>
 
 <p>A string representation of this object. If negative, the string will begin with a minus sign (&quot;-&quot;, U+002D). The string will use the basic digits 0 to 9 (U+0030 to U+0039).</p>
+
+<p><a id="valueOf_long"></a></p>
 
 <h3>valueOf</h3>
 

@@ -29,24 +29,26 @@
 
 <p>In this implementation, the first and second of these are syntactically invalid, so they trigger parse errors, while the third of these is syntactically valid, but the &quot;filename&quot; parameter is treated as &quot;=?UTF-8?Q?test.png?=&quot;, not &quot;test.png&quot; or something else -- RFC 2047 encoded words are not decoded at the moment a content disposition is parsed (using the Parse method).</p>
 
+<h2>Member Summary</h2>
+
 <ul>
 <li><code> public static readonly PeterO.Mail.ContentDisposition Attachment;</code> - The content disposition value &quot;attachment&quot;.</li>
 <li><code> public string DispositionType { get; }</code> - Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
-<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
-<li><code> public int[] GetCreationDate();</code> - Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec.</li>
-<li><code> public string GetFilename();</code> - Gets an adapted version of the &quot;filename&quot; parameter in this content disposition object by using the &quot;MakeFilename&quot; method.</li>
-<li><code> public override int GetHashCode();</code> - Calculates the hash code of this object.</li>
-<li><code> public int[] GetModificationDate();</code> - Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec.</li>
-<li><code> public string GetParameter( string name);</code> - Gets a parameter from this disposition object.</li>
-<li><code> public int[] GetReadDate();</code> - Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot; parameter, which specifies the date at which a file was last read (RFC 2183 sec.</li>
+<li><code>bool Equals(object)</code> - Determines whether this object and another object are equal.</li>
+<li><code>int[] GetCreationDate()</code> - Gets the date and time extracted from this content disposition&#39;s &quot;creation-date&quot; parameter, which specifies the date of creation of a file (RFC 2183 sec.</li>
+<li><code>string GetFilename()</code> - Gets an adapted version of the &quot;filename&quot; parameter in this content disposition object by using the &quot;MakeFilename&quot; method.</li>
+<li><code>int GetHashCode()</code> - Calculates the hash code of this object.</li>
+<li><code>int[] GetModificationDate()</code> - Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec.</li>
+<li><code>string GetParameter(string)</code> - Gets a parameter from this disposition object.</li>
+<li><code>int[] GetReadDate()</code> - Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot; parameter, which specifies the date at which a file was last read (RFC 2183 sec.</li>
 <li><code> public static readonly PeterO.Mail.ContentDisposition Inline;</code> - The content disposition value &quot;inline&quot;.</li>
 <li><code> public bool IsAttachment { get; }</code> - Gets a value indicating whether the disposition type is attachment.</li>
 <li><code> public bool IsInline { get; }</code> - Gets a value indicating whether the disposition type is inline.</li>
-<li><code> public static string MakeFilename( string str);</code> - Converts a file name from the Content-Disposition header to a suitable name for saving data to a file.</li>
+<li><code>string MakeFilename(string)</code> - Converts a file name from the Content-Disposition header to a suitable name for saving data to a file.</li>
 <li><code> public System.Collections.Generic.IDictionary Parameters { get; }</code> - Gets a list of parameter names associated with this object and their values.</li>
-<li><code> public static PeterO.Mail.ContentDisposition Parse( string dispoValue);</code> - Creates a new content disposition object from the value of a Content-Disposition header field.</li>
-<li><code> public string ToSingleLineString();</code> - Converts this content disposition to a text string form suitable for inserting in HTTP headers.</li>
-<li><code> public override string ToString();</code> - Converts this content disposition to a text string form suitable for inserting in email headers.</li>
+<li><code>PeterO.Mail.ContentDisposition Parse(string)</code> - Creates a new content disposition object from the value of a Content-Disposition header field.</li>
+<li><code>string ToSingleLineString()</code> - Converts this content disposition to a text string form suitable for inserting in HTTP headers.</li>
+<li><code>string ToString()</code> - Converts this content disposition to a text string form suitable for inserting in email headers.</li>
 </ul>
 
 <h3>Attachment</h3>

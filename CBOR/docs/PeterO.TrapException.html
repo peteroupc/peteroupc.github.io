@@ -18,11 +18,15 @@
 
 <p>Exception thrown for arithmetic trap errors.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public PeterO.PrecisionContext Context { get; }</code> - Gets the precision context used during the operation that triggered the trap.</li>
-<li><code> public int Error { get; }</code> - Gets the flag that specifies the kind of error (PrecisionContext.</li>
-<li><code> public object Result { get; }</code> - Gets the defined result of the operation that caused the trap.</li>
+<li><code><a href="#Context">Context</a></code> - Gets the precision context used during the operation that triggered the trap.</li>
+<li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the kind of error (PrecisionContext.</li>
+<li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
+
+<p><a id="Void_ctor_Int32_PrecisionContext_Object"></a></p>
 
 <h3>TrapException Constructor</h3>
 
@@ -42,6 +46,8 @@
 <li><p><i>result</i>: The desired result of the operation that caused the trap, such as an <code>ExtendedDecimal</code> or <code>ExtendedFloat</code> .</p></li>
 </ul>
 
+<p><a id="Context"></a></p>
+
 <h3>Context</h3>
 
 <pre>public PeterO.PrecisionContext Context { get; }
@@ -53,6 +59,8 @@
 
 <p>The precision context used during the operation that triggered the trap. May be null.</p>
 
+<p><a id="Error"></a></p>
+
 <h3>Error</h3>
 
 <pre>public int Error { get; }
@@ -63,6 +71,8 @@
 <p><b>Returns:</b></p>
 
 <p>The flag that specifies the kind of error (PrecisionContext.FlagXXX). This will only be one flag, such as FlagInexact or FlagSubnormal.</p>
+
+<p><a id="Result"></a></p>
 
 <h3>Result</h3>
 

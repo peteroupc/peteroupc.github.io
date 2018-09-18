@@ -19,19 +19,23 @@
 
 <p>Specifies the mode to use when &quot;shortening&quot; numbers that otherwise can&#39;t it a given number of digits, so that the shortened number has about the ame value. This &quot;shortening&quot; is known as rounding.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public static PeterO.Rounding Ceiling = 2;</code> - If there is a fractional part, the number is rounded to the highest representable number that&#39;s closest to it.</li>
-<li><code> public static PeterO.Rounding Down = 1;</code> - The fractional part is discarded (the number is truncated).</li>
-<li><code> public static PeterO.Rounding Floor = 3;</code> - If there is a fractional part, the number is rounded to the lowest representable number that&#39;s closest to it.</li>
-<li><code> public static PeterO.Rounding HalfDown = 5;</code> - Rounded to the nearest number; if the fractional part is exactly half, it is discarded.</li>
-<li><code> public static PeterO.Rounding HalfEven = 6;</code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number that is even.</li>
-<li><code> public static PeterO.Rounding HalfUp = 4;</code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number away from zero.</li>
-<li><code> public static PeterO.Rounding Odd = 9;</code> - If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</li>
-<li><code> public static PeterO.Rounding OddOrZeroFiveUp = 10;</code> - For binary floating point numbers, this is the same as Odd.</li>
-<li><code> public static PeterO.Rounding Unnecessary = 7;</code> - Indicates that rounding will not be used.</li>
-<li><code> public static PeterO.Rounding Up = 0;</code> - If there is a fractional part, the number is rounded to the closest representable number away from zero.</li>
-<li><code> public static PeterO.Rounding ZeroFiveUp = 8;</code> - If there is a fractional part and if the last digit before rounding is 0 or half the radix, the number is rounded to the closest representable number away from zero; otherwise the fractional part is discarded.</li>
+<li><code><a href="#Ceiling">public static PeterO.Rounding Ceiling = 2;</a></code> - If there is a fractional part, the number is rounded to the highest representable number that&#39;s closest to it.</li>
+<li><code><a href="#Down">public static PeterO.Rounding Down = 1;</a></code> - The fractional part is discarded (the number is truncated).</li>
+<li><code><a href="#Floor">public static PeterO.Rounding Floor = 3;</a></code> - If there is a fractional part, the number is rounded to the lowest representable number that&#39;s closest to it.</li>
+<li><code><a href="#HalfDown">public static PeterO.Rounding HalfDown = 5;</a></code> - Rounded to the nearest number; if the fractional part is exactly half, it is discarded.</li>
+<li><code><a href="#HalfEven">public static PeterO.Rounding HalfEven = 6;</a></code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number that is even.</li>
+<li><code><a href="#HalfUp">public static PeterO.Rounding HalfUp = 4;</a></code> - Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number away from zero.</li>
+<li><code><a href="#Odd">public static PeterO.Rounding Odd = 9;</a></code> - If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</li>
+<li><code><a href="#OddOrZeroFiveUp">public static PeterO.Rounding OddOrZeroFiveUp = 10;</a></code> - For binary floating point numbers, this is the same as Odd.</li>
+<li><code><a href="#Unnecessary">public static PeterO.Rounding Unnecessary = 7;</a></code> - Indicates that rounding will not be used.</li>
+<li><code><a href="#Up">public static PeterO.Rounding Up = 0;</a></code> - If there is a fractional part, the number is rounded to the closest representable number away from zero.</li>
+<li><code><a href="#ZeroFiveUp">public static PeterO.Rounding ZeroFiveUp = 8;</a></code> - If there is a fractional part and if the last digit before rounding is 0 or half the radix, the number is rounded to the closest representable number away from zero; otherwise the fractional part is discarded.</li>
 </ul>
+
+<p><a id="Ceiling"></a></p>
 
 <h3>Ceiling</h3>
 
@@ -40,12 +44,16 @@
 
 <p>If there is a fractional part, the number is rounded to the highest representable number that&#39;s closest to it.</p>
 
+<p><a id="Down"></a></p>
+
 <h3>Down</h3>
 
 <pre>public static PeterO.Rounding Down = 1;
 </pre>
 
 <p>The fractional part is discarded (the number is truncated).</p>
+
+<p><a id="Floor"></a></p>
 
 <h3>Floor</h3>
 
@@ -54,12 +62,16 @@
 
 <p>If there is a fractional part, the number is rounded to the lowest representable number that&#39;s closest to it.</p>
 
+<p><a id="HalfDown"></a></p>
+
 <h3>HalfDown</h3>
 
 <pre>public static PeterO.Rounding HalfDown = 5;
 </pre>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, it is discarded.</p>
+
+<p><a id="HalfEven"></a></p>
 
 <h3>HalfEven</h3>
 
@@ -68,12 +80,16 @@
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number that is even. This is sometimes also known as &quot;banker&#39;s rounding&quot;.</p>
 
+<p><a id="HalfUp"></a></p>
+
 <h3>HalfUp</h3>
 
 <pre>public static PeterO.Rounding HalfUp = 4;
 </pre>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the number is rounded to the closest representable number away from zero. This is the most familiar rounding mode for many people.</p>
+
+<p><a id="Odd"></a></p>
 
 <h3>Odd</h3>
 
@@ -82,12 +98,16 @@
 
 <p>If there is a fractional part and the whole number part is even, the number is rounded to the closest representable odd number away from zero.</p>
 
+<p><a id="OddOrZeroFiveUp"></a></p>
+
 <h3>OddOrZeroFiveUp</h3>
 
 <pre>public static PeterO.Rounding OddOrZeroFiveUp = 10;
 </pre>
 
 <p>For binary floating point numbers, this is the same as Odd. For other bases (including decimal numbers), this is the same as ZeroFiveUp. This rounding mode is useful for rounding intermediate results at a slightly higher precision (at least 2 bits more for binary) than the final precision.</p>
+
+<p><a id="Unnecessary"></a></p>
 
 <h3>Unnecessary</h3>
 
@@ -96,12 +116,16 @@
 
 <p>Indicates that rounding will not be used. If rounding is required, the rounding operation will report an error.</p>
 
+<p><a id="Up"></a></p>
+
 <h3>Up</h3>
 
 <pre>public static PeterO.Rounding Up = 0;
 </pre>
 
 <p>If there is a fractional part, the number is rounded to the closest representable number away from zero.</p>
+
+<p><a id="ZeroFiveUp"></a></p>
 
 <h3>ZeroFiveUp</h3>
 

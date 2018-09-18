@@ -11,40 +11,42 @@
 
 <p>Reads and writes data types in little endian or big endian.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
 <li><code> public bool CanRead { get; }</code> - Gets a value indicating whether the underlying stream can be read.</li>
 <li><code> public bool CanSeek { get; }</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
 <li><code> public bool CanWrite { get; }</code> - Gets a value indicating whether the underlying stream supports writing.</li>
 <li><code> public long Length { get; }</code> - Gets the length of the underlying stream.</li>
 <li><code> public long Position { get; set;}</code> - Gets or sets the position of the underlying stream.</li>
-<li><code> public int Read( byte[] data, int offset, int length);</code> - Not documented yet.</li>
-<li><code> public int Read7BitEncodedInt32BE();</code> - Not documented yet.</li>
-<li><code> public int Read7BitEncodedInt32LE();</code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code> public long Read7BitEncodedInt64BE();</code> - Not documented yet.</li>
-<li><code> public long Read7BitEncodedInt64LE();</code> - Not documented yet.</li>
-<li><code> public int Read7BitEncodedUInt32BE();</code> - Not documented yet.</li>
-<li><code> public int Read7BitEncodedUInt32LE();</code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code> public byte ReadByte();</code> - Not documented yet.</li>
-<li><code> public byte[] ReadBytes( int size);</code> - Reads data from a stream into a byte array.</li>
-<li><code> public double ReadDoubleBE();</code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
-<li><code> public double ReadDoubleLE();</code> - Not documented yet.</li>
-<li><code> public short ReadInt16BE();</code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
-<li><code> public short ReadInt16LE();</code> - Not documented yet.</li>
-<li><code> public int ReadInt32BE();</code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
-<li><code> public int ReadInt32LE();</code> - Not documented yet.</li>
-<li><code> public long ReadInt64BE();</code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
-<li><code> public long ReadInt64LE();</code> - Not documented yet.</li>
-<li><code> public float ReadSingleBE();</code> - Not documented yet.</li>
-<li><code> public float ReadSingleLE();</code> - Not documented yet.</li>
-<li><code> public void Write( byte value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedInt32BE( int value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedInt32LE( int value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedInt64BE( long value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedInt64LE( long value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedUInt32BE( int value);</code> - Not documented yet.</li>
-<li><code> public int Write7BitEncodedUInt32LE( int value);</code> - Not documented yet.</li>
-<li><code> public void WriteBE( int value);</code> - Not documented yet.</li>
-<li><code> public void WriteLE( int value);</code> - Not documented yet.</li>
+<li><code>int Read(byte[], int, int)</code> - Not documented yet.</li>
+<li><code>int Read7BitEncodedInt32BE()</code> - Not documented yet.</li>
+<li><code>int Read7BitEncodedInt32LE()</code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
+<li><code>long Read7BitEncodedInt64BE()</code> - Not documented yet.</li>
+<li><code>long Read7BitEncodedInt64LE()</code> - Not documented yet.</li>
+<li><code>int Read7BitEncodedUInt32BE()</code> - Not documented yet.</li>
+<li><code>int Read7BitEncodedUInt32LE()</code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
+<li><code>byte ReadByte()</code> - Not documented yet.</li>
+<li><code>byte[] ReadBytes(int)</code> - Reads data from a stream into a byte array.</li>
+<li><code>double ReadDoubleBE()</code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
+<li><code>double ReadDoubleLE()</code> - Not documented yet.</li>
+<li><code>short ReadInt16BE()</code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
+<li><code>short ReadInt16LE()</code> - Not documented yet.</li>
+<li><code>int ReadInt32BE()</code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
+<li><code>int ReadInt32LE()</code> - Not documented yet.</li>
+<li><code>long ReadInt64BE()</code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
+<li><code>long ReadInt64LE()</code> - Not documented yet.</li>
+<li><code>float ReadSingleBE()</code> - Not documented yet.</li>
+<li><code>float ReadSingleLE()</code> - Not documented yet.</li>
+<li><code>void Write(byte)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedInt32BE(int)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedInt32LE(int)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedInt64BE(long)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedInt64LE(long)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedUInt32BE(int)</code> - Not documented yet.</li>
+<li><code>int Write7BitEncodedUInt32LE(int)</code> - Not documented yet.</li>
+<li><code>void WriteBE(int)</code> - Not documented yet.</li>
+<li><code>void WriteLE(int)</code> - Not documented yet.</li>
 </ul>
 
 <h3>BinaryIO Constructor</h3>

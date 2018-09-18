@@ -11,6 +11,8 @@
 
 <p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).<b>Thread safety:</b>With one exception, instances of this class are immutable and are safe o use among multiple threads. The one exception involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code> property (a read-only property) is <code>true</code> , the <code>Flags</code> property is mutable, thus making the context mutable. This class oesn&#39;t synchronize access to such mutable contexts, so applications hould provide their own synchronization if a context with the <code>HasFlags</code> property set to <code>true</code> will be shared among multiple threads and at least one of those threads eeds to write the <code>Flags</code> property (which can happen, for example, by passing the context to most ethods of <code>EDecimal</code> such as <code>Add</code> ).</p>
 
+<h2>Member Summary</h2>
+
 <ul>
 <li><code> public bool AdjustExponent { get; }</code> - Gets a value indicating whether the EMax and EMin properties refer to the number&#39;s Exponent property adjusted to the number&#39;s precision, or just the number&#39;s Exponent property.</li>
 <li><code> public static readonly PeterO.Numbers.EContext Basic;</code> - A basic arithmetic context, 9 digits precision, rounding mode half-up, unlimited exponent range.</li>
@@ -21,13 +23,13 @@
 <li><code> public static readonly PeterO.Numbers.EContext Binary64;</code> - An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits precision.</li>
 <li><code> public bool ClampNormalExponents { get; }</code> - Gets a value indicating whether a converted number&#39;s Exponent property will not be higher than EMax + 1 - Precision.</li>
 <li><code> public static readonly PeterO.Numbers.EContext CliDecimal;</code> - An arithmetic context for the .</li>
-<li><code> public PeterO.Numbers.EContext Copy();</code> - Initializes a new EContext that is a copy of another EContext.</li>
+<li><code>PeterO.Numbers.EContext Copy()</code> - Initializes a new EContext that is a copy of another EContext.</li>
 <li><code> public static readonly PeterO.Numbers.EContext Decimal128;</code> - An arithmetic context for the IEEE-754-2008 decimal128 format.</li>
 <li><code> public static readonly PeterO.Numbers.EContext Decimal32;</code> - An arithmetic context for the IEEE-754-2008 decimal32 format.</li>
 <li><code> public static readonly PeterO.Numbers.EContext Decimal64;</code> - An arithmetic context for the IEEE-754-2008 decimal64 format.</li>
 <li><code> public PeterO.Numbers.EInteger EMax { get; }</code> - Gets the highest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point.</li>
 <li><code> public PeterO.Numbers.EInteger EMin { get; }</code> - Gets the lowest exponent possible when a converted number is expressed in scientific notation with one digit before the radix point.</li>
-<li><code> public bool ExponentWithinRange( PeterO.Numbers.EInteger exponent);</code> - Determines whether a number can have the given Exponent property under this arithmetic context.</li>
+<li><code>bool ExponentWithinRange(PeterO.Numbers.EInteger)</code> - Determines whether a number can have the given Exponent property under this arithmetic context.</li>
 <li><code> public static int FlagClamped = 32;</code> - Signals that the exponent was adjusted to fit the exponent range.</li>
 <li><code> public static int FlagDivideByZero = 128;</code> - Signals a division of a nonzero number by zero.</li>
 <li><code> public static int FlagInexact = 1;</code> - Signals that the result was rounded to a different mathematical value, but as close as possible to the original.</li>
@@ -38,9 +40,9 @@
 <li><code> public static int FlagSubnormal = 4;</code> - Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed.</li>
 <li><code> public static int FlagUnderflow = 8;</code> - Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed, and the result was rounded to a different mathematical value, but as close as possible to the original.</li>
 <li><code> public int Flags { get; set;}</code> - Gets or sets the flags that are set from converting numbers according to this arithmetic context.</li>
-<li><code> public static PeterO.Numbers.EContext ForPrecision( int precision);</code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
-<li><code> public static PeterO.Numbers.EContext ForPrecisionAndRounding( int precision, PeterO.Numbers.ERounding rounding);</code> - Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</li>
-<li><code> public static PeterO.Numbers.EContext ForRounding( PeterO.Numbers.ERounding rounding);</code> - Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</li>
+<li><code>PeterO.Numbers.EContext ForPrecision(int)</code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
+<li><code>PeterO.Numbers.EContext ForPrecisionAndRounding(int, PeterO.Numbers.ERounding)</code> - Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</li>
+<li><code>PeterO.Numbers.EContext ForRounding(PeterO.Numbers.ERounding)</code> - Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</li>
 <li><code> public bool HasExponentRange { get; }</code> - Gets a value indicating whether this context defines a minimum and maximum exponent.</li>
 <li><code> public bool HasFlags { get; }</code> - Gets a value indicating whether this context has a mutable Flags field.</li>
 <li><code> public bool HasMaxPrecision { get; }</code> - Gets a value indicating whether this context defines a maximum precision.</li>
@@ -48,23 +50,23 @@
 <li><code> public bool IsSimplified { get; }</code> - Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 <li><code> public PeterO.Numbers.EInteger Precision { get; }</code> - Gets the maximum length of a converted number in digits, ignoring the radix point and exponent.</li>
 <li><code> public PeterO.Numbers.ERounding Rounding { get; }</code> - Gets the desired rounding mode when converting numbers that can&#39;t be represented in the given precision and exponent range.</li>
-<li><code> public override string ToString();</code> - Gets a string representation of this object.</li>
+<li><code>string ToString()</code> - Gets a string representation of this object.</li>
 <li><code> public int Traps { get; }</code> - Gets the traps that are set for each flag in the context.</li>
 <li><code> public static readonly PeterO.Numbers.EContext Unlimited;</code> - No specific (theoretical) limit on precision.</li>
 <li><code> public static readonly PeterO.Numbers.EContext UnlimitedHalfEven;</code> - No specific (theoretical) limit on precision.</li>
-<li><code> public PeterO.Numbers.EContext WithAdjustExponent( bool adjustExponent);</code> - Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</li>
-<li><code> public PeterO.Numbers.EContext WithBigExponentRange( PeterO.Numbers.EInteger exponentMin, PeterO.Numbers.EInteger exponentMax);</code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
-<li><code> public PeterO.Numbers.EContext WithBigPrecision( PeterO.Numbers.EInteger bigintPrecision);</code> - Copies this EContext and gives it a particular precision value.</li>
-<li><code> public PeterO.Numbers.EContext WithBlankFlags();</code> - Copies this EContext with HasFlags set to true and a Flags value of 0.</li>
-<li><code> public PeterO.Numbers.EContext WithExponentClamp( bool clamp);</code> - Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</li>
-<li><code> public PeterO.Numbers.EContext WithExponentRange( int exponentMinSmall, int exponentMaxSmall);</code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
-<li><code> public PeterO.Numbers.EContext WithNoFlags();</code> - Copies this EContext with HasFlags set to false and a Flags value of 0.</li>
-<li><code> public PeterO.Numbers.EContext WithPrecision( int precision);</code> - Copies this EContext and gives it a particular precision value.</li>
-<li><code> public PeterO.Numbers.EContext WithPrecisionInBits( bool isPrecisionBits);</code> - Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</li>
-<li><code> public PeterO.Numbers.EContext WithRounding( PeterO.Numbers.ERounding rounding);</code> - Copies this EContext with the specified rounding mode.</li>
-<li><code> public PeterO.Numbers.EContext WithSimplified( bool simplified);</code> - Copies this EContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</li>
-<li><code> public PeterO.Numbers.EContext WithTraps( int traps);</code> - Copies this EContext with Traps set to the given value.</li>
-<li><code> public PeterO.Numbers.EContext WithUnlimitedExponents();</code> - Copies this EContext with an unlimited exponent range.</li>
+<li><code>PeterO.Numbers.EContext WithAdjustExponent(bool)</code> - Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the given value.</li>
+<li><code>PeterO.Numbers.EContext WithBigExponentRange(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
+<li><code>PeterO.Numbers.EContext WithBigPrecision(PeterO.Numbers.EInteger)</code> - Copies this EContext and gives it a particular precision value.</li>
+<li><code>PeterO.Numbers.EContext WithBlankFlags()</code> - Copies this EContext with HasFlags set to true and a Flags value of 0.</li>
+<li><code>PeterO.Numbers.EContext WithExponentClamp(bool)</code> - Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</li>
+<li><code>PeterO.Numbers.EContext WithExponentRange(int, int)</code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
+<li><code>PeterO.Numbers.EContext WithNoFlags()</code> - Copies this EContext with HasFlags set to false and a Flags value of 0.</li>
+<li><code>PeterO.Numbers.EContext WithPrecision(int)</code> - Copies this EContext and gives it a particular precision value.</li>
+<li><code>PeterO.Numbers.EContext WithPrecisionInBits(bool)</code> - Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</li>
+<li><code>PeterO.Numbers.EContext WithRounding(PeterO.Numbers.ERounding)</code> - Copies this EContext with the specified rounding mode.</li>
+<li><code>PeterO.Numbers.EContext WithSimplified(bool)</code> - Copies this EContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</li>
+<li><code>PeterO.Numbers.EContext WithTraps(int)</code> - Copies this EContext with Traps set to the given value.</li>
+<li><code>PeterO.Numbers.EContext WithUnlimitedExponents()</code> - Copies this EContext with an unlimited exponent range.</li>
 </ul>
 
 <h3>EContext Constructor</h3>

@@ -60,32 +60,36 @@
 
 <p>This class&#39;s natural ordering (under the CompareTo method) is not consistent with the Equals method. This means that two values that compare as equal under the CompareTo method might not be equal under the Equals method. The CompareTo method compares the mathematical values of the two instances passed to it (and considers two different NaN values as equal), while two instances with the same mathematical value, but different exponents, will be considered unequal under the Equals method.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public sealed int CompareTo( PeterO.ExtendedDecimal other);</code> - Compares this extended decimal to another.</li>
-<li><code> public static PeterO.ExtendedDecimal Create( PeterO.BigInteger mantissa, PeterO.BigInteger exponent);</code> - Creates a number with the value exponent*10^mantissa.</li>
-<li><code> public sealed bool Equals( PeterO.ExtendedDecimal other);</code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
-<li><code> public PeterO.BigInteger Exponent { get; }</code> - Gets this object&#39;s exponent.</li>
-<li><code> public static PeterO.ExtendedDecimal FromString( string str);</code> - Creates a decimal number from a text string that represents a number.</li>
-<li><code> public override int GetHashCode();</code> - Calculates this object&#39;s hash code.</li>
-<li><code> public bool IsInfinity();</code> - Gets a value indicating whether this object is positive or negative infinity.</li>
-<li><code> public bool IsNaN();</code> - Gets a value indicating whether this object is not a number (NaN).</li>
-<li><code> public bool IsNegative { get; }</code> - Gets a value indicating whether this object is negative, including negative zero.</li>
-<li><code> public bool IsQuietNaN();</code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
-<li><code> public PeterO.BigInteger Mantissa { get; }</code> - Gets this object&#39;s un-scaled value.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal NaN;</code> - A not-a-number value.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal NegativeInfinity;</code> - Negative infinity, less than any other number.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal NegativeZero;</code> - Represents the number negative zero.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal One;</code> - Represents the number 1.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal PositiveInfinity;</code> - Positive infinity, greater than any other number.</li>
-<li><code> public int Sign { get; }</code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal SignalingNaN;</code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision decimal.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal Ten;</code> - Represents the number 10.</li>
-<li><code> public double ToDouble();</code> - Converts this value to a 64-bit floating-point number.</li>
-<li><code> public float ToSingle();</code> - Converts this value to a 32-bit floating-point number.</li>
-<li><code> public override string ToString();</code> - Converts this value to a string.</li>
-<li><code> public PeterO.BigInteger UnsignedMantissa { get; }</code> - Gets the absolute value of this object&#39;s un-scaled value.</li>
-<li><code> public static readonly PeterO.ExtendedDecimal Zero;</code> - Represents the number 0.</li>
+<li><code><a href="#CompareTo_PeterO_ExtendedDecimal">CompareTo(PeterO.ExtendedDecimal)</a></code> - Compares this extended decimal to another.</li>
+<li><code><a href="#Create_PeterO_BigInteger_PeterO_BigInteger">Create(PeterO.BigInteger, PeterO.BigInteger)</a></code> - Creates a number with the value exponent*10^mantissa.</li>
+<li><code><a href="#Equals_PeterO_ExtendedDecimal">Equals(PeterO.ExtendedDecimal)</a></code> - Determines whether this object&#39;s mantissa and exponent are equal to those of another object.</li>
+<li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
+<li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a decimal number from a text string that represents a number.</li>
+<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates this object&#39;s hash code.</li>
+<li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object is positive or negative infinity.</li>
+<li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object is not a number (NaN).</li>
+<li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object is negative, including negative zero.</li>
+<li><code><a href="#IsQuietNaN">IsQuietNaN()</a></code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
+<li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s un-scaled value.</li>
+<li><code><a href="#NaN">public static readonly PeterO.ExtendedDecimal NaN;</a></code> - A not-a-number value.</li>
+<li><code><a href="#NegativeInfinity">public static readonly PeterO.ExtendedDecimal NegativeInfinity;</a></code> - Negative infinity, less than any other number.</li>
+<li><code><a href="#NegativeZero">public static readonly PeterO.ExtendedDecimal NegativeZero;</a></code> - Represents the number negative zero.</li>
+<li><code><a href="#One">public static readonly PeterO.ExtendedDecimal One;</a></code> - Represents the number 1.</li>
+<li><code><a href="#PositiveInfinity">public static readonly PeterO.ExtendedDecimal PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
+<li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+<li><code><a href="#SignalingNaN">public static readonly PeterO.ExtendedDecimal SignalingNaN;</a></code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision decimal.</li>
+<li><code><a href="#Ten">public static readonly PeterO.ExtendedDecimal Ten;</a></code> - Represents the number 10.</li>
+<li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
+<li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to a 32-bit floating-point number.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this value to a string.</li>
+<li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s un-scaled value.</li>
+<li><code><a href="#Zero">public static readonly PeterO.ExtendedDecimal Zero;</a></code> - Represents the number 0.</li>
 </ul>
+
+<p><a id="NaN"></a></p>
 
 <h3>NaN</h3>
 
@@ -94,12 +98,16 @@
 
 <p>A not-a-number value.</p>
 
+<p><a id="NegativeInfinity"></a></p>
+
 <h3>NegativeInfinity</h3>
 
 <pre>public static readonly PeterO.ExtendedDecimal NegativeInfinity;
 </pre>
 
 <p>Negative infinity, less than any other number.</p>
+
+<p><a id="NegativeZero"></a></p>
 
 <h3>NegativeZero</h3>
 
@@ -108,12 +116,16 @@
 
 <p>Represents the number negative zero.</p>
 
+<p><a id="One"></a></p>
+
 <h3>One</h3>
 
 <pre>public static readonly PeterO.ExtendedDecimal One;
 </pre>
 
 <p>Represents the number 1.</p>
+
+<p><a id="PositiveInfinity"></a></p>
 
 <h3>PositiveInfinity</h3>
 
@@ -122,12 +134,16 @@
 
 <p>Positive infinity, greater than any other number.</p>
 
+<p><a id="SignalingNaN"></a></p>
+
 <h3>SignalingNaN</h3>
 
 <pre>public static readonly PeterO.ExtendedDecimal SignalingNaN;
 </pre>
 
 <p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision decimal.</p>
+
+<p><a id="Ten"></a></p>
 
 <h3>Ten</h3>
 
@@ -136,12 +152,16 @@
 
 <p>Represents the number 10.</p>
 
+<p><a id="Zero"></a></p>
+
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.ExtendedDecimal Zero;
 </pre>
 
 <p>Represents the number 0.</p>
+
+<p><a id="Exponent"></a></p>
 
 <h3>Exponent</h3>
 
@@ -153,6 +173,8 @@
 <p><b>Returns:</b></p>
 
 <p>This object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
+
+<p><a id="IsNegative"></a></p>
 
 <h3>IsNegative</h3>
 
@@ -167,6 +189,8 @@
 
 <p><code>true</code>  If this object is negative, including negative zero; otherwise, .  <code>false</code> .</p>
 
+<p><a id="Mantissa"></a></p>
+
 <h3>Mantissa</h3>
 
 <pre>public PeterO.BigInteger Mantissa { get; }
@@ -177,6 +201,8 @@
 <p><b>Returns:</b></p>
 
 <p>This object&#39;s un-scaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
+
+<p><a id="Sign"></a></p>
 
 <h3>Sign</h3>
 
@@ -191,6 +217,8 @@
 
 <p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
+<p><a id="UnsignedMantissa"></a></p>
+
 <h3>UnsignedMantissa</h3>
 
 <pre>public PeterO.BigInteger UnsignedMantissa { get; }
@@ -201,6 +229,8 @@
 <p><b>Returns:</b></p>
 
 <p>The absolute value of this object&#39;s un-scaled value.</p>
+
+<p><a id="CompareTo_PeterO_ExtendedDecimal"></a></p>
 
 <h3>CompareTo</h3>
 
@@ -220,6 +250,8 @@ is an ExtendedDecimal object.</li>
 <p><b>Return Value:</b></p>
 
 <p>Less than 0 if this value is less than, 0 if equal to, or greater than 0 if greater than the other extended decimal.</p>
+
+<p><a id="Create_PeterO_BigInteger_PeterO_BigInteger"></a></p>
 
 <h3>Create</h3>
 
@@ -250,6 +282,8 @@ or  <i>exponent</i>
 is null.</li>
 </ul>
 
+<p><a id="Equals_object"></a></p>
+
 <h3>Equals</h3>
 
 <pre>public override bool Equals(
@@ -268,6 +302,8 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="Equals_PeterO_ExtendedDecimal"></a></p>
 
 <h3>Equals</h3>
 
@@ -288,6 +324,8 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this object&#39;s mantissa and exponent are equal to those of another bject; otherwise,  <code>false</code> .</p>
+
+<p><a id="FromString_string"></a></p>
 
 <h3>FromString</h3>
 
@@ -319,6 +357,8 @@ The parameter  <i>str</i>
 is not a correctly formatted number string.</p></li>
 </ul>
 
+<p><a id="GetHashCode"></a></p>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
@@ -329,6 +369,8 @@ is not a correctly formatted number string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This object&#39;s hash code.</p>
+
+<p><a id="IsInfinity"></a></p>
 
 <h3>IsInfinity</h3>
 
@@ -341,6 +383,8 @@ is not a correctly formatted number string.</p></li>
 
 <p><code>true</code> if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsNaN"></a></p>
+
 <h3>IsNaN</h3>
 
 <pre>public bool IsNaN();
@@ -351,6 +395,8 @@ is not a correctly formatted number string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this object is not a number (NaN); otherwise,  <code>false</code> .</p>
+
+<p><a id="IsQuietNaN"></a></p>
 
 <h3>IsQuietNaN</h3>
 
@@ -365,6 +411,8 @@ is not a correctly formatted number string.</p></li>
 
 <p><code>true</code> if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
 
+<p><a id="ToDouble"></a></p>
+
 <h3>ToDouble</h3>
 
 <pre>public double ToDouble();
@@ -376,6 +424,8 @@ is not a correctly formatted number string.</p></li>
 
 <p>The closest 64-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 64-bit floating point number.</p>
 
+<p><a id="ToSingle"></a></p>
+
 <h3>ToSingle</h3>
 
 <pre>public float ToSingle();
@@ -386,6 +436,8 @@ is not a correctly formatted number string.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The closest 32-bit floating-point number to this value. The return value can be positive infinity or negative infinity if this value exceeds the range of a 32-bit floating point number.</p>
+
+<p><a id="ToString"></a></p>
 
 <h3>ToString</h3>
 

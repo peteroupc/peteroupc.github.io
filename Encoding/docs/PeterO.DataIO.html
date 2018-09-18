@@ -11,10 +11,12 @@
 
 <p>Convenience class that contains static methods for wrapping byte arrays and streams into byte readers and byte writers.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
-<li><code> public static PeterO.IByteReader ToByteReader( this byte[] bytes, int offset, int length);</code> - Wraps a portion of a byte array into a byte reader.</li>
-<li><code> public static PeterO.IReader ToReader( this byte[] bytes);</code> - Wraps a byte array into a byte reader.</li>
-<li><code> public static PeterO.IWriter ToWriter( this System.IO.Stream output);</code> - Wraps an output stream into a writer object.</li>
+<li><code>PeterO.IByteReader ToByteReader(this byte[], int, int)</code> - Wraps a portion of a byte array into a byte reader.</li>
+<li><code>PeterO.IReader ToReader(this byte[])</code> - Wraps a byte array into a byte reader.</li>
+<li><code>PeterO.IWriter ToWriter(this System.IO.Stream)</code> - Wraps an output stream into a writer object.</li>
 </ul>
 
 <h3>ToByteReader</h3>

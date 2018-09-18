@@ -19,23 +19,25 @@
 
 <p><b>Note:</b>According to RFC 2049, unrecognized subtypes of the top-level type <code>multipart</code> must be treated as <code>multipart/mixed</code> and unrecognized media types as the media type <code>application/octet-stream</code> .</p>
 
+<h2>Member Summary</h2>
+
 <ul>
 <li><code> public static readonly PeterO.Mail.MediaType ApplicationOctetStream;</code> - Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.</li>
-<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
-<li><code> public string GetCharset();</code> - Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
-<li><code> public override int GetHashCode();</code> - Calculates the hash code of this object.</li>
-<li><code> public string GetParameter( string name);</code> - Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</li>
+<li><code>bool Equals(object)</code> - Determines whether this object and another object are equal.</li>
+<li><code>string GetCharset()</code> - Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</li>
+<li><code>int GetHashCode()</code> - Calculates the hash code of this object.</li>
+<li><code>string GetParameter(string)</code> - Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</li>
 <li><code> public bool IsMultipart { get; }</code> - Gets a value indicating whether this is a multipart media type.</li>
 <li><code> public bool IsText { get; }</code> - Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</li>
 <li><code> public static readonly PeterO.Mail.MediaType MessageRfc822;</code> - Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</li>
 <li><code> public System.Collections.Generic.IDictionary Parameters { get; }</code> - Gets a list of the parameters contained in this media type object.</li>
-<li><code> public static PeterO.Mail.MediaType Parse( string mediaTypeValue);</code> - Parses a media type string and returns a media type object.</li>
+<li><code>PeterO.Mail.MediaType Parse(string)</code> - Parses a media type string and returns a media type object.</li>
 <li><code> public string SubType { get; }</code> - Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;).</li>
 <li><code> public static readonly PeterO.Mail.MediaType TextPlainAscii;</code> - Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data.</li>
 <li><code> public static readonly PeterO.Mail.MediaType TextPlainUtf8;</code> - Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U+0000 to U+007F).</li>
-<li><code> public string ToSingleLineString();</code> - Converts this media type to a text string form suitable for inserting in HTTP headers.</li>
-<li><code> public override string ToString();</code> - Converts this media type to a text string form suitable for inserting in email headers.</li>
-<li><code> public string ToUriSafeString();</code> - Converts this media type to a text string form suitable for data URIs.</li>
+<li><code>string ToSingleLineString()</code> - Converts this media type to a text string form suitable for inserting in HTTP headers.</li>
+<li><code>string ToString()</code> - Converts this media type to a text string form suitable for inserting in email headers.</li>
+<li><code>string ToUriSafeString()</code> - Converts this media type to a text string form suitable for data URIs.</li>
 <li><code> public string TopLevelType { get; }</code> - Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;).</li>
 <li><code> public string TypeAndSubType { get; }</code> - Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</li>
 </ul>

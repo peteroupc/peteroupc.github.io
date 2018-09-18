@@ -11,15 +11,17 @@
 
 <p>Contains methods for parsing and matching language tags.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
-<li><code> public static System.Collections.Generic.IList GetLanguageList( string str);</code> - Parses a language list from a Content-Language header field.</li>
-<li><code> public static System.Collections.Generic.IList GetRangeListWithQuality( string str);</code> - Parses a language range list from an Accept-Language header field.</li>
-<li><code> public static bool IsLanguageRange( string str);</code> - Returns whether the given string is a basic language range under RFC 4647.</li>
-<li><code> public static bool IsPotentiallyValidLanguageTag( string str);</code> - Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.</li>
-<li><code> public static string LanguageTagCase( string str);</code> - Sets the given language tag to the case combination recommended by RFC 5646.</li>
-<li><code> public static System.Collections.Generic.IList LanguageTagFilter( System.Collections.Generic.IList ranges, System.Collections.Generic.IList languages, bool extended, bool matchStarAtEnd);</code> - Finds the language tags that match a priority list of language ranges.</li>
-<li><code> public static string LanguageTagLookup( string range, System.Collections.Generic.IList languages, string defaultValue);</code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
-<li><code> public static bool MatchesLanguageTag( string range, string tag);</code> - Determines whether the given language tag matches the given language range.</li>
+<li><code>System.Collections.Generic.IList GetLanguageList(string)</code> - Parses a language list from a Content-Language header field.</li>
+<li><code>System.Collections.Generic.IList GetRangeListWithQuality(string)</code> - Parses a language range list from an Accept-Language header field.</li>
+<li><code>bool IsLanguageRange(string)</code> - Returns whether the given string is a basic language range under RFC 4647.</li>
+<li><code>bool IsPotentiallyValidLanguageTag(string)</code> - Returns true if (1) the given string is a well-formed language tag under RFC 5646 (that is, the string follows the syntax given in section 2.</li>
+<li><code>string LanguageTagCase(string)</code> - Sets the given language tag to the case combination recommended by RFC 5646.</li>
+<li><code>System.Collections.Generic.IList LanguageTagFilter(System.Collections.Generic.IList, System.Collections.Generic.IList, bool, bool)</code> - Finds the language tags that match a priority list of language ranges.</li>
+<li><code>string LanguageTagLookup(string, System.Collections.Generic.IList, string)</code> - Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code>bool MatchesLanguageTag(string, string)</code> - Determines whether the given language tag matches the given language range.</li>
 </ul>
 
 <h3>GetLanguageList</h3>

@@ -11,30 +11,34 @@
 
 <p>Specifies what kinds of CBOR objects a tag can be. This class is used when a CBOR object is being read from a data stream. This class can&#39;t be inherited; this is a change in version 2.0 from previous versions, where the class was inadvertently left inheritable.</p>
 
+<h3>Member Summary</h3>
+
 <ul>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter Any;</code> - A filter that allows any CBOR object.</li>
-<li><code> public bool ArrayIndexAllowed( int index);</code> - Determines whether this type filter allows CBOR arrays and the given array index is allowed under this type filter.</li>
-<li><code> public bool ArrayLengthMatches( int length);</code> - Returns whether an array&#39;s length is allowed under this filter.</li>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter ByteString;</code> - A filter that allows byte strings.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter GetSubFilter( int index);</code> - Gets the type filter for this array filter by its index.</li>
-<li><code> public bool MajorTypeMatches( int type);</code> - Returns whether the given CBOR major type matches a major type allowed by this filter.</li>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter NegativeInteger;</code> - A filter that allows negative integers.</li>
-<li><code> public bool NonFPSimpleValueAllowed();</code> - Returns whether this filter allows simple values that are not floating-point numbers.</li>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter None;</code> - A filter that allows no CBOR types.</li>
-<li><code> public bool TagAllowed( int tag);</code> - Gets a value indicating whether CBOR objects can have the given tag number.</li>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter TextString;</code> - A filter that allows text strings.</li>
-<li><code> public static readonly PeterO.Cbor.CBORTypeFilter UnsignedInteger;</code> - A filter that allows unsigned integers.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithArrayAnyLength();</code> - Copies this filter and includes arrays of any length in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithArrayExactLength( int arrayLength, params PeterO.Cbor.CBORTypeFilter[] elements);</code> - Copies this filter and includes CBOR arrays with an exact length to the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithArrayMinLength( int arrayLength, params PeterO.Cbor.CBORTypeFilter[] elements);</code> - Copies this filter and includes CBOR arrays with at least a given length to the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithByteString();</code> - Copies this filter and includes byte strings in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithFloatingPoint();</code> - Copies this filter and includes floating-point numbers in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithMap();</code> - Copies this filter and includes maps in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithNegativeInteger();</code> - Copies this filter and includes negative integers in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithTags( params int[] tags);</code> - Copies this filter and includes a set of valid CBOR tags in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithTextString();</code> - Copies this filter and includes text strings in the new filter.</li>
-<li><code> public PeterO.Cbor.CBORTypeFilter WithUnsignedInteger();</code> - Copies this filter and includes unsigned integers in the new filter.</li>
+<li><code><a href="#Any">public static readonly PeterO.Cbor.CBORTypeFilter Any;</a></code> - A filter that allows any CBOR object.</li>
+<li><code><a href="#ArrayIndexAllowed_int">ArrayIndexAllowed(int)</a></code> - Determines whether this type filter allows CBOR arrays and the given array index is allowed under this type filter.</li>
+<li><code><a href="#ArrayLengthMatches_int">ArrayLengthMatches(int)</a></code> - Returns whether an array&#39;s length is allowed under this filter.</li>
+<li><code><a href="#ByteString">public static readonly PeterO.Cbor.CBORTypeFilter ByteString;</a></code> - A filter that allows byte strings.</li>
+<li><code><a href="#GetSubFilter_int">GetSubFilter(int)</a></code> - Gets the type filter for this array filter by its index.</li>
+<li><code><a href="#MajorTypeMatches_int">MajorTypeMatches(int)</a></code> - Returns whether the given CBOR major type matches a major type allowed by this filter.</li>
+<li><code><a href="#NegativeInteger">public static readonly PeterO.Cbor.CBORTypeFilter NegativeInteger;</a></code> - A filter that allows negative integers.</li>
+<li><code><a href="#NonFPSimpleValueAllowed">NonFPSimpleValueAllowed()</a></code> - Returns whether this filter allows simple values that are not floating-point numbers.</li>
+<li><code><a href="#None">public static readonly PeterO.Cbor.CBORTypeFilter None;</a></code> - A filter that allows no CBOR types.</li>
+<li><code><a href="#TagAllowed_int">TagAllowed(int)</a></code> - Gets a value indicating whether CBOR objects can have the given tag number.</li>
+<li><code><a href="#TextString">public static readonly PeterO.Cbor.CBORTypeFilter TextString;</a></code> - A filter that allows text strings.</li>
+<li><code><a href="#UnsignedInteger">public static readonly PeterO.Cbor.CBORTypeFilter UnsignedInteger;</a></code> - A filter that allows unsigned integers.</li>
+<li><code><a href="#WithArrayAnyLength">WithArrayAnyLength()</a></code> - Copies this filter and includes arrays of any length in the new filter.</li>
+<li><code><a href="#WithArrayExactLength_int_params_PeterO_Cbor_CBORTypeFilter">WithArrayExactLength(int, params PeterO.Cbor.CBORTypeFilter[])</a></code> - Copies this filter and includes CBOR arrays with an exact length to the new filter.</li>
+<li><code><a href="#WithArrayMinLength_int_params_PeterO_Cbor_CBORTypeFilter">WithArrayMinLength(int, params PeterO.Cbor.CBORTypeFilter[])</a></code> - Copies this filter and includes CBOR arrays with at least a given length to the new filter.</li>
+<li><code><a href="#WithByteString">WithByteString()</a></code> - Copies this filter and includes byte strings in the new filter.</li>
+<li><code><a href="#WithFloatingPoint">WithFloatingPoint()</a></code> - Copies this filter and includes floating-point numbers in the new filter.</li>
+<li><code><a href="#WithMap">WithMap()</a></code> - Copies this filter and includes maps in the new filter.</li>
+<li><code><a href="#WithNegativeInteger">WithNegativeInteger()</a></code> - Copies this filter and includes negative integers in the new filter.</li>
+<li><code><a href="#WithTags_params_int">WithTags(params int[])</a></code> - Copies this filter and includes a set of valid CBOR tags in the new filter.</li>
+<li><code><a href="#WithTextString">WithTextString()</a></code> - Copies this filter and includes text strings in the new filter.</li>
+<li><code><a href="#WithUnsignedInteger">WithUnsignedInteger()</a></code> - Copies this filter and includes unsigned integers in the new filter.</li>
 </ul>
+
+<p><a id="Any"></a></p>
 
 <h3>Any</h3>
 
@@ -43,12 +47,16 @@
 
 <p>A filter that allows any CBOR object.</p>
 
+<p><a id="ByteString"></a></p>
+
 <h3>ByteString</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORTypeFilter ByteString;
 </pre>
 
 <p>A filter that allows byte strings.</p>
+
+<p><a id="NegativeInteger"></a></p>
 
 <h3>NegativeInteger</h3>
 
@@ -57,12 +65,16 @@
 
 <p>A filter that allows negative integers.</p>
 
+<p><a id="None"></a></p>
+
 <h3>None</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORTypeFilter None;
 </pre>
 
 <p>A filter that allows no CBOR types.</p>
+
+<p><a id="TextString"></a></p>
 
 <h3>TextString</h3>
 
@@ -71,12 +83,16 @@
 
 <p>A filter that allows text strings.</p>
 
+<p><a id="UnsignedInteger"></a></p>
+
 <h3>UnsignedInteger</h3>
 
 <pre>public static readonly PeterO.Cbor.CBORTypeFilter UnsignedInteger;
 </pre>
 
 <p>A filter that allows unsigned integers.</p>
+
+<p><a id="ArrayIndexAllowed_int"></a></p>
 
 <h3>ArrayIndexAllowed</h3>
 
@@ -96,6 +112,8 @@
 
 <p><code>true</code> if this type filter allows CBOR arrays and the given array index is llowed under this type filter; otherwise,  <code>false</code> .</p>
 
+<p><a id="ArrayLengthMatches_int"></a></p>
+
 <h3>ArrayLengthMatches</h3>
 
 <pre>public bool ArrayLengthMatches(
@@ -114,6 +132,8 @@
 
 <p><code>true</code> if this filter allows CBOR arrays and an array&#39;s length is allowed under his filter; otherwise,  <code>false</code> .</p>
 
+<p><a id="ArrayLengthMatches_long"></a></p>
+
 <h3>ArrayLengthMatches</h3>
 
 <pre>public bool ArrayLengthMatches(
@@ -131,6 +151,8 @@
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this filter allows CBOR arrays and an array&#39;s length is allowed under filter; otherwise,  <code>false</code> .</p>
+
+<p><a id="ArrayLengthMatches_PeterO_Numbers_EInteger"></a></p>
 
 <h3>ArrayLengthMatches</h3>
 
@@ -158,6 +180,8 @@ The parameter <i>bigLength</i>
 is null.</li>
 </ul>
 
+<p><a id="GetSubFilter_int"></a></p>
+
 <h3>GetSubFilter</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter GetSubFilter(
@@ -175,6 +199,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
+
+<p><a id="GetSubFilter_long"></a></p>
 
 <h3>GetSubFilter</h3>
 
@@ -194,6 +220,8 @@ is null.</li>
 
 <p>Returns None if the index is out of range, or Any if this filter doesn&#39;t filter an array. Returns the appropriate filter for the array index otherwise.</p>
 
+<p><a id="MajorTypeMatches_int"></a></p>
+
 <h3>MajorTypeMatches</h3>
 
 <pre>public bool MajorTypeMatches(
@@ -212,6 +240,8 @@ is null.</li>
 
 <p><code>true</code> if the given CBOR major type matches a major type allowed by this filter; otherwise,  <code>false</code> .</p>
 
+<p><a id="NonFPSimpleValueAllowed"></a></p>
+
 <h3>NonFPSimpleValueAllowed</h3>
 
 <pre>public bool NonFPSimpleValueAllowed();
@@ -222,6 +252,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this filter allows simple values that are not floating-point numbers; otherwise,  <code>false</code> .</p>
+
+<p><a id="TagAllowed_int"></a></p>
 
 <h3>TagAllowed</h3>
 
@@ -241,6 +273,8 @@ is null.</li>
 
 <p><code>true</code> if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
 
+<p><a id="TagAllowed_long"></a></p>
+
 <h3>TagAllowed</h3>
 
 <pre>public bool TagAllowed(
@@ -258,6 +292,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if CBOR objects can have the given tag number; otherwise,  <code>false</code> .</p>
+
+<p><a id="TagAllowed_PeterO_Numbers_EInteger"></a></p>
 
 <h3>TagAllowed</h3>
 
@@ -285,6 +321,8 @@ The parameter <i>bigTag</i>
 is null.</li>
 </ul>
 
+<p><a id="WithArrayAnyLength"></a></p>
+
 <h3>WithArrayAnyLength</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithArrayAnyLength();
@@ -295,6 +333,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
+
+<p><a id="WithArrayExactLength_int_params_PeterO_Cbor_CBORTypeFilter"></a></p>
 
 <h3>WithArrayExactLength</h3>
 
@@ -327,6 +367,8 @@ The parameter elements is null.</p></li>
 The parameter elements has fewer elements than specified in arrayLength.</p></li>
 </ul>
 
+<p><a id="WithArrayMinLength_int_params_PeterO_Cbor_CBORTypeFilter"></a></p>
+
 <h3>WithArrayMinLength</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithArrayMinLength(
@@ -358,6 +400,8 @@ The parameter elements is null.</p></li>
 The parameter elements has fewer elements than specified in arrayLength.</p></li>
 </ul>
 
+<p><a id="WithByteString"></a></p>
+
 <h3>WithByteString</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithByteString();
@@ -368,6 +412,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 <p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
+
+<p><a id="WithFloatingPoint"></a></p>
 
 <h3>WithFloatingPoint</h3>
 
@@ -380,6 +426,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>A CBORTypeFilter object.</p>
 
+<p><a id="WithMap"></a></p>
+
 <h3>WithMap</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithMap();
@@ -391,6 +439,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>A CBORTypeFilter object.</p>
 
+<p><a id="WithNegativeInteger"></a></p>
+
 <h3>WithNegativeInteger</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithNegativeInteger();
@@ -401,6 +451,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 <p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
+
+<p><a id="WithTags_params_int"></a></p>
 
 <h3>WithTags</h3>
 
@@ -420,6 +472,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 
 <p>A CBORTypeFilter object.</p>
 
+<p><a id="WithTextString"></a></p>
+
 <h3>WithTextString</h3>
 
 <pre>public PeterO.Cbor.CBORTypeFilter WithTextString();
@@ -430,6 +484,8 @@ The parameter elements has fewer elements than specified in arrayLength.</p></li
 <p><b>Return Value:</b></p>
 
 <p>A CBORTypeFilter object.</p>
+
+<p><a id="WithUnsignedInteger"></a></p>
 
 <h3>WithUnsignedInteger</h3>
 

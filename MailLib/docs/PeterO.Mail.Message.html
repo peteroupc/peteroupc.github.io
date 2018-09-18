@@ -44,48 +44,50 @@
 
 <p>Note that this library (the MailLib library) has no facilities for sending and receiving email messages, since that&#39;s outside this library&#39;s scope.</p>
 
+<h2>Member Summary</h2>
+
 <ul>
-<li><code> public PeterO.Mail.Message AddAttachment( PeterO.Mail.MediaType mediaType);</code> - Adds an attachment with an empty body and with the given media type to this message.</li>
-<li><code> public PeterO.Mail.Message AddHeader( System.Collections.Generic.KeyValuePair header);</code> - Adds a header field to the end of the message&#39;s header.</li>
-<li><code> public PeterO.Mail.Message AddInline( PeterO.Mail.MediaType mediaType);</code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
+<li><code>PeterO.Mail.Message AddAttachment(PeterO.Mail.MediaType)</code> - Adds an attachment with an empty body and with the given media type to this message.</li>
+<li><code>PeterO.Mail.Message AddHeader(System.Collections.Generic.KeyValuePair)</code> - Adds a header field to the end of the message&#39;s header.</li>
+<li><code>PeterO.Mail.Message AddInline(PeterO.Mail.MediaType)</code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
 <li><code> public System.Collections.Generic.IList BccAddresses { get; }</code> - Gets a list of addresses found in the BCC header field or fields.</li>
 <li><code> public string BodyString { get; }</code> - Gets the body of this message as a text string.</li>
 <li><code> public System.Collections.Generic.IList CCAddresses { get; }</code> - Gets a list of addresses found in the CC header field or fields.</li>
-<li><code> public PeterO.Mail.Message ClearHeaders();</code> - Deletes all header fields in this message.</li>
+<li><code>PeterO.Mail.Message ClearHeaders()</code> - Deletes all header fields in this message.</li>
 <li><code> public PeterO.Mail.ContentDisposition ContentDisposition { get; set;}</code> - Gets or sets this message&#39;s content disposition.</li>
 <li><code> public PeterO.Mail.MediaType ContentType { get; set;}</code> - Gets or sets this message&#39;s media type.</li>
-<li><code> public static string DecodeHeaderValue( string name, string value);</code> - Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded.</li>
+<li><code>string DecodeHeaderValue(string, string)</code> - Decodes RFC 2047 encoded words from the given header field value and returns a string with those words decoded.</li>
 <li><code> public string FileName { get; }</code> -  Gets a file name suggested by this message for saving the message&#39;s body to a file.</li>
 <li><code> public System.Collections.Generic.IList FromAddresses { get; }</code> - Gets a list of addresses found in the From header field or fields.</li>
-<li><code> public static PeterO.Mail.Message FromMailtoUri( string uri);</code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
-<li><code> public static PeterO.Mail.Message FromMailtoUrl( string url);</code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
-<li><code> public string Generate();</code> - Generates this message&#39;s data in text form.</li>
-<li><code> public byte[] GenerateBytes();</code> - Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.</li>
-<li><code> public System.Collections.Generic.IList GetAddresses( string headerName);</code> - Gets a list of addresses contained in the header fields with the given name in this message.</li>
-<li><code> public byte[] GetBody();</code> - Gets the byte array for this message&#39;s body.</li>
-<li><code> public PeterO.Mail.Message GetBodyMessage();</code> - Returns the mail message contained in this message&#39;s body.</li>
-<li><code> public int[] GetDate();</code> - Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
-<li><code> public string GetFormattedBodyString();</code> -  Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body.</li>
-<li><code> public System.Collections.Generic.KeyValuePair GetHeader( int index);</code> - Gets the name and value of a header field by index.</li>
-<li><code> public string[] GetHeaderArray( string name);</code> - Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison.</li>
+<li><code>PeterO.Mail.Message FromMailtoUri(string)</code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
+<li><code>PeterO.Mail.Message FromMailtoUrl(string)</code> - Creates a message object from a MailTo URI (uniform resource identifier).</li>
+<li><code>string Generate()</code> - Generates this message&#39;s data in text form.</li>
+<li><code>byte[] GenerateBytes()</code> - Generates this message&#39;s data as a byte array, using the same algorithm as the Generate method.</li>
+<li><code>System.Collections.Generic.IList GetAddresses(string)</code> - Gets a list of addresses contained in the header fields with the given name in this message.</li>
+<li><code>byte[] GetBody()</code> - Gets the byte array for this message&#39;s body.</li>
+<li><code>PeterO.Mail.Message GetBodyMessage()</code> - Returns the mail message contained in this message&#39;s body.</li>
+<li><code>int[] GetDate()</code> - Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
+<li><code>string GetFormattedBodyString()</code> -  Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body.</li>
+<li><code>System.Collections.Generic.KeyValuePair GetHeader(int)</code> - Gets the name and value of a header field by index.</li>
+<li><code>string[] GetHeaderArray(string)</code> - Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison.</li>
 <li><code> public System.Collections.Generic.IList HeaderFields { get; }</code> - Gets a snapshot of the header fields of this message, in the order in which they appear in the message.</li>
-<li><code> public static PeterO.Mail.Message MakeMultilingualMessage( System.Collections.Generic.IList messages, System.Collections.Generic.IList languages);</code> - Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</li>
-<li><code> public static PeterO.Mail.Message NewBodyPart();</code> - Creates a message object with no header fields.</li>
+<li><code>PeterO.Mail.Message MakeMultilingualMessage(System.Collections.Generic.IList, System.Collections.Generic.IList)</code> - Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</li>
+<li><code>PeterO.Mail.Message NewBodyPart()</code> - Creates a message object with no header fields.</li>
 <li><code> public System.Collections.Generic.IList Parts { get; }</code> - Gets a list of all the parts of this message.</li>
-<li><code> public PeterO.Mail.Message RemoveHeader( int index);</code> - Removes a header field by index.</li>
-<li><code> public PeterO.Mail.Message SelectLanguageMessage( System.Collections.Generic.IList languages);</code> - Selects a body part for a multiple-language message (multipart/multilingual ) according to the given language priority list.</li>
-<li><code> public PeterO.Mail.Message SetBody( byte[] bytes);</code> - Sets the body of this message to the given byte array.</li>
-<li><code> public PeterO.Mail.Message SetCurrentDate();</code> - Sets this message&#39;s Date header field to the current time as its value.</li>
-<li><code> public PeterO.Mail.Message SetDate( int[] dateTime);</code> - Sets this message&#39;s Date header field to the given date and time.</li>
-<li><code> public PeterO.Mail.Message SetHeader( int index, System.Collections.Generic.KeyValuePair header);</code> - Sets the name and value of a header field by index.</li>
-<li><code> public PeterO.Mail.Message SetHtmlBody( string str);</code> - Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format.</li>
-<li><code> public PeterO.Mail.Message SetTextAndHtml( string text, string html);</code> - Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message.</li>
-<li><code> public PeterO.Mail.Message SetTextAndMarkdown( string text, string markdown);</code> - Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message.</li>
-<li><code> public PeterO.Mail.Message SetTextBody( string str);</code> - Sets the body of this message to the specified plain text string.</li>
+<li><code>PeterO.Mail.Message RemoveHeader(int)</code> - Removes a header field by index.</li>
+<li><code>PeterO.Mail.Message SelectLanguageMessage(System.Collections.Generic.IList)</code> - Selects a body part for a multiple-language message (multipart/multilingual ) according to the given language priority list.</li>
+<li><code>PeterO.Mail.Message SetBody(byte[])</code> - Sets the body of this message to the given byte array.</li>
+<li><code>PeterO.Mail.Message SetCurrentDate()</code> - Sets this message&#39;s Date header field to the current time as its value.</li>
+<li><code>PeterO.Mail.Message SetDate(int[])</code> - Sets this message&#39;s Date header field to the given date and time.</li>
+<li><code>PeterO.Mail.Message SetHeader(int, System.Collections.Generic.KeyValuePair)</code> - Sets the name and value of a header field by index.</li>
+<li><code>PeterO.Mail.Message SetHtmlBody(string)</code> - Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format.</li>
+<li><code>PeterO.Mail.Message SetTextAndHtml(string, string)</code> - Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message.</li>
+<li><code>PeterO.Mail.Message SetTextAndMarkdown(string, string)</code> - Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message.</li>
+<li><code>PeterO.Mail.Message SetTextBody(string)</code> - Sets the body of this message to the specified plain text string.</li>
 <li><code> public string Subject { get; set;}</code> - Gets or sets this message&#39;s subject.</li>
 <li><code> public System.Collections.Generic.IList ToAddresses { get; }</code> - Gets a list of addresses found in the To header field or fields.</li>
-<li><code> public string ToMailtoUri();</code> - Generates a MailTo URI (uniform resource identifier) corresponding to this message.</li>
-<li><code> public string ToMailtoUrl();</code> - Generates a MailTo URI (uniform resource identifier) corresponding to this message.</li>
+<li><code>string ToMailtoUri()</code> - Generates a MailTo URI (uniform resource identifier) corresponding to this message.</li>
+<li><code>string ToMailtoUrl()</code> - Generates a MailTo URI (uniform resource identifier) corresponding to this message.</li>
 </ul>
 
 <h3>Message Constructor</h3>
