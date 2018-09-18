@@ -11,6 +11,19 @@
 
 <p>A mutable media type object.</p>
 
+<ul>
+<li><code> public bool IsMultipart { get; }</code> - Gets a value indicating whether this is a multipart media type.</li>
+<li><code> public bool IsText { get; }</code> - Gets a value indicating whether this is a text media type.</li>
+<li><code> public PeterO.Mail.MediaTypeBuilder RemoveParameter( string name);</code> - Removes a parameter from this builder object.</li>
+<li><code> public PeterO.Mail.MediaTypeBuilder SetParameter( string name, string value);</code> - Sets a parameter&#39;s name and value for this media type.</li>
+<li><code> public PeterO.Mail.MediaTypeBuilder SetSubType( string str);</code> - Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
+<li><code> public PeterO.Mail.MediaTypeBuilder SetTopLevelType( string str);</code> - Sets this media type&#39;s top-level type.</li>
+<li><code> public string SubType { get; set;}</code> - Gets or sets this value&#39;s subtype.</li>
+<li><code> public PeterO.Mail.MediaType ToMediaType();</code> - Converts this builder to an immutable media type object.</li>
+<li><code> public override string ToString();</code> - Converts this object to a text string of the media type it represents, in the same form as MediaType.</li>
+<li><code> public string TopLevelType { get; set;}</code> - Gets or sets this value&#39;s top-level type.</li>
+</ul>
+
 <h3>MediaTypeBuilder Constructor</h3>
 
 <pre>public MediaTypeBuilder(

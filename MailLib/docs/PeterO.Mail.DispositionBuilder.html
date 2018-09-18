@@ -11,6 +11,17 @@
 
 <p>A mutable data type that allows a content disposition to be built.</p>
 
+<ul>
+<li><code> public string DispositionType { get; set;}</code> - Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
+<li><code> public bool IsMultipart { get; }</code> - Gets a value indicating whether this is a multipart media type.</li>
+<li><code> public bool IsText { get; }</code> - Gets a value indicating whether this is a text media type.</li>
+<li><code> public PeterO.Mail.DispositionBuilder RemoveParameter( string name);</code> - Removes a parameter from this content disposition.</li>
+<li><code> public PeterO.Mail.DispositionBuilder SetDispositionType( string str);</code> - Sets the disposition type, such as &quot;inline&quot;.</li>
+<li><code> public PeterO.Mail.DispositionBuilder SetParameter( string name, string value);</code> - Sets a parameter of this content disposition.</li>
+<li><code> public PeterO.Mail.ContentDisposition ToDisposition();</code> - Converts this object to an immutable ContentDisposition object.</li>
+<li><code> public override string ToString();</code> - Converts this object to a text string.</li>
+</ul>
+
 <h3>DispositionBuilder Constructor</h3>
 
 <pre>public DispositionBuilder(

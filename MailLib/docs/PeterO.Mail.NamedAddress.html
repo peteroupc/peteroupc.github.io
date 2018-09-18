@@ -11,6 +11,19 @@
 
 <p>Represents an email address and a name for that address. Can represent a group of email addresses instead.</p>
 
+<ul>
+<li><code> public PeterO.Mail.Address Address { get; }</code> - Gets the email address associated with this object.</li>
+<li><code> public bool AddressesEqual( PeterO.Mail.NamedAddress na);</code> - Not documented yet.</li>
+<li><code> public string DisplayName { get; }</code> - Gets the display name for this email address.</li>
+<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
+<li><code> public override int GetHashCode();</code> - Calculates the hash code of this object.</li>
+<li><code> public System.Collections.Generic.IList GroupAddresses { get; }</code> - Gets a read-only list of addresses that make up the group, if this object represents a group, or an empty list otherwise.</li>
+<li><code> public bool IsGroup { get; }</code> - Gets a value indicating whether this represents a group of addresses rather than a single address.</li>
+<li><code> public string Name { get; }</code> - Gets the display name for this email address, or the email address&#39;s value if the display name is null.</li>
+<li><code> public static System.Collections.Generic.IList ParseAddresses( string addressValue);</code> - Generates a list of NamedAddress objects from a comma-separated list of addresses.</li>
+<li><code> public override string ToString();</code> - Converts this object to a text string.</li>
+</ul>
+
 <h3>NamedAddress Constructor</h3>
 
 <pre>public NamedAddress(

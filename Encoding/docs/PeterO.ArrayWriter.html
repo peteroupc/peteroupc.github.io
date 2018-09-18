@@ -13,6 +13,13 @@
 
 <p>An array of bytes that grows as needed.</p>
 
+<ul>
+<li><code> public void Clear();</code> - Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
+<li><code> public byte[] ToArray();</code> - Generates an array of all bytes written so far to it.</li>
+<li><code> public sealed void Write( byte[] src, int offset, int length);</code> - Writes a series of bytes to the array.</li>
+<li><code> public sealed void WriteByte( int byteValue);</code> - Writes an 8-bit byte to the array.</li>
+</ul>
+
 <h3>ArrayWriter Constructor</h3>
 
 <pre>public ArrayWriter(

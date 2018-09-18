@@ -15,6 +15,13 @@
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. See the documentation for the NormalizerInput class for the permission notice for the Unicode Character Database.</p>
 
+<ul>
+<li><code> public static bool IsNormalized( string str, PeterO.Text.Normalization form);</code> - Returns whether this string is normalized.</li>
+<li><code> public static string Normalize( string str, PeterO.Text.Normalization form);</code> - Converts a string to the given Unicode normalization form.</li>
+<li><code> public int Read( int[] chars, int index, int length);</code> - Reads a sequence of Unicode code points from a data source.</li>
+<li><code> public int ReadChar();</code> - Reads a Unicode character from a data source.</li>
+</ul>
+
 <h3>Normalizer Constructor</h3>
 
 <pre>public Normalizer(

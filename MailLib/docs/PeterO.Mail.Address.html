@@ -11,6 +11,14 @@
 
 <p>Represents an email address.</p>
 
+<ul>
+<li><code> public string Domain { get; }</code> - Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
+<li><code> public override bool Equals( object obj);</code> - Determines whether this object and another object are equal.</li>
+<li><code> public override int GetHashCode();</code> - Returns a hash code for this address object.</li>
+<li><code> public string LocalPart { get; }</code> - Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
+<li><code> public override string ToString();</code> - Converts this address object to a text string.</li>
+</ul>
+
 <h3>Address Constructor</h3>
 
 <pre>public Address(

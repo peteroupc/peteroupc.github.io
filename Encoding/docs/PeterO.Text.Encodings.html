@@ -65,6 +65,21 @@
 
 <p>(Note that this library doesn&#39;t implement either encoding.)</p>
 
+<ul>
+<li><code> public static string DecodeToString( this PeterO.Text.ICharacterEncoding encoding, PeterO.IByteReader input);</code> - Reads bytes from a data source and converts the bytes from a given encoding to a text string.</li>
+<li><code> public static byte[] EncodeToBytes( this PeterO.Text.ICharacterInput input, PeterO.Text.ICharacterEncoding encoding);</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+<li><code> public static void EncodeToWriter( this PeterO.Text.ICharacterInput input, PeterO.Text.ICharacterEncoding encoding, PeterO.IWriter writer);</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+<li><code> public static PeterO.Text.ICharacterInput GetDecoderInput( this PeterO.Text.ICharacterEncoding encoding, PeterO.IByteReader stream);</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
+<li><code> public static PeterO.Text.ICharacterInput GetDecoderInputSkipBom( this PeterO.Text.ICharacterEncoding encoding, PeterO.IByteReader stream);</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
+<li><code> public static PeterO.Text.ICharacterEncoding GetEncoding( string name);</code> - Returns a character encoding from the given name.</li>
+<li><code> public static string InputToString( this PeterO.Text.ICharacterInput reader);</code> - Reads Unicode characters from a character input and converts them to a text string.</li>
+<li><code> public static string ResolveAlias( string name);</code> - Resolves a character encoding&#39;s name to a standard form.</li>
+<li><code> public static string ResolveAliasForEmail( string name);</code> - Resolves a character encoding&#39;s name to a canonical form, using rules more suitable for email.</li>
+<li><code> public static byte[] StringToBytes( this PeterO.Text.ICharacterEncoding encoding, string str);</code> - Converts a text string to a byte array encoded in a given character encoding.</li>
+<li><code> public static PeterO.Text.ICharacterInput StringToInput( this string str);</code> - Converts a text string to a character input.</li>
+<li><code> public static readonly PeterO.Text.ICharacterEncoding UTF8;</code> - Character encoding object for the UTF-8 character encoding, which represents each code point in the universal coded character set using 1 to 4 bytes.</li>
+</ul>
+
 <h3>UTF8</h3>
 
 <pre>public static readonly PeterO.Text.ICharacterEncoding UTF8;

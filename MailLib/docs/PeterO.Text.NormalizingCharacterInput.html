@@ -36,6 +36,14 @@
 
 <p>Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.</p>
 
+<ul>
+<li><code> public static System.Collections.Generic.IList GetChars( string str, PeterO.Text.Normalization form);</code> - Gets a list of normalized code points after reading from a string.</li>
+<li><code> public static bool IsNormalized( PeterO.Text.ICharacterInput chars, PeterO.Text.Normalization form);</code> - Determines whether the text provided by a character input is normalized.</li>
+<li><code> public static string Normalize( string str, PeterO.Text.Normalization form);</code> - Converts a string to the given Unicode normalization form.</li>
+<li><code> public sealed int Read( int[] chars, int index, int length);</code> - Reads a sequence of Unicode code points from a data source.</li>
+<li><code> public sealed int ReadChar();</code> - Reads a Unicode character from a data source.</li>
+</ul>
+
 <h3>NormalizingCharacterInput Constructor</h3>
 
 <pre>public NormalizingCharacterInput(

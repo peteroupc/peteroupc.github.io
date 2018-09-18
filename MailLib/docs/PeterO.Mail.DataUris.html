@@ -18,6 +18,12 @@ data:text/markdown,hello%20world
 data:application/octet-stream;base64,AAAAAA==
 </pre>
 
+<ul>
+<li><code> public static byte[] DataUriBytes( string uri);</code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
+<li><code> public static PeterO.Mail.MediaType DataUriMediaType( string uri);</code> - Extracts the media type from a Data URI (uniform resource identifier).</li>
+<li><code> public static string MakeDataUri( string textString);</code> - Encodes text as a Data URI (uniform resource identifier).</li>
+</ul>
+
 <h3>DataUriBytes</h3>
 
 <pre>public static byte[] DataUriBytes(
