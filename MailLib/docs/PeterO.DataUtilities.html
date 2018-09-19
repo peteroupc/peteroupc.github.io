@@ -17,18 +17,25 @@
 
 <ul>
 <li><code><a href="#CodePointAt_string_int">CodePointAt(string, int)</a></code> - Gets the Unicode code point at the given index of the string.</li>
+<li><code><a href="#CodePointAt_string_int_int">CodePointAt(string, int, int)</a></code> - Gets the Unicode code point at the given index of the string.</li>
 <li><code><a href="#CodePointBefore_string_int">CodePointBefore(string, int)</a></code> - Gets the Unicode code point just before the given index of the string.</li>
+<li><code><a href="#CodePointBefore_string_int_int">CodePointBefore(string, int, int)</a></code> - Gets the Unicode code point just before the given index of the string.</li>
 <li><code><a href="#CodePointCompare_string_string">CodePointCompare(string, string)</a></code> - Compares two strings in Unicode code point order.</li>
 <li><code><a href="#CodePointLength_string">CodePointLength(string)</a></code> - Finds the number of Unicode code points in the given text string.</li>
 <li><code><a href="#GetUtf8Bytes_string_bool">GetUtf8Bytes(string, bool)</a></code> - Encodes a string in UTF-8 as a byte array.</li>
+<li><code><a href="#GetUtf8Bytes_string_bool_bool">GetUtf8Bytes(string, bool, bool)</a></code> - Encodes a string in UTF-8 as a byte array.</li>
 <li><code><a href="#GetUtf8Length_string_bool">GetUtf8Length(string, bool)</a></code> - Calculates the number of bytes needed to encode a string in UTF-8.</li>
 <li><code><a href="#GetUtf8String_byte_bool">GetUtf8String(byte[], bool)</a></code> - Generates a text string from a UTF-8 byte array.</li>
-<li><code><a href="#ReadUtf8_System_IO_Stream_int_System_Text_StringBuilder_bool">ReadUtf8(System.IO.Stream, int, System.Text.StringBuilder, bool)</a></code> - Reads a string in UTF-8 encoding from a data stream.</li>
+<li><code><a href="#GetUtf8String_byte_int_int_bool">GetUtf8String(byte[], int, int, bool)</a></code> - Generates a text string from a portion of a UTF-8 byte array.</li>
 <li><code><a href="#ReadUtf8FromBytes_byte_int_int_System_Text_StringBuilder_bool">ReadUtf8FromBytes(byte[], int, int, System.Text.StringBuilder, bool)</a></code> - Reads a string in UTF-8 encoding from a byte array.</li>
 <li><code><a href="#ReadUtf8ToString_System_IO_Stream">ReadUtf8ToString(System.IO.Stream)</a></code> - Reads a string in UTF-8 encoding from a data stream in full and returns that string.</li>
+<li><code><a href="#ReadUtf8ToString_System_IO_Stream_int_bool">ReadUtf8ToString(System.IO.Stream, int, bool)</a></code> - Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
+<li><code><a href="#ReadUtf8_System_IO_Stream_int_System_Text_StringBuilder_bool">ReadUtf8(System.IO.Stream, int, System.Text.StringBuilder, bool)</a></code> - Reads a string in UTF-8 encoding from a data stream.</li>
 <li><code><a href="#ToLowerCaseAscii_string">ToLowerCaseAscii(string)</a></code> - Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower-case.</li>
 <li><code><a href="#ToUpperCaseAscii_string">ToUpperCaseAscii(string)</a></code> - Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to upper-case.</li>
+<li><code><a href="#WriteUtf8_string_System_IO_Stream_bool">WriteUtf8(string, System.IO.Stream, bool)</a></code> - Writes a string in UTF-8 encoding to a data stream.</li>
 <li><code><a href="#WriteUtf8_string_int_int_System_IO_Stream_bool">WriteUtf8(string, int, int, System.IO.Stream, bool)</a></code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
+<li><code><a href="#WriteUtf8_string_int_int_System_IO_Stream_bool_bool">WriteUtf8(string, int, int, System.IO.Stream, bool, bool)</a></code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
 </ul>
 
 <p><a id="CodePointAt_string_int"></a></p>

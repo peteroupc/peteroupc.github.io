@@ -48,8 +48,15 @@
 
 <ul>
 <li><code><a href="#AddAttachment_PeterO_Mail_MediaType">AddAttachment(PeterO.Mail.MediaType)</a></code> - Adds an attachment with an empty body and with the given media type to this message.</li>
+<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type.</li>
+<li><code><a href="#AddAttachment_System_IO_Stream_PeterO_Mail_MediaType_string">AddAttachment(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
+<li><code><a href="#AddAttachment_System_IO_Stream_string">AddAttachment(System.IO.Stream, string)</a></code> - Adds an attachment to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#AddHeader_System_Collections_Generic_KeyValuePair">AddHeader(System.Collections.Generic.KeyValuePair)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
+<li><code><a href="#AddHeader_string_string">AddHeader(string, string)</a></code> - Adds a header field to the end of the message&#39;s header.</li>
 <li><code><a href="#AddInline_PeterO_Mail_MediaType">AddInline(PeterO.Mail.MediaType)</a></code> - Adds an inline body part with an empty body and with the given media type to this message.</li>
+<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType">AddInline(System.IO.Stream, PeterO.Mail.MediaType)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type.</li>
+<li><code><a href="#AddInline_System_IO_Stream_PeterO_Mail_MediaType_string">AddInline(System.IO.Stream, PeterO.Mail.MediaType, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given media type and file name.</li>
+<li><code><a href="#AddInline_System_IO_Stream_string">AddInline(System.IO.Stream, string)</a></code> - Adds an inline body part to this message in the form of data from the given readable stream, and with the given file name.</li>
 <li><code><a href="#BccAddresses">BccAddresses</a></code> - Gets a list of addresses found in the BCC header field or fields.</li>
 <li><code><a href="#BodyString">BodyString</a></code> - Gets the body of this message as a text string.</li>
 <li><code><a href="#CCAddresses">CCAddresses</a></code> - Gets a list of addresses found in the CC header field or fields.</li>
@@ -68,18 +75,24 @@
 <li><code><a href="#GetBodyMessage">GetBodyMessage()</a></code> - Returns the mail message contained in this message&#39;s body.</li>
 <li><code><a href="#GetDate">GetDate()</a></code> - Gets the date and time extracted from this message&#39;s Date header field (the value of which is found as though GetHeader(&quot;date&quot;) were called).</li>
 <li><code><a href="#GetFormattedBodyString">GetFormattedBodyString()</a></code> -  Gets a Hypertext Markup Language (HTML) rendering of this message&#39;s text body.</li>
-<li><code><a href="#GetHeader_int">GetHeader(int)</a></code> - Gets the name and value of a header field by index.</li>
 <li><code><a href="#GetHeaderArray_string">GetHeaderArray(string)</a></code> - Gets an array with the values of all header fields with the specified name, using a basic case-insensitive comparison.</li>
+<li><code><a href="#GetHeader_int">GetHeader(int)</a></code> - Gets the name and value of a header field by index.</li>
+<li><code><a href="#GetHeader_string">GetHeader(string)</a></code> - Gets the first instance of the header field with the specified name, using a basic case-insensitive comparison.</li>
 <li><code><a href="#HeaderFields">HeaderFields</a></code> - Gets a snapshot of the header fields of this message, in the order in which they appear in the message.</li>
 <li><code><a href="#MakeMultilingualMessage_System_Collections_Generic_IList_System_Collections_Generic_IList">MakeMultilingualMessage(System.Collections.Generic.IList, System.Collections.Generic.IList)</a></code> - Generates a multilingual message (see RFC 8255) from a list of messages and a list of language strings.</li>
 <li><code><a href="#NewBodyPart">NewBodyPart()</a></code> - Creates a message object with no header fields.</li>
 <li><code><a href="#Parts">Parts</a></code> - Gets a list of all the parts of this message.</li>
 <li><code><a href="#RemoveHeader_int">RemoveHeader(int)</a></code> - Removes a header field by index.</li>
+<li><code><a href="#RemoveHeader_string">RemoveHeader(string)</a></code> - Removes all instances of the given header field from this message.</li>
 <li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList">SelectLanguageMessage(System.Collections.Generic.IList)</a></code> - Selects a body part for a multiple-language message (multipart/multilingual ) according to the given language priority list.</li>
+<li><code><a href="#SelectLanguageMessage_System_Collections_Generic_IList_bool">SelectLanguageMessage(System.Collections.Generic.IList, bool)</a></code> - Selects a body part for a multiple-language message (multipart/multilingual ) according to the given language priority list and original-language preference.</li>
 <li><code><a href="#SetBody_byte">SetBody(byte[])</a></code> - Sets the body of this message to the given byte array.</li>
 <li><code><a href="#SetCurrentDate">SetCurrentDate()</a></code> - Sets this message&#39;s Date header field to the current time as its value.</li>
 <li><code><a href="#SetDate_int">SetDate(int[])</a></code> - Sets this message&#39;s Date header field to the given date and time.</li>
 <li><code><a href="#SetHeader_int_System_Collections_Generic_KeyValuePair">SetHeader(int, System.Collections.Generic.KeyValuePair)</a></code> - Sets the name and value of a header field by index.</li>
+<li><code><a href="#SetHeader_int_string">SetHeader(int, string)</a></code> - Sets the value of a header field by index without changing its name.</li>
+<li><code><a href="#SetHeader_int_string_string">SetHeader(int, string, string)</a></code> - Sets the name and value of a header field by index.</li>
+<li><code><a href="#SetHeader_string_string">SetHeader(string, string)</a></code> - Sets the value of this message&#39;s header field.</li>
 <li><code><a href="#SetHtmlBody_string">SetHtmlBody(string)</a></code> - Sets the body of this message to the specified string in Hypertext Markup Language (HTML) format.</li>
 <li><code><a href="#SetTextAndHtml_string_string">SetTextAndHtml(string, string)</a></code> - Sets the body of this message to a multipart body with plain text and Hypertext Markup Language (HTML) versions of the same message.</li>
 <li><code><a href="#SetTextAndMarkdown_string_string">SetTextAndMarkdown(string, string)</a></code> - Sets the body of this message to a multipart body with plain text, Markdown, and Hypertext Markup Language (HTML) versions of the same message.</li>

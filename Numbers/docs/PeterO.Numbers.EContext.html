@@ -40,8 +40,8 @@
 <li><code><a href="#FlagSubnormal">public static int FlagSubnormal = 4;</a></code> - Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed.</li>
 <li><code><a href="#FlagUnderflow">public static int FlagUnderflow = 8;</a></code> - Signals that the result&#39;s exponent, before rounding, is lower than the lowest exponent allowed, and the result was rounded to a different mathematical value, but as close as possible to the original.</li>
 <li><code><a href="#Flags">Flags</a></code> - Gets or sets the flags that are set from converting numbers according to this arithmetic context.</li>
-<li><code><a href="#ForPrecision_int">ForPrecision(int)</a></code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
 <li><code><a href="#ForPrecisionAndRounding_int_PeterO_Numbers_ERounding">ForPrecisionAndRounding(int, PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited exponent range, and the given rounding mode and maximum precision.</li>
+<li><code><a href="#ForPrecision_int">ForPrecision(int)</a></code> - Creates a new arithmetic context using the given maximum number of digits, an unlimited exponent range, and the HalfUp rounding mode.</li>
 <li><code><a href="#ForRounding_PeterO_Numbers_ERounding">ForRounding(PeterO.Numbers.ERounding)</a></code> - Creates a new EContext object initialized with an unlimited precision, an unlimited exponent range, and the given rounding mode.</li>
 <li><code><a href="#HasExponentRange">HasExponentRange</a></code> - Gets a value indicating whether this context defines a minimum and maximum exponent.</li>
 <li><code><a href="#HasFlags">HasFlags</a></code> - Gets a value indicating whether this context has a mutable Flags field.</li>
@@ -61,8 +61,8 @@
 <li><code><a href="#WithExponentClamp_bool">WithExponentClamp(bool)</a></code> - Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot; flag to the given value.</li>
 <li><code><a href="#WithExponentRange_int_int">WithExponentRange(int, int)</a></code> - Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code><a href="#WithNoFlags">WithNoFlags()</a></code> - Copies this EContext with HasFlags set to false and a Flags value of 0.</li>
-<li><code><a href="#WithPrecision_int">WithPrecision(int)</a></code> - Copies this EContext and gives it a particular precision value.</li>
 <li><code><a href="#WithPrecisionInBits_bool">WithPrecisionInBits(bool)</a></code> - Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the given value.</li>
+<li><code><a href="#WithPrecision_int">WithPrecision(int)</a></code> - Copies this EContext and gives it a particular precision value.</li>
 <li><code><a href="#WithRounding_PeterO_Numbers_ERounding">WithRounding(PeterO.Numbers.ERounding)</a></code> - Copies this EContext with the specified rounding mode.</li>
 <li><code><a href="#WithSimplified_bool">WithSimplified(bool)</a></code> - Copies this EContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the given value.</li>
 <li><code><a href="#WithTraps_int">WithTraps(int)</a></code> - Copies this EContext with Traps set to the given value.</li>

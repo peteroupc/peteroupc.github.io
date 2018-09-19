@@ -18,16 +18,19 @@
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Returns the absolute value of this rational number, that is, a number with the same value as this one but as a nonnegative number.</li>
 <li><code><a href="#Add_PeterO_Numbers_ERational">Add(PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
-<li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares an arbitrary-precision rational number with this instance.</li>
 <li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary float with this instance.</li>
 <li><code><a href="#CompareToDecimal_PeterO_Numbers_EDecimal">CompareToDecimal(PeterO.Numbers.EDecimal)</a></code> - Compares an arbitrary-precision decimal number with this instance.</li>
-<li><code><a href="#CompareToTotal_PeterO_Numbers_ERational">CompareToTotal(PeterO.Numbers.ERational)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_ERational">CompareToTotalMagnitude(PeterO.Numbers.ERational)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code><a href="#CompareToTotal_PeterO_Numbers_ERational">CompareToTotal(PeterO.Numbers.ERational)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares an arbitrary-precision rational number with this instance.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_ERational">CopySign(PeterO.Numbers.ERational)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a rational number with the given numerator and denominator.</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool">CreateNaN(PeterO.Numbers.EInteger, bool, bool)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a rational number with the given numerator and denominator.</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a rational number with the given numerator and denominator.</li>
 <li><code><a href="#Denominator">Denominator</a></code> - Gets this object&#39;s denominator.</li>
 <li><code><a href="#Divide_PeterO_Numbers_ERational">Divide(PeterO.Numbers.ERational)</a></code> - Divides this instance by the value of an arbitrary-precision rational number object.</li>
+<li><code><a href="#Equals_PeterO_Numbers_ERational">Equals(PeterO.Numbers.ERational)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimalunder the Common Language Infrastructure (usually a .</li>
@@ -43,6 +46,7 @@
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Converts a 32-bit binary floating-point number to a rational number.</li>
 <li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a rational number from a text string that represents a number.</li>
+<li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> -  Creates a rational number from a text string that represents a number.</li>
 <li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision rational number.</li>
@@ -76,15 +80,19 @@
 <li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
 <li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this rational number to a decimal number.</li>
 <li><code><a href="#ToEDecimalExactIfPossible_PeterO_Numbers_EContext">ToEDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToEDecimal_PeterO_Numbers_EContext">ToEDecimal(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number and rounds the result to the given precision.</li>
 <li><code><a href="#ToEFloat">ToEFloat()</a></code> - Converts this rational number to a binary float.</li>
 <li><code><a href="#ToEFloatExactIfPossible_PeterO_Numbers_EContext">ToEFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToEFloat_PeterO_Numbers_EContext">ToEFloat(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float and rounds that result to the given precision.</li>
 <li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this value to an arbitrary-precision integer.</li>
 <li><code><a href="#ToEIntegerExact">ToEIntegerExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
 <li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
 <li><code><a href="#ToExtendedDecimal">ToExtendedDecimal()</a></code> - Converts this rational number to a decimal number.</li>
 <li><code><a href="#ToExtendedDecimalExactIfPossible_PeterO_Numbers_EContext">ToExtendedDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToExtendedDecimal_PeterO_Numbers_EContext">ToExtendedDecimal(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number and rounds the result to the given precision.</li>
 <li><code><a href="#ToExtendedFloat">ToExtendedFloat()</a></code> - Converts this rational number to a binary float.</li>
 <li><code><a href="#ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext">ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToExtendedFloat_PeterO_Numbers_EContext">ToExtendedFloat(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float and rounds that result to the given precision.</li>
 <li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
 <li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
@@ -110,12 +118,12 @@
 <li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
 <li><code><a href="#UnsignedNumerator">UnsignedNumerator</a></code> - Gets this object&#39;s numerator with the sign removed.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.ERational Zero;</a></code> - A rational number for zero.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator +(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator /(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Divides an arbitrary-precision rational number by the value of another arbitrary-precision rational number object.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator %(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator *(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
-<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)</a></code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
+<li><code><a href="#op_Addition">PeterO.Numbers.ERational operator +(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
+<li><code><a href="#op_Division">PeterO.Numbers.ERational operator /(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Divides an arbitrary-precision rational number by the value of another arbitrary-precision rational number object.</li>
+<li><code><a href="#op_Modulus">PeterO.Numbers.ERational operator %(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#op_Multiply">PeterO.Numbers.ERational operator *(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#op_Subtraction">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
+<li><code><a href="#op_UnaryNegation">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)</a></code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
 </ul>
 
 <p><a id="Void_ctor_EInteger_EInteger"></a></p>
@@ -1276,7 +1284,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 
 <p>An arbitrary-precision binary rational number.</p>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_Addition"></a></p>
 
 <h3>Operator <code>+</code></h3>
 
@@ -1305,7 +1313,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_Division"></a></p>
 
 <h3>Operator <code>/</code></h3>
 
@@ -1334,7 +1342,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_Modulus"></a></p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -1363,7 +1371,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_Multiply"></a></p>
 
 <h3>Operator <code>*</code></h3>
 
@@ -1392,7 +1400,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_Subtraction"></a></p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -1421,7 +1429,7 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational"></a></p>
+<p><a id="op_UnaryNegation"></a></p>
 
 <h3>Operator <code>-</code></h3>
 

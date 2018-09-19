@@ -40,24 +40,37 @@
 
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
+<li><code><a href="#Abs_PeterO_Numbers_EContext">Abs(PeterO.Numbers.EContext)</a></code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
 <li><code><a href="#Add_PeterO_Numbers_EFloat">Add(PeterO.Numbers.EFloat)</a></code> - Adds this object and another binary float and returns the result.</li>
-<li><code><a href="#CompareTo_PeterO_Numbers_EFloat">CompareTo(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
+<li><code><a href="#Add_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Add(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the sum of this object and another object.</li>
 <li><code><a href="#CompareToSignal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
-<li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat">CompareToTotalMagnitude(PeterO.Numbers.EFloat)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat">CompareToTotal(PeterO.Numbers.EFloat)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
 <li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
+<li><code><a href="#CompareTo_PeterO_Numbers_EFloat">CompareTo(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
 <li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*2^mantissa (significand).</li>
 <li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary float.</li>
+<li><code><a href="#CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext">CreateNaN(PeterO.Numbers.EInteger, bool, bool, PeterO.Numbers.EContext)</a></code> - Creates a not-a-number arbitrary-precision binary float.</li>
+<li><code><a href="#Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Create(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Creates a number with the value exponent*2^mantissa (significand).</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*2^mantissa (significand).</li>
 <li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EFloat">DivRemNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this object by another binary float and returns the result.</li>
+<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivRemNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
 <li><code><a href="#DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat">DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code><a href="#DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code><a href="#DivideToExponent_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">DivideToExponent(PeterO.Numbers.EFloat, PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
+<li><code><a href="#DivideToExponent_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding">DivideToExponent(PeterO.Numbers.EFloat, PeterO.Numbers.EInteger, PeterO.Numbers.ERounding)</a></code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
 <li><code><a href="#DivideToExponent_PeterO_Numbers_EFloat_long_PeterO_Numbers_EContext">DivideToExponent(PeterO.Numbers.EFloat, long, PeterO.Numbers.EContext)</a></code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
+<li><code><a href="#DivideToExponent_PeterO_Numbers_EFloat_long_PeterO_Numbers_ERounding">DivideToExponent(PeterO.Numbers.EFloat, long, PeterO.Numbers.ERounding)</a></code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
 <li><code><a href="#DivideToIntegerNaturalScale_PeterO_Numbers_EFloat">DivideToIntegerNaturalScale(PeterO.Numbers.EFloat)</a></code> - Divides two arbitrary-precision binary floats, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
+<li><code><a href="#DivideToIntegerNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivideToIntegerNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this object by another object, and returns the integer part of the result (which is initially rounded down), with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
 <li><code><a href="#DivideToIntegerZeroScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivideToIntegerZeroScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
 <li><code><a href="#DivideToSameExponent_PeterO_Numbers_EFloat_PeterO_Numbers_ERounding">DivideToSameExponent(PeterO.Numbers.EFloat, PeterO.Numbers.ERounding)</a></code> - Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</li>
-<li><code><a href="#Equals_PeterO_Numbers_EFloat">Equals(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
+<li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this object by another binary float and returns the result.</li>
+<li><code><a href="#Divide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Divide(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this arbitrary-precision binary float by another arbitrary-precision binary float.</li>
 <li><code><a href="#EqualsInternal_PeterO_Numbers_EFloat">EqualsInternal(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object.</li>
+<li><code><a href="#Equals_PeterO_Numbers_EFloat">Equals(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object and that other object is an arbitrary-precision binary float.</li>
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
@@ -68,6 +81,9 @@
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
 <li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision binary float.</li>
 <li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Creates a binary float from a 32-bit floating-point number.</li>
+<li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a binary float from a text string that represents a number, using an unlimited precision context.</li>
+<li><code><a href="#FromString_string_PeterO_Numbers_EContext">FromString(string, PeterO.Numbers.EContext)</a></code> - Creates a binary float from a text string that represents a number.</li>
+<li><code><a href="#FromString_string_int_int">FromString(string, int, int)</a></code> - Creates a binary float from a text string that represents a number.</li>
 <li><code><a href="#FromString_string_int_int_PeterO_Numbers_EContext">FromString(string, int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary float from a text string that represents a number.</li>
 <li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision binary float.</li>
 <li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
@@ -82,20 +98,33 @@
 <li><code><a href="#IsQuietNaN">IsQuietNaN()</a></code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
 <li><code><a href="#IsSignalingNaN">IsSignalingNaN()</a></code> - Gets a value indicating whether this object is a signaling not-a-number value.</li>
 <li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Log10_PeterO_Numbers_EContext">Log10(PeterO.Numbers.EContext)</a></code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
+<li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
 <li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value.</li>
-<li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two binary floats.</li>
+<li><code><a href="#MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">MaxMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the greater value between two values, ignoring their signs.</li>
 <li><code><a href="#MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MaxMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two values, ignoring their signs.</li>
-<li><code><a href="#Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Min(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the lesser value between two binary floats.</li>
+<li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the greater value between two binary floats.</li>
+<li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two binary floats.</li>
+<li><code><a href="#MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">MinMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the lesser value between two values, ignoring their signs.</li>
 <li><code><a href="#MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MinMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the lesser value between two values, ignoring their signs.</li>
+<li><code><a href="#Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">Min(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Gets the lesser value between two binary floats.</li>
+<li><code><a href="#Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Min(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the lesser value between two binary floats.</li>
+<li><code><a href="#MovePointLeft_PeterO_Numbers_EInteger">MovePointLeft(PeterO.Numbers.EInteger)</a></code> - Returns a number similar to this number but with the radix point moved to the left.</li>
+<li><code><a href="#MovePointLeft_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">MovePointLeft(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the radix point moved to the left.</li>
 <li><code><a href="#MovePointLeft_int">MovePointLeft(int)</a></code> - Returns a number similar to this number but with the radix point moved to the left.</li>
+<li><code><a href="#MovePointLeft_int_PeterO_Numbers_EContext">MovePointLeft(int, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the radix point moved to the left.</li>
+<li><code><a href="#MovePointRight_PeterO_Numbers_EInteger">MovePointRight(PeterO.Numbers.EInteger)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
+<li><code><a href="#MovePointRight_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">MovePointRight(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
 <li><code><a href="#MovePointRight_int">MovePointRight(int)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
-<li><code><a href="#Multiply_PeterO_Numbers_EFloat">Multiply(PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
+<li><code><a href="#MovePointRight_int_PeterO_Numbers_EContext">MovePointRight(int, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
 <li><code><a href="#MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">MultiplyAndAdd(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies by one binary float, and then adds another binary float.</li>
+<li><code><a href="#MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MultiplyAndAdd(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Multiplies by one value, and then adds another value.</li>
 <li><code><a href="#MultiplyAndSubtract_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MultiplyAndSubtract(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Multiplies by one value, and then subtracts another value.</li>
+<li><code><a href="#Multiply_PeterO_Numbers_EFloat">Multiply(PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
+<li><code><a href="#Multiply_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Multiply(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Multiplies two binary floats.</li>
 <li><code><a href="#NaN">public static readonly PeterO.Numbers.EFloat NaN;</a></code> - A not-a-number value.</li>
 <li><code><a href="#Negate">Negate()</a></code> - Gets an object with the same value as this one, but with the sign reversed.</li>
+<li><code><a href="#Negate_PeterO_Numbers_EContext">Negate(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but with the sign reversed.</li>
 <li><code><a href="#NegativeInfinity">public static readonly PeterO.Numbers.EFloat NegativeInfinity;</a></code> - Negative infinity, less than any other number.</li>
 <li><code><a href="#NegativeZero">public static readonly PeterO.Numbers.EFloat NegativeZero;</a></code> - Represents the number negative zero.</li>
 <li><code><a href="#NextMinus_PeterO_Numbers_EContext">NextMinus(PeterO.Numbers.EContext)</a></code> - Finds the largest value that&#39;s smaller than the given value.</li>
@@ -106,25 +135,37 @@
 <li><code><a href="#Plus_PeterO_Numbers_EContext">Plus(PeterO.Numbers.EContext)</a></code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
 <li><code><a href="#PositiveInfinity">public static readonly PeterO.Numbers.EFloat PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
+<li><code><a href="#Pow_int">Pow(int)</a></code> - Raises this object&#39;s value to the given exponent.</li>
+<li><code><a href="#Pow_int_PeterO_Numbers_EContext">Pow(int, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
 <li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
+<li><code><a href="#Quantize_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but with the same exponent as another binary float.</li>
 <li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value but a new exponent.</li>
+<li><code><a href="#Quantize_int_PeterO_Numbers_EContext">Quantize(int, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value but a new exponent.</li>
 <li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Removes trailing zeros from this object&#39;s mantissa (significand).</li>
-<li><code><a href="#Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
-<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat">RemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
+<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat">RemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</li>
+<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
-<li><code><a href="#RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to a new exponent if necessary.</li>
+<li><code><a href="#Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
 <li><code><a href="#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
+<li><code><a href="#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding">RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.ERounding)</a></code> - Returns a binary number with the same value as this object but rounded to the given exponent.</li>
+<li><code><a href="#RoundToExponentExact_int_PeterO_Numbers_EContext">RoundToExponentExact(int, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code><a href="#RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to a new exponent if necessary.</li>
+<li><code><a href="#RoundToExponent_int_PeterO_Numbers_EContext">RoundToExponent(int, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to a new exponent if necessary.</li>
 <li><code><a href="#RoundToIntegerExact_PeterO_Numbers_EContext">RoundToIntegerExact(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
 <li><code><a href="#RoundToIntegerNoRoundedFlag_PeterO_Numbers_EContext">RoundToIntegerNoRoundedFlag(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
 <li><code><a href="#RoundToIntegralExact_PeterO_Numbers_EContext">RoundToIntegralExact(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
 <li><code><a href="#RoundToIntegralNoRoundedFlag_PeterO_Numbers_EContext">RoundToIntegralNoRoundedFlag(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
 <li><code><a href="#RoundToPrecision_PeterO_Numbers_EContext">RoundToPrecision(PeterO.Numbers.EContext)</a></code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</li>
+<li><code><a href="#ScaleByPowerOfTwo_PeterO_Numbers_EInteger">ScaleByPowerOfTwo(PeterO.Numbers.EInteger)</a></code> - Returns a number similar to this number but with the scale adjusted.</li>
+<li><code><a href="#ScaleByPowerOfTwo_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">ScaleByPowerOfTwo(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with its scale adjusted.</li>
 <li><code><a href="#ScaleByPowerOfTwo_int">ScaleByPowerOfTwo(int)</a></code> - Returns a number similar to this number but with the scale adjusted.</li>
+<li><code><a href="#ScaleByPowerOfTwo_int_PeterO_Numbers_EContext">ScaleByPowerOfTwo(int, PeterO.Numbers.EContext)</a></code> - Returns a number similar to this number but with the scale adjusted.</li>
 <li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
 <li><code><a href="#SignalingNaN">public static readonly PeterO.Numbers.EFloat SignalingNaN;</a></code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</li>
 <li><code><a href="#Sqrt_PeterO_Numbers_EContext">Sqrt(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
 <li><code><a href="#SquareRoot_PeterO_Numbers_EContext">SquareRoot(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
 <li><code><a href="#Subtract_PeterO_Numbers_EFloat">Subtract(PeterO.Numbers.EFloat)</a></code> - Subtracts an arbitrary-precision binary float from this instance and returns the result.</li>
+<li><code><a href="#Subtract_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Subtract(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Subtracts an arbitrary-precision binary float from this instance.</li>
 <li><code><a href="#Ten">public static readonly PeterO.Numbers.EFloat Ten;</a></code> - Represents the number 10.</li>
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
@@ -164,12 +205,12 @@
 <li><code><a href="#Ulp">Ulp()</a></code> - Returns the unit in the last place.</li>
 <li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value.</li>
 <li><code><a href="#Zero">public static readonly PeterO.Numbers.EFloat Zero;</a></code> - Represents the number 0.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Adds two arbitrary-precision binary floating-point numbers and returns the result.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator /(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Divides one binary float by another and returns the result.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator %(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Finds the remainder when dividing one arbitrary-precision binary float by another.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator *(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Subtracts one arbitrary-precision binary float from another.</li>
-<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat)</a></code> - Gets an object with the same value as this one, but with the sign reversed.</li>
+<li><code><a href="#op_Addition">PeterO.Numbers.EFloat operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Adds two arbitrary-precision binary floating-point numbers and returns the result.</li>
+<li><code><a href="#op_Division">PeterO.Numbers.EFloat operator /(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Divides one binary float by another and returns the result.</li>
+<li><code><a href="#op_Modulus">PeterO.Numbers.EFloat operator %(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Finds the remainder when dividing one arbitrary-precision binary float by another.</li>
+<li><code><a href="#op_Multiply">PeterO.Numbers.EFloat operator *(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
+<li><code><a href="#op_Subtraction">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Subtracts one arbitrary-precision binary float from another.</li>
+<li><code><a href="#op_UnaryNegation">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat)</a></code> - Gets an object with the same value as this one, but with the sign reversed.</li>
 </ul>
 
 <p><a id="NaN"></a></p>
@@ -2277,7 +2318,7 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_Addition"></a></p>
 
 <h3>Operator <code>+</code></h3>
 
@@ -2308,7 +2349,7 @@ or <i>otherValue</i>
 is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_Division"></a></p>
 
 <h3>Operator <code>/</code></h3>
 
@@ -2338,7 +2379,7 @@ The parameter <i>dividend</i>
 is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_Modulus"></a></p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -2368,7 +2409,7 @@ The parameter <i>dividend</i>
 is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_Multiply"></a></p>
 
 <h3>Operator <code>*</code></h3>
 
@@ -2398,7 +2439,7 @@ The parameter <i>operand1</i>
 is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_Subtraction"></a></p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -2428,7 +2469,7 @@ The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
-<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat"></a></p>
+<p><a id="op_UnaryNegation"></a></p>
 
 <h3>Operator <code>-</code></h3>
 
