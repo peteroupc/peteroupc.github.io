@@ -133,6 +133,15 @@ Finds the sum of two CBOR numbers.</li>
 <li><code>static void AddTagHandler​(com.upokecenter.numbers.EInteger bigintTag,
          ICBORTag handler)</code><br>
 Registers an object that validates CBOR objects with new tags.</li>
+<li><code>static void AddTagHandler​(BigInteger bigintTag,
+         ICBORTag handler)</code><br>
+Deprecated.
+Use the EInteger version of this method.
+Use the EInteger version of this method.</li>
+<li><code>BigInteger AsBigInteger()</code><br>
+Deprecated.
+Use the AsEInteger method instead.
+Use the AsEInteger method instead.</li>
 <li><code>boolean AsBoolean()</code><br>
 Returns false if this object is False, Null, or Undefined; otherwise, true.</li>
 <li><code>byte AsByte()</code><br>
@@ -147,6 +156,18 @@ Converts this object to an arbitrary-precision binary floating point number.</li
 Converts this object to an arbitrary-precision integer.</li>
 <li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
 Converts this object to a rational number.</li>
+<li><code>ExtendedDecimal AsExtendedDecimal()</code><br>
+Deprecated.
+Use AsEDecimal instead.
+Use AsEDecimal instead.</li>
+<li><code>ExtendedFloat AsExtendedFloat()</code><br>
+Deprecated.
+Use AsEFloat instead.
+Use AsEFloat instead.</li>
+<li><code>ExtendedRational AsExtendedRational()</code><br>
+Deprecated.
+Use AsERational instead.
+Use AsERational instead.</li>
 <li><code>short AsInt16()</code><br>
 Converts this object to a 16-bit signed integer.</li>
 <li><code>int AsInt32()</code><br>
@@ -252,6 +273,22 @@ number.</li>
 Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.ERational bigValue)</code><br>
 Generates a CBOR object from a rational number.</li>
+<li><code>static CBORObject FromObject​(BigInteger bigintValue)</code><br>
+Deprecated.
+Use the EInteger version of this method.
+Use the EInteger version of this method.</li>
+<li><code>static CBORObject FromObject​(ExtendedDecimal otherValue)</code><br>
+Deprecated.
+Use the EDecimal version of this method instead.
+Use the EDecimal version of this method instead.</li>
+<li><code>static CBORObject FromObject​(ExtendedFloat bigValue)</code><br>
+Deprecated.
+Use the EFloat version of this method instead.
+Use the EFloat version of this method instead.</li>
+<li><code>static CBORObject FromObject​(ExtendedRational bigValue)</code><br>
+Deprecated.
+Use the ERational version of this method instead.
+Use the ERational version of this method instead.</li>
 <li><code>static &lt;T&gt; CBORObject FromObject​(Iterable&lt;T&gt; value)</code><br>
 Generates a CBOR object from an enumerable set of objects.</li>
 <li><code>static CBORObject FromObject​(Object obj)</code><br>
@@ -274,6 +311,11 @@ object a tag.</li>
             com.upokecenter.numbers.EInteger bigintTag)</code><br>
 Generates a CBOR object from an arbitrary object and gives the resulting
 object a tag.</li>
+<li><code>static CBORObject FromObjectAndTag​(Object valueOb,
+            BigInteger bigintTag)</code><br>
+Deprecated.
+Use the EInteger version instead.
+Use the EInteger version instead.</li>
 <li><code>static CBORObject FromSimpleValue​(int simpleValue)</code><br>
 Creates a CBOR object from a simple value number.</li>
 <li><code>CBORObject get​(int index)</code><br>
@@ -287,6 +329,10 @@ Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
 Gets the byte array used in this object, if this object is a byte string,
 without copying the data to a new one.</li>
+<li><code>BigInteger getInnermostTag()</code><br>
+Deprecated.
+Use MostInnerTag instead.
+Use MostInnerTag instead.</li>
 <li><code>Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object in an undefined order.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
@@ -295,9 +341,17 @@ untagged.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostOuterTag()</code><br>
 Gets the outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
+<li><code>BigInteger getOutermostTag()</code><br>
+Deprecated.
+Use MostOuterTag instead.
+Use MostOuterTag instead.</li>
 <li><code>int getSimpleValue()</code><br>
 Gets the simple value ID of this object, or -1 if this object is not a
 simple value (including if the value is a floating-point number).</li>
+<li><code>BigInteger[] GetTags()</code><br>
+Deprecated.
+Use the GetAllTags method instead.
+Use the GetAllTags method instead.</li>
 <li><code>CBORType getType()</code><br>
 Gets the general data type of this CBOR object.</li>
 <li><code>Collection&lt;CBORObject&gt; getValues()</code><br>
@@ -313,6 +367,10 @@ Returns whether this object has a tag of the given number.</li>
 Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
+<li><code>boolean HasTag​(BigInteger bigTagValue)</code><br>
+Deprecated.
+Use the EInteger version of this method.
+Use the EInteger version of this method.</li>
 <li><code>CBORObject Insert​(int index,
   Object valueOb)</code><br>
 Inserts an object at the specified position in this CBOR array.</li>
@@ -464,6 +522,26 @@ Writes a big integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(com.upokecenter.numbers.ERational rational,
  OutputStream stream)</code><br>
 Writes a rational number in CBOR format to a data stream.</li>
+<li><code>static void Write​(BigInteger bigint,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EInteger to the Write method instead.
+Pass an EInteger to the Write method instead.</li>
+<li><code>static void Write​(ExtendedDecimal bignum,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EDecimal to the Write method instead.
+Pass an EDecimal to the Write method instead.</li>
+<li><code>static void Write​(ExtendedFloat bignum,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an EFloat to the Write method instead.
+Pass an EFloat to the Write method instead.</li>
+<li><code>static void Write​(ExtendedRational rational,
+ OutputStream stream)</code><br>
+Deprecated.
+Pass an ERational to the Write method instead.
+Pass an ERational to the Write method instead.</li>
 <li><code>static void Write​(Object objValue,
  OutputStream stream) CBOREncodeOptions</code><br>
 At the moment, use the overload of this method that takes a CBOREncodeOptions object.</li>
@@ -595,6 +673,38 @@ an arbitrary-precision integer.</li>
 <ul>
 <li>The number of keys in this map, or the number of items in this
 array, or 0 if this item is neither an array nor a map.</li>
+</ul>
+
+<h3>getInnermostTag</h3>
+
+<pre>@Deprecated public final BigInteger getInnermostTag()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use MostInnerTag instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The last defined tag for this CBOR data item, or -1 if the item is
+untagged.</li>
+</ul>
+
+<h3>getOutermostTag</h3>
+
+<pre>@Deprecated public final BigInteger getOutermostTag()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use MostOuterTag instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The outermost tag for this CBOR data item, or -1 if the item is
+untagged.</li>
 </ul>
 
 <h3>getMostInnerTag</h3>
@@ -1049,6 +1159,31 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>AddTagHandler</h3>
 
+<pre>@Deprecated public static void AddTagHandler​(BigInteger bigintTag, ICBORTag handler)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EInteger version of this method.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigintTag</code> - An arbitrary-precision integer.</p></li>
+<li><p><code>handler</code> - The parameter <code>handler</code> is an ICBORTag object.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> or
+<code>handler</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less
+than 0 or greater than (2^64-1).</p></li>
+</ul>
+
+<h3>AddTagHandler</h3>
+
 <pre>public static void AddTagHandler​(com.upokecenter.numbers.EInteger bigintTag, ICBORTag handler)
 </pre>
 
@@ -1372,6 +1507,27 @@ object&#39;s CBOR type, is not supported.</p></li>
 
 <h3>FromObject</h3>
 
+<pre>@Deprecated public static CBORObject FromObject​(BigInteger bigintValue)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EInteger version of this method.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigintValue</code> - An arbitrary-precision value.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)
 </pre>
 
@@ -1391,11 +1547,53 @@ object&#39;s CBOR type, is not supported.</p></li>
 
 <h3>FromObject</h3>
 
+<pre>@Deprecated public static CBORObject FromObject​(ExtendedFloat bigValue)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EFloat version of this method instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EFloat bigValue)
 </pre>
 
 <p>Generates a CBOR object from an arbitrary-precision binary floating-point
  number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre>@Deprecated public static CBORObject FromObject​(ExtendedRational bigValue)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the ERational version of this method instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1434,6 +1632,27 @@ object&#39;s CBOR type, is not supported.</p></li>
 </pre>
 
 <p>Generates a CBOR object from a decimal number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>otherValue</code> - An arbitrary-precision decimal number.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR number.</li>
+</ul>
+
+<h3>FromObject</h3>
+
+<pre>@Deprecated public static CBORObject FromObject​(ExtendedDecimal otherValue)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EDecimal version of this method instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1898,6 +2117,48 @@ CBORObject.Null if the object is null.</li>
 
 <h3>FromObjectAndTag</h3>
 
+<pre>@Deprecated public static CBORObject FromObjectAndTag​(Object valueOb, BigInteger bigintTag)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EInteger version instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>valueOb</code> - An arbitrary object. If the tag number is 2 or 3, this must
+be a byte string whose bytes represent an integer in little-endian
+byte order, and the value of the number is 1 minus the integer&#39;s
+value for tag 3. If the tag number is 4 or 5, this must be an array
+with two elements: the first must be an integer representing the
+exponent, and the second must be an integer representing a mantissa.</p></li>
+<li><p><code>bigintTag</code> - Tag number. The tag number 55799 can be used to mark a
+&quot;self-described CBOR&quot; object. This document does not attempt to list
+all CBOR tags and their meanings. An up-to-date list can be found at
+the CBOR Tags registry maintained by the Internet Assigned Numbers
+Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object where the object <code>valueOb</code> is converted to a
+CBOR object and given the tag <code>bigintTag</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less
+than 0 or greater than 2^64-1, or <code>valueOb</code> &#39;s type is
+unsupported.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> is
+null.</p></li>
+</ul>
+
+<h3>FromObjectAndTag</h3>
+
 <pre>public static CBORObject FromObjectAndTag​(Object valueOb, com.upokecenter.numbers.EInteger bigintTag)
 </pre>
 
@@ -2299,6 +2560,29 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
+<pre>@Deprecated public static void Write​(ExtendedFloat bignum, OutputStream stream) throws IOException
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Pass an EFloat to the Write method instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bignum</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
 <pre>public static void Write​(com.upokecenter.numbers.EFloat bignum, OutputStream stream) throws IOException
 </pre>
 
@@ -2316,6 +2600,29 @@ opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p><code>bignum</code> - An arbitrary-precision binary float.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre>@Deprecated public static void Write​(ExtendedRational rational, OutputStream stream) throws IOException
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Pass an ERational to the Write method instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>rational</code> - An arbitrary-precision rational number.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 </ul>
 
@@ -2349,6 +2656,29 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
+<pre>@Deprecated public static void Write​(ExtendedDecimal bignum, OutputStream stream) throws IOException
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Pass an EDecimal to the Write method instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bignum</code> - The arbitrary-precision decimal number to write. Can be null.</p></li>
+<li><p><code>stream</code> - InputStream to write to.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
 <pre>public static void Write​(com.upokecenter.numbers.EDecimal bignum, OutputStream stream) throws IOException
 </pre>
 
@@ -2367,6 +2697,29 @@ opposed to Not-a-Number, NaN).</li>
 <ul>
 <li><p><code>bignum</code> - The arbitrary-precision decimal number to write. Can be null.</p></li>
 <li><p><code>stream</code> - InputStream to write to.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
+<li><p><code>IOException</code> - An I/O error occurred.</p></li>
+</ul>
+
+<h3>Write</h3>
+
+<pre>@Deprecated public static void Write​(BigInteger bigint, OutputStream stream) throws IOException
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Pass an EInteger to the Write method instead.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigint</code> - Big integer to write. Can be null.</p></li>
+<li><p><code>stream</code> - A writable data stream.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2810,6 +3163,30 @@ valueOb</code> has an unsupported type.</p></li>
 <li><p><code>IllegalArgumentException</code> - The type of <code>obj</code> is not supported.</p></li>
 </ul>
 
+<h3>AsBigInteger</h3>
+
+<pre>@Deprecated public BigInteger AsBigInteger()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the AsEInteger method instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The closest big integer to this object.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</p></li>
+<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or
+not-a-number (NaN).</p></li>
+</ul>
+
 <h3>AsEInteger</h3>
 
 <pre>public com.upokecenter.numbers.EInteger AsEInteger()
@@ -2890,6 +3267,30 @@ exceeds the range of a 64-bit floating point number.</li>
 <li><code>IllegalStateException</code> - This object&#39;s type is not a number type.</li>
 </ul>
 
+<h3>AsExtendedDecimal</h3>
+
+<pre>@Deprecated public ExtendedDecimal AsExtendedDecimal()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use AsEDecimal instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A decimal number for this object&#39;s value. If this object is a
+rational number with a nonterminating decimal expansion, returns a
+decimal number rounded to 34 digits.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
+
 <h3>AsEDecimal</h3>
 
 <pre>public com.upokecenter.numbers.EDecimal AsEDecimal()
@@ -2903,6 +3304,33 @@ exceeds the range of a 64-bit floating point number.</li>
 <li>A decimal number for this object&#39;s value. If this object is a
 rational number with a nonterminating decimal expansion, returns a
 decimal number rounded to 34 digits.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
+
+<h3>AsExtendedFloat</h3>
+
+<pre>@Deprecated public ExtendedFloat AsExtendedFloat()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use AsEFloat instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision binary floating point number for this
+object&#39;s value. Note that if this object is a decimal number with a
+fractional part, the conversion may lose information depending on the
+number. If this object is a rational number with a nonterminating
+binary expansion, returns a binary floating-point number rounded to
+113 bits.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -2928,6 +3356,28 @@ fractional part, the conversion may lose information depending on the
 number. If this object is a rational number with a nonterminating
 binary expansion, returns a binary floating-point number rounded to
 113 bits.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
+including if this object is CBORObject.Null.</li>
+</ul>
+
+<h3>AsExtendedRational</h3>
+
+<pre>@Deprecated public ExtendedRational AsExtendedRational()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use AsERational instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A rational number for this object&#39;s value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3463,6 +3913,21 @@ if the given key is not found or this object is not a map.</li>
 <li>A 32-bit hash code.</li>
 </ul>
 
+<h3>GetTags</h3>
+
+<pre>@Deprecated public BigInteger[] GetTags()
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the GetAllTags method instead.</div>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An array of tags, or the empty string if this object is untagged.</li>
+</ul>
+
 <h3>GetAllTags</h3>
 
 <pre>public com.upokecenter.numbers.EInteger[] GetAllTags()
@@ -3520,7 +3985,7 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code> .</li>
+otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3555,6 +4020,35 @@ otherwise, <code>false</code>.</li>
 <ul>
 <li><p><code>IllegalArgumentException</code> - TagValue is less than 0.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;obj&quot; is null.</p></li>
+</ul>
+
+<h3>HasTag</h3>
+
+<pre>@Deprecated public boolean HasTag​(BigInteger bigTagValue)
+</pre>
+
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>Use the EInteger version of this method.</div>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>bigTagValue</code> - The tag value to search for.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object has a tag of the given number;
+otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
 </ul>
 
 <h3>HasTag</h3>
