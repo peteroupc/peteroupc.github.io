@@ -60,13 +60,11 @@
 <ul>
 <li><code><a href="#Abs">Abs()</a></code> - Gets this object&#39;s absolute value.</li>
 <li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> - Registers an object that converts objects of a given type to CBOR objects (called a CBOR converter).</li>
-<li><code><a href="#AddTagHandler_PeterO_BigInteger_PeterO_Cbor_ICBORTag">AddTagHandler(PeterO.BigInteger, PeterO.Cbor.ICBORTag)</a></code> - Registers an object that validates CBOR objects with new tags.</li>
 <li><code><a href="#AddTagHandler_PeterO_Numbers_EInteger_PeterO_Cbor_ICBORTag">AddTagHandler(PeterO.Numbers.EInteger, PeterO.Cbor.ICBORTag)</a></code> - Registers an object that validates CBOR objects with new tags.</li>
 <li><code><a href="#Add_PeterO_Cbor_CBORObject">Add(PeterO.Cbor.CBORObject)</a></code> -  Adds a new object to the end of this array.</li>
 <li><code><a href="#Add_object">Add(object)</a></code> -  Converts an object to a CBOR object and adds it to the end of this array.</li>
 <li><code><a href="#Add_object_object">Add(object, object)</a></code> -  Adds a new key and its value to this CBOR map, or adds the value if the key doesn&#39;t exist.</li>
 <li><code><a href="#Addition_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Addition(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Finds the sum of two CBOR numbers.</li>
-<li><code><a href="#AsBigInteger">AsBigInteger()</a></code> - Converts this object to an arbitrary-precision integer.</li>
 <li><code><a href="#AsBoolean">AsBoolean()</a></code> - Returns false if this object is False, Null, or Undefined; otherwise,true.</li>
 <li><code><a href="#AsByte">AsByte()</a></code> - Converts this object to a byte (0 to 255).</li>
 <li><code><a href="#AsDecimal">AsDecimal()</a></code> - Converts this object to a .</li>
@@ -75,9 +73,6 @@
 <li><code><a href="#AsEFloat">AsEFloat()</a></code> - Converts this object to an arbitrary-precision binary floating point number.</li>
 <li><code><a href="#AsEInteger">AsEInteger()</a></code> - Converts this object to an arbitrary-precision integer.</li>
 <li><code><a href="#AsERational">AsERational()</a></code> - Converts this object to a rational number.</li>
-<li><code><a href="#AsExtendedDecimal">AsExtendedDecimal()</a></code> - Converts this object to a decimal number.</li>
-<li><code><a href="#AsExtendedFloat">AsExtendedFloat()</a></code> - Converts this object to an arbitrary-precision binary floating point number.</li>
-<li><code><a href="#AsExtendedRational">AsExtendedRational()</a></code> - Converts this object to a rational number.</li>
 <li><code><a href="#AsInt16">AsInt16()</a></code> - Converts this object to a 16-bit signed integer.</li>
 <li><code><a href="#AsInt32">AsInt32()</a></code> - Converts this object to a 32-bit signed integer.</li>
 <li><code><a href="#AsInt64">AsInt64()</a></code> - Converts this object to a 64-bit signed integer.</li>
@@ -109,15 +104,10 @@
 <li><code><a href="#False">public static readonly PeterO.Cbor.CBORObject False;</a></code> - Represents the value false.</li>
 <li><code><a href="#FromJSONString_string">FromJSONString(string)</a></code> -  At the moment, use the overload of this method that takes aPeterO.</li>
 <li><code><a href="#FromJSONString_string_PeterO_Cbor_CBOREncodeOptions">FromJSONString(string, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
-<li><code><a href="#FromObjectAndTag_object_PeterO_BigInteger">FromObjectAndTag(object, PeterO.BigInteger)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
 <li><code><a href="#FromObjectAndTag_object_PeterO_Numbers_EInteger">FromObjectAndTag(object, PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
 <li><code><a href="#FromObjectAndTag_object_int">FromObjectAndTag(object, int)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
 <li><code><a href="#FromObjectAndTag_object_ulong">FromObjectAndTag(object, ulong)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
-<li><code><a href="#FromObject_PeterO_BigInteger">FromObject(PeterO.BigInteger)</a></code> - Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code><a href="#FromObject_PeterO_Cbor_CBORObject">FromObject(PeterO.Cbor.CBORObject)</a></code> - Generates a CBOR object from a CBOR object.</li>
-<li><code><a href="#FromObject_PeterO_ExtendedDecimal">FromObject(PeterO.ExtendedDecimal)</a></code> - Generates a CBOR object from a decimal number.</li>
-<li><code><a href="#FromObject_PeterO_ExtendedFloat">FromObject(PeterO.ExtendedFloat)</a></code> - Generates a CBOR object from an arbitrary-precision binary floating-point number.</li>
-<li><code><a href="#FromObject_PeterO_ExtendedRational">FromObject(PeterO.ExtendedRational)</a></code> - Generates a CBOR object from an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromObject_PeterO_Numbers_EDecimal">FromObject(PeterO.Numbers.EDecimal)</a></code> - Generates a CBOR object from a decimal number.</li>
 <li><code><a href="#FromObject_PeterO_Numbers_EFloat">FromObject(PeterO.Numbers.EFloat)</a></code> - Generates a CBOR object from an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromObject_PeterO_Numbers_EInteger">FromObject(PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from an arbitrary-precision integer.</li>
@@ -145,13 +135,10 @@
 <li><code><a href="#GetAllTags">GetAllTags()</a></code> - Gets a list of all tags, from outermost to innermost.</li>
 <li><code><a href="#GetByteString">GetByteString()</a></code> - Gets the byte array used in this object, if this object is a byte string, without copying the data to a new one.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
-<li><code><a href="#GetTags">GetTags()</a></code> - Gets a list of all tags, from outermost to innermost.</li>
 <li><code><a href="#HasMostOuterTag_PeterO_Numbers_EInteger">HasMostOuterTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasMostOuterTag_int">HasMostOuterTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
-<li><code><a href="#HasTag_PeterO_BigInteger">HasTag(PeterO.BigInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasTag_PeterO_Numbers_EInteger">HasTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasTag_int">HasTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
-<li><code><a href="#InnermostTag">InnermostTag</a></code> - Gets the last defined tag for this CBOR data item, or -1 if the item is untagged.</li>
 <li><code><a href="#Insert_int_object">Insert(int, object)</a></code> - Inserts an object at the specified position in this CBOR array.</li>
 <li><code><a href="#IsFalse">IsFalse</a></code> - Gets a value indicating whether this value is a CBOR false value.</li>
 <li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this CBOR object represents a finite number.</li>
@@ -176,7 +163,6 @@
 <li><code><a href="#NewArray">NewArray()</a></code> - Creates a new empty CBOR array.</li>
 <li><code><a href="#NewMap">NewMap()</a></code> - Creates a new empty CBOR map.</li>
 <li><code><a href="#Null">public static readonly PeterO.Cbor.CBORObject Null;</a></code> - Represents the value null.</li>
-<li><code><a href="#OutermostTag">OutermostTag</a></code> - Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</li>
 <li><code><a href="#PositiveInfinity">public static readonly PeterO.Cbor.CBORObject PositiveInfinity;</a></code> - The value positive infinity.</li>
 <li><code><a href="#ReadJSON_System_IO_Stream">ReadJSON(System.IO.Stream)</a></code> - Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format.</li>
 <li><code><a href="#ReadJSON_System_IO_Stream_PeterO_Cbor_CBOREncodeOptions">ReadJSON(System.IO.Stream, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
@@ -211,11 +197,7 @@
 <li><code><a href="#WriteValue_System_IO_Stream_int_long">WriteValue(System.IO.Stream, int, long)</a></code> - Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit signed integer.</li>
 <li><code><a href="#WriteValue_System_IO_Stream_int_uint">WriteValue(System.IO.Stream, int, uint)</a></code> - Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 32-bit unsigned integer.</li>
 <li><code><a href="#WriteValue_System_IO_Stream_int_ulong">WriteValue(System.IO.Stream, int, ulong)</a></code> - Writes a CBOR major type number and an integer 0 or greater associated with it to a data stream, where that integer is passed to this method as a 64-bit unsigned integer.</li>
-<li><code><a href="#Write_PeterO_BigInteger_System_IO_Stream">Write(PeterO.BigInteger, System.IO.Stream)</a></code> - Writes a big integer in CBOR format to a data stream.</li>
 <li><code><a href="#Write_PeterO_Cbor_CBORObject_System_IO_Stream">Write(PeterO.Cbor.CBORObject, System.IO.Stream)</a></code> - Writes a CBOR object to a CBOR data stream.</li>
-<li><code><a href="#Write_PeterO_ExtendedDecimal_System_IO_Stream">Write(PeterO.ExtendedDecimal, System.IO.Stream)</a></code> - Writes a decimal floating-point number in CBOR format to a data stream, as follows:If the value is null, writes the byte 0xF6.</li>
-<li><code><a href="#Write_PeterO_ExtendedFloat_System_IO_Stream">Write(PeterO.ExtendedFloat, System.IO.Stream)</a></code> - Writes a binary floating-point number in CBOR format to a data stream as follows:If the value is null, writes the byte 0xF6.</li>
-<li><code><a href="#Write_PeterO_ExtendedRational_System_IO_Stream">Write(PeterO.ExtendedRational, System.IO.Stream)</a></code> - Writes a rational number in CBOR format to a data stream.</li>
 <li><code><a href="#Write_PeterO_Numbers_EDecimal_System_IO_Stream">Write(PeterO.Numbers.EDecimal, System.IO.Stream)</a></code> - Writes a decimal floating-point number in CBOR format to a data stream, as follows:If the value is null, writes the byte 0xF6.</li>
 <li><code><a href="#Write_PeterO_Numbers_EFloat_System_IO_Stream">Write(PeterO.Numbers.EFloat, System.IO.Stream)</a></code> - Writes a binary floating-point number in CBOR format to a data stream as follows:If the value is null, writes the byte 0xF6.</li>
 <li><code><a href="#Write_PeterO_Numbers_EInteger_System_IO_Stream">Write(PeterO.Numbers.EInteger, System.IO.Stream)</a></code> - Writes a big integer in CBOR format to a data stream.</li>
@@ -328,21 +310,6 @@
 <p><b>Returns:</b></p>
 
 <p>The number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</p>
-
-<p><a id="InnermostTag"></a></p>
-
-<h3>InnermostTag</h3>
-
-<pre>public PeterO.BigInteger InnermostTag { get; }
-</pre>
-
-<p><b>Deprecated.</b> Use MostInnerTag instead.</p>
-
-<p>Gets the last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The last defined tag for this CBOR data item, or -1 if the item is untagged.</p>
 
 <p><a id="IsFalse"></a></p>
 
@@ -500,21 +467,6 @@ This object is not a map.</li>
 
 <pre>public PeterO.Numbers.EInteger MostOuterTag { get; }
 </pre>
-
-<p>Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
-
-<p><b>Returns:</b></p>
-
-<p>The outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
-
-<p><a id="OutermostTag"></a></p>
-
-<h3>OutermostTag</h3>
-
-<pre>public PeterO.BigInteger OutermostTag { get; }
-</pre>
-
-<p><b>Deprecated.</b> Use MostOuterTag instead.</p>
 
 <p>Gets the outermost tag for this CBOR data item, or -1 if the item is untagged.</p>
 
@@ -789,39 +741,6 @@ is a CBOR object.</p></li>
 Either or both operands are not numbers (as opposed to Not-a-Number, NaN).</li>
 </ul>
 
-<p><a id="AddTagHandler_PeterO_BigInteger_PeterO_Cbor_ICBORTag"></a></p>
-
-<h3>AddTagHandler</h3>
-
-<pre>public static void AddTagHandler(
-    PeterO.BigInteger bigintTag,
-    PeterO.Cbor.ICBORTag handler);
-</pre>
-
-<p><b>Deprecated.</b> Use the EInteger version of this method.</p>
-
-<p>Registers an object that validates CBOR objects with new tags.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bigintTag</i>: An arbitrary-precision integer.</p></li>
-<li><p><i>handler</i>: The parameter  <i>handler</i>
-is an ICBORTag object.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>bigintTag</i>
-or  <i>handler</i>
-is null.</p></li>
-<li><p>System.ArgumentException:
-The parameter <i>bigintTag</i>
-is less than 0 or greater than (2^64-1).</p></li>
-</ul>
-
 <p><a id="AddTagHandler_PeterO_Numbers_EInteger_PeterO_Cbor_ICBORTag"></a></p>
 
 <h3>AddTagHandler</h3>
@@ -851,30 +770,6 @@ is null.</p></li>
 <li><p>System.ArgumentException:
 The parameter <i>bigintTag</i>
 is less than 0 or greater than (2^64-1).</p></li>
-</ul>
-
-<p><a id="AsBigInteger"></a></p>
-
-<h3>AsBigInteger</h3>
-
-<pre>public PeterO.BigInteger AsBigInteger();
-</pre>
-
-<p><b>Deprecated.</b> Use the AsEInteger method instead.</p>
-
-<p>Converts this object to an arbitrary-precision integer. Fractional values are truncated to an integer.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>The closest big integer to this object.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</p></li>
-<li><p>System.OverflowException:
-This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 </ul>
 
 <p><a id="AsBoolean"></a></p>
@@ -1022,72 +917,6 @@ This object&#39;s value is infinity or not-a-number (NaN).</p></li>
 
 <pre>public PeterO.Numbers.ERational AsERational();
 </pre>
-
-<p>Converts this object to a rational number.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A rational number for this object&#39;s value.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
-</ul>
-
-<p><a id="AsExtendedDecimal"></a></p>
-
-<h3>AsExtendedDecimal</h3>
-
-<pre>public PeterO.ExtendedDecimal AsExtendedDecimal();
-</pre>
-
-<p><b>Deprecated.</b> Use AsEDecimal instead.</p>
-
-<p>Converts this object to a decimal number.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A decimal number for this object&#39;s value. If this object is a rational number with a nonterminating decimal expansion, returns a decimal number rounded to 34 digits.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
-</ul>
-
-<p><a id="AsExtendedFloat"></a></p>
-
-<h3>AsExtendedFloat</h3>
-
-<pre>public PeterO.ExtendedFloat AsExtendedFloat();
-</pre>
-
-<p><b>Deprecated.</b> Use AsEFloat instead.</p>
-
-<p>Converts this object to an arbitrary-precision binary floating point number.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>An arbitrary-precision binary floating point number for this object&#39;s value. Note that if this object is a decimal number with a fractional part, the conversion may lose information depending on the number. If this object is a rational number with a nonterminating binary expansion, returns a binary floating-point number rounded to 113 bits.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.InvalidOperationException:
-This object&#39;s type is not a number type, including if this object is CBORObject.Null.</li>
-</ul>
-
-<p><a id="AsExtendedRational"></a></p>
-
-<h3>AsExtendedRational</h3>
-
-<pre>public PeterO.ExtendedRational AsExtendedRational();
-</pre>
-
-<p><b>Deprecated.</b> Use AsERational instead.</p>
 
 <p>Converts this object to a rational number.</p>
 
@@ -2058,28 +1887,6 @@ The parameter  <i>options</i>
 is null.</li>
 </ul>
 
-<p><a id="FromObject_PeterO_BigInteger"></a></p>
-
-<h3>FromObject</h3>
-
-<pre>public static PeterO.Cbor.CBORObject FromObject(
-    PeterO.BigInteger bigintValue);
-</pre>
-
-<p><b>Deprecated.</b> Use the EInteger version of this method.</p>
-
-<p>Generates a CBOR object from an arbitrary-precision integer.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigintValue</i>: An arbitrary-precision value.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR number.</p>
-
 <p><a id="FromObject_PeterO_Cbor_CBORObject"></a></p>
 
 <h3>FromObject</h3>
@@ -2120,72 +1927,6 @@ is a CBOR object.</li>
 <p><b>Return Value:</b></p>
 
 <p>A CBOR object where each element of the given array is copied to a new array, or CBORObject.Null if the value is null.</p>
-
-<p><a id="FromObject_PeterO_ExtendedDecimal"></a></p>
-
-<h3>FromObject</h3>
-
-<pre>public static PeterO.Cbor.CBORObject FromObject(
-    PeterO.ExtendedDecimal otherValue);
-</pre>
-
-<p><b>Deprecated.</b> Use the EDecimal version of this method instead.</p>
-
-<p>Generates a CBOR object from a decimal number.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>otherValue</i>: An arbitrary-precision decimal number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR number.</p>
-
-<p><a id="FromObject_PeterO_ExtendedFloat"></a></p>
-
-<h3>FromObject</h3>
-
-<pre>public static PeterO.Cbor.CBORObject FromObject(
-    PeterO.ExtendedFloat bigValue);
-</pre>
-
-<p><b>Deprecated.</b> Use the EFloat version of this method instead.</p>
-
-<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR number.</p>
-
-<p><a id="FromObject_PeterO_ExtendedRational"></a></p>
-
-<h3>FromObject</h3>
-
-<pre>public static PeterO.Cbor.CBORObject FromObject(
-    PeterO.ExtendedRational bigValue);
-</pre>
-
-<p><b>Deprecated.</b> Use the ERational version of this method instead.</p>
-
-<p>Generates a CBOR object from an arbitrary-precision binary floating-point number.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigValue</i>: An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR number.</p>
 
 <p><a id="FromObject_PeterO_Numbers_EDecimal"></a></p>
 
@@ -2507,44 +2248,6 @@ is an arbitrary object.</p></li>
 is converted to a CBOR object and given the tag <i>tag</i>
 .</p>
 
-<p><a id="FromObjectAndTag_object_PeterO_BigInteger"></a></p>
-
-<h3>FromObjectAndTag</h3>
-
-<pre>public static PeterO.Cbor.CBORObject FromObjectAndTag(
-    object valueOb,
-    PeterO.BigInteger bigintTag);
-</pre>
-
-<p><b>Deprecated.</b> Use the EInteger version instead.</p>
-
-<p>Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>valueOb</i>: An arbitrary object. If the tag number is 2 or 3, this must be a byte string whose bytes represent an integer in little-endian byte order, and the value of the number is 1 minus the integer&#39;s value for tag 3. If the tag number is 4 or 5, this must be an array with two elements: the first must be an integer representing the exponent, and the second must be an integer representing a mantissa.</p></li>
-<li><p><i>bigintTag</i>: Tag number. The tag number 55799 can be used to mark a &quot;self-described CBOR&quot; object. This document does not attempt to list all CBOR tags and their meanings. An up-to-date list can be found at the CBOR Tags registry maintained by the Internet Assigned Numbers Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A CBOR object where the object  <i>valueOb</i>
-is converted to a CBOR object and given the tag  <i>bigintTag</i>
-.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-The parameter <i>bigintTag</i>
-is less than 0 or greater than 2^64-1, or  <i>valueOb</i>
-&#39;s type is unsupported.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter <i>bigintTag</i>
-is null.</p></li>
-</ul>
-
 <p><a id="FromObjectAndTag_object_PeterO_Numbers_EInteger"></a></p>
 
 <h3>FromObjectAndTag</h3>
@@ -2689,21 +2392,6 @@ This object is not a byte string.</li>
 
 <p>A 32-bit hash code.</p>
 
-<p><a id="GetTags"></a></p>
-
-<h3>GetTags</h3>
-
-<pre>public PeterO.BigInteger[] GetTags();
-</pre>
-
-<p><b>Deprecated.</b> Use the GetAllTags method instead.</p>
-
-<p>Gets a list of all tags, from outermost to innermost.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>An array of tags, or the empty string if this object is untagged.</p>
-
 <p><a id="HasMostOuterTag_int"></a></p>
 
 <h3>HasMostOuterTag</h3>
@@ -2751,7 +2439,7 @@ The parameter &quot;obj&quot; is null.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code> if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -2789,37 +2477,6 @@ BigTagValue is less than 0.</p></li>
 TagValue is less than 0.</p></li>
 <li><p>System.ArgumentNullException:
 The parameter &quot;obj&quot; is null.</p></li>
-</ul>
-
-<p><a id="HasTag_PeterO_BigInteger"></a></p>
-
-<h3>HasTag</h3>
-
-<pre>public bool HasTag(
-    PeterO.BigInteger bigTagValue);
-</pre>
-
-<p><b>Deprecated.</b> Use the EInteger version of this method.</p>
-
-<p>Returns whether this object has a tag of the given number.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>bigTagValue</i>: The tag value to search for.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-BigTagValue is null.</p></li>
-<li><p>System.ArgumentException:
-BigTagValue is less than 0.</p></li>
 </ul>
 
 <p><a id="HasTag_PeterO_Numbers_EInteger"></a></p>
@@ -3919,36 +3576,6 @@ is an arbitrary object.</p></li>
 <li><p><i>stream</i>: A writable data stream.</p></li>
 </ul>
 
-<p><a id="Write_PeterO_BigInteger_System_IO_Stream"></a></p>
-
-<h3>Write</h3>
-
-<pre>public static void Write(
-    PeterO.BigInteger bigint,
-    System.IO.Stream stream);
-</pre>
-
-<p><b>Deprecated.</b> Pass an EInteger to the Write method instead.</p>
-
-<p>Writes a big integer in CBOR format to a data stream.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bigint</i>: Big integer to write. Can be null.</p></li>
-<li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
 <p><a id="Write_PeterO_Cbor_CBORObject_System_IO_Stream"></a></p>
 
 <h3>Write</h3>
@@ -3973,110 +3600,6 @@ An I/O error occurred.</p></li>
 <li>System.ArgumentNullException:
 The parameter <i>stream</i>
 is null.</li>
-</ul>
-
-<p><a id="Write_PeterO_ExtendedDecimal_System_IO_Stream"></a></p>
-
-<h3>Write</h3>
-
-<pre>public static void Write(
-    PeterO.ExtendedDecimal bignum,
-    System.IO.Stream stream);
-</pre>
-
-<p><b>Deprecated.</b> Pass an EDecimal to the Write method instead.</p>
-
-<p>Writes a decimal floating-point number in CBOR format to a data stream, as follows:</p>
-
-<ul>
-<li><p>If the value is null, writes the byte 0xF6.</p></li>
-<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
-<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
-<li><p>In all other cases, writes the value as a decimal number.</p></li>
-</ul>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bignum</i>: The arbitrary-precision decimal number to write. Can be null.</p></li>
-<li><p><i>stream</i>: Stream to write to.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
-<p><a id="Write_PeterO_ExtendedFloat_System_IO_Stream"></a></p>
-
-<h3>Write</h3>
-
-<pre>public static void Write(
-    PeterO.ExtendedFloat bignum,
-    System.IO.Stream stream);
-</pre>
-
-<p><b>Deprecated.</b> Pass an EFloat to the Write method instead.</p>
-
-<p>Writes a binary floating-point number in CBOR format to a data stream as follows:</p>
-
-<ul>
-<li><p>If the value is null, writes the byte 0xF6.</p></li>
-<li><p>If the value is negative zero, infinity, or NaN, converts the number to a  <code>double</code>  and writes that  <code>double</code> . If negative zero should not be written this way, use the Plus method to convert the value beforehand.</p></li>
-<li><p>If the value has an exponent of zero, writes the value as an unsigned integer or signed integer if the number can fit either type or as a big integer otherwise.</p></li>
-<li><p>In all other cases, writes the value as a big float.</p></li>
-</ul>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bignum</i>: An arbitrary-precision binary float.</p></li>
-<li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
-</ul>
-
-<p><a id="Write_PeterO_ExtendedRational_System_IO_Stream"></a></p>
-
-<h3>Write</h3>
-
-<pre>public static void Write(
-    PeterO.ExtendedRational rational,
-    System.IO.Stream stream);
-</pre>
-
-<p><b>Deprecated.</b> Pass an ERational to the Write method instead.</p>
-
-<p>Writes a rational number in CBOR format to a data stream.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>rational</i>: An arbitrary-precision rational number.</p></li>
-<li><p><i>stream</i>: A writable data stream.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>stream</i>
-is null.</p></li>
-<li><p>System.IO.IOException:
-An I/O error occurred.</p></li>
 </ul>
 
 <p><a id="Write_PeterO_Numbers_EDecimal_System_IO_Stream"></a></p>
