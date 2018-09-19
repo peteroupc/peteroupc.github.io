@@ -15,14 +15,16 @@
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses an internal class, called NormalizationData, that includes data derived from the Unicode Character Database. See the documentation for the NormalizerInput class for the permission notice for the Unicode Character Database.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>bool IsNormalized(string, PeterO.Text.Normalization)</code> - Returns whether this string is normalized.</li>
-<li><code>string Normalize(string, PeterO.Text.Normalization)</code> - Converts a string to the given Unicode normalization form.</li>
-<li><code>int Read(int[], int, int)</code> - Reads a sequence of Unicode code points from a data source.</li>
-<li><code>int ReadChar()</code> - Reads a Unicode character from a data source.</li>
+<li><code><a href="#IsNormalized_string_PeterO_Text_Normalization">IsNormalized(string, PeterO.Text.Normalization)</a></code> - Returns whether this string is normalized.</li>
+<li><code><a href="#Normalize_string_PeterO_Text_Normalization">Normalize(string, PeterO.Text.Normalization)</a></code> - Converts a string to the given Unicode normalization form.</li>
+<li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a sequence of Unicode code points from a data source.</li>
+<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode character from a data source.</li>
 </ul>
+
+<p><a id="Void_ctor_String_Normalization"></a></p>
 
 <h3>Normalizer Constructor</h3>
 
@@ -41,6 +43,8 @@ is a text string.</p></li>
 <li><p><i>form</i>: The parameter <i>form</i>
 is a Normalization object.</p></li>
 </ul>
+
+<p><a id="IsNormalized_string_PeterO_Text_Normalization"></a></p>
 
 <h3>IsNormalized</h3>
 
@@ -62,6 +66,8 @@ is a Normalization object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code> if this string is normalized; otherwise,  <code>false</code> . Returns <code>false</code> if the string contains an unpaired surrogate code point.</p>
+
+<p><a id="Normalize_string_PeterO_Text_Normalization"></a></p>
 
 <h3>Normalize</h3>
 
@@ -91,6 +97,8 @@ converted to the given normalization form.</p>
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="Read_int_int_int"></a></p>
 
 <h3>Read</h3>
 
@@ -129,6 +137,8 @@ is less than <i>length</i>
 The parameter <i>chars</i>
 is null.</p></li>
 </ul>
+
+<p><a id="ReadChar"></a></p>
 
 <h3>ReadChar</h3>
 

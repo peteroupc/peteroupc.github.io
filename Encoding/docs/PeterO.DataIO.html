@@ -11,13 +11,15 @@
 
 <p>Convenience class that contains static methods for wrapping byte arrays and streams into byte readers and byte writers.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>PeterO.IByteReader ToByteReader(this byte[], int, int)</code> - Wraps a portion of a byte array into a byte reader.</li>
-<li><code>PeterO.IReader ToReader(this byte[])</code> - Wraps a byte array into a byte reader.</li>
-<li><code>PeterO.IWriter ToWriter(this System.IO.Stream)</code> - Wraps an output stream into a writer object.</li>
+<li><code><a href="#ToByteReader_this_byte_int_int">ToByteReader(this byte[], int, int)</a></code> - Wraps a portion of a byte array into a byte reader.</li>
+<li><code><a href="#ToReader_this_byte">ToReader(this byte[])</a></code> - Wraps a byte array into a byte reader.</li>
+<li><code><a href="#ToWriter_this_System_IO_Stream">ToWriter(this System.IO.Stream)</a></code> - Wraps an output stream into a writer object.</li>
 </ul>
+
+<p><a id="ToByteReader_this_byte"></a></p>
 
 <h3>ToByteReader</h3>
 
@@ -46,6 +48,8 @@
 The parameter <i>bytes</i>
 is null.</li>
 </ul>
+
+<p><a id="ToByteReader_this_byte_int_int"></a></p>
 
 <h3>ToByteReader</h3>
 
@@ -90,6 +94,8 @@ is less than  <i>length</i>
 .</p></li>
 </ul>
 
+<p><a id="ToByteReader_this_System_IO_Stream"></a></p>
+
 <h3>ToByteReader</h3>
 
 <pre>public static PeterO.IByteReader ToByteReader(
@@ -118,6 +124,8 @@ The parameter <i>input</i>
 is null.</li>
 </ul>
 
+<p><a id="ToReader_this_byte"></a></p>
+
 <h3>ToReader</h3>
 
 <pre>public static PeterO.IReader ToReader(
@@ -143,6 +151,8 @@ is null.</li>
 The parameter <i>bytes</i>
 is null.</li>
 </ul>
+
+<p><a id="ToReader_this_byte_int_int"></a></p>
 
 <h3>ToReader</h3>
 
@@ -182,6 +192,8 @@ is less than  <i>length</i>
 .</p></li>
 </ul>
 
+<p><a id="ToReader_this_System_IO_Stream"></a></p>
+
 <h3>ToReader</h3>
 
 <pre>public static PeterO.IReader ToReader(
@@ -208,6 +220,8 @@ The parameter <i>input</i>
 is null.</li>
 </ul>
 
+<p><a id="ToWriter_this_PeterO_IByteWriter"></a></p>
+
 <h3>ToWriter</h3>
 
 <pre>public static PeterO.IWriter ToWriter(
@@ -233,6 +247,8 @@ is null.</li>
 The parameter <i>output</i>
 is null.</li>
 </ul>
+
+<p><a id="ToWriter_this_System_IO_Stream"></a></p>
 
 <h3>ToWriter</h3>
 

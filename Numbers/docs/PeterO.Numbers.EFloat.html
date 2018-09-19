@@ -36,141 +36,143 @@
 
 <p>This class&#39;s natural ordering (under the CompareTo method) is not consistent with the Equals method. This means that two values that compare as equal under the CompareTo method might not be equal under the Equals method. The CompareTo method compares the mathematical values of the two instances passed to it (and considers two different NaN values as equal), while two instances with the same mathematical value, but different exponents, will be considered unequal under the Equals method.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>PeterO.Numbers.EFloat Abs()</code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
-<li><code>PeterO.Numbers.EFloat Add(PeterO.Numbers.EFloat)</code> - Adds this object and another binary float and returns the result.</li>
-<li><code>int CompareTo(PeterO.Numbers.EFloat)</code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
-<li><code>PeterO.Numbers.EFloat CompareToSignal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
-<li><code>int CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
-<li><code>int CompareToTotalMagnitude(PeterO.Numbers.EFloat)</code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code>PeterO.Numbers.EFloat CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Compares the mathematical values of this object and another object.</li>
-<li><code>PeterO.Numbers.EFloat CopySign(PeterO.Numbers.EFloat)</code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code>PeterO.Numbers.EFloat Create(int, int)</code> - Creates a number with the value exponent*2^mantissa (significand).</li>
-<li><code>PeterO.Numbers.EFloat CreateNaN(PeterO.Numbers.EInteger)</code> - Creates a not-a-number arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat[] DivRemNaturalScale(PeterO.Numbers.EFloat)</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code>PeterO.Numbers.EFloat Divide(PeterO.Numbers.EFloat)</code> - Divides this object by another binary float and returns the result.</li>
-<li><code>PeterO.Numbers.EFloat[] DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat)</code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
-<li><code>PeterO.Numbers.EFloat DivideToExponent(PeterO.Numbers.EFloat, long, PeterO.Numbers.EContext)</code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
-<li><code>PeterO.Numbers.EFloat DivideToIntegerNaturalScale(PeterO.Numbers.EFloat)</code> - Divides two arbitrary-precision binary floats, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code>PeterO.Numbers.EFloat DivideToIntegerZeroScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
-<li><code>PeterO.Numbers.EFloat DivideToSameExponent(PeterO.Numbers.EFloat, PeterO.Numbers.ERounding)</code> - Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</li>
-<li><code>bool Equals(PeterO.Numbers.EFloat)</code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
-<li><code>bool EqualsInternal(PeterO.Numbers.EFloat)</code> - Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object.</li>
-<li><code>PeterO.Numbers.EFloat Exp(PeterO.Numbers.EContext)</code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EInteger Exponent { get; }</code> - Gets this object&#39;s exponent.</li>
-<li><code>PeterO.Numbers.EFloat FromByte(byte)</code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromDouble(double)</code> - Creates a binary float from a 64-bit floating-point number.</li>
-<li><code>PeterO.Numbers.EFloat FromEInteger(PeterO.Numbers.EInteger)</code> - Converts an arbitrary-precision integer to the same value as a binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromInt16(short)</code> - Converts a 16-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromInt32(int)</code> - Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromInt64(long)</code> - Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromSByte(sbyte)</code> - Converts an 8-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromSingle(float)</code> - Creates a binary float from a 32-bit floating-point number.</li>
-<li><code>PeterO.Numbers.EFloat FromString(string, int, int, PeterO.Numbers.EContext)</code> - Creates a binary float from a text string that represents a number.</li>
-<li><code>PeterO.Numbers.EFloat FromUInt16(ushort)</code> - Converts a 16-bit unsigned integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromUInt32(uint)</code> - Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat FromUInt64(ulong)</code> - Converts a 64-bit unsigned integer to an arbitrary-precision binary float.</li>
-<li><code>int GetHashCode()</code> - Calculates this object&#39;s hash code.</li>
-<li><code> public bool IsFinite { get; }</code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
-<li><code>bool IsInfinity()</code> - Gets a value indicating whether this object is positive or negative infinity.</li>
-<li><code>bool IsNaN()</code> - Gets a value indicating whether this object is not a number (NaN).</li>
-<li><code> public bool IsNegative { get; }</code> - Gets a value indicating whether this object is negative, including negative zero.</li>
-<li><code>bool IsNegativeInfinity()</code> - Returns whether this object is negative infinity.</li>
-<li><code>bool IsPositiveInfinity()</code> - Returns whether this object is positive infinity.</li>
-<li><code>bool IsQuietNaN()</code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
-<li><code>bool IsSignalingNaN()</code> - Gets a value indicating whether this object is a signaling not-a-number value.</li>
-<li><code> public bool IsZero { get; }</code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code>PeterO.Numbers.EFloat Log(PeterO.Numbers.EContext)</code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
-<li><code>PeterO.Numbers.EFloat Log10(PeterO.Numbers.EContext)</code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
-<li><code> public PeterO.Numbers.EInteger Mantissa { get; }</code> - Gets this object&#39;s unscaled value.</li>
-<li><code>PeterO.Numbers.EFloat Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Gets the greater value between two binary floats.</li>
-<li><code>PeterO.Numbers.EFloat MaxMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Gets the greater value between two values, ignoring their signs.</li>
-<li><code>PeterO.Numbers.EFloat Min(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Gets the lesser value between two binary floats.</li>
-<li><code>PeterO.Numbers.EFloat MinMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Gets the lesser value between two values, ignoring their signs.</li>
-<li><code>PeterO.Numbers.EFloat MovePointLeft(int)</code> - Returns a number similar to this number but with the radix point moved to the left.</li>
-<li><code>PeterO.Numbers.EFloat MovePointRight(int)</code> - Returns a number similar to this number but with the radix point moved to the right.</li>
-<li><code>PeterO.Numbers.EFloat Multiply(PeterO.Numbers.EFloat)</code> - Multiplies two binary floats.</li>
-<li><code>PeterO.Numbers.EFloat MultiplyAndAdd(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Multiplies by one binary float, and then adds another binary float.</li>
-<li><code>PeterO.Numbers.EFloat MultiplyAndSubtract(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Multiplies by one value, and then subtracts another value.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat NaN;</code> - A not-a-number value.</li>
-<li><code>PeterO.Numbers.EFloat Negate()</code> - Gets an object with the same value as this one, but with the sign reversed.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat NegativeInfinity;</code> - Negative infinity, less than any other number.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat NegativeZero;</code> - Represents the number negative zero.</li>
-<li><code>PeterO.Numbers.EFloat NextMinus(PeterO.Numbers.EContext)</code> - Finds the largest value that&#39;s smaller than the given value.</li>
-<li><code>PeterO.Numbers.EFloat NextPlus(PeterO.Numbers.EContext)</code> - Finds the smallest value that&#39;s greater than the given value.</li>
-<li><code>PeterO.Numbers.EFloat NextToward(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat One;</code> - Represents the number 1.</li>
-<li><code>PeterO.Numbers.EFloat PI(PeterO.Numbers.EContext)</code> - Finds the constant π, the circumference of a circle divided by its diameter.</li>
-<li><code>PeterO.Numbers.EFloat Plus(PeterO.Numbers.EContext)</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat PositiveInfinity;</code> - Positive infinity, greater than any other number.</li>
-<li><code>PeterO.Numbers.EFloat Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Raises this object&#39;s value to the given exponent.</li>
-<li><code>PeterO.Numbers.EInteger Precision()</code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
-<li><code>PeterO.Numbers.EFloat Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a binary float with the same value but a new exponent.</li>
-<li><code>PeterO.Numbers.EFloat Reduce(PeterO.Numbers.EContext)</code> - Removes trailing zeros from this object&#39;s mantissa (significand).</li>
-<li><code>PeterO.Numbers.EFloat Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
-<li><code>PeterO.Numbers.EFloat RemainderNaturalScale(PeterO.Numbers.EFloat)</code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
-<li><code>PeterO.Numbers.EFloat RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
-<li><code>PeterO.Numbers.EFloat RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to a new exponent if necessary.</li>
-<li><code>PeterO.Numbers.EFloat RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
-<li><code>PeterO.Numbers.EFloat RoundToIntegerExact(PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code>PeterO.Numbers.EFloat RoundToIntegerNoRoundedFlag(PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
-<li><code>PeterO.Numbers.EFloat RoundToIntegralExact(PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
-<li><code>PeterO.Numbers.EFloat RoundToIntegralNoRoundedFlag(PeterO.Numbers.EContext)</code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
-<li><code>PeterO.Numbers.EFloat RoundToPrecision(PeterO.Numbers.EContext)</code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</li>
-<li><code>PeterO.Numbers.EFloat ScaleByPowerOfTwo(int)</code> - Returns a number similar to this number but with the scale adjusted.</li>
-<li><code> public int Sign { get; }</code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat SignalingNaN;</code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</li>
-<li><code>PeterO.Numbers.EFloat Sqrt(PeterO.Numbers.EContext)</code> - Finds the square root of this object&#39;s value.</li>
-<li><code>PeterO.Numbers.EFloat SquareRoot(PeterO.Numbers.EContext)</code> - Finds the square root of this object&#39;s value.</li>
-<li><code>PeterO.Numbers.EFloat Subtract(PeterO.Numbers.EFloat)</code> - Subtracts an arbitrary-precision binary float from this instance and returns the result.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat Ten;</code> - Represents the number 10.</li>
-<li><code>byte ToByteChecked()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
-<li><code>byte ToByteIfExact()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
-<li><code>byte ToByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
-<li><code>double ToDouble()</code> - Converts this value to a 64-bit floating-point number.</li>
-<li><code>PeterO.Numbers.EDecimal ToEDecimal()</code> - Converts this value to an arbitrary-precision decimal number.</li>
-<li><code>PeterO.Numbers.EInteger ToEInteger()</code> - Converts this value to an arbitrary-precision integer.</li>
-<li><code>PeterO.Numbers.EInteger ToEIntegerExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</li>
-<li><code>PeterO.Numbers.EInteger ToEIntegerIfExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</li>
-<li><code>string ToEngineeringString()</code> - Converts this value to an arbitrary-precision decimal number, then returns the value of that decimal&#39;s ToEngineeringString method.</li>
-<li><code>PeterO.Numbers.EDecimal ToExtendedDecimal()</code> - Converts this value to an arbitrary-precision decimal number.</li>
-<li><code>short ToInt16Checked()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
-<li><code>short ToInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
-<li><code>short ToInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
-<li><code>int ToInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code>int ToInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code>int ToInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code>long ToInt64Checked()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
-<li><code>long ToInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
-<li><code>long ToInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
-<li><code>string ToPlainString()</code> - Converts this value to a string, but without exponential notation.</li>
-<li><code>sbyte ToSByteChecked()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
-<li><code>sbyte ToSByteIfExact()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
-<li><code>sbyte ToSByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
-<li><code>string ToShortestString(PeterO.Numbers.EContext)</code> - Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context).</li>
-<li><code>float ToSingle()</code> - Converts this value to its closest equivalent as 32-bit floating-point number.</li>
-<li><code>string ToString()</code> - Converts this number&#39;s value to a text string.</li>
-<li><code>ushort ToUInt16Checked()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
-<li><code>ushort ToUInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code>ushort ToUInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
-<li><code>uint ToUInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code>uint ToUInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code>uint ToUInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code>ulong ToUInt64Checked()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
-<li><code>ulong ToUInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code>ulong ToUInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
-<li><code>PeterO.Numbers.EFloat Ulp()</code> - Returns the unit in the last place.</li>
-<li><code> public PeterO.Numbers.EInteger UnsignedMantissa { get; }</code> - Gets the absolute value of this object&#39;s unscaled value.</li>
-<li><code> public static readonly PeterO.Numbers.EFloat Zero;</code> - Represents the number 0.</li>
-<li><code> operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Adds two arbitrary-precision binary floating-point numbers and returns the result.</li>
-<li><code> operator /(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Divides one binary float by another and returns the result.</li>
-<li><code> operator %(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Finds the remainder when dividing one arbitrary-precision binary float by another.</li>
-<li><code> operator *(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Multiplies two binary floats.</li>
-<li><code> operator -(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</code> - Subtracts one arbitrary-precision binary float from another.</li>
-<li><code> operator -(PeterO.Numbers.EFloat)</code> - Gets an object with the same value as this one, but with the sign reversed.</li>
+<li><code><a href="#Abs">Abs()</a></code> - Finds the absolute value of this object (if it&#39;s negative, it becomes positive).</li>
+<li><code><a href="#Add_PeterO_Numbers_EFloat">Add(PeterO.Numbers.EFloat)</a></code> - Adds this object and another binary float and returns the result.</li>
+<li><code><a href="#CompareTo_PeterO_Numbers_EFloat">CompareTo(PeterO.Numbers.EFloat)</a></code> - Compares the mathematical values of this object and another object, accepting NaN values.</li>
+<li><code><a href="#CompareToSignal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToSignal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object, treating quiet NaN as signaling.</li>
+<li><code><a href="#CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToTotal(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_EFloat">CompareToTotalMagnitude(PeterO.Numbers.EFloat)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code><a href="#CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">CompareToWithContext(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Compares the mathematical values of this object and another object.</li>
+<li><code><a href="#CopySign_PeterO_Numbers_EFloat">CopySign(PeterO.Numbers.EFloat)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a number with the value exponent*2^mantissa (significand).</li>
+<li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision binary float.</li>
+<li><code><a href="#DivRemNaturalScale_PeterO_Numbers_EFloat">DivRemNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code><a href="#Divide_PeterO_Numbers_EFloat">Divide(PeterO.Numbers.EFloat)</a></code> - Divides this object by another binary float and returns the result.</li>
+<li><code><a href="#DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat">DivideAndRemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the quotient and remainder using the DivideToIntegerNaturalScale and the formula in RemainderNaturalScale.</li>
+<li><code><a href="#DivideToExponent_PeterO_Numbers_EFloat_long_PeterO_Numbers_EContext">DivideToExponent(PeterO.Numbers.EFloat, long, PeterO.Numbers.EContext)</a></code> - Divides two arbitrary-precision binary floats, and gives a particular exponent to the result.</li>
+<li><code><a href="#DivideToIntegerNaturalScale_PeterO_Numbers_EFloat">DivideToIntegerNaturalScale(PeterO.Numbers.EFloat)</a></code> - Divides two arbitrary-precision binary floats, and returns the integer part of the result, rounded down, with the preferred exponent set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
+<li><code><a href="#DivideToIntegerZeroScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">DivideToIntegerZeroScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Divides this object by another object, and returns the integer part of the result, with the exponent set to 0.</li>
+<li><code><a href="#DivideToSameExponent_PeterO_Numbers_EFloat_PeterO_Numbers_ERounding">DivideToSameExponent(PeterO.Numbers.EFloat, PeterO.Numbers.ERounding)</a></code> - Divides this object by another binary float and returns a result with the same exponent as this object (the dividend).</li>
+<li><code><a href="#Equals_PeterO_Numbers_EFloat">Equals(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s mantissa (significand), exponent, and properties are equal to those of another object.</li>
+<li><code><a href="#EqualsInternal_PeterO_Numbers_EFloat">EqualsInternal(PeterO.Numbers.EFloat)</a></code> - Determines whether this object&#39;s mantissa (significand) and exponent are equal to those of another object.</li>
+<li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
+<li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
+<li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Creates a binary float from a 64-bit floating-point number.</li>
+<li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to the same value as a binary float.</li>
+<li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Creates a binary float from a 32-bit floating-point number.</li>
+<li><code><a href="#FromString_string_int_int_PeterO_Numbers_EContext">FromString(string, int, int, PeterO.Numbers.EContext)</a></code> - Creates a binary float from a text string that represents a number.</li>
+<li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision binary float.</li>
+<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates this object&#39;s hash code.</li>
+<li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
+<li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object is positive or negative infinity.</li>
+<li><code><a href="#IsNaN">IsNaN()</a></code> - Gets a value indicating whether this object is not a number (NaN).</li>
+<li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object is negative, including negative zero.</li>
+<li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Returns whether this object is negative infinity.</li>
+<li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Returns whether this object is positive infinity.</li>
+<li><code><a href="#IsQuietNaN">IsQuietNaN()</a></code> - Gets a value indicating whether this object is a quiet not-a-number value.</li>
+<li><code><a href="#IsSignalingNaN">IsSignalingNaN()</a></code> - Gets a value indicating whether this object is a signaling not-a-number value.</li>
+<li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
+<li><code><a href="#Log_PeterO_Numbers_EContext">Log(PeterO.Numbers.EContext)</a></code> - Finds the natural logarithm of this object, that is, the power (exponent) that e (the base of natural logarithms) must be raised to in order to equal this object&#39;s value.</li>
+<li><code><a href="#Log10_PeterO_Numbers_EContext">Log10(PeterO.Numbers.EContext)</a></code> - Finds the base-10 logarithm of this object, that is, the power (exponent) that the number 10 must be raised to in order to equal this object&#39;s value.</li>
+<li><code><a href="#Mantissa">Mantissa</a></code> - Gets this object&#39;s unscaled value.</li>
+<li><code><a href="#Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Max(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two binary floats.</li>
+<li><code><a href="#MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MaxMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the greater value between two values, ignoring their signs.</li>
+<li><code><a href="#Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Min(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the lesser value between two binary floats.</li>
+<li><code><a href="#MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MinMagnitude(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Gets the lesser value between two values, ignoring their signs.</li>
+<li><code><a href="#MovePointLeft_int">MovePointLeft(int)</a></code> - Returns a number similar to this number but with the radix point moved to the left.</li>
+<li><code><a href="#MovePointRight_int">MovePointRight(int)</a></code> - Returns a number similar to this number but with the radix point moved to the right.</li>
+<li><code><a href="#Multiply_PeterO_Numbers_EFloat">Multiply(PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
+<li><code><a href="#MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">MultiplyAndAdd(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies by one binary float, and then adds another binary float.</li>
+<li><code><a href="#MultiplyAndSubtract_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">MultiplyAndSubtract(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Multiplies by one value, and then subtracts another value.</li>
+<li><code><a href="#NaN">public static readonly PeterO.Numbers.EFloat NaN;</a></code> - A not-a-number value.</li>
+<li><code><a href="#Negate">Negate()</a></code> - Gets an object with the same value as this one, but with the sign reversed.</li>
+<li><code><a href="#NegativeInfinity">public static readonly PeterO.Numbers.EFloat NegativeInfinity;</a></code> - Negative infinity, less than any other number.</li>
+<li><code><a href="#NegativeZero">public static readonly PeterO.Numbers.EFloat NegativeZero;</a></code> - Represents the number negative zero.</li>
+<li><code><a href="#NextMinus_PeterO_Numbers_EContext">NextMinus(PeterO.Numbers.EContext)</a></code> - Finds the largest value that&#39;s smaller than the given value.</li>
+<li><code><a href="#NextPlus_PeterO_Numbers_EContext">NextPlus(PeterO.Numbers.EContext)</a></code> - Finds the smallest value that&#39;s greater than the given value.</li>
+<li><code><a href="#NextToward_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">NextToward(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the next value that is closer to the other object&#39;s value than this object&#39;s value.</li>
+<li><code><a href="#One">public static readonly PeterO.Numbers.EFloat One;</a></code> - Represents the number 1.</li>
+<li><code><a href="#PI_PeterO_Numbers_EContext">PI(PeterO.Numbers.EContext)</a></code> - Finds the constant π, the circumference of a circle divided by its diameter.</li>
+<li><code><a href="#Plus_PeterO_Numbers_EContext">Plus(PeterO.Numbers.EContext)</a></code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent, and also converts negative zero to positive zero.</li>
+<li><code><a href="#PositiveInfinity">public static readonly PeterO.Numbers.EFloat PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
+<li><code><a href="#Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Pow(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Raises this object&#39;s value to the given exponent.</li>
+<li><code><a href="#Precision">Precision()</a></code> - Finds the number of digits in this number&#39;s mantissa (significand).</li>
+<li><code><a href="#Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">Quantize(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value but a new exponent.</li>
+<li><code><a href="#Reduce_PeterO_Numbers_EContext">Reduce(PeterO.Numbers.EContext)</a></code> - Removes trailing zeros from this object&#39;s mantissa (significand).</li>
+<li><code><a href="#Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
+<li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat">RemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;) Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
+<li><code><a href="#RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
+<li><code><a href="#RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponent(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to a new exponent if necessary.</li>
+<li><code><a href="#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
+<li><code><a href="#RoundToIntegerExact_PeterO_Numbers_EContext">RoundToIntegerExact(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code><a href="#RoundToIntegerNoRoundedFlag_PeterO_Numbers_EContext">RoundToIntegerNoRoundedFlag(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
+<li><code><a href="#RoundToIntegralExact_PeterO_Numbers_EContext">RoundToIntegralExact(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, and signals an inexact flag if the result would be inexact.</li>
+<li><code><a href="#RoundToIntegralNoRoundedFlag_PeterO_Numbers_EContext">RoundToIntegralNoRoundedFlag(PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to an integer, without adding the FlagInexact orFlagRounded flags.</li>
+<li><code><a href="#RoundToPrecision_PeterO_Numbers_EContext">RoundToPrecision(PeterO.Numbers.EContext)</a></code> - Rounds this object&#39;s value to a given precision, using the given rounding mode and range of exponent.</li>
+<li><code><a href="#ScaleByPowerOfTwo_int">ScaleByPowerOfTwo(int)</a></code> - Returns a number similar to this number but with the scale adjusted.</li>
+<li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
+<li><code><a href="#SignalingNaN">public static readonly PeterO.Numbers.EFloat SignalingNaN;</a></code> - A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</li>
+<li><code><a href="#Sqrt_PeterO_Numbers_EContext">Sqrt(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
+<li><code><a href="#SquareRoot_PeterO_Numbers_EContext">SquareRoot(PeterO.Numbers.EContext)</a></code> - Finds the square root of this object&#39;s value.</li>
+<li><code><a href="#Subtract_PeterO_Numbers_EFloat">Subtract(PeterO.Numbers.EFloat)</a></code> - Subtracts an arbitrary-precision binary float from this instance and returns the result.</li>
+<li><code><a href="#Ten">public static readonly PeterO.Numbers.EFloat Ten;</a></code> - Represents the number 10.</li>
+<li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
+<li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
+<li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
+<li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
+<li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this value to an arbitrary-precision decimal number.</li>
+<li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this value to an arbitrary-precision integer.</li>
+<li><code><a href="#ToEIntegerExact">ToEIntegerExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</li>
+<li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value contains a fractional part.</li>
+<li><code><a href="#ToEngineeringString">ToEngineeringString()</a></code> - Converts this value to an arbitrary-precision decimal number, then returns the value of that decimal&#39;s ToEngineeringString method.</li>
+<li><code><a href="#ToExtendedDecimal">ToExtendedDecimal()</a></code> - Converts this value to an arbitrary-precision decimal number.</li>
+<li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
+<li><code><a href="#ToInt32Checked">ToInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt32IfExact">ToInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt32Unchecked">ToInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToInt64Checked">ToInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt64IfExact">ToInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt64Unchecked">ToInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
+<li><code><a href="#ToPlainString">ToPlainString()</a></code> - Converts this value to a string, but without exponential notation.</li>
+<li><code><a href="#ToSByteChecked">ToSByteChecked()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
+<li><code><a href="#ToShortestString_PeterO_Numbers_EContext">ToShortestString(PeterO.Numbers.EContext)</a></code> - Returns a string representation of this number&#39;s value after rounding to the given precision (using the given arithmetic context).</li>
+<li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to its closest equivalent as 32-bit floating-point number.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this number&#39;s value to a text string.</li>
+<li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt16Unchecked">ToUInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
+<li><code><a href="#ToUInt32Checked">ToUInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt32IfExact">ToUInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt32Unchecked">ToUInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToUInt64Checked">ToUInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt64IfExact">ToUInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
+<li><code><a href="#Ulp">Ulp()</a></code> - Returns the unit in the last place.</li>
+<li><code><a href="#UnsignedMantissa">UnsignedMantissa</a></code> - Gets the absolute value of this object&#39;s unscaled value.</li>
+<li><code><a href="#Zero">public static readonly PeterO.Numbers.EFloat Zero;</a></code> - Represents the number 0.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator +(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Adds two arbitrary-precision binary floating-point numbers and returns the result.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator /(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Divides one binary float by another and returns the result.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator %(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Finds the remainder when dividing one arbitrary-precision binary float by another.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator *(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Multiplies two binary floats.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat, PeterO.Numbers.EFloat)</a></code> - Subtracts one arbitrary-precision binary float from another.</li>
+<li><code><a href="#PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat">PeterO.Numbers.EFloat operator -(PeterO.Numbers.EFloat)</a></code> - Gets an object with the same value as this one, but with the sign reversed.</li>
 </ul>
+
+<p><a id="NaN"></a></p>
 
 <h3>NaN</h3>
 
@@ -179,12 +181,16 @@
 
 <p>A not-a-number value.</p>
 
+<p><a id="NegativeInfinity"></a></p>
+
 <h3>NegativeInfinity</h3>
 
 <pre>public static readonly PeterO.Numbers.EFloat NegativeInfinity;
 </pre>
 
 <p>Negative infinity, less than any other number.</p>
+
+<p><a id="NegativeZero"></a></p>
 
 <h3>NegativeZero</h3>
 
@@ -193,12 +199,16 @@
 
 <p>Represents the number negative zero.</p>
 
+<p><a id="One"></a></p>
+
 <h3>One</h3>
 
 <pre>public static readonly PeterO.Numbers.EFloat One;
 </pre>
 
 <p>Represents the number 1.</p>
+
+<p><a id="PositiveInfinity"></a></p>
 
 <h3>PositiveInfinity</h3>
 
@@ -207,12 +217,16 @@
 
 <p>Positive infinity, greater than any other number.</p>
 
+<p><a id="SignalingNaN"></a></p>
+
 <h3>SignalingNaN</h3>
 
 <pre>public static readonly PeterO.Numbers.EFloat SignalingNaN;
 </pre>
 
 <p>A not-a-number value that signals an invalid operation flag when it&#39;s passed as an argument to any arithmetic operation in arbitrary-precision binary float.</p>
+
+<p><a id="Ten"></a></p>
 
 <h3>Ten</h3>
 
@@ -221,12 +235,16 @@
 
 <p>Represents the number 10.</p>
 
+<p><a id="Zero"></a></p>
+
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.Numbers.EFloat Zero;
 </pre>
 
 <p>Represents the number 0.</p>
+
+<p><a id="Exponent"></a></p>
 
 <h3>Exponent</h3>
 
@@ -239,6 +257,8 @@
 
 <p>This object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
 
+<p><a id="IsFinite"></a></p>
+
 <h3>IsFinite</h3>
 
 <pre>public bool IsFinite { get; }
@@ -249,6 +269,8 @@
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if this object is finite (not infinity or NaN); otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegative"></a></p>
 
 <h3>IsNegative</h3>
 
@@ -261,6 +283,8 @@
 
 <p><code>true</code>  if this object is negative, including negative zero; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsZero"></a></p>
+
 <h3>IsZero</h3>
 
 <pre>public bool IsZero { get; }
@@ -271,6 +295,8 @@
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
+
+<p><a id="Mantissa"></a></p>
 
 <h3>Mantissa</h3>
 
@@ -283,6 +309,8 @@
 
 <p>This object&#39;s unscaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
 
+<p><a id="Sign"></a></p>
+
 <h3>Sign</h3>
 
 <pre>public int Sign { get; }
@@ -294,6 +322,8 @@
 
 <p>This value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</p>
 
+<p><a id="UnsignedMantissa"></a></p>
+
 <h3>UnsignedMantissa</h3>
 
 <pre>public PeterO.Numbers.EInteger UnsignedMantissa { get; }
@@ -304,6 +334,8 @@
 <p><b>Returns:</b></p>
 
 <p>The absolute value of this object&#39;s unscaled value.</p>
+
+<p><a id="Abs_PeterO_Numbers_EContext"></a></p>
 
 <h3>Abs</h3>
 
@@ -324,6 +356,8 @@ is not documented yet.</li>
 
 <p>The absolute value of this object. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
+<p><a id="Abs"></a></p>
+
 <h3>Abs</h3>
 
 <pre>public PeterO.Numbers.EFloat Abs();
@@ -334,6 +368,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Add_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Add</h3>
 
@@ -353,6 +389,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The sum of the two objects.</p>
+
+<p><a id="Add_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Add</h3>
 
@@ -375,6 +413,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="CompareTo_PeterO_Numbers_EFloat"></a></p>
 
 <h3>CompareTo</h3>
 
@@ -399,6 +439,8 @@ is not documented yet.</li>
 
 <p>Less than 0 if this object&#39;s value is less than the other value, or greater than 0 if this object&#39;s value is greater than the other value or if &quot;other&quot; is null, or 0 if both values are equal.</p>
 
+<p><a id="CompareToSignal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>CompareToSignal</h3>
 
 <pre>public PeterO.Numbers.EFloat CompareToSignal(
@@ -422,6 +464,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="CompareToTotal_PeterO_Numbers_EFloat"></a></p>
 
 <h3>CompareToTotal</h3>
 
@@ -450,6 +494,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
+
+<p><a id="CompareToTotal_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>CompareToTotal</h3>
 
@@ -482,6 +528,8 @@ is not documented yet.</p></li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="CompareToTotalMagnitude_PeterO_Numbers_EFloat"></a></p>
+
 <h3>CompareToTotalMagnitude</h3>
 
 <pre>public int CompareToTotalMagnitude(
@@ -509,6 +557,8 @@ is not documented yet.</li>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="CompareToWithContext_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>CompareToWithContext</h3>
 
 <pre>public PeterO.Numbers.EFloat CompareToWithContext(
@@ -532,6 +582,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="CopySign_PeterO_Numbers_EFloat"></a></p>
 
 <h3>CopySign</h3>
 
@@ -560,6 +612,8 @@ The parameter <i>other</i>
 is null.</li>
 </ul>
 
+<p><a id="Create_int_int"></a></p>
+
 <h3>Create</h3>
 
 <pre>public static PeterO.Numbers.EFloat Create(
@@ -581,6 +635,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger"></a></p>
 
 <h3>Create</h3>
 
@@ -612,6 +668,8 @@ The parameter &quot;mantissa (significand)&quot; or  <i>exponent</i>
 is null.</li>
 </ul>
 
+<p><a id="CreateNaN_PeterO_Numbers_EInteger"></a></p>
+
 <h3>CreateNaN</h3>
 
 <pre>public static PeterO.Numbers.EFloat CreateNaN(
@@ -638,6 +696,8 @@ is not documented yet.</li>
 The parameter <i>diag</i>
 is less than 0.</li>
 </ul>
+
+<p><a id="CreateNaN_PeterO_Numbers_EInteger_bool_bool_PeterO_Numbers_EContext"></a></p>
 
 <h3>CreateNaN</h3>
 
@@ -675,6 +735,8 @@ The parameter <i>diag</i>
 is null.</li>
 </ul>
 
+<p><a id="Divide_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Divide</h3>
 
 <pre>public PeterO.Numbers.EFloat Divide(
@@ -692,6 +754,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>The quotient of the two numbers. Returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the result can&#39;t be exact because it would have a nonterminating binary expansion.</p>
+
+<p><a id="Divide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Divide</h3>
 
@@ -714,6 +778,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat"></a></p>
+
 <h3>DivideAndRemainderNaturalScale</h3>
 
 <pre>public PeterO.Numbers.EFloat[] DivideAndRemainderNaturalScale(
@@ -733,6 +799,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
+
+<p><a id="DivideAndRemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>DivideAndRemainderNaturalScale</h3>
 
@@ -757,6 +825,8 @@ is not documented yet.</p></li>
 
 <p>An EFloat[] object.</p>
 
+<p><a id="DivideToExponent_PeterO_Numbers_EFloat_long_PeterO_Numbers_EContext"></a></p>
+
 <h3>DivideToExponent</h3>
 
 <pre>public PeterO.Numbers.EFloat DivideToExponent(
@@ -780,6 +850,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context defines an exponent range and the desired exponent is outside that range. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
+
+<p><a id="DivideToExponent_PeterO_Numbers_EFloat_long_PeterO_Numbers_ERounding"></a></p>
 
 <h3>DivideToExponent</h3>
 
@@ -805,6 +877,8 @@ is not documented yet.</p></li>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
+<p><a id="DivideToExponent_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding"></a></p>
+
 <h3>DivideToExponent</h3>
 
 <pre>public PeterO.Numbers.EFloat DivideToExponent(
@@ -828,6 +902,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Returns not-a-number (NaN) if the divisor and the dividend are 0. Returns NaN if the rounding mode is ERounding.None and the result is not exact.</p>
+
+<p><a id="DivideToExponent_PeterO_Numbers_EFloat_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>DivideToExponent</h3>
 
@@ -853,6 +929,8 @@ is not documented yet.</p></li>
 
 <p>The quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0. Signals FlagInvalid and returns not-a-number (NaN) if the context defines an exponent range and the desired exponent is outside that range. Signals FlagInvalid and returns not-a-number (NaN) if the rounding mode is ERounding.None and the result is not exact.</p>
 
+<p><a id="DivideToIntegerNaturalScale_PeterO_Numbers_EFloat"></a></p>
+
 <h3>DivideToIntegerNaturalScale</h3>
 
 <pre>public PeterO.Numbers.EFloat DivideToIntegerNaturalScale(
@@ -870,6 +948,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The integer part of the quotient of the two objects. Signals FlagDivideByZero and returns infinity if the divisor is 0 and the dividend is nonzero. Signals FlagInvalid and returns not-a-number (NaN) if the divisor and the dividend are 0.</p>
+
+<p><a id="DivideToIntegerNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>DivideToIntegerNaturalScale</h3>
 
@@ -892,6 +972,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="DivideToIntegerZeroScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>DivideToIntegerZeroScale</h3>
 
 <pre>public PeterO.Numbers.EFloat DivideToIntegerZeroScale(
@@ -912,6 +994,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="DivideToSameExponent_PeterO_Numbers_EFloat_PeterO_Numbers_ERounding"></a></p>
 
 <h3>DivideToSameExponent</h3>
 
@@ -934,6 +1018,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="DivRemNaturalScale_PeterO_Numbers_EFloat"></a></p>
+
 <h3>DivRemNaturalScale</h3>
 
 <pre>public PeterO.Numbers.EFloat[] DivRemNaturalScale(
@@ -951,6 +1037,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 2 element array consisting of the quotient and remainder in that order.</p>
+
+<p><a id="DivRemNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>DivRemNaturalScale</h3>
 
@@ -973,6 +1061,8 @@ is not documented yet.</p></li>
 
 <p>An EFloat[] object.</p>
 
+<p><a id="Equals_object"></a></p>
+
 <h3>Equals</h3>
 
 <pre>public override bool Equals(
@@ -991,6 +1081,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="Equals_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Equals</h3>
 
@@ -1011,6 +1103,8 @@ is not documented yet.</li>
 
 <p><code>true</code>  if this object&#39;s mantissa (significand) and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
 
+<p><a id="EqualsInternal_PeterO_Numbers_EFloat"></a></p>
+
 <h3>EqualsInternal</h3>
 
 <pre>public bool EqualsInternal(
@@ -1029,6 +1123,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object&#39;s mantissa (significand) and exponent are equal to those of another object; otherwise,  <code>false</code> .</p>
+
+<p><a id="Exp_PeterO_Numbers_EContext"></a></p>
 
 <h3>Exp</h3>
 
@@ -1049,6 +1145,8 @@ is not documented yet.</li>
 
 <p>Exponential of this object. If this object&#39;s value is 1, returns an approximation to &quot; e&quot; within the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
+<p><a id="FromByte_byte"></a></p>
+
 <h3>FromByte</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromByte(
@@ -1067,6 +1165,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
+
+<p><a id="FromDouble_double"></a></p>
 
 <h3>FromDouble</h3>
 
@@ -1087,6 +1187,8 @@ is not documented yet.</li>
 
 <p>A binary float with the same value as &quot;dbl&quot;.</p>
 
+<p><a id="FromEInteger_PeterO_Numbers_EInteger"></a></p>
+
 <h3>FromEInteger</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromEInteger(
@@ -1105,6 +1207,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><a id="FromInt16_short"></a></p>
 
 <h3>FromInt16</h3>
 
@@ -1125,6 +1229,8 @@ is not documented yet.</li>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
 
+<p><a id="FromInt32_int"></a></p>
+
 <h3>FromInt32</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromInt32(
@@ -1143,6 +1249,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
+
+<p><a id="FromInt64_long"></a></p>
 
 <h3>FromInt64</h3>
 
@@ -1163,6 +1271,8 @@ is not documented yet.</li>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
 
+<p><a id="FromSByte_sbyte"></a></p>
+
 <h3>FromSByte</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromSByte(
@@ -1180,6 +1290,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
+
+<p><a id="FromSingle_float"></a></p>
 
 <h3>FromSingle</h3>
 
@@ -1200,6 +1312,8 @@ is not documented yet.</li>
 
 <p>A binary float with the same value as &quot;flt&quot;.</p>
 
+<p><a id="FromString_string"></a></p>
+
 <h3>FromString</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromString(
@@ -1218,6 +1332,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The parsed number, converted to arbitrary-precision binary float.</p>
+
+<p><a id="FromString_string_int_int"></a></p>
 
 <h3>FromString</h3>
 
@@ -1261,6 +1377,8 @@ is less than  <i>length</i>
 The parameter <i>str</i>
 is null.</p></li>
 </ul>
+
+<p><a id="FromString_string_int_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>FromString</h3>
 
@@ -1317,6 +1435,8 @@ is less than <i>length</i>
 .</p></li>
 </ul>
 
+<p><a id="FromString_string_PeterO_Numbers_EContext"></a></p>
+
 <h3>FromString</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromString(
@@ -1348,6 +1468,8 @@ The parameter <i>str</i>
 is null.</li>
 </ul>
 
+<p><a id="FromUInt16_ushort"></a></p>
+
 <h3>FromUInt16</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromUInt16(
@@ -1365,6 +1487,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
+
+<p><a id="FromUInt32_uint"></a></p>
 
 <h3>FromUInt32</h3>
 
@@ -1384,6 +1508,8 @@ is null.</li>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
 
+<p><a id="FromUInt64_ulong"></a></p>
+
 <h3>FromUInt64</h3>
 
 <pre>public static PeterO.Numbers.EFloat FromUInt64(
@@ -1402,6 +1528,8 @@ is null.</li>
 
 <p>This number&#39;s value as an arbitrary-precision binary float.</p>
 
+<p><a id="GetHashCode"></a></p>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
@@ -1412,6 +1540,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="IsInfinity"></a></p>
 
 <h3>IsInfinity</h3>
 
@@ -1424,6 +1554,8 @@ is null.</li>
 
 <p><code>true</code>  if this object is positive or negative infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsNaN"></a></p>
+
 <h3>IsNaN</h3>
 
 <pre>public bool IsNaN();
@@ -1434,6 +1566,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is not a number (NaN); otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegativeInfinity"></a></p>
 
 <h3>IsNegativeInfinity</h3>
 
@@ -1446,6 +1580,8 @@ is null.</li>
 
 <p><code>true</code>  if this object is negative infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsPositiveInfinity"></a></p>
+
 <h3>IsPositiveInfinity</h3>
 
 <pre>public bool IsPositiveInfinity();
@@ -1456,6 +1592,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is positive infinity; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsQuietNaN"></a></p>
 
 <h3>IsQuietNaN</h3>
 
@@ -1468,6 +1606,8 @@ is null.</li>
 
 <p><code>true</code>  if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsSignalingNaN"></a></p>
+
 <h3>IsSignalingNaN</h3>
 
 <pre>public bool IsSignalingNaN();
@@ -1478,6 +1618,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is a signaling not-a-number value; otherwise,  <code>false</code> .</p>
+
+<p><a id="Log_PeterO_Numbers_EContext"></a></p>
 
 <h3>Log</h3>
 
@@ -1498,6 +1640,8 @@ is not documented yet.</li>
 
 <p>Ln(this object). Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the result would be a complex number with a real part equal to Ln of this object&#39;s absolute value and an imaginary part equal to pi, but the return value is still NaN.). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0). Signals no flags and returns negative infinity if this object&#39;s value is 0.</p>
 
+<p><a id="Log10_PeterO_Numbers_EContext"></a></p>
+
 <h3>Log10</h3>
 
 <pre>public PeterO.Numbers.EFloat Log10(
@@ -1516,6 +1660,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>Ln(this object)/Ln(10). Signals the flag FlagInvalid and returns not-a-number (NaN) if this object is less than 0. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Max</h3>
 
@@ -1538,6 +1684,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Max_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Max</h3>
 
@@ -1564,6 +1712,8 @@ is not documented yet.</p></li>
 
 <p>The larger value of the two numbers.</p>
 
+<p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>MaxMagnitude</h3>
 
 <pre>public static PeterO.Numbers.EFloat MaxMagnitude(
@@ -1585,6 +1735,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="MaxMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>MaxMagnitude</h3>
 
@@ -1611,6 +1763,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary float.</p>
 
+<p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Min</h3>
 
 <pre>public static PeterO.Numbers.EFloat Min(
@@ -1632,6 +1786,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Min_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Min</h3>
 
@@ -1658,6 +1814,8 @@ is not documented yet.</p></li>
 
 <p>The smaller value of the two numbers.</p>
 
+<p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>MinMagnitude</h3>
 
 <pre>public static PeterO.Numbers.EFloat MinMagnitude(
@@ -1679,6 +1837,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="MinMagnitude_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>MinMagnitude</h3>
 
@@ -1705,6 +1865,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary float.</p>
 
+<p><a id="MovePointLeft_int"></a></p>
+
 <h3>MovePointLeft</h3>
 
 <pre>public PeterO.Numbers.EFloat MovePointLeft(
@@ -1723,6 +1885,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A number whose exponent is decreased by &quot;places&quot;, but not to more than 0.</p>
+
+<p><a id="MovePointLeft_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>MovePointLeft</h3>
 
@@ -1745,6 +1909,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="MovePointLeft_PeterO_Numbers_EInteger"></a></p>
 
 <h3>MovePointLeft</h3>
 
@@ -1765,6 +1931,8 @@ is not documented yet.</li>
 
 <p>A number whose exponent is decreased by &quot;bigPlaces&quot;, but not to more than 0.</p>
 
+<p><a id="MovePointLeft_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
+
 <h3>MovePointLeft</h3>
 
 <pre>public PeterO.Numbers.EFloat MovePointLeft(
@@ -1787,6 +1955,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="MovePointRight_int"></a></p>
+
 <h3>MovePointRight</h3>
 
 <pre>public PeterO.Numbers.EFloat MovePointRight(
@@ -1805,6 +1975,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by &quot;places&quot;, but not to more than 0.</p>
+
+<p><a id="MovePointRight_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>MovePointRight</h3>
 
@@ -1828,6 +2000,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="MovePointRight_PeterO_Numbers_EInteger"></a></p>
+
 <h3>MovePointRight</h3>
 
 <pre>public PeterO.Numbers.EFloat MovePointRight(
@@ -1846,6 +2020,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by &quot;bigPlaces&quot;, but not to more than 0.</p>
+
+<p><a id="MovePointRight_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>MovePointRight</h3>
 
@@ -1868,6 +2044,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Multiply_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Multiply</h3>
 
@@ -1891,6 +2069,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Multiply_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Multiply</h3>
 
 <pre>public PeterO.Numbers.EFloat Multiply(
@@ -1909,6 +2089,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The product of the two binary floats.</p>
+
+<p><a id="MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>MultiplyAndAdd</h3>
 
@@ -1931,6 +2113,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="MultiplyAndAdd_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>MultiplyAndAdd</h3>
 
@@ -1956,6 +2140,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The result thisValue * multiplicand + augend.</p>
+
+<p><a id="MultiplyAndSubtract_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>MultiplyAndSubtract</h3>
 
@@ -1991,6 +2177,8 @@ or  <i>subtrahend</i>
 is null.</li>
 </ul>
 
+<p><a id="Negate_PeterO_Numbers_EContext"></a></p>
+
 <h3>Negate</h3>
 
 <pre>public PeterO.Numbers.EFloat Negate(
@@ -2010,6 +2198,8 @@ is not documented yet.</li>
 
 <p>An arbitrary-precision binary float. If this value is positive zero, returns positive zero. Signals FlagInvalid and returns quiet NaN if this value is signaling NaN.</p>
 
+<p><a id="Negate"></a></p>
+
 <h3>Negate</h3>
 
 <pre>public PeterO.Numbers.EFloat Negate();
@@ -2020,6 +2210,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="NextMinus_PeterO_Numbers_EContext"></a></p>
 
 <h3>NextMinus</h3>
 
@@ -2040,6 +2232,8 @@ is not documented yet.</li>
 
 <p>Returns the largest value that&#39;s less than the given value. Returns negative infinity if the result is negative infinity. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</p>
 
+<p><a id="NextPlus_PeterO_Numbers_EContext"></a></p>
+
 <h3>NextPlus</h3>
 
 <pre>public PeterO.Numbers.EFloat NextPlus(
@@ -2058,6 +2252,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>Returns the smallest value that&#39;s greater than the given value.Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null, the precision is 0, or &quot;ctx&quot; has an unlimited exponent range.</p>
+
+<p><a id="NextToward_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>NextToward</h3>
 
@@ -2080,6 +2276,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Operator <code>+</code></h3>
 
@@ -2110,6 +2308,8 @@ or <i>otherValue</i>
 is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Operator <code>/</code></h3>
 
 <pre>public static PeterO.Numbers.EFloat operator /(
@@ -2137,6 +2337,8 @@ is null.</li>
 The parameter <i>dividend</i>
 is null.</li>
 </ul>
+
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -2166,6 +2368,8 @@ The parameter <i>dividend</i>
 is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Operator <code>*</code></h3>
 
 <pre>public static PeterO.Numbers.EFloat operator *(
@@ -2193,6 +2397,8 @@ is null.</li>
 The parameter <i>operand1</i>
 is null.</li>
 </ul>
+
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat_PeterO_Numbers_EFloat"></a></p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -2222,6 +2428,8 @@ The parameter <i>bthis</i>
 is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_EFloat_operator_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Operator <code>-</code></h3>
 
 <pre>public static PeterO.Numbers.EFloat operator -(
@@ -2248,6 +2456,8 @@ The parameter <i>bigValue</i>
 is null.</li>
 </ul>
 
+<p><a id="PI_PeterO_Numbers_EContext"></a></p>
+
 <h3>PI</h3>
 
 <pre>public static PeterO.Numbers.EFloat PI(
@@ -2266,6 +2476,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The constant π rounded to the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="Plus_PeterO_Numbers_EContext"></a></p>
 
 <h3>Plus</h3>
 
@@ -2286,6 +2498,8 @@ is not documented yet.</li>
 
 <p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if &quot;ctx&quot; is null or the precision and exponent range are unlimited.</p>
 
+<p><a id="Pow_int"></a></p>
+
 <h3>Pow</h3>
 
 <pre>public PeterO.Numbers.EFloat Pow(
@@ -2304,6 +2518,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This^exponent. Returns not-a-number (NaN) if this object and exponent are both 0.</p>
+
+<p><a id="Pow_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>Pow</h3>
 
@@ -2327,6 +2543,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Pow_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>Pow</h3>
 
 <pre>public PeterO.Numbers.EFloat Pow(
@@ -2349,6 +2567,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Precision"></a></p>
+
 <h3>Precision</h3>
 
 <pre>public PeterO.Numbers.EInteger Precision();
@@ -2359,6 +2579,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer.</p>
+
+<p><a id="Quantize_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>Quantize</h3>
 
@@ -2393,6 +2615,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Quantize_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>Quantize</h3>
 
 <pre>public PeterO.Numbers.EFloat Quantize(
@@ -2416,6 +2640,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="Quantize_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>Quantize</h3>
 
@@ -2450,6 +2676,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Reduce_PeterO_Numbers_EContext"></a></p>
+
 <h3>Reduce</h3>
 
 <pre>public PeterO.Numbers.EFloat Reduce(
@@ -2468,6 +2696,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This value with trailing zeros removed. Note that if the result has a very high exponent and the context says to clamp high exponents, there may still be some trailing zeros in the mantissa (significand).</p>
+
+<p><a id="Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Remainder</h3>
 
@@ -2490,6 +2720,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="RemainderNaturalScale_PeterO_Numbers_EFloat"></a></p>
+
 <h3>RemainderNaturalScale</h3>
 
 <pre>public PeterO.Numbers.EFloat RemainderNaturalScale(
@@ -2507,6 +2739,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><a id="RemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>RemainderNaturalScale</h3>
 
@@ -2528,6 +2762,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>RemainderNear</h3>
 
@@ -2559,6 +2795,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="RoundToExponent_int_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToExponent</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToExponent(
@@ -2580,6 +2818,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="RoundToExponent_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>RoundToExponent</h3>
 
@@ -2603,6 +2843,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="RoundToExponentExact_int_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToExponentExact</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToExponentExact(
@@ -2624,6 +2866,8 @@ is not documented yet.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>RoundToExponentExact</h3>
 
@@ -2647,6 +2891,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding"></a></p>
+
 <h3>RoundToExponentExact</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToExponentExact(
@@ -2669,6 +2915,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="RoundToIntegerExact_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToIntegerExact</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToIntegerExact(
@@ -2688,6 +2936,8 @@ is not documented yet.</li>
 
 <p>A binary float rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
+<p><a id="RoundToIntegerNoRoundedFlag_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToIntegerNoRoundedFlag</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToIntegerNoRoundedFlag(
@@ -2706,6 +2956,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A binary float rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
+
+<p><a id="RoundToIntegralExact_PeterO_Numbers_EContext"></a></p>
 
 <h3>RoundToIntegralExact</h3>
 
@@ -2728,6 +2980,8 @@ is not documented yet.</li>
 
 <p>A binary float rounded to the closest integer representable in the given precision. Signals FlagInvalid and returns not-a-number (NaN) if the result can&#39;t fit the given precision without rounding. Signals FlagInvalid and returns not-a-number (NaN) if the arithmetic context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
+<p><a id="RoundToIntegralNoRoundedFlag_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToIntegralNoRoundedFlag</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToIntegralNoRoundedFlag(
@@ -2749,6 +3003,8 @@ is not documented yet.</li>
 
 <p>A binary float rounded to the closest integer representable in the given precision. If the result can&#39;t fit the precision, additional digits are discarded to make it fit. Signals FlagInvalid and returns not-a-number (NaN) if the precision context defines an exponent range, the new exponent must be changed to 0 when rounding, and 0 is outside of the valid range of the arithmetic context.</p>
 
+<p><a id="RoundToPrecision_PeterO_Numbers_EContext"></a></p>
+
 <h3>RoundToPrecision</h3>
 
 <pre>public PeterO.Numbers.EFloat RoundToPrecision(
@@ -2768,6 +3024,8 @@ is not documented yet.</li>
 
 <p>The closest value to this object&#39;s value, rounded to the specified precision. Returns the same value as this object if &quot;ctx&quot; is null or the precision and exponent range are unlimited.</p>
 
+<p><a id="ScaleByPowerOfTwo_int"></a></p>
+
 <h3>ScaleByPowerOfTwo</h3>
 
 <pre>public PeterO.Numbers.EFloat ScaleByPowerOfTwo(
@@ -2786,6 +3044,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary float.</p>
+
+<p><a id="ScaleByPowerOfTwo_int_PeterO_Numbers_EContext"></a></p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2809,6 +3069,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="ScaleByPowerOfTwo_PeterO_Numbers_EInteger"></a></p>
+
 <h3>ScaleByPowerOfTwo</h3>
 
 <pre>public PeterO.Numbers.EFloat ScaleByPowerOfTwo(
@@ -2827,6 +3089,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A number whose exponent is increased by &quot;bigPlaces&quot;.</p>
+
+<p><a id="ScaleByPowerOfTwo_PeterO_Numbers_EInteger_PeterO_Numbers_EContext"></a></p>
 
 <h3>ScaleByPowerOfTwo</h3>
 
@@ -2850,6 +3114,8 @@ is not documented yet.</p></li>
 
 <p>An arbitrary-precision binary floating-point number.</p>
 
+<p><a id="Sqrt_PeterO_Numbers_EContext"></a></p>
+
 <h3>Sqrt</h3>
 
 <pre>public PeterO.Numbers.EFloat Sqrt(
@@ -2868,6 +3134,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
+
+<p><a id="SquareRoot_PeterO_Numbers_EContext"></a></p>
 
 <h3>SquareRoot</h3>
 
@@ -2890,6 +3158,8 @@ is not documented yet.</li>
 
 <p>The square root. Signals the flag FlagInvalid and returns NaN if this object is less than 0 (the square root would be a complex number, but the return value is still NaN). Signals FlagInvalid and returns not-a-number (NaN) if the parameter &quot;ctx&quot; is null or the precision is unlimited (the context&#39;s Precision property is 0).</p>
 
+<p><a id="Subtract_PeterO_Numbers_EFloat"></a></p>
+
 <h3>Subtract</h3>
 
 <pre>public PeterO.Numbers.EFloat Subtract(
@@ -2908,6 +3178,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The difference of the two objects.</p>
+
+<p><a id="Subtract_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
 
 <h3>Subtract</h3>
 
@@ -2939,6 +3211,8 @@ The parameter <i>otherValue</i>
 is null.</li>
 </ul>
 
+<p><a id="ToByteChecked"></a></p>
+
 <h3>ToByteChecked</h3>
 
 <pre>public byte ToByteChecked();
@@ -2956,6 +3230,8 @@ is null.</li>
 <li>System.OverflowException:
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</li>
 </ul>
+
+<p><a id="ToByteIfExact"></a></p>
 
 <h3>ToByteIfExact</h3>
 
@@ -2975,6 +3251,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
+<p><a id="ToByteUnchecked"></a></p>
+
 <h3>ToByteUnchecked</h3>
 
 <pre>public byte ToByteUnchecked();
@@ -2985,6 +3263,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A byte (from 0 to 255).</p>
+
+<p><a id="ToDouble"></a></p>
 
 <h3>ToDouble</h3>
 
@@ -3004,6 +3284,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 &quot;Doesn&#39;t satisfy bitLength&lt;= 53&quot;.</li>
 </ul>
 
+<p><a id="ToEDecimal"></a></p>
+
 <h3>ToEDecimal</h3>
 
 <pre>public PeterO.Numbers.EDecimal ToEDecimal();
@@ -3014,6 +3296,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
+
+<p><a id="ToEInteger"></a></p>
 
 <h3>ToEInteger</h3>
 
@@ -3032,6 +3316,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <li>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
+
+<p><a id="ToEIntegerExact"></a></p>
 
 <h3>ToEIntegerExact</h3>
 
@@ -3053,6 +3339,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
 
+<p><a id="ToEIntegerIfExact"></a></p>
+
 <h3>ToEIntegerIfExact</h3>
 
 <pre>public PeterO.Numbers.EInteger ToEIntegerIfExact();
@@ -3071,6 +3359,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
 
+<p><a id="ToEngineeringString"></a></p>
+
 <h3>ToEngineeringString</h3>
 
 <pre>public string ToEngineeringString();
@@ -3081,6 +3371,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
+
+<p><a id="ToExtendedDecimal"></a></p>
 
 <h3>ToExtendedDecimal</h3>
 
@@ -3094,6 +3386,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
+
+<p><a id="ToInt16Checked"></a></p>
 
 <h3>ToInt16Checked</h3>
 
@@ -3113,6 +3407,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 This value is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</li>
 </ul>
 
+<p><a id="ToInt16IfExact"></a></p>
+
 <h3>ToInt16IfExact</h3>
 
 <pre>public short ToInt16IfExact();
@@ -3131,6 +3427,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -3
 This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
+<p><a id="ToInt16Unchecked"></a></p>
+
 <h3>ToInt16Unchecked</h3>
 
 <pre>public short ToInt16Unchecked();
@@ -3141,6 +3439,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 16-bit signed integer.</p>
+
+<p><a id="ToInt32Checked"></a></p>
 
 <h3>ToInt32Checked</h3>
 
@@ -3160,6 +3460,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
+<p><a id="ToInt32IfExact"></a></p>
+
 <h3>ToInt32IfExact</h3>
 
 <pre>public int ToInt32IfExact();
@@ -3178,6 +3480,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -2
 This value is infinity or not-a-number, is not an exact integer, or is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
+<p><a id="ToInt32Unchecked"></a></p>
+
 <h3>ToInt32Unchecked</h3>
 
 <pre>public int ToInt32Unchecked();
@@ -3188,6 +3492,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="ToInt64Checked"></a></p>
 
 <h3>ToInt64Checked</h3>
 
@@ -3207,6 +3513,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</li>
 </ul>
 
+<p><a id="ToInt64IfExact"></a></p>
+
 <h3>ToInt64IfExact</h3>
 
 <pre>public long ToInt64IfExact();
@@ -3225,6 +3533,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -9
 This value is infinity or not-a-number, is not an exact integer, or is less than -9223372036854775808 or greater than 9223372036854775807.</li>
 </ul>
 
+<p><a id="ToInt64Unchecked"></a></p>
+
 <h3>ToInt64Unchecked</h3>
 
 <pre>public long ToInt64Unchecked();
@@ -3236,6 +3546,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>A 64-bit signed integer.</p>
 
+<p><a id="ToPlainString"></a></p>
+
 <h3>ToPlainString</h3>
 
 <pre>public string ToPlainString();
@@ -3246,6 +3558,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
+
+<p><a id="ToSByteChecked"></a></p>
 
 <h3>ToSByteChecked</h3>
 
@@ -3265,6 +3579,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</li>
 </ul>
 
+<p><a id="ToSByteIfExact"></a></p>
+
 <h3>ToSByteIfExact</h3>
 
 <pre>public sbyte ToSByteIfExact();
@@ -3283,6 +3599,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -1
 This value is infinity or not-a-number, is not an exact integer, or is less than -128 or greater than 127.</li>
 </ul>
 
+<p><a id="ToSByteUnchecked"></a></p>
+
 <h3>ToSByteUnchecked</h3>
 
 <pre>public sbyte ToSByteUnchecked();
@@ -3293,6 +3611,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to an 8-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToShortestString_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToShortestString</h3>
 
@@ -3313,6 +3633,8 @@ is not documented yet.</li>
 
 <p>Shortest decimal form of this number&#39;s value for the given arithmetic context. The text string will be in exponential notation if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point, or if the number&#39;s exponent is greater than 0 and its value is 10, 000, 000 or greater.</p>
 
+<p><a id="ToSingle"></a></p>
+
 <h3>ToSingle</h3>
 
 <pre>public float ToSingle();
@@ -3331,6 +3653,8 @@ is not documented yet.</li>
 &quot;Doesn&#39;t satisfy bitLength&lt;= 24&quot;.</li>
 </ul>
 
+<p><a id="ToString"></a></p>
+
 <h3>ToString</h3>
 
 <pre>public override string ToString();
@@ -3341,6 +3665,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
+
+<p><a id="ToUInt16Checked"></a></p>
 
 <h3>ToUInt16Checked</h3>
 
@@ -3360,6 +3686,8 @@ is not documented yet.</li>
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</li>
 </ul>
 
+<p><a id="ToUInt16IfExact"></a></p>
+
 <h3>ToUInt16IfExact</h3>
 
 <pre>public ushort ToUInt16IfExact();
@@ -3378,6 +3706,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 65535.</li>
 </ul>
 
+<p><a id="ToUInt16Unchecked"></a></p>
+
 <h3>ToUInt16Unchecked</h3>
 
 <pre>public ushort ToUInt16Unchecked();
@@ -3388,6 +3718,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a 16-bit unsigned integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToUInt32Checked"></a></p>
 
 <h3>ToUInt32Checked</h3>
 
@@ -3407,6 +3739,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</li>
 </ul>
 
+<p><a id="ToUInt32IfExact"></a></p>
+
 <h3>ToUInt32IfExact</h3>
 
 <pre>public uint ToUInt32IfExact();
@@ -3425,6 +3759,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 4294967295.</li>
 </ul>
 
+<p><a id="ToUInt32Unchecked"></a></p>
+
 <h3>ToUInt32Unchecked</h3>
 
 <pre>public uint ToUInt32Unchecked();
@@ -3435,6 +3771,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a 32-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToUInt64Checked"></a></p>
 
 <h3>ToUInt64Checked</h3>
 
@@ -3454,6 +3792,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</li>
 </ul>
 
+<p><a id="ToUInt64IfExact"></a></p>
+
 <h3>ToUInt64IfExact</h3>
 
 <pre>public ulong ToUInt64IfExact();
@@ -3472,6 +3812,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 18446744073709551615.</li>
 </ul>
 
+<p><a id="ToUInt64Unchecked"></a></p>
+
 <h3>ToUInt64Unchecked</h3>
 
 <pre>public ulong ToUInt64Unchecked();
@@ -3482,6 +3824,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a 64-bit unsigned integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="Ulp"></a></p>
 
 <h3>Ulp</h3>
 

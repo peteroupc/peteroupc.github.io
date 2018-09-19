@@ -13,110 +13,112 @@
 
 <p>Represents an arbitrary-precision rational number. This class can&#39;t be inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.)<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same roperties are interchangeable, so they should not be compared using the ==&quot; operator (which might only check if each side of the operator is he same instance).</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>PeterO.Numbers.ERational Abs()</code> - Returns the absolute value of this rational number, that is, a number with the same value as this one but as a nonnegative number.</li>
-<li><code>PeterO.Numbers.ERational Add(PeterO.Numbers.ERational)</code> - Adds two rational numbers.</li>
-<li><code>int CompareTo(PeterO.Numbers.ERational)</code> - Compares an arbitrary-precision rational number with this instance.</li>
-<li><code>int CompareToBinary(PeterO.Numbers.EFloat)</code> - Compares an arbitrary-precision binary float with this instance.</li>
-<li><code>int CompareToDecimal(PeterO.Numbers.EDecimal)</code> - Compares an arbitrary-precision decimal number with this instance.</li>
-<li><code>int CompareToTotal(PeterO.Numbers.ERational)</code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
-<li><code>int CompareToTotalMagnitude(PeterO.Numbers.ERational)</code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
-<li><code>PeterO.Numbers.ERational CopySign(PeterO.Numbers.ERational)</code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
-<li><code>PeterO.Numbers.ERational Create(int, int)</code> - Creates a rational number with the given numerator and denominator.</li>
-<li><code>PeterO.Numbers.ERational CreateNaN(PeterO.Numbers.EInteger)</code> - Creates a not-a-number arbitrary-precision rational number.</li>
-<li><code> public PeterO.Numbers.EInteger Denominator { get; }</code> - Gets this object&#39;s denominator.</li>
-<li><code>PeterO.Numbers.ERational Divide(PeterO.Numbers.ERational)</code> - Divides this instance by the value of an arbitrary-precision rational number object.</li>
-<li><code>bool Equals(object)</code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromByte(byte)</code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromDecimal(System.Decimal)</code> - Converts adecimalunder the Common Language Infrastructure (usually a .</li>
-<li><code>PeterO.Numbers.ERational FromDouble(double)</code> - Converts a 64-bit floating-point number to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromEDecimal(PeterO.Numbers.EDecimal)</code> - Converts an arbitrary-precision decimal number to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromEFloat(PeterO.Numbers.EFloat)</code> - Converts an arbitrary-precision binary float to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromEInteger(PeterO.Numbers.EInteger)</code> - Converts an arbitrary-precision integer to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromExtendedDecimal(PeterO.Numbers.EDecimal)</code> - Converts an arbitrary-precision decimal number to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromExtendedFloat(PeterO.Numbers.EFloat)</code> - Converts an arbitrary-precision binary float to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromInt16(short)</code> - Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromInt32(int)</code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromInt64(long)</code> - Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromSByte(sbyte)</code> - Converts an 8-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromSingle(float)</code> - Converts a 32-bit binary floating-point number to a rational number.</li>
-<li><code>PeterO.Numbers.ERational FromString(string)</code> - Creates a rational number from a text string that represents a number.</li>
-<li><code>PeterO.Numbers.ERational FromUInt16(ushort)</code> - Converts a 16-bit unsigned integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromUInt32(uint)</code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>PeterO.Numbers.ERational FromUInt64(ulong)</code> - Converts a 64-bit unsigned integer to an arbitrary-precision rational number.</li>
-<li><code>int GetHashCode()</code> - Returns the hash code for this instance.</li>
-<li><code> public bool IsFinite { get; }</code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
-<li><code>bool IsInfinity()</code> - Gets a value indicating whether this object&#39;s value is infinity.</li>
-<li><code>bool IsNaN()</code> - Returns whether this object is a not-a-number value.</li>
-<li><code> public bool IsNegative { get; }</code> - Gets a value indicating whether this object&#39;s value is negative (including negative zero).</li>
-<li><code>bool IsNegativeInfinity()</code> - Returns whether this object is negative infinity.</li>
-<li><code>bool IsPositiveInfinity()</code> - Returns whether this object is positive infinity.</li>
-<li><code>bool IsQuietNaN()</code> - Returns whether this object is a quiet not-a-number value.</li>
-<li><code>bool IsSignalingNaN()</code> - Returns whether this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class).</li>
-<li><code> public bool IsZero { get; }</code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code>PeterO.Numbers.ERational Multiply(PeterO.Numbers.ERational)</code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
-<li><code> public static readonly PeterO.Numbers.ERational NaN;</code> - A not-a-number value.</li>
-<li><code>PeterO.Numbers.ERational Negate()</code> - Returns a rational number with the same value as this one but with the sign reversed.</li>
-<li><code> public static readonly PeterO.Numbers.ERational NegativeInfinity;</code> - Negative infinity, less than any other number.</li>
-<li><code> public static readonly PeterO.Numbers.ERational NegativeZero;</code> - A rational number for negative zero.</li>
-<li><code> public PeterO.Numbers.EInteger Numerator { get; }</code> - Gets this object&#39;s numerator.</li>
-<li><code> public static readonly PeterO.Numbers.ERational One;</code> - The rational number one.</li>
-<li><code> public static readonly PeterO.Numbers.ERational PositiveInfinity;</code> - Positive infinity, greater than any other number.</li>
-<li><code>PeterO.Numbers.ERational Remainder(PeterO.Numbers.ERational)</code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
-<li><code> public int Sign { get; }</code> - Gets the sign of this rational number.</li>
-<li><code> public static readonly PeterO.Numbers.ERational SignalingNaN;</code> - A signaling not-a-number value.</li>
-<li><code>PeterO.Numbers.ERational Subtract(PeterO.Numbers.ERational)</code> - Subtracts an arbitrary-precision rational number from this instance.</li>
-<li><code> public static readonly PeterO.Numbers.ERational Ten;</code> - The rational number ten.</li>
-<li><code>byte ToByteChecked()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
-<li><code>byte ToByteIfExact()</code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
-<li><code>byte ToByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
-<li><code>System.Decimal ToDecimal()</code> - Converts this value to adecimalunder the Common Language Infrastructure (usually a .</li>
-<li><code>double ToDouble()</code> - Converts this value to a 64-bit floating-point number.</li>
-<li><code>PeterO.Numbers.EDecimal ToEDecimal()</code> - Converts this rational number to a decimal number.</li>
-<li><code>PeterO.Numbers.EDecimal ToEDecimalExactIfPossible(PeterO.Numbers.EContext)</code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
-<li><code>PeterO.Numbers.EFloat ToEFloat()</code> - Converts this rational number to a binary float.</li>
-<li><code>PeterO.Numbers.EFloat ToEFloatExactIfPossible(PeterO.Numbers.EContext)</code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
-<li><code>PeterO.Numbers.EInteger ToEInteger()</code> - Converts this value to an arbitrary-precision integer.</li>
-<li><code>PeterO.Numbers.EInteger ToEIntegerExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
-<li><code>PeterO.Numbers.EInteger ToEIntegerIfExact()</code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
-<li><code>PeterO.Numbers.EDecimal ToExtendedDecimal()</code> - Converts this rational number to a decimal number.</li>
-<li><code>PeterO.Numbers.EDecimal ToExtendedDecimalExactIfPossible(PeterO.Numbers.EContext)</code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
-<li><code>PeterO.Numbers.EFloat ToExtendedFloat()</code> - Converts this rational number to a binary float.</li>
-<li><code>PeterO.Numbers.EFloat ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)</code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
-<li><code>short ToInt16Checked()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
-<li><code>short ToInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
-<li><code>short ToInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
-<li><code>int ToInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code>int ToInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code>int ToInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code>long ToInt64Checked()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
-<li><code>long ToInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
-<li><code>long ToInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
-<li><code>sbyte ToSByteChecked()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
-<li><code>sbyte ToSByteIfExact()</code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
-<li><code>sbyte ToSByteUnchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
-<li><code>float ToSingle()</code> - Converts this value to a 32-bit binary floating-point number.</li>
-<li><code>string ToString()</code> - Converts this object to a text string.</li>
-<li><code>ushort ToUInt16Checked()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
-<li><code>ushort ToUInt16IfExact()</code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code>ushort ToUInt16Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
-<li><code>uint ToUInt32Checked()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
-<li><code>uint ToUInt32IfExact()</code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
-<li><code>uint ToUInt32Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
-<li><code>ulong ToUInt64Checked()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
-<li><code>ulong ToUInt64IfExact()</code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
-<li><code>ulong ToUInt64Unchecked()</code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
-<li><code> public PeterO.Numbers.EInteger UnsignedNumerator { get; }</code> - Gets this object&#39;s numerator with the sign removed.</li>
-<li><code> public static readonly PeterO.Numbers.ERational Zero;</code> - A rational number for zero.</li>
-<li><code> operator +(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</code> - Adds two rational numbers.</li>
-<li><code> operator /(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</code> - Divides an arbitrary-precision rational number by the value of another arbitrary-precision rational number object.</li>
-<li><code> operator %(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
-<li><code> operator *(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
-<li><code> operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</code> - Subtracts an arbitrary-precision rational number from this instance.</li>
-<li><code> operator -(PeterO.Numbers.ERational)</code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
+<li><code><a href="#Abs">Abs()</a></code> - Returns the absolute value of this rational number, that is, a number with the same value as this one but as a nonnegative number.</li>
+<li><code><a href="#Add_PeterO_Numbers_ERational">Add(PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
+<li><code><a href="#CompareTo_PeterO_Numbers_ERational">CompareTo(PeterO.Numbers.ERational)</a></code> - Compares an arbitrary-precision rational number with this instance.</li>
+<li><code><a href="#CompareToBinary_PeterO_Numbers_EFloat">CompareToBinary(PeterO.Numbers.EFloat)</a></code> - Compares an arbitrary-precision binary float with this instance.</li>
+<li><code><a href="#CompareToDecimal_PeterO_Numbers_EDecimal">CompareToDecimal(PeterO.Numbers.EDecimal)</a></code> - Compares an arbitrary-precision decimal number with this instance.</li>
+<li><code><a href="#CompareToTotal_PeterO_Numbers_ERational">CompareToTotal(PeterO.Numbers.ERational)</a></code> - Compares the values of this object and another object, imposing a total ordering on all possible values.</li>
+<li><code><a href="#CompareToTotalMagnitude_PeterO_Numbers_ERational">CompareToTotalMagnitude(PeterO.Numbers.ERational)</a></code> - Compares the absolute values of this object and another object, imposing a total ordering on all possible values (ignoring their signs).</li>
+<li><code><a href="#CopySign_PeterO_Numbers_ERational">CopySign(PeterO.Numbers.ERational)</a></code> - Returns a number with the same value as this one, but copying the sign (positive or negative) of another number.</li>
+<li><code><a href="#Create_int_int">Create(int, int)</a></code> - Creates a rational number with the given numerator and denominator.</li>
+<li><code><a href="#CreateNaN_PeterO_Numbers_EInteger">CreateNaN(PeterO.Numbers.EInteger)</a></code> - Creates a not-a-number arbitrary-precision rational number.</li>
+<li><code><a href="#Denominator">Denominator</a></code> - Gets this object&#39;s denominator.</li>
+<li><code><a href="#Divide_PeterO_Numbers_ERational">Divide(PeterO.Numbers.ERational)</a></code> - Divides this instance by the value of an arbitrary-precision rational number object.</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number.</li>
+<li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimalunder the Common Language Infrastructure (usually a .</li>
+<li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Converts a 64-bit floating-point number to a rational number.</li>
+<li><code><a href="#FromEDecimal_PeterO_Numbers_EDecimal">FromEDecimal(PeterO.Numbers.EDecimal)</a></code> - Converts an arbitrary-precision decimal number to a rational number.</li>
+<li><code><a href="#FromEFloat_PeterO_Numbers_EFloat">FromEFloat(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary float to a rational number.</li>
+<li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to a rational number.</li>
+<li><code><a href="#FromExtendedDecimal_PeterO_Numbers_EDecimal">FromExtendedDecimal(PeterO.Numbers.EDecimal)</a></code> - Converts an arbitrary-precision decimal number to a rational number.</li>
+<li><code><a href="#FromExtendedFloat_PeterO_Numbers_EFloat">FromExtendedFloat(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary float to a rational number.</li>
+<li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromSByte_sbyte">FromSByte(sbyte)</a></code> - Converts an 8-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromSingle_float">FromSingle(float)</a></code> - Converts a 32-bit binary floating-point number to a rational number.</li>
+<li><code><a href="#FromString_string">FromString(string)</a></code> - Creates a rational number from a text string that represents a number.</li>
+<li><code><a href="#FromUInt16_ushort">FromUInt16(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromUInt32_uint">FromUInt32(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#FromUInt64_ulong">FromUInt64(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision rational number.</li>
+<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns the hash code for this instance.</li>
+<li><code><a href="#IsFinite">IsFinite</a></code> - Gets a value indicating whether this object is finite (not infinity or NaN).</li>
+<li><code><a href="#IsInfinity">IsInfinity()</a></code> - Gets a value indicating whether this object&#39;s value is infinity.</li>
+<li><code><a href="#IsNaN">IsNaN()</a></code> - Returns whether this object is a not-a-number value.</li>
+<li><code><a href="#IsNegative">IsNegative</a></code> - Gets a value indicating whether this object&#39;s value is negative (including negative zero).</li>
+<li><code><a href="#IsNegativeInfinity">IsNegativeInfinity()</a></code> - Returns whether this object is negative infinity.</li>
+<li><code><a href="#IsPositiveInfinity">IsPositiveInfinity()</a></code> - Returns whether this object is positive infinity.</li>
+<li><code><a href="#IsQuietNaN">IsQuietNaN()</a></code> - Returns whether this object is a quiet not-a-number value.</li>
+<li><code><a href="#IsSignalingNaN">IsSignalingNaN()</a></code> - Returns whether this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class).</li>
+<li><code><a href="#IsZero">IsZero</a></code> - Gets a value indicating whether this object&#39;s value equals 0.</li>
+<li><code><a href="#Multiply_PeterO_Numbers_ERational">Multiply(PeterO.Numbers.ERational)</a></code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#NaN">public static readonly PeterO.Numbers.ERational NaN;</a></code> - A not-a-number value.</li>
+<li><code><a href="#Negate">Negate()</a></code> - Returns a rational number with the same value as this one but with the sign reversed.</li>
+<li><code><a href="#NegativeInfinity">public static readonly PeterO.Numbers.ERational NegativeInfinity;</a></code> - Negative infinity, less than any other number.</li>
+<li><code><a href="#NegativeZero">public static readonly PeterO.Numbers.ERational NegativeZero;</a></code> - A rational number for negative zero.</li>
+<li><code><a href="#Numerator">Numerator</a></code> - Gets this object&#39;s numerator.</li>
+<li><code><a href="#One">public static readonly PeterO.Numbers.ERational One;</a></code> - The rational number one.</li>
+<li><code><a href="#PositiveInfinity">public static readonly PeterO.Numbers.ERational PositiveInfinity;</a></code> - Positive infinity, greater than any other number.</li>
+<li><code><a href="#Remainder_PeterO_Numbers_ERational">Remainder(PeterO.Numbers.ERational)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#Sign">Sign</a></code> - Gets the sign of this rational number.</li>
+<li><code><a href="#SignalingNaN">public static readonly PeterO.Numbers.ERational SignalingNaN;</a></code> - A signaling not-a-number value.</li>
+<li><code><a href="#Subtract_PeterO_Numbers_ERational">Subtract(PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
+<li><code><a href="#Ten">public static readonly PeterO.Numbers.ERational Ten;</a></code> - The rational number ten.</li>
+<li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
+<li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
+<li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
+<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to adecimalunder the Common Language Infrastructure (usually a .</li>
+<li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
+<li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this rational number to a decimal number.</li>
+<li><code><a href="#ToEDecimalExactIfPossible_PeterO_Numbers_EContext">ToEDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToEFloat">ToEFloat()</a></code> - Converts this rational number to a binary float.</li>
+<li><code><a href="#ToEFloatExactIfPossible_PeterO_Numbers_EContext">ToEFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToEInteger">ToEInteger()</a></code> - Converts this value to an arbitrary-precision integer.</li>
+<li><code><a href="#ToEIntegerExact">ToEIntegerExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
+<li><code><a href="#ToEIntegerIfExact">ToEIntegerIfExact()</a></code> - Converts this value to an arbitrary-precision integer, checking whether the value is an exact integer.</li>
+<li><code><a href="#ToExtendedDecimal">ToExtendedDecimal()</a></code> - Converts this rational number to a decimal number.</li>
+<li><code><a href="#ToExtendedDecimalExactIfPossible_PeterO_Numbers_EContext">ToExtendedDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToExtendedFloat">ToExtendedFloat()</a></code> - Converts this rational number to a binary float.</li>
+<li><code><a href="#ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext">ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a binary float, but if the result would have a nonterminating binary expansion, rounds that result to the given precision.</li>
+<li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
+<li><code><a href="#ToInt32Checked">ToInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt32IfExact">ToInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt32Unchecked">ToInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToInt64Checked">ToInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToInt64IfExact">ToInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit signed integer if it can fit in a 64-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToInt64Unchecked">ToInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit signed integer.</li>
+<li><code><a href="#ToSByteChecked">ToSByteChecked()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToSByteIfExact">ToSByteIfExact()</a></code> - Converts this number&#39;s value to an 8-bit signed integer if it can fit in an 8-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToSByteUnchecked">ToSByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as an 8-bit signed integer.</li>
+<li><code><a href="#ToSingle">ToSingle()</a></code> - Converts this value to a 32-bit binary floating-point number.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
+<li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt16Unchecked">ToUInt16Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
+<li><code><a href="#ToUInt32Checked">ToUInt32Checked()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt32IfExact">ToUInt32IfExact()</a></code> - Converts this number&#39;s value to a 32-bit signed integer if it can fit in a 32-bit signed integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt32Unchecked">ToUInt32Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 32-bit signed integer.</li>
+<li><code><a href="#ToUInt64Checked">ToUInt64Checked()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer after truncating to an integer.</li>
+<li><code><a href="#ToUInt64IfExact">ToUInt64IfExact()</a></code> - Converts this number&#39;s value to a 64-bit unsigned integer if it can fit in a 64-bit unsigned integer without rounding to a different numerical value.</li>
+<li><code><a href="#ToUInt64Unchecked">ToUInt64Unchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a 64-bit unsigned integer.</li>
+<li><code><a href="#UnsignedNumerator">UnsignedNumerator</a></code> - Gets this object&#39;s numerator with the sign removed.</li>
+<li><code><a href="#Zero">public static readonly PeterO.Numbers.ERational Zero;</a></code> - A rational number for zero.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator +(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Adds two rational numbers.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator /(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Divides an arbitrary-precision rational number by the value of another arbitrary-precision rational number object.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator %(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Finds the remainder that results when this instance is divided by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator *(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Multiplies this instance by the value of an arbitrary-precision rational number.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational, PeterO.Numbers.ERational)</a></code> - Subtracts an arbitrary-precision rational number from this instance.</li>
+<li><code><a href="#PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational">PeterO.Numbers.ERational operator -(PeterO.Numbers.ERational)</a></code> - Returns an arbitrary-precision rational number with the same value as the given one but with its sign reversed.</li>
 </ul>
+
+<p><a id="Void_ctor_EInteger_EInteger"></a></p>
 
 <h3>ERational Constructor</h3>
 
@@ -145,12 +147,16 @@ is not documented yet.</p></li>
 The denominator is zero.</li>
 </ul>
 
+<p><a id="NaN"></a></p>
+
 <h3>NaN</h3>
 
 <pre>public static readonly PeterO.Numbers.ERational NaN;
 </pre>
 
 <p>A not-a-number value.</p>
+
+<p><a id="NegativeInfinity"></a></p>
 
 <h3>NegativeInfinity</h3>
 
@@ -159,12 +165,16 @@ The denominator is zero.</li>
 
 <p>Negative infinity, less than any other number.</p>
 
+<p><a id="NegativeZero"></a></p>
+
 <h3>NegativeZero</h3>
 
 <pre>public static readonly PeterO.Numbers.ERational NegativeZero;
 </pre>
 
 <p>A rational number for negative zero.</p>
+
+<p><a id="One"></a></p>
 
 <h3>One</h3>
 
@@ -173,12 +183,16 @@ The denominator is zero.</li>
 
 <p>The rational number one.</p>
 
+<p><a id="PositiveInfinity"></a></p>
+
 <h3>PositiveInfinity</h3>
 
 <pre>public static readonly PeterO.Numbers.ERational PositiveInfinity;
 </pre>
 
 <p>Positive infinity, greater than any other number.</p>
+
+<p><a id="SignalingNaN"></a></p>
 
 <h3>SignalingNaN</h3>
 
@@ -187,6 +201,8 @@ The denominator is zero.</li>
 
 <p>A signaling not-a-number value.</p>
 
+<p><a id="Ten"></a></p>
+
 <h3>Ten</h3>
 
 <pre>public static readonly PeterO.Numbers.ERational Ten;
@@ -194,12 +210,16 @@ The denominator is zero.</li>
 
 <p>The rational number ten.</p>
 
+<p><a id="Zero"></a></p>
+
 <h3>Zero</h3>
 
 <pre>public static readonly PeterO.Numbers.ERational Zero;
 </pre>
 
 <p>A rational number for zero.</p>
+
+<p><a id="Denominator"></a></p>
 
 <h3>Denominator</h3>
 
@@ -212,6 +232,8 @@ The denominator is zero.</li>
 
 <p>This object&#39;s denominator.</p>
 
+<p><a id="IsFinite"></a></p>
+
 <h3>IsFinite</h3>
 
 <pre>public bool IsFinite { get; }
@@ -222,6 +244,8 @@ The denominator is zero.</li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if this object is finite (not infinity or NaN); otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegative"></a></p>
 
 <h3>IsNegative</h3>
 
@@ -234,6 +258,8 @@ The denominator is zero.</li>
 
 <p><code>true</code>  if this object&#39;s value is negative (including negative zero); otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value is negative; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsZero"></a></p>
+
 <h3>IsZero</h3>
 
 <pre>public bool IsZero { get; }
@@ -244,6 +270,8 @@ The denominator is zero.</li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
+
+<p><a id="Numerator"></a></p>
 
 <h3>Numerator</h3>
 
@@ -256,6 +284,8 @@ The denominator is zero.</li>
 
 <p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information (which will be negative if this object is negative).</p>
 
+<p><a id="Sign"></a></p>
+
 <h3>Sign</h3>
 
 <pre>public int Sign { get; }
@@ -266,6 +296,8 @@ The denominator is zero.</li>
 <p><b>Returns:</b></p>
 
 <p>The sign of this rational number.</p>
+
+<p><a id="UnsignedNumerator"></a></p>
 
 <h3>UnsignedNumerator</h3>
 
@@ -278,6 +310,8 @@ The denominator is zero.</li>
 
 <p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information.</p>
 
+<p><a id="Abs"></a></p>
+
 <h3>Abs</h3>
 
 <pre>public PeterO.Numbers.ERational Abs();
@@ -288,6 +322,8 @@ The denominator is zero.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary rational number.</p>
+
+<p><a id="Add_PeterO_Numbers_ERational"></a></p>
 
 <h3>Add</h3>
 
@@ -315,6 +351,8 @@ is not documented yet.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="CompareTo_PeterO_Numbers_ERational"></a></p>
+
 <h3>CompareTo</h3>
 
 <pre>public sealed int CompareTo(
@@ -340,6 +378,8 @@ is not documented yet.</li>
 <li>System.ArgumentException:
 Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 </ul>
+
+<p><a id="CompareToBinary_PeterO_Numbers_EFloat"></a></p>
 
 <h3>CompareToBinary</h3>
 
@@ -367,6 +407,8 @@ is not documented yet.</li>
 Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 </ul>
 
+<p><a id="CompareToDecimal_PeterO_Numbers_EDecimal"></a></p>
+
 <h3>CompareToDecimal</h3>
 
 <pre>public int CompareToDecimal(
@@ -392,6 +434,8 @@ is not documented yet.</li>
 <li>System.ArgumentException:
 Doesn&#39;t satisfy this.IsFinite; doesn&#39;t satisfy other.IsFinite.</li>
 </ul>
+
+<p><a id="CompareToTotal_PeterO_Numbers_ERational"></a></p>
 
 <h3>CompareToTotal</h3>
 
@@ -421,6 +465,8 @@ is not documented yet.</li>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="CompareToTotalMagnitude_PeterO_Numbers_ERational"></a></p>
+
 <h3>CompareToTotalMagnitude</h3>
 
 <pre>public int CompareToTotalMagnitude(
@@ -448,6 +494,8 @@ is not documented yet.</li>
 
 <p>The number 0 if both objects have the same value, or -1 if this object is less than the other value, or 1 if this object is greater.</p>
 
+<p><a id="CopySign_PeterO_Numbers_ERational"></a></p>
+
 <h3>CopySign</h3>
 
 <pre>public PeterO.Numbers.ERational CopySign(
@@ -473,6 +521,8 @@ is not documented yet.</li>
 <li>System.ArgumentNullException:
 The parameter &quot;other&quot; is null.</li>
 </ul>
+
+<p><a id="Create_int_int"></a></p>
 
 <h3>Create</h3>
 
@@ -503,6 +553,8 @@ is not documented yet.</p></li>
 The denominator is zero.</li>
 </ul>
 
+<p><a id="Create_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger"></a></p>
+
 <h3>Create</h3>
 
 <pre>public static PeterO.Numbers.ERational Create(
@@ -532,6 +584,8 @@ is not documented yet.</p></li>
 The denominator is zero.</li>
 </ul>
 
+<p><a id="CreateNaN_PeterO_Numbers_EInteger"></a></p>
+
 <h3>CreateNaN</h3>
 
 <pre>public static PeterO.Numbers.ERational CreateNaN(
@@ -557,6 +611,8 @@ is not documented yet.</li>
 <li>System.ArgumentException:
 The parameter &quot;diag&quot; is less than 0.</li>
 </ul>
+
+<p><a id="CreateNaN_PeterO_Numbers_EInteger_bool_bool"></a></p>
 
 <h3>CreateNaN</h3>
 
@@ -592,6 +648,8 @@ The parameter &quot;diag&quot; is less than 0.</p></li>
 The parameter &quot;diag&quot; is null.</p></li>
 </ul>
 
+<p><a id="Divide_PeterO_Numbers_ERational"></a></p>
+
 <h3>Divide</h3>
 
 <pre>public PeterO.Numbers.ERational Divide(
@@ -618,6 +676,8 @@ is not documented yet.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="Equals_object"></a></p>
+
 <h3>Equals</h3>
 
 <pre>public override bool Equals(
@@ -636,6 +696,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the objects are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="Equals_PeterO_Numbers_ERational"></a></p>
 
 <h3>Equals</h3>
 
@@ -656,6 +718,8 @@ is not documented yet.</li>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
 
+<p><a id="FromByte_byte"></a></p>
+
 <h3>FromByte</h3>
 
 <pre>public static PeterO.Numbers.ERational FromByte(
@@ -675,6 +739,8 @@ is not documented yet.</li>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
 
+<p><a id="FromDecimal_System_Decimal"></a></p>
+
 <h3>FromDecimal</h3>
 
 <pre>public static PeterO.Numbers.ERational FromDecimal(
@@ -692,6 +758,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision rational number.</p>
+
+<p><a id="FromDouble_double"></a></p>
 
 <h3>FromDouble</h3>
 
@@ -711,6 +779,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A rational number with the same value as &quot;flt&quot;.</p>
+
+<p><a id="FromEDecimal_PeterO_Numbers_EDecimal"></a></p>
 
 <h3>FromEDecimal</h3>
 
@@ -738,6 +808,8 @@ is not documented yet.</li>
 The parameter &quot;ef&quot; is null.</li>
 </ul>
 
+<p><a id="FromEFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>FromEFloat</h3>
 
 <pre>public static PeterO.Numbers.ERational FromEFloat(
@@ -764,6 +836,8 @@ is not documented yet.</li>
 The parameter &quot;ef&quot; is null.</li>
 </ul>
 
+<p><a id="FromEInteger_PeterO_Numbers_EInteger"></a></p>
+
 <h3>FromEInteger</h3>
 
 <pre>public static PeterO.Numbers.ERational FromEInteger(
@@ -782,6 +856,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>The exact value of the integer as a rational number.</p>
+
+<p><a id="FromExtendedDecimal_PeterO_Numbers_EDecimal"></a></p>
 
 <h3>FromExtendedDecimal</h3>
 
@@ -804,6 +880,8 @@ is not documented yet.</li>
 
 <p>An arbitrary-precision rational number.</p>
 
+<p><a id="FromExtendedFloat_PeterO_Numbers_EFloat"></a></p>
+
 <h3>FromExtendedFloat</h3>
 
 <pre>public static PeterO.Numbers.ERational FromExtendedFloat(
@@ -825,6 +903,8 @@ is not documented yet.</li>
 
 <p>An arbitrary-precision rational number.</p>
 
+<p><a id="FromInt16_short"></a></p>
+
 <h3>FromInt16</h3>
 
 <pre>public static PeterO.Numbers.ERational FromInt16(
@@ -843,6 +923,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
+
+<p><a id="FromInt32_int"></a></p>
 
 <h3>FromInt32</h3>
 
@@ -863,6 +945,8 @@ is not documented yet.</li>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
 
+<p><a id="FromInt64_long"></a></p>
+
 <h3>FromInt64</h3>
 
 <pre>public static PeterO.Numbers.ERational FromInt64(
@@ -882,6 +966,8 @@ is not documented yet.</li>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
 
+<p><a id="FromSByte_sbyte"></a></p>
+
 <h3>FromSByte</h3>
 
 <pre>public static PeterO.Numbers.ERational FromSByte(
@@ -899,6 +985,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
+
+<p><a id="FromSingle_float"></a></p>
 
 <h3>FromSingle</h3>
 
@@ -918,6 +1006,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A rational number with the same value as &quot;flt&quot;.</p>
+
+<p><a id="FromString_string"></a></p>
 
 <h3>FromString</h3>
 
@@ -944,6 +1034,8 @@ is not documented yet.</li>
 <li>System.FormatException:
 The parameter &quot;str&quot; is not a correctly formatted number string.</li>
 </ul>
+
+<p><a id="FromString_string_int_int"></a></p>
 
 <h3>FromString</h3>
 
@@ -992,6 +1084,8 @@ The parameter &quot;str&quot; is not a correctly formatted number string.</p></l
 The parameter &quot;str&quot; is null.</p></li>
 </ul>
 
+<p><a id="FromUInt16_ushort"></a></p>
+
 <h3>FromUInt16</h3>
 
 <pre>public static PeterO.Numbers.ERational FromUInt16(
@@ -1009,6 +1103,8 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
+
+<p><a id="FromUInt32_uint"></a></p>
 
 <h3>FromUInt32</h3>
 
@@ -1028,6 +1124,8 @@ The parameter &quot;str&quot; is null.</p></li>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
 
+<p><a id="FromUInt64_ulong"></a></p>
+
 <h3>FromUInt64</h3>
 
 <pre>public static PeterO.Numbers.ERational FromUInt64(
@@ -1046,6 +1144,8 @@ The parameter &quot;str&quot; is null.</p></li>
 
 <p>This number&#39;s value as an arbitrary-precision rational number.</p>
 
+<p><a id="GetHashCode"></a></p>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
@@ -1056,6 +1156,8 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="IsInfinity"></a></p>
 
 <h3>IsInfinity</h3>
 
@@ -1068,6 +1170,8 @@ The parameter &quot;str&quot; is null.</p></li>
 
 <p><code>true</code>  if this object&#39;s value is infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsNaN"></a></p>
+
 <h3>IsNaN</h3>
 
 <pre>public bool IsNaN();
@@ -1078,6 +1182,8 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is a not-a-number value; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsNegativeInfinity"></a></p>
 
 <h3>IsNegativeInfinity</h3>
 
@@ -1090,6 +1196,8 @@ The parameter &quot;str&quot; is null.</p></li>
 
 <p><code>true</code>  if this object is negative infinity; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsPositiveInfinity"></a></p>
+
 <h3>IsPositiveInfinity</h3>
 
 <pre>public bool IsPositiveInfinity();
@@ -1100,6 +1208,8 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is positive infinity; otherwise,  <code>false</code> .</p>
+
+<p><a id="IsQuietNaN"></a></p>
 
 <h3>IsQuietNaN</h3>
 
@@ -1112,6 +1222,8 @@ The parameter &quot;str&quot; is null.</p></li>
 
 <p><code>true</code>  if this object is a quiet not-a-number value; otherwise,  <code>false</code> .</p>
 
+<p><a id="IsSignalingNaN"></a></p>
+
 <h3>IsSignalingNaN</h3>
 
 <pre>public bool IsSignalingNaN();
@@ -1122,6 +1234,8 @@ The parameter &quot;str&quot; is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object is a signaling not-a-number value (which causes an error if the value is passed to any arithmetic operation in this class); otherwise,  <code>false</code> .</p>
+
+<p><a id="Multiply_PeterO_Numbers_ERational"></a></p>
 
 <h3>Multiply</h3>
 
@@ -1149,6 +1263,8 @@ is not documented yet.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="Negate"></a></p>
+
 <h3>Negate</h3>
 
 <pre>public PeterO.Numbers.ERational Negate();
@@ -1159,6 +1275,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary rational number.</p>
+
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
 
 <h3>Operator <code>+</code></h3>
 
@@ -1187,6 +1305,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+
 <h3>Operator <code>/</code></h3>
 
 <pre>public static PeterO.Numbers.ERational operator /(
@@ -1213,6 +1333,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 <li>System.ArgumentNullException:
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
+
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
 
 <h3>Operator <code>%</code></h3>
 
@@ -1241,6 +1363,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
+
 <h3>Operator <code>*</code></h3>
 
 <pre>public static PeterO.Numbers.ERational operator *(
@@ -1267,6 +1391,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 <li>System.ArgumentNullException:
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
+
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational_PeterO_Numbers_ERational"></a></p>
 
 <h3>Operator <code>-</code></h3>
 
@@ -1295,6 +1421,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="PeterO_Numbers_ERational_operator_PeterO_Numbers_ERational"></a></p>
+
 <h3>Operator <code>-</code></h3>
 
 <pre>public static PeterO.Numbers.ERational operator -(
@@ -1320,6 +1448,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 The parameter <i>bigValue</i>
 is null.</li>
 </ul>
+
+<p><a id="Remainder_PeterO_Numbers_ERational"></a></p>
 
 <h3>Remainder</h3>
 
@@ -1347,6 +1477,8 @@ is not documented yet.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="Subtract_PeterO_Numbers_ERational"></a></p>
+
 <h3>Subtract</h3>
 
 <pre>public PeterO.Numbers.ERational Subtract(
@@ -1373,6 +1505,8 @@ is not documented yet.</li>
 The parameter &quot;otherValue&quot; is null.</li>
 </ul>
 
+<p><a id="ToByteChecked"></a></p>
+
 <h3>ToByteChecked</h3>
 
 <pre>public byte ToByteChecked();
@@ -1390,6 +1524,8 @@ The parameter &quot;otherValue&quot; is null.</li>
 <li>System.OverflowException:
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 255.</li>
 </ul>
+
+<p><a id="ToByteIfExact"></a></p>
 
 <h3>ToByteIfExact</h3>
 
@@ -1409,6 +1545,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
+<p><a id="ToByteUnchecked"></a></p>
+
 <h3>ToByteUnchecked</h3>
 
 <pre>public byte ToByteUnchecked();
@@ -1419,6 +1557,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A byte (from 0 to 255).</p>
+
+<p><a id="ToDecimal"></a></p>
 
 <h3>ToDecimal</h3>
 
@@ -1431,6 +1571,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>A <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal).</p>
 
+<p><a id="ToDouble"></a></p>
+
 <h3>ToDouble</h3>
 
 <pre>public double ToDouble();
@@ -1441,6 +1583,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit floating-point number.</p>
+
+<p><a id="ToEDecimal_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToEDecimal</h3>
 
@@ -1461,6 +1605,8 @@ is not documented yet.</li>
 
 <p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
 
+<p><a id="ToEDecimal"></a></p>
+
 <h3>ToEDecimal</h3>
 
 <pre>public PeterO.Numbers.EDecimal ToEDecimal();
@@ -1471,6 +1617,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
+
+<p><a id="ToEDecimalExactIfPossible_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToEDecimalExactIfPossible</h3>
 
@@ -1491,6 +1639,8 @@ is not documented yet.</li>
 
 <p>The exact value of the rational number if possible; otherwise, the rounded version of the result if a context is given. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
 
+<p><a id="ToEFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>ToEFloat</h3>
 
 <pre>public PeterO.Numbers.EFloat ToEFloat(
@@ -1510,6 +1660,8 @@ is not documented yet.</li>
 
 <p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
 
+<p><a id="ToEFloat"></a></p>
+
 <h3>ToEFloat</h3>
 
 <pre>public PeterO.Numbers.EFloat ToEFloat();
@@ -1520,6 +1672,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="ToEFloatExactIfPossible_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToEFloatExactIfPossible</h3>
 
@@ -1540,6 +1694,8 @@ is not documented yet.</li>
 
 <p>The exact value of the rational number if possible; otherwise, the rounded version of the result if a context is given. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
 
+<p><a id="ToEInteger"></a></p>
+
 <h3>ToEInteger</h3>
 
 <pre>public PeterO.Numbers.EInteger ToEInteger();
@@ -1557,6 +1713,8 @@ is not documented yet.</li>
 <li>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
+
+<p><a id="ToEIntegerExact"></a></p>
 
 <h3>ToEIntegerExact</h3>
 
@@ -1578,6 +1736,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
 
+<p><a id="ToEIntegerIfExact"></a></p>
+
 <h3>ToEIntegerIfExact</h3>
 
 <pre>public PeterO.Numbers.EInteger ToEIntegerIfExact();
@@ -1595,6 +1755,8 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <li>System.OverflowException:
 This object&#39;s value is infinity or not-a-number (NaN).</li>
 </ul>
+
+<p><a id="ToExtendedDecimal_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToExtendedDecimal</h3>
 
@@ -1617,6 +1779,8 @@ is not documented yet.</li>
 
 <p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
 
+<p><a id="ToExtendedDecimal"></a></p>
+
 <h3>ToExtendedDecimal</h3>
 
 <pre>public PeterO.Numbers.EDecimal ToExtendedDecimal();
@@ -1629,6 +1793,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An EDecimal object.</p>
+
+<p><a id="ToExtendedDecimalExactIfPossible_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToExtendedDecimalExactIfPossible</h3>
 
@@ -1651,6 +1817,8 @@ is not documented yet.</li>
 
 <p>The exact value of the rational number if possible; otherwise, the rounded version of the result if a context is given. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating decimal expansion.</p>
 
+<p><a id="ToExtendedFloat_PeterO_Numbers_EContext"></a></p>
+
 <h3>ToExtendedFloat</h3>
 
 <pre>public PeterO.Numbers.EFloat ToExtendedFloat(
@@ -1672,6 +1840,8 @@ is not documented yet.</li>
 
 <p>The value of the rational number, rounded to the given precision. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
 
+<p><a id="ToExtendedFloat"></a></p>
+
 <h3>ToExtendedFloat</h3>
 
 <pre>public PeterO.Numbers.EFloat ToExtendedFloat();
@@ -1684,6 +1854,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision binary floating-point number.</p>
+
+<p><a id="ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext"></a></p>
 
 <h3>ToExtendedFloatExactIfPossible</h3>
 
@@ -1706,6 +1878,8 @@ is not documented yet.</li>
 
 <p>The exact value of the rational number if possible; otherwise, the rounded version of the result if a context is given. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
 
+<p><a id="ToInt16Checked"></a></p>
+
 <h3>ToInt16Checked</h3>
 
 <pre>public short ToInt16Checked();
@@ -1723,6 +1897,8 @@ is not documented yet.</li>
 <li>System.OverflowException:
 This value is infinity or not-a-number, or the truncated integer is less than -32768 or greater than 32767.</li>
 </ul>
+
+<p><a id="ToInt16IfExact"></a></p>
 
 <h3>ToInt16IfExact</h3>
 
@@ -1742,6 +1918,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -3
 This value is infinity or not-a-number, is not an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
+<p><a id="ToInt16Unchecked"></a></p>
+
 <h3>ToInt16Unchecked</h3>
 
 <pre>public short ToInt16Unchecked();
@@ -1752,6 +1930,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 16-bit signed integer.</p>
+
+<p><a id="ToInt32Checked"></a></p>
 
 <h3>ToInt32Checked</h3>
 
@@ -1771,6 +1951,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
+<p><a id="ToInt32IfExact"></a></p>
+
 <h3>ToInt32IfExact</h3>
 
 <pre>public int ToInt32IfExact();
@@ -1789,6 +1971,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -2
 This value is infinity or not-a-number, is not an exact integer, or is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
+<p><a id="ToInt32Unchecked"></a></p>
+
 <h3>ToInt32Unchecked</h3>
 
 <pre>public int ToInt32Unchecked();
@@ -1799,6 +1983,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="ToInt64Checked"></a></p>
 
 <h3>ToInt64Checked</h3>
 
@@ -1818,6 +2004,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -9223372036854775808 or greater than 9223372036854775807.</li>
 </ul>
 
+<p><a id="ToInt64IfExact"></a></p>
+
 <h3>ToInt64IfExact</h3>
 
 <pre>public long ToInt64IfExact();
@@ -1836,6 +2024,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -9
 This value is infinity or not-a-number, is not an exact integer, or is less than -9223372036854775808 or greater than 9223372036854775807.</li>
 </ul>
 
+<p><a id="ToInt64Unchecked"></a></p>
+
 <h3>ToInt64Unchecked</h3>
 
 <pre>public long ToInt64Unchecked();
@@ -1846,6 +2036,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
+
+<p><a id="ToSByteChecked"></a></p>
 
 <h3>ToSByteChecked</h3>
 
@@ -1865,6 +2057,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than -128 or greater than 127.</li>
 </ul>
 
+<p><a id="ToSByteIfExact"></a></p>
+
 <h3>ToSByteIfExact</h3>
 
 <pre>public sbyte ToSByteIfExact();
@@ -1883,6 +2077,8 @@ This value is infinity or not-a-number, or the truncated integer is less than -1
 This value is infinity or not-a-number, is not an exact integer, or is less than -128 or greater than 127.</li>
 </ul>
 
+<p><a id="ToSByteUnchecked"></a></p>
+
 <h3>ToSByteUnchecked</h3>
 
 <pre>public sbyte ToSByteUnchecked();
@@ -1893,6 +2089,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to an 8-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToSingle"></a></p>
 
 <h3>ToSingle</h3>
 
@@ -1905,6 +2103,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <p>A 32-bit floating-point number.</p>
 
+<p><a id="ToString"></a></p>
+
 <h3>ToString</h3>
 
 <pre>public override string ToString();
@@ -1915,6 +2115,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>A text string.</p>
+
+<p><a id="ToUInt16Checked"></a></p>
 
 <h3>ToUInt16Checked</h3>
 
@@ -1934,6 +2136,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 65535.</li>
 </ul>
 
+<p><a id="ToUInt16IfExact"></a></p>
+
 <h3>ToUInt16IfExact</h3>
 
 <pre>public ushort ToUInt16IfExact();
@@ -1952,6 +2156,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 65535.</li>
 </ul>
 
+<p><a id="ToUInt16Unchecked"></a></p>
+
 <h3>ToUInt16Unchecked</h3>
 
 <pre>public ushort ToUInt16Unchecked();
@@ -1962,6 +2168,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a 16-bit unsigned integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToUInt32Checked"></a></p>
 
 <h3>ToUInt32Checked</h3>
 
@@ -1981,6 +2189,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 4294967295.</li>
 </ul>
 
+<p><a id="ToUInt32IfExact"></a></p>
+
 <h3>ToUInt32IfExact</h3>
 
 <pre>public uint ToUInt32IfExact();
@@ -1999,6 +2209,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 4294967295.</li>
 </ul>
 
+<p><a id="ToUInt32Unchecked"></a></p>
+
 <h3>ToUInt32Unchecked</h3>
 
 <pre>public uint ToUInt32Unchecked();
@@ -2009,6 +2221,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <p><b>Return Value:</b></p>
 
 <p>This number, converted to a 32-bit signed integer. Returns 0 if this value is infinity or not-a-number.</p>
+
+<p><a id="ToUInt64Checked"></a></p>
 
 <h3>ToUInt64Checked</h3>
 
@@ -2028,6 +2242,8 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 This value is infinity or not-a-number, or the truncated integer is less than 0 or greater than 18446744073709551615.</li>
 </ul>
 
+<p><a id="ToUInt64IfExact"></a></p>
+
 <h3>ToUInt64IfExact</h3>
 
 <pre>public ulong ToUInt64IfExact();
@@ -2045,6 +2261,8 @@ This value is infinity or not-a-number, or the truncated integer is less than 0 
 <li>System.ArithmeticException:
 This value is infinity or not-a-number, is not an exact integer, or is less than 0 or greater than 18446744073709551615.</li>
 </ul>
+
+<p><a id="ToUInt64Unchecked"></a></p>
 
 <h3>ToUInt64Unchecked</h3>
 

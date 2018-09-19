@@ -20,13 +20,15 @@ data:text/markdown,hello%20world
 data:application/octet-stream;base64,AAAAAA==
 </pre>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>byte[] DataUrlBytes(string)</code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
-<li><code>PeterO.Mail.MediaType DataUrlMediaType(string)</code> - Extracts the media type from a Data URI (uniform resource identifier).</li>
-<li><code>string MakeDataUrl(string)</code> - Encodes text as a Data URI (uniform resource identifier).</li>
+<li><code><a href="#DataUrlBytes_string">DataUrlBytes(string)</a></code> - Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</li>
+<li><code><a href="#DataUrlMediaType_string">DataUrlMediaType(string)</a></code> - Extracts the media type from a Data URI (uniform resource identifier).</li>
+<li><code><a href="#MakeDataUrl_string">MakeDataUrl(string)</a></code> - Encodes text as a Data URI (uniform resource identifier).</li>
 </ul>
+
+<p><a id="DataUrlBytes_string"></a></p>
 
 <h3>DataUrlBytes</h3>
 
@@ -50,6 +52,8 @@ is not documented yet.</li>
 <p>The data as a byte array. Returns null if  <i>uri</i>
  is null, is syntactically invalid, or is not a data URI.</p>
 
+<p><a id="DataUrlMediaType_string"></a></p>
+
 <h3>DataUrlMediaType</h3>
 
 <pre>public static PeterO.Mail.MediaType DataUrlMediaType(
@@ -71,6 +75,8 @@ is not documented yet.</li>
 
 <p>The media type. Returns null if  <i>uri</i>
  is null, is syntactically invalid, or is not a Data URI.</p>
+
+<p><a id="MakeDataUrl_byte_PeterO_Mail_MediaType"></a></p>
 
 <h3>MakeDataUrl</h3>
 
@@ -102,6 +108,8 @@ The parameter  <i>bytes</i>
 or  <i>mediaType</i>
 is null.</li>
 </ul>
+
+<p><a id="MakeDataUrl_string"></a></p>
 
 <h3>MakeDataUrl</h3>
 

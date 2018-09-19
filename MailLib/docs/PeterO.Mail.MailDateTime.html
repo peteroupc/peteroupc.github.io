@@ -11,12 +11,14 @@
 
 <p>Contains methods for parsing and generating date-time strings following the Internet Message Format (RFC 5322).</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>string GenerateDateString(int[])</code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
-<li><code>int[] ParseDateString(string, bool)</code> - Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322), with an option to allow obsolete time zone strings to appear in the date-time string.</li>
+<li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
+<li><code><a href="#ParseDateString_string_bool">ParseDateString(string, bool)</a></code> - Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322), with an option to allow obsolete time zone strings to appear in the date-time string.</li>
 </ul>
+
+<p><a id="GenerateDateString_int"></a></p>
 
 <h3>GenerateDateString</h3>
 
@@ -43,6 +45,8 @@
 The parameter <i>dateTime</i>
 is null or invalid.</li>
 </ul>
+
+<p><a id="GenerateDateString_int_bool"></a></p>
 
 <h3>GenerateDateString</h3>
 
@@ -75,6 +79,8 @@ The time zone offset is other than 0 and  <i>gmt</i>
 is true.</p></li>
 </ul>
 
+<p><a id="ParseDateString_string"></a></p>
+
 <h3>ParseDateString</h3>
 
 <pre>public static int[] ParseDateString(
@@ -93,6 +99,8 @@ is true.</p></li>
 
 <p>An 8-element array containing the date and time, or <code>null</code>  if  <i>str</i>
  is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
+
+<p><a id="ParseDateString_string_bool"></a></p>
 
 <h3>ParseDateString</h3>
 

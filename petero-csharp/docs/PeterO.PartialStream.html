@@ -13,21 +13,23 @@
 
 <p>Represents a portion of another data stream. For this to work, the underlying stream must be seekable and have a known length.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public override bool CanRead { get; }</code> - Gets a value indicating whether the underlying stream supports reading.</li>
-<li><code> public override bool CanSeek { get; }</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
-<li><code> public override bool CanWrite { get; }</code> - Gets a value indicating whether the underlying stream supports writing.</li>
-<li><code>void Dispose(bool)</code> - Not documented yet.</li>
-<li><code>void Flush()</code> - Not documented yet.</li>
-<li><code> public override long Length { get; }</code> - Gets the partial stream&#39;s length in bytes.</li>
-<li><code> public override long Position { get; set;}</code> - Gets the partial stream&#39;s current byte position.</li>
-<li><code>int Read(byte[], int, int)</code> - Not documented yet.</li>
-<li><code>long Seek(long, System.IO.SeekOrigin)</code> - Not documented yet.</li>
-<li><code>void SetLength(long)</code> - Not documented yet.</li>
-<li><code>void Write(byte[], int, int)</code> - Not documented yet.</li>
+<li><code><a href="#CanRead">CanRead</a></code> - Gets a value indicating whether the underlying stream supports reading.</li>
+<li><code><a href="#CanSeek">CanSeek</a></code> - Gets a value indicating whether the underlying stream supports seeking.</li>
+<li><code><a href="#CanWrite">CanWrite</a></code> - Gets a value indicating whether the underlying stream supports writing.</li>
+<li><code><a href="#Dispose_bool">Dispose(bool)</a></code> - Not documented yet.</li>
+<li><code><a href="#Flush">Flush()</a></code> - Not documented yet.</li>
+<li><code><a href="#Length">Length</a></code> - Gets the partial stream&#39;s length in bytes.</li>
+<li><code><a href="#Position">Position</a></code> - Gets the partial stream&#39;s current byte position.</li>
+<li><code><a href="#Read_byte_int_int">Read(byte[], int, int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Seek_long_System_IO_SeekOrigin">Seek(long, System.IO.SeekOrigin)</a></code> - Not documented yet.</li>
+<li><code><a href="#SetLength_long">SetLength(long)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write_byte_int_int">Write(byte[], int, int)</a></code> - Not documented yet.</li>
 </ul>
+
+<p><a id="Void_ctor_Stream_Int64_Int64"></a></p>
 
 <h3>PartialStream Constructor</h3>
 
@@ -49,6 +51,8 @@ is not documented yet.</p></li>
 <li><p><i>length</i>: The parameter  <i>length</i>
 is not documented yet.</p></li>
 </ul>
+
+<p><a id="Void_ctor_Stream_Int64_Int64_Boolean"></a></p>
 
 <h3>PartialStream Constructor</h3>
 
@@ -86,6 +90,8 @@ or  <i>stream</i>
 is null.</p></li>
 </ul>
 
+<p><a id="CanRead"></a></p>
+
 <h3>CanRead</h3>
 
 <pre>public override bool CanRead { get; }
@@ -96,6 +102,8 @@ is null.</p></li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  If the underlying stream supports reading; otherwise, .  <code>false</code> .</p>
+
+<p><a id="CanSeek"></a></p>
 
 <h3>CanSeek</h3>
 
@@ -108,6 +116,8 @@ is null.</p></li>
 
 <p><code>true</code>  If the underlying stream supports seeking; otherwise, .  <code>false</code> .</p>
 
+<p><a id="CanWrite"></a></p>
+
 <h3>CanWrite</h3>
 
 <pre>public override bool CanWrite { get; }
@@ -118,6 +128,8 @@ is null.</p></li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  If the underlying stream supports writing; otherwise, .  <code>false</code> .</p>
+
+<p><a id="Length"></a></p>
 
 <h3>Length</h3>
 
@@ -130,9 +142,11 @@ is null.</p></li>
 
 <p>The partial stream&#39;s length in bytes.</p>
 
+<p><a id="Position"></a></p>
+
 <h3>Position</h3>
 
-<pre>public override long Position { get; set;}
+<pre>public override long Position { get; set; }
 </pre>
 
 <p>Gets the partial stream&#39;s current byte position.</p>
@@ -140,6 +154,8 @@ is null.</p></li>
 <p><b>Returns:</b></p>
 
 <p>The partial stream&#39;s current byte position.</p>
+
+<p><a id="Dispose_bool"></a></p>
 
 <h3>Dispose</h3>
 
@@ -156,12 +172,16 @@ is null.</p></li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="Flush"></a></p>
+
 <h3>Flush</h3>
 
 <pre>public override void Flush();
 </pre>
 
 <p>Not documented yet.</p>
+
+<p><a id="Read_byte_int_int"></a></p>
 
 <h3>Read</h3>
 
@@ -205,6 +225,8 @@ The parameter  <i>buffer</i>
 is null.</p></li>
 </ul>
 
+<p><a id="Seek_long_System_IO_SeekOrigin"></a></p>
+
 <h3>Seek</h3>
 
 <pre>public override long Seek(
@@ -227,6 +249,8 @@ is not documented yet.</p></li>
 
 <p>A 64-bit signed integer.</p>
 
+<p><a id="SetLength_long"></a></p>
+
 <h3>SetLength</h3>
 
 <pre>public override void SetLength(
@@ -241,6 +265,8 @@ is not documented yet.</p></li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="Write_byte_int_int"></a></p>
 
 <h3>Write</h3>
 

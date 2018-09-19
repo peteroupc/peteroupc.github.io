@@ -13,23 +13,25 @@
 
 <p>In C# and Java, text strings are represented as sequences of 16-bit values called <code>char</code> s. These sequences are well-formed under UTF-16, a 16-bit encoding form f Unicode, except if they contain unpaired surrogate code points. (A urrogate code point is used to encode supplementary characters, those ith code points U+10000 or higher, in UTF-16. A surrogate pair is a igh surrogate [U+D800 to U+DBFF] followed by a low surrogate [U+DC00 to +DFFF]. An unpaired surrogate code point is a surrogate not appearing n a surrogate pair.) Many of the methods in this class allow setting he behavior to follow when unpaired surrogate code points are found in ext strings, such as throwing an error or treating the unpaired urrogate as a replacement character (U+FFFD).</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>int CodePointAt(string, int)</code> - Gets the Unicode code point at the given index of the string.</li>
-<li><code>int CodePointBefore(string, int)</code> - Gets the Unicode code point just before the given index of the string.</li>
-<li><code>int CodePointCompare(string, string)</code> - Compares two strings in Unicode code point order.</li>
-<li><code>int CodePointLength(string)</code> - Finds the number of Unicode code points in the given text string.</li>
-<li><code>byte[] GetUtf8Bytes(string, bool)</code> - Encodes a string in UTF-8 as a byte array.</li>
-<li><code>long GetUtf8Length(string, bool)</code> - Calculates the number of bytes needed to encode a string in UTF-8.</li>
-<li><code>string GetUtf8String(byte[], bool)</code> - Generates a text string from a UTF-8 byte array.</li>
-<li><code>int ReadUtf8(System.IO.Stream, int, System.Text.StringBuilder, bool)</code> - Reads a string in UTF-8 encoding from a data stream.</li>
-<li><code>int ReadUtf8FromBytes(byte[], int, int, System.Text.StringBuilder, bool)</code> - Reads a string in UTF-8 encoding from a byte array.</li>
-<li><code>string ReadUtf8ToString(System.IO.Stream)</code> - Reads a string in UTF-8 encoding from a data stream in full and returns that string.</li>
-<li><code>string ToLowerCaseAscii(string)</code> - Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower-case.</li>
-<li><code>string ToUpperCaseAscii(string)</code> - Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to upper-case.</li>
-<li><code>int WriteUtf8(string, int, int, System.IO.Stream, bool)</code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
+<li><code><a href="#CodePointAt_string_int">CodePointAt(string, int)</a></code> - Gets the Unicode code point at the given index of the string.</li>
+<li><code><a href="#CodePointBefore_string_int">CodePointBefore(string, int)</a></code> - Gets the Unicode code point just before the given index of the string.</li>
+<li><code><a href="#CodePointCompare_string_string">CodePointCompare(string, string)</a></code> - Compares two strings in Unicode code point order.</li>
+<li><code><a href="#CodePointLength_string">CodePointLength(string)</a></code> - Finds the number of Unicode code points in the given text string.</li>
+<li><code><a href="#GetUtf8Bytes_string_bool">GetUtf8Bytes(string, bool)</a></code> - Encodes a string in UTF-8 as a byte array.</li>
+<li><code><a href="#GetUtf8Length_string_bool">GetUtf8Length(string, bool)</a></code> - Calculates the number of bytes needed to encode a string in UTF-8.</li>
+<li><code><a href="#GetUtf8String_byte_bool">GetUtf8String(byte[], bool)</a></code> - Generates a text string from a UTF-8 byte array.</li>
+<li><code><a href="#ReadUtf8_System_IO_Stream_int_System_Text_StringBuilder_bool">ReadUtf8(System.IO.Stream, int, System.Text.StringBuilder, bool)</a></code> - Reads a string in UTF-8 encoding from a data stream.</li>
+<li><code><a href="#ReadUtf8FromBytes_byte_int_int_System_Text_StringBuilder_bool">ReadUtf8FromBytes(byte[], int, int, System.Text.StringBuilder, bool)</a></code> - Reads a string in UTF-8 encoding from a byte array.</li>
+<li><code><a href="#ReadUtf8ToString_System_IO_Stream">ReadUtf8ToString(System.IO.Stream)</a></code> - Reads a string in UTF-8 encoding from a data stream in full and returns that string.</li>
+<li><code><a href="#ToLowerCaseAscii_string">ToLowerCaseAscii(string)</a></code> - Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A) converted to lower-case.</li>
+<li><code><a href="#ToUpperCaseAscii_string">ToUpperCaseAscii(string)</a></code> - Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A) converted to upper-case.</li>
+<li><code><a href="#WriteUtf8_string_int_int_System_IO_Stream_bool">WriteUtf8(string, int, int, System.IO.Stream, bool)</a></code> - Writes a portion of a string in UTF-8 encoding to a data stream.</li>
 </ul>
+
+<p><a id="CodePointAt_string_int"></a></p>
 
 <h3>CodePointAt</h3>
 
@@ -60,6 +62,8 @@ is less than 0, or is the string&#39;s length or greater. Returns the eplacement
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="CodePointAt_string_int_int"></a></p>
 
 <h3>CodePointAt</h3>
 
@@ -94,6 +98,8 @@ The parameter <i>str</i>
 is null.</li>
 </ul>
 
+<p><a id="CodePointBefore_string_int"></a></p>
+
 <h3>CodePointBefore</h3>
 
 <pre>public static int CodePointBefore(
@@ -123,6 +129,8 @@ is 0 or less, or is greater than the string&#39;s length. Returns the eplacement
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="CodePointBefore_string_int_int"></a></p>
 
 <h3>CodePointBefore</h3>
 
@@ -157,6 +165,8 @@ The parameter <i>str</i>
 is null.</li>
 </ul>
 
+<p><a id="CodePointCompare_string_string"></a></p>
+
 <h3>CodePointCompare</h3>
 
 <pre>public static int CodePointCompare(
@@ -176,6 +186,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A value indicating which string is &quot; less&quot; or &quot; greater&quot; . 0: Both strings are equal or null. Less than 0: a is null and b isn&#39;t; or the first code point that&#39;s different is less in A than in B; or b starts with a and is longer than a. Greater than 0: b is null and a isn&#39;t; or the first code point that&#39;s different is greater in A than in B; or a starts with b and is longer than b.</p>
+
+<p><a id="CodePointLength_string"></a></p>
 
 <h3>CodePointLength</h3>
 
@@ -203,6 +215,8 @@ is a text string.</li>
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="GetUtf8Bytes_string_bool"></a></p>
 
 <h3>GetUtf8Bytes</h3>
 
@@ -235,6 +249,8 @@ is null.</p></li>
 The string contains an unpaired surrogate code point and <i>replace</i>
 is false, or an internal error occurred.</p></li>
 </ul>
+
+<p><a id="GetUtf8Bytes_string_bool_bool"></a></p>
 
 <h3>GetUtf8Bytes</h3>
 
@@ -270,6 +286,8 @@ The string contains an unpaired surrogate code point and <i>replace</i>
 is false, or an internal error occurred.</p></li>
 </ul>
 
+<p><a id="GetUtf8Length_string_bool"></a></p>
+
 <h3>GetUtf8Length</h3>
 
 <pre>public static long GetUtf8Length(
@@ -299,6 +317,8 @@ is false.</p>
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="GetUtf8String_byte_bool"></a></p>
 
 <h3>GetUtf8String</h3>
 
@@ -330,6 +350,8 @@ is null.</p></li>
 The string is not valid UTF-8 and <i>replace</i>
 is false.</p></li>
 </ul>
+
+<p><a id="GetUtf8String_byte_int_int_bool"></a></p>
 
 <h3>GetUtf8String</h3>
 
@@ -370,6 +392,8 @@ is less than 0, <i>bytesCount</i>
 is less than 0, or offset plus bytesCount is greater than the length of data&quot; .</p></li>
 </ul>
 
+<p><a id="ReadUtf8_System_IO_Stream_int_System_Text_StringBuilder_bool"></a></p>
+
 <h3>ReadUtf8</h3>
 
 <pre>public static int ReadUtf8(
@@ -406,6 +430,8 @@ The parameter <i>stream</i>
 is null or <i>builder</i>
 is null.</p></li>
 </ul>
+
+<p><a id="ReadUtf8FromBytes_byte_int_int_System_Text_StringBuilder_bool"></a></p>
 
 <h3>ReadUtf8FromBytes</h3>
 
@@ -448,6 +474,8 @@ is less than 0, or offset plus bytesCount is greater than the length of <i>data<
 .</p></li>
 </ul>
 
+<p><a id="ReadUtf8ToString_System_IO_Stream"></a></p>
+
 <h3>ReadUtf8ToString</h3>
 
 <pre>public static string ReadUtf8ToString(
@@ -475,6 +503,8 @@ An I/O error occurred.</p></li>
 The parameter <i>stream</i>
 is null.</p></li>
 </ul>
+
+<p><a id="ReadUtf8ToString_System_IO_Stream_int_bool"></a></p>
 
 <h3>ReadUtf8ToString</h3>
 
@@ -509,6 +539,8 @@ The parameter <i>stream</i>
 is null.</p></li>
 </ul>
 
+<p><a id="ToLowerCaseAscii_string"></a></p>
+
 <h3>ToLowerCaseAscii</h3>
 
 <pre>public static string ToLowerCaseAscii(
@@ -529,6 +561,8 @@ is a text string.</li>
 <p>The converted string, or null if <i>str</i>
 is null.</p>
 
+<p><a id="ToUpperCaseAscii_string"></a></p>
+
 <h3>ToUpperCaseAscii</h3>
 
 <pre>public static string ToUpperCaseAscii(
@@ -548,6 +582,8 @@ is a text string.</li>
 
 <p>The converted string, or null if <i>str</i>
 is null.</p>
+
+<p><a id="WriteUtf8_string_int_int_System_IO_Stream_bool"></a></p>
 
 <h3>WriteUtf8</h3>
 
@@ -592,6 +628,8 @@ is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 </ul>
+
+<p><a id="WriteUtf8_string_int_int_System_IO_Stream_bool_bool"></a></p>
 
 <h3>WriteUtf8</h3>
 
@@ -638,6 +676,8 @@ is greater than the string&#39;s length.</p></li>
 <li><p>System.IO.IOException:
 An I/O error occurred.</p></li>
 </ul>
+
+<p><a id="WriteUtf8_string_System_IO_Stream_bool"></a></p>
 
 <h3>WriteUtf8</h3>
 

@@ -65,22 +65,24 @@
 
 <p>(Note that this library doesn&#39;t implement either encoding.)</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>string DecodeToString(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</code> - Reads bytes from a data source and converts the bytes from a given encoding to a text string.</li>
-<li><code>byte[] EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
-<li><code>void EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, PeterO.IWriter)</code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
-<li><code>PeterO.Text.ICharacterInput GetDecoderInput(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
-<li><code>PeterO.Text.ICharacterInput GetDecoderInputSkipBom(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
-<li><code>PeterO.Text.ICharacterEncoding GetEncoding(string)</code> - Returns a character encoding from the given name.</li>
-<li><code>string InputToString(this PeterO.Text.ICharacterInput)</code> - Reads Unicode characters from a character input and converts them to a text string.</li>
-<li><code>string ResolveAlias(string)</code> - Resolves a character encoding&#39;s name to a standard form.</li>
-<li><code>string ResolveAliasForEmail(string)</code> - Resolves a character encoding&#39;s name to a canonical form, using rules more suitable for email.</li>
-<li><code>byte[] StringToBytes(this PeterO.Text.ICharacterEncoding, string)</code> - Converts a text string to a byte array encoded in a given character encoding.</li>
-<li><code>PeterO.Text.ICharacterInput StringToInput(this string)</code> - Converts a text string to a character input.</li>
-<li><code> public static readonly PeterO.Text.ICharacterEncoding UTF8;</code> - Character encoding object for the UTF-8 character encoding, which represents each code point in the universal coded character set using 1 to 4 bytes.</li>
+<li><code><a href="#DecodeToString_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader">DecodeToString(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</a></code> - Reads bytes from a data source and converts the bytes from a given encoding to a text string.</li>
+<li><code><a href="#EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding">EncodeToBytes(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding)</a></code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+<li><code><a href="#EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_PeterO_IWriter">EncodeToWriter(this PeterO.Text.ICharacterInput, PeterO.Text.ICharacterEncoding, PeterO.IWriter)</a></code> - Reads Unicode characters from a character input and writes them to a byte array encoded using the given character encoder.</li>
+<li><code><a href="#GetDecoderInput_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader">GetDecoderInput(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</a></code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
+<li><code><a href="#GetDecoderInputSkipBom_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader">GetDecoderInputSkipBom(this PeterO.Text.ICharacterEncoding, PeterO.IByteReader)</a></code> - Converts a character encoding into a character input stream, given a streamable source of bytes.</li>
+<li><code><a href="#GetEncoding_string">GetEncoding(string)</a></code> - Returns a character encoding from the given name.</li>
+<li><code><a href="#InputToString_this_PeterO_Text_ICharacterInput">InputToString(this PeterO.Text.ICharacterInput)</a></code> - Reads Unicode characters from a character input and converts them to a text string.</li>
+<li><code><a href="#ResolveAlias_string">ResolveAlias(string)</a></code> - Resolves a character encoding&#39;s name to a standard form.</li>
+<li><code><a href="#ResolveAliasForEmail_string">ResolveAliasForEmail(string)</a></code> - Resolves a character encoding&#39;s name to a canonical form, using rules more suitable for email.</li>
+<li><code><a href="#StringToBytes_this_PeterO_Text_ICharacterEncoding_string">StringToBytes(this PeterO.Text.ICharacterEncoding, string)</a></code> - Converts a text string to a byte array encoded in a given character encoding.</li>
+<li><code><a href="#StringToInput_this_string">StringToInput(this string)</a></code> - Converts a text string to a character input.</li>
+<li><code><a href="#UTF8">public static readonly PeterO.Text.ICharacterEncoding UTF8;</a></code> - Character encoding object for the UTF-8 character encoding, which represents each code point in the universal coded character set using 1 to 4 bytes.</li>
 </ul>
+
+<p><a id="UTF8"></a></p>
 
 <h3>UTF8</h3>
 
@@ -88,6 +90,8 @@
 </pre>
 
 <p>Character encoding object for the UTF-8 character encoding, which represents each code point in the universal coded character set using 1 to 4 bytes.</p>
+
+<p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_byte"></a></p>
 
 <h3>DecodeToString</h3>
 
@@ -119,6 +123,8 @@ The parameter <i>enc</i>
 or  <i>bytes</i>
 is null.</li>
 </ul>
+
+<p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_byte_int_int"></a></p>
 
 <h3>DecodeToString</h3>
 
@@ -168,6 +174,8 @@ is less than  <i>length</i>
 .</p></li>
 </ul>
 
+<p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
+
 <h3>DecodeToString</h3>
 
 <pre>public static string DecodeToString(
@@ -195,6 +203,8 @@ is less than  <i>length</i>
 The parameter &quot;encoding&quot; or  <i>input</i>
 is null.</li>
 </ul>
+
+<p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader"></a></p>
 
 <h3>DecodeToString</h3>
 
@@ -224,6 +234,8 @@ The parameter <i>encoding</i>
 or  <i>input</i>
 is null.</li>
 </ul>
+
+<p><a id="EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder"></a></p>
 
 <h3>EncodeToBytes</h3>
 
@@ -255,6 +267,8 @@ The parameter <i>encoder</i>
 or  <i>input</i>
 is null.</li>
 </ul>
+
+<p><a id="EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_bool"></a></p>
 
 <h3>EncodeToBytes</h3>
 
@@ -288,6 +302,8 @@ or  <i>input</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding"></a></p>
+
 <h3>EncodeToBytes</h3>
 
 <pre>public static byte[] EncodeToBytes(
@@ -315,6 +331,8 @@ is null.</li>
 The parameter <i>encoding</i>
 is null.</li>
 </ul>
+
+<p><a id="EncodeToBytes_this_string_PeterO_Text_ICharacterEncoding"></a></p>
 
 <h3>EncodeToBytes</h3>
 
@@ -347,6 +365,8 @@ or  <i>enc</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToBytes_this_string_PeterO_Text_ICharacterEncoding_bool"></a></p>
+
 <h3>EncodeToBytes</h3>
 
 <pre>public static byte[] EncodeToBytes(
@@ -378,6 +398,8 @@ or  <i>enc</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_PeterO_IWriter"></a></p>
+
 <h3>EncodeToWriter</h3>
 
 <pre>public static void EncodeToWriter(
@@ -406,6 +428,8 @@ The parameter <i>encoder</i>
 or  <i>input</i>
 is null.</li>
 </ul>
+
+<p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoder_System_IO_Stream"></a></p>
 
 <h3>EncodeToWriter</h3>
 
@@ -436,6 +460,8 @@ or  <i>input</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_PeterO_IWriter"></a></p>
+
 <h3>EncodeToWriter</h3>
 
 <pre>public static void EncodeToWriter(
@@ -464,6 +490,8 @@ The parameter <i>encoding</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToWriter_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
+
 <h3>EncodeToWriter</h3>
 
 <pre>public static void EncodeToWriter(
@@ -491,6 +519,8 @@ is null.</li>
 The parameter <i>encoding</i>
 is null.</li>
 </ul>
+
+<p><a id="EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_PeterO_IWriter"></a></p>
 
 <h3>EncodeToWriter</h3>
 
@@ -521,6 +551,8 @@ or  <i>enc</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeToWriter_this_string_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
+
 <h3>EncodeToWriter</h3>
 
 <pre>public static void EncodeToWriter(
@@ -550,6 +582,8 @@ or  <i>enc</i>
 is null.</li>
 </ul>
 
+<p><a id="GetDecoderInput_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader"></a></p>
+
 <h3>GetDecoderInput</h3>
 
 <pre>public static PeterO.Text.ICharacterInput GetDecoderInput(
@@ -570,6 +604,8 @@ is null.</li>
 
 <p>An ICharacterInput object.</p>
 
+<p><a id="GetDecoderInput_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
+
 <h3>GetDecoderInput</h3>
 
 <pre>public static PeterO.Text.ICharacterInput GetDecoderInput(
@@ -589,6 +625,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>An ICharacterInput object.</p>
+
+<p><a id="GetDecoderInputSkipBom_this_PeterO_Text_ICharacterEncoding_PeterO_IByteReader"></a></p>
 
 <h3>GetDecoderInputSkipBom</h3>
 
@@ -612,6 +650,8 @@ is null.</li>
 
 <p>An ICharacterInput object.</p>
 
+<p><a id="GetDecoderInputSkipBom_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
+
 <h3>GetDecoderInputSkipBom</h3>
 
 <pre>public static PeterO.Text.ICharacterInput GetDecoderInputSkipBom(
@@ -632,6 +672,8 @@ is null.</li>
 
 <p>An ICharacterInput object.</p>
 
+<p><a id="GetEncoding_string"></a></p>
+
 <h3>GetEncoding</h3>
 
 <pre>public static PeterO.Text.ICharacterEncoding GetEncoding(
@@ -649,6 +691,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>An object implementing a character encoding (gives access to an encoder and a decoder).</p>
+
+<p><a id="GetEncoding_string_bool"></a></p>
 
 <h3>GetEncoding</h3>
 
@@ -669,6 +713,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
+
+<p><a id="GetEncoding_string_bool_bool"></a></p>
 
 <h3>GetEncoding</h3>
 
@@ -692,6 +738,8 @@ is null.</li>
 
 <p>An object that enables encoding and decoding text in the given character encoding. Returns null if the name is null or empty, or if it names an unrecognized or unsupported encoding.</p>
 
+<p><a id="InputToString_this_PeterO_Text_ICharacterInput"></a></p>
+
 <h3>InputToString</h3>
 
 <pre>public static string InputToString(
@@ -711,6 +759,8 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>A text string containing the characters read.</p>
+
+<p><a id="ResolveAlias_string"></a></p>
 
 <h3>ResolveAlias</h3>
 
@@ -762,6 +812,8 @@ is null.</li>
 <p>A standardized name for the encoding. Returns the empty string if <i>name</i>
 is null or empty, or if the encoding name is unsupported.</p>
 
+<p><a id="ResolveAliasForEmail_string"></a></p>
+
 <h3>ResolveAliasForEmail</h3>
 
 <pre>public static string ResolveAliasForEmail(
@@ -787,6 +839,8 @@ is null or empty, or if the encoding name is unsupported.</p>
 
 <p>A standardized name for the encoding. Returns the empty string if  <i>name</i>
  is null or empty, or if the encoding name is unsupported.</p>
+
+<p><a id="StringToBytes_this_PeterO_Text_ICharacterEncoder_string"></a></p>
 
 <h3>StringToBytes</h3>
 
@@ -819,6 +873,8 @@ or  <i>str</i>
 is null.</li>
 </ul>
 
+<p><a id="StringToBytes_this_PeterO_Text_ICharacterEncoding_string"></a></p>
+
 <h3>StringToBytes</h3>
 
 <pre>public static byte[] StringToBytes(
@@ -849,6 +905,8 @@ The parameter <i>encoding</i>
 is null.</li>
 </ul>
 
+<p><a id="StringToInput_this_string"></a></p>
+
 <h3>StringToInput</h3>
 
 <pre>public static PeterO.Text.ICharacterInput StringToInput(
@@ -877,6 +935,8 @@ is a text string.</li>
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="StringToInput_this_string_int_int"></a></p>
 
 <h3>StringToInput</h3>
 

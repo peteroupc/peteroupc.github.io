@@ -36,14 +36,16 @@
 
 <p>Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in these Data Files or Software without prior written authorization of the copyright holder.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>bool IsNormalized(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)</code> - Determines whether the text provided by a character input is normalized.</li>
-<li><code>string Normalize(string, PeterO.Text.Normalization)</code> - Converts a string to the given Unicode normalization form.</li>
-<li><code>int Read(int[], int, int)</code> - Reads a sequence of Unicode code points from a data source.</li>
-<li><code>int ReadChar()</code> - Reads a Unicode character from a data source.</li>
+<li><code><a href="#IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization">IsNormalized(PeterO.Text.ICharacterInput, PeterO.Text.Normalization)</a></code> - Determines whether the text provided by a character input is normalized.</li>
+<li><code><a href="#Normalize_string_PeterO_Text_Normalization">Normalize(string, PeterO.Text.Normalization)</a></code> - Converts a string to the given Unicode normalization form.</li>
+<li><code><a href="#Read_int_int_int">Read(int[], int, int)</a></code> - Reads a sequence of Unicode code points from a data source.</li>
+<li><code><a href="#ReadChar">ReadChar()</a></code> - Reads a Unicode character from a data source.</li>
 </ul>
+
+<p><a id="Void_ctor_ICharacterInput"></a></p>
 
 <h3>NormalizerInput Constructor</h3>
 
@@ -59,6 +61,8 @@
 <li><i>input</i>: The parameter <i>input</i>
 is an ICharacterInput object.</li>
 </ul>
+
+<p><a id="Void_ctor_ICharacterInput_Normalization"></a></p>
 
 <h3>NormalizerInput Constructor</h3>
 
@@ -85,6 +89,8 @@ The parameter <i>stream</i>
 is null.</li>
 </ul>
 
+<p><a id="Void_ctor_String"></a></p>
+
 <h3>NormalizerInput Constructor</h3>
 
 <pre>public NormalizerInput(
@@ -98,6 +104,8 @@ is null.</li>
 <ul>
 <li><i>str</i>: A string specifying the text to normalize.</li>
 </ul>
+
+<p><a id="Void_ctor_String_Int32_Int32_Normalization"></a></p>
 
 <h3>NormalizerInput Constructor</h3>
 
@@ -123,6 +131,8 @@ begins.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
 
+<p><a id="Void_ctor_String_Normalization"></a></p>
+
 <h3>NormalizerInput Constructor</h3>
 
 <pre>public NormalizerInput(
@@ -139,6 +149,8 @@ begins.</p></li>
 is a text string.</p></li>
 <li><p><i>form</i>: Specifies the normalization form to use when normalizing the text.</p></li>
 </ul>
+
+<p><a id="IsNormalized_PeterO_Text_ICharacterInput_PeterO_Text_Normalization"></a></p>
 
 <h3>IsNormalized</h3>
 
@@ -168,6 +180,8 @@ The parameter <i>chars</i>
 is null.</li>
 </ul>
 
+<p><a id="IsNormalized_string_PeterO_Text_Normalization"></a></p>
+
 <h3>IsNormalized</h3>
 
 <pre>public static bool IsNormalized(
@@ -195,6 +209,8 @@ is null.</li>
 The parameter <i>str</i>
 is null.</li>
 </ul>
+
+<p><a id="Normalize_string_PeterO_Text_Normalization"></a></p>
 
 <h3>Normalize</h3>
 
@@ -227,6 +243,8 @@ contains an unpaired surrogate code point.</p></li>
 The parameter <i>str</i>
 is null.</p></li>
 </ul>
+
+<p><a id="Read_int_int_int"></a></p>
 
 <h3>Read</h3>
 
@@ -268,6 +286,8 @@ is less than 0 or greater than <i>chars</i>
 is less than <i>length</i>
 .</p></li>
 </ul>
+
+<p><a id="ReadChar"></a></p>
 
 <h3>ReadChar</h3>
 

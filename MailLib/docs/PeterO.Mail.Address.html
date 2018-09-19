@@ -11,15 +11,17 @@
 
 <p>Represents an email address.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public string Domain { get; }</code> - Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
-<li><code>bool Equals(object)</code> - Determines whether this object and another object are equal.</li>
-<li><code>int GetHashCode()</code> - Returns a hash code for this address object.</li>
-<li><code> public string LocalPart { get; }</code> - Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
-<li><code>string ToString()</code> - Converts this address object to a text string.</li>
+<li><code><a href="#Domain">Domain</a></code> - Gets the domain of this email address (the part after the &quot;@&quot; sign).</li>
+<li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal.</li>
+<li><code><a href="#GetHashCode">GetHashCode()</a></code> - Returns a hash code for this address object.</li>
+<li><code><a href="#LocalPart">LocalPart</a></code> - Gets the local part of this email address (the part before the &quot;@&quot; sign).</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this address object to a text string.</li>
 </ul>
+
+<p><a id="Void_ctor_String"></a></p>
 
 <h3>Address Constructor</h3>
 
@@ -45,6 +47,8 @@ is null.</p></li>
 The email address contains invalid syntax. For example, it doesn&#39;t contain an &#39;@&#39; sign or either side of the &#39;@&#39; contains invalid characters, the address is too long, or the address contains comments (text within parentheses).</p></li>
 </ul>
 
+<p><a id="Domain"></a></p>
+
 <h3>Domain</h3>
 
 <pre>public string Domain { get; }
@@ -56,6 +60,8 @@ The email address contains invalid syntax. For example, it doesn&#39;t contain a
 
 <p>The domain of this email address (the part after the &quot;@&quot; sign).</p>
 
+<p><a id="LocalPart"></a></p>
+
 <h3>LocalPart</h3>
 
 <pre>public string LocalPart { get; }
@@ -66,6 +72,8 @@ The email address contains invalid syntax. For example, it doesn&#39;t contain a
 <p><b>Returns:</b></p>
 
 <p>The local part of this email address (the part before the &quot;@&quot; sign).</p>
+
+<p><a id="Equals_object"></a></p>
 
 <h3>Equals</h3>
 
@@ -86,6 +94,8 @@ is an arbitrary object.</li>
 
 <p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
+<p><a id="GetHashCode"></a></p>
+
 <h3>GetHashCode</h3>
 
 <pre>public override int GetHashCode();
@@ -96,6 +106,8 @@ is an arbitrary object.</li>
 <p><b>Return Value:</b></p>
 
 <p>A hash code for this instance.</p>
+
+<p><a id="ToString"></a></p>
 
 <h3>ToString</h3>
 

@@ -27,13 +27,15 @@
 
 <p>NOTICE: While this class&#39;s source code is in the public domain, the class uses two internal classes, called <code>NormalizationData</code> and <code>IdnaData</code> , that include data derived from the Unicode Character Database. See he documentation for the NormalizerInput class for the permission otice for the Unicode Character Database.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>string DecodeDomainName(string)</code> - Tries to encode each XN-label of the given domain name into Unicode.</li>
-<li><code>string EncodeDomainName(string)</code> - Tries to encode each label of a domain name with code points outside the Basic Latin range (U+0000 to U+007F) into an XN-label.</li>
-<li><code>bool IsValidDomainName(string, bool)</code> - Determines whether the given string is a domain name containing only U-labels, A-labels, NR-LDH labels, or any combination of these, separated by dots (&quot;.</li>
+<li><code><a href="#DecodeDomainName_string">DecodeDomainName(string)</a></code> - Tries to encode each XN-label of the given domain name into Unicode.</li>
+<li><code><a href="#EncodeDomainName_string">EncodeDomainName(string)</a></code> - Tries to encode each label of a domain name with code points outside the Basic Latin range (U+0000 to U+007F) into an XN-label.</li>
+<li><code><a href="#IsValidDomainName_string_bool">IsValidDomainName(string, bool)</a></code> - Determines whether the given string is a domain name containing only U-labels, A-labels, NR-LDH labels, or any combination of these, separated by dots (&quot;.</li>
 </ul>
+
+<p><a id="DecodeDomainName_string"></a></p>
 
 <h3>DecodeDomainName</h3>
 
@@ -61,6 +63,8 @@ The parameter <i>value</i>
 is null.</li>
 </ul>
 
+<p><a id="EncodeDomainName_string"></a></p>
+
 <h3>EncodeDomainName</h3>
 
 <pre>public static string EncodeDomainName(
@@ -86,6 +90,8 @@ is null.</li>
 The parameter <i>value</i>
 is null.</li>
 </ul>
+
+<p><a id="IsValidDomainName_string_bool"></a></p>
 
 <h3>IsValidDomainName</h3>
 

@@ -13,14 +13,16 @@
 
 <p>An array of bytes that grows as needed.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>void Clear()</code> - Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
-<li><code>byte[] ToArray()</code> - Generates an array of all bytes written so far to it.</li>
-<li><code>void Write(byte[], int, int)</code> - Writes a series of bytes to the array.</li>
-<li><code>void WriteByte(int)</code> - Writes an 8-bit byte to the array.</li>
+<li><code><a href="#Clear">Clear()</a></code> - Offers a fast way to reset the length of the array writer&#39;s data to 0.</li>
+<li><code><a href="#ToArray">ToArray()</a></code> - Generates an array of all bytes written so far to it.</li>
+<li><code><a href="#Write_byte_int_int">Write(byte[], int, int)</a></code> - Writes a series of bytes to the array.</li>
+<li><code><a href="#WriteByte_int">WriteByte(int)</a></code> - Writes an 8-bit byte to the array.</li>
 </ul>
+
+<p><a id="Void_ctor_Int32"></a></p>
 
 <h3>ArrayWriter Constructor</h3>
 
@@ -37,6 +39,8 @@
 is a 32-bit signed integer.</li>
 </ul>
 
+<p><a id="Void_ctor"></a></p>
+
 <h3>ArrayWriter Constructor</h3>
 
 <pre>public ArrayWriter();
@@ -44,12 +48,16 @@ is a 32-bit signed integer.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.ArrayWriter.html">PeterO.ArrayWriter</a> class with a default buffer size.</p>
 
+<p><a id="Clear"></a></p>
+
 <h3>Clear</h3>
 
 <pre>public void Clear();
 </pre>
 
 <p>Offers a fast way to reset the length of the array writer&#39;s data to 0.</p>
+
+<p><a id="ToArray"></a></p>
 
 <h3>ToArray</h3>
 
@@ -61,6 +69,8 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>A byte array.</p>
+
+<p><a id="Write_byte_int_int"></a></p>
 
 <h3>Write</h3>
 
@@ -98,6 +108,8 @@ is less than 0 or greater than <i>src</i>
 is less than <i>length</i>
 .</p></li>
 </ul>
+
+<p><a id="WriteByte_int"></a></p>
 
 <h3>WriteByte</h3>
 

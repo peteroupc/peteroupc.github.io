@@ -11,43 +11,45 @@
 
 <p>Reads and writes data types in little endian or big endian.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public bool CanRead { get; }</code> - Gets a value indicating whether the underlying stream can be read.</li>
-<li><code> public bool CanSeek { get; }</code> - Gets a value indicating whether the underlying stream supports seeking.</li>
-<li><code> public bool CanWrite { get; }</code> - Gets a value indicating whether the underlying stream supports writing.</li>
-<li><code> public long Length { get; }</code> - Gets the length of the underlying stream.</li>
-<li><code> public long Position { get; set;}</code> - Gets or sets the position of the underlying stream.</li>
-<li><code>int Read(byte[], int, int)</code> - Not documented yet.</li>
-<li><code>int Read7BitEncodedInt32BE()</code> - Not documented yet.</li>
-<li><code>int Read7BitEncodedInt32LE()</code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code>long Read7BitEncodedInt64BE()</code> - Not documented yet.</li>
-<li><code>long Read7BitEncodedInt64LE()</code> - Not documented yet.</li>
-<li><code>int Read7BitEncodedUInt32BE()</code> - Not documented yet.</li>
-<li><code>int Read7BitEncodedUInt32LE()</code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
-<li><code>byte ReadByte()</code> - Not documented yet.</li>
-<li><code>byte[] ReadBytes(int)</code> - Reads data from a stream into a byte array.</li>
-<li><code>double ReadDoubleBE()</code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
-<li><code>double ReadDoubleLE()</code> - Not documented yet.</li>
-<li><code>short ReadInt16BE()</code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
-<li><code>short ReadInt16LE()</code> - Not documented yet.</li>
-<li><code>int ReadInt32BE()</code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
-<li><code>int ReadInt32LE()</code> - Not documented yet.</li>
-<li><code>long ReadInt64BE()</code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
-<li><code>long ReadInt64LE()</code> - Not documented yet.</li>
-<li><code>float ReadSingleBE()</code> - Not documented yet.</li>
-<li><code>float ReadSingleLE()</code> - Not documented yet.</li>
-<li><code>void Write(byte)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedInt32BE(int)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedInt32LE(int)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedInt64BE(long)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedInt64LE(long)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedUInt32BE(int)</code> - Not documented yet.</li>
-<li><code>int Write7BitEncodedUInt32LE(int)</code> - Not documented yet.</li>
-<li><code>void WriteBE(int)</code> - Not documented yet.</li>
-<li><code>void WriteLE(int)</code> - Not documented yet.</li>
+<li><code><a href="#CanRead">CanRead</a></code> - Gets a value indicating whether the underlying stream can be read.</li>
+<li><code><a href="#CanSeek">CanSeek</a></code> - Gets a value indicating whether the underlying stream supports seeking.</li>
+<li><code><a href="#CanWrite">CanWrite</a></code> - Gets a value indicating whether the underlying stream supports writing.</li>
+<li><code><a href="#Length">Length</a></code> - Gets the length of the underlying stream.</li>
+<li><code><a href="#Position">Position</a></code> - Gets or sets the position of the underlying stream.</li>
+<li><code><a href="#Read_byte_int_int">Read(byte[], int, int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Read7BitEncodedInt32BE">Read7BitEncodedInt32BE()</a></code> - Not documented yet.</li>
+<li><code><a href="#Read7BitEncodedInt32LE">Read7BitEncodedInt32LE()</a></code> - Reads a signed 32-bit integer encoded in 7-bit encoding to the stream.</li>
+<li><code><a href="#Read7BitEncodedInt64BE">Read7BitEncodedInt64BE()</a></code> - Not documented yet.</li>
+<li><code><a href="#Read7BitEncodedInt64LE">Read7BitEncodedInt64LE()</a></code> - Not documented yet.</li>
+<li><code><a href="#Read7BitEncodedUInt32BE">Read7BitEncodedUInt32BE()</a></code> - Not documented yet.</li>
+<li><code><a href="#Read7BitEncodedUInt32LE">Read7BitEncodedUInt32LE()</a></code> - Reads an unsigned 32-bit integer encoded in 7-bit encoding to the stream.</li>
+<li><code><a href="#ReadByte">ReadByte()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadBytes_int">ReadBytes(int)</a></code> - Reads data from a stream into a byte array.</li>
+<li><code><a href="#ReadDoubleBE">ReadDoubleBE()</a></code> - Reads a 64-bit floating-point number in big-endian byte order.</li>
+<li><code><a href="#ReadDoubleLE">ReadDoubleLE()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadInt16BE">ReadInt16BE()</a></code> - Reads a 16-bit signed integer in big-endian byte order (2 bytes).</li>
+<li><code><a href="#ReadInt16LE">ReadInt16LE()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadInt32BE">ReadInt32BE()</a></code> - Reads a 32-bit signed integer in big-endian byte order (4 bytes).</li>
+<li><code><a href="#ReadInt32LE">ReadInt32LE()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadInt64BE">ReadInt64BE()</a></code> - Reads a 64-bit signed integer in big-endian byte order (8 bytes).</li>
+<li><code><a href="#ReadInt64LE">ReadInt64LE()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadSingleBE">ReadSingleBE()</a></code> - Not documented yet.</li>
+<li><code><a href="#ReadSingleLE">ReadSingleLE()</a></code> - Not documented yet.</li>
+<li><code><a href="#Write_byte">Write(byte)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedInt32BE_int">Write7BitEncodedInt32BE(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedInt32LE_int">Write7BitEncodedInt32LE(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedInt64BE_long">Write7BitEncodedInt64BE(long)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedInt64LE_long">Write7BitEncodedInt64LE(long)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedUInt32BE_int">Write7BitEncodedUInt32BE(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#Write7BitEncodedUInt32LE_int">Write7BitEncodedUInt32LE(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#WriteBE_int">WriteBE(int)</a></code> - Not documented yet.</li>
+<li><code><a href="#WriteLE_int">WriteLE(int)</a></code> - Not documented yet.</li>
 </ul>
+
+<p><a id="Void_ctor_Stream"></a></p>
 
 <h3>BinaryIO Constructor</h3>
 
@@ -72,6 +74,8 @@ The parameter <i>stream</i>
 is null.</li>
 </ul>
 
+<p><a id="CanRead"></a></p>
+
 <h3>CanRead</h3>
 
 <pre>public bool CanRead { get; }
@@ -82,6 +86,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if the underlying stream can be read; otherwise,  <code>false</code> .</p>
+
+<p><a id="CanSeek"></a></p>
 
 <h3>CanSeek</h3>
 
@@ -94,6 +100,8 @@ is null.</li>
 
 <p><code>true</code>  if the underlying stream supports seeking; otherwise,  <code>false</code> .</p>
 
+<p><a id="CanWrite"></a></p>
+
 <h3>CanWrite</h3>
 
 <pre>public bool CanWrite { get; }
@@ -104,6 +112,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  if the underlying stream supports writing; otherwise,  <code>false</code> .</p>
+
+<p><a id="Length"></a></p>
 
 <h3>Length</h3>
 
@@ -116,9 +126,11 @@ is null.</li>
 
 <p>The length of the underlying stream.</p>
 
+<p><a id="Position"></a></p>
+
 <h3>Position</h3>
 
-<pre>public long Position { get; set;}
+<pre>public long Position { get; set; }
 </pre>
 
 <p>Gets or sets the position of the underlying stream.</p>
@@ -126,6 +138,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>The position of the underlying stream.</p>
+
+<p><a id="Read_byte_int_int"></a></p>
 
 <h3>Read</h3>
 
@@ -169,6 +183,8 @@ The parameter  <i>data</i>
 is null.</p></li>
 </ul>
 
+<p><a id="Read7BitEncodedInt32BE"></a></p>
+
 <h3>Read7BitEncodedInt32BE</h3>
 
 <pre>public int Read7BitEncodedInt32BE();
@@ -179,6 +195,8 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="Read7BitEncodedInt32LE"></a></p>
 
 <h3>Read7BitEncodedInt32LE</h3>
 
@@ -193,6 +211,8 @@ is null.</p></li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="Read7BitEncodedInt64BE"></a></p>
+
 <h3>Read7BitEncodedInt64BE</h3>
 
 <pre>public long Read7BitEncodedInt64BE();
@@ -203,6 +223,8 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
+
+<p><a id="Read7BitEncodedInt64LE"></a></p>
 
 <h3>Read7BitEncodedInt64LE</h3>
 
@@ -215,6 +237,8 @@ is null.</p></li>
 
 <p>A 64-bit signed integer.</p>
 
+<p><a id="Read7BitEncodedUInt32BE"></a></p>
+
 <h3>Read7BitEncodedUInt32BE</h3>
 
 <pre>public int Read7BitEncodedUInt32BE();
@@ -225,6 +249,8 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="Read7BitEncodedUInt32LE"></a></p>
 
 <h3>Read7BitEncodedUInt32LE</h3>
 
@@ -239,6 +265,8 @@ is null.</p></li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="ReadByte"></a></p>
+
 <h3>ReadByte</h3>
 
 <pre>public byte ReadByte();
@@ -249,6 +277,8 @@ is null.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A byte (from 0 to 255).</p>
+
+<p><a id="ReadBytes_int"></a></p>
 
 <h3>ReadBytes</h3>
 
@@ -269,6 +299,8 @@ is not documented yet.</li>
 
 <p>A byte array containing the data read.</p>
 
+<p><a id="ReadDoubleBE"></a></p>
+
 <h3>ReadDoubleBE</h3>
 
 <pre>public double ReadDoubleBE();
@@ -279,6 +311,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit floating-point number.</p>
+
+<p><a id="ReadDoubleLE"></a></p>
 
 <h3>ReadDoubleLE</h3>
 
@@ -291,6 +325,8 @@ is not documented yet.</li>
 
 <p>A 64-bit floating-point number.</p>
 
+<p><a id="ReadInt16BE"></a></p>
+
 <h3>ReadInt16BE</h3>
 
 <pre>public short ReadInt16BE();
@@ -301,6 +337,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 16-bit signed integer.</p>
+
+<p><a id="ReadInt16LE"></a></p>
 
 <h3>ReadInt16LE</h3>
 
@@ -313,6 +351,8 @@ is not documented yet.</li>
 
 <p>A 16-bit signed integer.</p>
 
+<p><a id="ReadInt32BE"></a></p>
+
 <h3>ReadInt32BE</h3>
 
 <pre>public int ReadInt32BE();
@@ -323,6 +363,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="ReadInt32LE"></a></p>
 
 <h3>ReadInt32LE</h3>
 
@@ -335,6 +377,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="ReadInt64BE"></a></p>
+
 <h3>ReadInt64BE</h3>
 
 <pre>public long ReadInt64BE();
@@ -345,6 +389,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 64-bit signed integer.</p>
+
+<p><a id="ReadInt64LE"></a></p>
 
 <h3>ReadInt64LE</h3>
 
@@ -357,6 +403,8 @@ is not documented yet.</li>
 
 <p>A 64-bit signed integer.</p>
 
+<p><a id="ReadSingleBE"></a></p>
+
 <h3>ReadSingleBE</h3>
 
 <pre>public float ReadSingleBE();
@@ -368,6 +416,8 @@ is not documented yet.</li>
 
 <p>A 32-bit floating-point number.</p>
 
+<p><a id="ReadSingleLE"></a></p>
+
 <h3>ReadSingleLE</h3>
 
 <pre>public float ReadSingleLE();
@@ -378,6 +428,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit floating-point number.</p>
+
+<p><a id="Write_byte"></a></p>
 
 <h3>Write</h3>
 
@@ -393,6 +445,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="Write_byte"></a></p>
 
 <h3>Write</h3>
 
@@ -416,6 +470,8 @@ is not documented yet.</li>
 The parameter <i>data</i>
 is null.</li>
 </ul>
+
+<p><a id="Write_byte_int_int"></a></p>
 
 <h3>Write</h3>
 
@@ -455,6 +511,8 @@ is less than  <i>length</i>
 .</p></li>
 </ul>
 
+<p><a id="Write7BitEncodedInt32BE_int"></a></p>
+
 <h3>Write7BitEncodedInt32BE</h3>
 
 <pre>public int Write7BitEncodedInt32BE(
@@ -473,6 +531,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="Write7BitEncodedInt32LE_int"></a></p>
 
 <h3>Write7BitEncodedInt32LE</h3>
 
@@ -493,6 +553,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="Write7BitEncodedInt64BE_long"></a></p>
+
 <h3>Write7BitEncodedInt64BE</h3>
 
 <pre>public int Write7BitEncodedInt64BE(
@@ -511,6 +573,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="Write7BitEncodedInt64LE_long"></a></p>
 
 <h3>Write7BitEncodedInt64LE</h3>
 
@@ -531,6 +595,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="Write7BitEncodedUInt32BE_int"></a></p>
+
 <h3>Write7BitEncodedUInt32BE</h3>
 
 <pre>public int Write7BitEncodedUInt32BE(
@@ -549,6 +615,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit signed integer.</p>
+
+<p><a id="Write7BitEncodedUInt32LE_int"></a></p>
 
 <h3>Write7BitEncodedUInt32LE</h3>
 
@@ -569,6 +637,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="WriteBE_byte"></a></p>
+
 <h3>WriteBE</h3>
 
 <pre>public void WriteBE(
@@ -583,6 +653,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteBE_double"></a></p>
 
 <h3>WriteBE</h3>
 
@@ -599,6 +671,8 @@ is not documented yet.</li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="WriteBE_float"></a></p>
+
 <h3>WriteBE</h3>
 
 <pre>public void WriteBE(
@@ -613,6 +687,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteBE_int"></a></p>
 
 <h3>WriteBE</h3>
 
@@ -629,6 +705,8 @@ is not documented yet.</li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="WriteBE_long"></a></p>
+
 <h3>WriteBE</h3>
 
 <pre>public void WriteBE(
@@ -643,6 +721,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteBE_short"></a></p>
 
 <h3>WriteBE</h3>
 
@@ -659,6 +739,8 @@ is not documented yet.</li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="WriteLE_byte"></a></p>
+
 <h3>WriteLE</h3>
 
 <pre>public void WriteLE(
@@ -673,6 +755,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteLE_double"></a></p>
 
 <h3>WriteLE</h3>
 
@@ -689,6 +773,8 @@ is not documented yet.</li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="WriteLE_float"></a></p>
+
 <h3>WriteLE</h3>
 
 <pre>public void WriteLE(
@@ -703,6 +789,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteLE_int"></a></p>
 
 <h3>WriteLE</h3>
 
@@ -719,6 +807,8 @@ is not documented yet.</li>
 is not documented yet.</li>
 </ul>
 
+<p><a id="WriteLE_long"></a></p>
+
 <h3>WriteLE</h3>
 
 <pre>public void WriteLE(
@@ -733,6 +823,8 @@ is not documented yet.</li>
 <li><i>value</i>: The parameter  <i>value</i>
 is not documented yet.</li>
 </ul>
+
+<p><a id="WriteLE_short"></a></p>
 
 <h3>WriteLE</h3>
 

@@ -11,20 +11,22 @@
 
 <p>A mutable media type object.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public bool IsMultipart { get; }</code> - Gets a value indicating whether this is a multipart media type.</li>
-<li><code> public bool IsText { get; }</code> - Gets a value indicating whether this is a text media type.</li>
-<li><code>PeterO.Mail.MediaTypeBuilder RemoveParameter(string)</code> - Removes a parameter from this builder object.</li>
-<li><code>PeterO.Mail.MediaTypeBuilder SetParameter(string, string)</code> - Sets a parameter&#39;s name and value for this media type.</li>
-<li><code>PeterO.Mail.MediaTypeBuilder SetSubType(string)</code> - Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
-<li><code>PeterO.Mail.MediaTypeBuilder SetTopLevelType(string)</code> - Sets this media type&#39;s top-level type.</li>
-<li><code> public string SubType { get; set;}</code> - Gets or sets this value&#39;s subtype.</li>
-<li><code>PeterO.Mail.MediaType ToMediaType()</code> - Converts this builder to an immutable media type object.</li>
-<li><code>string ToString()</code> - Converts this object to a text string of the media type it represents, in the same form as MediaType.</li>
-<li><code> public string TopLevelType { get; set;}</code> - Gets or sets this value&#39;s top-level type.</li>
+<li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
+<li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type.</li>
+<li><code><a href="#RemoveParameter_string">RemoveParameter(string)</a></code> - Removes a parameter from this builder object.</li>
+<li><code><a href="#SetParameter_string_string">SetParameter(string, string)</a></code> - Sets a parameter&#39;s name and value for this media type.</li>
+<li><code><a href="#SetSubType_string">SetSubType(string)</a></code> - Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
+<li><code><a href="#SetTopLevelType_string">SetTopLevelType(string)</a></code> - Sets this media type&#39;s top-level type.</li>
+<li><code><a href="#SubType">SubType</a></code> - Gets or sets this value&#39;s subtype.</li>
+<li><code><a href="#ToMediaType">ToMediaType()</a></code> - Converts this builder to an immutable media type object.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string of the media type it represents, in the same form as MediaType.</li>
+<li><code><a href="#TopLevelType">TopLevelType</a></code> - Gets or sets this value&#39;s top-level type.</li>
 </ul>
+
+<p><a id="Void_ctor_MediaType"></a></p>
 
 <h3>MediaTypeBuilder Constructor</h3>
 
@@ -49,6 +51,8 @@ The parameter <i>mt</i>
 is null.</li>
 </ul>
 
+<p><a id="Void_ctor_String_String"></a></p>
+
 <h3>MediaTypeBuilder Constructor</h3>
 
 <pre>public MediaTypeBuilder(
@@ -65,12 +69,16 @@ is null.</li>
 <li><p><i>subtype</i>: The media type&#39;s subtype.</p></li>
 </ul>
 
+<p><a id="Void_ctor"></a></p>
+
 <h3>MediaTypeBuilder Constructor</h3>
 
 <pre>public MediaTypeBuilder();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class, using the type &quot;application/octet-stream&quot;.</p>
+
+<p><a id="IsMultipart"></a></p>
 
 <h3>IsMultipart</h3>
 
@@ -83,6 +91,8 @@ is null.</li>
 
 <p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code> .</p>
 
+<p><a id="IsText"></a></p>
+
 <h3>IsText</h3>
 
 <pre>public bool IsText { get; }
@@ -94,9 +104,11 @@ is null.</li>
 
 <p><code>true</code>  If this is a text media type; otherwise, . <code>false</code> .</p>
 
+<p><a id="SubType"></a></p>
+
 <h3>SubType</h3>
 
-<pre>public string SubType { get; set;}
+<pre>public string SubType { get; set; }
 </pre>
 
 <p>Gets or sets this value&#39;s subtype.</p>
@@ -105,9 +117,11 @@ is null.</li>
 
 <p>This value&#39;s subtype.</p>
 
+<p><a id="TopLevelType"></a></p>
+
 <h3>TopLevelType</h3>
 
-<pre>public string TopLevelType { get; set;}
+<pre>public string TopLevelType { get; set; }
 </pre>
 
 <p>Gets or sets this value&#39;s top-level type.</p>
@@ -115,6 +129,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>This value&#39;s top-level type.</p>
+
+<p><a id="RemoveParameter_string"></a></p>
 
 <h3>RemoveParameter</h3>
 
@@ -141,6 +157,8 @@ is null.</li>
 The parameter <i>name</i>
 is null.</li>
 </ul>
+
+<p><a id="SetParameter_string_string"></a></p>
 
 <h3>SetParameter</h3>
 
@@ -174,6 +192,8 @@ The parameter <i>name</i>
 is empty or syntactically invalid.</p></li>
 </ul>
 
+<p><a id="SetSubType_string"></a></p>
+
 <h3>SetSubType</h3>
 
 <pre>public PeterO.Mail.MediaTypeBuilder SetSubType(
@@ -202,6 +222,8 @@ is null.</p></li>
 The parameter <i>str</i>
 is empty or syntactically invalid.</p></li>
 </ul>
+
+<p><a id="SetTopLevelType_string"></a></p>
 
 <h3>SetTopLevelType</h3>
 
@@ -232,6 +254,8 @@ The parameter <i>str</i>
 is syntactically invalid for a top-level type.</p></li>
 </ul>
 
+<p><a id="ToMediaType"></a></p>
+
 <h3>ToMediaType</h3>
 
 <pre>public PeterO.Mail.MediaType ToMediaType();
@@ -242,6 +266,8 @@ is syntactically invalid for a top-level type.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A MediaType object.</p>
+
+<p><a id="ToString"></a></p>
 
 <h3>ToString</h3>
 

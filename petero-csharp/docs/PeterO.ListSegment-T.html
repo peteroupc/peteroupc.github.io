@@ -15,20 +15,20 @@
 
 <p>Specifies a segment of a list defined by an offset and length. This class cannot be inherited.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code>void Add(T)</code> - This method is not supported.</li>
-<li><code>void Clear()</code> - This method is not supported.</li>
-<li><code>bool Contains(T)</code> - Not documented yet.</li>
-<li><code> public sealed int Count { get; }</code> - Gets a value not documented yet.</li>
-<li><code>System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator()</code> - Not documented yet.</li>
-<li><code>int IndexOf(T)</code> - Not documented yet.</li>
-<li><code>void Insert(int, T)</code> - This method is not supported.</li>
-<li><code> public sealed bool IsReadOnly { get; }</code> - Gets a value indicating whether this list segment is read only.</li>
-<li><code>bool Remove(T)</code> - This method is not supported.</li>
-<li><code>void RemoveAt(int)</code> - This method is not supported.</li>
-<li><code> public int StartIndex { get; }</code> - Gets the starting index within the underlying list for this list segment.</li>
+<li><code><a href="#Add_T">Add(T)</a></code> - This method is not supported.</li>
+<li><code><a href="#Clear">Clear()</a></code> - This method is not supported.</li>
+<li><code><a href="#Contains_T">Contains(T)</a></code> - Not documented yet.</li>
+<li><code><a href="#Count">Count</a></code> - Gets a value not documented yet.</li>
+<li><code><a href="#GetEnumerator">GetEnumerator()</a></code> - Not documented yet.</li>
+<li><code><a href="#IndexOf_T">IndexOf(T)</a></code> - Not documented yet.</li>
+<li><code><a href="#Insert_int_T">Insert(int, T)</a></code> - This method is not supported.</li>
+<li><code><a href="#IsReadOnly">IsReadOnly</a></code> - Gets a value indicating whether this list segment is read only.</li>
+<li><code><a href="#Remove_T">Remove(T)</a></code> - This method is not supported.</li>
+<li><code><a href="#RemoveAt_int">RemoveAt(int)</a></code> - This method is not supported.</li>
+<li><code><a href="#StartIndex">StartIndex</a></code> - Gets the starting index within the underlying list for this list segment.</li>
 </ul>
 
 <p><b>Parameters:</b></p>
@@ -36,6 +36,8 @@
 <ul>
 <li>&lt;T&gt;: Any object type.</li>
 </ul>
+
+<p><a id="Void_ctor_IList_1_Int32_Int32"></a></p>
 
 <h3>ListSegment Constructor</h3>
 
@@ -61,6 +63,8 @@ The parameter  <i>list</i>
 is null.</li>
 </ul>
 
+<p><a id="Count"></a></p>
+
 <h3>Count</h3>
 
 <pre>public sealed int Count { get; }
@@ -71,6 +75,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>A value not documented yet.</p>
+
+<p><a id="IsReadOnly"></a></p>
 
 <h3>IsReadOnly</h3>
 
@@ -85,6 +91,8 @@ is null.</li>
 
 <p><code>true</code>  if this list segment is read only; otherwise,  <code>false</code> .</p>
 
+<p><a id="StartIndex"></a></p>
+
 <h3>StartIndex</h3>
 
 <pre>public int StartIndex { get; }
@@ -95,6 +103,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>The starting index within the underlying list for this list segment.</p>
+
+<p><a id="Add_T"></a></p>
 
 <h3>Add</h3>
 
@@ -118,6 +128,8 @@ is not documented yet.</li>
 Always thrown, because changing the size of a list segment is not supported.</li>
 </ul>
 
+<p><a id="Clear"></a></p>
+
 <h3>Clear</h3>
 
 <pre>public sealed void Clear();
@@ -131,6 +143,8 @@ Always thrown, because changing the size of a list segment is not supported.</li
 <li>System.NotSupportedException:
 Always thrown, because changing the size of a list segment is not supported.</li>
 </ul>
+
+<p><a id="Contains_T"></a></p>
 
 <h3>Contains</h3>
 
@@ -151,6 +165,8 @@ is not documented yet.</li>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
 
+<p><a id="GetEnumerator"></a></p>
+
 <h3>GetEnumerator</h3>
 
 <pre>public sealed System.Collections.Generic.IEnumerator&lt;T&gt; GetEnumerator();
@@ -161,6 +177,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>An IEnumerator(T) object.</p>
+
+<p><a id="IndexOf_T"></a></p>
 
 <h3>IndexOf</h3>
 
@@ -181,6 +199,8 @@ is not documented yet.</li>
 
 <p>A 32-bit signed integer.</p>
 
+<p><a id="Insert_int_T"></a></p>
+
 <h3>Insert</h3>
 
 <pre>public sealed void Insert(
@@ -198,6 +218,8 @@ is not documented yet.</p></li>
 <li><p><i>item</i>: The parameter  <i>item</i>
 is not documented yet.</p></li>
 </ul>
+
+<p><a id="Remove_T"></a></p>
 
 <h3>Remove</h3>
 
@@ -217,6 +239,8 @@ is not documented yet.</li>
 <p><b>Return Value:</b></p>
 
 <p>Either  <code>true</code>  or  <code>false</code> .</p>
+
+<p><a id="RemoveAt_int"></a></p>
 
 <h3>RemoveAt</h3>
 

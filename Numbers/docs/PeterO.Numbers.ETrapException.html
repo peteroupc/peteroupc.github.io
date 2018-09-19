@@ -14,13 +14,15 @@
 
 <p>Exception thrown for arithmetic trap errors. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public PeterO.Numbers.EContext Context { get; }</code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
-<li><code> public int Error { get; }</code> - Gets the flag that specifies the kind of error (EContext.</li>
-<li><code> public object Result { get; }</code> - Gets the defined result of the operation that caused the trap.</li>
+<li><code><a href="#Context">Context</a></code> - Gets the arithmetic context used during the operation that triggered the trap.</li>
+<li><code><a href="#Error">Error</a></code> - Gets the flag that specifies the kind of error (EContext.</li>
+<li><code><a href="#Result">Result</a></code> - Gets the defined result of the operation that caused the trap.</li>
 </ul>
+
+<p><a id="Void_ctor_Int32_EContext_Object"></a></p>
 
 <h3>ETrapException Constructor</h3>
 
@@ -41,6 +43,8 @@
 is an arbitrary object.</p></li>
 </ul>
 
+<p><a id="Context"></a></p>
+
 <h3>Context</h3>
 
 <pre>public PeterO.Numbers.EContext Context { get; }
@@ -52,6 +56,8 @@ is an arbitrary object.</p></li>
 
 <p>The arithmetic context used during the operation that triggered the trap. May be null.</p>
 
+<p><a id="Error"></a></p>
+
 <h3>Error</h3>
 
 <pre>public int Error { get; }
@@ -62,6 +68,8 @@ is an arbitrary object.</p></li>
 <p><b>Returns:</b></p>
 
 <p>The flag that specifies the kind of error (EContext.FlagXXX). This will only be one flag, such as. <code>FlagInexact</code> or FlagSubnormal.</p>
+
+<p><a id="Result"></a></p>
 
 <h3>Result</h3>
 

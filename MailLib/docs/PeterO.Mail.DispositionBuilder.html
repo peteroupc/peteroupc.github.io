@@ -11,18 +11,20 @@
 
 <p>A mutable data type that allows a content disposition to be built.</p>
 
-<h2>Member Summary</h2>
+<h3>Member Summary</h3>
 
 <ul>
-<li><code> public string DispositionType { get; set;}</code> - Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
-<li><code> public bool IsMultipart { get; }</code> - Gets a value indicating whether this is a multipart media type.</li>
-<li><code> public bool IsText { get; }</code> - Gets a value indicating whether this is a text media type.</li>
-<li><code>PeterO.Mail.DispositionBuilder RemoveParameter(string)</code> - Removes a parameter from this content disposition.</li>
-<li><code>PeterO.Mail.DispositionBuilder SetDispositionType(string)</code> - Sets the disposition type, such as &quot;inline&quot;.</li>
-<li><code>PeterO.Mail.DispositionBuilder SetParameter(string, string)</code> - Sets a parameter of this content disposition.</li>
-<li><code>PeterO.Mail.ContentDisposition ToDisposition()</code> - Converts this object to an immutable ContentDisposition object.</li>
-<li><code>string ToString()</code> - Converts this object to a text string.</li>
+<li><code><a href="#DispositionType">DispositionType</a></code> - Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
+<li><code><a href="#IsMultipart">IsMultipart</a></code> - Gets a value indicating whether this is a multipart media type.</li>
+<li><code><a href="#IsText">IsText</a></code> - Gets a value indicating whether this is a text media type.</li>
+<li><code><a href="#RemoveParameter_string">RemoveParameter(string)</a></code> - Removes a parameter from this content disposition.</li>
+<li><code><a href="#SetDispositionType_string">SetDispositionType(string)</a></code> - Sets the disposition type, such as &quot;inline&quot;.</li>
+<li><code><a href="#SetParameter_string_string">SetParameter(string, string)</a></code> - Sets a parameter of this content disposition.</li>
+<li><code><a href="#ToDisposition">ToDisposition()</a></code> - Converts this object to an immutable ContentDisposition object.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this object to a text string.</li>
 </ul>
+
+<p><a id="Void_ctor_ContentDisposition"></a></p>
 
 <h3>DispositionBuilder Constructor</h3>
 
@@ -47,6 +49,8 @@ The parameter <i>mt</i>
 is null.</li>
 </ul>
 
+<p><a id="Void_ctor_String"></a></p>
+
 <h3>DispositionBuilder Constructor</h3>
 
 <pre>public DispositionBuilder(
@@ -70,6 +74,8 @@ The parameter <i>type</i>
 is null.</li>
 </ul>
 
+<p><a id="Void_ctor"></a></p>
+
 <h3>DispositionBuilder Constructor</h3>
 
 <pre>public DispositionBuilder();
@@ -77,9 +83,11 @@ is null.</li>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type &quot;attachment&quot;.</p>
 
+<p><a id="DispositionType"></a></p>
+
 <h3>DispositionType</h3>
 
-<pre>public string DispositionType { get; set;}
+<pre>public string DispositionType { get; set; }
 </pre>
 
 <p>Gets or sets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
@@ -87,6 +95,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p>This value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
+
+<p><a id="IsMultipart"></a></p>
 
 <h3>IsMultipart</h3>
 
@@ -101,6 +111,8 @@ is null.</li>
 
 <p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code> .</p>
 
+<p><a id="IsText"></a></p>
+
 <h3>IsText</h3>
 
 <pre>public bool IsText { get; }
@@ -113,6 +125,8 @@ is null.</li>
 <p><b>Returns:</b></p>
 
 <p><code>true</code>  If this is a text media type; otherwise, . <code>false</code> .</p>
+
+<p><a id="RemoveParameter_string"></a></p>
 
 <h3>RemoveParameter</h3>
 
@@ -139,6 +153,8 @@ is null.</li>
 The parameter <i>name</i>
 is null.</li>
 </ul>
+
+<p><a id="SetDispositionType_string"></a></p>
 
 <h3>SetDispositionType</h3>
 
@@ -168,6 +184,8 @@ is null.</p></li>
 <li><p>System.ArgumentException:
 Str is empty.</p></li>
 </ul>
+
+<p><a id="SetParameter_string_string"></a></p>
 
 <h3>SetParameter</h3>
 
@@ -201,6 +219,8 @@ The parameter <i>name</i>
 is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 </ul>
 
+<p><a id="ToDisposition"></a></p>
+
 <h3>ToDisposition</h3>
 
 <pre>public PeterO.Mail.ContentDisposition ToDisposition();
@@ -211,6 +231,8 @@ is empty, or it isn&#39;t a well-formed parameter name.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>A MediaType object.</p>
+
+<p><a id="ToString"></a></p>
 
 <h3>ToString</h3>
 
