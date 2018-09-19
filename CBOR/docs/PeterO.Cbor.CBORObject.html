@@ -102,7 +102,7 @@
 <li><code><a href="#Equals_PeterO_Cbor_CBORObject">Equals(PeterO.Cbor.CBORObject)</a></code> - Compares the equality of two CBOR objects.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object and another object are equal and have the same type.</li>
 <li><code><a href="#False">public static readonly PeterO.Cbor.CBORObject False;</a></code> - Represents the value false.</li>
-<li><code><a href="#FromJSONString_string">FromJSONString(string)</a></code> -  At the moment, use the overload of this method that takes aPeterO.</li>
+<li><code><a href="#FromJSONString_string">FromJSONString(string)</a></code> -  Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</li>
 <li><code><a href="#FromJSONString_string_PeterO_Cbor_CBOREncodeOptions">FromJSONString(string, PeterO.Cbor.CBOREncodeOptions)</a></code> - Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</li>
 <li><code><a href="#FromObjectAndTag_object_PeterO_Numbers_EInteger">FromObjectAndTag(object, PeterO.Numbers.EInteger)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
 <li><code><a href="#FromObjectAndTag_object_int">FromObjectAndTag(object, int)</a></code> - Generates a CBOR object from an arbitrary object and gives the resulting object a tag.</li>
@@ -1537,11 +1537,9 @@ is an arbitrary object.</li>
     string str);
 </pre>
 
-<p><b>At the moment, use the overload of this method that takes a<a href="PeterO.Cbor.CBOREncodeOptions.html">PeterO.Cbor.CBOREncodeOptions</a> object. The object <code>CBOREncodeOptions.Default</code>  contains recommended settings for CBOREncodeOptions, and those settings may be adopted by this overload (without a CBOREncodeOptions argument) in the next major version.</b></p>
-
 <p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format.</p>
 
-<p>If a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>If a JSON object has duplicate keys, a CBORException is thrown. This is a change in version 4.0.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1551,7 +1549,7 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A CBORObject object.</p>
+<p>A CBOR object.</p>
 
 <p><b>Exceptions:</b></p>
 
@@ -1572,14 +1570,13 @@ The string is not in JSON format.</p></li>
     PeterO.Cbor.CBOREncodeOptions options);
 </pre>
 
-<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.By default, if a JSON object has the same key, only the last given value will be used for each duplicated key.</p>
+<p>Generates a CBOR object from a text string in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
 <li><p><i>str</i>: A string in JSON format. The entire string must contain a single JSON object and not multiple objects. The string may not begin with a byte-order mark (U+FEFF).</p></li>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is a CBOREncodeOptions object.</p></li>
+<li><p><i>options</i>: Specifies options to control the decoding process.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1591,6 +1588,7 @@ is a CBOREncodeOptions object.</p></li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>str</i>
+or  <i>options</i>
 is null.</p></li>
 <li><p>PeterO.Cbor.CBORException:
 The string is not in JSON format.</p></li>
