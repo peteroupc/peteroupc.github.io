@@ -133,15 +133,6 @@ Finds the sum of two CBOR numbers.</li>
 <li><code>static void AddTagHandler​(com.upokecenter.numbers.EInteger bigintTag,
          ICBORTag handler)</code><br>
 Registers an object that validates CBOR objects with new tags.</li>
-<li><code>static void AddTagHandler​(BigInteger bigintTag,
-         ICBORTag handler)</code><br>
-Deprecated.
-Use the EInteger version of this method.
-Use the EInteger version of this method.</li>
-<li><code>BigInteger AsBigInteger()</code><br>
-Deprecated.
-Use the AsEInteger method instead.
-Use the AsEInteger method instead.</li>
 <li><code>boolean AsBoolean()</code><br>
 Returns false if this object is False, Null, or Undefined; otherwise, true.</li>
 <li><code>byte AsByte()</code><br>
@@ -156,18 +147,6 @@ Converts this object to an arbitrary-precision binary floating point number.</li
 Converts this object to an arbitrary-precision integer.</li>
 <li><code>com.upokecenter.numbers.ERational AsERational()</code><br>
 Converts this object to a rational number.</li>
-<li><code>ExtendedDecimal AsExtendedDecimal()</code><br>
-Deprecated.
-Use AsEDecimal instead.
-Use AsEDecimal instead.</li>
-<li><code>ExtendedFloat AsExtendedFloat()</code><br>
-Deprecated.
-Use AsEFloat instead.
-Use AsEFloat instead.</li>
-<li><code>ExtendedRational AsExtendedRational()</code><br>
-Deprecated.
-Use AsERational instead.
-Use AsERational instead.</li>
 <li><code>short AsInt16()</code><br>
 Converts this object to a 16-bit signed integer.</li>
 <li><code>int AsInt32()</code><br>
@@ -231,8 +210,9 @@ Compares the equality of two CBOR objects.</li>
 <li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object and another object are equal and have the
 same type.</li>
-<li><code>static CBORObject FromJSONString​(String str) CBOREncodeOptions</code><br>
-At the moment, use the overload of this method that takes a CBOREncodeOptions object.</li>
+<li><code>static CBORObject FromJSONString​(String str)</code><br>
+Generates a CBOR object from a text string in JavaScript Object Notation
+(JSON) format.</li>
 <li><code>static CBORObject FromJSONString​(String str,
           CBOREncodeOptions options)</code><br>
 Generates a CBOR object from a text string in JavaScript Object Notation
@@ -273,24 +253,6 @@ number.</li>
 Generates a CBOR object from an arbitrary-precision integer.</li>
 <li><code>static CBORObject FromObject​(com.upokecenter.numbers.ERational bigValue)</code><br>
 Generates a CBOR object from a rational number.</li>
-<li><code>static CBORObject FromObject​(BigInteger bigintValue)</code><br>
-Deprecated.
-Use the EInteger version of this method.
-Use the EInteger version of this method.</li>
-<li><code>static CBORObject FromObject​(ExtendedDecimal otherValue)</code><br>
-Deprecated.
-Use the EDecimal version of this method instead.
-Use the EDecimal version of this method instead.</li>
-<li><code>static CBORObject FromObject​(ExtendedFloat bigValue)</code><br>
-Deprecated.
-Use the EFloat version of this method instead.
-Use the EFloat version of this method instead.</li>
-<li><code>static CBORObject FromObject​(ExtendedRational bigValue)</code><br>
-Deprecated.
-Use the ERational version of this method instead.
-Use the ERational version of this method instead.</li>
-<li><code>static &lt;T&gt; CBORObject FromObject​(Iterable&lt;T&gt; value)</code><br>
-Generates a CBOR object from an enumerable set of objects.</li>
 <li><code>static CBORObject FromObject​(Object obj)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
 <li><code>static CBORObject FromObject​(Object obj,
@@ -299,10 +261,6 @@ Generates a CBORObject from an arbitrary object, using the given options
 to control how certain objects are converted to CBOR objects.</li>
 <li><code>static CBORObject FromObject​(String strValue)</code><br>
 Generates a CBOR object from a text string.</li>
-<li><code>static &lt;T&gt; CBORObject FromObject​(List&lt;T&gt; value)</code><br>
-Generates a CBOR object from a list of objects.</li>
-<li><code>static &lt;TKey,TValue&gt;CBORObject FromObject​(Map&lt;TKey,TValue&gt; dic)</code><br>
-Generates a CBOR object from a map of objects.</li>
 <li><code>static CBORObject FromObjectAndTag​(Object valueObValue,
             int smallTag)</code><br>
 Generates a CBOR object from an arbitrary object and gives the resulting
@@ -311,11 +269,6 @@ object a tag.</li>
             com.upokecenter.numbers.EInteger bigintTag)</code><br>
 Generates a CBOR object from an arbitrary object and gives the resulting
 object a tag.</li>
-<li><code>static CBORObject FromObjectAndTag​(Object valueOb,
-            BigInteger bigintTag)</code><br>
-Deprecated.
-Use the EInteger version instead.
-Use the EInteger version instead.</li>
 <li><code>static CBORObject FromSimpleValue​(int simpleValue)</code><br>
 Creates a CBOR object from a simple value number.</li>
 <li><code>CBORObject get​(int index)</code><br>
@@ -329,10 +282,6 @@ Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
 Gets the byte array used in this object, if this object is a byte string,
 without copying the data to a new one.</li>
-<li><code>BigInteger getInnermostTag()</code><br>
-Deprecated.
-Use MostInnerTag instead.
-Use MostInnerTag instead.</li>
 <li><code>Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object in an undefined order.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
@@ -341,17 +290,9 @@ untagged.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostOuterTag()</code><br>
 Gets the outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
-<li><code>BigInteger getOutermostTag()</code><br>
-Deprecated.
-Use MostOuterTag instead.
-Use MostOuterTag instead.</li>
 <li><code>int getSimpleValue()</code><br>
 Gets the simple value ID of this object, or -1 if this object is not a
 simple value (including if the value is a floating-point number).</li>
-<li><code>BigInteger[] GetTags()</code><br>
-Deprecated.
-Use the GetAllTags method instead.
-Use the GetAllTags method instead.</li>
 <li><code>CBORType getType()</code><br>
 Gets the general data type of this CBOR object.</li>
 <li><code>Collection&lt;CBORObject&gt; getValues()</code><br>
@@ -367,10 +308,6 @@ Returns whether this object has a tag of the given number.</li>
 Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
-<li><code>boolean HasTag​(BigInteger bigTagValue)</code><br>
-Deprecated.
-Use the EInteger version of this method.
-Use the EInteger version of this method.</li>
 <li><code>CBORObject Insert​(int index,
   Object valueOb)</code><br>
 Inserts an object at the specified position in this CBOR array.</li>
@@ -522,26 +459,6 @@ Writes a big integer in CBOR format to a data stream.</li>
 <li><code>static void Write​(com.upokecenter.numbers.ERational rational,
  OutputStream stream)</code><br>
 Writes a rational number in CBOR format to a data stream.</li>
-<li><code>static void Write​(BigInteger bigint,
- OutputStream stream)</code><br>
-Deprecated.
-Pass an EInteger to the Write method instead.
-Pass an EInteger to the Write method instead.</li>
-<li><code>static void Write​(ExtendedDecimal bignum,
- OutputStream stream)</code><br>
-Deprecated.
-Pass an EDecimal to the Write method instead.
-Pass an EDecimal to the Write method instead.</li>
-<li><code>static void Write​(ExtendedFloat bignum,
- OutputStream stream)</code><br>
-Deprecated.
-Pass an EFloat to the Write method instead.
-Pass an EFloat to the Write method instead.</li>
-<li><code>static void Write​(ExtendedRational rational,
- OutputStream stream)</code><br>
-Deprecated.
-Pass an ERational to the Write method instead.
-Pass an ERational to the Write method instead.</li>
 <li><code>static void Write​(Object objValue,
  OutputStream stream) CBOREncodeOptions</code><br>
 At the moment, use the overload of this method that takes a CBOREncodeOptions object.</li>
@@ -673,38 +590,6 @@ an arbitrary-precision integer.</li>
 <ul>
 <li>The number of keys in this map, or the number of items in this
 array, or 0 if this item is neither an array nor a map.</li>
-</ul>
-
-<h3>getInnermostTag</h3>
-
-<pre>@Deprecated public final BigInteger getInnermostTag()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use MostInnerTag instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The last defined tag for this CBOR data item, or -1 if the item is
-untagged.</li>
-</ul>
-
-<h3>getOutermostTag</h3>
-
-<pre>@Deprecated public final BigInteger getOutermostTag()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use MostOuterTag instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The outermost tag for this CBOR data item, or -1 if the item is
-untagged.</li>
 </ul>
 
 <h3>getMostInnerTag</h3>
@@ -1159,31 +1044,6 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>AddTagHandler</h3>
 
-<pre>@Deprecated public static void AddTagHandler​(BigInteger bigintTag, ICBORTag handler)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EInteger version of this method.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>bigintTag</code> - An arbitrary-precision integer.</p></li>
-<li><p><code>handler</code> - The parameter <code>handler</code> is an ICBORTag object.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> or
-<code>handler</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less
-than 0 or greater than (2^64-1).</p></li>
-</ul>
-
-<h3>AddTagHandler</h3>
-
 <pre>public static void AddTagHandler​(com.upokecenter.numbers.EInteger bigintTag, ICBORTag handler)
 </pre>
 
@@ -1306,14 +1166,9 @@ parameter <code>data</code> is empty.</p></li>
 <pre>public static CBORObject FromJSONString​(String str)
 </pre>
 
-<p><b>At the moment, use the overload of this method that takes a <code>CBOREncodeOptions</code> object. The object
- <code>CBOREncodeOptions.Default</code> contains recommended settings for
- CBOREncodeOptions, and those settings may be adopted by this overload
- (without a CBOREncodeOptions argument) in the next major
- version.</b></p> <p>Generates a CBOR object from a text string in
- JavaScript Object Notation (JSON) format.</p> <p>If a JSON object has
- the same key, only the last given value will be used for each
- duplicated key.</p>
+<p>Generates a CBOR object from a text string in JavaScript Object Notation
+ (JSON) format.</p> <p>If a JSON object has duplicate keys, a
+ CBORException is thrown. This is a change in version 4.0.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1326,7 +1181,7 @@ byte-order mark (U + FEFF).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>A CBOR object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1343,8 +1198,7 @@ byte-order mark (U + FEFF).</li>
 
 <p>Generates a CBOR object from a text string in JavaScript Object Notation
  (JSON) format, using the specified options to control the decoding
- process. <p>By default, if a JSON object has the same key, only the
- last given value will be used for each duplicated key.</p></p>
+ process.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1352,7 +1206,7 @@ byte-order mark (U + FEFF).</li>
 <li><p><code>str</code> - A string in JSON format. The entire string must contain a single
 JSON object and not multiple objects. The string may not begin with a
 byte-order mark (U + FEFF).</p></li>
-<li><p><code>options</code> - The parameter <code>options</code> is a CBOREncodeOptions object.</p></li>
+<li><p><code>options</code> - Specifies options to control the decoding process.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1364,7 +1218,8 @@ byte-order mark (U + FEFF).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>str</code> or <code>
+options</code> is null.</p></li>
 <li><p><code>CBORException</code> - The string is not in JSON format.</p></li>
 </ul>
 
@@ -1402,40 +1257,40 @@ byte-order mark (U + FEFF).</p></li>
  the IsTrue method. </p> <p>In the .NET version, if the object is a
  CBOR map and the type "T" is not specially handled by this method, an
  object of the given type is created, then this method checks the CBOR
- object for public writable properties. For each method found, if its
- name (with the "Is" prefix deleted and then converted to camel case)
- matches the name of a key in this CBOR map, that property's setter is
- invoked and the corresponding value is passed to that method. </p>
-
-<p><p>In the Java version, if the object is a CBOR map and the type &quot;T&quot;
- is not specially handled by this method, an object of the given type
- is created, then this method checks the CBOR object for public
- methods starting with the word &quot;set&quot; (followed by an upper-case A to
- Z) that take a single parameter. For each method found, if its name
- (with the starting word &quot;set&quot; deleted and then converted to camel
- case) matches the name of a key in this CBOR map, that method is
- invoked and the corresponding value is passed to that method. </p>
- <p>REMARK: The behavior of this method is likely to change in the
- final version 3.4 of this library as well as in the next major
- version (4.0). There are certain inconsistencies between the ToObject
- method and the FromObject method as well as between the .NET and Java
- versions of FromObject. For one thing, java.util.Date/Date objects are
- converted differently between the two versions -- either as CBOR maps
- with their &quot;get&quot; properties (Java) or as tag-0 strings (.NET) -- this
- difference has to remain for backward compatibility with version 3.0.
- For another thing, the treatment of properties/getters starting with
- &quot;Is&quot; is subtly inconsistent between the .NET and Java versions of
- FromObject, especially when using certain PODOptions. A certain
- consistency between .NET and Java and between FromObject and ToObject
- are sought for version 4.0. It is also hoped that-- </p> <ul> <li>the
- ToObject method will support deserializing to objects consisting of
- fields and not getters (&quot;getX()&quot; methods), both in .NET and in Java,
- and </li> <li>both FromObject and ToObject will be better designed,
- in version 4.0, so that backward-compatible improvements are easier
- to make. </li> </ul><p><p>Java offers no easy way to express a
- generic type, at least none as easy as C#&#39;s <code>typeof</code> operator.
- The following example, written in Java, is a way to specify that the
- return value will be an ArrayList of String objects. </p> <pre>Type
+ object for public, nonstatic writable properties. For each method
+ found, if its name (with the "Is" prefix deleted and then converted
+ to camel case) matches the name of a key in this CBOR map, that
+ property's setter is invoked and the corresponding value is passed to
+ that method. </p> <p>In the Java version, if the object is a CBOR map
+ and the type "T" is not specially handled by this method, an object
+ of the given type is created, then this method checks the CBOR object
+ for public, nonstatic methods starting with the word "set" (followed
+ by an upper-case A to Z) that take a single parameter. For each
+ method found, if its name (with the starting word "set" deleted and
+ then converted to camel case) matches the name of a key in this CBOR
+ map, that method is invoked and the corresponding value is passed to
+ that method. </p> <p>REMARK: The behavior of this method is likely to
+ change in the final version 3.4 of this library as well as in the
+ next major version (4.0). There are certain inconsistencies between
+ the ToObject method and the FromObject method as well as between the
+ .NET and Java versions of FromObject. For one thing, java.util.Date/Date
+ objects are converted differently between the two versions -- either
+ as CBOR maps with their "get" properties (Java) or as tag-0 strings
+ (.NET) -- this difference has to remain for backward compatibility
+ with version 3.0. For another thing, the treatment of
+ properties/getters starting with "Is" is subtly inconsistent between
+ the .NET and Java versions of FromObject, especially when using
+ certain PODOptions. A certain consistency between .NET and Java and
+ between FromObject and ToObject are sought for version 4.0. It is
+ also hoped that-- </p> <ul> <li>the ToObject method will support
+ deserializing to objects consisting of fields and not getters
+ ("getX()" methods), both in .NET and in Java, and </li> <li>both
+ FromObject and ToObject will be better designed, in version 4.0, so
+ that backward-compatible improvements are easier to make. </li>
+ </ul><p><p>Java offers no easy way to express a generic type, at
+ least none as easy as C#'s <code>typeof</code> operator. The following
+ example, written in Java, is a way to specify that the return value
+ will be an ArrayList of String objects. </p> <pre>Type
  arrayListString = new ParameterizedType() { public Type[]
  getActualTypeArguments() { /* Contains one type parameter, String &#x2a;&#x2f;
  return new Type[] { String.class }; } public Type getRawType() { /* Raw
@@ -1443,7 +1298,8 @@ byte-order mark (U + FEFF).</p></li>
  getOwnerType() { return null; } }; ArrayList&lt;String&gt; array =
  (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
  </pre> <p>By comparison, the C# version is much shorter. </p>
- <pre>var&#x20;array = (List&lt;String&gt;)cborArray.ToObject(
+
+<p><pre>var&#x20;array = (List&lt;String&gt;)cborArray.ToObject(
  typeof&#x28;List&lt;String&gt;)); </pre> </p></p>
 
 <p><strong>Parameters:</strong></p>
@@ -1507,27 +1363,6 @@ object&#39;s CBOR type, is not supported.</p></li>
 
 <h3>FromObject</h3>
 
-<pre>@Deprecated public static CBORObject FromObject​(BigInteger bigintValue)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EInteger version of this method.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigintValue</code> - An arbitrary-precision value.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR number.</li>
-</ul>
-
-<h3>FromObject</h3>
-
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EInteger bigintValue)
 </pre>
 
@@ -1547,53 +1382,11 @@ object&#39;s CBOR type, is not supported.</p></li>
 
 <h3>FromObject</h3>
 
-<pre>@Deprecated public static CBORObject FromObject​(ExtendedFloat bigValue)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EFloat version of this method instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR number.</li>
-</ul>
-
-<h3>FromObject</h3>
-
 <pre>public static CBORObject FromObject​(com.upokecenter.numbers.EFloat bigValue)
 </pre>
 
 <p>Generates a CBOR object from an arbitrary-precision binary floating-point
  number.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigValue</code> - An arbitrary-precision binary floating-point number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR number.</li>
-</ul>
-
-<h3>FromObject</h3>
-
-<pre>@Deprecated public static CBORObject FromObject​(ExtendedRational bigValue)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the ERational version of this method instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1632,27 +1425,6 @@ object&#39;s CBOR type, is not supported.</p></li>
 </pre>
 
 <p>Generates a CBOR object from a decimal number.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>otherValue</code> - An arbitrary-precision decimal number.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR number.</li>
-</ul>
-
-<h3>FromObject</h3>
-
-<pre>@Deprecated public static CBORObject FromObject​(ExtendedDecimal otherValue)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EDecimal version of this method instead.</div>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1929,90 +1701,6 @@ to a new array, or CBORObject.Null if the value is null.</li>
 
 <h3>FromObject</h3>
 
-<pre>public static &lt;T&gt; CBORObject FromObject​(List&lt;T&gt; value)
-</pre>
-
-<p>Generates a CBOR object from a list of objects.</p>
-
-<p><strong>Type Parameters:</strong></p>
-
-<ul>
-<li><code>T</code> - A type convertible to CBORObject.</li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>value</code> - An array of CBOR objects. Can be null.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object where each element of the given array is converted to
-a CBOR object and copied to a new array, or CBORObject.Null if the
-value is null.</li>
-</ul>
-
-<h3>FromObject</h3>
-
-<pre>public static &lt;T&gt; CBORObject FromObject​(Iterable&lt;T&gt; value)
-</pre>
-
-<p>Generates a CBOR object from an enumerable set of objects.</p>
-
-<p><strong>Type Parameters:</strong></p>
-
-<ul>
-<li><code>T</code> - A type convertible to CBORObject.</li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>value</code> - An object that implements the IEnumerable interface. In the
-.NET version, this can be the return value of an iterator or the
-result of a LINQ query.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object where each element of the given enumerable object is
-converted to a CBOR object and copied to a new array, or
-CBORObject.Null if the value is null.</li>
-</ul>
-
-<h3>FromObject</h3>
-
-<pre>public static &lt;TKey,TValue&gt; CBORObject FromObject​(Map&lt;TKey,TValue&gt; dic)
-</pre>
-
-<p>Generates a CBOR object from a map of objects.</p>
-
-<p><strong>Type Parameters:</strong></p>
-
-<ul>
-<li><p><code>TKey</code> - A type convertible to CBORObject; the type of the keys.</p></li>
-<li><p><code>TValue</code> - A type convertible to CBORObject; the type of the values.</p></li>
-</ul>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>dic</code> - A map of CBOR objects.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object where each key and value of the given map is converted
-to a CBOR object and copied to a new map, or CBORObject.Null if
-<code>dic</code> is null.</li>
-</ul>
-
-<h3>FromObject</h3>
-
 <pre>public static CBORObject FromObject​(Object obj)
 </pre>
 
@@ -2049,32 +1737,33 @@ CBORObject.Null if the object is null.</li>
  and maps. (See also the other overloads to the FromObject
  method.)</p> <p>In the .NET version, if the object is a type not
  specially handled by this method, returns a CBOR map with the values
- of each of its read/write properties (or all properties in the case
- of a compiler-generated type). Properties are converted to their
- camel-case names (meaning if a name starts with A to Z, that letter
- is lower-cased). If the property name begins with the word "Is"
- followed by an upper-case A to Z, the "Is" prefix is deleted from the
- name. (Passing the appropriate "options" parameter can be done to
- control whether the "Is" prefix is removed and whether a camel-case
- conversion happens.) Also, .NET <code>Enum</code> objects will be converted
- to their integer values, and a multidimensional array is converted to
- an array of arrays.</p> <p>In the Java version, if the object is a
- type not specially handled by this method, this method checks the
- CBOR object for methods starting with the word "get" or "is" (either
- word followed by an upper-case A to Z) that take no parameters, and
- returns a CBOR map with one entry for each such method found. For
- each method found, the starting word "get" or "is" is deleted from
- its name, and the name is converted to camel case (meaning if a name
- starts with A to Z, that letter is lower-cased). (Passing the
- appropriate "options" parameter can be done to control whether the
- "is" prefix is removed and whether a camel-case conversion happens.)
- Also, Java <code>Enum</code> objects will be converted to the result of
- their <code>name</code> method.</p> <p>If the input is a byte array, the
- byte array is copied to a new byte array. (This method can't be used
- to decode CBOR data from a byte array; for that, use the
- DecodeFromBytes method instead.).</p> <p>If the input is a text
- string, a CBOR text string object will be created. To create a CBOR
- byte string object from a text string, see the example given in <see cref='M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])'/>.</p>
+ of each of its public, nonstatic properties (limited to read/write
+ properties except in the case of a compiler-generated type).
+ Properties are converted to their camel-case names (meaning if a name
+ starts with A to Z, that letter is lower-cased). If the property name
+ begins with the word "Is" followed by an upper-case A to Z, the "Is"
+ prefix is deleted from the name. (Passing the appropriate "options"
+ parameter can be done to control whether the "Is" prefix is removed
+ and whether a camel-case conversion happens.) Also, .NET <code>Enum</code>
+ objects will be converted to their integer values, and a
+ multidimensional array is converted to an array of arrays.</p> <p>In
+ the Java version, if the object is a type not specially handled by
+ this method, this method checks the CBOR object for public, nonstatic
+ methods starting with the word "get" or "is" (either word followed by
+ an upper-case A to Z) that take no parameters, and returns a CBOR map
+ with one entry for each such method found. For each method found, the
+ starting word "get" or "is" is deleted from its name, and the name is
+ converted to camel case (meaning if a name starts with A to Z, that
+ letter is lower-cased). (Passing the appropriate "options" parameter
+ can be done to control whether the "is" prefix is removed and whether
+ a camel-case conversion happens.) Also, Java <code>Enum</code> objects will
+ be converted to the result of their <code>name</code> method.</p> <p>If the
+ input is a byte array, the byte array is copied to a new byte array.
+ (This method can't be used to decode CBOR data from a byte array; for
+ that, use the DecodeFromBytes method instead.).</p> <p>If the input
+ is a text string, a CBOR text string object will be created. To
+ create a CBOR byte string object from a text string, see the example
+ given in <see cref='M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])'/>.</p>
 
 <p><p>REMARK: The behavior of this method is likely to change in the
  next major version (4.0). There are certain inconsistencies between
@@ -2113,48 +1802,6 @@ CBORObject.Null if the object is null.</li>
 
 <ul>
 <li><code>NullPointerException</code> - The parameter <code>options</code> is null.</li>
-</ul>
-
-<h3>FromObjectAndTag</h3>
-
-<pre>@Deprecated public static CBORObject FromObjectAndTag​(Object valueOb, BigInteger bigintTag)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EInteger version instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>valueOb</code> - An arbitrary object. If the tag number is 2 or 3, this must
-be a byte string whose bytes represent an integer in little-endian
-byte order, and the value of the number is 1 minus the integer&#39;s
-value for tag 3. If the tag number is 4 or 5, this must be an array
-with two elements: the first must be an integer representing the
-exponent, and the second must be an integer representing a mantissa.</p></li>
-<li><p><code>bigintTag</code> - Tag number. The tag number 55799 can be used to mark a
-&quot;self-described CBOR&quot; object. This document does not attempt to list
-all CBOR tags and their meanings. An up-to-date list can be found at
-the CBOR Tags registry maintained by the Internet Assigned Numbers
-Authority (<i>iana.org/assignments/cbor-tags</i>).</p></li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOR object where the object <code>valueOb</code> is converted to a
-CBOR object and given the tag <code>bigintTag</code>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>IllegalArgumentException</code> - The parameter <code>bigintTag</code> is less
-than 0 or greater than 2^64-1, or <code>valueOb</code> &#39;s type is
-unsupported.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>bigintTag</code> is
-null.</p></li>
 </ul>
 
 <h3>FromObjectAndTag</h3>
@@ -2560,29 +2207,6 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
-<pre>@Deprecated public static void Write​(ExtendedFloat bignum, OutputStream stream) throws IOException
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Pass an EFloat to the Write method instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>bignum</code> - An arbitrary-precision binary float.</p></li>
-<li><p><code>stream</code> - A writable data stream.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>IOException</code> - An I/O error occurred.</p></li>
-</ul>
-
-<h3>Write</h3>
-
 <pre>public static void Write​(com.upokecenter.numbers.EFloat bignum, OutputStream stream) throws IOException
 </pre>
 
@@ -2600,29 +2224,6 @@ opposed to Not-a-Number, NaN).</li>
 
 <ul>
 <li><p><code>bignum</code> - An arbitrary-precision binary float.</p></li>
-<li><p><code>stream</code> - A writable data stream.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>IOException</code> - An I/O error occurred.</p></li>
-</ul>
-
-<h3>Write</h3>
-
-<pre>@Deprecated public static void Write​(ExtendedRational rational, OutputStream stream) throws IOException
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Pass an ERational to the Write method instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>rational</code> - An arbitrary-precision rational number.</p></li>
 <li><p><code>stream</code> - A writable data stream.</p></li>
 </ul>
 
@@ -2656,29 +2257,6 @@ opposed to Not-a-Number, NaN).</li>
 
 <h3>Write</h3>
 
-<pre>@Deprecated public static void Write​(ExtendedDecimal bignum, OutputStream stream) throws IOException
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Pass an EDecimal to the Write method instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>bignum</code> - The arbitrary-precision decimal number to write. Can be null.</p></li>
-<li><p><code>stream</code> - InputStream to write to.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>IOException</code> - An I/O error occurred.</p></li>
-</ul>
-
-<h3>Write</h3>
-
 <pre>public static void Write​(com.upokecenter.numbers.EDecimal bignum, OutputStream stream) throws IOException
 </pre>
 
@@ -2697,29 +2275,6 @@ opposed to Not-a-Number, NaN).</li>
 <ul>
 <li><p><code>bignum</code> - The arbitrary-precision decimal number to write. Can be null.</p></li>
 <li><p><code>stream</code> - InputStream to write to.</p></li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - The parameter <code>stream</code> is null.</p></li>
-<li><p><code>IOException</code> - An I/O error occurred.</p></li>
-</ul>
-
-<h3>Write</h3>
-
-<pre>@Deprecated public static void Write​(BigInteger bigint, OutputStream stream) throws IOException
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Pass an EInteger to the Write method instead.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><p><code>bigint</code> - Big integer to write. Can be null.</p></li>
-<li><p><code>stream</code> - A writable data stream.</p></li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3163,30 +2718,6 @@ valueOb</code> has an unsupported type.</p></li>
 <li><p><code>IllegalArgumentException</code> - The type of <code>obj</code> is not supported.</p></li>
 </ul>
 
-<h3>AsBigInteger</h3>
-
-<pre>@Deprecated public BigInteger AsBigInteger()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the AsEInteger method instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The closest big integer to this object.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>IllegalStateException</code> - This object&#39;s type is not a number type,
-including if this object is CBORObject.Null.</p></li>
-<li><p><code>ArithmeticException</code> - This object&#39;s value is infinity or
-not-a-number (NaN).</p></li>
-</ul>
-
 <h3>AsEInteger</h3>
 
 <pre>public com.upokecenter.numbers.EInteger AsEInteger()
@@ -3267,30 +2798,6 @@ exceeds the range of a 64-bit floating point number.</li>
 <li><code>IllegalStateException</code> - This object&#39;s type is not a number type.</li>
 </ul>
 
-<h3>AsExtendedDecimal</h3>
-
-<pre>@Deprecated public ExtendedDecimal AsExtendedDecimal()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use AsEDecimal instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A decimal number for this object&#39;s value. If this object is a
-rational number with a nonterminating decimal expansion, returns a
-decimal number rounded to 34 digits.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
-including if this object is CBORObject.Null.</li>
-</ul>
-
 <h3>AsEDecimal</h3>
 
 <pre>public com.upokecenter.numbers.EDecimal AsEDecimal()
@@ -3304,33 +2811,6 @@ including if this object is CBORObject.Null.</li>
 <li>A decimal number for this object&#39;s value. If this object is a
 rational number with a nonterminating decimal expansion, returns a
 decimal number rounded to 34 digits.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
-including if this object is CBORObject.Null.</li>
-</ul>
-
-<h3>AsExtendedFloat</h3>
-
-<pre>@Deprecated public ExtendedFloat AsExtendedFloat()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use AsEFloat instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision binary floating point number for this
-object&#39;s value. Note that if this object is a decimal number with a
-fractional part, the conversion may lose information depending on the
-number. If this object is a rational number with a nonterminating
-binary expansion, returns a binary floating-point number rounded to
-113 bits.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3356,28 +2836,6 @@ fractional part, the conversion may lose information depending on the
 number. If this object is a rational number with a nonterminating
 binary expansion, returns a binary floating-point number rounded to
 113 bits.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>IllegalStateException</code> - This object&#39;s type is not a number type,
-including if this object is CBORObject.Null.</li>
-</ul>
-
-<h3>AsExtendedRational</h3>
-
-<pre>@Deprecated public ExtendedRational AsExtendedRational()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use AsERational instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A rational number for this object&#39;s value.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -3913,21 +3371,6 @@ if the given key is not found or this object is not a map.</li>
 <li>A 32-bit hash code.</li>
 </ul>
 
-<h3>GetTags</h3>
-
-<pre>@Deprecated public BigInteger[] GetTags()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the GetAllTags method instead.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An array of tags, or the empty string if this object is untagged.</li>
-</ul>
-
 <h3>GetAllTags</h3>
 
 <pre>public com.upokecenter.numbers.EInteger[] GetAllTags()
@@ -3985,7 +3428,7 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code>.</li>
+otherwise, <code>false</code> .</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -4020,35 +3463,6 @@ otherwise, <code>false</code>.</li>
 <ul>
 <li><p><code>IllegalArgumentException</code> - TagValue is less than 0.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;obj&quot; is null.</p></li>
-</ul>
-
-<h3>HasTag</h3>
-
-<pre>@Deprecated public boolean HasTag​(BigInteger bigTagValue)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use the EInteger version of this method.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>bigTagValue</code> - The tag value to search for.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
 </ul>
 
 <h3>HasTag</h3>
