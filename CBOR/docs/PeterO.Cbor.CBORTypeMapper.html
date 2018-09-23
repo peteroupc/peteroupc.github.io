@@ -6,7 +6,7 @@
 
 <h2>PeterO.Cbor.CBORTypeMapper</h2>
 
-<pre>public class CBORTypeMapper
+<pre>public sealed class CBORTypeMapper
 </pre>
 
 <p>Not documented yet.</p>
@@ -15,8 +15,8 @@
 
 <ul>
 <li><code><a href="#AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T">AddConverter&lt;T&gt;(System.Type, PeterO.Cbor.ICBORConverter&lt;T&gt;)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Not documented yet.</li>
+<li><code><a href="#AddTypeName_string">AddTypeName(string)</a></code> - Adds the fully qualified name of a Java or .</li>
+<li><code><a href="#AddTypePrefix_string">AddTypePrefix(string)</a></code> - Adds a prefix of a Java or .</li>
 </ul>
 
 <p><a id="AddConverter_T_System_Type_PeterO_Cbor_ICBORConverter_T"></a></p>
@@ -59,7 +59,7 @@ Converter doesn&#39;t contain a proper ToCBORObject method.</p></li>
     string name);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds the fully qualified name of a Java or .NET type for use in type matching.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -75,9 +75,12 @@ is not documented yet.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>name</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>name</i>
+is empty.</p></li>
 </ul>
 
 <p><a id="AddTypePrefix_string"></a></p>
@@ -88,7 +91,7 @@ is null.</li>
     string prefix);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds a prefix of a Java or .NET type for use in type matching. A type matches a prefix if its fully qualified name is or begins with that prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -104,9 +107,12 @@ is not documented yet.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>prefix</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+The parameter  <i>prefix</i>
+is empty.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>

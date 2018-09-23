@@ -6,7 +6,7 @@
 
 <h1>com.upokecenter.cbor.CBORTypeMapper</h1>
 
-<pre>public class CBORTypeMapper extends Object
+<pre>public final class CBORTypeMapper extends Object
 </pre>
 
 <p>Not documented yet.</p>
@@ -14,20 +14,25 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br></li>
+<li><code>CBORTypeMapper()</code><br>
+Initializes a new instance of the CBORTypeMapper class.</li>
 <li><code>&lt;T&gt; void AddConverter​(Type type,
         ICBORConverter&lt;T&gt; converter)</code><br>
 Not documented yet.</li>
 <li><code>CBORTypeMapper AddTypeName​(String name)</code><br>
-Not documented yet.</li>
+Adds the fully qualified name of a Java or .NET type for use in type
+matching.</li>
 <li><code>CBORTypeMapper AddTypePrefix​(String prefix)</code><br>
+Adds a prefix of a Java or .NET type for use in type matching.</li>
+<li><code>boolean FilterTypeName​(String typeName)</code><br>
 Not documented yet.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br></li>
+<li><code>CBORTypeMapper()</code><br>
+Initializes a new instance of the CBORTypeMapper class.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -37,10 +42,14 @@ Not documented yet.</li>
 <pre>public CBORTypeMapper()
 </pre>
 
+<p>Initializes a new instance of the CBORTypeMapper class.</p>
+
 <h3>CBORTypeMapper</h3>
 
 <pre>public CBORTypeMapper()
 </pre>
+
+<p>Initializes a new instance of the CBORTypeMapper class.</p>
 
 <h3>AddConverter</h3>
 
@@ -71,12 +80,33 @@ converter</code> is null.</p></li>
 ToCBORObject method.</p></li>
 </ul>
 
+<h3>FilterTypeName</h3>
+
+<pre>public boolean FilterTypeName​(String typeName)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>typeName</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A Boolean object.</li>
+</ul>
+
 <h3>AddTypePrefix</h3>
 
 <pre>public CBORTypeMapper AddTypePrefix​(String prefix)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds a prefix of a Java or .NET type for use in type matching. A type
+ matches a prefix if its fully qualified name is or begins with that
+ prefix, using codepoint-by-codepoint (case-sensitive) matching.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -93,7 +123,8 @@ ToCBORObject method.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>prefix</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>prefix</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>prefix</code> is empty.</p></li>
 </ul>
 
 <h3>AddTypeName</h3>
@@ -101,7 +132,8 @@ ToCBORObject method.</p></li>
 <pre>public CBORTypeMapper AddTypeName​(String name)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Adds the fully qualified name of a Java or .NET type for use in type
+ matching.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -118,7 +150,8 @@ ToCBORObject method.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>name</code> is null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>name</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>name</code> is empty.</p></li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
