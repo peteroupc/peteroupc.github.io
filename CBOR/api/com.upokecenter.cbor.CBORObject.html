@@ -249,6 +249,10 @@ Generates a CBOR object from a rational number.</li>
 <li><code>static CBORObject FromObject​(Object obj)</code><br>
 Generates a CBORObject from an arbitrary object.</li>
 <li><code>static CBORObject FromObject​(Object obj,
+      CBORTypeMapper mapper)</code><br>
+Generates a CBORObject from an arbitrary object, using the given options
+to control how certain objects are converted to CBOR objects.</li>
+<li><code>static CBORObject FromObject​(Object obj,
       CBORTypeMapper mapper,
       PODOptions options)</code><br>
 Generates a CBORObject from an arbitrary object, using the given options
@@ -1189,64 +1193,64 @@ options</code> is null.</p></li>
  <code>PeterO.Numbers</code>  library (in .NET) or the
  <code>com.github.peteroupc/numbers</code>  artifact (in Java), returns
  the result of the corresponding As* method. </li> <li>If the type is
- <code>byte[]</code> and this CBOR object is a byte array, returns a byte
+ <code>byte[]</code> and this CBOR object is a byte string, returns a byte
  array which this CBOR byte string's data will be copied to. </li>
- <li>If the type is an array type other than a byte array type.... (To
- be documented.) </li> <li>If the type is the generic List, IList,
- ICollection, or IEnumerable (or ArrayList, List, Collection, or
- Iterable in Java), and if this CBOR object is an array, returns an
- object conforming to the type, class, or interface passed to this
- method, where the object will contain all items in this CBOR array.
- </li> <li>If the type is the generic Dictionary or IDictionary (or
- HashMap or Map in Java), and if this CBOR object is a map, returns an
- object conforming to the type, class, or interface passed to this
- method, where the object will contain all keys and values in this
- CBOR map. </li> <li>Enums (To be implemented). </li> <li>Type
- converters (To be implemented). </li> <li>If the type is
- <code>java.util.Date</code> (or <code>Date</code> in Java) , returns a date/time object
- if the CBOR object's outermost tag is 0 or 1. </li> <li>If the type
- is <code>java.net.URI</code> (or <code>URI</code> in Java), returns a URI object if
- possible. </li> <li>If the type is <code>java.util.UUID</code> (or <code>UUID</code> in
- Java), returns a UUID object if possible. </li> </ul> <p>In the .NET
- version, if the object is a CBOR map, if the type "T" is not
- specially handled by this method, and if that type has a
- zero-argument constructor (default or otherwise), an object of the
- given type is created, then this method checks the CBOR object for
- public, nonstatic writable properties. For each property found, if
- its name (with the "Is" prefix deleted and then converted to camel
- case) matches the name of a key in this CBOR map, and if that
- property has a getter, that property's setter is invoked and the
- corresponding value is passed to that method. </p> <p>In the Java
- version, if the object is a CBOR map, if the type "T" is not
- specially handled by this method, and if that type has a
- zero-argument constructor (default or otherwise), an object of the
- given type is created, then this method checks the CBOR object for
- public, nonstatic methods starting with the word "set" (followed by
- an upper-case A to Z) that take a single parameter. For each method
- found, if its name (with the starting word "set" deleted and then
- converted to camel case) matches the name of a key in this CBOR map,
- and if it has a corresponding getter method that takes no parameters,
- that method is invoked and the corresponding value is passed to that
- method. </p> <p>REMARK: The behavior of this method is likely to
- change in the final version 3.4 of this library as well as in the
- next major version (4.0). There are certain inconsistencies between
- the ToObject method and the FromObject method as well as between the
- .NET and Java versions of FromObject. For one thing, java.util.Date/Date
- objects are converted differently between the two versions -- either
- as CBOR maps with their "get" properties (Java) or as tag-0 strings
- (.NET) -- this difference has to remain for backward compatibility
- with version 3.0. For another thing, the treatment of
- properties/getters starting with "Is" is subtly inconsistent between
- the .NET and Java versions of FromObject, especially when using
- certain PODOptions. A certain consistency between .NET and Java and
- between FromObject and ToObject are sought for version 4.0. It is
- also hoped that-- </p> <ul> <li>the ToObject method will support
- deserializing to objects consisting of fields and not getters
- ("getX()" methods), both in .NET and in Java, and </li> <li>both
- FromObject and ToObject will be better designed, in version 4.0, so
- that backward-compatible improvements are easier to make. </li>
- </ul><p><p>Java offers no easy way to express a generic type, at
- least none as easy as C#'s <code>typeof</code> operator. The following
+ <li>If the type is a one-dimensional array type and this CBOR object
+ is an array, returns an array containing the items in this CBOR
+ object. (Multidimensional arrays to be documented.) </li> <li>If the
+ type is the generic List, IList, ICollection, or IEnumerable (or
+ ArrayList, List, Collection, or Iterable in Java), and if this CBOR
+ object is an array, returns an object conforming to the type, class,
+ or interface passed to this method, where the object will contain all
+ items in this CBOR array. </li> <li>If the type is the generic
+ Dictionary or IDictionary (or HashMap or Map in Java), and if this
+ CBOR object is a map, returns an object conforming to the type,
+ class, or interface passed to this method, where the object will
+ contain all keys and values in this CBOR map. </li> <li>Enums (To be
+ implemented). </li> <li>Type converters (To be implemented). </li>
+ <li>If the type is <code>java.util.Date</code> (or <code>Date</code> in Java) , returns
+ a date/time object if the CBOR object's outermost tag is 0 or 1.
+ </li> <li>If the type is <code>java.net.URI</code> (or <code>URI</code> in Java), returns
+ a URI object if possible. </li> <li>If the type is <code>java.util.UUID</code> (or
+ <code>UUID</code> in Java), returns a UUID object if possible. </li> </ul>
+ <p>In the .NET version, if the object is a CBOR map, and if the type
+ is not specially handled above and has a zero-argument public
+ constructor (default or otherwise), an object of the given type is
+ created, then this method checks the CBOR object for public,
+ nonstatic writable properties. For each property found, if its name
+ (with the "Is" prefix deleted and then converted to camel case)
+ matches the name of a key in this CBOR map, and if that property has
+ a getter, that property's setter is invoked and the corresponding
+ value is passed to that method. </p> <p>In the Java version, if the
+ object is a CBOR map, and if the type is not specially handled above
+ and has a zero-argument public constructor(default or otherwise), an
+ object of the given type is created, then this method checks the CBOR
+ object for public, nonstatic methods starting with the word "set"
+ (followed by an upper-case A to Z) that take a single parameter. For
+ each method found, if its name (with the starting word "set" deleted
+ and then converted to camel case) matches the name of a key in this
+ CBOR map, and if it has a corresponding getter method that takes no
+ parameters, that method is invoked and the corresponding value is
+ passed to that method. </p> <p>REMARK: The behavior of this method is
+ likely to change in the final version 3.4 of this library as well as
+ in the next major version (4.0). There are certain inconsistencies
+ between the ToObject method and the FromObject method as well as
+ between the .NET and Java versions of FromObject. For one thing,
+ java.util.Date/Date objects in FromObject are converted differently between
+ the two versions -- either as CBOR maps with their "get" properties
+ (Java) or as tag-0 strings (.NET) -- this difference has to remain
+ for backward compatibility with version 3.0. For another thing, the
+ treatment of properties/getters starting with "Is" is subtly
+ inconsistent between the .NET and Java versions of FromObject,
+ especially when using certain PODOptions. A certain consistency
+ between .NET and Java and between FromObject and ToObject are sought
+ for version 4.0. It is also hoped that-- </p> <ul> <li>the ToObject
+ method will support deserializing to objects consisting of fields and
+ not getters ("getX()" methods), both in .NET and in Java, and </li>
+ <li>both FromObject and ToObject will be better designed, in version
+ 4.0, so that backward-compatible improvements are easier to make.
+ </li> </ul><p><p>Java offers no easy way to express a generic type,
+ at least none as easy as C#'s <code>typeof</code> operator. The following
  example, written in Java, is a way to specify that the return value
  will be an ArrayList of String objects. </p> <pre>Type
  arrayListString = new ParameterizedType() { public Type[]
@@ -1264,7 +1268,14 @@ options</code> is null.</p></li>
 
 <ul>
 <li><code>t</code> - The type, class, or interface that this method&#39;s return value will
-belong to. To express a generic type in Java, see the example.</li>
+belong to. To express a generic type in Java, see the example.
+<b>Note:</b> For security purposes, an application should not base
+this parameter on user input or other externally supplied data.
+Whenever possible, this parameter should be either a type specially
+handled by this method (such as <code>int</code> or <code>String</code>) or a
+plain-old-data type (POCO or POJO type) within the control of the
+application. If the plain-old-data type references other data types,
+those types should likewise meet either criterion above.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1709,9 +1720,106 @@ CBORObject.Null if the object is null.</li>
 
 <h3>FromObject</h3>
 
-<pre>public static CBORObject FromObject​(Object obj, CBORTypeMapper mapper, PODOptions options)
+<pre>public static CBORObject FromObject​(Object obj, CBORTypeMapper mapper)
 </pre>
 
+<p>Generates a CBORObject from an arbitrary object, using the given options
+ to control how certain objects are converted to CBOR objects. The
+ following types are specially handled by this method:</p> <ul>
+ <li><code>null</code> is converted to <code>CBORObject.Null</code>.</li> <li>A
+ <code>char</code> is TBD.</li> <li>A <code>boolean</code> (<code>boolean</code> in
+ Java) is converted to <code>CBORObject.True</code> or
+ <code>CBORObject.False</code>.</li> <li>A <code>byte</code> is converted to a
+ CBOR integer from 0 through 255.</li> <li>A primitive integer type (
+ <code>int</code>, <code>short</code>, <code>long</code>, as well as <code>sbyte</code>,
+ <code>ushort</code>, <code>uint</code> , and <code>ulong</code> in .NET) is converted
+ to the corresponding CBOR integer.</li> <li>A primitive
+ floating-point type (<code>float</code>, <code>double</code>, as well as
+ <code>decimal</code> in .NET) is converted to the corresponding CBOR
+ number.</li> <li>A <code>string</code> is converted to a CBOR text string.
+ To create a CBOR byte string object from <code>string</code>, see the
+ example given in <see cref='M:PeterO.Cbor.CBORObject.FromObject(System.Byte[])'/> .</li>
+ <li>A number of type <code>EDecimal</code>, <code>EFloat</code>, <code>EInteger</code>,
+ and <code>ERational</code> in the <code>PeterO.Numbers</code>
+ library (in .NET) or the <code>com.github.peteroupc/numbers</code>
+ artifact (in Java) is converted to the corresponding CBOR
+ number.</li> <li>An array (other than a byte array) is converted to a
+ CBOR array. In the .NET version, a multidimensional array is
+ converted to an array of arrays. A byte array is converted to a CBOR
+ byte string.</li> <li>An object implementing Map (Map in Java) is
+ converted to a CBOR map containing the keys and values
+ enumerated.</li> <li>An object implementing Iterable (Iterable in
+ Java) is converted to a CBOR array containing the items
+ enumerated.</li> <li>An enumeration (<code>Enum</code>) object is
+ converted to its integer value in the .NET version, or the result of
+ its "getName" method in the Java version. (TBD)</li> <li>If the
+ object is of a type corresponding to a type converter mentioned in
+ the <paramref name='mapper'/> parameter, that converter will be used
+ to convert the object to a CBOR object.</li> <li>An object of type
+ <code>java.util.Date</code>, <code>java.net.URI</code>, or <code>java.util.UUID</code> (<code>Date</code>,
+ <code>URI</code>, or <code>UUID</code>, respectively, in Java) will be converted
+ to a tagged CBOR object of the appropriate kind. (TBD: Decide whether
+ a custom CBORTypeMapper can override these behaviors.)</li></ul>
+ <p>In the .NET version, if the object is a type not specially handled
+ above, returns a CBOR map with the values of each of its public,
+ nonstatic properties (limited to read/write properties except in the
+ case of a compiler-generated type). Properties are converted to their
+ camel-case names (meaning if a name starts with A to Z, that letter
+ is lower-cased). If the property name begins with the word "Is"
+ followed by an upper-case A to Z, the "Is" prefix is deleted from the
+ name. (Passing the appropriate "options" parameter can be done to
+ control whether the "Is" prefix is removed and whether a camel-case
+ conversion happens.) Also, .NET <code>Enum</code> objects will be converted
+ to their integer values, and .</p> <p>In the Java version, if the
+ object is a type not specially handled above, this method checks the
+ CBOR object for public, nonstatic methods starting with the word
+ "get" or "is" (either word followed by an upper-case A to Z) that
+ take no parameters, and returns a CBOR map with one entry for each
+ such method found. For each method found, the starting word "get" or
+ "is" is deleted from its name, and the name is converted to camel
+ case (meaning if a name starts with A to Z, that letter is
+ lower-cased). (Passing the appropriate "options" parameter can be
+ done to control whether the "is" prefix is removed and whether a
+ camel-case conversion happens.) Also, Java <code>Enum</code> objects will
+ be converted to the result of their <code>name</code> method.</p> <p>If the
+ input is a byte array, the byte array is copied to a new byte array.
+ (This method can't be used to decode CBOR data from a byte array; for
+ that, use the DecodeFromBytes method instead.).</p> <p>REMARK: The
+ behavior of this method is likely to change in the next major version
+ (4.0). There are certain inconsistencies between the ToObject method
+ and the FromObject method as well as between the .NET and Java
+ versions of FromObject. For one thing, java.util.Date/Date objects in
+ FromObject are converted differently between the two versions --
+ either as CBOR maps with their "get" properties (Java) or as tag-0
+ strings (.NET) -- this difference has to remain for backward
+ compatibility with version 3.0. For another thing, the treatment of
+ properties/getters starting with "Is" is subtly inconsistent between
+ the .NET and Java versions of FromObject, especially when using
+ certain PODOptions. A certain consistency between .NET and Java and
+ between FromObject and ToObject are sought for version 4.0. It is
+ also hoped that--</p> <ul> <li>the ToObject method will support
+ deserializing to objects consisting of fields and not getters
+ ("getX()" methods), both in .NET and in Java, and</li> <li>both
+ FromObject and ToObject will be better designed, in version 4.0, so
+ that backward-compatible improvements are easier to make.</li></ul>
+
+**Parameters:**
+
+* <code>obj</code> - The parameter <code>obj</code> is an arbitrary object.
+
+* <code>mapper</code> - The parameter <code>mapper</code> is not documented yet.
+
+**Returns:**
+
+* A CBOR object corresponding to the given object. Returns
+ CBORObject.Null if the object is null.
+
+**Throws:**
+
+* <code>NullPointerException</code> - The parameter <code>mapper</code> is null.
+
+### FromObject
+    public static CBORObject FromObject​(Object obj, CBORTypeMapper mapper, PODOptions options)
 <p>Generates a CBORObject from an arbitrary object, using the given options
  to control how certain objects are converted to CBOR objects. The
  following types are specially handled by this method:</p><ul>
@@ -1738,7 +1846,7 @@ CBORObject.Null if the object is null.</li>
  Java) is converted to a CBOR map containing the keys and values
  enumerated.</li> <li>An object implementing IEnumerable (Iterable in
  Java) is converted to a CBOR array containing the items
- enumerated.</li> <li>An enumeration <code>Enum</code> object is converted
+ enumerated.</li> <li>An enumeration (<code>Enum</code>) object is converted
  to its integer value in the .NET version, or the result of its
  "getName" method in the Java version. (TBD)</li> <li>If the object is
  of a type corresponding to a type converter mentioned in the
@@ -1776,20 +1884,20 @@ CBORObject.Null if the object is null.</li>
  behavior of this method is likely to change in the next major version
  (4.0). There are certain inconsistencies between the ToObject method
  and the FromObject method as well as between the .NET and Java
- versions of FromObject. For one thing, java.util.Date/Date objects are
- converted differently between the two versions -- either as CBOR maps
- with their "get" properties (Java) or as tag-0 strings (.NET) -- this
- difference has to remain for backward compatibility with version 3.0.
- For another thing, the treatment of properties/getters starting with
- "Is" is subtly inconsistent between the .NET and Java versions of
- FromObject, especially when using certain PODOptions. A certain
- consistency between .NET and Java and between FromObject and ToObject
- are sought for version 4.0. It is also hoped that--</p> <ul> <li>the
- ToObject method will support deserializing to objects consisting of
- fields and not getters ("getX()" methods), both in .NET and in Java,
- and</li> <li>both FromObject and ToObject will be better designed, in
- version 4.0, so that backward-compatible improvements are easier to
- make.</li></ul>
+ versions of FromObject. For one thing, java.util.Date/Date objects in
+ FromObject are converted differently between the two versions --
+ either as CBOR maps with their "get" properties (Java) or as tag-0
+ strings (.NET) -- this difference has to remain for backward
+ compatibility with version 3.0. For another thing, the treatment of
+ properties/getters starting with "Is" is subtly inconsistent between
+ the .NET and Java versions of FromObject, especially when using
+ certain PODOptions. A certain consistency between .NET and Java and
+ between FromObject and ToObject are sought for version 4.0. It is
+ also hoped that--</p> <ul> <li>the ToObject method will support
+ deserializing to objects consisting of fields and not getters
+ ("getX()" methods), both in .NET and in Java, and</li> <li>both
+ FromObject and ToObject will be better designed, in version 4.0, so
+ that backward-compatible improvements are easier to make.</li></ul>
 
 **Parameters:**
 
