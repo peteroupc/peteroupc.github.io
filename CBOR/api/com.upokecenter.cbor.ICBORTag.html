@@ -6,20 +6,22 @@
 
 <h1>com.upokecenter.cbor.ICBORTag</h1>
 
-<pre>public interface ICBORTag
+<pre>@Deprecated public interface ICBORTag
 </pre>
 
-<p>Implemented by classes that validate CBOR objects belonging to a specific
- tag.</p>
+<p>Deprecated.</p>
+
+<div class='deprecationComment'>May be removed in the future without replacement. Not as useful as
+ ICBORConverters and ICBORObjectConverters for FromObject and ToObject.</div>
 
 <h2>Methods</h2>
 
 <ul>
 <li><code>CBORTypeFilter GetTypeFilter()</code><br>
-Gets a type filter specifying what kinds of CBOR objects are supported by
+Deprecated. Gets a type filter specifying what kinds of CBOR objects are supported by
 this tag.</li>
 <li><code>CBORObject ValidateObject​(CBORObject obj)</code><br>
-Generates a CBOR object based on the data of another object.</li>
+Deprecated. Generates a CBOR object based on the data of another object.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -29,8 +31,7 @@ Generates a CBOR object based on the data of another object.</li>
 <pre>CBORTypeFilter GetTypeFilter()
 </pre>
 
-<p>Gets a type filter specifying what kinds of CBOR objects are supported by
- this tag.</p>
+<p>Deprecated.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -43,8 +44,7 @@ Generates a CBOR object based on the data of another object.</li>
 <pre>CBORObject ValidateObject​(CBORObject obj)
 </pre>
 
-<p>Generates a CBOR object based on the data of another object. If the data is
- not valid, should throw a CBORException.</p>
+<p>Deprecated.</p>
 
 <p><strong>Parameters:</strong></p>
 
