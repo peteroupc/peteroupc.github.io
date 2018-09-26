@@ -16,18 +16,6 @@
 <ul>
 <li><code>static CBOREncodeOptions Default</code><br>
 Default options for CBOR objects.</li>
-<li><code>static CBOREncodeOptions NoDuplicateKeys</code><br>
-Deprecated.
-Use &#39;new CBOREncodeOptions(true,false)&#39; instead.
-Use &#39;new CBOREncodeOptions(true,false)&#39; instead.</li>
-<li><code>static CBOREncodeOptions NoIndefLengthStrings</code><br>
-Deprecated.
-Use &#39;new CBOREncodeOptions(false,true)&#39; instead.
-Use &#39;new CBOREncodeOptions(false,true)&#39; instead.</li>
-<li><code>static CBOREncodeOptions None</code><br>
-Deprecated.
-Use &#39;new CBOREncodeOptions(true,true)&#39; instead.
-Use &#39;new CBOREncodeOptions(true,true)&#39; instead.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -47,10 +35,6 @@ Initializes a new instance of the CBOREncodeOptions class.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>CBOREncodeOptions And​(CBOREncodeOptions o)</code><br>
-Deprecated.
-May be removed in a later version.
-May be removed in a later version.</li>
 <li><code>boolean getAllowDuplicateKeys()</code><br>
 Gets a value indicating whether to disallow duplicate keys when reading CBOR
 objects from a data stream.</li>
@@ -60,32 +44,9 @@ canonical CBOR encoding form.</li>
 <li><code>boolean getUseIndefLengthStrings()</code><br>
 Gets a value indicating whether to always encode strings with a
 definite-length encoding.</li>
-<li><code>int getValue()</code><br>
-Deprecated.
-Option classes in this library will follow the form seen in JSONOptions in a
-later version; the approach used in this class is too complicated.
-Option classes in this library will follow the form seen in JSONOptions in a
-later version; the approach used in this class is too complicated.</li>
-<li><code>CBOREncodeOptions Or​(CBOREncodeOptions o)</code><br>
-Deprecated.
-May be removed in a later version.
-May be removed in a later version.</li>
 </ul>
 
 <h2>Field Details</h2>
-
-<h3>None</h3>
-
-<pre>@Deprecated public static final CBOREncodeOptions None
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,true)' instead. Option classes in this
- library will follow the form seen in JSONOptions in a later version; the
- approach used in this class is too complicated.
-'CBOREncodeOptions.Default' contains recommended default options that may
- be adopted by certain CBORObject methods in the next major version.</div>
 
 <h3>Default</h3>
 
@@ -96,28 +57,6 @@ May be removed in a later version.</li>
  strings using definite-length encoding. These are recommended
  settings for the options that may be adopted by certain CBORObject
  methods in the next major version.</p>
-
-<h3>NoIndefLengthStrings</h3>
-
-<pre>@Deprecated public static final CBOREncodeOptions NoIndefLengthStrings
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use 'new CBOREncodeOptions(false,true)' instead. Option classes in this
- library will follow the form seen in JSONOptions in a later version; the
- approach used in this class is too complicated.</div>
-
-<h3>NoDuplicateKeys</h3>
-
-<pre>@Deprecated public static final CBOREncodeOptions NoDuplicateKeys
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Use 'new CBOREncodeOptions(true,false)' instead. Option classes in this
- library will follow the form seen in JSONOptions in a later version; the
- approach used in this class is too complicated.</div>
 
 <h2>Method Details</h2>
 
@@ -170,68 +109,6 @@ canonical CBOR encoding form; otherwise, <code>false</code>.. In this
 form, CBOR tags are not used, map keys are written out in a canonical
 order, and non-integer numbers and integers 2^63 or greater are
 written as 64-bit binary floating-point numbers.</li>
-</ul>
-
-<h3>getValue</h3>
-
-<pre>@Deprecated public final int getValue()
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>Option classes in this library will follow the form seen in JSONOptions in a
- later version; the approach used in this class is too complicated.</div>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>This options object&#39;s value.</li>
-</ul>
-
-<h3>Or</h3>
-
-<pre>@Deprecated public CBOREncodeOptions Or​(CBOREncodeOptions o)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
- follow the form seen in JSONOptions in a later version; the approach used
- in this class is too complicated.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>o</code> - The parameter <code>o</code> is a CBOREncodeOptions object.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A new CBOREncodeOptions object.</li>
-</ul>
-
-<h3>And</h3>
-
-<pre>@Deprecated public CBOREncodeOptions And​(CBOREncodeOptions o)
-</pre>
-
-<p>Deprecated.</p>
-
-<div class='deprecationComment'>May be removed in a later version. Option classes in this library will
- follow the form seen in JSONOptions in a later version; the approach used
- in this class is too complicated.</div>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>o</code> - The parameter <code>o</code> is a CBOREncodeOptions object.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A CBOREncodeOptions object.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
