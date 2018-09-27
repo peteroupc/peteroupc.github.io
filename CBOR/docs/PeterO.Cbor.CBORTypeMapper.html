@@ -33,7 +33,7 @@
 
 <h3>AddConverter</h3>
 
-<pre>public void AddConverter&lt;T&gt;(
+<pre>public PeterO.Cbor.CBORTypeMapper AddConverter&lt;T&gt;(
     System.Type type,
     PeterO.Cbor.ICBORConverter&lt;T&gt; converter);
 </pre>
@@ -50,11 +50,15 @@ is not documented yet.</p></li>
 <li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
 </ul>
 
+<p><b>Return Value:</b></p>
+
+<p>A CBORTypeMapper object.</p>
+
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-The parameter  <i>type</i>
+The parameter <i>type</i>
 or  <i>converter</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
