@@ -1840,7 +1840,7 @@ parameter, that converter will be used to convert the object to a CBOR object. T
 parameter for eligible getters as follows:</p></li>
 <li><p>(*) In the .NET version, eligible getters are the public, nonstatic getters of read/write properties (and also those of read-only properties in the case of a compiler-generated type).</p></li>
 <li><p>(*) In the Java version, eligible getters are public, nonstatic methods starting with &quot;get&quot; or &quot;is&quot; (either word followed by a character other than a basic digit or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;), that take no parameters and do not return void, except that methods named &quot;getClass&quot; are not eligible getters.</p></li>
-<li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation.</p></li>
+<li><p>Then, the method returns a CBOR map with each eligible getter&#39;s name or property name as each key, and with the corresponding value returned by that getter as that key&#39;s value. Before adding a key-value pair to the map, the key&#39;s name is adjusted according to the rules described in the <a href="PeterO.Cbor.PODOptions.html">PeterO.Cbor.PODOptions</a> documentation. Note that for security reasons, certain types are not supported even if they contain eligible getters.</p></li>
 </ul>
 
 <p><b>Note:</b> For security reasons, an application should, whenever possible, not base this parameter on user input or other externally supplied data unless the application limits  <i>obj</i>
@@ -3149,7 +3149,6 @@ parameter, that converter will be used to convert the CBOR object to n object of
 <li><p>If the type is the generic List, IList, ICollection, or IEnumerable (or ArrayList, List, Collection, or Iterable in Java), and if this CBOR object is an array, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all items in this CBOR array.</p></li>
 <li><p>If the type is the generic Dictionary or IDictionary (or HashMap or Map in Java), and if this CBOR object is a map, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all keys and values in this CBOR map.</p></li>
 <li><p>If the type is an enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or text string, returns the enumeration constant with the given number or name, respectively. (Enumeration constants made up of multiple enumeration constants, as allowed by .NET, can only be matched by number this way.) (To be implemented for Java.)</p></li>
-<li><p>Type converters (To be implemented).</p></li>
 <li><p>If the type is <code>DateTime</code> (or <code>Date</code> in Java) , returns a date/time object if the CBOR object&#39;s outermost ag is 0 or 1.</p></li>
 <li><p>If the type is <code>Uri</code> (or <code>URI</code> in Java), returns a URI object if possible.</p></li>
 <li><p>If the type is <code>Guid</code> (or <code>UUID</code> in Java), returns a UUID object if possible.</p></li>
@@ -3227,7 +3226,7 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <li><p>If the type is a primitive integer type (  <code>byte</code> , <code>int</code> ,  <code>short</code> ,  <code>long</code> , as well as  <code>sbyte</code> , <code>ushort</code> ,  <code>uint</code> , and  <code>ulong</code> in .NET) or a rimitive floating-point type (  <code>float</code> ,  <code>double</code> , as ell as  <code>decimal</code> in .NET), returns the result of the orresponding As* method.</p></li>
 <li><p>If the type is  <code>String</code> , returns the result of AsString.</p></li>
 <li><p>If the type is <code>EDecimal</code> ,  <code>EFloat</code> ,  <code>EInteger</code> , or <code>ERational</code> in the <a href="https://www.nuget.org/packages/PeterO.Numbers"> <code>PeterO.Numbers</code> </a>library (in .NET) or the <a href="https://github.com/peteroupc/numbers-java"> <code>com.github.peteroupc/numbers</code> </a>artifact (in Java), returns the result of the corresponding s* method.</p></li>
-<li><p>If the type is an enumeration ( <code>Enum</code> ) type this CBOR object is a text string or an integer, eturns the appropriate enumerated constant. (For example, if <code>MyEnum</code> includes an entry for  <code>MyValue</code> , this method ill return  <code>MyEnum.MyValue</code> if the CBOR object represents <code>&quot;MyValue&quot;</code> or the underlying value for  <code>MyEnum.MyValue</code> .) <b>Note:</b>If an integer is converted to a .NET Enum constant, nd that integer is shared by more than one constant of the same ype, it is undefined which constant from among them is returned. For example, if  <code>MyEnum.Zero = 0</code> and  <code>MyEnum.Null = 0</code> , converting 0 to  <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or  <code>MyEnum.Null</code> .) As a result, .NET Enum ypes with constants that share an underlying value should not be assed to this method.</p></li>
+<li><p>If the type is an enumeration ( <code>Enum</code> ///) type this CBOR object is a text string or an nteger, returns the appropriate enumerated constant. (For example, f  <code>MyEnum</code> includes an entry for  <code>MyValue</code> , this method ill return  <code>MyEnum.MyValue</code> if the CBOR object represents <code>&quot;MyValue&quot;</code> or the underlying value for  <code>MyEnum.MyValue</code> .) <b>Note:</b>If an integer is converted to a .NET Enum constant, nd that integer is shared by more than one constant of the same ype, it is undefined which constant from among them is returned. For example, if  <code>MyEnum.Zero = 0</code> and  <code>MyEnum.Null = 0</code> , converting 0 to  <code>MyEnum</code> may return either <code>MyEnum.Zero</code> or  <code>MyEnum.Null</code> .) As a result, .NET Enum ypes with constants that share an underlying value should not be assed to this method.</p></li>
 <li><p>If the type is  <code>byte[]</code> (a ne-dimensional byte array) and this CBOR object is a byte string, eturns a byte array which this CBOR byte string&#39;s data will be opied to. (This method can&#39;t be used to encode CBOR data to a byte rray; for that, use the EncodeToBytes method instead.)</p></li>
 <li><p>If the type is a one-dimensional array type and this CBOR object is an array, returns an array containing the items in this CBOR object. (Multidimensional arrays to be documented.)</p></li>
 <li><p>If the type is the generic List, IList, ICollection, or IEnumerable (or ArrayList, List, Collection, or Iterable in Java), and if this CBOR object is an array, returns an object conforming to the type, class, or interface passed to this method, where the object will contain all items in this CBOR array.</p></li>
@@ -3252,24 +3251,24 @@ parameter, that converter will be used to convert the CBOR object to an object o
 
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
 
-<pre>Type arrayListString = new ParameterizedType(){ public Type[]
-                    getActualTypeArguments(){ /* Contains one type parameter, String */
-                    return new Type[]{ String.class }; } public Type getRawType(){ /* Raw
-                    type is ArrayList */ return ArrayList.class; } public Type
-                    getOwnerType(){ return null; } }; ArrayList&lt;String&gt; array =
-                    (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+<pre>Type arrayListString = new ParameterizedType() { public Type[]
+            getActualTypeArguments() {  // Contains one type parameter, String
+            return new Type[] { String.class }; } public Type getRawType() { /* Raw
+            type is ArrayList */ return ArrayList.class; } public Type
+            getOwnerType() { return null; } }; ArrayList&lt;String&gt; array =
+            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-                    typeof(List&lt;String&gt;));
+            typeof(List&lt;String&gt;));
 </pre>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ) or a plain-old-data type (POCO or POJO type) within he control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
+<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) ithin the control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
 <li><p><i>mapper</i>: A CBORTypeMapper object.</p></li>
 </ul>
 
