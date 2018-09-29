@@ -62,7 +62,7 @@
 <p>If &quot;useCamelCase&quot; is  <code>true</code> :</p>
 
 <ul>
-<li><p>In the .NET version, for each eligible method name, the word &quot;Is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case, meaning the first letter in the name is converted to camel case if it&#39;s a basic lower-case letter (&quot;a&quot; to &quot;z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both become &quot;name&quot;.)</p></li>
+<li><p>In the .NET version, for each eligible property name, the word &quot;Is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case, meaning the first letter in the name is converted to lower case if it&#39;s a basic upper-case letter (&quot;A&quot; to &quot;Z&quot;). (For example, &quot;Name&quot; and &quot;IsName&quot; both become &quot;name&quot;.)</p></li>
 <li><p>In the Java version, for each eligible method name, the word &quot;get&quot;, &quot;set&quot;, or &quot;is&quot; is removed from the name if the name starts with that word, then the name is converted to camel case. (For example, &quot;getName&quot;, &quot;setName&quot;, and &quot;isName&quot; all become &quot;name&quot;.)</p></li>
 </ul>
 
@@ -70,7 +70,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  If the names are converted to camel case; otherwise, .  <code>false</code> .</p>
+<p><code>true</code>  If the names are converted to camel case; otherwise,  <code>false</code> . This property is  <code>true</code>  by default.</p>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
