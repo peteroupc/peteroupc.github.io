@@ -9,7 +9,9 @@
 <pre>public final class CBORTypeMapper extends Object
 </pre>
 
-<p>Not documented yet.</p>
+<p>Holds converters to customize the serialization and deserialization behavior
+ of <code>CBORObject.FromObject</code> and <code>CBORObject#ToObject</code>, as
+ well as type filters for <code>ToObject</code></p>
 
 <h2>Methods</h2>
 
@@ -96,7 +98,9 @@ ToCBORObject method.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>typeName</code> - The parameter <code>typeName</code> is not documented yet.</li>
+<li><code>typeName</code> - The fully qualified name of a Java or .NET class (e.g.,
+<code>java.math.BigInteger</code> or <code>
+System.Globalization.CultureInfo</code>).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
