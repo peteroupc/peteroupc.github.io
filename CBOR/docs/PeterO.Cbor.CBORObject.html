@@ -3186,29 +3186,13 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
     PeterO.Cbor.CBORTypeMapper mapper);
 </pre>
 
-<p>Converts this CBOR object to an object of an arbitrary type. See the documentation for the overload of this method taking a CBORTypeMapper parameter for more information. This method (without a CBORTypeMapper parameter) allows all data types not otherwise handled to be eligible for Plain-Old-Data serialization.</p>
-
-<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
-
-<pre>Type arrayListString = new ParameterizedType(){ public Type[]
-                    getActualTypeArguments(){ /* Contains one type parameter, String */
-                    return new Type[]{ String.class }; } public Type getRawType(){ /* Raw
-                    type is ArrayList */ return ArrayList.class; } public Type
-                    getOwnerType(){ return null; } }; ArrayList&lt;String&gt; array =
-                    (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
-</pre>
-
-<p>By comparison, the C# version is much shorter.</p>
-
-<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-                    typeof(List&lt;String&gt;));
-</pre>
+<p>Converts this CBOR object to an object of an arbitrary type. See the documentation for the overload of this method taking a CBORTypeMapper and PODOptions parameters parameters for more information.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ) or a plain-old-data type (POCO or POJO type) within he control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
-<li><p><i>mapper</i>: A CBORTypeMapper object.</p></li>
+<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) ithin the control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
+<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3277,17 +3261,18 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
 
 <pre>Type arrayListString = new ParameterizedType() { public Type[]
-                    getActualTypeArguments() { // Contains one type parameter, String return
-                    new Type[] { String.class }; } public Type getRawType() { /* Raw type is
-                    ArrayList */ return ArrayList.class; } public Type getOwnerType() {
-                    return null; } }; ArrayList&lt;String&gt; array =
-                    (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
+            getActualTypeArguments() {  // Contains one type parameter, String
+            return
+            new Type[] { String.class }; } public Type getRawType() { /* Raw type is
+            ArrayList */ return ArrayList.class; } public Type getOwnerType() {
+            return null; } }; ArrayList&lt;String&gt; array =
+            (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
 </pre>
 
 <p>By comparison, the C# version is much shorter.</p>
 
 <pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-                    typeof(List&lt;String&gt;));
+            typeof(List&lt;String&gt;));
 </pre>
 
 <p><b>Parameters:</b></p>
@@ -3295,7 +3280,8 @@ parameter, that converter will be used to convert the CBOR object to an object o
 <ul>
 <li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) ithin the control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
 <li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
-<li><p><i>options</i>: A PODOptions object.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a PODOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3324,29 +3310,14 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
     PeterO.Cbor.PODOptions options);
 </pre>
 
-<p>Converts this CBOR object to an object of an arbitrary type. See the documentation for the overload of this method taking a CBORTypeMapper parameter for more information. This method (without a CBORTypeMapper parameter) allows all data types not otherwise handled to be eligible for Plain-Old-Data serialization.</p>
-
-<p>Java offers no easy way to express a generic type, at least none as easy as C#&#39;s  <code>typeof</code> operator. The following example, ritten in Java, is a way to specify that the return value will be n ArrayList of String objects.</p>
-
-<pre>Type arrayListString = new ParameterizedType(){ public Type[]
-                    getActualTypeArguments(){ /* Contains one type parameter, String */
-                    return new Type[]{ String.class }; } public Type getRawType(){ /* Raw
-                    type is ArrayList */ return ArrayList.class; } public Type
-                    getOwnerType(){ return null; } }; ArrayList&lt;String&gt; array =
-                    (ArrayList&lt;String&gt;) cborArray.ToObject(arrayListString);
-</pre>
-
-<p>By comparison, the C# version is much shorter.</p>
-
-<pre>var array = (List&lt;String&gt;)cborArray.ToObject(
-                    typeof(List&lt;String&gt;));
-</pre>
+<p>Converts this CBOR object to an object of an arbitrary type. See the documentation for the overload of this method taking a CBORTypeMapper and PODOptions parameters for more information. This method (without a CBORTypeMapper parameter) allows all data types not otherwise handled to be eligible for Plain-Old-Data serialization.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ) or a plain-old-data type (POCO or POJO type) within he control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
-<li><p><i>options</i>: A PODOptions object.</p></li>
+<li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) ithin the control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is a PODOptions object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3379,7 +3350,8 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mapper</i>: Not documented yet.</p></li>
+<li><p><i>mapper</i>: The parameter  <i>mapper</i>
+is not documented yet.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 
@@ -3408,8 +3380,10 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mapper</i>: Not documented yet.</p></li>
-<li><p><i>options</i>: Not documented yet.</p></li>
+<li><p><i>mapper</i>: The parameter  <i>mapper</i>
+is not documented yet.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is not documented yet.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 
@@ -3437,7 +3411,8 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>options</i>: Not documented yet.</p></li>
+<li><p><i>options</i>: The parameter  <i>options</i>
+is not documented yet.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 

@@ -1238,21 +1238,7 @@ another error occurred when serializing the object.</p></li>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the
  documentation for the overload of this method taking a CBORTypeMapper
- parameter for more information. This method (without a CBORTypeMapper
- parameter) allows all data types not otherwise handled to be eligible
- for Plain-Old-Data serialization.<p> <p>Java offers no easy way to
- express a generic type, at least none as easy as C#&#39;s <code>typeof</code>
- operator. The following example, written in Java, is a way to specify
- that the return value will be an ArrayList of string objects.</p>
- <pre>Type arrayListString = new ParameterizedType() { public Type[]
- getActualTypeArguments() {  // Contains one type parameter, string
- return new Type[] { string.class }; } public Type getRawType() { /*
- Raw type is ArrayList &#x2a;&#x2f; return ArrayList.class; } public Type
- getOwnerType() { return null; } }; ArrayList&lt;string&gt; array =
- (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);
- </pre> <p>By comparison, the C# version is much shorter.</p>
- <pre>var&#x20;array = (List&lt;string&gt;)cborArray.ToObject(
- typeof&#x28;List&lt;string&gt;)); </pre> </p></p>
+ and PODOptions parameters parameters for more information.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1262,11 +1248,13 @@ belong to. To express a generic type in Java, see the example.
 <b>Note:</b> For security reasons, an application should not base
 this parameter on user input or other externally supplied data.
 Whenever possible, this parameter should be either a type specially
-handled by this method (such as <code>int</code> or <code>string</code>) or a
-plain-old-data type (POCO or POJO type) within the control of the
+handled by this method (such as <code>int</code> or <code>String</code>  // /) or
+a plain-old-data type (POCO or POJO type) within the control of the
 application. If the plain-old-data type references other data types,
 those types should likewise meet either criterion above.</p></li>
-<li><p><code>mapper</code> - A CBORTypeMapper object.</p></li>
+<li><p><code>mapper</code> - This parameter controls which data types are eligible for
+Plain-Old-Data deserialization and includes custom converters from
+CBOR objects to certain data types.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1292,21 +1280,9 @@ another error occurred when serializing the object.</p></li>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the
  documentation for the overload of this method taking a CBORTypeMapper
- parameter for more information. This method (without a CBORTypeMapper
- parameter) allows all data types not otherwise handled to be eligible
- for Plain-Old-Data serialization.<p> <p>Java offers no easy way to
- express a generic type, at least none as easy as C#&#39;s <code>typeof</code>
- operator. The following example, written in Java, is a way to specify
- that the return value will be an ArrayList of string objects.</p>
- <pre>Type arrayListString = new ParameterizedType() { public Type[]
- getActualTypeArguments() {  // Contains one type parameter, string
- return new Type[] { string.class }; } public Type getRawType() { /*
- Raw type is ArrayList &#x2a;&#x2f; return ArrayList.class; } public Type
- getOwnerType() { return null; } }; ArrayList&lt;string&gt; array =
- (ArrayList&lt;string&gt;) cborArray.ToObject(arrayListString);
- </pre> <p>By comparison, the C# version is much shorter.</p>
- <pre>var&#x20;array = (List&lt;string&gt;)cborArray.ToObject(
- typeof&#x28;List&lt;string&gt;)); </pre> </p></p>
+ and PODOptions parameters for more information. This method (without
+ a CBORTypeMapper parameter) allows all data types not otherwise
+ handled to be eligible for Plain-Old-Data serialization.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1316,11 +1292,11 @@ belong to. To express a generic type in Java, see the example.
 <b>Note:</b> For security reasons, an application should not base
 this parameter on user input or other externally supplied data.
 Whenever possible, this parameter should be either a type specially
-handled by this method (such as <code>int</code> or <code>string</code>) or a
-plain-old-data type (POCO or POJO type) within the control of the
+handled by this method (such as <code>int</code> or <code>String</code>  // /) or
+a plain-old-data type (POCO or POJO type) within the control of the
 application. If the plain-old-data type references other data types,
 those types should likewise meet either criterion above.</p></li>
-<li><p><code>options</code> - A PODOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a PODOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1356,20 +1332,20 @@ another error occurred when serializing the object.</p></li>
  used to override the default conversion behavior of almost any
  object.</li> <li>If the type is <code>object</code> , return this
  object.</li> <li>If the type is <code>char</code> ... (To be
- implemented).</li> <li>If the type is <code>boolean</code> (<code>boolean</code>
- in Java), returns the result of AsBoolean.</li> <li>If the type is a
+ implemented).</li> <li>If the type is <code>bool</code> (<code>boolean</code> in
+ Java), returns the result of AsBoolean.</li> <li>If the type is a
  primitive integer type (<code>byte</code> , <code>int</code> , <code>short</code> ,
  <code>long</code> , as well as <code>sbyte</code> , <code>ushort</code> , <code>uint</code> ,
  and <code>ulong</code> in .NET) or a primitive floating-point type (
  <code>float</code> , <code>double</code> , as well as <code>decimal</code> in .NET),
  returns the result of the corresponding As* method.</li> <li>If the
- type is <code>string</code> , returns the result of AsString.</li> <li>If
+ type is <code>String</code> , returns the result of AsString.</li> <li>If
  the type is <code>EDecimal</code> , <code>EFloat</code> , <code>EInteger</code> , or
  <code>ERational</code> in the <code>PeterO.Numbers</code>
   library (in .NET) or the <code>com.github.peteroupc/numbers</code>
   artifact (in Java), returns the result of the corresponding As*
- method.</li> <li>If the type is an enumeration (<code>Enum</code>) type
- this CBOR object is a text string or an integer, returns the
+ method.</li> <li>If the type is an enumeration (<code>Enum</code>  // /)
+ type this CBOR object is a text string or an integer, returns the
  appropriate enumerated constant. (For example, if <code>MyEnum</code>
  includes an entry for <code>MyValue</code> , this method will return
  <code>MyEnum.MyValue</code> if the CBOR object represents <code>&quot;MyValue&quot;</code>
@@ -1389,13 +1365,13 @@ another error occurred when serializing the object.</p></li>
  one-dimensional array type and this CBOR object is an array, returns
  an array containing the items in this CBOR object. (Multidimensional
  arrays to be documented.)</li> <li>If the type is List or the generic
- or non-generic List, ICollection, or Iterable, (or ArrayList, List,
- Collection, or Iterable in Java), and if this CBOR object is an
+ or non-generic IList, ICollection, or IEnumerable, (or ArrayList,
+ List, Collection, or Iterable in Java), and if this CBOR object is an
  array, returns an object conforming to the type, class, or interface
  passed to this method, where the object will contain all items in
  this CBOR array.</li> <li>If the type is Dictionary or the generic or
- non-generic Map (or HashMap or Map in Java), and if this CBOR object
- is a map, returns an object conforming to the type, class, or
+ non-generic IDictionary (or HashMap or Map in Java), and if this CBOR
+ object is a map, returns an object conforming to the type, class, or
  interface passed to this method, where the object will contain all
  keys and values in this CBOR map.</li> <li>If the type is an
  enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or
@@ -1425,9 +1401,9 @@ another error occurred when serializing the object.</p></li>
  containing an eligible setter must have a public, nonstatic method
  with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather than
  &quot;set&quot;, that takes no parameters and does not return void. (For
- example, if a class has &quot;public setValue(string)&quot; and &quot;public
+ example, if a class has &quot;public setValue(String)&quot; and &quot;public
  getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot;
- and &quot;setValue(string, int)&quot; are not eligible setters.) If a class has
+ and &quot;setValue(String, int)&quot; are not eligible setters.) If a class has
  two otherwise eligible setters with the same name, but different
  parameter type, they are not eligible setters.</li> <li>Then, the
  method creates an object of the given type and invokes each eligible
@@ -1442,20 +1418,20 @@ another error occurred when serializing the object.</p></li>
  objects consisting of fields and not getters (&quot;getX()&quot; methods), both
  in .NET and in Java, and</li> <li>both FromObject and ToObject will
  be better designed, in version 4.0, so that backward-compatible
- improvements are easier to make.</li> </ul><p> <p>Java offers no easy
+ improvements are easier to make.</li> </ul><p><p>Java offers no easy
  way to express a generic type, at least none as easy as C#&#39;s
  <code>typeof</code> operator. The following example, written in Java, is a
- way to specify that the return value will be an ArrayList of string
+ way to specify that the return value will be an ArrayList of String
  objects.</p> <pre>Type arrayListString = new ParameterizedType() {
  public Type[] getActualTypeArguments() {  // Contains one type
- parameter, string return new Type[] { string.class }; } public Type
+ parameter, String return new Type[] { String.class }; } public Type
  getRawType() { /* Raw type is ArrayList &#x2a;&#x2f; return ArrayList.class; }
  public Type getOwnerType() { return null; } };
- ArrayList&lt;string&gt; array = (ArrayList&lt;string&gt;)
+ ArrayList&lt;String&gt; array = (ArrayList&lt;String&gt;)
  cborArray.ToObject(arrayListString); </pre> <p>By comparison, the C#
  version is much shorter.</p> <pre>var&#x20;array =
- (List&lt;string&gt;)cborArray.ToObject(
- typeof&#x28;List&lt;string&gt;)); </pre> </p></p>
+ (List&lt;String&gt;)cborArray.ToObject(
+ typeof&#x28;List&lt;String&gt;)); </pre> </p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1465,14 +1441,14 @@ belong to. To express a generic type in Java, see the example.
 <b>Note:</b> For security reasons, an application should not base
 this parameter on user input or other externally supplied data.
 Whenever possible, this parameter should be either a type specially
-handled by this method (such as <code>int</code> or <code>string</code>) or a
-plain-old-data type (POCO or POJO type) within the control of the
+handled by this method (such as <code>int</code> or <code>String</code>  // /) or
+a plain-old-data type (POCO or POJO type) within the control of the
 application. If the plain-old-data type references other data types,
 those types should likewise meet either criterion above.</p></li>
 <li><p><code>mapper</code> - This parameter controls which data types are eligible for
 Plain-Old-Data deserialization and includes custom converters from
 CBOR objects to certain data types.</p></li>
-<li><p><code>options</code> - A PODOptions object.</p></li>
+<li><p><code>options</code> - The parameter <code>options</code> is a PODOptions object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

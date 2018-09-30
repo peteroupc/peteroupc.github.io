@@ -14,16 +14,16 @@
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#AddIfMissing_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue">AddIfMissing&lt;TKey, TValue&gt;(this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;, TKey, TValue)</a></code> - Not documented yet.</li>
+<li><code><a href="#AddIfMissing_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue">AddIfMissing&lt;TKey, TValue&gt;(this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;, TKey, TValue)</a></code> - Adds if missing.</li>
 <li><code><a href="#AddIfMissing_T_this_System_Collections_Generic_IList_T_T">AddIfMissing&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, T)</a></code> - Not documented yet.</li>
-<li><code><a href="#AddOverwrite_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue">AddOverwrite&lt;TKey, TValue&gt;(this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;, TKey, TValue)</a></code> - Not documented yet.</li>
+<li><code><a href="#AddOverwrite_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue">AddOverwrite&lt;TKey, TValue&gt;(this System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;, TKey, TValue)</a></code> - Adds the overwrite.</li>
 <li><code><a href="#AllSame_TContainer_TItem_this_System_Collections_Generic_IEnumerable_TContainer_System_Func_TContainer_TItem">AllSame&lt;TContainer, TItem&gt;(this System.Collections.Generic.IEnumerable&lt;TContainer&gt;, System.Func&lt;TContainer, TItem&gt;)</a></code> - Not documented yet.</li>
 <li><code><a href="#AllSame_T_this_System_Collections_Generic_IEnumerable_T">AllSame&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;)</a></code> - Not documented yet.</li>
 <li><code><a href="#ArrayToString_T_this_System_Collections_Generic_IEnumerable_T">ArrayToString&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;)</a></code> - Not documented yet.</li>
 <li><code><a href="#CopyStream_this_System_IO_Stream_System_IO_Stream">CopyStream(this System.IO.Stream, System.IO.Stream)</a></code> - Copies all bytes from one stream to another.</li>
 <li><code><a href="#CopyStream_this_System_IO_Stream_int_System_IO_Stream">CopyStream(this System.IO.Stream, int, System.IO.Stream)</a></code> - Copies a certain number of bytes from one stream to another.</li>
 <li><code><a href="#CopyStructure_T_this_T_where_T_new_PeterO_IStructureT">CopyStructure&lt;T&gt;(this T) where T : new(), PeterO.IStructureT</a></code> - Not documented yet.</li>
-<li><code><a href="#EachWithIndex_T_this_System_Collections_Generic_IEnumerable_T">EachWithIndex&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;)</a></code> - Not documented yet.</li>
+<li><code><a href="#EachWithIndex_T_this_System_Collections_Generic_IEnumerable_T">EachWithIndex&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;)</a></code> - Eachs the index of the with.</li>
 <li><code><a href="#GetSegment_T_this_System_Collections_Generic_IList_T_int">GetSegment&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int)</a></code> - Not documented yet.</li>
 <li><code><a href="#GetSegment_T_this_System_Collections_Generic_IList_T_int_int">GetSegment&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int, int)</a></code> - Not documented yet.</li>
 <li><code><a href="#HasUnique_TContainer_TItem_this_System_Collections_Generic_IEnumerable_TContainer_System_Func_TContainer_TItem">HasUnique&lt;TContainer, TItem&gt;(this System.Collections.Generic.IEnumerable&lt;TContainer&gt;, System.Func&lt;TContainer, TItem&gt;)</a></code> - Not documented yet.</li>
@@ -42,7 +42,7 @@
 <li><code><a href="#SetValue_T_this_System_Collections_Generic_IList_T_int_T">SetValue&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int, T)</a></code> - Not documented yet.</li>
 <li><code><a href="#StructureSize_this_PeterO_IStructure">StructureSize(this PeterO.IStructure)</a></code> - Not documented yet.</li>
 <li><code><a href="#Sum_T_this_System_Collections_Generic_IEnumerable_T_System_Func_T_int">Sum&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;, System.Func&lt;T, int&gt;)</a></code> - Not documented yet.</li>
-<li><code><a href="#Transform_TInput_TOutput_this_System_Collections_Generic_IEnumerable_TInput_System_Func_TInput_TOutput">Transform&lt;TInput, TOutput&gt;(this System.Collections.Generic.IEnumerable&lt;TInput&gt;, System.Func&lt;TInput, TOutput&gt;)</a></code> - Not documented yet.</li>
+<li><code><a href="#Transform_TInput_TOutput_this_System_Collections_Generic_IEnumerable_TInput_System_Func_TInput_TOutput">Transform&lt;TInput, TOutput&gt;(this System.Collections.Generic.IEnumerable&lt;TInput&gt;, System.Func&lt;TInput, TOutput&gt;)</a></code> -</li>
 <li><code><a href="#UpToExcluding_this_int_int">UpToExcluding(this int, int)</a></code> - Creates an iterator of integers starting at a minimum value and ending at one less than the maximum.</li>
 <li><code><a href="#UpToIncluding_this_int_int">UpToIncluding(this int, int)</a></code> - Not documented yet.</li>
 <li><code><a href="#ValueOrDefault_T_this_System_Collections_Generic_IList_T_int">ValueOrDefault&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int)</a></code> - Not documented yet.</li>
@@ -97,26 +97,16 @@ The parameter &quot;dict&quot; is null.</li>
     TValue value);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows: <code>dict.AddIfMissing&lt;TKey, TValue&gt;(key, value)</code> . If the object&#39;s class already has a AddIfMissing<TKey, TValue> ethod with the same parameters, that method takes precedence over this xtension method.</p>
+<p>Adds if missing.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dict</i>: The parameter <i>dict</i>
-is not documented yet.</p></li>
-<li><p><i>key</i>: The parameter <i>key</i>
-is not documented yet.</p></li>
-<li><p><i>value</i>: The parameter <i>value</i>
-is not documented yet.</p></li>
-<li><p>&lt;TValue&gt;: The parameteris not documented yet.</p></li>
-<li><p>&lt;TKey&gt;: Object type for keys.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter &quot;dict&quot; is null.</li>
+<li><p><i>dict</i>: Dict.</p></li>
+<li><p><i>key</i>: Key.</p></li>
+<li><p><i>value</i>: Value.</p></li>
+<li><p>&lt;TKey&gt;: The 1st type parameter.</p></li>
+<li><p>&lt;TValue&gt;: The 2nd type parameter.</p></li>
 </ul>
 
 <p><a id="AddOverwrite_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue"></a></p>
@@ -129,26 +119,16 @@ The parameter &quot;dict&quot; is null.</li>
     TValue value);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows: <code>dict.AddOverwrite&lt;TKey, TValue&gt;(key, value)</code> . If the object&#39;s class already has a AddOverwrite<TKey, TValue> ethod with the same parameters, that method takes precedence over this xtension method.</p>
+<p>Adds the overwrite.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>dict</i>: The parameter <i>dict</i>
-is not documented yet.</p></li>
-<li><p><i>key</i>: The parameter <i>key</i>
-is not documented yet.</p></li>
-<li><p><i>value</i>: The parameter <i>value</i>
-is not documented yet.</p></li>
-<li><p>&lt;TValue&gt;: The parameteris not documented yet.</p></li>
-<li><p>&lt;TKey&gt;: Type parameter not documented yet.</p></li>
-</ul>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter &quot;dict&quot; is null.</li>
+<li><p><i>dict</i>: Dict.</p></li>
+<li><p><i>key</i>: Key.</p></li>
+<li><p><i>value</i>: Value.</p></li>
+<li><p>&lt;TKey&gt;: The 1st type parameter.</p></li>
+<li><p>&lt;TValue&gt;: The 2nd type parameter.</p></li>
 </ul>
 
 <p><a id="AllSame_T_this_System_Collections_Generic_IEnumerable_T"></a></p>
@@ -334,17 +314,18 @@ The parameter &quot;structure&quot; is null.</li>
     this System.Collections.Generic.IEnumerable&lt;T&gt; arr);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Eachs the index of the with.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li>&lt;T&gt;: Type parameter not documented yet.</li>
+<li><p><i>arr</i>: Arr.</p></li>
+<li><p>&lt;T&gt;: The 1st type parameter.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value&#39;/&gt; is not documented yet.</p>
+<p>The with index.</p>
 
 <p><a id="GetSegment_T_this_System_Collections_Generic_IList_T_int"></a></p>
 
@@ -911,24 +892,18 @@ is not documented yet.</p></li>
     System.Func&lt;TInput, TOutput&gt; func);
 </pre>
 
-<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.Transform&lt;TInput,
-            TOutput&gt;(func)</code> . If the object&#39;s class already has a Transform<TInput, TOutput> method with the same parameters, that method takes precedence over this extension method.</p>
-
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>containers</i>: The parameter  <i>containers</i>
-is not documented yet.</p></li>
-<li><p><i>func</i>: The parameter  <i>func</i>
-is not documented yet.</p></li>
-<li><p>&lt;TInput&gt;: The parameter is not documented yet.</p></li>
-<li><p>&lt;TOutput&gt;: The parameter is not documented yet.</p></li>
-<li><p>&lt;T&gt;: Type parameter not documented yet.</p></li>
+<li><p><i>containers</i>: Containers.</p></li>
+<li><p><i>func</i>: Func.</p></li>
+<li><p>&lt;TInput&gt;: The 1st type parameter.</p></li>
+<li><p>&lt;TOutput&gt;: The 2nd type parameter.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>An IEnumerable(TOutput) object.</p>
+<p>The transform.</p>
 
 <p><a id="UpToExcluding_this_int_int"></a></p>
 
