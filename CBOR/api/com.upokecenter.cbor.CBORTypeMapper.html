@@ -16,26 +16,24 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br>
+<li><code>CBORTypeMapper() CBORTypeMapper</code><br>
 Initializes a new instance of the CBORTypeMapper class.</li>
 <li><code>&lt;T&gt; CBORTypeMapper AddConverter​(Type type,
         ICBORConverter&lt;T&gt; converter)</code><br>
-Registers an object that converts objects of a given type to CBOR objects
-(called a CBOR converter).</li>
+Not documented yet.</li>
 <li><code>CBORTypeMapper AddTypeName​(String name)</code><br>
 Adds the fully qualified name of a Java or .NET type for use in type
 matching.</li>
 <li><code>CBORTypeMapper AddTypePrefix​(String prefix)</code><br>
 Adds a prefix of a Java or .NET type for use in type matching.</li>
 <li><code>boolean FilterTypeName​(String typeName)</code><br>
-Returns whether the given Java or .NET type name fits the filters given in
-this mapper.</li>
+Not documented yet.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBORTypeMapper()</code><br>
+<li><code>CBORTypeMapper() CBORTypeMapper</code><br>
 Initializes a new instance of the CBORTypeMapper class.</li>
 </ul>
 
@@ -46,42 +44,39 @@ Initializes a new instance of the CBORTypeMapper class.</li>
 <pre>public CBORTypeMapper()
 </pre>
 
-<p>Initializes a new instance of the CBORTypeMapper class.</p>
+<p>Initializes a new instance of the <code>CBORTypeMapper</code> class.</p>
 
 <h3>CBORTypeMapper</h3>
 
 <pre>public CBORTypeMapper()
 </pre>
 
-<p>Initializes a new instance of the CBORTypeMapper class.</p>
+<p>Initializes a new instance of the <code>CBORTypeMapper</code> class.</p>
 
 <h3>AddConverter</h3>
 
 <pre>public &lt;T&gt; CBORTypeMapper AddConverter​(Type type, ICBORConverter&lt;T&gt; converter)
 </pre>
 
-<p>Registers an object that converts objects of a given type to CBOR objects
- (called a CBOR converter).</p>
+<p>Not documented yet.</p>
 
 <p><strong>Type Parameters:</strong></p>
 
 <ul>
-<li><code>T</code> - Must be the same as the &quot;type&quot; parameter.</li>
+<li><code>T</code> - Type parameter not documented yet.</li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>type</code> - A Type object specifying the type that the converter converts to
-CBOR objects.</p></li>
-<li><p><code>converter</code> - The parameter <code>converter</code> is an ICBORConverter
-object.</p></li>
+<li><p><code>type</code> - The parameter <code>type</code> is not documented yet.</p></li>
+<li><p><code>converter</code> - The parameter <code>converter</code> is not documented yet.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A CBORTypeMapper object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -89,8 +84,8 @@ object.</p></li>
 <ul>
 <li><p><code>NullPointerException</code> - The parameter <code>type</code> or <code>
 converter</code> is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - &quot;Converter doesn&#39;t contain a proper
-ToCBORObject method&quot;.</p></li>
+<li><p><code>IllegalArgumentException</code> - Converter doesn&#39;t contain a proper
+ToCBORObject method.</p></li>
 </ul>
 
 <h3>FilterTypeName</h3>
@@ -98,8 +93,7 @@ ToCBORObject method&quot;.</p></li>
 <pre>public boolean FilterTypeName​(String typeName)
 </pre>
 
-<p>Returns whether the given Java or .NET type name fits the filters given in
- this mapper.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -112,8 +106,7 @@ System.Globalization.CultureInfo</code>).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> if the given Java or .NET type name fits the
-filters given in this mapper, or <code>false</code> otherwise.</li>
+<li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
 <h3>AddTypePrefix</h3>
@@ -128,14 +121,13 @@ filters given in this mapper, or <code>false</code> otherwise.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>prefix</code> - The prefix of a Java or .NET type (e.g., <code>java.math.</code> or
-<code>System.Globalization</code>).</li>
+<li><code>prefix</code> - The parameter <code>prefix</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A CBORTypeMapper object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -156,14 +148,13 @@ filters given in this mapper, or <code>false</code> otherwise.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>name</code> - The fully qualified name of a Java or .NET class (e.g., <code>
-java.math.BigInteger</code> or <code>System.Globalization.CultureInfo</code>).</li>
+<li><code>name</code> - The parameter <code>name</code> is not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>This object.</li>
+<li>A CBORTypeMapper object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
