@@ -67,24 +67,24 @@ case before they are used as keys.</li>
  name is capitalized. (For example, "getName" and "setName" both
  become "Name", and "isName" becomes "IsName".)</li> </ul><p>If
  "useCamelCase" is <code>true</code>:</p><ul> <li>In the .NET version, for
- each eligible method name, the word "Is" is removed from the name if
- the name starts with that word, then the name is converted to camel
- case, meaning the first letter in the name is converted to camel case
- if it's a basic lower-case letter ("a" to "z"). (For example, "Name"
- and "IsName" both become "name".)</li> <li>In the Java version, for
- each eligible method name, the word "get", "set", or "is" is removed
- from the name if the name starts with that word, then the name is
- converted to camel case. (For example, "getName", "setName", and
- "isName" all become "name".)</li> </ul> <p>In the description above,
- a name "starts with" a word if that word begins the name and is
- followed by a character other than a basic digit or lower-case
- letter, that is, other than "a" to "z" or "0" to "9".</p>
+ each eligible property name, the word "Is" is removed from the name
+ if the name starts with that word, then the name is converted to
+ camel case, meaning the first letter in the name is converted to
+ lower case if it's a basic upper-case letter ("A" to "Z"). (For
+ example, "Name" and "IsName" both become "name".)</li> <li>In the
+ Java version, for each eligible method name, the word "get", "set",
+ or "is" is removed from the name if the name starts with that word,
+ then the name is converted to camel case. (For example, "getName",
+ "setName", and "isName" all become "name".)</li> </ul> <p>In the
+ description above, a name "starts with" a word if that word begins
+ the name and is followed by a character other than a basic digit or
+ lower-case letter, that is, other than "a" to "z" or "0" to "9".</p>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> If the names are converted to camel case; otherwise, .
-<code>false</code>.</li>
+<li><code>true</code> If the names are converted to camel case; otherwise,
+<code>false</code>. This property is <code>true</code> by default.</li>
 </ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
