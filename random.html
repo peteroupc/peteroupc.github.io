@@ -235,7 +235,7 @@
 
 <h3>Quality</h3>
 
-<p>A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the <em>one-way property</em> or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of <code>BigCrush</code>, part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;. The RNG need not be perfectly equidistributed.</p>
+<p>A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the <em>collision resistance</em> property or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of <code>BigCrush</code>, part of L&#39;Ecuyer and Simard&#39;s &quot;TestU01&quot;. The RNG need not be perfectly equidistributed.</p>
 
 <p><a id=Seeding_and_Reseeding_2></a></p>
 
@@ -656,8 +656,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <ul>
 <li>the <em>avalanche property</em> (every bit of the input affects every bit of the output without a clear preference for 0 or 1),</li>
-<li>the <em>one-way property</em> (finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive), and</li>
-<li><em>collision resistance</em> (finding an unknown input that leads to a given output is cost-prohibitive).</li>
+<li><em>collision resistance</em> (finding two different inputs that lead to a given output is cost-prohibitive), and</li>
+<li>the <em>one-way property</em> (finding an unknown input that leads to a given output is cost-prohibitive) (see NIST SP 800-108).</li>
 </ul>
 
 <p>Applications SHOULD choose hash functions with the avalanche property.  Hash functions used for information security SHOULD also have the collision resistance and one-way properties.</p>

@@ -157,7 +157,7 @@ A statistical RNG is usually implemented with a PRNG, but can also be implemente
 <a id=Quality_2></a>
 ### Quality
 
-A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the _one-way property_ or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be perfectly equidistributed.
+A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the _collision resistance_ property or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be perfectly equidistributed.
 
 <a id=Seeding_and_Reseeding_2></a>
 ### Seeding and Reseeding
@@ -446,8 +446,8 @@ A hash code can be used as follows:
 Useful properties of some hash functions include&mdash;
 
 - the _avalanche property_ (every bit of the input affects every bit of the output without a clear preference for 0 or 1),
-- the _one-way property_ (finding an unknown second input that leads to the same output as that of a given input is cost-prohibitive), and
-- _collision resistance_ (finding an unknown input that leads to a given output is cost-prohibitive).
+- _collision resistance_ (finding two different inputs that lead to a given output is cost-prohibitive), and
+- the _one-way property_ (finding an unknown input that leads to a given output is cost-prohibitive) (see NIST SP 800-108).
 
 Applications SHOULD choose hash functions with the avalanche property.  Hash functions used for information security SHOULD also have the collision resistance and one-way properties.
 
