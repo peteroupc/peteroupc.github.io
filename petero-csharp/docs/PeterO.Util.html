@@ -42,7 +42,7 @@
 <li><code><a href="#SetValue_T_this_System_Collections_Generic_IList_T_int_T">SetValue&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int, T)</a></code> - Not documented yet.</li>
 <li><code><a href="#StructureSize_this_PeterO_IStructure">StructureSize(this PeterO.IStructure)</a></code> - Not documented yet.</li>
 <li><code><a href="#Sum_T_this_System_Collections_Generic_IEnumerable_T_System_Func_T_int">Sum&lt;T&gt;(this System.Collections.Generic.IEnumerable&lt;T&gt;, System.Func&lt;T, int&gt;)</a></code> - Not documented yet.</li>
-<li><code><a href="#Transform_TInput_TOutput_this_System_Collections_Generic_IEnumerable_TInput_System_Func_TInput_TOutput">Transform&lt;TInput, TOutput&gt;(this System.Collections.Generic.IEnumerable&lt;TInput&gt;, System.Func&lt;TInput, TOutput&gt;)</a></code> -</li>
+<li><code><a href="#Transform_TInput_TOutput_this_System_Collections_Generic_IEnumerable_TInput_System_Func_TInput_TOutput">Transform&lt;TInput, TOutput&gt;(this System.Collections.Generic.IEnumerable&lt;TInput&gt;, System.Func&lt;TInput, TOutput&gt;)</a></code> - Not documented yet.</li>
 <li><code><a href="#UpToExcluding_this_int_int">UpToExcluding(this int, int)</a></code> - Creates an iterator of integers starting at a minimum value and ending at one less than the maximum.</li>
 <li><code><a href="#UpToIncluding_this_int_int">UpToIncluding(this int, int)</a></code> - Not documented yet.</li>
 <li><code><a href="#ValueOrDefault_T_this_System_Collections_Generic_IList_T_int">ValueOrDefault&lt;T&gt;(this System.Collections.Generic.IList&lt;T&gt;, int)</a></code> - Not documented yet.</li>
@@ -97,7 +97,8 @@ The parameter &quot;dict&quot; is null.</li>
     TValue value);
 </pre>
 
-<p>Adds if missing.</p>
+<p>Adds if missing.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows:  <code>dict.AddIfMissing&lt;TKey, TValue&gt;(key,
+            value)</code> . If the object&#39;s class already has a <code>AddIfMissing&lt;TKey, TValue&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -107,6 +108,14 @@ The parameter &quot;dict&quot; is null.</li>
 <li><p><i>value</i>: Value.</p></li>
 <li><p>&lt;TKey&gt;: The 1st type parameter.</p></li>
 <li><p>&lt;TValue&gt;: The 2nd type parameter.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>dict</i>
+is null.</li>
 </ul>
 
 <p><a id="AddOverwrite_TKey_TValue_this_System_Collections_Generic_IDictionary_TKey_TValue_TKey_TValue"></a></p>
@@ -119,7 +128,8 @@ The parameter &quot;dict&quot; is null.</li>
     TValue value);
 </pre>
 
-<p>Adds the overwrite.</p>
+<p>Adds the overwrite.In the .NET implementation, this method is implemented as an extension method to any object implementing IDictionary and can be called as follows:  <code>dict.AddOverwrite&lt;TKey, TValue&gt;(key,
+            value)</code> . If the object&#39;s class already has a <code>AddOverwrite&lt;TKey, TValue&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -129,6 +139,14 @@ The parameter &quot;dict&quot; is null.</li>
 <li><p><i>value</i>: Value.</p></li>
 <li><p>&lt;TKey&gt;: The 1st type parameter.</p></li>
 <li><p>&lt;TValue&gt;: The 2nd type parameter.</p></li>
+</ul>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>dict</i>
+is null.</li>
 </ul>
 
 <p><a id="AllSame_T_this_System_Collections_Generic_IEnumerable_T"></a></p>
@@ -891,6 +909,9 @@ is not documented yet.</p></li>
     this System.Collections.Generic.IEnumerable&lt;TInput&gt; containers,
     System.Func&lt;TInput, TOutput&gt; func);
 </pre>
+
+<p>Not documented yet.In the .NET implementation, this method is implemented as an extension method to any object implementing IEnumerable and can be called as follows:  <code>containers.Transform&lt;TInput,
+            TOutput&gt;(func)</code> . If the object&#39;s class already has a <code>Transform&lt;TInput, TOutput&gt;</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
