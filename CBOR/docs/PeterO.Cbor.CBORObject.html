@@ -1858,12 +1858,12 @@ is a byte (from 0 to 255).</li>
 
 <p>Generates a CBOR string object from a Unicode character.</p>
 
-<p>Note that this method&#39;s behavior may change in the future. Currently, it converts &#39;char&#39;s to text strings, but it may change to convert them to integers instead.</p>
+<p>Note that this method&#39;s behavior may change in the future. Currently, it converts &#39; char&#39;s to text strings, but it may change to convert them to integers instead.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>value</i>: The parameter <i>value</i>
+<li><i>value</i>: The parameter  <i>value</i>
 is a char object.</li>
 </ul>
 
@@ -3672,8 +3672,7 @@ parameter, that converter will be used to convert the CBOR object to n object of
 <ul>
 <li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example.<b>Note:</b>For security reasons, an application should not base this parameter on ser input or other externally supplied data. Whenever possible, this arameter should be either a type specially handled by this method (such s <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) within the control of he application. If the plain-old-data type references other data types, hose types should likewise meet either criterion above.</p></li>
 <li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
-<li><p><i>options</i>: The parameter <i>options</i>
-is a PODOptions object.</p></li>
+<li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3708,8 +3707,7 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 
 <ul>
 <li><p><i>t</i>: The type, class, or interface that this method&#39;s return value will belong to. To express a generic type in Java, see the example. <b>Note:</b>For security reasons, an application hould not base this parameter on user input or other externally upplied data. Whenever possible, this parameter should be either a ype specially handled by this method (such as  <code>int</code> or <code>String</code> ///) or a plain-old-data type (POCO or POJO type) ithin the control of the application. If the plain-old-data type eferences other data types, those types should likewise meet ither criterion above.</p></li>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is a PODOptions object.</p></li>
+<li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3742,8 +3740,7 @@ The given object&#39;s nesting is too deep, or another error occurred when seria
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mapper</i>: The parameter  <i>mapper</i>
-is not documented yet.</p></li>
+<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 
@@ -3772,10 +3769,8 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>mapper</i>: The parameter  <i>mapper</i>
-is not documented yet.</p></li>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is not documented yet.</p></li>
+<li><p><i>mapper</i>: This parameter controls which data types are eligible for Plain-Old-Data deserialization and includes custom converters from CBOR objects to certain data types.</p></li>
+<li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 
@@ -3803,8 +3798,7 @@ The given type &quot;T&quot;, or this object&#39;s CBOR type, is not supported.<
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>options</i>: The parameter  <i>options</i>
-is not documented yet.</p></li>
+<li><p><i>options</i>: Specifies options for controlling deserialization of CBOR objects.</p></li>
 <li><p>&lt;T&gt;: The type, class, or interface that this method&#39;s return value will belong to. <b>Note:</b> For security reasons, an application should not base this parameter on user input or other externally supplied data. Whenever possible, this parameter should be either a type specially handled by this method (such as  <code>int</code>  or  <code>String</code>  ) or a plain-old-data type (POCO type) within the control of the application. If the plain-old-data type references other data types, those types should likewise meet either criterion above.</p></li>
 </ul>
 
@@ -3951,7 +3945,7 @@ An I/O error occurred.</p></li>
 
 <p>Writes a Unicode character as a string in CBOR format to a data stream.</p>
 
-<p>Note that this method&#39;s behavior may change in the future. Currently, it converts &#39;char&#39;s to text strings, but it may change to convert them to integers instead.</p>
+<p>Note that this method&#39;s behavior may change in the future. Currently, it converts &#39; char&#39;s to text strings, but it may change to convert them to integers instead.</p>
 
 <p><b>Parameters:</b></p>
 
