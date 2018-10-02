@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 1, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 2, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -431,6 +431,7 @@
 <li>disk access timings,</li>
 <li>timings of keystrokes and/or other input device interactions,</li>
 <li>thermal noise,</li>
+<li>the output of assembly instructions specially dedicated to random number generation, such as RdSeed and RdRand,</li>
 <li>the output generated with A. Seznec&#39;s technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and</li>
 <li>differences between two high-resolution counter values taken in quick succession (such as in &quot;Jitter RNG&quot;; see (M&uuml;ller)<sup><a href="#Note11"><strong>(11)</strong></a></sup>).</li>
 </ul>
@@ -553,7 +554,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <hr>
 
-<p>In the limited cases where existing solutions are inadequate, a <strong>programming language API</strong> could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot; (it MAY provide a separate PRNG to accept such a seed, provided it documents how that PRNG works).</p>
+<p>In the limited cases where existing solutions are inadequate, a <strong>programming language API</strong> could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note13"><strong>(13)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed, provided it documents how that PRNG works).</p>
 
 <blockquote>
 <p><strong>Example:</strong> A C language API for an RNG could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where <code>bytes</code> is a pointer to an array of 8-bit bytes, and <code>size</code> is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.</p>
@@ -598,13 +599,13 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h3>Shuffling</h3>
 
-<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code> or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
+<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code> or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <p>An application can <strong>shuffle a list</strong>&mdash;</p>
 
 <ul>
 <li>by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or</li>
-<li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood)<sup><a href="#Note14"><strong>(14)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
+<li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood)<sup><a href="#Note15"><strong>(15)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
 </ul>
 
 <p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
@@ -619,7 +620,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <li>use the PRNG to do a Fisher&ndash;Yates shuffle.</li>
 </ol>
 
-<p>Here, <code>B</code> can usually be calculated for different lists using the Python code in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>; see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  For example, <code>B</code> is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for <code>B</code> and follow the steps above accordingly &mdash; for a list big enough, it&#39;s generally more important to have shuffles act random than to choose from among all permutations.)</p>
+<p>Here, <code>B</code> can usually be calculated for different lists using the Python code in the <a href="#Suggested_Entropy_Size"><strong>appendix</strong></a>; see also (van Staveren 2000, &quot;Lack of randomness&quot;)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  For example, <code>B</code> is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for <code>B</code> and follow the steps above accordingly &mdash; for a list big enough, it&#39;s generally more important to have shuffles act random than to choose from among all permutations.)</p>
 
 <p>The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation and SHOULD have the highest feasible period for its state length.</p>
 
@@ -643,7 +644,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p>A seemingly random number can be generated from arbitrary data using a <em>hash function</em>.</p>
 
-<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note16"><strong>(16)</strong></a></sup>.)</p>
+<p>A <em>hash function</em> is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a <em>hash code</em>. (By definition, hash functions are deterministic<sup><a href="#Note17"><strong>(17)</strong></a></sup>.)</p>
 
 <p>A hash code can be used as follows:</p>
 
@@ -726,13 +727,15 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small><sup id=Note12>(12)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  &quot;How to Extract and Expand Randomness: A Summary and Explanation of Existing Results&quot;, 2009.</small></p>
 
-<p><small><sup id=Note13>(13)</sup> More generally, a list has <code>N! / (W_1! * W_2! * ... * W_K!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>N</code> is the list&#39;s size, <code>K</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.  However, this number is never more than <code>N!</code> and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has <code>N!</code> permutations even if some of its items occur more than once.</small></p>
+<p><small><sup id=Note13>(13)</sup> Allowing this would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future, e.g., to use a cryptographic or otherwise &quot;better&quot; RNG.  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  However, this does not forbid APIs from allowing applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
+<p><small><sup id=Note14>(14)</sup> More generally, a list has <code>N! / (W_1! * W_2! * ... * W_K!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>N</code> is the list&#39;s size, <code>K</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.  However, this number is never more than <code>N!</code> and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has <code>N!</code> permutations even if some of its items occur more than once.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
+<p><small><sup id=Note15>(15)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note16>(16)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+<p><small><sup id=Note16>(16)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
+
+<p><small><sup id=Note17>(17)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
 
 <p><a id=Appendix></a></p>
 
