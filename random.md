@@ -370,7 +370,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 ----
 
-In the limited cases where existing solutions are inadequate, a **programming language API** could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads, whenever convenient.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed, provided it documents how that PRNG works).
+In the limited cases where existing solutions are inadequate, a **programming language API** could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads whenever convenient.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed, provided it documents how that PRNG works).
 
 > **Example:** A C language API for an RNG could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 

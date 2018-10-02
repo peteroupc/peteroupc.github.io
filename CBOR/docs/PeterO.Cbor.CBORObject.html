@@ -172,7 +172,7 @@
 <li><code><a href="#Sign">Sign</a></code> - Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
 <li><code><a href="#SimpleValue">SimpleValue</a></code> - Gets the simple value ID of this object, or -1 if this object is not a simple value (including if the value is a floating-point number).</li>
 <li><code><a href="#Subtract_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Subtract(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - Finds the difference between two CBOR number objects.</li>
-<li><code><a href="#ToJSONString">ToJSONString()</a></code> - Converts this object to a string in JavaScript Object Notation (JSON) format, using the specified options to control the encoding process.</li>
+<li><code><a href="#ToJSONString">ToJSONString()</a></code> - Converts this object to a string in JavaScript Object Notation (JSON) format.</li>
 <li><code><a href="#ToJSONString_PeterO_Cbor_JSONOptions">ToJSONString(PeterO.Cbor.JSONOptions)</a></code> - Converts this object to a string in JavaScript Object Notation (JSON) format, using the specified options to control the encoding process.</li>
 <li><code><a href="#ToObject_System_Type">ToObject(System.Type)</a></code> - Converts this CBOR object to an object of an arbitrary type.</li>
 <li><code><a href="#ToObject_System_Type_PeterO_Cbor_CBORTypeMapper">ToObject(System.Type, PeterO.Cbor.CBORTypeMapper)</a></code> - Converts this CBOR object to an object of an arbitrary type.</li>
@@ -3091,7 +3091,7 @@ is null.</li>
 <pre>public string ToJSONString();
 </pre>
 
-<p>Converts this object to a string in JavaScript Object Notation (JSON) format, using the specified options to control the encoding process. See the overload to JSONString taking a JSONOptions argument.If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
+<p>Converts this object to a string in JavaScript Object Notation (JSON) format. See the overload to JSONString taking a JSONOptions argument for further information.If the CBOR object contains CBOR maps, or is a CBOR map itself, the keys to the map are written out to the JSON string in an undefined order. The example code given in<strong>PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)</strong>can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
 <p><b>Return Value:</b></p>
 
