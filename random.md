@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 2, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 3, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -317,7 +317,7 @@ RFC 4086, "Randomness Requirements for Security", section 3, contains a survey o
 <a id=Entropy></a>
 ### Entropy
 
-_Entropy_ is a value that describes how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure and also details how nondeterministic sources can be used for information security.  See also RFC 4086 section 2.
+_Entropy_ is a value that describes how hard it is to predict a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to predict as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
 
 <a id=Seed_Generation></a>
 ### Seed Generation

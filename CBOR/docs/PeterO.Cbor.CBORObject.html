@@ -528,7 +528,7 @@ This object&#39;s type is not a number type, including the special not-a-number 
 <pre>public System.Collections.Generic.ICollection Values { get; }
 </pre>
 
-<p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an array. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed. (This method can&#39;t be used to get the bytes in a CBOR byte string; for that, use the GetByteArray method instead.).</p>
+<p>Gets a collection of the values of this CBOR object, if it&#39;s a map or an array. If this object is a map, returns one value for each key in the map in an undefined order. If this is an array, returns all the values of the array in the order they are listed. (This method can&#39;t be used to get the bytes in a CBOR byte string; for that, use the GetByteString method instead.).</p>
 
 <p><b>Returns:</b></p>
 
@@ -2295,7 +2295,7 @@ is less than 0, greater than 255, or from 24 through 31.</li>
 <pre>public byte[] GetByteString();
 </pre>
 
-<p>Gets the byte array used in this object, if this object is a byte string, without copying the data to a new one. This method&#39;s return value can be used to modify the array&#39;s contents. Note, though, that the array&#39; s length can&#39;t be changed.</p>
+<p>Gets the byte array used in this object, if this object is a byte string, without copying the data to a new one. This method&#39;s return value can be used to modify the array&#39;s contents. Note, though, that the array&#39;s length can&#39;t be changed.</p>
 
 <p><b>Return Value:</b></p>
 
