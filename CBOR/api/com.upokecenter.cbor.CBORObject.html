@@ -278,8 +278,8 @@ Gets the value of a CBOR object in this map, using a string as the key.</li>
 <li><code>com.upokecenter.numbers.EInteger[] GetAllTags()</code><br>
 Gets a list of all tags, from outermost to innermost.</li>
 <li><code>byte[] GetByteString()</code><br>
-Gets the byte array used in this object, if this object is a byte string,
-without copying the data to a new one.</li>
+Gets the backing byte array used in this CBOR object, if this object is a
+byte string, without copying the data to a new byte array.</li>
 <li><code>Collection&lt;CBORObject&gt; getKeys()</code><br>
 Gets a collection of the keys of this CBOR object in an undefined order.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostInnerTag()</code><br>
@@ -398,20 +398,20 @@ or 0 if this item is neither an array nor a map.</li>
 Finds the difference between two CBOR number objects.</li>
 <li><code>String ToJSONString()</code><br>
 Converts this object to a string in JavaScript Object Notation (JSON)
-format, using the specified options to control the encoding process.</li>
+format.</li>
 <li><code>String ToJSONString​(JSONOptions options)</code><br>
 Converts this object to a string in JavaScript Object Notation (JSON)
 format, using the specified options to control the encoding process.</li>
-<li><code>Object ToObject​(Type t)</code><br>
+<li><code>&lt;T&gt; T ToObject​(Type t)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>Object ToObject​(Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
     CBORTypeMapper mapper)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>Object ToObject​(Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
     CBORTypeMapper mapper,
     PODOptions options)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
-<li><code>Object ToObject​(Type t,
+<li><code>&lt;T&gt; T ToObject​(Type t,
     PODOptions options)</code><br>
 Converts this CBOR object to an object of an arbitrary type.</li>
 <li><code>String toString()</code><br>
@@ -832,7 +832,7 @@ simple value (including if the value is a floating-point number).</li>
  map in an undefined order. If this is an array, returns all the
  values of the array in the order they are listed. (This method can&#39;t
  be used to get the bytes in a CBOR byte string; for that, use the
- GetByteArray method instead.).</p>
+ GetByteString method instead.).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1175,7 +1175,7 @@ options</code> is null.</p></li>
 
 <h3>ToObject</h3>
 
-<pre>public Object ToObject​(Type t)
+<pre>public &lt;T&gt; T ToObject​(Type t)
 </pre>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the
@@ -1228,7 +1228,7 @@ another error occurred when serializing the object.</p></li>
 
 <h3>ToObject</h3>
 
-<pre>public Object ToObject​(Type t, CBORTypeMapper mapper)
+<pre>public &lt;T&gt; T ToObject​(Type t, CBORTypeMapper mapper)
 </pre>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the
@@ -1270,7 +1270,7 @@ another error occurred when serializing the object.</p></li>
 
 <h3>ToObject</h3>
 
-<pre>public Object ToObject​(Type t, PODOptions options)
+<pre>public &lt;T&gt; T ToObject​(Type t, PODOptions options)
 </pre>
 
 <p>Converts this CBOR object to an object of an arbitrary type. See the
@@ -1291,7 +1291,8 @@ handled by this method (such as <code>int</code> or <code>String</code>  // /) o
 a plain-old-data type (POCO or POJO type) within the control of the
 application. If the plain-old-data type references other data types,
 those types should likewise meet either criterion above.</p></li>
-<li><p><code>options</code> - The parameter <code>options</code> is a PODOptions object.</p></li>
+<li><p><code>options</code> - Specifies options for controlling deserialization of CBOR
+objects.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1312,7 +1313,7 @@ another error occurred when serializing the object.</p></li>
 
 <h3>ToObject</h3>
 
-<pre>public Object ToObject​(Type t, CBORTypeMapper mapper, PODOptions options)
+<pre>public &lt;T&gt; T ToObject​(Type t, CBORTypeMapper mapper, PODOptions options)
 </pre>
 
 <p>Converts this CBOR object to an object of an arbitrary type. The
@@ -1443,7 +1444,8 @@ those types should likewise meet either criterion above.</p></li>
 <li><p><code>mapper</code> - This parameter controls which data types are eligible for
 Plain-Old-Data deserialization and includes custom converters from
 CBOR objects to certain data types.</p></li>
-<li><p><code>options</code> - The parameter <code>options</code> is a PODOptions object.</p></li>
+<li><p><code>options</code> - Specifies options for controlling deserialization of CBOR
+objects.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3520,10 +3522,10 @@ if the given key is not found or this object is not a map.</li>
 <pre>public byte[] GetByteString()
 </pre>
 
-<p>Gets the byte array used in this object, if this object is a byte string,
- without copying the data to a new one. This method&#39;s return value can
- be used to modify the array&#39;s contents. Note, though, that the array&#39;
- s length can&#39;t be changed.</p>
+<p>Gets the backing byte array used in this CBOR object, if this object is a
+ byte string, without copying the data to a new byte array. Any
+ changes in the returned array&#39;s contents will be reflected in this
+ CBOR object. Note, though, that the array&#39;s length can&#39;t be changed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -3935,11 +3937,10 @@ or is not a 32-bit signed integer (<code>int</code>).</p></li>
 </pre>
 
 <p>Converts this object to a string in JavaScript Object Notation (JSON)
- format, using the specified options to control the encoding process.
- See the overload to JSONString taking a JSONOptions argument. <p>If
- the CBOR object contains CBOR maps, or is a CBOR map itself, the keys
- to the map are written out to the JSON string in an undefined order.
- The example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
+ format. See the overload to JSONString taking a JSONOptions argument
+ for further information. <p>If the CBOR object contains CBOR maps, or
+ is a CBOR map itself, the keys to the map are written out to the JSON
+ string in an undefined order. The example code given in <see cref='M:PeterO.Cbor.CBORObject.ToJSONString(PeterO.Cbor.JSONOptions)'/>
  can be used to write out certain keys of a CBOR map in a given order
  to a JSON string.</p></p>
 

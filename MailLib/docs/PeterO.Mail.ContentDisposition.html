@@ -54,97 +54,6 @@
 
 <p><a id="Attachment"></a></p>
 
-<h3>Attachment</h3>
-
-<pre>public static readonly PeterO.Mail.ContentDisposition Attachment;
-</pre>
-
-<p>The content disposition value &quot;attachment&quot;.</p>
-
-<p><a id="Inline"></a></p>
-
-<h3>Inline</h3>
-
-<pre>public static readonly PeterO.Mail.ContentDisposition Inline;
-</pre>
-
-<p>The content disposition value &quot;inline&quot;.</p>
-
-<p><a id="DispositionType"></a></p>
-
-<h3>DispositionType</h3>
-
-<pre>public string DispositionType { get; }
-</pre>
-
-<p>Gets a string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;. Note that under RFC 6266 sec. 4.2 and RFC 2183 sec. 2.8, unrecognized disposition types should be treated as &quot;attachment&quot;.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A string containing this object&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
-
-<p><a id="IsAttachment"></a></p>
-
-<h3>IsAttachment</h3>
-
-<pre>public bool IsAttachment { get; }
-</pre>
-
-<p>Gets a value indicating whether the disposition type is attachment.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If the disposition type is attachment; otherwise, .  <code>false</code> .</p>
-
-<p><a id="IsInline"></a></p>
-
-<h3>IsInline</h3>
-
-<pre>public bool IsInline { get; }
-</pre>
-
-<p>Gets a value indicating whether the disposition type is inline.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If the disposition type is inline; otherwise, . <code>false</code> .</p>
-
-<p><a id="Parameters"></a></p>
-
-<h3>Parameters</h3>
-
-<pre>public System.Collections.Generic.IDictionary Parameters { get; }
-</pre>
-
-<p>Gets a list of parameter names associated with this object and their values.For the &quot;filename&quot; parameter, the value of that parameter is not adapted with the ContentDisposition.MakeFilename method; see the documentation for the ContentDisposition class.</p>
-
-<p><b>Returns:</b></p>
-
-<p>A read-only list of parameter names associated with this object and their values. NOTE: Previous versions erroneously stated that the list will be sorted by name. In fact, the names will not be guaranteed to appear in any particular order; this is at least the case in version 0.10.0.</p>
-
-<p><a id="Equals_object"></a></p>
-
-<h3>Equals</h3>
-
-<pre>public override bool Equals(
-    object obj);
-</pre>
-
-<p>Determines whether this object and another object are equal.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>obj</i>: The parameter <i>obj</i>
-is an arbitrary object.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p><code>true</code> if the objects are equal; otherwise,  <code>false</code> .</p>
-
-<p><a id="GetCreationDate"></a></p>
-
 <h3>GetCreationDate</h3>
 
 <pre>public int[] GetCreationDate();
@@ -184,19 +93,6 @@ is an arbitrary object.</li>
 
 <p><a id="GetModificationDate"></a></p>
 
-<h3>GetModificationDate</h3>
-
-<pre>public int[] GetModificationDate();
-</pre>
-
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;modification-date&quot; parameter, which specifies the date of last modification of a file (RFC 2183 sec. 2.5). See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this method&#39;s return value.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>The extracted date and time as an 8-element array, or <code>null</code> if the &quot;modification-date&quot; parameter doesn&#39;t exist, is an empty string, r is syntactically invalid, or if the parameter&#39;s year would overflow a 2-bit signed integer.</p>
-
-<p><a id="GetParameter_string"></a></p>
-
 <h3>GetParameter</h3>
 
 <pre>public string GetParameter(
@@ -227,19 +123,6 @@ is empty.</p></li>
 </ul>
 
 <p><a id="GetReadDate"></a></p>
-
-<h3>GetReadDate</h3>
-
-<pre>public int[] GetReadDate();
-</pre>
-
-<p>Gets the date and time extracted from this content disposition&#39;s &quot;read-date&quot; parameter, which specifies the date at which a file was last read (RFC 2183 sec. 2.6). See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this method&#39;s return value.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>The extracted date and time as an 8-element array, or <code>null</code> if the &quot;read-date&quot; parameter doesn&#39;t exist, is an empty string, or is yntactically invalid, or if the parameter&#39;s year would overflow a 32-bit igned integer.</p>
-
-<p><a id="MakeFilename_string"></a></p>
 
 <h3>MakeFilename</h3>
 
@@ -353,19 +236,6 @@ is null.</li>
 </ul>
 
 <p><a id="ToSingleLineString"></a></p>
-
-<h3>ToSingleLineString</h3>
-
-<pre>public string ToSingleLineString();
-</pre>
-
-<p>Converts this content disposition to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Disposition header field (without the text necessarily starting with &quot;Content-Disposition&quot; followed by a space), and consists of a single line.</p>
-
-<p><b>Return Value:</b></p>
-
-<p>A text string form of this content disposition.</p>
-
-<p><a id="ToString"></a></p>
 
 <h3>ToString</h3>
 

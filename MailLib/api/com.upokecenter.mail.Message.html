@@ -213,27 +213,13 @@ Gets this message&#39;s subject.</li>
 Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
-<li><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
-                   List&lt;String&gt; languages)</code><br>
-Generates a multilingual message (see RFC 8255) from a list of messages and
-a list of language strings.</li>
-<li><code>static Message NewBodyPart()</code><br>
-Creates a message object with no header fields.</li>
-<li><code>Message RemoveHeader​(int index)</code><br>
-Removes a header field by index.</li>
-<li><code>Message RemoveHeader​(String name)</code><br>
-Removes all instances of the given header field from this message.</li>
-<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages) multipart/multilingual</code><br>
-Selects a body part for a multiple-language message (
-multipart/multilingual) according to the given language
-priority list.</li>
-<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages,
-                 boolean preferOriginals) multipart/multilingual</code><br>
-Selects a body part for a multiple-language message (
-multipart/multilingual) according to the given language
-priority list and original-language preference.</li>
-<li><code>Message SetBody​(byte[] bytes)</code><br>
-Sets the body of this message to the given byte array.</li>
+<li><p><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
+                   List&lt;String&gt; languages)</code><br></p>
+
+<p>Generates a multilingual message (see RFC 8255) from a list of messages and
+a list of language strings.</p></li>
+<li><p><code>Message SetBody​(byte[] bytes)</code><br>
+Sets the body of this message to the given byte array.</p></li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
 <li><code>void setContentType​(MediaType value)</code><br></li>
 <li><code>Message SetCurrentDate()</code><br>

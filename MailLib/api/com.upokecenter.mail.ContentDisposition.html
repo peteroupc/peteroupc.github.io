@@ -282,8 +282,9 @@ case in version 0.10.0.</li>
  encoding)</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code> (RFC
  2231 encoding)</p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code> (Reserved
  name)</p> <p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>
- (Directory separators)</p><p> <p><b>Remarks:</b></p> <ul> <li>The
- exact file name conversion used by this method is not guaranteed to
+ (Directory separators)</p><p> <p><b>Remarks:</b></p> <ul> <li>The</p>
+
+<p>exact file name conversion used by this method is not guaranteed to
  remain the same between versions of this library.</li> <li>The string
  returned by this method is normalized using Unicode normalization
  form C (NFC) (see the <code>NormalizerInput</code>
@@ -322,8 +323,9 @@ case in version 0.10.0.</li>
  &quot;name&quot; parameter is not allowed in message bodies other than those
  with the media type &quot;application/octet-stream&quot; or treated as that
  media-type, this is a deviation of RFC 2045 and 2046 (see also RFC
- 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful
- parameters that apply to all media types&quot;). (Some email
+ 2045 sec. 5, which says that &quot;[t]here are NO globally meaningful</p>
+
+<p>parameters that apply to all media types&quot;). (Some email
  implementations may still write out the &quot;name&quot; parameter, even for
  media types other than <code>application/octet-stream</code> and even
  though RFC 2046 has deprecated that parameter.)</p></li></ul> </p></p>

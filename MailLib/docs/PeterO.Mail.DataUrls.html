@@ -31,30 +31,6 @@ data:application/octet-stream;base64,AAAAAA==
 
 <p><a id="DataUrlBytes_string"></a></p>
 
-<h3>DataUrlBytes</h3>
-
-<pre>public static byte[] DataUrlBytes(
-    string url);
-</pre>
-
-<p><b>Deprecated.</b> Renamed to DataUriBytes.</p>
-
-<p>Extracts the data from a Data URI (uniform resource identifier) in the form of a byte array.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>url</i>: The parameter  <i>url</i>
-is not documented yet.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>The data as a byte array. Returns null if  <i>uri</i>
- is null, is syntactically invalid, or is not a data URI.</p>
-
-<p><a id="DataUrlMediaType_string"></a></p>
-
 <h3>DataUrlMediaType</h3>
 
 <pre>public static PeterO.Mail.MediaType DataUrlMediaType(
@@ -78,39 +54,6 @@ is not documented yet.</li>
  is null, is syntactically invalid, or is not a Data URI.</p>
 
 <p><a id="MakeDataUrl_byte_PeterO_Mail_MediaType"></a></p>
-
-<h3>MakeDataUrl</h3>
-
-<pre>public static string MakeDataUrl(
-    byte[] bytes,
-    PeterO.Mail.MediaType mediaType);
-</pre>
-
-<p><b>Deprecated.</b> Renamed to MakeDataUri.</p>
-
-<p>Encodes data with the given media type in a Data URI (uniform resource identifier).</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bytes</i>: A byte array containing the data to encode in a Data URI.</p></li>
-<li><p><i>mediaType</i>: A media type to assign to the data.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>A Data URI that encodes the given data and media type.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>bytes</i>
-or  <i>mediaType</i>
-is null.</li>
-</ul>
-
-<p><a id="MakeDataUrl_string"></a></p>
 
 <h3>MakeDataUrl</h3>
 
