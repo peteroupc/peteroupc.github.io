@@ -45,6 +45,197 @@
 
 <p><a id="ApplicationOctetStream"></a></p>
 
+<h3>ApplicationOctetStream</h3>
+
+<pre>public static readonly PeterO.Mail.MediaType ApplicationOctetStream;
+</pre>
+
+<p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary binary data.</p>
+
+<p><a id="MessageRfc822"></a></p>
+
+<h3>MessageRfc822</h3>
+
+<pre>public static readonly PeterO.Mail.MediaType MessageRfc822;
+</pre>
+
+<p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
+
+<p><a id="TextPlainAscii"></a></p>
+
+<h3>TextPlainAscii</h3>
+
+<pre>public static readonly PeterO.Mail.MediaType TextPlainAscii;
+</pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;US-ASCII&quot;, used for plain text data.</p>
+
+<p><a id="TextPlainUtf8"></a></p>
+
+<h3>TextPlainUtf8</h3>
+
+<pre>public static readonly PeterO.Mail.MediaType TextPlainUtf8;
+</pre>
+
+<p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;, used for plain text data that may contain characters outside the basic Latin range (U+0000 to U+007F).</p>
+
+<p><a id="IsMultipart"></a></p>
+
+<h3>IsMultipart</h3>
+
+<pre>public bool IsMultipart { get; }
+</pre>
+
+<p>Gets a value indicating whether this is a multipart media type.</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code>  If this is a multipart media type; otherwise, . <code>false</code> .</p>
+
+<p><a id="IsText"></a></p>
+
+<h3>IsText</h3>
+
+<pre>public bool IsText { get; }
+</pre>
+
+<p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
+
+<p><b>Returns:</b></p>
+
+<p><code>true</code> If this is a text media type; otherwise, . <code>false</code> .</p>
+
+<p><a id="Parameters"></a></p>
+
+<h3>Parameters</h3>
+
+<pre>public System.Collections.Generic.IDictionary Parameters { get; }
+</pre>
+
+<p>Gets a list of the parameters contained in this media type object.</p>
+
+<p><b>Returns:</b></p>
+
+<p>A list of the parameters contained in this media type object; the names of each parameter appear in an undefined order. NOTE: Previous versions erroneously stated that the list will be sorted by name. In fact, the names will not be guaranteed to appear in any particular order; this is at least the case in version 0.10.0.</p>
+
+<p><a id="SubType"></a></p>
+
+<h3>SubType</h3>
+
+<pre>public string SubType { get; }
+</pre>
+
+<p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The resulting string will be in lowercase letters.</p>
+
+<p><b>Returns:</b></p>
+
+<p>This media type&#39;s subtype.</p>
+
+<p><a id="TopLevelType"></a></p>
+
+<h3>TopLevelType</h3>
+
+<pre>public string TopLevelType { get; }
+</pre>
+
+<p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string will be in lowercase letters.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The name of this media type&#39;s top-level type (such as &quot;text&quot; or &quot;audio&quot;.</p>
+
+<p><a id="TypeAndSubType"></a></p>
+
+<h3>TypeAndSubType</h3>
+
+<pre>public string TypeAndSubType { get; }
+</pre>
+
+<p>Gets the top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;. The resulting string will be in lowercase letters.</p>
+
+<p><b>Returns:</b></p>
+
+<p>The top level type and subtype of this media type, separated by a slash; for example, &quot;text/plain&quot;.</p>
+
+<p><a id="Equals_object"></a></p>
+
+<h3>Equals</h3>
+
+<pre>public override bool Equals(
+    object obj);
+</pre>
+
+<p>Determines whether this object and another object are equal.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>obj</i>: The parameter <i>obj</i>
+is an arbitrary object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
+
+<p><a id="GetCharset"></a></p>
+
+<h3>GetCharset</h3>
+
+<pre>public string GetCharset();
+</pre>
+
+<p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used to represent text in the data that uses this media type.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>If the &quot;charset&quot; parameter is present and non-empty, returns the result of the Encodings.ResolveAliasForEmail method for that parameter, except that result&#39;s basic upper-case letters A to Z (U+0041 to U+005A) are converted to lower case. If the &quot;charset&quot; parameter is absent or empty, returns the default value, if any, for that parameter given the media type (e.g., &quot;us-ascii&quot; if the media type is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</p>
+
+<p><a id="GetHashCode"></a></p>
+
+<h3>GetHashCode</h3>
+
+<pre>public override int GetHashCode();
+</pre>
+
+<p>Calculates the hash code of this object. No application or process IDs are used in the hash code calculation.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>A 32-bit signed integer.</p>
+
+<p><a id="GetParameter_string"></a></p>
+
+<h3>GetParameter</h3>
+
+<pre>public string GetParameter(
+    string name);
+</pre>
+
+<p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or &quot;format&quot;.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>name</i>: Name of the parameter to get. The name is compared using a basic case-insensitive comparison. (Two strings are equal in such a comparison, if they match after converting the basic upper-case letters A to Z (U+0041 to U+005A) in both strings to lower case.).</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The value of the parameter as a string, or null if the parameter doesn&#39;t exist.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter <i>name</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Name is empty.</p></li>
+</ul>
+
+<p><a id="Parse_string"></a></p>
+
 <h3>Parse</h3>
 
 <pre>public static PeterO.Mail.MediaType Parse(
@@ -103,6 +294,13 @@ is null.</li>
 </ul>
 
 <p><a id="ToSingleLineString"></a></p>
+
+<h3>ToSingleLineString</h3>
+
+<pre>public string ToSingleLineString();
+</pre>
+
+<p>Converts this media type to a text string form suitable for inserting in HTTP headers. Notably, the string contains the value of a Content-Type header field (without the text necessarily starting with &quot;Content-Type&quot; followed by a space), and consists of a single line.</p>
 
 <p><b>Return Value:</b></p>
 

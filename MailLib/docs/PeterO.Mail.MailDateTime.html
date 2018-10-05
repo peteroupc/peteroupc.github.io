@@ -25,6 +25,34 @@
 <h3>GenerateDateString</h3>
 
 <pre>public static string GenerateDateString(
+    int[] dateTime);
+</pre>
+
+<p>Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>dateTime</i>: The date and time in the form of an 8-element array. See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this parameter.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A date-time string.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentException:
+The parameter <i>dateTime</i>
+is null or invalid.</li>
+</ul>
+
+<p><a id="GenerateDateString_int_bool"></a></p>
+
+<h3>GenerateDateString</h3>
+
+<pre>public static string GenerateDateString(
     int[] dateTime,
     bool gmt);
 </pre>
@@ -54,6 +82,27 @@ is true.</p></li>
 </ul>
 
 <p><a id="ParseDateString_string"></a></p>
+
+<h3>ParseDateString</h3>
+
+<pre>public static int[] ParseDateString(
+    string str);
+</pre>
+
+<p>Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322). However, this method does not allow obsolete time zone strings to appear in the date-time string. See<strong>PeterO.Mail.MailDateTime.ParseDateString(System.String,System.Boolean)</strong>for information on the format of this method&#39;s return value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: String.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An 8-element array containing the date and time, or <code>null</code>  if  <i>str</i>
+ is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
+
+<p><a id="ParseDateString_string_bool"></a></p>
 
 <h3>ParseDateString</h3>
 

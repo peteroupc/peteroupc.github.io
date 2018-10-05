@@ -270,7 +270,8 @@ object a tag.</li>
 <li><code>static CBORObject FromSimpleValue​(int simpleValue)</code><br>
 Creates a CBOR object from a simple value number.</li>
 <li><code>CBORObject get​(int index)</code><br>
-Gets the value of a CBOR object by integer index in this array.</li>
+Gets the value of a CBOR object by integer index in this array or by integer
+key in this map.</li>
 <li><code>CBORObject get​(CBORObject key)</code><br>
 Gets the value of a CBOR object in this map, using a CBOR object as the key.</li>
 <li><code>CBORObject get​(String key)</code><br>
@@ -377,7 +378,8 @@ If this object is an array, removes the first instance of the specified item
 Removes the item at the given index of this CBOR array.</li>
 <li><code>void set​(int index,
 CBORObject value)</code><br>
-Gets the value of a CBOR object by integer index in this array.</li>
+Sets the value of a CBOR object by integer index in this array or by integer
+key in this map.</li>
 <li><code>void set​(CBORObject key,
 CBORObject value)</code><br>
 Gets the value of a CBOR object in this map, using a CBOR object as the key.</li>
@@ -851,24 +853,29 @@ simple value (including if the value is a floating-point number).</li>
 <pre>public CBORObject get​(int index)
 </pre>
 
-<p>Gets the value of a CBOR object by integer index in this array.</p>
+<p>Gets the value of a CBOR object by integer index in this array or by integer
+ key in this map.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - Zero-based index of the element.</li>
+<li><code>index</code> - Zero-based index of the element, or the integer key to this
+map. (If this is a map, the given index can be any 32-bit signed
+integer, even a negative one.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>The CBOR object referred to by index or key in this array or map.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This object is an array and the index is
+less than 0 or equal to or greater than the size of the array.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
 opposed to CBORObject.Null).</p></li>
 </ul>
@@ -878,18 +885,23 @@ opposed to CBORObject.Null).</p></li>
 <pre>public void set​(int index, CBORObject value)
 </pre>
 
-<p>Gets the value of a CBOR object by integer index in this array.</p>
+<p>Sets the value of a CBOR object by integer index in this array or by integer
+ key in this map.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>index</code> - Zero-based index of the element.</li>
+<li><code>index</code> - Zero-based index of the element, or the integer key to this
+map. (If this is a map, the given index can be any 32-bit signed
+integer, even a negative one.).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalStateException</code> - This object is not an array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This object is an array and the index is
+less than 0 or equal to or greater than the size of the array.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
 opposed to CBORObject.Null).</p></li>
 </ul>
@@ -899,18 +911,22 @@ opposed to CBORObject.Null).</p></li>
 <pre>public CBORObject get​(CBORObject key)
 </pre>
 
-<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.</p>
+<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.
+ Or, gets the value of a CBOR object in the specified index in this
+ CBOR array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
+<li><code>key</code> - A CBOR object serving as the key to the map or index to the
+array. If this is a CBOR array, the key must be an integer 0 or
+greater and less than the size of the array.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>The CBOR object referred to by index or key in this array or map.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -918,7 +934,9 @@ opposed to CBORObject.Null).</p></li>
 <ul>
 <li><p><code>NullPointerException</code> - The key is null (as opposed to
 CBORObject.Null); or the set method is called and the value is null.</p></li>
-<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This CBOR object is an array and the key is
+not an integer 0 or greater and less than the size of the array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map or an array.</p></li>
 </ul>
 
 <h3>set</h3>
@@ -926,12 +944,16 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <pre>public void set​(CBORObject key, CBORObject value)
 </pre>
 
-<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.</p>
+<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.
+ Or, gets the value of a CBOR object in the specified index in this
+ CBOR array.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>key</code> - The parameter <code>key</code> is a CBOR object.</li>
+<li><code>key</code> - A CBOR object serving as the key to the map or index to the
+array. If this is a CBOR array, the key must be an integer 0 or
+greater and less than the size of the array.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -939,7 +961,9 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <ul>
 <li><p><code>NullPointerException</code> - The key is null (as opposed to
 CBORObject.Null); or the set method is called and the value is null.</p></li>
-<li><p><code>IllegalStateException</code> - This object is not a map.</p></li>
+<li><p><code>IllegalArgumentException</code> - This CBOR object is an array and the key is
+not an integer 0 or greater and less than the size of the array.</p></li>
+<li><p><code>IllegalStateException</code> - This object is not a map or an array.</p></li>
 </ul>
 
 <h3>get</h3>
@@ -958,7 +982,7 @@ CBORObject.Null); or the set method is called and the value is null.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>The CBOR object referred to by key in this map.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

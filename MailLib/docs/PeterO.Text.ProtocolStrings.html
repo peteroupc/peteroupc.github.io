@@ -33,6 +33,27 @@
 
 <p><a id="IsInFreeformClass_string"></a></p>
 
+<h3>IsInFreeformClass</h3>
+
+<pre>public static bool IsInFreeformClass(
+    string str);
+</pre>
+
+<p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In general, the FreeformClass contains most letters, digits, spaces, punctuation, and symbols in the Unicode standard, as well as all basic printable characters (U+0021 to U+007E), but excludes control characters and separators.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string to check.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given string is empty or contains only characters allowed in RFC 8264&#39;s FreeformClass (in the contexts required); otherwise,  <code>false</code> . Returns  <code>false</code>  if <i>str</i>
+ is null.</p>
+
+<p><a id="IsInIdentifierClass_string"></a></p>
+
 <h3>IsInIdentifierClass</h3>
 
 <pre>public static bool IsInIdentifierClass(
@@ -53,6 +74,27 @@
  is null.</p>
 
 <p><a id="NicknameEnforce_string"></a></p>
+
+<h3>NicknameEnforce</h3>
+
+<pre>public static string NicknameEnforce(
+    string str);
+</pre>
+
+<p>Checks the validity of a string serving as a &quot;memorable, human-friendly name&quot; for something (see RFC 8266), as opposed to that thing&#39;s identity for authentication or authorization purposes (see sec. 6.1 of that RFC). This checking is done using the Nickname profile in RFC 8266.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string serving as a nickname for something.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A nickname prepared for enforcement under the Nickname profile in RFC 8266. Returns null if that string is invalid under that profile (including if  <i>str</i>
+ is null or empty). Return values of this method should not be used for comparison purposes (see RFC 8266, sec. 2.3); for such purposes, use the NicknameForComparison method instead.</p>
+
+<p><a id="NicknameForComparison_string"></a></p>
 
 <h3>NicknameForComparison</h3>
 
@@ -75,6 +117,27 @@
 
 <p><a id="OpaqueStringEnforce_string"></a></p>
 
+<h3>OpaqueStringEnforce</h3>
+
+<pre>public static string OpaqueStringEnforce(
+    string str);
+</pre>
+
+<p>Checks the validity of a string serving as an arbitrary single-line sequence of characters, such as a passphrase. This checking is done using the OpaqueString profile in RFC 8265. (REMARK: Specifying a string as this method does is not ideal if the string represents a password or other sensitive data, since strings are immutable in .NET and Java, so that its contents cannot be cleared when done. An application concerned about security may want to reimplement this method by passing a clearable array of characters rather than a text string.).</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>str</i>: A string to prepare that represents an arbitrary single-line sequence of characters entered by a user.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A string prepared under the OpaqueString profile in RFC 8265. Returns null if that string is invalid under that profile (including if  <i>str</i>
+ is null or empty). For comparison purposes, return values of this method should be compared code point by code point (see RFC 8265, sec. 4.2.3).</p>
+
+<p><a id="UsernameEnforce_string"></a></p>
+
 <h3>UsernameEnforce</h3>
 
 <pre>public static string UsernameEnforce(
@@ -95,6 +158,30 @@
  is null or empty). Note that there will be as many spaces of separation between parts of the return value as between parts of the input; this method will not collapse multiple spaces (U+0020) into a single space. If such space collapsing on a string (or rejection of strings with multiple consecutive spaces) is desired, it should be done before that string is passed to this method. For comparison purposes, return values of this method should be compared code point by code point (see RFC 8265, sec. 3.3.4).</p>
 
 <p><a id="UsernameEnforce_string_bool"></a></p>
+
+<h3>UsernameEnforce</h3>
+
+<pre>public static string UsernameEnforce(
+    string str,
+    bool preserveCase);
+</pre>
+
+<p>Checks the validity of a string that can serve to identify a user or account (a &quot;username&quot;), where the string is made of one or more parts called &quot;userparts&quot; separated by spaces (U+0020) and where the case of letters in the string is either mapped to lowercase or preserved. This checking is done using the UsernameCaseMapped or UsernameCasePreserved profile in RFC 8265.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>str</i>: A string to prepare that represents a user or account identifier.</p></li>
+<li><p><i>preserveCase</i>: If true, use the UsernameCasePreserved profile to prepare each part of the string. If false, use the UsernameCaseMapped profile.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A username where each of its parts is prepared under the UsernameCaseMapped or UsernameCasePreserved profile in RFC 8265. Returns null if any of those parts is invalid under that profile (including if  <i>str</i>
+ is null or empty). Note that there will be as many spaces of separation between parts of the return value as between parts of the input; this method will not collapse multiple spaces (U+0020) into a single space. If such space collapsing on a string (or rejection of strings with multiple consecutive spaces) is desired, it should be done before that string is passed to this method. For comparison purposes, return values of this method (with the same value for  <i>preserveCase</i>
+ ) should be compared code point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</p>
+
+<p><a id="UserpartEnforce_string"></a></p>
 
 <h3>UserpartEnforce</h3>
 
