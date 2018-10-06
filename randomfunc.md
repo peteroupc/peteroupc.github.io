@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 5, 2018.
+Begun on June 4, 2017; last updated on Oct. 6, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -45,9 +45,9 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Uniform Random Numbers**](#Uniform_Random_Numbers)
     - [`RNDINT`: Random Integers in \[0, N\]](#RNDINT_Random_Integers_in_0_N)
     - [`RNDINTRANGE`: Random Integers in \[N, M\]](#RNDINTRANGE_Random_Integers_in_N_M)
-    - [**`RNDU01()`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1**](#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1)
+    - [**`RNDU01`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1**](#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1)
         - [**Definitions of Constants**](#Definitions_of_Constants)
-        - [**Alternative Implementation for `RNDU01()`**](#Alternative_Implementation_for_RNDU01)
+        - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
     - [`RNDNUMRANGE`: Random Numbers in \[X, Y\]](#RNDNUMRANGE_Random_Numbers_in_X_Y)
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
@@ -129,7 +129,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  If `RNG()` outputs integers in the interval **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup> (RNGs that output numbers in the interval \[0, 1\), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building `RNDINT` for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed.)
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  If `RNG()` outputs integers in the interval **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup> (RNGs that output numbers in the interval \[0, 1\), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building `RNDINT` for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed, so that they can be transformed into an RNG that outputs integers instead.)
 
 &nbsp;
 
@@ -289,55 +289,50 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 <a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a>
 ### `RNDU01`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1
 
-This section defines four methods that generate a **random number bounded by 0 and 1**.  For each method below, the alternatives are ordered from most preferred to least preferred, and `X`, `XALT`, and `INVX` are defined later.
+This section defines four methods that generate a **random number bounded by 0 and 1**.  For each method below, the alternatives are ordered from most preferred to least preferred, and `X` and `INVX` are defined later.
 
 - **`RNDU01()`, interval [0, 1]**:
     - For Java `float` or `double`, use the alternative implementation given later.
-    - `RNDINT(XALT) * INVXALT`, where `INVXALT` is the constant 1 divided by `XALT`.
-    - `RNDINT(XALT) / XALT`.
+    - `RNDINT(X) * INVX`.
+    - `RNDINT(X) / X`, if the number format can represent `X`.
 - **`RNDU01OneExc()`, interval [0, 1)**:
     - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
     - `RNDINT(X - 1) * INVX`.
     - `RNDINTEXC(X) * INVX`.
-    - `RNDINT(X - 1) / X`.
-    - `RNDINTEXC(X) / X`.
+    - `RNDINT(X - 1) / X`, if the number format can represent `X`.
+    - `RNDINTEXC(X) / X`, if the number format can represent `X`.
 
     Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).
 - **`RNDU01ZeroExc()`, interval (0, 1]**:
     - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
     - `(RNDINT(X - 1) + 1) * INVX`.
     - `(RNDINTEXC(X) + 1) * INVX`.
-    - `(RNDINT(X - 1) + 1) / X`.
-    - `(RNDINTEXC(X) + 1) / X`.
+    - `(RNDINT(X - 1) + 1) / X`, if the number format can represent `X`.
+    - `(RNDINTEXC(X) + 1) / X`, if the number format can represent `X`.
     - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
 - **`RNDU01ZeroOneExc()`, interval (0, 1)**:
     - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
     - `(RNDINT(X - 2) + 1) * INVX`.
     - `(RNDINTEXC(X - 1) + 1) * INVX`.
-    - `(RNDINT(X - 2) + 1) / X`.
-    - `(RNDINTEXC(X - 1) + 1) / X`.
+    - `(RNDINT(X - 2) + 1) / X`, if the number format can represent `X`.
+    - `(RNDINTEXC(X - 1) + 1) / X`, if the number format can represent `X`.
 
 <a id=Definitions_of_Constants></a>
 #### Definitions of Constants
 
-`X` is the highest integer `p` such that all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
+`X` is the highest integer `p` such that all multiples of `1/p` in the interval [0, 1] are representable in the number format in question.  For example&mdash;
 
-    - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
-    - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
-    - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
-    - for the .NET Framework decimal format (`System.Decimal`), `X` is 2<sup>96</sup>.
+- for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
+- for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
+- for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
+- for the .NET Framework decimal format (`System.Decimal`), `X` is 2<sup>96</sup>.
 
 `INVX` is the constant 1 divided by `X`.
 
-`XALT` is the highest integer `p` such that **`p` itself** and all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
-
-    - `XALT` is the same as `X` for the three IEEE 754 formats mentioned earlier, and
-    - for the .NET Framework decimal format, `XALT` is 2<sup>95</sup>, not 2<sup>96</sup>, which is not representable.
-
 <a id=Alternative_Implementation_for_RNDU01></a>
-#### Alternative Implementation for `RNDU01()`
+#### Alternative Implementation for `RNDU01`
 
-For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of digits the format can represent without loss; e.g., 53 for Java's `double`).
+For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -364,7 +359,7 @@ The na&iuml;ve way of generating a **random number in the interval \[`minInclusi
         return minInclusive + (maxInclusive - minInclusive) * RNDU01()
     END
 
-For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDNUMRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
+For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDNUMRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
 
     METHOD RNDNUMRANGE(minInclusive, maxInclusive)
        if minInclusive > maxInclusive: return error
@@ -391,7 +386,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END
 
-> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
+> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
 
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
@@ -572,7 +567,7 @@ To generate a random string of characters:
 > **Notes:**
 >
 > 1. If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-> 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).
+> 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)
 > 3. Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
 > 4. Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
 
@@ -1700,7 +1695,7 @@ This section contains various geometric sampling techniques.
 <a id=Random_Points_Inside_a_Simplex></a>
 ### Random Points Inside a Simplex
 
-The following pseudocode generates, uniformly at random, a point inside an _n_ dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater.
+The following pseudocode generates, uniformly at random, a point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater.
 
     METHOD RandomPointInSimplex(points):
        ret=NewList()

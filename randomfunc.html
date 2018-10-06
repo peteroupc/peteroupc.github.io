@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Oct. 5, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Oct. 6, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -66,11 +66,11 @@
 <ul>
 <li><a href="#RNDINT_Random_Integers_in_0_N"><code>RNDINT</code>: Random Integers in [0, N]</a></li>
 <li><a href="#RNDINTRANGE_Random_Integers_in_N_M"><code>RNDINTRANGE</code>: Random Integers in [N, M]</a></li>
-<li><a href="#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01()</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</strong></a>
+<li><a href="#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</strong></a>
 
 <ul>
 <li><a href="#Definitions_of_Constants"><strong>Definitions of Constants</strong></a></li>
-<li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01()</code></strong></a></li>
+<li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
 </ul></li>
 <li><a href="#RNDNUMRANGE_Random_Numbers_in_X_Y"><code>RNDNUMRANGE</code>: Random Numbers in [X, Y]</a></li>
 <li><a href="#RNDINTEXC_Random_Integers_in_0_N"><strong><code>RNDINTEXC</code>: Random Integers in [0, N)</strong></a></li>
@@ -186,7 +186,7 @@
 
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
-<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating independent uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  If <code>RNG()</code> outputs integers in the interval <strong>[0, positive <code>MODULUS</code>)</strong> (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2"><strong>(2)</strong></a></sup> (RNGs that output numbers in the interval [0, 1), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building <code>RNDINT</code> for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed.)</p>
+<p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating independent uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  If <code>RNG()</code> outputs integers in the interval <strong>[0, positive <code>MODULUS</code>)</strong> (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2"><strong>(2)</strong></a></sup> (RNGs that output numbers in the interval [0, 1), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building <code>RNDINT</code> for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed, so that they can be transformed into an RNG that outputs integers instead.)</p>
 
 <p>&nbsp;</p>
 
@@ -363,15 +363,15 @@ END METHOD
 
 <h3><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</h3>
 
-<p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  For each method below, the alternatives are ordered from most preferred to least preferred, and <code>X</code>, <code>XALT</code>, and <code>INVX</code> are defined later.</p>
+<p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  For each method below, the alternatives are ordered from most preferred to least preferred, and <code>X</code> and <code>INVX</code> are defined later.</p>
 
 <ul>
 <li><strong><code>RNDU01()</code>, interval [0, 1]</strong>:
 
 <ul>
 <li>For Java <code>float</code> or <code>double</code>, use the alternative implementation given later.</li>
-<li><code>RNDINT(XALT) * INVXALT</code>, where <code>INVXALT</code> is the constant 1 divided by <code>XALT</code>.</li>
-<li><code>RNDINT(XALT) / XALT</code>.</li>
+<li><code>RNDINT(X) * INVX</code>.</li>
+<li><code>RNDINT(X) / X</code>, if the number format can represent <code>X</code>.</li>
 </ul></li>
 <li><p><strong><code>RNDU01OneExc()</code>, interval [0, 1)</strong>:</p>
 
@@ -379,8 +379,8 @@ END METHOD
 <li>Generate <code>RNDU01()</code> in a loop until a number other than 1.0 is generated this way.</li>
 <li><code>RNDINT(X - 1) * INVX</code>.</li>
 <li><code>RNDINTEXC(X) * INVX</code>.</li>
-<li><code>RNDINT(X - 1) / X</code>.</li>
-<li><code>RNDINTEXC(X) / X</code>.</li>
+<li><code>RNDINT(X - 1) / X</code>, if the number format can represent <code>X</code>.</li>
+<li><code>RNDINTEXC(X) / X</code>, if the number format can represent <code>X</code>.</li>
 </ul>
 
 <p>Note that <code>RNDU01OneExc()</code> corresponds to <code>Math.random()</code> in Java and JavaScript.  See also &quot;Generating uniform doubles in the unit interval&quot; in the <a href="http://xoroshiro.di.unimi.it/#remarks"><strong><code>xoroshiro+</code> remarks page</strong></a>.</p></li>
@@ -390,8 +390,8 @@ END METHOD
 <li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 is generated this way.</li>
 <li><code>(RNDINT(X - 1) + 1) * INVX</code>.</li>
 <li><code>(RNDINTEXC(X) + 1) * INVX</code>.</li>
-<li><code>(RNDINT(X - 1) + 1) / X</code>.</li>
-<li><code>(RNDINTEXC(X) + 1) / X</code>.</li>
+<li><code>(RNDINT(X - 1) + 1) / X</code>, if the number format can represent <code>X</code>.</li>
+<li><code>(RNDINTEXC(X) + 1) / X</code>, if the number format can represent <code>X</code>.</li>
 <li><code>1.0 - RNDU01OneExc()</code> (but this is recommended only if the set of numbers <code>RNDU01OneExc()</code> could return &mdash; as opposed to their probability &mdash; is evenly distributed).</li>
 </ul></li>
 <li><strong><code>RNDU01ZeroOneExc()</code>, interval (0, 1)</strong>:
@@ -400,8 +400,8 @@ END METHOD
 <li>Generate <code>RNDU01()</code> in a loop until a number other than 0.0 or 1.0 is generated this way.</li>
 <li><code>(RNDINT(X - 2) + 1) * INVX</code>.</li>
 <li><code>(RNDINTEXC(X - 1) + 1) * INVX</code>.</li>
-<li><code>(RNDINT(X - 2) + 1) / X</code>.</li>
-<li><code>(RNDINTEXC(X - 1) + 1) / X</code>.</li>
+<li><code>(RNDINT(X - 2) + 1) / X</code>, if the number format can represent <code>X</code>.</li>
+<li><code>(RNDINTEXC(X - 1) + 1) / X</code>, if the number format can represent <code>X</code>.</li>
 </ul></li>
 </ul>
 
@@ -409,27 +409,22 @@ END METHOD
 
 <h4>Definitions of Constants</h4>
 
-<p><code>X</code> is the highest integer <code>p</code> such that all factors of <code>1/p</code> between 0 and 1 are representable in the number format in question.  For example&mdash;</p>
+<p><code>X</code> is the highest integer <code>p</code> such that all multiples of <code>1/p</code> in the interval [0, 1] are representable in the number format in question.  For example&mdash;</p>
 
-<pre>- for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2&lt;sup&gt;53&lt;/sup&gt; (9007199254740992),
-- for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2&lt;sup&gt;24&lt;/sup&gt; (16777216),
-- for the 64-bit IEEE 754 decimal floating-point format, `X` is 10&lt;sup&gt;16&lt;/sup&gt;, and
-- for the .NET Framework decimal format (`System.Decimal`), `X` is 2&lt;sup&gt;96&lt;/sup&gt;.
-</pre>
+<ul>
+<li>for the 64-bit IEEE 754 binary floating-point format (e.g., Java <code>double</code>), <code>X</code> is 2<sup>53</sup> (9007199254740992),</li>
+<li>for the 32-bit IEEE 754 binary floating-point format (e.g., Java <code>float</code>), <code>X</code> is 2<sup>24</sup> (16777216),</li>
+<li>for the 64-bit IEEE 754 decimal floating-point format, <code>X</code> is 10<sup>16</sup>, and</li>
+<li>for the .NET Framework decimal format (<code>System.Decimal</code>), <code>X</code> is 2<sup>96</sup>.</li>
+</ul>
 
 <p><code>INVX</code> is the constant 1 divided by <code>X</code>.</p>
 
-<p><code>XALT</code> is the highest integer <code>p</code> such that <strong><code>p</code> itself</strong> and all factors of <code>1/p</code> between 0 and 1 are representable in the number format in question.  For example&mdash;</p>
-
-<pre>- `XALT` is the same as `X` for the three IEEE 754 formats mentioned earlier, and
-- for the .NET Framework decimal format, `XALT` is 2&lt;sup&gt;95&lt;/sup&gt;, not 2&lt;sup&gt;96&lt;/sup&gt;, which is not representable.
-</pre>
-
 <p><a id=Alternative_Implementation_for_RNDU01></a></p>
 
-<h4>Alternative Implementation for <code>RNDU01()</code></h4>
+<h4>Alternative Implementation for <code>RNDU01</code></h4>
 
-<p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU01()</code> can be used instead.  It&#39;s based on a <a href="http://allendowney.com/research/rand/"><strong>technique devised by Allen Downey</strong></a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
+<p>For fixed-precision binary floating-point numbers with fixed exponent range (such as Java&#39;s <code>double</code> and <code>float</code>), the following pseudocode for <code>RNDU01()</code> can be used instead.  It&#39;s based on a <a href="http://allendowney.com/research/rand/"><strong>technique devised by Allen Downey</strong></a>, who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
 
 <pre>METHOD RNDU01()
     e=-SIGBITS
@@ -459,7 +454,7 @@ END METHOD
 END
 </pre>
 
-<p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible value for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
+<p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
 
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
@@ -488,7 +483,7 @@ END
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequences</em></strong></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
+<p><strong>Note:</strong> <a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a> uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often <em>quasirandom sequences</em> (also known as <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequences</em></strong></a>, such as Sobol and Halton sequences), often together with an RNG, provide the &quot;random&quot; numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.</p>
 </blockquote>
 
 <p><a id=RNDINTEXC_Random_Integers_in_0_N></a></p>
@@ -531,7 +526,7 @@ END
    // NOTE: For signed integer formats, replace the following line
    // with &quot;if minInclusive &gt;=0 or minInclusive + INT_MAX &gt;=
    // maxExclusive&quot;, where `INT_MAX` has the same meaning
-   // as the pseudocode for `RNDINTRANGE`.
+   // as in the pseudocode for `RNDINTRANGE`.
    if minInclusive &gt;=0
      return RNDINTRANGE(minInclusive, maxExclusive - 1)
    end
@@ -723,7 +718,7 @@ END METHOD
 
 <ol>
 <li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
-<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string).</li>
+<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)</li>
 <li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating &quot;pronounceable&quot; words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves <em>Markov chains</em>.  A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
@@ -2051,7 +2046,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 
 <h3>Random Points Inside a Simplex</h3>
 
-<p>The following pseudocode generates, uniformly at random, a point inside an <em>n</em> dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater.</p>
+<p>The following pseudocode generates, uniformly at random, a point inside an <em>n</em>-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes an array <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater.</p>
 
 <pre>METHOD RandomPointInSimplex(points):
    ret=NewList()
