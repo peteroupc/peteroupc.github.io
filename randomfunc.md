@@ -46,7 +46,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [`RNDINT`: Random Integers in \[0, N\]](#RNDINT_Random_Integers_in_0_N)
     - [`RNDINTRANGE`: Random Integers in \[N, M\]](#RNDINTRANGE_Random_Integers_in_N_M)
     - [**`RNDU01()`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1**](#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1)
-        - [**Maximum Even Parts**](#Maximum_Even_Parts)
+        - [**Definitions of Constants**](#Definitions_of_Constants)
         - [**Alternative Implementation for `RNDU01()`**](#Alternative_Implementation_for_RNDU01)
     - [`RNDNUMRANGE`: Random Numbers in \[X, Y\]](#RNDNUMRANGE_Random_Numbers_in_X_Y)
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
@@ -287,14 +287,14 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 > - Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 
 <a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a>
-### `RNDU01()`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1
+### `RNDU01`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1
 
-This section defines four methods that generates a **random number bounded by 0 and 1**.  In the pseudocode and idioms below, `X` is the number of _maximum even parts_, defined later, and `INVX` is the constant 1 divided by `X`.  For each method below, the alternatives are ordered from most preferred to least preferred.
+This section defines four methods that generate a **random number bounded by 0 and 1**.  For each method below, the alternatives are ordered from most preferred to least preferred, and `X`, `XALT`, and `INVX` are defined later.
 
 - **`RNDU01()`, interval [0, 1]**:
     - For Java `float` or `double`, use the alternative implementation given later.
-    - `RNDINT(X) * INVX`.
-    - `RNDINT(X) / X`.
+    - `RNDINT(XALT) * INVXALT`, where `INVXALT` is the constant 1 divided by `XALT`.
+    - `RNDINT(XALT) / XALT`.
 - **`RNDU01OneExc()`, interval [0, 1)**:
     - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
     - `RNDINT(X - 1) * INVX`.
@@ -317,14 +317,22 @@ This section defines four methods that generates a **random number bounded by 0 
     - `(RNDINT(X - 2) + 1) / X`.
     - `(RNDINTEXC(X - 1) + 1) / X`.
 
-<a id=Maximum_Even_Parts></a>
-#### Maximum Even Parts
+<a id=Definitions_of_Constants></a>
+#### Definitions of Constants
 
-`X`, the number of _maximum even parts_, depends on the number format. `X` is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in that number format.  For example&mdash;
-    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts,
-    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) maximum even parts,
-    - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> maximum even parts, and
-    - the .NET Framework decimal format (`System.Decimal`) would have 2<sup>96</sup> maximum even parts, but 2<sup>96</sup> is not representable, so it actually has 2<sup>95</sup> maximum even parts instead.
+`X` is the highest integer `p` such that all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
+
+    - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
+    - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
+    - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
+    - for the .NET Framework decimal format (`System.Decimal`), `X` is 2<sup>96</sup>.
+
+`INVX` is the constant 1 divided by `X`.
+
+`XALT` is the highest integer `p` such that **`p` itself** and all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
+
+    - `XALT` is the same as `X` for the three IEEE 754 formats mentioned earlier, and
+    - for the .NET Framework decimal format, `XALT` is 2<sup>95</sup>, not 2<sup>96</sup>, which is not representable.
 
 <a id=Alternative_Implementation_for_RNDU01></a>
 #### Alternative Implementation for `RNDU01()`
@@ -414,7 +422,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        // NOTE: For signed integer formats, replace the following line
        // with "if minInclusive >=0 or minInclusive + INT_MAX >=
        // maxExclusive", where `INT_MAX` has the same meaning
-       // as the pseudocode for `RNDINTRANGE`.
+       // as in the pseudocode for `RNDINTRANGE`.
        if minInclusive >=0
          return RNDINTRANGE(minInclusive, maxExclusive - 1)
        end
