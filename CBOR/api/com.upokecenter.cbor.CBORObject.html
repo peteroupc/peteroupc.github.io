@@ -273,7 +273,8 @@ Creates a CBOR object from a simple value number.</li>
 Gets the value of a CBOR object by integer index in this array or by integer
 key in this map.</li>
 <li><code>CBORObject get​(CBORObject key)</code><br>
-Gets the value of a CBOR object in this map, using a CBOR object as the key.</li>
+Gets the value of a CBOR object by integer index in this array or by CBOR
+object key in this map.</li>
 <li><code>CBORObject get​(String key)</code><br>
 Gets the value of a CBOR object in this map, using a string as the key.</li>
 <li><code>com.upokecenter.numbers.EInteger[] GetAllTags()</code><br>
@@ -382,7 +383,8 @@ Sets the value of a CBOR object by integer index in this array or by integer
 key in this map.</li>
 <li><code>void set​(CBORObject key,
 CBORObject value)</code><br>
-Gets the value of a CBOR object in this map, using a CBOR object as the key.</li>
+Gets the value of a CBOR object by integer index in this array or by CBOR
+object key in this map.</li>
 <li><code>void set​(String key,
 CBORObject value)</code><br>
 Gets the value of a CBOR object in this map, using a string as the key.</li>
@@ -867,7 +869,9 @@ integer, even a negative one.).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The CBOR object referred to by index or key in this array or map.</li>
+<li>The CBOR object referred to by index or key in this array or map. If
+this is a CBOR map, returns null if an item with the given key
+doesn&#39;t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -911,9 +915,8 @@ opposed to CBORObject.Null).</p></li>
 <pre>public CBORObject get​(CBORObject key)
 </pre>
 
-<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.
- Or, gets the value of a CBOR object in the specified index in this
- CBOR array.</p>
+<p>Gets the value of a CBOR object by integer index in this array or by CBOR
+ object key in this map.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -926,7 +929,9 @@ greater and less than the size of the array.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The CBOR object referred to by index or key in this array or map.</li>
+<li>The CBOR object referred to by index or key in this array or map. If
+this is a CBOR map, returns null if an item with the given key
+doesn&#39;t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -944,9 +949,8 @@ not an integer 0 or greater and less than the size of the array.</p></li>
 <pre>public void set​(CBORObject key, CBORObject value)
 </pre>
 
-<p>Gets the value of a CBOR object in this map, using a CBOR object as the key.
- Or, gets the value of a CBOR object in the specified index in this
- CBOR array.</p>
+<p>Gets the value of a CBOR object by integer index in this array or by CBOR
+ object key in this map.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -982,7 +986,8 @@ not an integer 0 or greater and less than the size of the array.</p></li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The CBOR object referred to by key in this map.</li>
+<li>The CBOR object referred to by key in this map. Returns <code>null</code>
+if an item with the given key doesn&#39;t exist.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>

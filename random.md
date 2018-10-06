@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 3, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 5, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -370,9 +370,11 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 ----
 
-In the limited cases where existing solutions are inadequate, a **programming language API** could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits. Such an API is RECOMMENDED to be reasonably fast for most applications, and to be safe for concurrent use by multiple threads whenever convenient.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed, provided it documents how that PRNG works).
+In the limited cases where existing solutions are inadequate, a **programming language API** could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits.
 
 > **Example:** A C language API for an RNG could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
+
+If an API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed).  If an API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented; the same is true for any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).
 
 My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
 
@@ -505,7 +507,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note12>(12)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
-<small><sup id=Note13>(13)</sup> Allowing this would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future, e.g., to use a cryptographic or otherwise "better" RNG.  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  However, this does not forbid APIs from allowing applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+<small><sup id=Note13>(13)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
 
 <small><sup id=Note14>(14)</sup> More generally, a list has `N! / (W_1! * W_2! * ... * W_K!)` permutations (a [**multinomial coefficient**](http://mathworld.wolfram.com/MultinomialCoefficient.html)), where `N` is the list's size, `K` is the number of different items in the list, and `W_i` is the number of times the item identified by `i` appears in the list.  However, this number is never more than `N!` and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has `N!` permutations even if some of its items occur more than once.</small>
 

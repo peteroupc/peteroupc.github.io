@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Sep. 15, 2018.
+Begun on June 4, 2017; last updated on Oct. 5, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -45,11 +45,12 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Uniform Random Numbers**](#Uniform_Random_Numbers)
     - [`RNDINT`: Random Integers in \[0, N\]](#RNDINT_Random_Integers_in_0_N)
     - [`RNDINTRANGE`: Random Integers in \[N, M\]](#RNDINTRANGE_Random_Integers_in_N_M)
-    - [`RNDU01`: Random Numbers in \[0, 1\]](#RNDU01_Random_Numbers_in_0_1)
+    - [**`RNDU01()`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1**](#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1)
+        - [**Maximum Even Parts**](#Maximum_Even_Parts)
+        - [**Alternative Implementation for `RNDU01()`**](#Alternative_Implementation_for_RNDU01)
     - [`RNDNUMRANGE`: Random Numbers in \[X, Y\]](#RNDNUMRANGE_Random_Numbers_in_X_Y)
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
-    - [`RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers in \[0, 1), (0, 1\], or (0, 1)](#RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_in_0_1_0_1_or_0_1)
     - [**`RNDNUMEXCRANGE`: Random Numbers in \[X, Y)**](#RNDNUMEXCRANGE_Random_Numbers_in_X_Y)
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
     - [**Special Programming Environments**](#Special_Programming_Environments)
@@ -113,11 +114,6 @@ All the random number methods presented on this page are ultimately based on an 
     - [`a`, `b`] means "`a` or greater and `b` or less".
 * **Norm.** The norm of one or more real numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
-* **Maximum even parts.** The number of maximum even parts is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in the number format in question.  For example&mdash;
-    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts (see "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks) for further discussion),
-    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) maximum even parts,
-    - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> maximum even parts, and
-    - the .NET Framework decimal format (`System.Decimal`) would have 2<sup>96</sup> maximum even parts, but 2<sup>96</sup> is not representable, so it actually has 2<sup>95</sup> maximum even parts instead.
 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
@@ -133,10 +129,7 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  This section explains how `RNDINT` can be implemented for two kinds of underlying RNGs; however, the definition of `RNDINT` is not limited to those kinds.  (These two kinds were chosen because they were the most commonly seen in practice.)
-
-- **Method 1**: If `RNG()` outputs **integers in the interval** **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup>
-- **Method 2**: If `RNG()` outputs **fixed-precision floating-point numbers in the interval [0, 1)**, then find `s`, where `s` is the number of _maximum even parts_ for the floating-point format, and use Method 1 above, where `MODULUS` is `s` and `RNG()` is `floor(RNG() * s)` instead.
+In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  If `RNG()` outputs integers in the interval **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup> (RNGs that output numbers in the interval \[0, 1\), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building `RNDINT` for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed.)
 
 &nbsp;
 
@@ -293,13 +286,48 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 > - Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
 > - Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
 
-<a id=RNDU01_Random_Numbers_in_0_1></a>
-### `RNDU01`: Random Numbers in [0, 1]
+<a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a>
+### `RNDU01()`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1
 
-**`RNDU01()`** generates a **random number in the interval [0, 1]**.  It can be implemented by one of the following, where `X` is the number of _maximum even parts_:
+This section defines four methods that generates a **random number bounded by 0 and 1**.  In the pseudocode and idioms below, `X` is the number of _maximum even parts_, defined later, and `INVX` is the constant 1 divided by `X`.  For each method below, the alternatives are ordered from most preferred to least preferred.
 
-- `RNDINT(X) / X`.
-- `RNDINT(X) * INVX`, where `INVX` is the constant 1 divided by `X`.
+- **`RNDU01()`, interval [0, 1]**:
+    - For Java `float` or `double`, use the alternative implementation given later.
+    - `RNDINT(X) * INVX`.
+    - `RNDINT(X) / X`.
+- **`RNDU01OneExc()`, interval [0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
+    - `RNDINT(X - 1) * INVX`.
+    - `RNDINTEXC(X) * INVX`.
+    - `RNDINT(X - 1) / X`.
+    - `RNDINTEXC(X) / X`.
+
+    Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.  See also "Generating uniform doubles in the unit interval" in the [**`xoroshiro+` remarks page**](http://xoroshiro.di.unimi.it/#remarks).
+- **`RNDU01ZeroExc()`, interval (0, 1]**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
+    - `(RNDINT(X - 1) + 1) * INVX`.
+    - `(RNDINTEXC(X) + 1) * INVX`.
+    - `(RNDINT(X - 1) + 1) / X`.
+    - `(RNDINTEXC(X) + 1) / X`.
+    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
+- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
+    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
+    - `(RNDINT(X - 2) + 1) * INVX`.
+    - `(RNDINTEXC(X - 1) + 1) * INVX`.
+    - `(RNDINT(X - 2) + 1) / X`.
+    - `(RNDINTEXC(X - 1) + 1) / X`.
+
+<a id=Maximum_Even_Parts></a>
+#### Maximum Even Parts
+
+`X`, the number of _maximum even parts_, depends on the number format. `X` is the highest integer `p` such that `p` itself and all factors of `1/p` between 0 and 1 are representable in that number format.  For example&mdash;
+    - the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`) has 2<sup>53</sup> (9007199254740992) maximum even parts,
+    - the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`) has 2<sup>24</sup> (16777216) maximum even parts,
+    - the 64-bit IEEE 754 decimal floating-point format has 10<sup>16</sup> maximum even parts, and
+    - the .NET Framework decimal format (`System.Decimal`) would have 2<sup>96</sup> maximum even parts, but 2<sup>96</sup> is not representable, so it actually has 2<sup>95</sup> maximum even parts instead.
+
+<a id=Alternative_Implementation_for_RNDU01></a>
+#### Alternative Implementation for `RNDU01()`
 
 For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of digits the format can represent without loss; e.g., 53 for Java's `double`).
 
@@ -396,40 +424,10 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END METHOD
 
-<a id=RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_in_0_1_0_1_or_0_1></a>
-### `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers in [0, 1), (0, 1], or (0, 1)
-
-Three methods related to `RNDU01()` can be implemented as follows, where
-`X` is the number of _maximum even parts_ and `INVX` is the constant 1 divided
-by `X`.  For each method below, the alternatives are ordered from most preferred to least.
-
-- **`RNDU01OneExc()`, interval [0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 1.0 is generated this way.
-    - `RNDINT(X - 1) * INVX`.
-    - `RNDINTEXC(X) * INVX`.
-    - `RNDINT(X - 1) / X`.
-    - `RNDINTEXC(X) / X`.
-
-    Note that `RNDU01OneExc()` corresponds to `Math.random()` in Java and JavaScript.
-- **`RNDU01ZeroExc()`, interval (0, 1]**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 is generated this way.
-    - `(RNDINT(X - 1) + 1) * INVX`.
-    - `(RNDINTEXC(X) + 1) * INVX`.
-    - `(RNDINT(X - 1) + 1) / X`.
-    - `(RNDINTEXC(X) + 1) / X`.
-    - `1.0 - RNDU01OneExc()` (but this is recommended only if the set of numbers `RNDU01OneExc()` could return &mdash; as opposed to their probability &mdash; is evenly distributed).
-- **`RNDU01ZeroOneExc()`, interval (0, 1)**:
-    - Generate `RNDU01()` in a loop until a number other than 0.0 or 1.0 is generated this way.
-    - `(RNDINT(X - 2) + 1) * INVX`.
-    - `(RNDINTEXC(X - 1) + 1) * INVX`.
-    - `(RNDINT(X - 2) + 1) / X`.
-    - `(RNDINTEXC(X - 1) + 1) / X`.
-
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
 
-**`RNDNUMEXCRANGE`** returns a  **random number in the interval \[`minInclusive`, `maxExclusive`\)**.
- It can be implemented using [**`RNDNUMRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
+**`RNDNUMEXCRANGE`** returns a  **random number in the interval \[`minInclusive`, `maxExclusive`\)**. It can be implemented using [**`RNDNUMRANGE`**](#Random_Integers_Within_a_Range_Maximum_Inclusive), as the following pseudocode demonstrates.
 
     METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
