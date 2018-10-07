@@ -53,7 +53,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
     - [**`RNDNUMEXCRANGE`: Random Numbers in \[X, Y)**](#RNDNUMEXCRANGE_Random_Numbers_in_X_Y)
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
-    - [**Special Programming Environments**](#Special_Programming_Environments)
+    - [**Certain Programming Environments**](#Certain_Programming_Environments)
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean Conditions**](#Boolean_Conditions)
     - [**Shuffling**](#Shuffling)
@@ -235,13 +235,13 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating i
 
 > **Notes:**
 >
-> - To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
-> - To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - rem(X, DIV)` if `X >= 0`, or `X - (DIV - rem(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
-> - A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
+> 1. To generate a random number that's either -1 or 1, the following idiom can be used: `(RNDINT(1) * 2 - 1)`.
+> 2. To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - rem(X, DIV)` if `X >= 0`, or `X - (DIV - rem(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
+> 3. A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
 >      - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
 >      - To convert a point `P` to its 2D coordinates, generate `[rem(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
 >      - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
-> - In functional programming languages such as Haskell, `RNDINT()`, as well as `RNG()` itself and other random-number-generating methods in this document, can be implemented by taking a _seed_ as an additional parameter, and returning a list of two items &mdash; the random number and a new _seed_ (as in the Haskell package `AC-Random`).  This works only if the underlying RNG is deterministic.
+> 4. In functional programming languages such as Haskell, `RNDINT()`, as well as `RNG()` itself and other random-number-generating methods in this document, can be implemented by taking a _seed_ as an additional parameter, and returning a list of two items &mdash; the random number and a new _seed_ (as in the Haskell package `AC-Random`).  This works only if the underlying RNG is deterministic.
 
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTRANGE`: Random Integers in [N, M]
@@ -448,13 +448,15 @@ The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform r
 
 In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
-<a id=Special_Programming_Environments></a>
-### Special Programming Environments
+<a id=Certain_Programming_Environments></a>
+### Certain Programming Environments
 
-In certain programming environments it's often impractical to implement the uniform random number generation methods just described without recurring to other programming languages. For instance:
+For certain programming environments, there are special considerations:
 
-- Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] or \[0, 65535\] (called `%RANDOM%` and `$RANDOM`, respectively); neither variable is designed for information security.
+- Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` and `$RANDOM`, respectively); neither variable is designed for information security.
 - Standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(6)**](#Note6)</sup>
+
+Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than SQL, shell scripts, and batch files, especially if information security is a goal.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques

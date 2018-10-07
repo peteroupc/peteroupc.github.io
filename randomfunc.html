@@ -77,7 +77,7 @@
 <li><a href="#RNDINTEXCRANGE_Random_Integers_in_N_M"><strong><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</strong></a></li>
 <li><a href="#RNDNUMEXCRANGE_Random_Numbers_in_X_Y"><strong><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</strong></a></li>
 <li><a href="#Uniform_Random_Bits"><strong>Uniform Random Bits</strong></a></li>
-<li><a href="#Special_Programming_Environments"><strong>Special Programming Environments</strong></a></li>
+<li><a href="#Certain_Programming_Environments"><strong>Certain Programming Environments</strong></a></li>
 </ul></li>
 <li><a href="#Randomization_Techniques"><strong>Randomization Techniques</strong></a>
 
@@ -294,7 +294,7 @@ END METHOD
 <blockquote>
 <p><strong>Notes:</strong></p>
 
-<ul>
+<ol>
 <li>To generate a random number that&#39;s either -1 or 1, the following idiom can be used: <code>(RNDINT(1) * 2 - 1)</code>.</li>
 <li>To generate a random integer that&#39;s divisible by a positive integer (<code>DIV</code>), generate the integer with any method (such as <code>RNDINT</code>), let <code>X</code> be that integer, then generate <code>X - rem(X, DIV)</code> if <code>X &gt;= 0</code>, or <code>X - (DIV - rem(abs(X), DIV))</code> otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)</li>
 <li>A random 2-dimensional point on an NxM grid can be expressed as a single integer as follows:
@@ -305,7 +305,7 @@ END METHOD
 <li>To convert 2D coordinates <code>coord</code> to an NxM point, generate <code>P = coord[1] * N + coord[0]</code>.</li>
 </ul></li>
 <li>In functional programming languages such as Haskell, <code>RNDINT()</code>, as well as <code>RNG()</code> itself and other random-number-generating methods in this document, can be implemented by taking a <em>seed</em> as an additional parameter, and returning a list of two items &mdash; the random number and a new <em>seed</em> (as in the Haskell package <code>AC-Random</code>).  This works only if the underlying RNG is deterministic.</li>
-</ul>
+</ol>
 </blockquote>
 
 <p><a id=RNDINTRANGE_Random_Integers_in_N_M></a></p>
@@ -559,16 +559,18 @@ END METHOD
 
 <p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to <code>RNDINT(255)</code>. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)</p>
 
-<p><a id=Special_Programming_Environments></a></p>
+<p><a id=Certain_Programming_Environments></a></p>
 
-<h3>Special Programming Environments</h3>
+<h3>Certain Programming Environments</h3>
 
-<p>In certain programming environments it&#39;s often impractical to implement the uniform random number generation methods just described without recurring to other programming languages. For instance:</p>
+<p>For certain programming environments, there are special considerations:</p>
 
 <ul>
-<li>Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and <code>bash</code> (a shell script interpreter) might support a variable which returns a random integer in the interval [0, 65535] (called <code>%RANDOM%</code> and <code>$RANDOM</code>, respectively); neither variable is designed for information security.</li>
+<li>Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and <code>bash</code> (a shell script interpreter) might support a variable which returns a random integer in the interval [0, 32767] (called <code>%RANDOM%</code> and <code>$RANDOM</code>, respectively); neither variable is designed for information security.</li>
 <li>Standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note6"><strong>(6)</strong></a></sup></li>
 </ul>
+
+<p>Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than SQL, shell scripts, and batch files, especially if information security is a goal.</p>
 
 <p><a id=Randomization_Techniques></a></p>
 
