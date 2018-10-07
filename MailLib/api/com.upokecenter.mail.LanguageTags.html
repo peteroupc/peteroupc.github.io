@@ -32,26 +32,197 @@ language subtag, no variant subtags with the same value, and no
 extension singleton subtags with the same value.</li>
 <li><code>static String LanguageTagCase​(String str)</code><br>
 Sets the given language tag to the case combination recommended by RFC 5646.</li>
-<li><p><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
-             List&lt;String&gt; languages)</code><br></p>
-
-<p>Finds the language tags that match a priority list of basic language ranges.</p></li>
-<li><p><code>static String LanguageTagLookup​(String range,
+<li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
+             List&lt;String&gt; languages)</code><br>
+Finds the language tags that match a priority list of basic language ranges.</li>
+<li><code>static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges,
              List&lt;String&gt; languages,
-             String defaultValue,
-             boolean extended)</code><br></p>
-
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p></li>
-<li><p><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
+             boolean extended,
+             boolean matchStarAtEnd)</code><br>
+Finds the language tags that match a priority list of language ranges.</li>
+<li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
              String defaultValue)</code><br>
-Does a language tag lookup (under RFC 4647) for a matching language tag.</p></li>
-<li><p><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code>static String LanguageTagLookup​(String range,
              List&lt;String&gt; languages,
              String defaultValue,
-             boolean extended)</code><br></p>
+             boolean extended)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
+             List&lt;String&gt; languages,
+             String defaultValue)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code>static String LanguageTagLookup​(List&lt;String&gt; ranges,
+             List&lt;String&gt; languages,
+             String defaultValue,
+             boolean extended)</code><br>
+Does a language tag lookup (under RFC 4647) for a matching language tag.</li>
+<li><code>static boolean MatchesLanguageTag​(String range,
+              String tag)</code><br>
+Determines whether the given language tag matches the given language range.</li>
+</ul>
 
-<p>Does a language tag lookup (under RFC 4647) for a matching language tag.</p></li>
+<h2>Method Details</h2>
+
+<h3>IsLanguageRange</h3>
+
+<pre>public static boolean IsLanguageRange​(String str)
+</pre>
+
+<p>Returns whether the given string is a basic language range under RFC 4647.
+ Examples include &quot;&#x2a;&quot;, &quot;en-us&quot;, and &quot;fr&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - The string to check. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given string is a basic language range;
+otherwise, <code>false</code> .</li>
+</ul>
+
+<h3>IsLanguageRange</h3>
+
+<pre>public static boolean IsLanguageRange​(String str, boolean extended)
+</pre>
+
+<p>Returns whether the given string is a basic or extended language range under
+ RFC 4647. Examples of basic (and extended) language ranges include
+ &quot;&#x2a;&quot;, &quot;en-us&quot;, and &quot;fr&quot;. Examples of extended language ranges
+ include &quot;&#x2a;-de&quot; and &quot;it-&#x2a;&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>str</code> - The string to check. Can be null.</p></li>
+<li><p><code>extended</code> - Check whether the string is a basic language range if
+&quot;false&quot;, or an extended language range if &quot;true&quot;.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given string is a basic language range
+(depending on the <code>extended</code> parameter); otherwise, <code>
+false</code> .</li>
+</ul>
+
+<h3>LanguageTagCase</h3>
+
+<pre>public static String LanguageTagCase​(String str)
+</pre>
+
+<p>Sets the given language tag to the case combination recommended by RFC 5646.
+ For example, &quot;en-us&quot; becomes &quot;en-US&quot;, and &quot;zh-hant&quot; becomes
+ &quot;zh-Hant&quot;.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string of a language tag. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A text string in the recommended case combination, or null if <code>
+str</code> is null.</li>
+</ul>
+
+<h3>GetLanguageList</h3>
+
+<pre>public static List&lt;String&gt; GetLanguageList​(String str)
+</pre>
+
+<p>Parses a language list from a Content-Language header field.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string following the syntax of a Content-Language header field
+(see RFC 3282). This is a comma-separated list of language tags. RFC
+5322 comments (in parentheses) can appear. This parameter can be
+null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language tags. Returns an empty list if <code>str</code> is
+null or the empty string, or null if <code>str</code> syntactically
+invalid.</li>
+</ul>
+
+<h3>GetRangeListWithQuality</h3>
+
+<pre>public static List&lt;StringAndQuality&gt; GetRangeListWithQuality​(String str)
+</pre>
+
+<p>Parses a language range list from an Accept-Language header field.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - A string following the syntax of an Accept-Language header field
+(see RFC 3282). This is a comma-separated list of language ranges,
+with an optional &quot;quality&quot; after the language tag (examples include
+&quot;en; q=0.5&quot; or &quot;de-DE&quot;). RFC 5322 comments (in parentheses) can
+appear. This parameter can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language ranges with their associated qualities. The list
+will be sorted in descending order by quality; if two or more
+language ranges have the same quality, they will be sorted in the
+order in which they appeared in the given string. Returns null if
+<code>str</code> is null or syntactically invalid.</li>
+</ul>
+
+<h3>LanguageTagFilter</h3>
+
+<pre>public static List&lt;String&gt; LanguageTagFilter​(List&lt;String&gt; ranges, List&lt;String&gt; languages, boolean extended, boolean matchStarAtEnd)
+</pre>
+
+<p>Finds the language tags that match a priority list of language ranges.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>ranges</code> - A list of language ranges (see documentation for the
+&quot;IsLanguageRange&quot; method), which should be given in order of
+descending preference.</p></li>
+<li><p><code>languages</code> - A list of language tags, which should be given in order of
+descending preference.</p></li>
+<li><p><code>extended</code> - If true, the ranges in &quot;ranges&quot; are extended language
+ranges; otherwise, they are basic language ranges.</p></li>
+<li><p><code>matchStarAtEnd</code> - If true, treats any range equaling &quot;&#x2a;&quot; as
+appearing at the end of the language priority list, no matter where
+it appears on that list.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A list of language tags that match the given range, in descending
+order of preference.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>languages</code> or
+<code>ranges</code> is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>ranges</code> contains a
+value that is not a basic or extended language range, or <code>
+languages</code> contains a value that is not a potentially valid language
+tag.</p></li>
 </ul>
 
 <h3>MatchesLanguageTag</h3>
