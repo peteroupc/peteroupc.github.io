@@ -237,7 +237,8 @@ Sets the body of this message to the given byte array.</li>
 <li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
 <li><code>void setContentType​(MediaType value)</code><br></li>
 <li><code>Message SetCurrentDate()</code><br>
-Sets this message&#39;s Date header field to the current time as its value.</li>
+Sets this message&#39;s Date header field to the current time as its value, with
+an unspecified time zone offset.</li>
 <li><code>Message SetDate​(int[] dateTime)</code><br>
 Sets this message&#39;s Date header field to the given date and time.</li>
 <li><code>Message SetHeader​(int index,
@@ -359,10 +360,10 @@ class.</li>
 <pre>public Message SetCurrentDate()
 </pre>
 
-<p>Sets this message&#39;s Date header field to the current time as its value.
- <p>This method can be used when the message is considered complete
- and ready to be generated, for example, using the &quot;Generate()&quot;
- method. </p></p>
+<p>Sets this message&#39;s Date header field to the current time as its value, with
+ an unspecified time zone offset. <p>This method can be used when the
+ message is considered complete and ready to be generated, for
+ example, using the &quot;Generate()&quot; method. </p></p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1749,14 +1750,14 @@ or the first message contains no From header field.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>url</code> - The parameter <code>url</code> is not documented yet.</li>
+<li><code>url</code> - A MailTo URI.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
 <li>A Message object created from the given MailTo URI. Returs null if
-<code>uri</code> is null, is syntactically invalid, or is not a MailTo
+<code>url</code> is null, is syntactically invalid, or is not a MailTo
 URI.</li>
 </ul>
 

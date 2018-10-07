@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 6, 2018.
+Begun on June 4, 2017; last updated on Oct. 7, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -64,6 +64,8 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
     - [**Random Walks**](#Random_Walks)
+    - [**Low-Discrepancy Sequences**](#Low_Discrepancy_Sequences)
+    - [**Randomization in Simulations**](#Randomization_in_Simulations)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
@@ -239,6 +241,7 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating i
 >      - To generate a random NxM point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
 >      - To convert a point `P` to its 2D coordinates, generate `[rem(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
 >      - To convert 2D coordinates `coord` to an NxM point, generate `P = coord[1] * N + coord[0]`.
+> - In functional programming languages such as Haskell, `RNDINT()`, as well as `RNG()` itself and other random-number-generating methods in this document, can be implemented by taking a _seed_ as an additional parameter, and returning a list of two items &mdash; the random number and a new _seed_ (as in the Haskell package `AC-Random`).  This works only if the underlying RNG is deterministic.
 
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTRANGE`: Random Integers in [N, M]
@@ -386,8 +389,6 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END
 
-> **Note:** [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often _quasirandom sequences_ (also known as [**_low-discrepancy sequences_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence), such as Sobol and Halton sequences), often together with an RNG, provide the "random" numbers to sample the function more efficiently.  Unfortunately, the methods to produce such sequences are too complicated to show here.
-
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
@@ -443,7 +444,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
 <a id=Uniform_Random_Bits></a>
 ### Uniform Random Bits
 
-The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `N`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
+The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `b`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
 
 In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
@@ -452,9 +453,8 @@ In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers 
 
 In certain programming environments it's often impractical to implement the uniform random number generation methods just described without recurring to other programming languages. For instance:
 
-- Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 65535\] (called `%RANDOM%` and `$RANDOM`, respectively); neither variable is designed for information security.
+- Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] or \[0, 65535\] (called `%RANDOM%` and `$RANDOM`, respectively); neither variable is designed for information security.
 - Standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(6)**](#Note6)</sup>
-- In functional programming languages such as Haskell, it may be important to separate code that directly uses RNGs from other code, usually by rewriting certain functions to take one or more pregenerated random numbers rather than directly using `RNDINT`, `RNDNUMRANGE`, or another random number generation method presented earlier in this document.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
@@ -517,15 +517,6 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 
 An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).<sup>[**(7)**](#Note7)</sup>
 
-> **Note:** In simulation testing, shuffling is used to relabel items from a dataset at random, where each item in the dataset is assigned one of several labels.  In such testing&mdash;
-> - one or more statistics that involve the specific labeling of the original dataset's groups is calculated (such as the difference, maximum, or minimum of means or variances between groups), then
-> - multiple simulated datasets are generated, where each dataset is generated by&mdash;
->    - merging the groups,
->    - shuffling the merged dataset, and
->    - relabeling each item in order such that the number of items in each group for the simulated dataset is the same as for the original dataset, then
-> - for each simulated dataset, the same statistics are calculated as for the original dataset, then
-> - the statistics for the simulated datasets are compared with those of the original.
-
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 ### Sampling With Replacement: Choosing a Random Item from a List
 
@@ -541,7 +532,6 @@ Choosing an item this way is also known as _sampling with replacement_.
 > - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
 >     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
 >     - choosing a random item from the list generated this way.
-> - [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated dataset by choosing random items with replacement from an existing dataset until both datasets have the same size.  (The simulated dataset can contain duplicates this way.)  Usually, multiple simulated datasets are generated this way, one or more statistics, such as the mean, are calculated for each simulated dataset as well as the original dataset, and the statistics for the simulated datasets are compared with those of the original.
 
 <a id=Example_Random_Character_Strings></a>
 #### Example: Random Character Strings
@@ -733,6 +723,25 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 > 1.  A random process can also be simulated by creating a list of random numbers generated the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  Examples of this include `Normal(0, 1)` (for modeling _Gaussian white noise_) and `Binomial(1, p)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `p`).
 > 2.  Some random walks model random behavior at every moment, not just at discrete times.  One example is a _Wiener process_, with random states and jumps that are normally distributed (a process of this kind is also known as _Brownian motion_).  (For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the average value per time unit, `sigma` is the volatility, and `timediff` is the time difference between samples.)
 > 3.  Some random walks model state changes happening at random times. One example is a _Poisson process_, in which the time between each event is a random exponential variable (the random time is `-ln(RNDU01ZeroOneExc()) / rate`, where `rate` is the average number of events per time unit; an _inhomogeneous Poisson process_ results if `rate` can vary with the "timestamp" before each event jump).
+
+<a id=Low_Discrepancy_Sequences></a>
+### Low-Discrepancy Sequences
+
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (_quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are spaced so that "clumps" between them are less likely to form (than with independent uniform random numbers).  Sobol and Halton sequences are examples of this kind of sequence.  Unfortunately, the methods to produce low-discrepancy sequences are too complicated to show here.  Moreover, RNGs have a limited role to play in most kinds of low-discrepancy sequences, such as by generating a "seed" to start the sequence at.
+
+<a id=Randomization_in_Simulations></a>
+### Randomization in Simulations
+
+Simulation testing uses shuffling and _bootstrapping_ to help draw conclusions on data through randomization.
+
+- [**Shuffling**](#Shuffling) is used when each item in a data set belongs to one of several mutually exclusive groups.  Here, one or more **simulated data sets** are generated by shuffling the original dataset and regrouping each item in the shuffled data set in order, such that the number of items in each group for the simulated data set is the same as for the original dataset.
+- [**_Bootstrapping_**](https://en.wikipedia.org/wiki/Bootstrapping_%28statistics%29) is a method of creating a simulated data set by choosing [**random items with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List) from an existing dataset until both data sets have the same size.  (The simulated dataset can contain duplicates this way.)
+
+After creating the simulated data sets, one or more statistics, such as the mean, are calculated for each simulated data set as well as the original data set, then the statistics for the simulated data sets are compared with those of the original.
+
+Randomization also occurs in numerical calculation.
+
+- [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often low-discrepancy sequences_ provide the "random" numbers to sample the function more efficiently.
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
