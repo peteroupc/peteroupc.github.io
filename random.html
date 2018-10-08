@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 5, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 8, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -197,7 +197,7 @@
 <li>MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</li>
 </ul>
 
-<p>The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the implementation reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p>
+<p>The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p>
 
 <p><a id=Examples></a></p>
 
@@ -601,7 +601,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h3>Shuffling</h3>
 
-<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code> or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
+<p>In a list with <code>N</code> different items, there are <code>N</code> factorial (that is, <code>1 * 2 * ... * N</code>, or <code>N!</code>) ways to arrange the items in that list.  These ways are called <em>permutations</em><sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <p>An application can <strong>shuffle a list</strong>&mdash;</p>
 

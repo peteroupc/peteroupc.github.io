@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 5, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 8, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -129,7 +129,7 @@ Before an instance of the RNG generates a random number, it MUST have been initi
 - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
 - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
 
-The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the implementation reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
+The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 <a id=Examples></a>
 ### Examples
@@ -404,7 +404,7 @@ An application that generates **random numbers in parallel** can also do one or 
 <a id=Shuffling></a>
 ### Shuffling
 
-In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N` or `N!`) ways to arrange the items in that list.  These ways are called _permutations_<sup>[**(14)**](#Note14)</sup>.
+In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * ... * N`, or `N!`) ways to arrange the items in that list.  These ways are called _permutations_<sup>[**(14)**](#Note14)</sup>.
 
 An application can **shuffle a list**&mdash;
 

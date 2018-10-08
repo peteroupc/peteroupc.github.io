@@ -48,9 +48,9 @@ All the random number methods presented on this page are ultimately based on an 
     - [**`RNDU01`, `RNDU01OneExc`, `RNDU01ZeroExc`, and `RNDU01ZeroOneExc`: Random Numbers Bounded by 0 and 1**](#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1)
         - [**Definitions of Constants**](#Definitions_of_Constants)
         - [**Alternative Implementation for `RNDU01`**](#Alternative_Implementation_for_RNDU01)
-    - [`RNDNUMRANGE`: Random Numbers in \[X, Y\]](#RNDNUMRANGE_Random_Numbers_in_X_Y)
     - [**`RNDINTEXC`: Random Integers in \[0, N)**](#RNDINTEXC_Random_Integers_in_0_N)
     - [**`RNDINTEXCRANGE`: Random Integers in \[N, M)**](#RNDINTEXCRANGE_Random_Integers_in_N_M)
+    - [`RNDNUMRANGE`: Random Numbers in \[X, Y\]](#RNDNUMRANGE_Random_Numbers_in_X_Y)
     - [**`RNDNUMEXCRANGE`: Random Numbers in \[X, Y)**](#RNDNUMEXCRANGE_Random_Numbers_in_X_Y)
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
     - [**Certain Programming Environments**](#Certain_Programming_Environments)
@@ -271,10 +271,9 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
          // form, use the following line:
          if RNDINT(1) == 0: ret = -1 - ret
          // NOTE: If the signed integer format has positive and negative
-         // zero, as is the case for Java `float` and
+         // zero, as is the case, e.g., for Java `float` and
          // `double` and .NET's implementation of `System.Decimal`,
-         // for example, use the following
-         // three lines instead of the preceding line;
+         // use the following three lines instead of the preceding line;
          // here, zero will be rejected at a 50% chance because zero occurs
          // twice in both forms.
          // negative = RNDINT(1) == 0
@@ -352,43 +351,6 @@ For fixed-precision binary floating-point numbers with fixed exponent range (suc
         return sig * pow(2, e)
     END METHOD
 
-<a id=RNDNUMRANGE_Random_Numbers_in_X_Y></a>
-### `RNDNUMRANGE`: Random Numbers in [X, Y]
-
-The na&iuml;ve way of generating a **random number in the interval \[`minInclusive`, `maxInclusive`\]**, is shown in the following pseudocode, which generally works well only if the number format can't be negative or that format uses arbitrary precision.
-
-    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
-        if minInclusive > maxInclusive: return error
-        return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-    END
-
-For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDNUMRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
-
-    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
-       if minInclusive > maxInclusive: return error
-       if minInclusive == maxInclusive: return minInclusive
-       // Difference does not exceed maxInclusive
-       if minInclusive >= 0 or minInclusive + NUM_MAX >= maxInclusive
-           return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-       end
-       while true
-         ret = RNDU01() * NUM_MAX
-         // NOTE: If the number format has positive and negative
-         // zero, as is the case for Java `float` and
-         // `double` and .NET's implementation of `System.Decimal`,
-         // for example, use the following:
-         negative = RNDINT(1) == 0
-         if negative: ret = 0 - ret
-         if negative and ret == 0: continue
-         // NOTE: For fixed-precision fixed-point numbers implemented
-         // using two's complement numbers (note 1), use the following line
-         // instead of the preceding three lines, where `QUANTUM` is the
-         // smallest representable positive number in the fixed-point format:
-         // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
-         if ret >= minInclusive and ret <= maxInclusive: return ret
-       end
-    END
-
 <a id=RNDINTEXC_Random_Integers_in_0_N></a>
 ### `RNDINTEXC`: Random Integers in [0, N)
 
@@ -427,6 +389,43 @@ For other number formats (including Java's `double` and `float`), the pseudocode
          if ret < maxExclusive: return ret
        end
     END METHOD
+
+<a id=RNDNUMRANGE_Random_Numbers_in_X_Y></a>
+### `RNDNUMRANGE`: Random Numbers in [X, Y]
+
+The na&iuml;ve way of generating a **random number in the interval \[`minInclusive`, `maxInclusive`\]**, is shown in the following pseudocode, which generally works well only if the number format can't be negative or that format uses arbitrary precision.
+
+    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
+        if minInclusive > maxInclusive: return error
+        return minInclusive + (maxInclusive - minInclusive) * RNDU01()
+    END
+
+For other number formats (including Java's `double` and `float`), the pseudocode above can overflow if the difference between `maxInclusive` and `minInclusive` exceeds the maximum possible value for the format.  For such formats, the following pseudocode for `RNDNUMRANGE()` can be used instead.  In the pseudocode below, `NUM_MAX` is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.
+
+    METHOD RNDNUMRANGE(minInclusive, maxInclusive)
+       if minInclusive > maxInclusive: return error
+       if minInclusive == maxInclusive: return minInclusive
+       // Difference does not exceed maxInclusive
+       if minInclusive >= 0 or minInclusive + NUM_MAX >= maxInclusive
+           return minInclusive + (maxInclusive - minInclusive) * RNDU01()
+       end
+       while true
+         ret = RNDU01() * NUM_MAX
+         // NOTE: If the number format has positive and negative
+         // zero, as is the case for Java `float` and
+         // `double` and .NET's implementation of `System.Decimal`,
+         // for example, use the following:
+         negative = RNDINT(1) == 0
+         if negative: ret = 0 - ret
+         if negative and ret == 0: continue
+         // NOTE: For fixed-precision fixed-point numbers implemented
+         // using two's complement numbers (note 1), use the following line
+         // instead of the preceding three lines, where `QUANTUM` is the
+         // smallest representable positive number in the fixed-point format:
+         // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
+         if ret >= minInclusive and ret <= maxInclusive: return ret
+       end
+    END
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
@@ -729,7 +728,7 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 <a id=Low_Discrepancy_Sequences></a>
 ### Low-Discrepancy Sequences
 
-A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (_quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are spaced so that "clumps" between them are less likely to form (than with independent uniform random numbers).  Sobol and Halton sequences are examples of this kind of sequence.  Unfortunately, the methods to produce low-discrepancy sequences are too complicated to show here.  Moreover, RNGs have a limited role to play in most kinds of low-discrepancy sequences, such as by generating a "seed" to start the sequence at.
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  Sobol and Halton sequences are examples of this kind of sequence.  Unfortunately, the methods to produce low-discrepancy sequences are too complicated to show here.  Moreover, RNGs have a limited role to play in most kinds of low-discrepancy sequences, such as by generating a "seed" to start the sequence at.
 
 <a id=Randomization_in_Simulations></a>
 ### Randomization in Simulations
@@ -743,7 +742,7 @@ After creating the simulated data sets, one or more statistics, such as the mean
 
 Randomization also occurs in numerical calculation.
 
-- [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often low-discrepancy sequences_ provide the "random" numbers to sample the function more efficiently.
+- [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration) uses randomization to estimate a multidimensional integral. It involves evaluating a function at N random points in the domain.  The estimated integral is the volume of the domain times the mean of those N points, and the error in the estimate is that volume times the square root of the (bias-corrected sample) variance of the N points (see the appendix). Often [**low-discrepancy sequences**](#Low_Discrepancy_Sequences) provide the "random" numbers to sample the function more efficiently.
 
 <a id=General_Non_Uniform_Distributions></a>
 ## General Non-Uniform Distributions
@@ -1825,7 +1824,7 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note13>(13)</sup> The method that formerly appeared here is the _Box-Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
+<small><sup id=Note13>(13)</sup> The method that formerly appeared here is the _Box&dash;Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
 
 <small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
