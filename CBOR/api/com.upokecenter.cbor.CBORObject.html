@@ -180,6 +180,8 @@ Compares this object and another CBOR object, ignoring the tags they have,
 if any.</li>
 <li><code>boolean ContainsKey​(CBORObject key)</code><br>
 Determines whether a value of the given key exists in this object.</li>
+<li><code>boolean ContainsKey​(Object objKey)</code><br>
+Determines whether a value of the given key exists in this object.</li>
 <li><code>boolean ContainsKey​(String key)</code><br>
 Determines whether a value of the given key exists in this object.</li>
 <li><code>static CBORObject DecodeFromBytes​(byte[] data) CBOREncodeOptions</code><br>
@@ -3396,7 +3398,7 @@ the other object or if the other object is null.</li>
 
 <h3>ContainsKey</h3>
 
-<pre>public boolean ContainsKey​(CBORObject key)
+<pre>public boolean ContainsKey​(Object objKey)
 </pre>
 
 <p>Determines whether a value of the given key exists in this object.</p>
@@ -3404,7 +3406,7 @@ the other object or if the other object is null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>key</code> - An object that serves as the key.</li>
+<li><code>objKey</code> - An arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3414,11 +3416,25 @@ the other object or if the other object is null.</li>
 not found or this object is not a map.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
+<h3>ContainsKey</h3>
+
+<pre>public boolean ContainsKey​(CBORObject key)
+</pre>
+
+<p>Determines whether a value of the given key exists in this object.</p>
+
+<p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - Key is null (as opposed to
-CBORObject.Null).</li>
+<li><code>key</code> - An object that serves as the key. If this is <code>null</code>, checks
+for <code>CBORObject.Null</code>.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if the given key is found, or false if the given key is
+not found or this object is not a map.</li>
 </ul>
 
 <h3>ContainsKey</h3>
@@ -3431,7 +3447,8 @@ CBORObject.Null).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>key</code> - A string that serves as the key.</li>
+<li><code>key</code> - A string that serves as the key. If this is <code>null</code>, checks
+for <code>CBORObject.Null</code>.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3439,12 +3456,6 @@ CBORObject.Null).</li>
 <ul>
 <li><code>true</code> if the given key (as a CBOR object) is found, or false
 if the given key is not found or this object is not a map.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - Key is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
