@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 8, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 10, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -510,9 +510,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 <tr>
 <td>JavaScript</td>
-<td><code>crypto.randomBytes(byteCount)</code> (node.js only); <code>crypto.getRandomValues()</code> (Web)</td>
+<td><code>crypto.randomBytes(byteCount)</code> or <code>random-number-csprng</code> package (node.js only); <code>crypto.getRandomValues()</code> (Web)</td>
 <td><a href="https://github.com/AndreasMadsen/xorshift"><strong><code>xorshift</code></strong></a> library</td>
-<td><code>Math.random()</code> (ranges from 0 through 1) (B)</td>
+<td>(B)</td>
 </tr>
 <tr>
 <td>Ruby</td>
@@ -530,7 +530,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(A) General RNG implements <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister.</small></p>
 
-<p><small>(B) JavaScript&#39;s <code>Math.random</code> is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</small></p>
+<p><small>(B) JavaScript&#39;s <code>Math.random</code> (which ranges from 0 through 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript&#39;s <code>Math.random</code> is &quot;implementation-dependent&quot;, though, according to the ECMAScript specification.</small></p>
 
 <p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 

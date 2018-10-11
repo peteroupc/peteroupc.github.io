@@ -90,6 +90,7 @@
 <li><code><a href="#CompareToIgnoreTags_PeterO_Cbor_CBORObject">CompareToIgnoreTags(PeterO.Cbor.CBORObject)</a></code> - Compares this object and another CBOR object, ignoring the tags they have, if any.</li>
 <li><code><a href="#CompareTo_PeterO_Cbor_CBORObject">CompareTo(PeterO.Cbor.CBORObject)</a></code> - Compares two CBOR objects.</li>
 <li><code><a href="#ContainsKey_PeterO_Cbor_CBORObject">ContainsKey(PeterO.Cbor.CBORObject)</a></code> - Determines whether a value of the given key exists in this object.</li>
+<li><code><a href="#ContainsKey_object">ContainsKey(object)</a></code> - Determines whether a value of the given key exists in this object.</li>
 <li><code><a href="#ContainsKey_string">ContainsKey(string)</a></code> - Determines whether a value of the given key exists in this object.</li>
 <li><code><a href="#Count">Count</a></code> - Gets the number of keys in this map, or the number of items in this array, or 0 if this item is neither an array nor a map.</li>
 <li><code><a href="#DecodeFromBytes_byte">DecodeFromBytes(byte[])</a></code> -  At the moment, use the overload of this method that takes aPeterO.</li>
@@ -1228,6 +1229,26 @@ An internal error occurred.</li>
 
 <p>Less than 0, if this value is less than the other object; or 0, if both values are equal; or greater than 0, if this value is less than the other object or if the other object is null.</p>
 
+<p><a id="ContainsKey_object"></a></p>
+
+<h3>ContainsKey</h3>
+
+<pre>public bool ContainsKey(
+    object objKey);
+</pre>
+
+<p>Determines whether a value of the given key exists in this object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>objKey</i>: An arbitrary object.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if the given key is found, or false if the given key is not found or this object is not a map.</p>
+
 <p><a id="ContainsKey_PeterO_Cbor_CBORObject"></a></p>
 
 <h3>ContainsKey</h3>
@@ -1241,19 +1262,12 @@ An internal error occurred.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>key</i>: An object that serves as the key.</li>
+<li><i>key</i>: An object that serves as the key. If this is  <code>null</code> , checks for  <code>CBORObject.Null</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given key is found, or false if the given key is not found or this object is not a map.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-Key is null (as opposed to CBORObject.Null).</li>
-</ul>
 
 <p><a id="ContainsKey_string"></a></p>
 
@@ -1268,19 +1282,12 @@ Key is null (as opposed to CBORObject.Null).</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>key</i>: A string that serves as the key.</li>
+<li><i>key</i>: A string that serves as the key. If this is  <code>null</code> , checks for  <code>CBORObject.Null</code> .</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if the given key (as a CBOR object) is found, or false if the given key is not found or this object is not a map.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-Key is null.</li>
-</ul>
 
 <p><a id="DecodeFromBytes_byte"></a></p>
 
