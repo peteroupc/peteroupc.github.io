@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 10, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 12, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -226,10 +226,6 @@
 </ul>
 
 <p>A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.</p>
-
-<blockquote>
-<p><strong>Note:</strong> If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to a statistical RNG implementation (see <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>).</p>
-</blockquote>
 
 <p><a id=Quality_2></a></p>
 
@@ -509,10 +505,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <td>prngine library (<code>MT19937_32Random</code>, <code>MT19937_64Random</code>)</td>
 </tr>
 <tr>
-<td>JavaScript</td>
+<td>JavaScript (B)</td>
 <td><code>crypto.randomBytes(byteCount)</code> or <code>random-number-csprng</code> package (node.js only); <code>crypto.getRandomValues()</code> (Web)</td>
 <td><a href="https://github.com/AndreasMadsen/xorshift"><strong><code>xorshift</code></strong></a> library</td>
-<td>(B)</td>
+<td></td>
 </tr>
 <tr>
 <td>Ruby</td>
@@ -535,7 +531,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 
 <ul>
-<li>read from the <code>/dev/urandom</code> and/or <code>/dev/random</code> devices in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
+<li>read from the <code>/dev/urandom</code> device in most Unix-based systems (using the <code>open</code> and <code>read</code> system calls where available),</li>
 <li>call the <code>getentropy</code> method on OpenBSD, or</li>
 <li>call the <code>BCryptGenRandom</code> API in Windows 7 and later,</small></li>
 </ul>

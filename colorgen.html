@@ -386,7 +386,7 @@ END METHOD
 
 <h3>RGB Color Spaces</h3>
 
-<p><strong>RGB color spaces</strong> are numerous, and they generally differ in their <strong>red, green, blue, and white points</strong> as well as in their <strong>color component transfer functions</strong>. In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html"><strong>RGB Working Space Information</strong></a>&quot;, contains further information on many RGB color spaces.</p>
+<p><strong>RGB color spaces</strong> are numerous, and they generally differ in their <strong>red, green, blue, and white points</strong> as well as in their <strong>color component transfer functions</strong>. In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note40"><strong>(40)</strong></a></sup> contains further information on many RGB color spaces.</p>
 
 <p><strong>Red, green, blue, and white points.</strong> RGB color spaces generally differ in what they consider &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  But they need not define the red, green, and/or blue points as actual colors.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a> of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.</p>
 
@@ -398,7 +398,12 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.</li>
+<li>Some industries (notably TV and film) distinguish between <em>standard dynamic range</em>(SDR) and <em>high dynamic range</em> (HDR) color spaces; SDR color spaces include sRGB, while HDR color spaces often cover a wider range of colors, a wider luminance range, or both. (Mano 2018)<sup><a href="#Note41"><strong>(41)</strong></a></sup> contains an introduction to HDR images.</li>
+</ol>
 </blockquote>
 
 <p><a id=sRGB></a></p>
@@ -1995,6 +2000,10 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 <p><small><sup id=Note38>(38)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
 <p><small><sup id=Note39>(39)</sup> Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</small></p>
+
+<p><small><sup id=Note40>(40)</sup> B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html"><strong>RGB Working Space Information</strong></a>&quot;.</small></p>
+
+<p><small><sup id=Note41>(41)</sup> Mano, Y., et al.  &quot;Enhancing the Netflix UI Experience with HDR&quot;, Netflix Technology Blog, Medium.com, 2018.</small></p>
 
 <p><a id=License></a></p>
 

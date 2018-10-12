@@ -304,7 +304,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
 
-**RGB color spaces** are numerous, and they generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [**sRGB**](#sRGB), and converting between RGB color spaces is not covered.  B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)", contains further information on many RGB color spaces.
+**RGB color spaces** are numerous, and they generally differ in their **red, green, blue, and white points** as well as in their **color component transfer functions**. In this document, the only RGB color space described in detail is [**sRGB**](#sRGB), and converting between RGB color spaces is not covered.  (Lindbloom)<sup>[**(40)**](#Note40)</sup> contains further information on many RGB color spaces.
 
 **Red, green, blue, and white points.** RGB color spaces generally differ in what they consider "red", "green", "blue", and "white".  But they need not define the red, green, and/or blue points as actual colors.  For example, the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces) of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.
 
@@ -312,7 +312,10 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 - A **linear RGB** color has a linear relationship of emitted light (as opposed to perceived light).
 - A **companded RGB** color has been encoded (_companded_) from linear RGB. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in companded form.
 
-> **Note:** In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.
+> **Notes:**
+>
+> 1. In this document, all techniques involving RGB colors apply to such colors in linear or companded form, unless noted otherwise.
+> 2. Some industries (notably TV and film) distinguish between _standard dynamic range_(SDR) and _high dynamic range_ (HDR) color spaces; SDR color spaces include sRGB, while HDR color spaces often cover a wider range of colors, a wider luminance range, or both. (Mano 2018)<sup>[**(41)**](#Note41)</sup> contains an introduction to HDR images.
 
 <a id=sRGB></a>
 ### sRGB
@@ -1649,6 +1652,10 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 <small><sup id=Note38>(38)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
 <small><sup id=Note39>(39)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+
+<small><sup id=Note40>(40)</sup> B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".</small>
+
+<small><sup id=Note41>(41)</sup> Mano, Y., et al.  "Enhancing the Netflix UI Experience with HDR", Netflix Technology Blog, Medium.com, 2018.</small>
 
 <a id=License></a>
 ## License

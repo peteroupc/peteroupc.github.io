@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 10, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 12, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -151,8 +151,6 @@ Statistical RNGs are used, for example, in simulations, numerical integration, a
 -  the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.
 
 A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.
-
-> **Note:** If more than 20 items are being shuffled, a concerned application would be well advised to use alternatives to a statistical RNG implementation (see [**"Shuffling"**](#Shuffling)).
 
 <a id=Quality_2></a>
 ### Quality
@@ -343,7 +341,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
 | Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
 | Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
-| JavaScript | `crypto.randomBytes(byteCount)` or `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | (B) |
+| JavaScript (B) | `crypto.randomBytes(byteCount)` or `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | |
 | Ruby | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
 | PHP | `random_int()`, `random_bytes()` (both since PHP 7) |  | `mt_rand()` (A) |
 
@@ -352,7 +350,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <small>(B) JavaScript's `Math.random` (which ranges from 0 through 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
-   - read from the `/dev/urandom` and/or `/dev/random` devices in most Unix-based systems (using the `open` and `read` system calls where available),
+   - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available),
    - call the `getentropy` method on OpenBSD, or
    - call the `BCryptGenRandom` API in Windows 7 and later,</small>
 
