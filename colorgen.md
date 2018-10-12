@@ -96,7 +96,6 @@ This document presents an overview of many common color topics that are of gener
     - a list of colors (which can have duplicates), all of the same color space, or
     - the colors (which can have duplicates) used in a raster image's pixels, a vector image, a three-dimensional image, a digital video, or a digital document.
 - **ISO.** International Organization for Standardization.
-- **ITU.** International Telecommunications Union.
 - **Light source.** Means a [**_primary light source_**](http://eilv.cie.co.at/term/982) or an [**_illuminant_**](http://eilv.cie.co.at/term/554), as defined by the CIE.  Roughly means an emitter of light, or radiation describing an emitter of light.
 - **RGB.** Red-green-blue.
 
@@ -322,7 +321,7 @@ The following pseudocode presents methods to convert RGB colors to and from the 
 
 Among RGB color spaces, one of the most popular is the _sRGB color space_.  In sRGB&mdash;
 
-- the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard ITU BT-709),
+- the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard [**Rec. 709**](https://en.wikipedia.org/wiki/Rec._709)),
 - the white point was chosen as the D65/2 white point, and
 - the color component transfer function (implemented as `LinearTosRGB` below) was based on the gamma encoding used for cathode-ray-tube monitors.
 
@@ -815,22 +814,22 @@ In the following pseudocode&mdash;
 
 The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>.  Each RGB color consists of three 8-bit integer components (0 or greater, 255 or less), rather than being in 0-1 format. There are three variants shown here, namely&mdash;
 
-- the ITU-R BT.601 variant (for standard-definition digital video), as the `YCbCrToRgb` and `RgbToYCbCr` methods,
-- the ITU-R BT.709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
+- the Rec. 601 variant (for standard-definition digital video), as the `YCbCrToRgb601` and `RgbToYCbCr601` methods,
+- the Rec. 709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [**JPEG File Interchange Format**](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
 For all these variants, the transformation should be done using [**_companded RGB_ colors**](#RGB_Color_Spaces).<sup>[**(24)**](#Note24)</sup>
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
-    METHOD RgbToYCbCr(rgb)
+    METHOD RgbToYCbCr601(rgb)
         y = floor(16.0+rgb[0]*0.25678824+rgb[1]*0.50412941+rgb[2]*0.097905882)
         cb = floor(128.0-rgb[0]*0.1482229-rgb[1]*0.29099279+rgb[2]*0.43921569)
         cr = floor(128.0+rgb[0]*0.43921569-rgb[1]*0.36778831-rgb[2]*0.071427373)
         return [y, cb, cr]
     END METHOD
 
-    // NOTE: Derived from scaled YPbPr using red/green/blue BT.709 luminance factors
+    // NOTE: Derived from scaled YPbPr using red/green/blue Rec. 709 luminance factors
     METHOD RgbToYCbCr709(rgb)
         y = floor(0.06200706*rgb[2] + 0.6142306*rgb[1] + 0.1825859*rgb[0] + 16.0)
         cb = floor(0.4392157*rgb[2] - 0.338572*rgb[1] - 0.1006437*rgb[0] + 128.0)
@@ -847,7 +846,7 @@ For all these variants, the transformation should be done using [**_companded RG
         return [y, cb, cr]
     END METHOD
 
-    METHOD YCbCrToRgb(yCbCr)
+    METHOD YCbCrToRgb601(yCbCr)
         cb = yCbCr[1] - 128
         cr = yCbCr[2] - 128
         yp = 1.1643836 * (yCbCr[0] - 16)
@@ -1620,7 +1619,7 @@ _uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is 
 
 <small><sup id=Note23>(23)</sup> The prime symbol appears near Y because the conversion from RGB usually involves [**companded RGB colors**](#RGB_Color_Spaces), so that Y&prime; will be similar to luminance, but not the same as luminance (Y).  (See C. Poynton, [**"_YUV_ and _luminance_ considered harmful"**](http://poynton.ca/PDFs/YUV_and_luminance_harmful.pdf).)  However, that symbol is left out in function names and other names in the pseudocode for convenience only.</small>
 
-<small><sup id=Note24>(24)</sup> The BT.2020 standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linear RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of general interest to programmers.</small>
+<small><sup id=Note24>(24)</sup> The [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020) standard defines a color model called _YcCbcCrc_ for encoding ultra-high-definition video.  Unlike for Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>, _linear RGB_ colors, rather than companded ones, should be converted to and from YcCbcCrc.  However, YcCbcCrc is not yet of general interest to programmers.</small>
 
 <small><sup id=Note25>(25)</sup> This page does not detail how multidimensional interpolation works, but an example is SciPy's [**`griddata`**](https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.griddata.html) method.</small>
 
