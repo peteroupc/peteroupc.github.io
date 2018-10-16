@@ -338,9 +338,8 @@ the sRGB proposal has a different value for this threshold.)
     // the sRGB proposal.
     METHOD LinearFromsRGB(c)
      // NOTE: Threshold here would more properly be
-     // 12.92 * 0.0031308 = 0.040449936, but I don't know
-     // whether that is what the IEC standard uses, either explicitly
-     // or implicitly (see the "Conclusion" on this page).
+     // 12.92 * 0.0031308 = 0.040449936, but 0.04045
+     // is what the IEC standard uses
       if c <= 0.04045: return c / 12.92
       return pow((0.055 + c) / 1.055, 2.4)
     END METHOD
