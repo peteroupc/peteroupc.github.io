@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 12, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 19, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -209,7 +209,7 @@ An application SHOULD NOT use a PRNG with a seed it specifies (rather than an au
     - finds it impractical to store or distribute the "random" numbers or results (rather than the seed) for later use, such as&mdash;
         - by saving the result to a file,
         - by storing the "random" numbers for the feature generating the result to "replay" later, or
-        - by distributing the results or the "random" numbers to networked users as they are generated, and
+        - by distributing the "random" numbers or results to networked users as they are generated, and
 3. any feature that uses such a PRNG to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
 > **Note:** Meeting statement 3 is aided by using _stable_ PRNGs; see [**"Definitions"**](#Definitions) and the following examples:

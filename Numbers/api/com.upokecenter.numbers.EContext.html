@@ -16,14 +16,14 @@
  safety:</b> With one exception, instances of this class are immutable
  and are safe to use among multiple threads. The one exception
  involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code>
- property (a read-only property) is <code>true</code> , the <code>Flags</code>
+ property (a read-only property) is <code>true</code>, the <code>Flags</code>
  property is mutable, thus making the context mutable. This class
  doesn&#39;t synchronize access to such mutable contexts, so applications
  should provide their own synchronization if a context with the
  <code>HasFlags</code> property set to <code>true</code> will be shared among
  multiple threads and at least one of those threads needs to write the
  <code>Flags</code> property (which can happen, for example, by passing the
- context to most methods of <code>EDecimal</code> such as <code>Add</code>). </p></p>
+ context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p></p>
 
 <h2>Fields</h2>
 
@@ -46,7 +46,7 @@ precision.</li>
 An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
 precision.</li>
 <li><code>static EContext CliDecimal &quot;Forms of numbers&quot;</code><br>
-An arithmetic context for the .NET Framework decimal format (see &quot;Forms of numbers&quot; ), 96 bits
+An arithmetic context for the .NET Framework decimal format (see &quot;Forms of numbers&quot;), 96 bits
 precision, and a valid exponent range of -28 to 0.</li>
 <li><code>static EContext Decimal128</code><br>
 An arithmetic context for the IEEE-754-2008 decimal128 format.</li>
@@ -315,7 +315,7 @@ Copies this EContext with an unlimited exponent range.</li>
 <pre>public static final EContext CliDecimal
 </pre>
 
-<p>An arithmetic context for the .NET Framework decimal format (see <code>&quot;Forms of numbers&quot; </code>), 96 bits
+<p>An arithmetic context for the .NET Framework decimal format (see <code>&quot;Forms of numbers&quot;</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
  rounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common
  Language Infrastructure&quot;, which defined this format as the .NET
@@ -466,8 +466,8 @@ HasExponentRange is false, this value will be 0.</li>
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) !=
-0</code> returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol>
 
 <p><strong>Returns:</strong></p>
@@ -479,8 +479,8 @@ arithmetic context. If <code>HasFlags</code> is false, this value will be
 <ol>
 <li>This value is a combination of bit fields. To retrieve a
 particular flag, use the AND operation on the return value of this
-method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact) != 0</code>
-returns <code>true</code> if the Inexact flag is set.</li>
+method. For example: <code>(this.getFlags() &amp; EContext.FlagInexact)
+!= 0</code> returns <code>true</code> if the Inexact flag is set.</li>
 </ol></li>
 </ul>
 

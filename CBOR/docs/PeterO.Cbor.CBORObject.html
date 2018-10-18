@@ -132,6 +132,7 @@
 <li><code><a href="#GetAllTags">GetAllTags()</a></code> - Gets a list of all tags, from outermost to innermost.</li>
 <li><code><a href="#GetByteString">GetByteString()</a></code> - Gets the backing byte array used in this CBOR object, if this object is a byte string, without copying the data to a new byte array.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
+<li><code><a href="#GetOrDefault_object_PeterO_Cbor_CBORObject">GetOrDefault(object, PeterO.Cbor.CBORObject)</a></code> - Not documented yet.</li>
 <li><code><a href="#HasMostOuterTag_PeterO_Numbers_EInteger">HasMostOuterTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasMostOuterTag_int">HasMostOuterTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasTag_PeterO_Numbers_EInteger">HasTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
@@ -1242,7 +1243,8 @@ An internal error occurred.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>objKey</i>: An arbitrary object.</li>
+<li><i>objKey</i>: The parameter  <i>objKey</i>
+is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2327,6 +2329,30 @@ This object is not a byte string.</li>
 <p><b>Return Value:</b></p>
 
 <p>A 32-bit hash code.</p>
+
+<p><a id="GetOrDefault_object_PeterO_Cbor_CBORObject"></a></p>
+
+<h3>GetOrDefault</h3>
+
+<pre>public PeterO.Cbor.CBORObject GetOrDefault(
+    object key,
+    PeterO.Cbor.CBORObject defaultValue);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>key</i>: The parameter  <i>key</i>
+is not documented yet.</p></li>
+<li><p><i>defaultValue</i>: The parameter  <i>defaultValue</i>
+is not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBORObject object.</p>
 
 <p><a id="HasMostOuterTag_int"></a></p>
 

@@ -108,10 +108,10 @@ not more than &quot;bytes&quot; &#39;s length).</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
 &#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <h3>ToReader</h3>
@@ -120,7 +120,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 </pre>
 
 <p>Wraps an input stream into a reader object. If an IOException is thrown by
- the input stream, the reader object throws InvalidOperationException
+ the input stream, the reader object throws IllegalStateException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
  called as follows: <code>input.ToByteReader()</code>. If the object&#39;s class
@@ -173,10 +173,10 @@ bytes</code> begins.</p></li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 <li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
-&#39;s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+&#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
 <h3>ToByteReader</h3>
@@ -239,7 +239,7 @@ less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</co
 </pre>
 
 <p>Wraps an output stream into a writer object. If an IOException is thrown by
- the input stream, the writer object throws InvalidOperationException
+ the input stream, the writer object throws IllegalStateException
  instead. <p>In the .NET implementation, this method is implemented as
  an extension method to any object implementing InputStream and can be
  called as follows: <code>output.ToWriter()</code>. If the object&#39;s class
