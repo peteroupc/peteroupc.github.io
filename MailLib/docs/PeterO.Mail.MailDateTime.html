@@ -16,6 +16,7 @@
 <ul>
 <li><code><a href="#GenerateDateString_int">GenerateDateString(int[])</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array.</li>
 <li><code><a href="#GenerateDateString_int_bool">GenerateDateString(int[], bool)</a></code> - Generates a date-time string following the Internet Message Format (RFC 5322) from an 8-element array, optionally using a &quot;GMT&quot; time zone indicator.</li>
+<li><code><a href="#ParseDateStringHttp_string">ParseDateStringHttp(string)</a></code> - Parses a date string in one of the three formats allowed by HTTP/1.</li>
 <li><code><a href="#ParseDateString_string">ParseDateString(string)</a></code> - Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322).</li>
 <li><code><a href="#ParseDateString_string_bool">ParseDateString(string, bool)</a></code> - Gets the date and time extracted from a date-time string following the Internet Message Format (RFC 5322), with an option to allow obsolete time zone strings to appear in the date-time string.</li>
 </ul>
@@ -45,7 +46,7 @@
 <ul>
 <li>System.ArgumentException:
 The parameter <i>dateTime</i>
-is null or invalid.</li>
+is null or invalid, including if the year ( <code>dateTime[0]</code> ) is less than 0.</li>
 </ul>
 
 <p><a id="GenerateDateString_int_bool"></a></p>
@@ -75,7 +76,7 @@ is null or invalid.</li>
 <ul>
 <li><p>System.ArgumentException:
 The parameter <i>dateTime</i>
-is null or invalid.</p></li>
+is null or invalid, including if the year ( <code>dateTime[0]</code> ) is less than 0.</p></li>
 <li><p>System.NotSupportedException:
 The time zone offset is other than 0 and  <i>gmt</i>
 is true.</p></li>
@@ -135,6 +136,27 @@ is true.</p></li>
 
 <p>An 8-element array containing the date and time, or <code>null</code>  if  <i>str</i>
  is null, empty, or syntactically invalid, or if the string&#39;s year would overflow the range of a 32-bit signed integer.</p>
+
+<p><a id="ParseDateStringHttp_string"></a></p>
+
+<h3>ParseDateStringHttp</h3>
+
+<pre>public static int[] ParseDateStringHttp(
+    string v);
+</pre>
+
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>v</i>: The parameter  <i>v</i>
+is not documented yet.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A 64-bit signed integer.</p>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
 </div><nav id="navigation"><ul>
