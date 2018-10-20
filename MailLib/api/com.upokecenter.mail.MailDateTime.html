@@ -31,6 +31,8 @@ Internet Message Format (RFC 5322).</li>
 Gets the date and time extracted from a date-time string following the
 Internet Message Format (RFC 5322), with an option to allow obsolete
 time zone strings to appear in the date-time string.</li>
+<li><code>static int[] ParseDateStringHttp​(String v)</code><br>
+Parses a date string in one of the three formats allowed by HTTP/1.1.</li>
 </ul>
 
 <h2>Method Details</h2>
@@ -61,7 +63,7 @@ for information on the format of this parameter.</li>
 
 <ul>
 <li><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
-invalid.</li>
+invalid, including if the year (<code>dateTime[0]</code>) is less than 0.</li>
 </ul>
 
 <h3>GenerateDateString</h3>
@@ -92,7 +94,7 @@ for information on the format of this parameter.</p></li>
 
 <ul>
 <li><p><code>IllegalArgumentException</code> - The parameter <code>dateTime</code> is null or
-invalid.</p></li>
+invalid, including if the year (<code>dateTime[0]</code>) is less than 0.</p></li>
 <li><p><code>UnsupportedOperationException</code> - The time zone offset is other than 0
 and <code>gmt</code> is true.</p></li>
 </ul>
@@ -160,6 +162,25 @@ string&#39;s year would overflow the range of a 32-bit signed integer.</li>
 <li>An 8-element array containing the date and time, or <code>null</code> if
 <code>str</code> is null, empty, or syntactically invalid, or if the
 string&#39;s year would overflow the range of a 32-bit signed integer.</li>
+</ul>
+
+<h3>ParseDateStringHttp</h3>
+
+<pre>public static int[] ParseDateStringHttp​(String v)
+</pre>
+
+<p>Parses a date string in one of the three formats allowed by HTTP/1.1.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>v</code> - The parameter <code>v</code> is not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A 64-bit signed integer.</li>
 </ul>
 
 <p><a href="/MailLib/">Back to MailLib start page.</a></p>
