@@ -11,7 +11,7 @@
     System.IEquatable
 </pre>
 
-<p>Represents an arbitrary-precision rational number. This class can&#39;t be inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.)<b>Thread safety:</b>Instances of this class are immutable, so they are inherently safe for se by multiple threads. Multiple instances of this object with the same roperties are interchangeable, so they should not be compared using the ==&quot; operator (which might only check if each side of the operator is he same instance).</p>
+<p>Represents an arbitrary-precision rational number. This class can&#39;t be inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of this class can be values other than numbers proper, such as infinity and not-a-number.)<b>Thread safety:</b> Instances of this class are immutable, so they are inherently safe for use by multiple threads. Multiple instances of this object with the same properties are interchangeable, so they should not be compared using the &quot;==&quot; operator (which might only check if each side of the operator is the same instance).</p>
 
 <h3>Member Summary</h3>
 
@@ -33,7 +33,7 @@
 <li><code><a href="#Equals_PeterO_Numbers_ERational">Equals(PeterO.Numbers.ERational)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object.</li>
 <li><code><a href="#Equals_object">Equals(object)</a></code> - Determines whether this object&#39;s numerator, denominator, and properties are equal to those of another object and that other object is an arbitrary-precision rational number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
-<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimalunder the Common Language Infrastructure (usually a .</li>
+<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts a decimal under the Common Language Infrastructure (usually a .</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Converts a 64-bit floating-point number to a rational number.</li>
 <li><code><a href="#FromEDecimal_PeterO_Numbers_EDecimal">FromEDecimal(PeterO.Numbers.EDecimal)</a></code> - Converts an arbitrary-precision decimal number to a rational number.</li>
 <li><code><a href="#FromEFloat_PeterO_Numbers_EFloat">FromEFloat(PeterO.Numbers.EFloat)</a></code> - Converts an arbitrary-precision binary float to a rational number.</li>
@@ -76,7 +76,7 @@
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
 <li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
-<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to adecimalunder the Common Language Infrastructure (usually a .</li>
+<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to a decimal under the Common Language Infrastructure (usually a .</li>
 <li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to a 64-bit floating-point number.</li>
 <li><code><a href="#ToEDecimal">ToEDecimal()</a></code> - Converts this rational number to a decimal number.</li>
 <li><code><a href="#ToEDecimalExactIfPossible_PeterO_Numbers_EContext">ToEDecimalExactIfPossible(PeterO.Numbers.EContext)</a></code> - Converts this rational number to a decimal number, but if the result would have a nonterminating decimal expansion, rounds that result to the given precision.</li>
@@ -238,7 +238,7 @@ The denominator is zero.</li>
 
 <p><b>Returns:</b></p>
 
-<p>This object&#39;s denominator.</p>
+<p>This object&#39; s denominator.</p>
 
 <p><a id="IsFinite"></a></p>
 
@@ -277,7 +277,7 @@ The denominator is zero.</li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39; s value equals 0; otherwise, .  <code>false</code> .</p>
 
 <p><a id="Numerator"></a></p>
 
@@ -290,7 +290,7 @@ The denominator is zero.</li>
 
 <p><b>Returns:</b></p>
 
-<p>This object&#39;s numerator. If this object is a not-a-number value, returns the diagnostic information (which will be negative if this object is negative).</p>
+<p>This object&#39; s numerator. If this object is a not-a-number value, returns the diagnostic information (which will be negative if this object is negative).</p>
 
 <p><a id="Sign"></a></p>
 
@@ -755,12 +755,12 @@ is not documented yet.</li>
     System.Decimal eint);
 </pre>
 
-<p>Converts a <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal) to a rational number.</p>
+<p>Converts a  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal) to a rational number.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>eint</i>: The number to convert as a <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal).</li>
+<li><i>eint</i>: The number to convert as a  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1573,11 +1573,11 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public System.Decimal ToDecimal();
 </pre>
 
-<p>Converts this value to a <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal). Currently, converts this value to the precision and range of a NET Framework decimal.</p>
+<p>Converts this value to a  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal). Currently, converts this value to the precision and range of a .NET Framework decimal.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal).</p>
+<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal).</p>
 
 <p><a id="ToDouble"></a></p>
 

@@ -133,8 +133,8 @@
 <li><code><a href="#GetByteString">GetByteString()</a></code> - Gets the backing byte array used in this CBOR object, if this object is a byte string, without copying the data to a new byte array.</li>
 <li><code><a href="#GetHashCode">GetHashCode()</a></code> - Calculates the hash code of this object.</li>
 <li><code><a href="#GetOrDefault_object_PeterO_Cbor_CBORObject">GetOrDefault(object, PeterO.Cbor.CBORObject)</a></code> - Not documented yet.</li>
-<li><code><a href="#HasMostOuterTag_PeterO_Numbers_EInteger">HasMostOuterTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
-<li><code><a href="#HasMostOuterTag_int">HasMostOuterTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
+<li><code><a href="#HasMostOuterTag_PeterO_Numbers_EInteger">HasMostOuterTag(PeterO.Numbers.EInteger)</a></code> - Not documented yet.</li>
+<li><code><a href="#HasMostOuterTag_int">HasMostOuterTag(int)</a></code> - Not documented yet.</li>
 <li><code><a href="#HasTag_PeterO_Numbers_EInteger">HasTag(PeterO.Numbers.EInteger)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#HasTag_int">HasTag(int)</a></code> - Returns whether this object has a tag of the given number.</li>
 <li><code><a href="#Insert_int_object">Insert(int, object)</a></code> - Inserts an object at the specified position in this CBOR array.</li>
@@ -2362,26 +2362,17 @@ is not documented yet.</p></li>
     int tagValue);
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>tagValue</i>: The tag value to search for.</li>
+<li><i>tagValue</i>: Not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code>  if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li><p>System.ArgumentException:
-TagValue is less than 0.</p></li>
-<li><p>System.ArgumentNullException:
-The parameter &quot;obj&quot; is null.</p></li>
-</ul>
+<p>A Boolean object.</p>
 
 <p><a id="HasMostOuterTag_PeterO_Numbers_EInteger"></a></p>
 
@@ -2391,25 +2382,24 @@ The parameter &quot;obj&quot; is null.</p></li>
     PeterO.Numbers.EInteger bigTagValue);
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Not documented yet.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigTagValue</i>: The tag value to search for.</li>
+<li><i>bigTagValue</i>: Not documented yet.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object has a tag of the given number; otherwise,  <code>false</code> .</p>
+<p>A Boolean object.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-BigTagValue is null.</p></li>
-<li><p>System.ArgumentException:
-BigTagValue is less than 0.</p></li>
+<li>System.ArgumentNullException:
+The parameter  <i>bigTagValue</i>
+is null.</li>
 </ul>
 
 <p><a id="HasTag_int"></a></p>

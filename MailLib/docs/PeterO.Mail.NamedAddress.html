@@ -39,7 +39,8 @@
 <ul>
 <li><p><code>john@example.com</code></p></li>
 <li><p><code>&quot;John Doe&quot; &lt;john@example.com&gt;</code></p></li>
-<li><p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?= &lt;john@example.com&gt;</code></p></li>
+<li><p><code>=?utf-8?q?John</code>  <code>=</code>  <code>27s_Office?=
+        &lt;john@example.com&gt;</code></p></li>
 <li><p><code>John &lt;john@example.com&gt;</code></p></li>
 <li><p><code>&quot;Group&quot; : Tom &lt;tom@example.com&gt;, Jane
         &lt;jane@example.com&gt;;</code></p></li>
@@ -48,7 +49,7 @@
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the third example.</li>
+<li><i>address</i>: A text string identifying a single email address or a group of email addresses. Comments, or text within parentheses, can appear. Multiple email addresses are not allowed unless they appear in the group syntax given above. Encoded words under RFC 2047 that appear within comments or display names will be decoded.An RFC 2047 encoded word consists of &quot;=?&quot;, a character encoding name, such as  <code>utf-8</code> , either &quot;?B?&quot; or &quot;?Q?&quot; (in upper or lower case), a series of bytes in the character encoding, further encoded using B or Q encoding, and finally &quot;?=&quot;. B encoding uses Base64, while in Q encoding, spaces are changed to &quot;_&quot;, equals are changed to &quot;=3D&quot;, and most bytes other than the basic digits 0 to 9 (0x30 to 0x39) and the basic letters A/a to Z/z (0x41 to 0x5a, 0x61 to 0x7a) are changed to &quot;=&quot; followed by their 2-digit hexadecimal form. An encoded word&#39;s maximum length is 75 characters. See the third example.</li>
 </ul>
 
 <p>.</p>
@@ -142,7 +143,7 @@ The display name or address has an invalid syntax.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>localPart</i>
-or <i>domain</i>
+or  <i>domain</i>
 is null.</li>
 </ul>
 
@@ -169,7 +170,7 @@ is null.</li>
 <ul>
 <li><p>System.ArgumentNullException:
 The parameter <i>groupName</i>
-or <i>mailboxes</i>
+or  <i>mailboxes</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 The parameter <i>groupName</i>
@@ -226,7 +227,7 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code> If this represents a group of addresses; otherwise, . <code>false</code> .</p>
+<p><code>true</code>  If this represents a group of addresses; otherwise, .  <code>false</code> .</p>
 
 <p><a id="Name"></a></p>
 
@@ -259,7 +260,7 @@ is empty, or an item in the list is itself a group.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>Either <code>true</code> or <code>false</code> .</p>
+<p>Either  <code>true</code>  or  <code>false</code> .</p>
 
 <p><a id="Equals_object"></a></p>
 
@@ -274,13 +275,13 @@ is empty, or an item in the list is itself a group.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter <i>obj</i>
+<li><i>obj</i>: The parameter  <i>obj</i>
 is an arbitrary object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object and another object are equal; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object and another object are equal; otherwise,  <code>false</code> .</p>
 
 <p><a id="GetHashCode"></a></p>
 
@@ -313,8 +314,8 @@ is an arbitrary object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>A list of addresses generated from the <i>addressValue</i>
-parameter.</p>
+<p>A list of addresses generated from the  <i>addressValue</i>
+ parameter.</p>
 
 <p><a id="ToString"></a></p>
 

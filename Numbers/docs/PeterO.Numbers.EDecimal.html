@@ -15,7 +15,7 @@
 
 <p>Decimal (base-10) arithmetic, such as that provided by this class, is appropriate for calculations involving such real-world data as prices and other sums of money, tax rates, and measurements. These calculations often involve multiplying or dividing one decimal with another decimal, or performing other operations on decimal numbers. Many of these calculations also rely on rounding behavior in which the result after rounding is a decimal number (for example, multiplying a price by a premium rate, then rounding, should result in a decimal amount of money).</p>
 
-<p>On the other hand, most implementations of <code>float</code> and <code>double</code> , including in C# and Java, store numbers in a binary (base-2) loating-point format and use binary floating-point arithmetic. Many ecimal numbers can&#39;t be represented exactly in binary floating-point ormat (regardless of its length). Applying binary arithmetic to numbers ntended to be decimals can sometimes lead to unintuitive results, as is hown in the description for the FromDouble() method of this class.</p>
+<p>On the other hand, most implementations of  <code>float</code> and <code>double</code> , including in C# and Java, store numbers in a binary base-2) floating-point format and use binary floating-point rithmetic. Many decimal numbers can&#39;t be represented exactly in inary floating-point format (regardless of its length). Applying inary arithmetic to numbers intended to be decimals can sometimes ead to unintuitive results, as is shown in the description for the romDouble() method of this class.</p>
 
 <p><b>About EDecimal instances</b></p>
 
@@ -25,7 +25,7 @@
 
 <p>The mantissa (significand) and exponent format preserves trailing zeros in the number&#39;s value. This may give rise to multiple ways to store the same value. For example, 1.00 and 1 would be stored differently, even though they have the same value. In the first case, 100 * 10^-2 (100 with decimal point moved left by 2), and in the second case, 1 * 10^0 (1 with decimal point moved 0).</p>
 
-<p>This class also supports values for negative zero, not-a-number (NaN) values, and infinity.<b>Negative zero</b>is generally used when a negative number is rounded to 0; it has the ame mathematical value as positive zero.<b>Infinity</b>is generally used when a non-zero number is divided by zero, or when a ery high or very low number can&#39;t be represented in a given exponent ange.<b>Not-a-number</b>is generally used to signal errors.</p>
+<p>This class also supports values for negative zero, not-a-number (NaN) values, and infinity. <b>Negative zero</b>is enerally used when a negative number is rounded to 0; it has the ame mathematical value as positive zero. <b>Infinity</b>is enerally used when a non-zero number is divided by zero, or when a ery high or very low number can&#39;t be represented in a given xponent range. <b>Not-a-number</b>is generally used to signal rrors.</p>
 
 <p>This class implements the General Decimal Arithmetic Specification version 1.70 (except part of chapter 6): <code>http://speleotrove.com/decimal/decarith.html</code></p>
 
@@ -62,27 +62,27 @@
 
 <p>There are several other types of numbers that are mentioned in this class and elsewhere in this documentation. For reference, they are specified here.</p>
 
-<p><b>Unsigned integer</b>: An integer that&#39;s always 0 or greater, with the following maximum alues:</p>
+<p><b>Unsigned integer</b>: An integer that&#39;s always 0 or reater, with the following maximum values:</p>
 
 <ul>
-<li><p>8-bit unsigned integer, or<i>byte</i>: 255.</p></li>
+<li><p>8-bit unsigned integer, or <i>byte</i>: 255.</p></li>
 <li><p>16-bit unsigned integer: 65535.</p></li>
-<li><p>32-bit unsigned integer: (2<sup>32</sup>-1).</p></li>
-<li><p>64-bit unsigned integer: (2<sup>64</sup>-1).</p></li>
+<li><p>32-bit unsigned integer: (2 <sup>32</sup>-1).</p></li>
+<li><p>64-bit unsigned integer: (2 <sup>64</sup>-1).</p></li>
 </ul>
 
-<p><b>Signed integer</b>: An integer in<i>two&#39;s-complement form</i>, with the following ranges:</p>
+<p><b>Signed integer</b>: An integer in <i>two&#39;s-complement form</i>, with the following ranges:</p>
 
 <ul>
 <li><p>8-bit signed integer: -128 to 127.</p></li>
 <li><p>16-bit signed integer: -32768 to 32767.</p></li>
-<li><p>32-bit signed integer: -2<sup>31</sup>to (2<sup>31</sup>- 1).</p></li>
-<li><p>64-bit signed integer: -2<sup>63</sup>to (2<sup>63</sup>- 1).</p></li>
+<li><p>32-bit signed integer: -2 <sup>31</sup>to (2 <sup>31</sup>- 1).</p></li>
+<li><p>64-bit signed integer: -2 <sup>63</sup>to (2 <sup>63</sup>- ).</p></li>
 </ul>
 
-<p><b>Two&#39;s complement form</b>: In<i>two&#39; s-complement form</i>, nonnegative numbers have the highest (most significant) bit set to ero, and negative numbers have that bit (and all bits beyond) set to ne, and a negative number is stored in such form by decreasing its bsolute value by 1 and swapping the bits of the resulting number.</p>
+<p><b>Two&#39;s complement form</b>: In <i>two&#39; s-complement form</i>, nonnegative numbers have the highest (most significant) it set to zero, and negative numbers have that bit (and all bits eyond) set to one, and a negative number is stored in such form by ecreasing its absolute value by 1 and swapping the bits of the esulting number.</p>
 
-<p><b>64-bit floating-point number</b>: A 64-bit binary floating-point number, in the form<i>significand</i>* 2<sup><i>exponent</i></sup>. The significand is 53 bits long (Precision) and the exponent ranges rom -1074 (EMin) to 971 (EMax). The number is stored in the following ormat (commonly called the IEEE 754 format):</p>
+<p><b>64-bit floating-point number</b>: A 64-bit binary loating-point number, in the form <i>significand</i>* 2<sup><i>exponent</i></sup>. The significand is 53 bits long Precision) and the exponent ranges from -1074 (EMin) to 971 EMax). The number is stored in the following format (commonly alled the IEEE 754 format):</p>
 
 <pre>|C|BBB...BBB|AAAAAA...AAAAAA|
 </pre>
@@ -98,7 +98,7 @@
 
 <p>The elements described above are in the same order as the order of each bit of each element, that is, either most significant first or least significant first.</p>
 
-<p><b>32-bit binary floating-point number</b>: A 32-bit binary number which is stored similarly to a<i>64-bit floating-point number</i>, except that:</p>
+<p><b>32-bit binary floating-point number</b>: A 32-bit binary umber which is stored similarly to a <i>64-bit floating-point number</i>, except that:</p>
 
 <ul>
 <li><p>Precision is 24 bits.</p></li>
@@ -109,10 +109,10 @@
 <li><p>C. If the highest bit is one, this is a negative number.</p></li>
 </ul>
 
-<p><b>.NET Framework decimal</b>: A 128-bit decimal floating-point number, in the form<i>significand</i>* 10<sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28. The number is stored in the ollowing format:</p>
+<p><b>.NET Framework decimal</b>: A 128-bit decimal loating-point number, in the form <i>significand</i>* 10 <sup>-<i>scale</i></sup>, where the scale ranges from 0 to 28. The umber is stored in the following format:</p>
 
 <ul>
-<li><p>Low 96 bits are the significand, as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2<sup>96</sup>-1)).</p></li>
+<li><p>Low 96 bits are the significand, as a 96-bit unsigned integer (all 96-bit values are allowed, up to (2 <sup>96</sup>-1)).</p></li>
 <li><p>Next 16 bits are unused.</p></li>
 <li><p>Next 8 bits are the scale, stored as an 8-bit unsigned integer.</p></li>
 <li><p>Next 7 bits are unused.</p></li>
@@ -164,7 +164,7 @@
 <li><code><a href="#Exp_PeterO_Numbers_EContext">Exp(PeterO.Numbers.EContext)</a></code> - Finds e (the base of natural logarithms) raised to the power of this object&#39;s value.</li>
 <li><code><a href="#Exponent">Exponent</a></code> - Gets this object&#39;s exponent.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
-<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts adecimalunder the Common Language Infrastructure (seePeterO.</li>
+<li><code><a href="#FromDecimal_System_Decimal">FromDecimal(System.Decimal)</a></code> - Converts a decimal under the Common Language Infrastructure (seePeterO.</li>
 <li><code><a href="#FromDouble_double">FromDouble(double)</a></code> - Creates a decimal number from a 64-bit binary floating-point number.</li>
 <li><code><a href="#FromEFloat_PeterO_Numbers_EFloat">FromEFloat(PeterO.Numbers.EFloat)</a></code> - Creates a decimal number from an arbitrary-precision binary floating-point number.</li>
 <li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to an arbitrary precision decimal.</li>
@@ -268,7 +268,7 @@
 <li><code><a href="#ToByteChecked">ToByteChecked()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) after truncating to an integer.</li>
 <li><code><a href="#ToByteIfExact">ToByteIfExact()</a></code> - Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a byte (from 0 to 255) without rounding to a different numerical value.</li>
 <li><code><a href="#ToByteUnchecked">ToByteUnchecked()</a></code> - Truncates this number&#39;s value to an integer and returns the least-significant bits of its two&#39;s-complement form as a byte (from 0 to 255).</li>
-<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to adecimalunder the Common Language Infrastructure (seePeterO.</li>
+<li><code><a href="#ToDecimal">ToDecimal()</a></code> - Converts this value to a decimal under the Common Language Infrastructure (seePeterO.</li>
 <li><code><a href="#ToDouble">ToDouble()</a></code> - Converts this value to its closest equivalent as a 64-bit floating-point number.</li>
 <li><code><a href="#ToEFloat">ToEFloat()</a></code> - Creates a binary floating-point number from this object&#39;s value.</li>
 <li><code><a href="#ToEFloat_PeterO_Numbers_EContext">ToEFloat(PeterO.Numbers.EContext)</a></code> - Creates a binary floating-point number from this object&#39;s value.</li>
@@ -395,7 +395,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>This object&#39;s exponent. This object&#39;s value will be an integer if the exponent is positive or zero.</p>
+<p>This object&#39;s exponent. This object&#39; s value will be an integer if the exponent is positive or zero.</p>
 
 <p><a id="IsFinite"></a></p>
 
@@ -434,7 +434,7 @@
 
 <p><b>Returns:</b></p>
 
-<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39;s value equals 0; otherwise, .  <code>false</code> .</p>
+<p><code>true</code>  if this object&#39;s value equals 0; otherwise,  <code>false</code> .  <code>true</code>  if this object&#39; s value equals 0; otherwise, .  <code>false</code> .</p>
 
 <p><a id="Mantissa"></a></p>
 
@@ -447,7 +447,7 @@
 
 <p><b>Returns:</b></p>
 
-<p>This object&#39;s unscaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
+<p>This object&#39; s unscaled value. Will be negative if this object&#39;s value is negative (including a negative NaN).</p>
 
 <p><a id="Sign"></a></p>
 
@@ -1241,9 +1241,10 @@ is not documented yet.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: The number to divide by.</p></li>
+<li><p><i>divisor</i>: The parameter  <i>divisor</i>
+is an EDecimal object.</p></li>
 <li><p><i>ctx</i>: The parameter  <i>ctx</i>
-is not documented yet.</p></li>
+is an EContext object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1431,14 +1432,12 @@ is not documented yet.</li>
     System.Decimal dec);
 </pre>
 
-<p>Converts a <code>decimal</code> under the Common Language Infrastructure (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
-      </a>) to an arbitrary-precision decimal.</p>
+<p>Converts a  <code>decimal</code>  under the Common Language Infrastructure (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ) to an arbitrary-precision decimal.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>dec</i>: A <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal).</li>
+<li><i>dec</i>: A  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal).</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2624,7 +2623,7 @@ is not documented yet.</p></li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>bthis</i>
-or <i>otherValue</i>
+or  <i>otherValue</i>
 is null.</li>
 </ul>
 
@@ -2715,7 +2714,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>operand1</i>
-or <i>operand2</i>
+or  <i>operand2</i>
 is null.</li>
 </ul>
 
@@ -2746,7 +2745,7 @@ is null.</li>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>bthis</i>
-or <i>subtrahend</i>
+or  <i>subtrahend</i>
 is null.</li>
 </ul>
 
@@ -2946,7 +2945,7 @@ is not documented yet.</p></li>
     PeterO.Numbers.ERounding rounding);
 </pre>
 
-<p>Returns a decimal number with the same value as this one but a new exponent.<b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
+<p>Returns a decimal number with the same value as this one but a new exponent.<b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -2972,7 +2971,7 @@ is not documented yet.</p></li>
 
 <p>Returns a decimal number with the same value as this object but with the same exponent as another decimal number.Note that this is not always the same as rounding to a given number of decimal places, since it can fail if the difference between this value&#39;s exponent and the desired exponent is too big, depending on the maximum precision. If rounding to a number of decimal places is desired, it&#39;s better to use the RoundToExponent and RoundToIntegral methods instead.</p>
 
-<p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot;.</p>
+<p><b>Remark:</b> This method can be used to implement fixed-point decimal arithmetic, in which a fixed number of digits come after the decimal point. A fixed-point decimal arithmetic in which no digits come after the decimal point (a desired exponent of 0) is considered an &quot;integer arithmetic&quot; .</p>
 
 <p><b>Parameters:</b></p>
 
@@ -3057,9 +3056,10 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>divisor</i>: The number to divide by.</p></li>
+<li><p><i>divisor</i>: The parameter  <i>divisor</i>
+is an EDecimal object.</p></li>
 <li><p><i>ctx</i>: The parameter  <i>ctx</i>
-is not documented yet.</p></li>
+is an EContext object.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -3706,13 +3706,11 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 <pre>public System.Decimal ToDecimal();
 </pre>
 
-<p>Converts this value to a <code>decimal</code> under the Common Language Infrastructure (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
-      </a>), using the half-even rounding mode.</p>
+<p>Converts this value to a  <code>decimal</code>  under the Common Language Infrastructure (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ), using the half-even rounding mode.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A <code>decimal</code> under the Common Language Infrastructure (usually a .NET Framework ecimal).</p>
+<p>A  <code>decimal</code>  under the Common Language Infrastructure (usually a .NET Framework decimal).</p>
 
 <p><a id="ToDouble"></a></p>
 
@@ -3741,7 +3739,7 @@ This value is infinity or not-a-number, is not an exact integer, or is less than
 
 <ul>
 <li><i>ec</i>: The parameter  <i>ec</i>
-is not documented yet.</li>
+is an EContext object.</li>
 </ul>
 
 <p><b>Return Value:</b></p>

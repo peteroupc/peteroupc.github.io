@@ -13,11 +13,11 @@
 
 <p>Contains methods for parsing and generating Data URIs (uniform resource identifiers). Data URIs are described in RFC 2397. Examples for Data URIs follow.</p>
 
-<pre>data:,hello%20world
+<pre>data:, hello%20world
 
-data:text/markdown,hello%20world
+data:text/markdown, hello%20world
 
-data:application/octet-stream;base64,AAAAAA==
+data:application/octet-stream;base64, AAAAAA==
 </pre>
 
 <h3>Member Summary</h3>
@@ -49,8 +49,8 @@ data:application/octet-stream;base64,AAAAAA==
 
 <p><b>Return Value:</b></p>
 
-<p>The data as a byte array. Returns null if <i>url</i>
-is null, is syntactically invalid, or is not a data URI.</p>
+<p>The data as a byte array. Returns null if  <i>url</i>
+ is null, is syntactically invalid, or is not a data URI.</p>
 
 <p><a id="DataUrlMediaType_string"></a></p>
 
@@ -72,8 +72,8 @@ is null, is syntactically invalid, or is not a data URI.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>The media type. Returns null if <i>url</i>
-is null, is syntactically invalid, or is not a Data URI.</p>
+<p>The media type. Returns null if  <i>url</i>
+ is null, is syntactically invalid, or is not a Data URI.</p>
 
 <p><a id="MakeDataUrl_byte_PeterO_Mail_MediaType"></a></p>
 
@@ -104,7 +104,7 @@ is null, is syntactically invalid, or is not a Data URI.</p>
 <ul>
 <li>System.ArgumentNullException:
 The parameter <i>bytes</i>
-or <i>mediaType</i>
+or  <i>mediaType</i>
 is null.</li>
 </ul>
 

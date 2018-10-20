@@ -9,7 +9,7 @@
 <pre>public sealed class EContext
 </pre>
 
-<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).<b>Thread safety:</b>With one exception, instances of this class are immutable and are safe o use among multiple threads. The one exception involves the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code> property (a read-only property) is <code>true</code> , the <code>Flags</code> property is mutable, thus making the context mutable. This class oesn&#39;t synchronize access to such mutable contexts, so applications hould provide their own synchronization if a context with the <code>HasFlags</code> property set to <code>true</code> will be shared among multiple threads and at least one of those threads eeds to write the <code>Flags</code> property (which can happen, for example, by passing the context to most ethods of <code>EDecimal</code> such as <code>Add</code> ).</p>
+<p>Contains parameters for controlling the precision, rounding, and exponent range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;, and has this prefix to group it with the other classes common to this library, particularly EDecimal, EFloat, and ERational.).<b>Thread safety:</b> With one exception, instances of this class are immutable and are safe to use among multiple threads. The one exception involves the  <code>Flags</code>  property. If the context&#39;s <code>HasFlags</code>  property (a read-only property) is  <code>true</code> , the  <code>Flags</code>  property is mutable, thus making the context mutable. This class doesn&#39;t synchronize access to such mutable contexts, so applications should provide their own synchronization if a context with the  <code>HasFlags</code>  property set to  <code>true</code> will be shared among multiple threads and at least one of those threads needs to write the  <code>Flags</code>  property (which can happen, for example, by passing the context to most methods of <code>EDecimal</code>  such as  <code>Add</code>  ).</p>
 
 <h3>Member Summary</h3>
 
@@ -159,9 +159,7 @@ is not documented yet.</p></li>
 <pre>public static readonly PeterO.Numbers.EContext CliDecimal;
 </pre>
 
-<p>An arithmetic context for the .NET Framework decimal format (see<a href="PeterO.Numbers.EDecimal.html">
-        &#x22;Forms of numbers&#x22;
-      </a>), 96 bits precision, and a valid exponent range of -28 to 0. The default ounding mode is HalfEven. (The <code>&quot;Cli&quot;</code> stands for &quot;Common Language Infrastructure&quot;, which defined this format as he .NET Framework decimal format in version 1, but leaves it unspecified n later versions.).</p>
+<p>An arithmetic context for the .NET Framework decimal format (see<a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a> ), 96 bits precision, and a valid exponent range of -28 to 0. The default rounding mode is HalfEven. (The  <code>&quot;Cli&quot;</code>  stands for &quot;Common Language Infrastructure&quot;, which defined this format as the .NET Framework decimal format in version 1, but leaves it unspecified in later versions.).</p>
 
 <p><a id="Decimal128"></a></p>
 

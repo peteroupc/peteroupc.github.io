@@ -9,49 +9,49 @@
 <pre>public static class Encodings
 </pre>
 
-<p>Contains methods for converting text from one character encoding to another. This class also contains convenience methods for converting strings and other character inputs to sequences of bytes and vice versa.The Encoding Standard, which is a Candidate Recommendation as of early November 2015, defines algorithms for the most common character encodings used on Web pages and recommends the UTF-8 encoding for new specifications and Web pages. Calling the <code>GetEncoding(name)</code> method returns one of the character encodings with the given name under he Encoding Standard.</p>
+<p>Contains methods for converting text from one character encoding to another. This class also contains convenience methods for converting strings and other character inputs to sequences of bytes and vice versa.The Encoding Standard, which is a Candidate Recommendation as of early November 2015, defines algorithms for the most common character encodings used on Web pages and recommends the UTF-8 encoding for new specifications and Web pages. Calling the <code>GetEncoding(name)</code>  method returns one of the character encodings with the given name under the Encoding Standard.</p>
 
 <p>Now let&#39;s define some terms.</p>
 
 <p><b>Encoding Terms</b></p>
 
 <ul>
-<li><p>A<b>code point</b>is a number that identifies a single text character, such as a etter, digit, or symbol. (A collection of such characters is also alled an<i>abstract character repertoire</i>.)</p></li>
-<li><p>A<b>coded character set</b>is a set of code points which are each assigned to a single text haracter. As used here, coded character sets don&#39;t define how code oints are laid out in memory.</p></li>
-<li><p>A<b>character encoding</b>is a mapping from a sequence of code points, in one or more specific oded character sets, to a sequence of bytes and vice versa. (For revity, the rest of this documentation may use the term<i>encoding</i>instead. RFC 6365 uses the analogous term<i>charset</i>instead; in this documentation, however,<i>charset</i>is used only to refer to the names that identify a character ncoding.)</p></li>
-<li><p><b>ASCII</b>is a 128-code-point coded character set that includes the English etters and digits, common punctuation and symbols, and control haracters. As used here, its code points match the code points within he Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode tandard.</p></li>
+<li><p>A <b>code point</b> is a number that identifies a single text character, such as a letter, digit, or symbol. (A collection of such characters is also called an<i>abstract character repertoire</i>.)</p></li>
+<li><p>A <b>coded character set</b> is a set of code points which are each assigned to a single text character. As used here, coded character sets don&#39;t define how code points are laid out in memory.</p></li>
+<li><p>A <b>character encoding</b> is a mapping from a sequence of code points, in one or more specific coded character sets, to a sequence of bytes and vice versa. (For brevity, the rest of this documentation may use the term<i>encoding</i> instead. RFC 6365 uses the analogous term<i>charset</i> instead; in this documentation, however,<i>charset</i> is used only to refer to the names that identify a character encoding.)</p></li>
+<li><p><b>ASCII</b> is a 128-code-point coded character set that includes the English letters and digits, common punctuation and symbols, and control characters. As used here, its code points match the code points within the Basic Latin block (0-127 or U+0000 to U+007F) of the Unicode Standard.</p></li>
 </ul>
 
 <p>There are several kinds of character encodings:</p>
 
 <ul>
-<li><p><b>Single-byte encodings</b>define a coded character set that assigns one code point to one byte. hus, they can have a maximum of 256 code points. For example:</p></li>
-<li><p>(a) ISO 8859 encodings and <code>windows-1252</code> .</p></li>
-<li><p>(b) ASCII is usually used as a single-byte encoding where each code point fits in the lower 7 bits of an eight-bit byte (in that case, the encoding is often called <code>US-ASCII</code> ). In the Encoding Standard, all single-byte encodings use the ASCII haracters as the first 128 code points of their coded character sets.</p></li>
-<li><p><b>Multi-byte encodings</b>include code points from one or more coded character sets and assign ome or all code points to several bytes. For example:</p></li>
-<li><p>(a) <code>UTF-16LE</code> and <code>UTF-16BE</code> are two encodings defined in the Unicode Standard. They use 2 bytes or the most common code points, and 4 bytes for supplementary code oints.</p></li>
-<li><p>(b) <code>UTF-8</code> is another encoding defined in the Unicode Standard. It uses 1 byte or ASCII and 2 to 4 bytes for the other Unicode code points.</p></li>
-<li><p>(c) Most legacy East Asian encodings, such as <code>Shift_JIS</code> , <code>GBK</code> , and <code>Big5</code> use 1 byte for ASCII (or a slightly modified version) and, usually, 2 r more bytes for national standard coded character sets. In many of hese encodings, notably <code>Shift_JIS</code> , characters whose code points use one byte traditionally take half he space of characters whose code points use two bytes.</p></li>
-<li><p><b>Escape-based encodings</b>are combinations of single- and/or multi-byte encodings, and use scape sequences and/or shift codes to change which encoding to use or the bytes that follow. For example:</p></li>
-<li><p>(a) <code>ISO-2022-JP</code> supports several escape sequences that shift into different ncodings, including a Katakana, a Kanji, and an ASCII encoding (with SCII as the default).</p></li>
+<li><p><b>Single-byte encodings</b> define a coded character set that assigns one code point to one byte. Thus, they can have a maximum of 256 code points. For example:</p></li>
+<li><p>(a) ISO 8859 encodings and  <code>windows-1252</code> .</p></li>
+<li><p>(b) ASCII is usually used as a single-byte encoding where each code point fits in the lower 7 bits of an eight-bit byte (in that case, the encoding is often called  <code>US-ASCII</code>  ). In the Encoding Standard, all single-byte encodings use the ASCII characters as the first 128 code points of their coded character sets.</p></li>
+<li><p><b>Multi-byte encodings</b> include code points from one or more coded character sets and assign some or all code points to several bytes. For example:</p></li>
+<li><p>(a)  <code>UTF-16LE</code>  and  <code>UTF-16BE</code>  are two encodings defined in the Unicode Standard. They use 2 bytes for the most common code points, and 4 bytes for supplementary code points.</p></li>
+<li><p>(b)  <code>UTF-8</code>  is another encoding defined in the Unicode Standard. It uses 1 byte for ASCII and 2 to 4 bytes for the other Unicode code points.</p></li>
+<li><p>(c) Most legacy East Asian encodings, such as <code>Shift_JIS</code> ,  <code>GBK</code> , and  <code>Big5</code>  use 1 byte for ASCII (or a slightly modified version) and, usually, 2 or more bytes for national standard coded character sets. In many of these encodings, notably  <code>Shift_JIS</code> , characters whose code points use one byte traditionally take half the space of characters whose code points use two bytes.</p></li>
+<li><p><b>Escape-based encodings</b> are combinations of single- and/or multi-byte encodings, and use escape sequences and/or shift codes to change which encoding to use for the bytes that follow. For example:</p></li>
+<li><p>(a)  <code>ISO-2022-JP</code>  supports several escape sequences that shift into different encodings, including a Katakana, a Kanji, and an ASCII encoding (with ASCII as the default).</p></li>
 <li><p>(b) UTF-7 (not included in the Encoding Standard) is an encoding that uses the Unicode Standard&#39;s coded character set, which is encoded using a limited subset of ASCII. The plus symbol (U+002B) is used to shift into a UTF-16BE multi-byte encoding (converted to a modified version of base-64) to encode other Unicode code points.</p></li>
-<li><p>The Encoding Standard also defines a<b>replacement encoding</b>, which causes a decoding error and is used to alias a few roblematic or unsupported encoding names, such as <code>hz-gb-2312</code> .</p></li>
+<li><p>The Encoding Standard also defines a <b>replacement encoding</b>, which causes a decoding error and is used to alias a few problematic or unsupported encoding names, such as <code>hz-gb-2312</code> .</p></li>
 </ul>
 
 <p><b>Getting an Encoding</b></p>
 
-<p>The Encoding Standard includes UTF-8, UTF-16, and many legacy encodings, and gives each one of them a name. The <code>GetEncoding(name)</code> method takes a name string and returns an ICharacterEncoding object hat implements that encoding, or <code>null</code> if the name is unrecognized.</p>
+<p>The Encoding Standard includes UTF-8, UTF-16, and many legacy encodings, and gives each one of them a name. The <code>GetEncoding(name)</code>  method takes a name string and returns an ICharacterEncoding object that implements that encoding, or <code>null</code>  if the name is unrecognized.</p>
 
-<p>However, the Encoding Standard is designed to include only encodings commonly used on Web pages, not in other protocols such as email. For email, the Encoding class includes an alternate function <code>GetEncoding(name, forEmail)</code> . Setting <code>forEmail</code> to <code>true</code> will use rules modified from the Encoding Standard to better suit ncoding and decoding text from email messages.</p>
+<p>However, the Encoding Standard is designed to include only encodings commonly used on Web pages, not in other protocols such as email. For email, the Encoding class includes an alternate function  <code>GetEncoding(name, forEmail)</code> . Setting <code>forEmail</code>  to  <code>true</code>  will use rules modified from the Encoding Standard to better suit encoding and decoding text from email messages.</p>
 
 <p><b>Classes for Character Encodings</b></p>
 
 <p>This Encodings class provides access to common character encodings through classes as described below:</p>
 
 <ul>
-<li><p>An<b>encoder class</b>is a class that converts a sequence of bytes to a sequence of code oints in the universal character set (otherwise known under the name nicode). An encoder class implements the <code>ICharacterEncoder</code> interface.</p></li>
-<li><p>A<b>decoder class</b>is a class that converts a sequence of Unicode code points to a equence of bytes. A decoder class implements the <code>ICharacterDecoder</code> interface.</p></li>
-<li><p>An<b>encoding class</b>allows access to both an encoder class and a decoder class and mplements the <code>ICharacterEncoding</code> interface. The encoder and decoder classes should implement the same haracter encoding.</p></li>
+<li><p>An <b>encoder class</b> is a class that converts a sequence of bytes to a sequence of code points in the universal character set (otherwise known under the name Unicode). An encoder class implements the  <code>ICharacterEncoder</code>  interface.</p></li>
+<li><p>A <b>decoder class</b> is a class that converts a sequence of Unicode code points to a sequence of bytes. A decoder class implements the  <code>ICharacterDecoder</code>  interface.</p></li>
+<li><p>An <b>encoding class</b> allows access to both an encoder class and a decoder class and implements the <code>ICharacterEncoding</code>  interface. The encoder and decoder classes should implement the same character encoding.</p></li>
 </ul>
 
 <p><b>Custom Encodings</b></p>
@@ -178,7 +178,7 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li><p>T:System.ArgumentNullException:
 The parameter <i>enc</i>
 or  <i>bytes</i>
 is null.</p></li>
@@ -186,10 +186,14 @@ is null.</p></li>
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>bytes</i>
-&#39;s length, or  <i>bytes</i>
+&#39;s length, or  <i> bytes</i>
 &#39; s length minus  <i>offset</i>
 is less than  <i>length</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>enc</i>
+or  <i>bytes</i>
+is null.</p></li>
 </ul>
 
 <p><a id="DecodeToString_this_PeterO_Text_ICharacterEncoding_System_IO_Stream"></a></p>
@@ -314,10 +318,14 @@ is null.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>T:System.ArgumentNullException:
+The parameter <i> encoder</i>
+or  <i> input</i>
+is null.</p></li>
+<li><p>System.ArgumentNullException:
 The parameter  <i>encoder</i>
 or  <i>input</i>
-is null.</li>
+is null.</p></li>
 </ul>
 
 <p><a id="EncodeToBytes_this_PeterO_Text_ICharacterInput_PeterO_Text_ICharacterEncoding"></a></p>
@@ -655,7 +663,7 @@ is null.</li>
 
 <p>Converts a character encoding into a character input stream, given a streamable source of bytes. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the given character encoding.This method implements the &quot;decode&quot; algorithm specified in the Encoding standard.</p>
 
-<p>In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows: <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object&#39;s class already has a <code>GetDecoderInputSkipBom</code> method with the same parameters, that method takes precedence over this xtension method.</p>
+<p>In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows: <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object&#39;s class already has a  <code>GetDecoderInputSkipBom</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -677,7 +685,7 @@ is null.</li>
     System.IO.Stream input);
 </pre>
 
-<p>Converts a character encoding into a character input stream, given a readable data stream. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the given character encoding.This method implements the &quot;decode&quot; algorithm specified in the Encoding standard.In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows: <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object&#39;s class already has a <code>GetDecoderInputSkipBom</code> method with the same parameters, that method takes precedence over this xtension method.</p>
+<p>Converts a character encoding into a character input stream, given a readable data stream. But if the input stream starts with a UTF-8 or UTF-16 byte order mark, the input is decoded as UTF-8 or UTF-16, as the case may be, rather than the given character encoding.This method implements the &quot;decode&quot; algorithm specified in the Encoding standard.In the .NET implementation, this method is implemented as an extension method to any object implementing ICharacterEncoding and can be called as follows: <code>encoding.GetDecoderInputSkipBom(input)</code> . If the object&#39;s class already has a  <code>GetDecoderInputSkipBom</code>  method with the same parameters, that method takes precedence over this extension method.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -792,43 +800,43 @@ is null.</li>
 
 <ul>
 <li><p><i>name</i>: A string that names a given character encoding. Can be null. Any leading and trailing whitespace is removed and the name converted to lowercase before resolving the encoding&#39;s name. The Encoding Standard supports only the following encodings (and defines aliases for most of them).</p></li>
-<li><p><code>UTF-8</code> - UTF-8 (8-bit encoding of the universal coded character set, the ncoding recommended by the Encoding Standard for new data formats)</p></li>
-<li><p><code>UTF-16LE</code> - UTF-16 little-endian (16-bit UCS)</p></li>
-<li><p><code>UTF-16BE</code> - UTF-16 big-endian (16-bit UCS)</p></li>
-<li><p>The special-purpose encoding <code>x-user-defined</code></p></li>
-<li><p>The special-purpose encoding <code>replacement</code> .</p></li>
+<li><p><code>UTF-8</code>  - UTF-8 (8-bit encoding of the universal coded character set, the encoding recommended by the Encoding Standard for new data formats)</p></li>
+<li><p><code>UTF-16LE</code>  - UTF-16 little-endian (16-bit UCS)</p></li>
+<li><p><code>UTF-16BE</code>  - UTF-16 big-endian (16-bit UCS)</p></li>
+<li><p>The special-purpose encoding  <code>x-user-defined</code></p></li>
+<li><p>The special-purpose encoding  <code>replacement</code> .</p></li>
 <li><p>28 legacy single-byte encodings:</p></li>
-<li><p><code>windows-1252</code> : Western Europe (Note: The Encoding Standard aliases the names <code>US-ASCII</code> and <code>ISO-8859-1</code> to <code>windows-1252</code> , which uses a different coded character set from either; it iffers from <code>ISO-8859-1</code> by assigning different characters to some bytes from 0x80 to x9F. The Encoding Standard does this for compatibility with xisting Web pages.)</p></li>
-<li><p><code>ISO-8859-2</code> , <code>windows-1250</code> : Central Europe</p></li>
-<li><p><code>ISO-8859-10</code> : Northern Europe</p></li>
-<li><p><code>ISO-8859-4</code> , <code>windows-1257</code> : Baltic</p></li>
-<li><p><code>ISO-8859-13</code> : Estonian</p></li>
-<li><p><code>ISO-8859-14</code> : Celtic</p></li>
-<li><p><code>ISO-8859-16</code> : Romanian</p></li>
-<li><p><code>ISO-8859-5</code> , <code>IBM-866</code> , <code>KOI8-R</code> , <code>windows-1251</code> , <code>x-mac-cyrillic</code> : Cyrillic</p></li>
-<li><p><code>KOI8-U</code> : Ukrainian</p></li>
-<li><p><code>ISO-8859-7</code> , <code>windows-1253</code> : Greek</p></li>
-<li><p><code>ISO-8859-6</code> , <code>windows-1256</code> : Arabic</p></li>
-<li><p><code>ISO-8859-8</code> , <code>ISO-8859-8-I</code> , <code>windows-1255</code> : Hebrew</p></li>
-<li><p><code>ISO-8859-3</code> : Latin 3</p></li>
-<li><p><code>ISO-8859-15</code> , <code>windows-1254</code> : Turkish</p></li>
-<li><p><code>windows-874</code> : Thai</p></li>
-<li><p><code>windows-1258</code> : Vietnamese</p></li>
-<li><p><code>macintosh</code> : Mac Roman</p></li>
-<li><p>Three legacy Japanese encodings: <code>Shift_JIS</code> , <code>EUC-JP</code> , <code>ISO-2022-JP</code></p></li>
-<li><p>Two legacy simplified Chinese encodings: <code>GBK</code> and <code>gb18030</code></p></li>
-<li><p><code>Big5</code> : legacy traditional Chinese encoding</p></li>
-<li><p><code>EUC-KR</code> : legacy Korean encoding</p></li>
+<li><p><code>windows-1252</code>  : Western Europe (Note: The Encoding Standard aliases the names  <code>US-ASCII</code>  and  <code>ISO-8859-1</code>  to <code>windows-1252</code> , which uses a different coded character set from either; it differs from  <code>ISO-8859-1</code>  by assigning different characters to some bytes from 0x80 to 0x9F. The Encoding Standard does this for compatibility with existing Web pages.)</p></li>
+<li><p><code>ISO-8859-2</code> ,  <code>windows-1250</code>  : Central Europe</p></li>
+<li><p><code>ISO-8859-10</code>  : Northern Europe</p></li>
+<li><p><code>ISO-8859-4</code> ,  <code>windows-1257</code>  : Baltic</p></li>
+<li><p><code>ISO-8859-13</code>  : Estonian</p></li>
+<li><p><code>ISO-8859-14</code>  : Celtic</p></li>
+<li><p><code>ISO-8859-16</code>  : Romanian</p></li>
+<li><p><code>ISO-8859-5</code> ,  <code>IBM-866</code> ,  <code>KOI8-R</code> , <code>windows-1251</code> ,  <code>x-mac-cyrillic</code>  : Cyrillic</p></li>
+<li><p><code>KOI8-U</code>  : Ukrainian</p></li>
+<li><p><code>ISO-8859-7</code> ,  <code>windows-1253</code>  : Greek</p></li>
+<li><p><code>ISO-8859-6</code> ,  <code>windows-1256</code>  : Arabic</p></li>
+<li><p><code>ISO-8859-8</code> ,  <code>ISO-8859-8-I</code> ,  <code>windows-1255</code> : Hebrew</p></li>
+<li><p><code>ISO-8859-3</code>  : Latin 3</p></li>
+<li><p><code>ISO-8859-15</code> ,  <code>windows-1254</code>  : Turkish</p></li>
+<li><p><code>windows-874</code>  : Thai</p></li>
+<li><p><code>windows-1258</code>  : Vietnamese</p></li>
+<li><p><code>macintosh</code>  : Mac Roman</p></li>
+<li><p>Three legacy Japanese encodings:  <code>Shift_JIS</code> , <code>EUC-JP</code> ,  <code>ISO-2022-JP</code></p></li>
+<li><p>Two legacy simplified Chinese encodings:  <code>GBK</code>  and <code>gb18030</code></p></li>
+<li><p><code>Big5</code>  : legacy traditional Chinese encoding</p></li>
+<li><p><code>EUC-KR</code>  : legacy Korean encoding</p></li>
 </ul>
 
-<p>The <code>UTF-8</code> , <code>UTF-16LE</code> , and <code>UTF-16BE</code> encodings don&#39;t encode a byte-order mark at the start of the text doing so is not recommended for <code>UTF-8</code> , while in <code>UTF-16LE</code> and <code>UTF-16BE</code> , the byte-order mark character U+FEFF is treated as an ordinary haracter, unlike in the UTF-16 encoding form). The Encoding Standard liases <code>UTF-16</code> to <code>UTF-16LE</code> &quot;to deal with deployed content&quot;.</p>
+<p>The  <code>UTF-8</code> ,  <code>UTF-16LE</code> , and  <code>UTF-16BE</code> encodings don&#39;t encode a byte-order mark at the start of the text (doing so is not recommended for  <code>UTF-8</code> , while in <code>UTF-16LE</code>  and  <code>UTF-16BE</code> , the byte-order mark character U+FEFF is treated as an ordinary character, unlike in the UTF-16 encoding form). The Encoding Standard aliases  <code>UTF-16</code>  to <code>UTF-16LE</code>  &quot;to deal with deployed content&quot;.</p>
 
 <p>.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A standardized name for the encoding. Returns the empty string if <i>name</i>
-is null or empty, or if the encoding name is unsupported.</p>
+<p>A standardized name for the encoding. Returns the empty string if  <i>name</i>
+ is null or empty, or if the encoding name is unsupported.</p>
 
 <p><a id="ResolveAliasForEmail_string"></a></p>
 
@@ -987,17 +995,20 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li><p>T:System.ArgumentNullException:
 The parameter <i>str</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>length</i>
 is less than 0 or greater than  <i>str</i>
-&#39;s length, or  <i>str</i>
+&#39;s length, or  <i>             str</i>
 &#39; s length minus  <i>offset</i>
-is less than  <i>length</i>
+is less than <i>length</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>str</i>
+is null.</p></li>
 </ul>
 
 <p><a href="/Encoding/">Back to Encoding start page.</a></p>

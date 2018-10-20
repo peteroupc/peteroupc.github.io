@@ -85,7 +85,7 @@ is not documented yet.</p></li>
 The parameter <i>stream</i>
 doesn&#39;t support seeking, the length or start is less than 0 or greater than the underlying stream&#39;s length, or the partial stream would go beyond the underlying stream.</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>stream</i>
+The parameter <i>stream</i>
 or  <i>stream</i>
 is null.</p></li>
 </ul>
@@ -196,12 +196,12 @@ is not documented yet.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>buffer</i>: The parameter  <i>buffer</i>
+<li><p><i>buffer</i>: The parameter <i>buffer</i>
 is not documented yet.</p></li>
-<li><p><i>offset</i>: A zero-based index showing where the desired portion of  <i>buffer</i>
+<li><p><i>offset</i>: A zero-based index showing where the desired portion of <i>buffer</i>
 begins.</p></li>
-<li><p><i>count</i>: The number of elements in the desired portion of  <i>buffer</i>
-(but not more than  <i>buffer</i>
+<li><p><i>count</i>: The number of elements in the desired portion of <i>buffer</i>
+(but not more than <i>buffer</i>
 &#39;s length).</p></li>
 </ul>
 
@@ -212,17 +212,19 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentException:
-Either  <i>offset</i>
-or  <i>count</i>
-is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i>buffer</i>
-&#39; s length minus  <i>offset</i>
-is less than  <i>count</i>
+<li><p>T:System.ArgumentException:
+Either <i> offset</i>
+or <i> count</i>
+is less than 0 or greater than <i>buffer</i>
+&#39;s length, or <i> buffer</i>
+&#39; s length minus <i>offset</i>
+is less than <i>count</i>
 .</p></li>
 <li><p>System.ArgumentNullException:
-The parameter  <i>buffer</i>
+The parameter <i>buffer</i>
 is null.</p></li>
+<li><p>System.ArgumentException:
+Either &quot;offset&quot; or &quot;count&quot; is less than 0 or greater than &quot;buffer&quot;&#39;s length, or &quot;buffer&quot;&#39;s length minus &quot;offset&quot; is less than &quot;count&quot;.</p></li>
 </ul>
 
 <p><a id="Seek_long_System_IO_SeekOrigin"></a></p>
@@ -293,17 +295,20 @@ begins.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
+<li><p>T:System.ArgumentNullException:
 The parameter <i>buffer</i>
 is null.</p></li>
 <li><p>System.ArgumentException:
 Either  <i>offset</i>
 or  <i>count</i>
 is less than 0 or greater than  <i>buffer</i>
-&#39;s length, or  <i>buffer</i>
-&#39;s length minus  <i>offset</i>
+&#39;s length, or  <i> buffer</i>
+&#39; s length minus  <i>offset</i>
 is less than  <i>count</i>
 .</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>buffer</i>
+is null.</p></li>
 </ul>
 
 <p><a href="/petero-csharp/">Back to petero-csharp start page.</a></p>

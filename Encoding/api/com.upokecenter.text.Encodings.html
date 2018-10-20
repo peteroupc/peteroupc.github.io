@@ -405,8 +405,8 @@ bytes</code> begins.</p></li>
 <li><p><code>IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is
 less than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code>
 &#39; s length minus <code>offset</code> is less than <code>length</code>.</p></li>
-<li><p><code>NullPointerException</code> - The parameter <code>enc</code> or <code>bytes</code> is
-null.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>enc</code> or <code>
+bytes</code> is null.</p></li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -518,8 +518,8 @@ the invalid characters instead. If false, writes a question mark byte
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>input</code>
-is null.</li>
+<li><code>NullPointerException</code> - The parameter <code>encoder</code> or <code>
+input</code> is null.</li>
 </ul>
 
 <h3>EncodeToBytes</h3>
@@ -533,7 +533,7 @@ is null.</li>
  character (U + FFFD), and when writing to the byte array, any
  characters that can&#39;t be encoded are replaced with the byte 0x3f (the
  question mark character). <p>In the .NET implementation, this method
- is implemented as an extension method to any string object and can be
+ is implemented as an extension method to any String object and can be
  called as follows: <code>str.EncodeToBytes(enc)</code>. If the object&#39;s
  class already has a EncodeToBytes method with the same parameters,
  that method takes precedence over this extension method.</p> <p>In
@@ -685,7 +685,7 @@ input</code> is null.</li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -793,7 +793,7 @@ input</code> is null.</p></li>
  writing to the byte stream, any characters that can&#39;t be encoded are
  replaced with the byte 0x3f (the question mark character). <p>In the
  .NET implementation, this method is implemented as an extension
- method to any string object and can be called as follows:
+ method to any String object and can be called as follows:
  <code>str.EncodeToBytes(enc, writer)</code>. If the object&#39;s class already
  has a EncodeToBytes method with the same parameters, that method
  takes precedence over this extension method.</p> <p>In the .NET
@@ -1267,7 +1267,7 @@ str</code> is null.</li>
  code point, among other things. When reading the string, any unpaired
  surrogate characters are replaced with the replacement character
  (U + FFFD). <p>In the .NET implementation, this method is implemented
- as an extension method to any string object and can be called as
+ as an extension method to any String object and can be called as
  follows: <code>str.StringToInput(offset, length)</code>. If the object&#39;s
  class already has a StringToInput method with the same parameters,
  that method takes precedence over this extension method.</p> <p>In
@@ -1305,7 +1305,7 @@ str</code> is null.</li>
  string code point by code point, among other things. When reading the
  string, any unpaired surrogate characters are replaced with the
  replacement character (U + FFFD). <p>In the .NET implementation, this
- method is implemented as an extension method to any string object and
+ method is implemented as an extension method to any String object and
  can be called as follows: <code>str.StringToInput(offset, length)</code>.
  If the object&#39;s class already has a StringToInput method with the
  same parameters, that method takes precedence over this extension
