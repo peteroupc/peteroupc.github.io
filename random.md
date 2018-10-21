@@ -117,7 +117,7 @@ A cryptographic RNG implementation generates uniformly distributed random bits s
 
 If a cryptographic RNG implementation uses a PRNG, the following requirements apply:
 
-1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and MAY equal the PRNG's _state length_.
+1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and is less than or equal to the PRNG's _state length_.
 
 2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
     - MUST have as many bits as the PRNG's _state length_,
@@ -140,7 +140,7 @@ Examples of cryptographic RNG implementations include the following:
 <a id=Statistical_RNGs></a>
 ## Statistical RNGs
 
-Statistical RNGs are used, for example, in simulations, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical RNGs are generally suitable only if&mdash;
+Statistical RNGs are used, for example, in simulations, machine learning, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical RNGs are generally suitable only if&mdash;
 
 -  information security is not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.
@@ -288,7 +288,7 @@ Examples of nondeterministic sources are&mdash;
 - disk access timings,
 - timings of keystrokes and/or other input device interactions,
 - thermal noise,
-- the output of assembly instructions specially dedicated to random number generation, such as RdSeed and RdRand,
+- the output of assembly instructions specially dedicated to random number generation, such as RdSeed,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
 - differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(11)**](#Note11)</sup>).
 
