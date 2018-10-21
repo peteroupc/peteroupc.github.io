@@ -292,6 +292,9 @@ untagged.</li>
 <li><code>com.upokecenter.numbers.EInteger getMostOuterTag()</code><br>
 Gets the outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
+<li><code>CBORObject GetOrDefault​(Object key,
+        CBORObject defaultValue)</code><br>
+Not documented yet.</li>
 <li><code>int getSimpleValue()</code><br>
 Gets the simple value ID of this object, or -1 if this object is not a
 simple value (including if the value is a floating-point number).</li>
@@ -303,9 +306,9 @@ array.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
 <li><code>boolean HasMostOuterTag​(int tagValue)</code><br>
-Returns whether this object has a tag of the given number.</li>
+Not documented yet.</li>
 <li><code>boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
-Returns whether this object has a tag of the given number.</li>
+Not documented yet.</li>
 <li><code>boolean HasTag​(int tagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
@@ -342,8 +345,7 @@ Gets a value indicating whether this data item has at least one tag.</li>
 Gets a value indicating whether this value is a CBOR true value.</li>
 <li><code>boolean isUndefined()</code><br>
 Gets a value indicating whether this value is a CBOR undefined value.</li>
-<li><code>boolean isZero()</code><br>
-Gets a value indicating whether this object&#39;s value equals 0.</li>
+<li><code>boolean isZero()</code><br></li>
 <li><code>static CBORObject Multiply​(CBORObject first,
     CBORObject second)</code><br>
 Multiplies two CBOR numbers.</li>
@@ -381,7 +383,7 @@ If this object is an array, removes the first instance of the specified item
 Removes the item at the given index of this CBOR array.</li>
 <li><code>void set​(int index,
 CBORObject value)</code><br>
-Sets the value of a CBOR object by integer index in this array or by integer
+Gets the value of a CBOR object by integer index in this array or by integer
 key in this map.</li>
 <li><code>void set​(CBORObject key,
 CBORObject value)</code><br>
@@ -723,15 +725,6 @@ false</code>.</li>
 <pre>public final boolean isZero()
 </pre>
 
-<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> If this object&#39;s value equals 0; otherwise, . <code>
-false</code> .</li>
-</ul>
-
 <h3>getKeys</h3>
 
 <pre>public final Collection&lt;CBORObject&gt; getKeys()
@@ -881,7 +874,7 @@ doesn&#39;t exist.</li>
 <ul>
 <li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
 <li><p><code>IllegalArgumentException</code> - This object is an array and the index is
-less than 0 or equal to or greater than the size of the array.</p></li>
+less than 0 or at least the size of the array.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
 opposed to CBORObject.Null).</p></li>
 </ul>
@@ -891,7 +884,7 @@ opposed to CBORObject.Null).</p></li>
 <pre>public void set​(int index, CBORObject value)
 </pre>
 
-<p>Sets the value of a CBOR object by integer index in this array or by integer
+<p>Gets the value of a CBOR object by integer index in this array or by integer
  key in this map.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -907,9 +900,30 @@ integer, even a negative one.).</li>
 <ul>
 <li><p><code>IllegalStateException</code> - This object is not an array or map.</p></li>
 <li><p><code>IllegalArgumentException</code> - This object is an array and the index is
-less than 0 or equal to or greater than the size of the array.</p></li>
+less than 0 or at least the size of the array.</p></li>
 <li><p><code>NullPointerException</code> - The parameter &quot;value&quot; is null (as
 opposed to CBORObject.Null).</p></li>
+</ul>
+
+<h3>GetOrDefault</h3>
+
+<pre>public CBORObject GetOrDefault​(Object key, CBORObject defaultValue)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>key</code> - The parameter <code>key</code> is not documented yet.</p></li>
+<li><p><code>defaultValue</code> - The parameter <code>defaultValue</code> is not documented
+yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBORObject object.</li>
 </ul>
 
 <h3>get</h3>
@@ -3406,7 +3420,7 @@ the other object or if the other object is null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>objKey</code> - An arbitrary object.</li>
+<li><code>objKey</code> - The parameter <code>objKey</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3617,26 +3631,18 @@ if the given key is not found or this object is not a map.</li>
 <pre>public boolean HasMostOuterTag​(int tagValue)
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>tagValue</code> - The tag value to search for.</li>
+<li><code>tagValue</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code>.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>IllegalArgumentException</code> - TagValue is less than 0.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;obj&quot; is null.</p></li>
+<li>A Boolean object.</li>
 </ul>
 
 <h3>HasMostOuterTag</h3>
@@ -3644,26 +3650,24 @@ otherwise, <code>false</code>.</li>
 <pre>public boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)
 </pre>
 
-<p>Returns whether this object has a tag of the given number.</p>
+<p>Not documented yet.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigTagValue</code> - The tag value to search for.</li>
+<li><code>bigTagValue</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if this object has a tag of the given number;
-otherwise, <code>false</code> .</li>
+<li>A Boolean object.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
+<li><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is null.</li>
 </ul>
 
 <h3>HasTag</h3>

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 19, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 21, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -51,12 +51,10 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 - [**Contents**](#Contents)
 - [**Definitions**](#Definitions)
 - [**Cryptographic RNGs**](#Cryptographic_RNGs)
-    - [**Quality**](#Quality)
-    - [**Seeding and Reseeding**](#Seeding_and_Reseeding)
+    - [**Requirements**](#Requirements)
     - [**Examples**](#Examples)
 - [**Statistical RNGs**](#Statistical_RNGs)
-    - [**Quality**](#Quality_2)
-    - [**Seeding and Reseeding**](#Seeding_and_Reseeding_2)
+    - [**Requirements**](#Requirements_2)
     - [**Examples and Non-Examples**](#Examples_and_Non_Examples)
 - [**Seeded PRNGs**](#Seeded_PRNGs)
     - [**When to Use a Seeded PRNG**](#When_to_Use_a_Seeded_PRNG)
@@ -112,24 +110,21 @@ Cryptographic RNGs (also known as "cryptographically strong" or "cryptographical
 
 as well as for applications that generate random numbers so infrequently that the RNG's speed is not a concern.
 
-<a id=Quality></a>
-### Quality
+<a id=Requirements></a>
+### Requirements
 
 A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG.
 
-<a id=Seeding_and_Reseeding></a>
-### Seeding and Reseeding
+If a cryptographic RNG implementation uses a PRNG, the following requirements apply:
 
-If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
+1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and MAY equal the PRNG's _state length_.
 
-The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and MAY equal the PRNG's _state length_.
+2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
+    - MUST have as many bits as the PRNG's _state length_,
+    - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
+    - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
 
-Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed defined as follows. The seed&mdash;
-- MUST have as many bits as the PRNG's _state length_,
-- MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
-- MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
-
-The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
+3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 <a id=Examples></a>
 ### Examples
@@ -152,24 +147,21 @@ Statistical RNGs are used, for example, in simulations, numerical integration, a
 
 A statistical RNG is usually implemented with a PRNG, but can also be implemented in a similar way as a cryptographic RNG provided it remains reasonably fast.
 
-<a id=Quality_2></a>
-### Quality
+<a id=Requirements_2></a>
+### Requirements
 
 A statistical RNG generates random bits, each of which is uniformly distributed independently of the other bits, at least for nearly all practical purposes.  If the implementation uses a PRNG, that PRNG algorithm MUST either satisfy the _collision resistance_ property or be significantly more likely than not to pass all tests (other than MatrixRank and LinearComp) of `BigCrush`, part of L'Ecuyer and Simard's "TestU01". The RNG need not be perfectly equidistributed.
 
-<a id=Seeding_and_Reseeding_2></a>
-### Seeding and Reseeding
-
 If a statistical RNG implementation uses a PRNG, the following requirements apply.
 
-The PRNG's _state length_ MUST be at least 64 bits, SHOULD be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.
+1. The PRNG's _state length_ MUST be at least 64 bits, SHOULD be at least 128 bits, and is encouraged to be as high as the implementation can go to remain reasonably fast for most applications.
 
-Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed described as follows. The seed&mdash;
-- MUST have as many bits as the PRNG's _state length_,
-- MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_, and
-- MAY be mixed with arbitrary data other than the seed.
+2. Before an instance of the RNG generates a random number, it MUST have been initialized ("seeded") with a seed described as follows. The seed&mdash;
+    - MUST have as many bits as the PRNG's _state length_,
+    - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG's _state length_, and
+    - MAY be mixed with arbitrary data other than the seed.
 
-The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be the PRNG's period's square root or less.
+3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be the PRNG's period's square root or less.
 
 <a id=Examples_and_Non_Examples></a>
 ### Examples and Non-Examples
@@ -219,16 +211,12 @@ An application SHOULD NOT use a PRNG with a seed it specifies (rather than an au
 > - C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
 > - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
-Among other things, using seeded PRNGs only in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.
+Among other things, not using seeded PRNGs except in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.
 
 <a id=Which_Seeded_PRNG_to_Use></a>
 ### Which Seeded PRNG to Use
 
-If an application decides to use a seeded PRNG for repeatable "randomness", that PRNG SHOULD&mdash;
-
-- meet or exceed the quality requirements of a [**statistical RNG**](#Statistical_RNGs),
-- be reasonably fast, and
-- have a _state length_ of 64 bits or greater.
+If an application decides to use a seeded PRNG for repeatable "randomness", that PRNG SHOULD meet or exceed the requirements of a [**statistical RNG**](#Statistical_RNGs) (except it may use a custom seed) and SHOULD be reasonably fast.
 
 <a id=Seed_Generation_for_Seeded_PRNGs></a>
 ### Seed Generation for Seeded PRNGs
@@ -372,7 +360,7 @@ In the limited cases where existing solutions are inadequate, a **programming la
 
 > **Example:** A C language API for an RNG could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
 
-If an API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed).  If an API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented; the same is true for any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).
+If an API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(13)**](#Note13)</sup> (it MAY provide a separate PRNG to accept such a seed).  If an API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).
 
 My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
 
@@ -421,7 +409,7 @@ If an application uses PRNGs for shuffling purposes, it is encouraged to&mdash;
 
 Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(16)**](#Note16)</sup>.  For example, `B` is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for `B` and follow the steps above accordingly &mdash; for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.)
 
-The PRNG chosen this way SHOULD meet at least the quality requirements of a statistical RNG implementation and SHOULD have the highest feasible period for its state length.
+The PRNG chosen this way SHOULD meet or exceed the requirements of a statistical RNG (except it uses a seed generated as given above) and SHOULD have the highest feasible period for its state length.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
