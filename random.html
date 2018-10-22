@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 21, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 22, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -212,7 +212,7 @@
 
 <h2>Statistical RNGs</h2>
 
-<p>Statistical RNGs are used, for example, in simulations, machine learning, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical RNGs are generally suitable only if&mdash;</p>
+<p>Statistical RNGs are used, for example, in simulations, machine learning, numerical integration, and many games to bring an element of chance and variation to the application. However, statistical RNGs are generally suitable only if&mdash;</p>
 
 <ul>
 <li> information security is not involved, and</li>
@@ -277,7 +277,7 @@
 
 <h2>Seeded PRNGs</h2>
 
-<p>In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparent randomness, starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNGs given earlier, the PRNGs involved are automatically seeded before use.)</p>
+<p>In addition, some applications use pseudorandom number generators (PRNGs) to generate apparently &quot;random&quot; numbers starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNGs given earlier, the PRNGs involved are automatically seeded before use.)</p>
 
 <p><a id=When_to_Use_a_Seeded_PRNG></a></p>
 
@@ -313,7 +313,7 @@
 </ul>
 </blockquote>
 
-<p>Among other things, not using seeded PRNGs except in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.</p>
+<p>Using seeded RNGs ties the application to a particular RNG or RNG implementation, which is why they are NOT RECOMMENDED except in the limited circumstances given above.</p>
 
 <p><a id=Which_Seeded_PRNG_to_Use></a></p>
 
@@ -526,7 +526,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation.</small></p>
 
-<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup></small></p>
+<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD only be used to supplement other techniques for random number generation.</small></p>
 

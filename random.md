@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 21, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 22, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -140,7 +140,7 @@ Examples of cryptographic RNG implementations include the following:
 <a id=Statistical_RNGs></a>
 ## Statistical RNGs
 
-Statistical RNGs are used, for example, in simulations, machine learning, numerical integration, and many games to bring an element of chance and variation to the application, with the goal that each possible outcome is equally likely. However, statistical RNGs are generally suitable only if&mdash;
+Statistical RNGs are used, for example, in simulations, machine learning, numerical integration, and many games to bring an element of chance and variation to the application. However, statistical RNGs are generally suitable only if&mdash;
 
 -  information security is not involved, and
 -  the application generates random numbers so frequently that it would slow down undesirably if a cryptographic RNG were used instead.
@@ -188,7 +188,7 @@ Non-examples include the following:
 <a id=Seeded_PRNGs></a>
 ## Seeded PRNGs
 
-In addition, some applications use pseudorandom number generators (PRNGs) to generate results based on apparent randomness, starting from a known initial state, or "seed". Such applications usually care about repeatable "randomness". (Note that in the definitions for [**cryptographic**](#Cryptographic_RNGs) and [**statistical**](#Statistical_RNGs) RNGs given earlier, the PRNGs involved are automatically seeded before use.)
+In addition, some applications use pseudorandom number generators (PRNGs) to generate apparently "random" numbers starting from a known initial state, or "seed". Such applications usually care about repeatable "randomness". (Note that in the definitions for [**cryptographic**](#Cryptographic_RNGs) and [**statistical**](#Statistical_RNGs) RNGs given earlier, the PRNGs involved are automatically seeded before use.)
 
 <a id=When_to_Use_a_Seeded_PRNG></a>
 ### When to Use a Seeded PRNG
@@ -211,7 +211,7 @@ An application SHOULD NOT use a PRNG with a seed it specifies (rather than an au
 > - C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), are not stable (because the algorithms they use are implementation-defined according to the specification).
 > - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) is not stable (because its generation behavior could change in the future).
 
-Among other things, not using seeded PRNGs except in the limited circumstances given above makes the application less dependent on a particular RNG or on a particular RNG implementation, meaning the application is free to change the RNG if needed.
+Using seeded RNGs ties the application to a particular RNG or RNG implementation, which is why they are NOT RECOMMENDED except in the limited circumstances given above.
 
 <a id=Which_Seeded_PRNG_to_Use></a>
 ### Which Seeded PRNG to Use
@@ -348,7 +348,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(E) In my opinion, Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation.</small>
 
-<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(13)**](#Note13)</sup></small>
+<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(13)**](#Note13)</sup>.</small>
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD only be used to supplement other techniques for random number generation.</small>
 
