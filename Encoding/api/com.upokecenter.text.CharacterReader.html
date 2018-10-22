@@ -17,55 +17,55 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>CharacterReader​(InputStream stream) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will read the stream as
 UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
 characters (U + FFFD).</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the byte-order
 mark (U + FEFF) if it appears first in the stream and replace invalid
 byte sequences with replacement characters (U + FFFD).</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the byte-order
 mark (U + FEFF) if it appears first in the stream.</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode,
-           boolean errorThrow,
-           boolean dontSkipUtf8Bom) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode,
+           boolean errorThrow,
+           boolean dontSkipUtf8Bom) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(String str) CharacterReader</code><br>
+<li><code>CharacterReader​(String str) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; if the string begins with a byte-order mark (U + FEFF), it
 won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to
 U + DFFF) in the string are replaced with replacement characters
 (U + FFFD).</li>
-<li><code>CharacterReader​(String str,
-           boolean skipByteOrderMark) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           boolean skipByteOrderMark) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
 string are replaced with replacement characters (U + FFFD).</li>
-<li><code>CharacterReader​(String str,
-           boolean skipByteOrderMark,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           boolean skipByteOrderMark,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string.</li>
-<li><code>CharacterReader​(String str,
-           int offset,
-           int length) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           int offset,
+           int length) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(String str,
-           int offset,
-           int length,
-           boolean skipByteOrderMark,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           int offset,
+           int length,
+           boolean skipByteOrderMark,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
-<li><code>int Read​(int[] chars,
-int index,
-int length)</code><br>
+<li><code>int Read​(int[] chars,
+int index,
+int length)</code><br>
 Reads a series of code points from a Unicode stream or a string.</li>
 <li><code>int ReadChar()</code><br>
 Reads the next character from a Unicode stream or a string.</li>
@@ -74,51 +74,51 @@ Reads the next character from a Unicode stream or a string.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CharacterReader​(InputStream stream) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will read the stream as
 UTF-8, skip the byte-order mark (U + FEFF) if it appears first in the
 stream, and replace invalid byte sequences with replacement
 characters (U + FFFD).</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the byte-order
 mark (U + FEFF) if it appears first in the stream and replace invalid
 byte sequences with replacement characters (U + FFFD).</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class; will skip the byte-order
 mark (U + FEFF) if it appears first in the stream.</li>
-<li><code>CharacterReader​(InputStream stream,
-           int mode,
-           boolean errorThrow,
-           boolean dontSkipUtf8Bom) CharacterReader</code><br>
+<li><code>CharacterReader​(InputStream stream,
+           int mode,
+           boolean errorThrow,
+           boolean dontSkipUtf8Bom) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(String str) CharacterReader</code><br>
+<li><code>CharacterReader​(String str) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; if the string begins with a byte-order mark (U + FEFF), it
 won&#39;t be skipped, and any unpaired surrogate code points (U+D800 to
 U + DFFF) in the string are replaced with replacement characters
 (U + FFFD).</li>
-<li><code>CharacterReader​(String str,
-           boolean skipByteOrderMark) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           boolean skipByteOrderMark) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string; any unpaired surrogate code points (U + D800 to U + DFFF) in the
 string are replaced with replacement characters (U + FFFD).</li>
-<li><code>CharacterReader​(String str,
-           boolean skipByteOrderMark,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           boolean skipByteOrderMark,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class using a Unicode 16-bit
 string.</li>
-<li><code>CharacterReader​(String str,
-           int offset,
-           int length) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           int offset,
+           int length) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
-<li><code>CharacterReader​(String str,
-           int offset,
-           int length,
-           boolean skipByteOrderMark,
-           boolean errorThrow) CharacterReader</code><br>
+<li><code>CharacterReader​(String str,
+           int offset,
+           int length,
+           boolean skipByteOrderMark,
+           boolean errorThrow) CharacterReader</code><br>
 Initializes a new instance of the CharacterReader class.</li>
 </ul>
 
@@ -370,7 +370,7 @@ start of the stream.</p></li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>Read</code>&nbsp;in interface&nbsp;<code>ICharacterInput</code></li>
+<li><code>Read</code> in interface <code>ICharacterInput</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -410,7 +410,7 @@ less than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</co
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>ReadChar</code>&nbsp;in interface&nbsp;<code>ICharacterInput</code></li>
+<li><code>ReadChar</code> in interface <code>ICharacterInput</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

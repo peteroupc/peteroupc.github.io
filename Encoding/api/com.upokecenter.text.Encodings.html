@@ -117,123 +117,123 @@ bytes.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>static String DecodeToString​(ICharacterEncoding enc,
-          byte[] bytes)</code><br>
+<li><code>static String DecodeToString​(ICharacterEncoding enc,
+          byte[] bytes)</code><br>
 Reads a byte array from a data source and converts the bytes from a given
 encoding to a text string.</li>
-<li><code>static String DecodeToString​(ICharacterEncoding enc,
-          byte[] bytes,
-          int offset,
-          int length)</code><br>
+<li><code>static String DecodeToString​(ICharacterEncoding enc,
+          byte[] bytes,
+          int offset,
+          int length)</code><br>
 Reads a portion of a byte array from a data source and converts the bytes
 from a given encoding to a text string.</li>
-<li><code>static String DecodeToString​(ICharacterEncoding encoding,
-          IByteReader input)</code><br>
+<li><code>static String DecodeToString​(ICharacterEncoding encoding,
+          IByteReader input)</code><br>
 Reads bytes from a data source and converts the bytes from a given encoding
 to a text string.</li>
-<li><code>static String DecodeToString​(ICharacterEncoding enc,
-          InputStream input)</code><br>
+<li><code>static String DecodeToString​(ICharacterEncoding enc,
+          InputStream input)</code><br>
 Decodes data read from a data stream into a text string in the given
 character encoding.</li>
-<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoder encoder)</code><br>
+<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
+         ICharacterEncoder encoder)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using a given character encoding.</li>
-<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoder encoder,
-         boolean htmlFallback)</code><br>
+<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
+         ICharacterEncoder encoder,
+         boolean htmlFallback)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder and fallback
 strategy.</li>
-<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
-         ICharacterEncoding encoding)</code><br>
+<li><code>static byte[] EncodeToBytes​(ICharacterInput input,
+         ICharacterEncoding encoding)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
-<li><code>static byte[] EncodeToBytes​(String str,
-         ICharacterEncoding enc)</code><br>
+<li><code>static byte[] EncodeToBytes​(String str,
+         ICharacterEncoding enc)</code><br>
 Reads Unicode characters from a text string and writes them to a byte array
 encoded in a given character encoding.</li>
-<li><code>static byte[] EncodeToBytes​(String str,
-         ICharacterEncoding enc,
-         boolean htmlFallback)</code><br>
+<li><code>static byte[] EncodeToBytes​(String str,
+         ICharacterEncoding enc,
+         boolean htmlFallback)</code><br>
 Reads Unicode characters from a text string and writes them to a byte array
 encoded in a given character encoding and using the given encoder
 fallback strategy.</li>
-<li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoder encoder,
-          IWriter writer)</code><br>
+<li><code>static void EncodeToWriter​(ICharacterInput input,
+          ICharacterEncoder encoder,
+          IWriter writer)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded in a given character encoding.</li>
-<li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoder encoder,
-          OutputStream output)</code><br>
+<li><code>static void EncodeToWriter​(ICharacterInput input,
+          ICharacterEncoder encoder,
+          OutputStream output)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded in a given character encoding.</li>
-<li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoding encoding,
-          IWriter writer)</code><br>
+<li><code>static void EncodeToWriter​(ICharacterInput input,
+          ICharacterEncoding encoding,
+          IWriter writer)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
-<li><code>static void EncodeToWriter​(ICharacterInput input,
-          ICharacterEncoding encoding,
-          OutputStream output)</code><br>
+<li><code>static void EncodeToWriter​(ICharacterInput input,
+          ICharacterEncoding encoding,
+          OutputStream output)</code><br>
 Reads Unicode characters from a character input and writes them to a byte
 array encoded using the given character encoder.</li>
-<li><code>static void EncodeToWriter​(String str,
-          ICharacterEncoding enc,
-          IWriter writer)</code><br>
+<li><code>static void EncodeToWriter​(String str,
+          ICharacterEncoding enc,
+          IWriter writer)</code><br>
 Converts a text string to bytes and writes the bytes to an output byte
 writer.</li>
-<li><code>static void EncodeToWriter​(String str,
-          ICharacterEncoding enc,
-          OutputStream output)</code><br>
+<li><code>static void EncodeToWriter​(String str,
+          ICharacterEncoding enc,
+          OutputStream output)</code><br>
 Converts a text string to bytes and writes the bytes to an output data
 stream.</li>
-<li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
-           IByteReader stream)</code><br>
+<li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
+           IByteReader stream)</code><br>
 Converts a character encoding into a character input stream, given a
 streamable source of bytes.</li>
-<li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
-           InputStream input)</code><br>
+<li><code>static ICharacterInput GetDecoderInput​(ICharacterEncoding encoding,
+           InputStream input)</code><br>
 Converts a character encoding into a character input stream, given a data
 stream.</li>
-<li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
-                  IByteReader stream)</code><br>
+<li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
+                  IByteReader stream)</code><br>
 Converts a character encoding into a character input stream, given a
 streamable source of bytes.</li>
-<li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
-                  InputStream input)</code><br>
+<li><code>static ICharacterInput GetDecoderInputSkipBom​(ICharacterEncoding encoding,
+                  InputStream input)</code><br>
 Converts a character encoding into a character input stream, given a
 readable data stream.</li>
-<li><code>static ICharacterEncoding GetEncoding​(String name)</code><br>
+<li><code>static ICharacterEncoding GetEncoding​(String name)</code><br>
 Returns a character encoding from the given name.</li>
-<li><code>static ICharacterEncoding GetEncoding​(String name,
-       boolean forEmail)</code><br>
+<li><code>static ICharacterEncoding GetEncoding​(String name,
+       boolean forEmail)</code><br>
 Returns a character encoding from the given name.</li>
-<li><code>static ICharacterEncoding GetEncoding​(String name,
-       boolean forEmail,
-       boolean allowReplacement)</code><br>
+<li><code>static ICharacterEncoding GetEncoding​(String name,
+       boolean forEmail,
+       boolean allowReplacement)</code><br>
 Returns a character encoding from the given name.</li>
-<li><code>static String InputToString​(ICharacterInput reader)</code><br>
+<li><code>static String InputToString​(ICharacterInput reader)</code><br>
 Reads Unicode characters from a character input and converts them to a text
 string.</li>
-<li><code>static String ResolveAlias​(String name)</code><br>
+<li><code>static String ResolveAlias​(String name)</code><br>
 Resolves a character encoding&#39;s name to a standard form.</li>
-<li><code>static String ResolveAliasForEmail​(String name)</code><br>
+<li><code>static String ResolveAliasForEmail​(String name)</code><br>
 Resolves a character encoding&#39;s name to a canonical form, using rules more
 suitable for email.</li>
-<li><code>static byte[] StringToBytes​(ICharacterEncoder encoder,
-         String str)</code><br>
+<li><code>static byte[] StringToBytes​(ICharacterEncoder encoder,
+         String str)</code><br>
 Converts a text string to a byte array using the given character encoder.</li>
-<li><code>static byte[] StringToBytes​(ICharacterEncoding encoding,
-         String str)</code><br>
+<li><code>static byte[] StringToBytes​(ICharacterEncoding encoding,
+         String str)</code><br>
 Converts a text string to a byte array encoded in a given character
 encoding.</li>
-<li><code>static ICharacterInput StringToInput​(String str)</code><br>
+<li><code>static ICharacterInput StringToInput​(String str)</code><br>
 Converts a text string to a character input.</li>
-<li><code>static ICharacterInput StringToInput​(String str,
-         int offset,
-         int length)</code><br>
+<li><code>static ICharacterInput StringToInput​(String str,
+         int offset,
+         int length)</code><br>
 Converts a portion of a text string to a character input.</li>
 </ul>
 

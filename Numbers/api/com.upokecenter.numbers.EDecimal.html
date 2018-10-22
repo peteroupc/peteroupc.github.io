@@ -181,181 +181,181 @@ Represents the number 0.</li>
 <li><code>EDecimal Abs()</code><br>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
-<li><code>EDecimal Abs​(EContext context)</code><br>
+<li><code>EDecimal Abs​(EContext context)</code><br>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
-<li><code>EDecimal Add​(EDecimal otherValue)</code><br>
+<li><code>EDecimal Add​(EDecimal otherValue)</code><br>
 Adds this object and another decimal number and returns the result.</li>
-<li><code>EDecimal Add​(EDecimal otherValue,
-EContext ctx)</code><br>
+<li><code>EDecimal Add​(EDecimal otherValue,
+EContext ctx)</code><br>
 Finds the sum of this object and another object.</li>
-<li><code>int compareTo​(EDecimal other)</code><br>
+<li><code>int compareTo​(EDecimal other)</code><br>
 Compares the mathematical values of this object and another object,
 accepting NaN values.</li>
-<li><code>int CompareToBinary​(EFloat other)</code><br>
+<li><code>int CompareToBinary​(EFloat other)</code><br>
 Compares an arbitrary-precision binary float with this instance.</li>
-<li><code>EDecimal CompareToSignal​(EDecimal other,
-           EContext ctx)</code><br>
+<li><code>EDecimal CompareToSignal​(EDecimal other,
+           EContext ctx)</code><br>
 Compares the mathematical values of this object and another object, treating
 quiet NaN as signaling.</li>
-<li><code>int CompareToTotal​(EDecimal other)</code><br>
+<li><code>int CompareToTotal​(EDecimal other)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values.</li>
-<li><code>int CompareToTotal​(EDecimal other,
-          EContext ctx)</code><br>
+<li><code>int CompareToTotal​(EDecimal other,
+          EContext ctx)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values.</li>
-<li><code>int CompareToTotalMagnitude​(EDecimal other)</code><br>
+<li><code>int CompareToTotalMagnitude​(EDecimal other)</code><br>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
-<li><code>EDecimal CompareToWithContext​(EDecimal other,
-                EContext ctx)</code><br>
+<li><code>EDecimal CompareToWithContext​(EDecimal other,
+                EContext ctx)</code><br>
 Compares the mathematical values of this object and another object.</li>
-<li><code>EDecimal CopySign​(EDecimal other)</code><br>
+<li><code>EDecimal CopySign​(EDecimal other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
-<li><code>static EDecimal Create​(int mantissaSmall,
-  int exponentSmall) exponent*10^mantissa</code><br>
+<li><code>static EDecimal Create​(int mantissaSmall,
+  int exponentSmall) exponent*10^mantissa</code><br>
 Creates a number with the value exponent*10^mantissa</li>
-<li><code>static EDecimal Create​(EInteger mantissa,
-  EInteger exponent) exponent*10^mantissa</code><br>
+<li><code>static EDecimal Create​(EInteger mantissa,
+  EInteger exponent) exponent*10^mantissa</code><br>
 Creates a number with the value exponent*10^mantissa</li>
-<li><code>static EDecimal CreateNaN​(EInteger diag)</code><br>
+<li><code>static EDecimal CreateNaN​(EInteger diag)</code><br>
 Creates a not-a-number arbitrary-precision decimal number.</li>
-<li><code>static EDecimal CreateNaN​(EInteger diag,
-     boolean signaling,
-     boolean negative,
-     EContext ctx)</code><br>
+<li><code>static EDecimal CreateNaN​(EInteger diag,
+     boolean signaling,
+     boolean negative,
+     EContext ctx)</code><br>
 Creates a not-a-number arbitrary-precision decimal number.</li>
-<li><code>EDecimal Divide​(EDecimal divisor)</code><br>
+<li><code>EDecimal Divide​(EDecimal divisor)</code><br>
 Divides this object by another decimal number and returns the result.</li>
-<li><code>EDecimal Divide​(EDecimal divisor,
-  EContext ctx)</code><br>
+<li><code>EDecimal Divide​(EDecimal divisor,
+  EContext ctx)</code><br>
 Divides this arbitrary-precision decimal number by another
 arbitrary-precision decimal number.</li>
-<li><code>EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)</code><br>
+<li><code>EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
 Renamed to DivRemNaturalScale.</li>
-<li><code>EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor,
-                          EContext ctx)</code><br>
+<li><code>EDecimal[] DivideAndRemainderNaturalScale​(EDecimal divisor,
+                          EContext ctx)</code><br>
 Deprecated.
 Renamed to DivRemNaturalScale.
 Renamed to DivRemNaturalScale.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            int desiredExponentInt)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            int desiredExponentInt)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent (expressed as a 32-bit signed integer) to the result, using
 the half-even rounding mode.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            int desiredExponentInt,
-            EContext ctx)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            int desiredExponentInt,
+            EContext ctx)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent (expressed as a 32-bit signed integer) to the result, using
 the half-even rounding mode.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            int desiredExponentInt,
-            ERounding rounding)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            int desiredExponentInt,
+            ERounding rounding)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent (expressed as a 32-bit signed integer) to the result, using
 the half-even rounding mode.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            long desiredExponentSmall)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            long desiredExponentSmall)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent (expressed as a 64-bit signed integer) to the result, using
 the half-even rounding mode.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            long desiredExponentSmall,
-            EContext ctx)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            long desiredExponentSmall,
+            EContext ctx)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent to the result.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            long desiredExponentSmall,
-            ERounding rounding)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            long desiredExponentSmall,
+            ERounding rounding)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent to the result.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            EInteger exponent)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            EInteger exponent)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent to the result, using the half-even rounding mode.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            EInteger exponent,
-            EContext ctx)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            EInteger exponent,
+            EContext ctx)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent to the result.</li>
-<li><code>EDecimal DivideToExponent​(EDecimal divisor,
-            EInteger desiredExponent,
-            ERounding rounding)</code><br>
+<li><code>EDecimal DivideToExponent​(EDecimal divisor,
+            EInteger desiredExponent,
+            ERounding rounding)</code><br>
 Divides two arbitrary-precision decimal numbers, and gives a particular
 exponent to the result.</li>
-<li><code>EDecimal DivideToIntegerNaturalScale​(EDecimal divisor)</code><br>
+<li><code>EDecimal DivideToIntegerNaturalScale​(EDecimal divisor)</code><br>
 Divides two arbitrary-precision decimal numbers, and returns the integer
 part of the result, rounded down, with the preferred exponent set to
 this value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code>EDecimal DivideToIntegerNaturalScale​(EDecimal divisor,
-                       EContext ctx)</code><br>
+<li><code>EDecimal DivideToIntegerNaturalScale​(EDecimal divisor,
+                       EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
 result (which is initially rounded down), with the preferred exponent
 set to this value&#39;s exponent minus the divisor&#39;s exponent.</li>
-<li><code>EDecimal DivideToIntegerZeroScale​(EDecimal divisor,
-                    EContext ctx)</code><br>
+<li><code>EDecimal DivideToIntegerZeroScale​(EDecimal divisor,
+                    EContext ctx)</code><br>
 Divides this object by another object, and returns the integer part of the
 result, with the exponent set to 0.</li>
-<li><code>EDecimal DivideToSameExponent​(EDecimal divisor,
-                ERounding rounding)</code><br>
+<li><code>EDecimal DivideToSameExponent​(EDecimal divisor,
+                ERounding rounding)</code><br>
 Divides this object by another decimal number and returns a result with the
 same exponent as this object (the dividend).</li>
-<li><code>EDecimal[] DivRemNaturalScale​(EDecimal divisor)</code><br>
+<li><code>EDecimal[] DivRemNaturalScale​(EDecimal divisor)</code><br>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
-<li><code>EDecimal[] DivRemNaturalScale​(EDecimal divisor,
-              EContext ctx)</code><br>
+<li><code>EDecimal[] DivRemNaturalScale​(EDecimal divisor,
+              EContext ctx)</code><br>
 Calculates the quotient and remainder using the DivideToIntegerNaturalScale
 and the formula in RemainderNaturalScale.</li>
-<li><code>boolean equals​(EDecimal other)</code><br>
+<li><code>boolean equals​(EDecimal other)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object&#39;s mantissa (significand), exponent, and
 properties are equal to those of another object and that other object
 is an arbitrary-precision decimal number.</li>
-<li><code>EDecimal Exp​(EContext ctx)</code><br>
+<li><code>EDecimal Exp​(EContext ctx)</code><br>
 Finds e (the base of natural logarithms) raised to the power of this
 object&#39;s value.</li>
-<li><code>static EDecimal FromByte​(byte inputByte)</code><br>
+<li><code>static EDecimal FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
-<li><code>static EDecimal FromDouble​(double dbl)</code><br>
+<li><code>static EDecimal FromDouble​(double dbl)</code><br>
 Creates a decimal number from a 64-bit binary floating-point number.</li>
-<li><code>static EDecimal FromEFloat​(EFloat bigfloat)</code><br>
+<li><code>static EDecimal FromEFloat​(EFloat bigfloat)</code><br>
 Creates a decimal number from an arbitrary-precision binary floating-point
 number.</li>
-<li><code>static EDecimal FromEInteger​(EInteger bigint)</code><br>
+<li><code>static EDecimal FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to an arbitrary precision decimal.</li>
-<li><code>static EDecimal FromExtendedFloat​(EFloat ef)</code><br>
+<li><code>static EDecimal FromExtendedFloat​(EFloat ef)</code><br>
 Deprecated.
 Renamed to FromEFloat.
 Renamed to FromEFloat.</li>
-<li><code>static EDecimal FromInt16​(short inputInt16)</code><br>
+<li><code>static EDecimal FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
-<li><code>static EDecimal FromInt32​(int valueSmaller)</code><br>
+<li><code>static EDecimal FromInt32​(int valueSmaller)</code><br>
 Creates a decimal number from a 32-bit signed integer.</li>
-<li><code>static EDecimal FromInt64​(long valueSmall)</code><br>
+<li><code>static EDecimal FromInt64​(long valueSmall)</code><br>
 Creates a decimal number from a 64-bit signed integer.</li>
-<li><code>static EDecimal FromSingle​(float flt)</code><br>
+<li><code>static EDecimal FromSingle​(float flt)</code><br>
 Creates a decimal number from a 32-bit binary floating-point number.</li>
-<li><code>static EDecimal FromString​(String str)</code><br>
+<li><code>static EDecimal FromString​(String str)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
-      int offset,
-      int length)</code><br>
+<li><code>static EDecimal FromString​(String str,
+      int offset,
+      int length)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
-      int offset,
-      int length,
-      EContext ctx)</code><br>
+<li><code>static EDecimal FromString​(String str,
+      int offset,
+      int length,
+      EContext ctx)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
-<li><code>static EDecimal FromString​(String str,
-      EContext ctx)</code><br>
+<li><code>static EDecimal FromString​(String str,
+      EContext ctx)</code><br>
 Creates a decimal number from a text string that represents a number.</li>
 <li><code>EInteger getExponent()</code><br>
 Gets this object&#39;s exponent.</li>
@@ -385,225 +385,225 @@ Gets a value indicating whether this object is a quiet not-a-number value.</li>
 Gets a value indicating whether this object is a signaling not-a-number
 value.</li>
 <li><code>boolean isZero()</code><br></li>
-<li><code>EDecimal Log​(EContext ctx)</code><br>
+<li><code>EDecimal Log​(EContext ctx)</code><br>
 Finds the natural logarithm of this object, that is, the power (exponent)
 that e (the base of natural logarithms) must be raised to in order to
 equal this object&#39;s value.</li>
-<li><code>EDecimal Log10​(EContext ctx)</code><br>
+<li><code>EDecimal Log10​(EContext ctx)</code><br>
 Finds the base-10 logarithm of this object, that is, the power (exponent)
 that the number 10 must be raised to in order to equal this object&#39;s
 value.</li>
-<li><code>static EDecimal Max​(EDecimal first,
-EDecimal second)</code><br>
+<li><code>static EDecimal Max​(EDecimal first,
+EDecimal second)</code><br>
 Gets the greater value between two decimal numbers.</li>
-<li><code>static EDecimal Max​(EDecimal first,
-EDecimal second,
-EContext ctx)</code><br>
+<li><code>static EDecimal Max​(EDecimal first,
+EDecimal second,
+EContext ctx)</code><br>
 Gets the greater value between two decimal numbers.</li>
-<li><code>static EDecimal MaxMagnitude​(EDecimal first,
-        EDecimal second)</code><br>
+<li><code>static EDecimal MaxMagnitude​(EDecimal first,
+        EDecimal second)</code><br>
 Gets the greater value between two values, ignoring their signs.</li>
-<li><code>static EDecimal MaxMagnitude​(EDecimal first,
-        EDecimal second,
-        EContext ctx)</code><br>
+<li><code>static EDecimal MaxMagnitude​(EDecimal first,
+        EDecimal second,
+        EContext ctx)</code><br>
 Gets the greater value between two values, ignoring their signs.</li>
-<li><code>static EDecimal Min​(EDecimal first,
-EDecimal second)</code><br>
+<li><code>static EDecimal Min​(EDecimal first,
+EDecimal second)</code><br>
 Gets the lesser value between two decimal numbers.</li>
-<li><code>static EDecimal Min​(EDecimal first,
-EDecimal second,
-EContext ctx)</code><br>
+<li><code>static EDecimal Min​(EDecimal first,
+EDecimal second,
+EContext ctx)</code><br>
 Gets the lesser value between two decimal numbers.</li>
-<li><code>static EDecimal MinMagnitude​(EDecimal first,
-        EDecimal second)</code><br>
+<li><code>static EDecimal MinMagnitude​(EDecimal first,
+        EDecimal second)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
-<li><code>static EDecimal MinMagnitude​(EDecimal first,
-        EDecimal second,
-        EContext ctx)</code><br>
+<li><code>static EDecimal MinMagnitude​(EDecimal first,
+        EDecimal second,
+        EContext ctx)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
-<li><code>EDecimal MovePointLeft​(int places)</code><br>
+<li><code>EDecimal MovePointLeft​(int places)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the left.</li>
-<li><code>EDecimal MovePointLeft​(int places,
-         EContext ctx)</code><br>
+<li><code>EDecimal MovePointLeft​(int places,
+         EContext ctx)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the left.</li>
-<li><code>EDecimal MovePointLeft​(EInteger bigPlaces)</code><br>
+<li><code>EDecimal MovePointLeft​(EInteger bigPlaces)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the left.</li>
-<li><code>EDecimal MovePointLeft​(EInteger bigPlaces,
-         EContext ctx)</code><br>
+<li><code>EDecimal MovePointLeft​(EInteger bigPlaces,
+         EContext ctx)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the left.</li>
-<li><code>EDecimal MovePointRight​(int places)</code><br>
+<li><code>EDecimal MovePointRight​(int places)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the right.</li>
-<li><code>EDecimal MovePointRight​(int places,
-          EContext ctx)</code><br>
+<li><code>EDecimal MovePointRight​(int places,
+          EContext ctx)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the right.</li>
-<li><code>EDecimal MovePointRight​(EInteger bigPlaces)</code><br>
+<li><code>EDecimal MovePointRight​(EInteger bigPlaces)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the right.</li>
-<li><code>EDecimal MovePointRight​(EInteger bigPlaces,
-          EContext ctx)</code><br>
+<li><code>EDecimal MovePointRight​(EInteger bigPlaces,
+          EContext ctx)</code><br>
 Returns a number similar to this number but with the decimal point moved to
 the right.</li>
-<li><code>EDecimal Multiply​(EDecimal otherValue)</code><br>
+<li><code>EDecimal Multiply​(EDecimal otherValue)</code><br>
 Multiplies two decimal numbers.</li>
-<li><code>EDecimal Multiply​(EDecimal op,
-    EContext ctx)</code><br>
+<li><code>EDecimal Multiply​(EDecimal op,
+    EContext ctx)</code><br>
 Multiplies two decimal numbers.</li>
-<li><code>EDecimal MultiplyAndAdd​(EDecimal multiplicand,
-          EDecimal augend)</code><br>
+<li><code>EDecimal MultiplyAndAdd​(EDecimal multiplicand,
+          EDecimal augend)</code><br>
 Multiplies by one decimal number, and then adds another decimal number.</li>
-<li><code>EDecimal MultiplyAndAdd​(EDecimal op,
-          EDecimal augend,
-          EContext ctx)</code><br>
+<li><code>EDecimal MultiplyAndAdd​(EDecimal op,
+          EDecimal augend,
+          EContext ctx)</code><br>
 Multiplies by one value, and then adds another value.</li>
-<li><code>EDecimal MultiplyAndSubtract​(EDecimal op,
-               EDecimal subtrahend,
-               EContext ctx)</code><br>
+<li><code>EDecimal MultiplyAndSubtract​(EDecimal op,
+               EDecimal subtrahend,
+               EContext ctx)</code><br>
 Multiplies by one value, and then subtracts another value.</li>
 <li><code>EDecimal Negate()</code><br>
 Gets an object with the same value as this one, but with the sign reversed.</li>
-<li><code>EDecimal Negate​(EContext context)</code><br>
+<li><code>EDecimal Negate​(EContext context)</code><br>
 Returns a decimal number with the same value as this object but with the
 sign reversed.</li>
-<li><code>EDecimal NextMinus​(EContext ctx)</code><br>
+<li><code>EDecimal NextMinus​(EContext ctx)</code><br>
 Finds the largest value that&#39;s smaller than the given value.</li>
-<li><code>EDecimal NextPlus​(EContext ctx)</code><br>
+<li><code>EDecimal NextPlus​(EContext ctx)</code><br>
 Finds the smallest value that&#39;s greater than the given value.</li>
-<li><code>EDecimal NextToward​(EDecimal otherValue,
-      EContext ctx)</code><br>
+<li><code>EDecimal NextToward​(EDecimal otherValue,
+      EContext ctx)</code><br>
 Finds the next value that is closer to the other object&#39;s value than this
 object&#39;s value.</li>
-<li><code>static EDecimal PI​(EContext ctx)</code><br>
+<li><code>static EDecimal PI​(EContext ctx)</code><br>
 Finds the constant π, the circumference of a circle divided by its diameter.</li>
-<li><code>EDecimal Plus​(EContext ctx)</code><br>
+<li><code>EDecimal Plus​(EContext ctx)</code><br>
 Rounds this object&#39;s value to a given precision, using the given rounding
 mode and range of exponent, and also converts negative zero to
 positive zero.</li>
-<li><code>EDecimal Pow​(int exponentSmall)</code><br>
+<li><code>EDecimal Pow​(int exponentSmall)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
-<li><code>EDecimal Pow​(int exponentSmall,
-EContext ctx)</code><br>
+<li><code>EDecimal Pow​(int exponentSmall,
+EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
-<li><code>EDecimal Pow​(EDecimal exponent,
-EContext ctx)</code><br>
+<li><code>EDecimal Pow​(EDecimal exponent,
+EContext ctx)</code><br>
 Raises this object&#39;s value to the given exponent.</li>
 <li><code>EInteger Precision()</code><br>
 Finds the number of digits in this number&#39;s mantissa (significand).</li>
-<li><code>EDecimal Quantize​(int desiredExponentInt,
-    EContext ctx)</code><br>
+<li><code>EDecimal Quantize​(int desiredExponentInt,
+    EContext ctx)</code><br>
 Returns a decimal number with the same value but a new exponent.</li>
-<li><code>EDecimal Quantize​(int desiredExponentInt,
-    ERounding rounding)</code><br>
+<li><code>EDecimal Quantize​(int desiredExponentInt,
+    ERounding rounding)</code><br>
 Returns a decimal number with the same value as this one but a new exponent.</li>
-<li><code>EDecimal Quantize​(EDecimal otherValue,
-    EContext ctx)</code><br>
+<li><code>EDecimal Quantize​(EDecimal otherValue,
+    EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but with the
 same exponent as another decimal number.</li>
-<li><code>EDecimal Quantize​(EInteger desiredExponent,
-    EContext ctx)</code><br>
+<li><code>EDecimal Quantize​(EInteger desiredExponent,
+    EContext ctx)</code><br>
 Returns a decimal number with the same value but a new exponent.</li>
-<li><code>EDecimal Reduce​(EContext ctx)</code><br>
+<li><code>EDecimal Reduce​(EContext ctx)</code><br>
 Removes trailing zeros from this object&#39;s mantissa (significand).</li>
-<li><code>EDecimal Remainder​(EDecimal divisor,
-     EContext ctx)</code><br>
+<li><code>EDecimal Remainder​(EDecimal divisor,
+     EContext ctx)</code><br>
 Finds the remainder that results when dividing two arbitrary-precision
 decimal numbers.</li>
-<li><code>EDecimal RemainderNaturalScale​(EDecimal divisor) &quot;this&quot; - ((&quot;this&quot; /
+<li><code>EDecimal RemainderNaturalScale​(EDecimal divisor) &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;)</code><br>
 Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;)</li>
-<li><code>EDecimal RemainderNaturalScale​(EDecimal divisor,
-                 EContext ctx)</code><br>
+<li><code>EDecimal RemainderNaturalScale​(EDecimal divisor,
+                 EContext ctx)</code><br>
 Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; /
 &quot;divisor&quot;) * &quot;divisor&quot;).</li>
-<li><code>EDecimal RemainderNear​(EDecimal divisor,
-         EContext ctx)</code><br>
+<li><code>EDecimal RemainderNear​(EDecimal divisor,
+         EContext ctx)</code><br>
 Finds the distance to the closest multiple of the given divisor, based on
 the result of dividing this object&#39;s value by another object&#39;s value.</li>
-<li><code>EDecimal RoundToExponent​(int exponentSmall)</code><br>
+<li><code>EDecimal RoundToExponent​(int exponentSmall)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary, using the HalfEven rounding mode.</li>
-<li><code>EDecimal RoundToExponent​(int exponentSmall,
-           EContext ctx)</code><br>
+<li><code>EDecimal RoundToExponent​(int exponentSmall,
+           EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary.</li>
-<li><code>EDecimal RoundToExponent​(int exponentSmall,
-           ERounding rounding)</code><br>
+<li><code>EDecimal RoundToExponent​(int exponentSmall,
+           ERounding rounding)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary.</li>
-<li><code>EDecimal RoundToExponent​(EInteger exponent)</code><br>
+<li><code>EDecimal RoundToExponent​(EInteger exponent)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary, using the HalfEven rounding mode.</li>
-<li><code>EDecimal RoundToExponent​(EInteger exponent,
-           EContext ctx)</code><br>
+<li><code>EDecimal RoundToExponent​(EInteger exponent,
+           EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary.</li>
-<li><code>EDecimal RoundToExponent​(EInteger exponent,
-           ERounding rounding)</code><br>
+<li><code>EDecimal RoundToExponent​(EInteger exponent,
+           ERounding rounding)</code><br>
 Returns a decimal number with the same value as this object but rounded to a
 new exponent if necessary, using the given rounding mode.</li>
-<li><code>EDecimal RoundToExponentExact​(int exponentSmall,
-                EContext ctx)</code><br>
+<li><code>EDecimal RoundToExponentExact​(int exponentSmall,
+                EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but rounded to
 an integer, and signals an inexact flag if the result would be
 inexact.</li>
-<li><code>EDecimal RoundToExponentExact​(int exponentSmall,
-                ERounding rounding)</code><br>
+<li><code>EDecimal RoundToExponentExact​(int exponentSmall,
+                ERounding rounding)</code><br>
 Returns a decimal number with the same value as this object but rounded to
 an integer, and signals an inexact flag if the result would be
 inexact.</li>
-<li><code>EDecimal RoundToExponentExact​(EInteger exponent,
-                EContext ctx)</code><br>
+<li><code>EDecimal RoundToExponentExact​(EInteger exponent,
+                EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but rounded to
 the given exponent, and signals an inexact flag if the result would
 be inexact.</li>
-<li><code>EDecimal RoundToIntegerExact​(EContext ctx)</code><br>
+<li><code>EDecimal RoundToIntegerExact​(EContext ctx)</code><br>
 Returns a decimal number with the same value as this object but rounded to
 an integer, and signals an inexact flag if the result would be
 inexact.</li>
-<li><code>EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded</code><br>
+<li><code>EDecimal RoundToIntegerNoRoundedFlag​(EContext ctx) FlagInexact FlagRounded</code><br>
 Returns a decimal number with the same value as this object but rounded to
 an integer, without adding the FlagInexact or
 FlagRounded flags.</li>
-<li><code>EDecimal RoundToIntegralExact​(EContext ctx)</code><br>
+<li><code>EDecimal RoundToIntegralExact​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerExact.
 Renamed to RoundToIntegerExact.</li>
-<li><code>EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)</code><br>
+<li><code>EDecimal RoundToIntegralNoRoundedFlag​(EContext ctx)</code><br>
 Deprecated.
 Renamed to RoundToIntegerNoRoundedFlag.
 Renamed to RoundToIntegerNoRoundedFlag.</li>
-<li><code>EDecimal RoundToPrecision​(EContext ctx)</code><br>
+<li><code>EDecimal RoundToPrecision​(EContext ctx)</code><br>
 Rounds this object&#39;s value to a given precision, using the given rounding
 mode and range of exponent.</li>
-<li><code>EDecimal ScaleByPowerOfTen​(int places)</code><br>
+<li><code>EDecimal ScaleByPowerOfTen​(int places)</code><br>
 Returns a number similar to this number but with the scale adjusted.</li>
-<li><code>EDecimal ScaleByPowerOfTen​(int places,
-             EContext ctx)</code><br>
+<li><code>EDecimal ScaleByPowerOfTen​(int places,
+             EContext ctx)</code><br>
 Returns a number similar to this number but with the scale adjusted.</li>
-<li><code>EDecimal ScaleByPowerOfTen​(EInteger bigPlaces)</code><br>
+<li><code>EDecimal ScaleByPowerOfTen​(EInteger bigPlaces)</code><br>
 Returns a number similar to this number but with the scale adjusted.</li>
-<li><code>EDecimal ScaleByPowerOfTen​(EInteger bigPlaces,
-             EContext ctx)</code><br>
+<li><code>EDecimal ScaleByPowerOfTen​(EInteger bigPlaces,
+             EContext ctx)</code><br>
 Returns a number similar to this number but with its scale adjusted.</li>
 <li><code>int signum()</code><br>
 Gets this value&#39;s sign: -1 if negative; 1 if positive; 0 if zero.</li>
-<li><code>EDecimal Sqrt​(EContext ctx)</code><br>
+<li><code>EDecimal Sqrt​(EContext ctx)</code><br>
 Finds the square root of this object&#39;s value.</li>
-<li><code>EDecimal SquareRoot​(EContext ctx)</code><br>
+<li><code>EDecimal SquareRoot​(EContext ctx)</code><br>
 Deprecated.
 Renamed to Sqrt.
 Renamed to Sqrt.</li>
-<li><code>EDecimal Subtract​(EDecimal otherValue)</code><br>
+<li><code>EDecimal Subtract​(EDecimal otherValue)</code><br>
 Subtracts an arbitrary-precision decimal number from this instance and
 returns the result.</li>
-<li><code>EDecimal Subtract​(EDecimal otherValue,
-    EContext ctx)</code><br>
+<li><code>EDecimal Subtract​(EDecimal otherValue,
+    EContext ctx)</code><br>
 Subtracts an arbitrary-precision decimal number from this instance.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
@@ -620,7 +620,7 @@ Converts this value to its closest equivalent as a 64-bit floating-point
 number.</li>
 <li><code>EFloat ToEFloat()</code><br>
 Creates a binary floating-point number from this object&#39;s value.</li>
-<li><code>EFloat ToEFloat​(EContext ec)</code><br>
+<li><code>EFloat ToEFloat​(EContext ec)</code><br>
 Creates a binary floating-point number from this object&#39;s value.</li>
 <li><code>EInteger ToEInteger()</code><br>
 Converts this value to an arbitrary-precision integer.</li>
@@ -1541,7 +1541,7 @@ quiet NaN if this value is signaling NaN.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;EDecimal&gt;</code></li>
+<li><code>compareTo</code> in interface <code>Comparable&lt;EDecimal&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -2220,7 +2220,7 @@ are equal to those of another object; otherwise, <code>false</code>.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>equals</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -2269,7 +2269,7 @@ precision is unlimited (the context&#39;s Precision property is 0).</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>hashCode</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3826,7 +3826,7 @@ not-a-number (NaN).</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

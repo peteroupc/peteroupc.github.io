@@ -21,7 +21,7 @@
  (Internet Message Format and MIME): </p> <ul> <li>The
  content-transfer-encodings "quoted-printable" and "base64" are
  treated as 7bit instead if they occur in a message or body part with
- content type "multipart/&#x2a;" or "message/&#x2a;" (other than
+ content type "multipart/*" or "message/*" (other than
  "message/global", "message/global-headers",
  "message/global-disposition-notification", or
  "message/global-delivery-status"). </li> <li>If a message has two or
@@ -51,7 +51,7 @@
  If the charset is declared to be <code>utf-8</code> . </li> <li>(c) If the
  content type is "text/html" and the charset is declared to be
  <code>us-ascii</code> , "windows-1252", "windows-1251", or
- "iso-8859-&#x2a;" (all single byte encodings). </li> <li>(d) In
+ "iso-8859-*" (all single byte encodings). </li> <li>(d) In
  non-MIME message bodies and in text/plain message bodies. Any 8-bit
  bytes are replaced with the substitute character byte (0x1a). </li>
  <li>If the message starts with the word "From" (and no other case
@@ -100,58 +100,58 @@
 <li><code>Message() Message</code><br>
 Initializes a new instance of the Message
 class.</li>
-<li><code>Message​(byte[] bytes) Message</code><br>
+<li><code>Message​(byte[] bytes) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
-<li><code>Message​(InputStream stream) Message</code><br>
+<li><code>Message​(InputStream stream) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
-<li><code>Message AddAttachment​(MediaType mediaType)</code><br>
+<li><code>Message AddAttachment​(MediaType mediaType)</code><br>
 Adds an attachment with an empty body and with the given media type to this
 message.</li>
-<li><code>Message AddAttachment​(InputStream inputStream,
-         MediaType mediaType)</code><br>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         MediaType mediaType)</code><br>
 Adds an attachment to this message in the form of data from the given
 readable stream, and with the given media type.</li>
-<li><code>Message AddAttachment​(InputStream inputStream,
-         MediaType mediaType,
-         String filename)</code><br>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         MediaType mediaType,
+         String filename)</code><br>
 Adds an attachment to this message in the form of data from the given
 readable stream, and with the given media type and file name.</li>
-<li><code>Message AddAttachment​(InputStream inputStream,
-         String filename)</code><br>
+<li><code>Message AddAttachment​(InputStream inputStream,
+         String filename)</code><br>
 Adds an attachment to this message in the form of data from the given
 readable stream, and with the given file name.</li>
-<li><code>Message AddHeader​(String name,
-     String value)</code><br>
+<li><code>Message AddHeader​(String name,
+     String value)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
-<li><code>Message AddHeader​(Map.Entry&lt;String,String&gt; header)</code><br>
+<li><code>Message AddHeader​(Map.Entry&lt;String,String&gt; header)</code><br>
 Adds a header field to the end of the message&#39;s header.</li>
-<li><code>Message AddInline​(MediaType mediaType)</code><br>
+<li><code>Message AddInline​(MediaType mediaType)</code><br>
 Adds an inline body part with an empty body and with the given media type to
 this message.</li>
-<li><code>Message AddInline​(InputStream inputStream,
-     MediaType mediaType)</code><br>
+<li><code>Message AddInline​(InputStream inputStream,
+     MediaType mediaType)</code><br>
 Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given media type.</li>
-<li><code>Message AddInline​(InputStream inputStream,
-     MediaType mediaType,
-     String filename)</code><br>
+<li><code>Message AddInline​(InputStream inputStream,
+     MediaType mediaType,
+     String filename)</code><br>
 Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given media type and file name.</li>
-<li><code>Message AddInline​(InputStream inputStream,
-     String filename)</code><br>
+<li><code>Message AddInline​(InputStream inputStream,
+     String filename)</code><br>
 Adds an inline body part to this message in the form of data from the given
 readable stream, and with the given file name.</li>
 <li><code>Message ClearHeaders()</code><br>
 Deletes all header fields in this message.</li>
-<li><code>static String DecodeHeaderValue​(String name,
-             String value)</code><br>
+<li><code>static String DecodeHeaderValue​(String name,
+             String value)</code><br>
 Decodes RFC 2047 encoded words from the given header field value and returns
 a string with those words decoded.</li>
-<li><code>static Message FromMailtoUri​(String uri)</code><br>
+<li><code>static Message FromMailtoUri​(String uri)</code><br>
 Creates a message object from a MailTo URI (uniform resource identifier).</li>
-<li><code>static Message FromMailtoUrl​(String url)</code><br>
+<li><code>static Message FromMailtoUrl​(String url)</code><br>
 Deprecated.
 Renamed to FromMailtoUri.
 Renamed to FromMailtoUri.</li>
@@ -160,7 +160,7 @@ Generates this message&#39;s data in text form.</li>
 <li><code>byte[] GenerateBytes()</code><br>
 Generates this message&#39;s data as a byte array, using the same algorithm as
 the Generate method.</li>
-<li><code>List&lt;NamedAddress&gt; GetAddresses​(String headerName)</code><br>
+<li><code>List&lt;NamedAddress&gt; GetAddresses​(String headerName)</code><br>
 Gets a list of addresses contained in the header fields with the given name
 in this message.</li>
 <li><code>List&lt;NamedAddress&gt; getBccAddresses()</code><br>
@@ -194,12 +194,12 @@ body.</li>
 Deprecated.
 Use GetAddresses(\From) instead.
 Use GetAddresses(\From) instead.</li>
-<li><code>Map.Entry&lt;String,String&gt; GetHeader​(int index)</code><br>
+<li><code>Map.Entry&lt;String,String&gt; GetHeader​(int index)</code><br>
 Gets the name and value of a header field by index.</li>
-<li><code>String GetHeader​(String name)</code><br>
+<li><code>String GetHeader​(String name)</code><br>
 Gets the first instance of the header field with the specified name, using a
 basic case-insensitive comparison.</li>
-<li><code>String[] GetHeaderArray​(String name)</code><br>
+<li><code>String[] GetHeaderArray​(String name)</code><br>
 Gets an array with the values of all header fields with the specified name,
 using a basic case-insensitive comparison.</li>
 <li><code>List&lt;Map.Entry&lt;String,String&gt;&gt; getHeaderFields()</code><br>
@@ -213,60 +213,60 @@ Gets this message&#39;s subject.</li>
 Deprecated.
 Use GetAddresses(\To) instead.
 Use GetAddresses(\To) instead.</li>
-<li><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
-                   List&lt;String&gt; languages)</code><br>
+<li><code>static Message MakeMultilingualMessage​(List&lt;Message&gt; messages,
+                   List&lt;String&gt; languages)</code><br>
 Generates a multilingual message (see RFC 8255) from a list of messages and
 a list of language strings.</li>
 <li><code>static Message NewBodyPart()</code><br>
 Creates a message object with no header fields.</li>
-<li><code>Message RemoveHeader​(int index)</code><br>
+<li><code>Message RemoveHeader​(int index)</code><br>
 Removes a header field by index.</li>
-<li><code>Message RemoveHeader​(String name)</code><br>
+<li><code>Message RemoveHeader​(String name)</code><br>
 Removes all instances of the given header field from this message.</li>
-<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages) multipart/multilingual</code><br>
+<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages) multipart/multilingual</code><br>
 Selects a body part for a multiple-language message (
 multipart/multilingual) according to the given language
 priority list.</li>
-<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages,
-                 boolean preferOriginals) multipart/multilingual</code><br>
+<li><code>Message SelectLanguageMessage​(List&lt;String&gt; languages,
+                 boolean preferOriginals) multipart/multilingual</code><br>
 Selects a body part for a multiple-language message (
 multipart/multilingual) according to the given language
 priority list and original-language preference.</li>
-<li><code>Message SetBody​(byte[] bytes)</code><br>
+<li><code>Message SetBody​(byte[] bytes)</code><br>
 Sets the body of this message to the given byte array.</li>
-<li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
-<li><code>void setContentType​(MediaType value)</code><br></li>
+<li><code>void setContentDisposition​(ContentDisposition value)</code><br></li>
+<li><code>void setContentType​(MediaType value)</code><br></li>
 <li><code>Message SetCurrentDate()</code><br>
 Sets this message&#39;s Date header field to the current time as its value, with
 an unspecified time zone offset.</li>
-<li><code>Message SetDate​(int[] dateTime)</code><br>
+<li><code>Message SetDate​(int[] dateTime)</code><br>
 Sets this message&#39;s Date header field to the given date and time.</li>
-<li><code>Message SetHeader​(int index,
-     String value)</code><br>
+<li><code>Message SetHeader​(int index,
+     String value)</code><br>
 Sets the value of a header field by index without changing its name.</li>
-<li><code>Message SetHeader​(int index,
-     String name,
-     String value)</code><br>
+<li><code>Message SetHeader​(int index,
+     String name,
+     String value)</code><br>
 Sets the name and value of a header field by index.</li>
-<li><code>Message SetHeader​(int index,
-     Map.Entry&lt;String,String&gt; header)</code><br>
+<li><code>Message SetHeader​(int index,
+     Map.Entry&lt;String,String&gt; header)</code><br>
 Sets the name and value of a header field by index.</li>
-<li><code>Message SetHeader​(String name,
-     String value)</code><br>
+<li><code>Message SetHeader​(String name,
+     String value)</code><br>
 Sets the value of this message&#39;s header field.</li>
-<li><code>Message SetHtmlBody​(String str)</code><br>
+<li><code>Message SetHtmlBody​(String str)</code><br>
 Sets the body of this message to the specified string in Hypertext Markup
 Language (HTML) format.</li>
-<li><code>void setSubject​(String value)</code><br></li>
-<li><code>Message SetTextAndHtml​(String text,
-          String html)</code><br>
+<li><code>void setSubject​(String value)</code><br></li>
+<li><code>Message SetTextAndHtml​(String text,
+          String html)</code><br>
 Sets the body of this message to a multipart body with plain text and
 Hypertext Markup Language (HTML) versions of the same message.</li>
-<li><code>Message SetTextAndMarkdown​(String text,
-              String markdown)</code><br>
+<li><code>Message SetTextAndMarkdown​(String text,
+              String markdown)</code><br>
 Sets the body of this message to a multipart body with plain text, Markdown,
 and Hypertext Markup Language (HTML) versions of the same message.</li>
-<li><code>Message SetTextBody​(String str)</code><br>
+<li><code>Message SetTextBody​(String str)</code><br>
 Sets the body of this message to the specified plain text string.</li>
 <li><code>String ToMailtoUri()</code><br>
 Generates a MailTo URI (uniform resource identifier) corresponding to this
@@ -283,10 +283,10 @@ Renamed to ToMailtoUri.</li>
 <li><code>Message() Message</code><br>
 Initializes a new instance of the Message
 class.</li>
-<li><code>Message​(byte[] bytes) Message</code><br>
+<li><code>Message​(byte[] bytes) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
-<li><code>Message​(InputStream stream) Message</code><br>
+<li><code>Message​(InputStream stream) Message</code><br>
 Initializes a new instance of the Message
 class.</li>
 </ul>
@@ -432,86 +432,61 @@ supported.</li>
 <p>Gets a Hypertext Markup Language (HTML) rendering of this message's text
  body. This method currently supports text/plain, text/plain with
  format = flowed, text/enriched, and text/markdown (original
- Markdown).</p><p> <p>REMARK: The Markdown implementation currently
+ Markdown).</p><p> </p><p>REMARK: The Markdown implementation currently
  supports all features of original Markdown, except that the
  implementation--</p> <ul> <li>does not strictly check the placement
  of "block-level HTML elements",</li> <li>does not prevent Markdown
  content from being interpreted as such merely because it's contained
  in a "block-level HTML element", and</li> <li>does not deliberately
  use HTML escapes to obfuscate email addresses wrapped in
- angle-brackets.</li></ul></p>
+ angle-brackets.</li></ul>
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>An HTML rendering of this message&#39;s text.</li>
-</ul>
+* An HTML rendering of this message's text.
 
-<p><strong>Throws:</strong></p>
+**Throws:**
 
-<ul>
-<li><code>UnsupportedOperationException</code> - Either this message is a multipart
-message, so it doesn&#39;t have its own body text, or this message has no
-character encoding declared or assumed for it (which is usually the
-case for non-text messages), or the character encoding is not
-supported.</li>
-</ul>
+* <code>UnsupportedOperationException</code> - Either this message is a multipart
+ message, so it doesn't have its own body text, or this message has no
+ character encoding declared or assumed for it (which is usually the
+ case for non-text messages), or the character encoding is not
+ supported.
 
-<h3>getContentDisposition</h3>
-
-<pre>public final ContentDisposition getContentDisposition()
-</pre>
-
-<p>Gets this message&#39;s content disposition. The content disposition specifies
+### getContentDisposition
+    public final ContentDisposition getContentDisposition()
+Gets this message's content disposition. The content disposition specifies
  how a user agent should display or otherwise handle this message. Can
  be set to null. If set to a disposition or to null, updates the
- Content-Disposition header field as appropriate.</p>
+ Content-Disposition header field as appropriate.
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>This message&#39;s content disposition, or null if none is specified.</li>
-</ul>
+* This message's content disposition, or null if none is specified.
 
-<h3>setContentDisposition</h3>
-
-<pre>public final void setContentDisposition​(ContentDisposition value)
-</pre>
-
-<h3>getContentType</h3>
-
-<pre>public final MediaType getContentType()
-</pre>
-
-<p>Gets this message&#39;s media type. When getting, the media type may differ in
+### setContentDisposition
+    public final void setContentDisposition​(ContentDisposition value)
+### getContentType
+    public final MediaType getContentType()
+Gets this message's media type. When getting, the media type may differ in
  certain cases from the value of the Content-Type header field, if
  any, and may have a value even if the Content-Type header field is
  absent from this message. If set to a media type, updates the
- Content-Type header field as appropriate. Cannot be set to null.</p>
+ Content-Type header field as appropriate. Cannot be set to null.
 
-<p><strong>Returns:</strong></p>
+**Returns:**
 
-<ul>
-<li>This message&#39;s media type.</li>
-</ul>
+* This message's media type.
 
-<p><strong>Throws:</strong></p>
+**Throws:**
 
-<ul>
-<li><code>NullPointerException</code> - This value is being set and &quot;value&quot; is
-null.</li>
-</ul>
+* <code>NullPointerException</code> - This value is being set and "value" is
+ null.
 
-<h3>setContentType</h3>
-
-<pre>public final void setContentType​(MediaType value)
-</pre>
-
-<h3>getFileName</h3>
-
-<pre>public final String getFileName()
-</pre>
-
+### setContentType
+    public final void setContentType​(MediaType value)
+### getFileName
+    public final String getFileName()
 <p>Gets a file name suggested by this message for saving the message's body
  to a file. For more information on the algorithm, see
  ContentDisposition.MakeFilename.</p> <p>This method generates a file
@@ -721,13 +696,13 @@ syntactically invalid.</p></li>
  set to the contents of all of the header fields with the same name,
  and the address set to <code>me@[header-name]-address.invalid</code> as the
  address (a <code>.invalid</code> address is a reserved address that can
- never belong to anyone). (An exception is that the Resent-&#x2a;
+ never belong to anyone). (An exception is that the Resent-*
  header fields may appear more than once.) The generated message
  should always have a From header field. </p> <p>If a Date and/or
  Message-ID header field doesn&#39;t exist, a field with that name will be
  generated (using the current local time for the Date field). </p>
  <p>When encoding the message&#39;s body, if the message has a text
- content type (&quot;text/&#x2a;&quot;), the line breaks are a CR byte (carriage
+ content type (&quot;text/*&quot;), the line breaks are a CR byte (carriage
  return, 0x0d) followed by an LF byte (line feed, 0x0a), CR alone, or
  LF alone. If the message has any other content type, only CR followed
  by LF is considered a line break. </p></p>
@@ -1212,7 +1187,7 @@ value</code> is null.</p></li>
 
 <p>Sets the body of this message to the specified string in Hypertext Markup
  Language (HTML) format. The character sequences CR (carriage return,
- &quot;&#x5c;r&quot;, U+000D), LF (line feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be
+ &quot;\r&quot;, U+000D), LF (line feed, &quot;\n&quot;, U+000A), and CR/LF will be
  converted to CR/LF line breaks. Unpaired surrogate code points will
  be replaced with replacement characters.</p>
 
@@ -1241,8 +1216,8 @@ value</code> is null.</p></li>
 
 <p>Sets the body of this message to a multipart body with plain text and
  Hypertext Markup Language (HTML) versions of the same message. The
- character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
- feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
  breaks. Unpaired surrogate code points will be replaced with
  replacement characters.</p>
 
@@ -1273,8 +1248,8 @@ html</code> is null.</li>
 
 <p>Sets the body of this message to a multipart body with plain text, Markdown,
  and Hypertext Markup Language (HTML) versions of the same message.
- The character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
- feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ The character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
  breaks. Unpaired surrogate code points will be replaced with
  replacement characters.</p>
 
@@ -1307,8 +1282,8 @@ HTML.</p></li>
 </pre>
 
 <p>Sets the body of this message to the specified plain text string. The
- character sequences CR (carriage return, &quot;&#x5c;r&quot;, U+000D), LF (line
- feed, &quot;&#x5c;n&quot;, U+000A), and CR/LF will be converted to CR/LF line
+ character sequences CR (carriage return, &quot;\r&quot;, U+000D), LF (line
+ feed, &quot;\n&quot;, U+000A), and CR/LF will be converted to CR/LF line
  breaks. Unpaired surrogate code points will be replaced with
  replacement characters. This method changes this message&#39;s media type
  to plain text.</p>
@@ -1386,7 +1361,7 @@ HTML.</p></li>
  message, it becomes a &quot;multipart/mixed&quot; message with the current body
  converted to an inline body part.<p>The following example (written in
  C# for the .NET version) is an extension method that adds an
- attachment from a byte array to a message. <pre>public static
+ attachment from a byte array to a message. </p><pre>public static
  Message AddAttachmentFromBytes(this Message msg, byte[] bytes,
  MediaType mediaType) { {
 java.io.ByteArrayInputStream fs = null;
@@ -1400,7 +1375,7 @@ try { if (fs != null) {
  fs.close();
  } } catch (java.io.IOException ex) {}
 }
-} } </pre> </p></p>
+} } </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1441,7 +1416,7 @@ try { if (fs != null) {
 <li><p><code>filename</code> - A file name to assign to the attachment. Can be null or
 empty, in which case no file name is assigned. Only the file name
 portion of this parameter is used, which in this case means the
-portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either character
+portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character
 exists, or the entire string otherwise An appropriate media type (or
 &quot;application/octet-stream&quot;) will be assigned to the attachment based
 on this file name&#39;s extension. If the file name has an extension
@@ -1482,7 +1457,7 @@ null.</p></li>
 <li><p><code>filename</code> - A file name to assign to the attachment. Can be null or
 empty, in which case no file name is assigned. Only the file name
 portion of this parameter is used, which in this case means the
-portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either character
+portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character
 exists, or the entire string otherwise.</p></li>
 </ul>
 
@@ -1511,7 +1486,7 @@ exists, or the entire string otherwise.</p></li>
  becomes a &quot;multipart/mixed&quot; message with the current body converted
  to an inline body part.<p>The following example (written in C# for
  the .NET version) is an extension method that adds an inline body
- part from a byte array to a message. <pre>public static Message
+ part from a byte array to a message. </p><pre>public static Message
  AddInlineFromBytes(this Message msg, byte[] bytes, MediaType
  mediaType) { {
 java.io.ByteArrayInputStream fs = null;
@@ -1525,7 +1500,7 @@ try { if (fs != null) {
  fs.close();
  } } catch (java.io.IOException ex) {}
 }
-} } </pre> </p></p>
+} } </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1566,7 +1541,7 @@ try { if (fs != null) {
 <li><p><code>filename</code> - A file name to assign to the inline body part. Can be null
 or empty, in which case no file name is assigned. Only the file name
 portion of this parameter is used, which in this case means the
-portion of the string after the last &quot;/&quot; or &quot;&#x5c;&quot;, if either character
+portion of the string after the last &quot;/&quot; or &quot;\&quot;, if either character
 exists, or the entire string otherwise An appropriate media type (or
 &quot;application/octet-stream&quot;) will be assigned to the body part based
 on this file name&#39;s extension. If the file name has an extension

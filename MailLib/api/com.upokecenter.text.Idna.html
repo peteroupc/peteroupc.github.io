@@ -27,7 +27,7 @@
  an NR-LDH label. </p> <p>A U-label contains one or more characters
  outside the Basic Latin range (U + 0000 to U + 007F) and meets IDNA2008
  requirements for labels with such characters. An example is
- &quot;e&#xe1;&quot;. </p> <p>An A-label is an LDH label beginning with &quot;xn--&quot;
+ &quot;eá&quot;. </p> <p>An A-label is an LDH label beginning with &quot;xn--&quot;
  in any combination of case, and is convertible to a U-label. An
  example is &quot;xn--e-ufa&quot;. </p> <p>An XN-label is an LDH label beginning
  with &quot;xn--&quot; in any combination of case. </p> <p>NOTICE: While this
@@ -40,13 +40,13 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static String DecodeDomainName​(String value)</code><br>
+<li><code>static String DecodeDomainName​(String value)</code><br>
 Tries to encode each XN-label of the given domain name into Unicode.</li>
-<li><code>static String EncodeDomainName​(String value)</code><br>
+<li><code>static String EncodeDomainName​(String value)</code><br>
 Tries to encode each label of a domain name with code points outside the
 Basic Latin range (U + 0000 to U + 007F) into an XN-label.</li>
-<li><code>static boolean IsValidDomainName​(String str,
-             boolean lookupRules)</code><br>
+<li><code>static boolean IsValidDomainName​(String str,
+             boolean lookupRules)</code><br>
 Determines whether the given string is a domain name containing only
 U-labels, A-labels, NR-LDH labels, or any combination of these,
 separated by dots (&quot;.&quot;).</li>

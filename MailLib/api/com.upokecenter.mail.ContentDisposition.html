@@ -52,7 +52,7 @@ The content disposition value &quot;inline&quot;.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
 <li><code>int[] GetCreationDate()</code><br>
 Gets the date and time extracted from this content disposition&#39;s
@@ -68,7 +68,7 @@ disposition object by using the &quot;MakeFilename&quot; method.</li>
 Gets the date and time extracted from this content disposition&#39;s
 &quot;modification-date&quot; parameter, which specifies the date of last
 modification of a file (RFC 2183 sec.</li>
-<li><code>String GetParameter​(String name)</code><br>
+<li><code>String GetParameter​(String name)</code><br>
 Gets a parameter from this disposition object.</li>
 <li><code>Map&lt;String,String&gt; getParameters()</code><br>
 Gets a list of parameter names associated with this object and their values.</li>
@@ -82,14 +82,14 @@ Calculates the hash code of this object.</li>
 Gets a value indicating whether the disposition type is attachment.</li>
 <li><code>boolean isInline()</code><br>
 Gets a value indicating whether the disposition type is inline.</li>
-<li><code>static String MakeFilename​(String str)</code><br>
+<li><code>static String MakeFilename​(String str)</code><br>
 Converts a file name from the Content-Disposition header to a suitable name
 for saving data to a file.</li>
-<li><code>static ContentDisposition Parse​(String dispoValue)</code><br>
+<li><code>static ContentDisposition Parse​(String dispoValue)</code><br>
 Creates a new content disposition object from the value of a
 Content-Disposition header field.</li>
-<li><code>static ContentDisposition Parse​(String dispositionValue,
- ContentDisposition defaultValue)</code><br>
+<li><code>static ContentDisposition Parse​(String dispositionValue,
+ ContentDisposition defaultValue)</code><br>
 Parses a content disposition string and returns a content disposition
 object, or the default value if the string is invalid.</li>
 <li><code>String ToSingleLineString()</code><br>
@@ -145,7 +145,7 @@ or &quot;attachment&quot;.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>equals</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -171,7 +171,7 @@ or &quot;attachment&quot;.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>hashCode</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -242,7 +242,7 @@ case in version 0.10.0.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -282,7 +282,7 @@ case in version 0.10.0.</li>
  encoding)</p> <p><code>&quot;utf-8&#39;en&#39;hello%2Etxt&quot; -&gt; &quot;hello.txt&quot;</code> (RFC
  2231 encoding)</p> <p><code>&quot;nul.txt&quot; -&gt; &quot;_nul.txt&quot;</code> (Reserved
  name)</p> <p><code>&quot;dir1/dir2/file&quot; -&gt; &quot;dir1_dir2_file&quot;</code>
- (Directory separators)</p><p> <p><b>Remarks:</b></p> <ul> <li>The
+ (Directory separators)</p><p> </p><p><b>Remarks:</b></p> <ul> <li>The
  exact file name conversion used by this method is not guaranteed to
  remain the same between versions of this library.</li> <li>The string
  returned by this method is normalized using Unicode normalization
@@ -326,7 +326,7 @@ case in version 0.10.0.</li>
  parameters that apply to all media types&quot;). (Some email
  implementations may still write out the &quot;name&quot; parameter, even for
  media types other than <code>application/octet-stream</code> and even
- though RFC 2046 has deprecated that parameter.)</p></li></ul></p></p>
+ though RFC 2046 has deprecated that parameter.)</p></li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -504,14 +504,14 @@ null.</li>
  allow each content disposition parameter to be associated with a
  character encoding and/or language, and support parameter values that
  span two or more key-value pairs. Parameters making use of RFC 2231
- extensions have names with an asterisk (&quot;&#x2a;&quot;). Such a parameter
+ extensions have names with an asterisk (&quot;<em>&quot;). Such a parameter
  will be ignored if it is ill-formed because of RFC 2231&#39;s rules
  (except for illegal percent-decoding or undecodable sequences for the
  given character enoding). Examples of RFC 2231 extensions follow
  (both examples encode the same &quot;filename&quot; parameter): </p>
- <p><b>inline; filename&#x2a;=utf-8&#39;en&#39;filename.txt</b> </p>
- <p><b>inline; filename&#x2a;0&#x2a;=utf-8&#39;en&#39;file;
- filename&#x2a;1&#x2a;=name%2Etxt</b> </p> <p>This implementation
+ <p><b>inline; filename</em>=utf-8&#39;en&#39;filename.txt</b> </p>
+ <p><b>inline; filename<em>0</em>=utf-8&#39;en&#39;file;
+ filename<em>1</em>=name%2Etxt</b> </p> <p>This implementation
  ignores keys (in parameter key-value pairs) that appear more than
  once in the content disposition. Nothing in RFCs 2045, 2183, 2231,
  6266, or 7231 explicitly disallows such keys, or otherwise specifies

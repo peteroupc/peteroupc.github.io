@@ -43,8 +43,8 @@ A rational number for zero.</li>
 <h2>Constructors</h2>
 
 <ul>
-<li><code>ERational​(EInteger numerator,
-     EInteger denominator)</code><br>
+<li><code>ERational​(EInteger numerator,
+     EInteger denominator)</code><br>
 Deprecated.
 Use the ERational.Create method instead.
 Use the ERational.Create method instead.</li>
@@ -56,76 +56,76 @@ Use the ERational.Create method instead.</li>
 <li><code>ERational Abs()</code><br>
 Returns the absolute value of this rational number, that is, a number with
 the same value as this one but as a nonnegative number.</li>
-<li><code>ERational Add​(ERational otherValue)</code><br>
+<li><code>ERational Add​(ERational otherValue)</code><br>
 Adds two rational numbers.</li>
-<li><code>int compareTo​(ERational other)</code><br>
+<li><code>int compareTo​(ERational other)</code><br>
 Compares an arbitrary-precision rational number with this instance.</li>
-<li><code>int CompareToBinary​(EFloat other)</code><br>
+<li><code>int CompareToBinary​(EFloat other)</code><br>
 Compares an arbitrary-precision binary float with this instance.</li>
-<li><code>int CompareToDecimal​(EDecimal other)</code><br>
+<li><code>int CompareToDecimal​(EDecimal other)</code><br>
 Compares an arbitrary-precision decimal number with this instance.</li>
-<li><code>int CompareToTotal​(ERational other)</code><br>
+<li><code>int CompareToTotal​(ERational other)</code><br>
 Compares the values of this object and another object, imposing a total
 ordering on all possible values.</li>
-<li><code>int CompareToTotalMagnitude​(ERational other)</code><br>
+<li><code>int CompareToTotalMagnitude​(ERational other)</code><br>
 Compares the absolute values of this object and another object, imposing a
 total ordering on all possible values (ignoring their signs).</li>
-<li><code>ERational CopySign​(ERational other)</code><br>
+<li><code>ERational CopySign​(ERational other)</code><br>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
-<li><code>static ERational Create​(int numeratorSmall,
-  int denominatorSmall)</code><br>
+<li><code>static ERational Create​(int numeratorSmall,
+  int denominatorSmall)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
-<li><code>static ERational Create​(EInteger numerator,
-  EInteger denominator)</code><br>
+<li><code>static ERational Create​(EInteger numerator,
+  EInteger denominator)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
-<li><code>static ERational CreateNaN​(EInteger diag)</code><br>
+<li><code>static ERational CreateNaN​(EInteger diag)</code><br>
 Creates a not-a-number arbitrary-precision rational number.</li>
-<li><code>static ERational CreateNaN​(EInteger diag,
-     boolean signaling,
-     boolean negative)</code><br>
+<li><code>static ERational CreateNaN​(EInteger diag,
+     boolean signaling,
+     boolean negative)</code><br>
 Creates a not-a-number arbitrary-precision rational number.</li>
-<li><code>ERational Divide​(ERational otherValue)</code><br>
+<li><code>ERational Divide​(ERational otherValue)</code><br>
 Divides this instance by the value of an arbitrary-precision rational number
 object.</li>
-<li><code>boolean equals​(ERational other)</code><br>
+<li><code>boolean equals​(ERational other)</code><br>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object.</li>
-<li><code>boolean equals​(Object obj)</code><br>
+<li><code>boolean equals​(Object obj)</code><br>
 Determines whether this object&#39;s numerator, denominator, and properties are
 equal to those of another object and that other object is an
 arbitrary-precision rational number.</li>
-<li><code>static ERational FromByte​(byte inputByte)</code><br>
+<li><code>static ERational FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</li>
-<li><code>static ERational FromDouble​(double flt)</code><br>
+<li><code>static ERational FromDouble​(double flt)</code><br>
 Converts a 64-bit floating-point number to a rational number.</li>
-<li><code>static ERational FromEDecimal​(EDecimal ef)</code><br>
+<li><code>static ERational FromEDecimal​(EDecimal ef)</code><br>
 Converts an arbitrary-precision decimal number to a rational number.</li>
-<li><code>static ERational FromEFloat​(EFloat ef)</code><br>
+<li><code>static ERational FromEFloat​(EFloat ef)</code><br>
 Converts an arbitrary-precision binary float to a rational number.</li>
-<li><code>static ERational FromEInteger​(EInteger bigint)</code><br>
+<li><code>static ERational FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to a rational number.</li>
-<li><code>static ERational FromExtendedDecimal​(EDecimal ef)</code><br>
+<li><code>static ERational FromExtendedDecimal​(EDecimal ef)</code><br>
 Deprecated.
 Renamed to FromEDecimal.
 Renamed to FromEDecimal.</li>
-<li><code>static ERational FromExtendedFloat​(EFloat ef)</code><br>
+<li><code>static ERational FromExtendedFloat​(EFloat ef)</code><br>
 Deprecated.
 Renamed to FromEFloat.
 Renamed to FromEFloat.</li>
-<li><code>static ERational FromInt16​(short inputInt16)</code><br>
+<li><code>static ERational FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>static ERational FromInt32​(int inputInt32)</code><br>
+<li><code>static ERational FromInt32​(int inputInt32)</code><br>
 Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>static ERational FromInt64​(long inputInt64)</code><br>
+<li><code>static ERational FromInt64​(long inputInt64)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
-<li><code>static ERational FromSingle​(float flt)</code><br>
+<li><code>static ERational FromSingle​(float flt)</code><br>
 Converts a 32-bit binary floating-point number to a rational number.</li>
-<li><code>static ERational FromString​(String str)</code><br>
+<li><code>static ERational FromString​(String str)</code><br>
 Creates a rational number from a text string that represents a number.</li>
-<li><code>static ERational FromString​(String str,
-      int offset,
-      int length)</code><br>
+<li><code>static ERational FromString​(String str,
+      int offset,
+      int length)</code><br>
 Creates a rational number from a text string that represents a number.</li>
 <li><code>EInteger getDenominator()</code><br>
 Gets this object&#39;s denominator.</li>
@@ -155,18 +155,18 @@ Returns whether this object is a signaling not-a-number value (which causes
 an error if the value is passed to any arithmetic operation in this
 class).</li>
 <li><code>boolean isZero()</code><br></li>
-<li><code>ERational Multiply​(ERational otherValue)</code><br>
+<li><code>ERational Multiply​(ERational otherValue)</code><br>
 Multiplies this instance by the value of an arbitrary-precision rational
 number.</li>
 <li><code>ERational Negate()</code><br>
 Returns a rational number with the same value as this one but with the sign
 reversed.</li>
-<li><code>ERational Remainder​(ERational otherValue)</code><br>
+<li><code>ERational Remainder​(ERational otherValue)</code><br>
 Finds the remainder that results when this instance is divided by the value
 of an arbitrary-precision rational number.</li>
 <li><code>int signum()</code><br>
 Gets the sign of this rational number.</li>
-<li><code>ERational Subtract​(ERational otherValue)</code><br>
+<li><code>ERational Subtract​(ERational otherValue)</code><br>
 Subtracts an arbitrary-precision rational number from this instance.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
@@ -182,19 +182,19 @@ to 255).</li>
 Converts this value to a 64-bit floating-point number.</li>
 <li><code>EDecimal ToEDecimal()</code><br>
 Converts this rational number to a decimal number.</li>
-<li><code>EDecimal ToEDecimal​(EContext ctx)</code><br>
+<li><code>EDecimal ToEDecimal​(EContext ctx)</code><br>
 Converts this rational number to a decimal number and rounds the result to
 the given precision.</li>
-<li><code>EDecimal ToEDecimalExactIfPossible​(EContext ctx)</code><br>
+<li><code>EDecimal ToEDecimalExactIfPossible​(EContext ctx)</code><br>
 Converts this rational number to a decimal number, but if the result would
 have a nonterminating decimal expansion, rounds that result to the
 given precision.</li>
 <li><code>EFloat ToEFloat()</code><br>
 Converts this rational number to a binary float.</li>
-<li><code>EFloat ToEFloat​(EContext ctx)</code><br>
+<li><code>EFloat ToEFloat​(EContext ctx)</code><br>
 Converts this rational number to a binary float and rounds that result to
 the given precision.</li>
-<li><code>EFloat ToEFloatExactIfPossible​(EContext ctx)</code><br>
+<li><code>EFloat ToEFloatExactIfPossible​(EContext ctx)</code><br>
 Converts this rational number to a binary float, but if the result would
 have a nonterminating binary expansion, rounds that result to the
 given precision.</li>
@@ -211,11 +211,11 @@ value is an exact integer.</li>
 Deprecated.
 Renamed to ToEDecimal.
 Renamed to ToEDecimal.</li>
-<li><code>EDecimal ToExtendedDecimal​(EContext ctx)</code><br>
+<li><code>EDecimal ToExtendedDecimal​(EContext ctx)</code><br>
 Deprecated.
 Renamed to ToEDecimal.
 Renamed to ToEDecimal.</li>
-<li><code>EDecimal ToExtendedDecimalExactIfPossible​(EContext ctx)</code><br>
+<li><code>EDecimal ToExtendedDecimalExactIfPossible​(EContext ctx)</code><br>
 Deprecated.
 Renamed to ToEDecimalExactIfPossible.
 Renamed to ToEDecimalExactIfPossible.</li>
@@ -223,11 +223,11 @@ Renamed to ToEDecimalExactIfPossible.</li>
 Deprecated.
 Renamed to ToEFloat.
 Renamed to ToEFloat.</li>
-<li><code>EFloat ToExtendedFloat​(EContext ctx)</code><br>
+<li><code>EFloat ToExtendedFloat​(EContext ctx)</code><br>
 Deprecated.
 Renamed to ToEFloat.
 Renamed to ToEFloat.</li>
-<li><code>EFloat ToExtendedFloatExactIfPossible​(EContext ctx)</code><br>
+<li><code>EFloat ToExtendedFloatExactIfPossible​(EContext ctx)</code><br>
 Deprecated.
 Renamed to ToEFloatExactIfPossible.
 Renamed to ToEFloatExactIfPossible.</li>
@@ -864,7 +864,7 @@ operand is NaN.</li>
 <p><strong>Specified by:</strong></p>
 
 <ul>
-<li><code>compareTo</code>&nbsp;in interface&nbsp;<code>Comparable&lt;ERational&gt;</code></li>
+<li><code>compareTo</code> in interface <code>Comparable&lt;ERational&gt;</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -1006,7 +1006,7 @@ satisfy other.isFinite().</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>equals</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>equals</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Parameters:</strong></p>
@@ -1053,7 +1053,7 @@ satisfy other.isFinite().</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>hashCode</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>hashCode</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1585,7 +1585,7 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Overrides:</strong></p>
 
 <ul>
-<li><code>toString</code>&nbsp;in class&nbsp;<code>Object</code></li>
+<li><code>toString</code> in class <code>Object</code></li>
 </ul>
 
 <p><strong>Returns:</strong></p>

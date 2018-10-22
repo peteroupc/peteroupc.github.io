@@ -9,14 +9,14 @@
 <pre>public final class ProtocolStrings extends Object
 </pre>
 
-<p>Contains methods for preparing user-facing protocol strings (such as user
+<p><p>Contains methods for preparing user-facing protocol strings (such as user
  identifiers) for equality comparison and validity checking. Such
- strings can be _internationalized_, that is, contain characters
+ strings can be <em>internationalized</em>, that is, contain characters
  beyond the Basic Latin block (U + 0000 to U + 007F) of the Unicode
  Standard. See RFC 8264. Currently there are four profiles for
  internationalized strings: two for strings serving as user
  identifiers, one for arbitrary single-line strings (such as
- passwords), and one for display names.</p><p> <ul> <li>Other
+ passwords), and one for display names.</p><p> </p><ul> <li>Other
  user-facing internationalized strings not expressly handled by this
  class include file and directory names, domain names, profile data
  voluntarily entered by users, and the text of article, post, and
@@ -26,7 +26,7 @@
  ordering, which is a comparison of text strings that is usually
  language-dependent and goes beyond equality comparison. Further
  discussion on collation can be found in Unicode Technical Standard 10
- (UTS 10), "Unicode Collation Algorithm".</li> <li>As explained in UTS
+ (UTS 10), &quot;Unicode Collation Algorithm&quot;.</li> <li>As explained in UTS
  10 sec. 1.6, collation serves the purposes of searching and selection
  (e.g., searches by name or by title). However, this class is directed
  more to equality comparisons for authentication or authorization
@@ -37,38 +37,38 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static boolean IsInFreeformClass​(String str)</code><br>
+<li><code>static boolean IsInFreeformClass​(String str)</code><br>
 Determines whether the given string belongs in RFC 8264&#39;s FreeformClass.</li>
-<li><code>static boolean IsInIdentifierClass​(String str)</code><br>
+<li><code>static boolean IsInIdentifierClass​(String str)</code><br>
 Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass.</li>
-<li><code>static String NicknameEnforce​(String str)</code><br>
+<li><code>static String NicknameEnforce​(String str)</code><br>
 Checks the validity of a string serving as a &quot;memorable, human-friendly
 name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
 identity for authentication or authorization purposes (see sec.</li>
-<li><code>static String NicknameForComparison​(String str)</code><br>
+<li><code>static String NicknameForComparison​(String str)</code><br>
 Prepares for comparison a string serving as a &quot;memorable, human-friendly
 name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
 identity for authentication or authorization purposes (see sec.</li>
-<li><code>static String OpaqueStringEnforce​(String str)</code><br>
+<li><code>static String OpaqueStringEnforce​(String str)</code><br>
 Checks the validity of a string serving as an arbitrary single-line sequence
 of characters, such as a passphrase.</li>
-<li><code>static String UsernameEnforce​(String str)</code><br>
+<li><code>static String UsernameEnforce​(String str)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
 letters in the string is mapped to lowercase.</li>
-<li><code>static String UsernameEnforce​(String str,
-           boolean preserveCase)</code><br>
+<li><code>static String UsernameEnforce​(String str,
+           boolean preserveCase)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
 letters in the string is either mapped to lowercase or preserved.</li>
-<li><code>static String UserpartEnforce​(String str)</code><br>
+<li><code>static String UserpartEnforce​(String str)</code><br>
 Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
 string is mapped to lowercase.</li>
-<li><code>static String UserpartEnforce​(String str,
-           boolean preserveCase)</code><br>
+<li><code>static String UserpartEnforce​(String str,
+           boolean preserveCase)</code><br>
 Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
 string is either mapped to lowercase or preserved.</li>
