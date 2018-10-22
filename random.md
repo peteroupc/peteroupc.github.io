@@ -348,7 +348,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(E) In my opinion, Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation.</small>
 
-<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)</small>
+<small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(18)**](#Note18)</sup></small>
 
 <small>(G) [**`std::random_device`**](http://en.cppreference.com/w/cpp/numeric/random/random_device), introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  `std::random_device` can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, `std::random_device` SHOULD only be used to supplement other techniques for random number generation.</small>
 
@@ -502,6 +502,8 @@ I acknowledge&mdash;
 <small><sup id=Note16>(16)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
 
 <small><sup id=Note17>(17)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+
+<small><sup id=Note18>(18)</sup> A. Klyubin, "Some SecureRandom Thoughts", Android Developers Blog, Aug. 14, 2013.</small>
 
 <a id=Appendix></a>
 ## Appendix

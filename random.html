@@ -526,7 +526,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation.</small></p>
 
-<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)</small></p>
+<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note18"><strong>(18)</strong></a></sup></small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD only be used to supplement other techniques for random number generation.</small></p>
 
@@ -718,6 +718,8 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <p><small><sup id=Note16>(16)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
 <p><small><sup id=Note17>(17)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+
+<p><small><sup id=Note18>(18)</sup> A. Klyubin, &quot;Some SecureRandom Thoughts&quot;, Android Developers Blog, Aug. 14, 2013.</small></p>
 
 <p><a id=Appendix></a></p>
 
