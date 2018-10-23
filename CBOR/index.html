@@ -217,31 +217,20 @@ bignum with length 0 as having a value of -1.</li>
 <li>Section 2.4.1 specifies the number of seconds since the start of 1970.  It is
 based on the POSIX definition of &quot;seconds since the Epoch&quot;, which
 the RFC cites as a normative reference.  This definition does not
-count leap seconds.  When this implementation supports date
-conversion, it won&#39;t count leap seconds, either.  This implementation
-treats values of infinity and NaN as invalid.</li>
-<li>For tag 32, this implementation accepts strings that are valid
-Internationalized Resource Identifiers (IRIs) in addition to URIs.
-IRIs are like URIs except that they also allow non-ASCII characters.</li>
+count leap seconds.</li>
 </ul>
 
 <h2>Release Notes</h2>
 
-<p>Version 4.0.0-alpha1:</p>
+<h3>Version 3.4.0-beta1</h3>
 
 <ul>
-<li>Remove all APIs obsoleted since version 3.4.  This
-includes the BigInteger, ExtendedDecimal, and ExtendedFloat APIs,
-which were renamed and moved to a different library, as well as the
-ICBORTag and CBORTypeFilter APIs.</li>
-<li>Changed implementation of FromObject, including imposing a nesting depth
-limit and supporting a CBORTypeMapper parameter.</li>
-<li>Property name conversion rules (in PODOptions) were changed
-in this version with respect to FromObject.  In this sense,
-PODOptions.RemoveIsPrefix was removed.</li>
-<li>Certain other changes in CBOR object reading and validation were
-made; they are largely compatible with previous versions but may be
-backwards-incompatible in certain rare cases</li>
+<li>Improved implementation of new ToObject method.</li>
+<li>Bugs in multidimensional array serialization by FromObject were fixed.</li>
+<li>URI parsing restored to 3.0 version for backward compatibility.</li>
+<li>Remove method disallows null for backward compatibility.</li>
+<li>ICBORObjectConverter renamed to ICBORToFromConverter.</li>
+<li>Several APIs were obsoleted.</li>
 </ul>
 
 <h3>Version 3.4.0-alpha1</h3>
