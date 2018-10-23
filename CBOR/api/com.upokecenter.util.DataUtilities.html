@@ -32,83 +32,83 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static int CodePointAt​(String str,
-       int index)</code><br>
+<li><code>static int CodePointAt​(String str,
+       int index)</code><br>
 Gets the Unicode code point at the given index of the string.</li>
-<li><code>static int CodePointAt​(String str,
-       int index,
-       int surrogateBehavior)</code><br>
+<li><code>static int CodePointAt​(String str,
+       int index,
+       int surrogateBehavior)</code><br>
 Gets the Unicode code point at the given index of the string.</li>
-<li><code>static int CodePointBefore​(String str,
-           int index)</code><br>
+<li><code>static int CodePointBefore​(String str,
+           int index)</code><br>
 Gets the Unicode code point just before the given index of the string.</li>
-<li><code>static int CodePointBefore​(String str,
-           int index,
-           int surrogateBehavior)</code><br>
+<li><code>static int CodePointBefore​(String str,
+           int index,
+           int surrogateBehavior)</code><br>
 Gets the Unicode code point just before the given index of the string.</li>
-<li><code>static int CodePointCompare​(String strA,
-            String strB)</code><br>
+<li><code>static int CodePointCompare​(String strA,
+            String strB)</code><br>
 Compares two strings in Unicode code point order.</li>
-<li><code>static int CodePointLength​(String str)</code><br>
+<li><code>static int CodePointLength​(String str)</code><br>
 Finds the number of Unicode code points in the given text string.</li>
-<li><code>static byte[] GetUtf8Bytes​(String str,
-        boolean replace)</code><br>
+<li><code>static byte[] GetUtf8Bytes​(String str,
+        boolean replace)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
-<li><code>static byte[] GetUtf8Bytes​(String str,
-        boolean replace,
-        boolean lenientLineBreaks)</code><br>
+<li><code>static byte[] GetUtf8Bytes​(String str,
+        boolean replace,
+        boolean lenientLineBreaks)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
-<li><code>static long GetUtf8Length​(String str,
-         boolean replace)</code><br>
+<li><code>static long GetUtf8Length​(String str,
+         boolean replace)</code><br>
 Calculates the number of bytes needed to encode a string in UTF-8.</li>
-<li><code>static String GetUtf8String​(byte[] bytes,
-         boolean replace)</code><br>
+<li><code>static String GetUtf8String​(byte[] bytes,
+         boolean replace)</code><br>
 Generates a text string from a UTF-8 byte array.</li>
-<li><code>static String GetUtf8String​(byte[] bytes,
-         int offset,
-         int bytesCount,
-         boolean replace)</code><br>
+<li><code>static String GetUtf8String​(byte[] bytes,
+         int offset,
+         int bytesCount,
+         boolean replace)</code><br>
 Generates a text string from a portion of a UTF-8 byte array.</li>
-<li><code>static int ReadUtf8​(InputStream stream,
-    int bytesCount,
-    StringBuilder builder,
-    boolean replace)</code><br>
+<li><code>static int ReadUtf8​(InputStream stream,
+    int bytesCount,
+    StringBuilder builder,
+    boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a data stream.</li>
-<li><code>static int ReadUtf8FromBytes​(byte[] data,
-             int offset,
-             int bytesCount,
-             StringBuilder builder,
-             boolean replace)</code><br>
+<li><code>static int ReadUtf8FromBytes​(byte[] data,
+             int offset,
+             int bytesCount,
+             StringBuilder builder,
+             boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a byte array.</li>
-<li><code>static String ReadUtf8ToString​(InputStream stream)</code><br>
+<li><code>static String ReadUtf8ToString​(InputStream stream)</code><br>
 Reads a string in UTF-8 encoding from a data stream in full and returns that
 string.</li>
-<li><code>static String ReadUtf8ToString​(InputStream stream,
-            int bytesCount,
-            boolean replace)</code><br>
+<li><code>static String ReadUtf8ToString​(InputStream stream,
+            int bytesCount,
+            boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
-<li><code>static String ToLowerCaseAscii​(String str)</code><br>
+<li><code>static String ToLowerCaseAscii​(String str)</code><br>
 Returns a string with the basic upper-case letters A to Z (U + 0041 to U + 005A)
 converted to lower-case.</li>
-<li><code>static String ToUpperCaseAscii​(String str)</code><br>
+<li><code>static String ToUpperCaseAscii​(String str)</code><br>
 Returns a string with the basic lower-case letters A to Z (U + 0061 to U + 007A)
 converted to upper-case.</li>
-<li><code>static int WriteUtf8​(String str,
-     int offset,
-     int length,
-     OutputStream stream,
-     boolean replace)</code><br>
+<li><code>static int WriteUtf8​(String str,
+     int offset,
+     int length,
+     OutputStream stream,
+     boolean replace)</code><br>
 Writes a portion of a string in UTF-8 encoding to a data stream.</li>
-<li><code>static int WriteUtf8​(String str,
-     int offset,
-     int length,
-     OutputStream stream,
-     boolean replace,
-     boolean lenientLineBreaks)</code><br>
+<li><code>static int WriteUtf8​(String str,
+     int offset,
+     int length,
+     OutputStream stream,
+     boolean replace,
+     boolean lenientLineBreaks)</code><br>
 Writes a portion of a string in UTF-8 encoding to a data stream.</li>
-<li><code>static int WriteUtf8​(String str,
-     OutputStream stream,
-     boolean replace)</code><br>
+<li><code>static int WriteUtf8​(String str,
+     OutputStream stream,
+     boolean replace)</code><br>
 Writes a string in UTF-8 encoding to a data stream.</li>
 </ul>
 
@@ -381,12 +381,12 @@ UTF-16 code units.</li>
 <pre>public static int CodePointAt​(String str, int index)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p><p>The
+<p>Gets the Unicode code point at the given index of the string.<p/><p>The
  following example shows how to iterate a text string code point by
  code point.</p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int
  codePoint = DataUtilities.CodePointAt(str, i);
  Console.WriteLine(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;=
- 0x10000) { i++; /* Supplementary code point &#x2a;&#x2f; } } </pre></p></p>
+ 0x10000) { i++; /* Supplementary code point */ } } </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -416,14 +416,14 @@ or greater, the code point takes up two UTF-16 code units.</li>
 <pre>public static int CodePointAt​(String str, int index, int surrogateBehavior)
 </pre>
 
-<p>Gets the Unicode code point at the given index of the string.<p><p>The
+<p>Gets the Unicode code point at the given index of the string.<p/><p>The
  following example shows how to iterate a text string code point by
  code point, terminating the loop when an unpaired surrogate is
  found.</p> <pre>for (var i = 0;i&lt;str.length(); ++i) { int codePoint =
  DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break;
- /* Unpaired surrogate &#x2a;&#x2f; } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
- if (codePoint &gt;= 0x10000) { i++; /* Supplementary code point &#x2a;&#x2f; } }
- </pre></p></p>
+ /* Unpaired surrogate <em>/ } Console.WriteLine(&quot;codePoint:&quot;+codePoint);
+ if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point */ } }
+ </pre></p>
 
 <p><strong>Parameters:</strong></p>
 
