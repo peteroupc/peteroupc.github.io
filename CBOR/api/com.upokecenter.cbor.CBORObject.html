@@ -406,7 +406,8 @@ Gets a value indicating whether this data item has at least one tag.</li>
 Gets a value indicating whether this value is a CBOR true value.</li>
 <li><code>boolean isUndefined()</code><br>
 Gets a value indicating whether this value is a CBOR undefined value.</li>
-<li><code>boolean isZero()</code><br></li>
+<li><code>boolean isZero()</code><br>
+Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>static CBORObject Multiply​(CBORObject first,
     CBORObject second)</code><br>
 Multiplies two CBOR numbers.</li>
@@ -839,6 +840,15 @@ false</code>.</li>
 
 <pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> If this object&#39;s value equals 0; otherwise, . <code>
+false</code> .</li>
+</ul>
 
 <h3>getKeys</h3>
 
