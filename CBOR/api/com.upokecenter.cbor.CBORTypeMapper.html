@@ -18,16 +18,16 @@
 <ul>
 <li><code>CBORTypeMapper()</code><br>
 Initializes a new instance of the CBORTypeMapper class.</li>
-<li><code>&lt;T&gt; CBORTypeMapper AddConverter​(Type type,
-        ICBORConverter&lt;T&gt; converter)</code><br>
+<li><code>&lt;T&gt; CBORTypeMapper AddConverter​(Type type,
+        ICBORConverter&lt;T&gt; converter)</code><br>
 Registers an object that converts objects of a given type to CBOR objects
 (called a CBOR converter).</li>
-<li><code>CBORTypeMapper AddTypeName​(String name)</code><br>
+<li><code>CBORTypeMapper AddTypeName​(String name)</code><br>
 Adds the fully qualified name of a Java or .NET type for use in type
 matching.</li>
-<li><code>CBORTypeMapper AddTypePrefix​(String prefix)</code><br>
+<li><code>CBORTypeMapper AddTypePrefix​(String prefix)</code><br>
 Adds a prefix of a Java or .NET type for use in type matching.</li>
-<li><code>boolean FilterTypeName​(String typeName)</code><br>
+<li><code>boolean FilterTypeName​(String typeName)</code><br>
 Returns whether the given Java or .NET type name fits the filters given in
 this mapper.</li>
 </ul>

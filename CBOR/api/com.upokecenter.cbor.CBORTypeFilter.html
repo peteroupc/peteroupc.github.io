@@ -40,39 +40,39 @@ Deprecated.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>boolean ArrayIndexAllowed​(int index)</code><br>
+<li><code>boolean ArrayIndexAllowed​(int index)</code><br>
 Deprecated. Determines whether this type filter allows CBOR arrays and the given array
 index is allowed under this type filter.</li>
-<li><code>boolean ArrayLengthMatches​(int length)</code><br>
+<li><code>boolean ArrayLengthMatches​(int length)</code><br>
 Deprecated. Returns whether an array&#39;s length is allowed under this filter.</li>
-<li><code>boolean ArrayLengthMatches​(long length)</code><br>
+<li><code>boolean ArrayLengthMatches​(long length)</code><br>
 Deprecated. Returns whether an array&#39;s length is allowed under a filter.</li>
-<li><code>boolean ArrayLengthMatches​(com.upokecenter.numbers.EInteger bigLength)</code><br>
+<li><code>boolean ArrayLengthMatches​(com.upokecenter.numbers.EInteger bigLength)</code><br>
 Deprecated. Returns whether an array&#39;s length is allowed under a filter.</li>
-<li><code>CBORTypeFilter GetSubFilter​(int index)</code><br>
+<li><code>CBORTypeFilter GetSubFilter​(int index)</code><br>
 Deprecated. Gets the type filter for this array filter by its index.</li>
-<li><code>CBORTypeFilter GetSubFilter​(long index)</code><br>
+<li><code>CBORTypeFilter GetSubFilter​(long index)</code><br>
 Deprecated. Gets the type filter for this array filter by its index.</li>
-<li><code>boolean MajorTypeMatches​(int type)</code><br>
+<li><code>boolean MajorTypeMatches​(int type)</code><br>
 Deprecated. Returns whether the given CBOR major type matches a major type allowed by
 this filter.</li>
 <li><code>boolean NonFPSimpleValueAllowed()</code><br>
 Deprecated. Returns whether this filter allows simple values that are not floating-point
 numbers.</li>
-<li><code>boolean TagAllowed​(int tag)</code><br>
+<li><code>boolean TagAllowed​(int tag)</code><br>
 Deprecated. Gets a value indicating whether CBOR objects can have the given tag number.</li>
-<li><code>boolean TagAllowed​(long longTag)</code><br>
+<li><code>boolean TagAllowed​(long longTag)</code><br>
 Deprecated. Gets a value indicating whether CBOR objects can have the given tag number.</li>
-<li><code>boolean TagAllowed​(com.upokecenter.numbers.EInteger bigTag)</code><br>
+<li><code>boolean TagAllowed​(com.upokecenter.numbers.EInteger bigTag)</code><br>
 Deprecated. Gets a value indicating whether CBOR objects can have the given tag number.</li>
 <li><code>CBORTypeFilter WithArrayAnyLength()</code><br>
 Deprecated. Copies this filter and includes arrays of any length in the new filter.</li>
-<li><code>CBORTypeFilter WithArrayExactLength​(int arrayLength,
-                CBORTypeFilter... elements)</code><br>
+<li><code>CBORTypeFilter WithArrayExactLength​(int arrayLength,
+                CBORTypeFilter... elements)</code><br>
 Deprecated. Copies this filter and includes CBOR arrays with an exact length to the new
 filter.</li>
-<li><code>CBORTypeFilter WithArrayMinLength​(int arrayLength,
-              CBORTypeFilter... elements)</code><br>
+<li><code>CBORTypeFilter WithArrayMinLength​(int arrayLength,
+              CBORTypeFilter... elements)</code><br>
 Deprecated. Copies this filter and includes CBOR arrays with at least a given length to
 the new filter.</li>
 <li><code>CBORTypeFilter WithByteString()</code><br>
@@ -83,7 +83,7 @@ Deprecated. Copies this filter and includes floating-point numbers in the new fi
 Deprecated. Copies this filter and includes maps in the new filter.</li>
 <li><code>CBORTypeFilter WithNegativeInteger()</code><br>
 Deprecated. Copies this filter and includes negative integers in the new filter.</li>
-<li><code>CBORTypeFilter WithTags​(int... tags)</code><br>
+<li><code>CBORTypeFilter WithTags​(int... tags)</code><br>
 Deprecated. Copies this filter and includes a set of valid CBOR tags in the new filter.</li>
 <li><code>CBORTypeFilter WithTextString()</code><br>
 Deprecated. Copies this filter and includes text strings in the new filter.</li>
