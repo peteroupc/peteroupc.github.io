@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 22, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 24, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability or speed/high quality.</p>
 
@@ -126,6 +126,7 @@
 <li><a href="#How_to_Initialize_RNGs"><strong>How to Initialize RNGs</strong></a></li>
 <li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
 <li><a href="#GPU_Programming_Environments"><strong>GPU Programming Environments</strong></a></li>
+<li><a href="#Resource_Constrained_Devices"><strong>Resource-Constrained Devices</strong></a></li>
 </ul></li>
 <li><a href="#Hash_Functions"><strong>Hash Functions</strong></a></li>
 <li><a href="#Motivation"><strong>Motivation</strong></a></li>
@@ -610,15 +611,15 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <h3>GPU Programming Environments</h3>
 
-<p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;</p>
+<p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves), so random number generators for such environments are often designed as <a href="#Hash_Functions"><strong>hash functions</strong></a>, because their output is determined solely by the input rather than both the input and state (as with PRNGs).</p>
 
-<ul>
-<li>have limited access to some system resources compared with other programming environments,</li>
-<li>are designed for parallel execution, and</li>
-<li>do not store state,</li>
-</ul>
+<p>However, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
 
-<p>so random number generators for such environments are often designed as <a href="#Hash_Functions"><strong>hash functions</strong></a>, because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
+<p><a id=Resource_Constrained_Devices></a></p>
+
+<h3>Resource-Constrained Devices</h3>
+
+<p>Unlike with mainstream computing devices such as desktops and smartphones, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note20"><strong>(20)</strong></a></sup></p>
 
 <p><a id=Hash_Functions></a></p>
 
@@ -720,6 +721,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <p><small><sup id=Note17>(17)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
 <p><small><sup id=Note18>(18)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Wetzels, J., &quot;33C3: Analyzing Embedded Operating System Random Number Generators&quot;, samvartaka.github.io, Jan. 3, 2017.</small></p>
+
+<p><small><sup id=Note20>(20)</sup> B. Peng, &quot;Two Fast Methods of Generating True Random Numbers on the Arduino&quot;, GitHub Gist, December 2017.</small></p>
 
 <p><a id=Appendix></a></p>
 

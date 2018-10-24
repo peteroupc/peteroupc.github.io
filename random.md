@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 22, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 24, 2018.
 
 Most apps that use random numbers care about either unpredictability or speed/high quality.
 
@@ -74,6 +74,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
     - [**How to Initialize RNGs**](#How_to_Initialize_RNGs)
     - [**Shuffling**](#Shuffling)
     - [**GPU Programming Environments**](#GPU_Programming_Environments)
+    - [**Resource-Constrained Devices**](#Resource_Constrained_Devices)
 - [**Hash Functions**](#Hash_Functions)
 - [**Motivation**](#Motivation)
 - [**Conclusion**](#Conclusion)
@@ -414,12 +415,14 @@ The PRNG chosen this way SHOULD meet or exceed the requirements of a statistical
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
 
-In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU)&mdash;
-- have limited access to some system resources compared with other programming environments,
-- are designed for parallel execution, and
-- do not store state,
+In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves), so random number generators for such environments are often designed as [**hash functions**](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).
 
-so random number generators for such environments are often designed as [**hash functions**](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).  Moreover, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+However, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
+
+<a id=Resource_Constrained_Devices></a>
+### Resource-Constrained Devices
+
+Unlike with mainstream computing devices such as desktops and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(19)**](#Note19)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(20)**](#Note20)</sup>
 
 <a id=Hash_Functions></a>
 ## Hash Functions
@@ -504,6 +507,10 @@ I acknowledge&mdash;
 <small><sup id=Note17>(17)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
 
 <small><sup id=Note18>(18)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+
+<small><sup id=Note19>(19)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
+
+<small><sup id=Note20>(20)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>
 
 <a id=Appendix></a>
 ## Appendix
