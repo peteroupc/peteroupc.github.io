@@ -26,10 +26,11 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 **This document does not cover:**
 
 - Testing an RNG implementation for correctness or adequate random number generation (e.g., Dörre and Klebanov 2016<sup>[**(1)**](#Note1)</sup>).
-- Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_, _password authenticated key exchange_).
+- Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_).
 - Generation of random numbers that follow a nonuniform distribution; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
-- Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
+- Applications for which the selection of RNGs is constrained by regulatory requirements.
+- Key exchange protocols, including those based on a secret password (_PAKEs_).
 
 **The following table summarizes the kinds of RNGs covered in this document:**
 
@@ -142,7 +143,7 @@ Examples of cryptographic RNG implementations include the following:
 <a id=Resource_Constrained_Devices></a>
 ### Resource-Constrained Devices
 
-Unlike with mainstream computing devices such as desktops and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(5)**](#Note5)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(6)**](#Note6)</sup>.
+Unlike with general-purpose computing devices such as desktops and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(5)**](#Note5)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(6)**](#Note6)</sup>.
 
 <a id=Statistical_RNGs></a>
 ## Statistical RNGs
@@ -442,7 +443,7 @@ Useful properties of some hash functions include&mdash;
 - _collision resistance_ (finding two different inputs that lead to a given output is cost-prohibitive), and
 - the _one-way property_ (finding an unknown input that leads to a given output is cost-prohibitive) (see NIST SP 800-108).
 
-Applications SHOULD choose hash functions with the avalanche property.  Hash functions used for information security SHOULD also have the collision resistance and one-way properties.
+Hash functions used for information security SHOULD have the collision resistance and one-way properties (e.g., SHA2-256, BLAKE2).  Hash functions not used for information security SHOULD have the avalanche property (e.g, MurmurHash3, xxHash, CityHash).
 
 <a id=Motivation></a>
 ## Motivation
