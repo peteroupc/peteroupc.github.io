@@ -25,8 +25,9 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 
 **This document does not cover:**
 
-- Testing an RNG implementation for correctness or adequate random number generation.
+- Testing an RNG implementation for correctness or adequate random number generation (e.g., Dörre and Klebanov 2016<sup>[**(21)**](#Note21)</sup>).
 - Generation of random numbers or keying material based at least in part on a password (e.g. _key derivation functions_, _password authenticated key exchange_).
+- Generation of random numbers that follow a nonuniform distribution; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
 - Applications for which the selection of RNGs is constrained by statutory or regulatory requirements.
 
@@ -125,7 +126,7 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
     - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
     - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(2)**](#Note2)</sup>.
 
-3. The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
+3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 <a id=Examples></a>
 ### Examples
@@ -363,7 +364,7 @@ In the limited cases where existing solutions are inadequate, a **programming la
 
 If an API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(14)**](#Note14)</sup> (it MAY provide a separate PRNG to accept such a seed).  If an API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).
 
-My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs. That document also discusses how to implement other methods to generate random numbers or integers that follow a given distribution (such as a normal, geometric, binomial, or weighted distribution) or fall within a given range.
+My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's standard library ought to include those ten methods separately for cryptographic and for statistical RNGs.
 
 <a id=RNG_Topics></a>
 ## RNG Topics
@@ -422,14 +423,14 @@ However, some of the hash functions which have been written in GLSL give undesir
 <a id=Resource_Constrained_Devices></a>
 ### Resource-Constrained Devices
 
-Unlike with mainstream computing devices such as desktops and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(19)**](#Note19)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(20)**](#Note20)</sup>
+Unlike with mainstream computing devices such as desktops and smartphones, resource-constrained devices ("embedded" devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup>[**(18)**](#Note18)</sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup>[**(19)**](#Note19)</sup>.
 
 <a id=Hash_Functions></a>
 ## Hash Functions
 
 A seemingly random number can be generated from arbitrary data using a _hash function_.
 
-A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(18)**](#Note18)</sup>.)
+A _hash function_ is a function that takes an arbitrary input of any size (such as an array of 8-bit bytes or a sequence of characters) and returns an output with a fixed number of bits. That output is also known as a _hash code_. (By definition, hash functions are deterministic<sup>[**(20)**](#Note20)</sup>.)
 
 A hash code can be used as follows:
 - The hash code can serve as a seed for a PRNG, and the desired random numbers can be generated from that PRNG.  (See my document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) for techniques.)
@@ -480,7 +481,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note4>(4)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 
-<small><sup id=Note5>(5)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358v1 [cs.CR], 2017</small>
+<small><sup id=Note5>(5)</sup> Widynski, B., "Middle Square Weyl Sequence RNG", arXiv:1704.00358v1 [cs.CR], 2017.</small>
 
 <small><sup id=Note6>(6)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
 
@@ -506,11 +507,13 @@ I acknowledge&mdash;
 
 <small><sup id=Note17>(17)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
 
-<small><sup id=Note18>(18)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+<small><sup id=Note18>(18)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
 
-<small><sup id=Note19>(19)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
+<small><sup id=Note19>(19)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>
 
-<small><sup id=Note20>(20)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>
+<small><sup id=Note20>(20)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+
+<small><sup id=Note21>(21)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", CCS '16, 2016.</small>
 
 <a id=Appendix></a>
 ## Appendix
