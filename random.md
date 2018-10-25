@@ -4,7 +4,7 @@
 
 Begun on Mar. 5, 2016; last updated on Oct. 24, 2018.
 
-Most apps that use random numbers care about either unpredictability or speed/high quality.
+Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
 <a id=Introduction_and_Summary></a>
 ## Introduction and Summary
@@ -474,7 +474,7 @@ I acknowledge&mdash;
 <a id=Notes></a>
 ## Notes
 
-<small><sup id=Note1>(1)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", CCS '16, 2016.</small>
+<small><sup id=Note1>(1)</sup> F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
 
 <small><sup id=Note2>(2)</sup> If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_ (see RFC 4086 sec. 4 or Cliff et al. 2009 for further discussion).</small>
 
