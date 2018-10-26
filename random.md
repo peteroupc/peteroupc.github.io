@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 24, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 26, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -30,7 +30,6 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 - Generation of random numbers that follow a nonuniform distribution; I discuss this topic in [**another document**](https://peteroupc.github.io/randomfunc.html).
 - Low-discrepancy sequences (quasirandom sequences), such as Sobol sequences.  Their structure differs in an essential way from independent uniform random numbers.
 - Applications for which the selection of RNGs is constrained by regulatory requirements.
-- Key exchange protocols, including those based on a secret password (_PAKEs_).
 
 **The following table summarizes the kinds of RNGs covered in this document:**
 
@@ -331,19 +330,19 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 - Methods and libraries mentioned in the "Statistical" column need to be initialized with a seed before use (for example, a seed generated using an implementation in the "Cryptographic" column).
 - The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.
 
-| Language   | Cryptographic   | Statistical | Other |
- --------|-----------------------------------------------|------|------|
-| .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |   |
+| Language   | Cryptographic   | Statistical |
+ --------|-----------------------------------------------|------|
+| .NET (incl. C# and VB.NET) (H) | `RNGCryptoServiceProvider` in `System.Security.Cryptography` namespace | [**airbreather/AirBreather.Common library**](https://github.com/airbreather/Airbreather.Common) (XorShift1024Star, XorShift128Plus, XoroShiro128Plus) |
 | C/C++ (G)  | (C) | [**`xoroshiro128plus.c`**](http://xoroshiro.di.unimi.it/xoroshiro128plus.c) (128-bit nonzero seed); [**`xorshift128plus.c`**](http://xoroshiro.di.unimi.it/xorshift128plus.c) (128-bit nonzero seed); [**frostburn/jkiss**](https://github.com/frostburn/jkiss) library |
-| Python | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) | `random.getrandbits()` (A); `random.seed()` (19,936-bit seed) (A) |
-| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |  prngine library (`MT19937_32Random`, `MT19937_64Random`) |
-| JavaScript (B) | `crypto.randomBytes(byteCount)` or `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | [**`xorshift`**](https://github.com/AndreasMadsen/xorshift) library | |
-| Ruby | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  | `Random#rand()` (ranges from 0 through 1) (A) (E); `Random#rand(N)` (integer) (A) (E); `Random.new(seed)` (default seed uses nondeterministic data) |
-| PHP | `random_int()`, `random_bytes()` (both since PHP 7) |  | `mt_rand()` (A) |
+| Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) |
+| Java (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
+| JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
+| Ruby (A) | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  |
+| PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
 
-<small>(A) General RNG implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister.</small>
+<small>(A) The general RNGs of Python and Ruby implements [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random`, `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
-<small>(B) JavaScript's `Math.random` (which ranges from 0 through 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; the exact algorithm to be used by JavaScript's `Math.random` is "implementation-dependent", though, according to the ECMAScript specification.</small>
+<small>(B) JavaScript's `Math.random` (which ranges from 0 through 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; ECMAScript 6, however, allows any "implementation-dependent algorithm or strategy" (sec. 20.2.2.27).</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
    - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available),
@@ -354,7 +353,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical RNG requirements.  However, a subclass of `java.util.Random` might be implemented to meet those requirements.</small>
 
-<small>(E) In my opinion, Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation.</small>
+<small>(E) In my opinion, Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation.  Namely, `rand()` return a number from 0 to 1 exclusive, and `rand(N)` returns an integer from 0 to N exclusive.</small>
 
 <small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(16)**](#Note16)</sup>.</small>
 
@@ -443,7 +442,7 @@ Useful properties of some hash functions include&mdash;
 - _collision resistance_ (finding two different inputs that lead to a given output is cost-prohibitive), and
 - the _one-way property_ (finding an unknown input that leads to a given output is cost-prohibitive) (see NIST SP 800-108).
 
-Hash functions used for information security SHOULD have the collision resistance and one-way properties (e.g., SHA2-256, BLAKE2).  Hash functions not used for information security SHOULD have the avalanche property (e.g, MurmurHash3, xxHash, CityHash).
+Hash functions not used for information security SHOULD have the avalanche property (e.g, MurmurHash3, xxHash, CityHash).  Hash functions used for information security SHOULD also have the collision resistance and one-way properties (e.g., SHA2-256, BLAKE2).
 
 <a id=Motivation></a>
 ## Motivation
