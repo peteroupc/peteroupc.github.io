@@ -121,7 +121,12 @@
 <li><a href="#Entropy"><strong>Entropy</strong></a></li>
 <li><a href="#Seed_Generation"><strong>Seed Generation</strong></a></li>
 </ul></li>
-<li><a href="#Implementing_RNGs_in_Programming_Languages"><strong>Implementing RNGs in Programming Languages</strong></a></li>
+<li><a href="#Programming_Language_APIs"><strong>Programming Language APIs</strong></a>
+
+<ul>
+<li><a href="#Existing_RNG_APIs"><strong>Existing RNG APIs</strong></a></li>
+<li><a href="#Implementing_New_RNG_APIs"><strong>Implementing New RNG APIs</strong></a></li>
+</ul></li>
 <li><a href="#RNG_Topics"><strong>RNG Topics</strong></a>
 
 <ul>
@@ -214,7 +219,7 @@
 
 <h3>Resource-Constrained Devices</h3>
 
-<p>Unlike with general-purpose computing devices such as desktops and smartphones, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
+<p>Compared to general-purpose computing devices such as desktops and smartphones, resource-constrained devices (&quot;embedded&quot; devices) are much less likely to have a cryptographic RNG available (Wetzels 2017)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, although methods exist for implementing a cryptographic RNG on the Arduino (Peng 2017)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
 
 <p><a id=Statistical_RNGs></a></p>
 
@@ -450,9 +455,15 @@
 
 <p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
-<p><a id=Implementing_RNGs_in_Programming_Languages></a></p>
+<p><a id=Programming_Language_APIs></a></p>
 
-<h2>Implementing RNGs in Programming Languages</h2>
+<h2>Programming Language APIs</h2>
+
+<p>&nbsp;</p>
+
+<p><a id=Existing_RNG_APIs></a></p>
+
+<h3>Existing RNG APIs</h3>
 
 <p>As much as possible, <strong>applications SHOULD use existing libraries and techniques</strong> that already meet the requirements for cryptographic and statistical RNGs.</p>
 
@@ -487,7 +498,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <td><code>pypcg</code> package; <a href="https://github.com/ihaque/xorshift"><strong>ihaque/xorshift</strong></a> library (128-bit nonzero seed; default seed uses <code>os.urandom()</code>)</td>
 </tr>
 <tr>
-<td>Java (D)</td>
+<td>Java (A) (D)</td>
 <td>(C); <code>java.security.SecureRandom</code> (F)</td>
 <td><a href="https://github.com/grunka/xorshift"><strong>grunka/xorshift</strong></a> (<code>XORShift1024Star</code> or <code>XORShift128Plus</code>); <a href="https://github.com/jenetics/prngine"><strong>jenetics/prngine</strong></a> (<code>KISS32Random</code>, <code>KISS64Random</code>)</td>
 </tr>
@@ -497,7 +508,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <td><code>pcg-random</code> or <code>xoroshiro128starstar</code> package</td>
 </tr>
 <tr>
-<td>Ruby</td>
+<td>Ruby (A) (E)</td>
 <td>(C); <code>SecureRandom.rand()</code> (ranges from 0 through 1) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>)</td>
 <td></td>
 </tr>
@@ -508,9 +519,9 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 </tbody></table>
 
-<p><small>(A) The general RNGs of Python and Ruby implements <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. <code>prngine</code>, a Java library, also has <code>MT19937_32Random</code>, <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
+<p><small>(A) The general RNGs of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. <code>prngine</code>, a Java library, also has <code>MT19937_32Random</code>, <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
 
-<p><small>(B) JavaScript&#39;s <code>Math.random</code> (which ranges from 0 through 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; ECMAScript 6, however, allows any &quot;implementation-dependent algorithm or strategy&quot; (sec. 20.2.2.27).</small></p>
+<p><small>(B) JavaScript&#39;s <code>Math.random</code> (which ranges from 0 through 1) is implemented using <code>xorshift128+</code> (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; <code>Math.random</code> uses an &quot;implementation-dependent algorithm or strategy&quot;, though (see ECMAScript sec. 20.2.2.27).</small></p>
 
 <p><small>(C) A cryptographic RNG implementation can&mdash;</p>
 
@@ -524,7 +535,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</small></p>
 
-<p><small>(E) In my opinion, Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation.  Namely, <code>rand()</code> return a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
+<p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> return a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</small></p>
 
@@ -532,17 +543,18 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(H) The .NET Framework&#39;s <code>System.Random</code> class uses a seed of at most 32 bits, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>System.Random</code> might be implemented to meet those requirements.</small></p>
 
-<hr>
+<p><a id=Implementing_New_RNG_APIs></a></p>
 
-<p>In the limited cases where existing solutions are inadequate, a <strong>programming language API</strong> could implement cryptographic and statistical RNGs by filling one or more memory units (such as 8-bit bytes) completely with random bits.</p>
+<h3>Implementing New RNG APIs</h3>
 
-<blockquote>
-<p><strong>Example:</strong> A C language API for an RNG could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where <code>bytes</code> is a pointer to an array of 8-bit bytes, and <code>size</code> is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.</p>
-</blockquote>
+<p>As mentioned before, applications SHOULD <a href="#Existing_RNG_APIs"><strong>use existing implementations</strong></a> of cryptographic and statistical RNGs whenever possible.  In the limited cases where existing implementations are inadequate, a <strong>programming language API</strong> could implement such RNGs using the following guidelines:</p>
 
-<p>If an API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note17"><strong>(17)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed).  If an API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, that PRNG SHOULD be <em>stable</em> and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).</p>
-
-<p>My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on ten uniform random number methods. In my opinion, a new programming language&#39;s standard library ought to include those ten methods separately for cryptographic and for statistical RNGs.</p>
+<ol>
+<li> The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  For example, a C language RNG method could look like the following: <code>int random(uint8_t[] bytes, size_t size);</code>, where <code>bytes</code> is a pointer to an array of 8-bit bytes, and <code>size</code> is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.</li>
+<li> If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note17"><strong>(17)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed).</li>
+<li> If the API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, that PRNG SHOULD be <em>stable</em> and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).</li>
+<li> My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on ten uniform random number methods. In my opinion, a new programming language&#39;s <strong>standard library</strong> ought to include those ten methods separately for cryptographic and for statistical RNGs.</li>
+</ol>
 
 <p><a id=RNG_Topics></a></p>
 
