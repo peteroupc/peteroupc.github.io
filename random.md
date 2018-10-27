@@ -373,10 +373,15 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 As mentioned before, applications SHOULD [**use existing implementations**](#Existing_RNG_APIs) of cryptographic and statistical RNGs whenever possible.  In the limited cases where existing implementations are inadequate, a **programming language API** could implement such RNGs using the following guidelines:
 
-1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits.  For example, a C language RNG method could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
-2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(17)**](#Note17)</sup> (it MAY provide a separate PRNG to accept such a seed).
-3.  If the API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation).
+1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits (see example 1).
+2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(17)**](#Note17)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
+3.  If the API provides a PRNG that an application can seed for repeatable "randomness", that PRNG SHOULD be _stable_ and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation). See example 2.
 4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those ten methods separately for cryptographic and for statistical RNGs.
+
+> **Examples:**
+>
+> 1. A C language RNG method for filling memory could look like the following: `int random(uint8_t[] bytes, size_t size);`, where `bytes` is a pointer to an array of 8-bit bytes, and `size` is the number of random 8-bit bytes to generate, and where 0 is returned if the method succeeds and nonzero otherwise.
+> 2. A Java API that follows these guidelines can contain two classes: a `RandomGen` class that implements an unspecified but general-purpose RNG, and a `RandomStable` class that implements a PCG PRNG that is documented and will not change in the future. `RandomStable` includes a constructor that takes a seed for repeatable "randomness", while `RandomGen` does not.  Both classes include methods to generate uniform random numbers, but `RandomStable` specifies the exact algorithms to those methods and `RandomGen` does not.  At any time in the future, `RandomGen` can change its implementation to use a different RNG while remaining backward compatible, while `RandomStable` has to use the same algorithms for all time to remain backward compatible, especially because it takes a seed for repeatable "randomness".
 
 <a id=RNG_Topics></a>
 ## RNG Topics
