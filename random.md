@@ -344,12 +344,12 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | Python (A) | `secrets.SystemRandom` (since Python 3.6); `os.urandom()`| `pypcg` package; [**ihaque/xorshift**](https://github.com/ihaque/xorshift) library (128-bit nonzero seed; default seed uses `os.urandom()`) |
 | Java (A) (D) | (C); `java.security.SecureRandom` (F) |  [**grunka/xorshift**](https://github.com/grunka/xorshift) (`XORShift1024Star` or `XORShift128Plus`); [**jenetics/prngine**](https://github.com/jenetics/prngine) (`KISS32Random`, `KISS64Random`) |
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
-| Ruby (A) (E) | (C); `SecureRandom.rand()` (ranges from 0 through 1) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  |
+| Ruby (A) (E) | (C); `SecureRandom.rand()` (ranges from 0 to 1 exclusive) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  |
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
 
 <small>(A) The general RNGs of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random`, `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
-<small>(B) JavaScript's `Math.random` (which ranges from 0 through 1) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
+<small>(B) JavaScript's `Math.random()` (which ranges from 0 to 1 exclusive) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 
 <small>(C) A cryptographic RNG implementation can&mdash;
    - read from the `/dev/urandom` device in most Unix-based systems (using the `open` and `read` system calls where available),
