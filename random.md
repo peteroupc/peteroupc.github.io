@@ -130,8 +130,6 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 
 3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
-A cryptographic RNG MAY mix its output with arbitrary data outside the RNG as long as the result is no easier to predict.
-
 <a id=Examples></a>
 ### Examples
 

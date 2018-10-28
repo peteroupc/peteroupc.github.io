@@ -63,11 +63,11 @@
 <p>It is not recommended to implement security-sensitive algorithms using the methods in this class, for several reasons:</p>
 
 <ul>
-<li><p><code>EDecimal</code> objects are immutable, so they can&#39;t be modified, and the memory they ccupy is not guaranteed to be cleared in a timely fashion due to arbage collection. This is relevant for applications that consider any-digit-long numbers as secret parameters.</p></li>
+<li><p><code>EDecimal</code> objects are immutable, so they can&#39;t be modified, and the memory they ccupy is not guaranteed to be cleared in a timely fashion due to arbage collection. This is relevant for applications that use any-digit-long numbers as secret parameters.</p></li>
 <li><p>The methods in this class (especially those that involve arithmetic) are not guaranteed to run in constant time for all relevant inputs. Certain attacks that involve encrypted communications have exploited the timing and other aspects of such communications to derive keying material or cleartext indirectly.</p></li>
 </ul>
 
-<p>Applications should instead use libraries designed with security in mind to handle big numbers in security-sensitive algorithms.</p>
+<p>Applications should instead use dedicated security libraries to handle big numbers in security-sensitive algorithms.</p>
 
 <p><b>Forms of numbers</b></p>
 
