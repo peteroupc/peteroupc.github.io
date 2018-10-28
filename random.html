@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 26, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 28, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -58,7 +58,7 @@
 </tr>
 <tr>
 <td><a href="#Statistical_RNGs"><strong>Statistical RNG</strong></a></td>
-<td>When information security is not a concern, but speed is.  See also <a href="#Shuffling"><strong>&quot;Shuffling&quot;</strong></a>.</td>
+<td>When information security is not a concern, but speed is.</td>
 <td><code>xoroshiro128+</code>, <code>xorshift128+</code></td>
 </tr>
 <tr>
@@ -199,8 +199,6 @@
 </ul></li>
 <li><p>The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.</p></li>
 </ol>
-
-<p>A cryptographic RNG MAY mix its output with arbitrary data outside the RNG as long as the result is no easier to predict.</p>
 
 <p><a id=Examples></a></p>
 
@@ -537,7 +535,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <p><small>(D) Java&#39;s <code>java.util.Random</code> class uses a 48-bit seed, so doesn&#39;t meet the statistical RNG requirements.  However, a subclass of <code>java.util.Random</code> might be implemented to meet those requirements.</small></p>
 
-<p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> return a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
+<p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
 
 <p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</small></p>
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 26, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 28, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -36,7 +36,7 @@ Many applications rely on random number generators (RNGs); these RNGs include&md
 | Kind of RNG   | When to Use This RNG  | Examples |
  --------|--------|------|
 | [**Cryptographic RNG**](#Cryptographic_RNGs)   | In information security cases, or when speed is not a concern.  | `/dev/urandom`, `BCryptGenRandom` |
-| [**Statistical RNG**](#Statistical_RNGs)   | When information security is not a concern, but speed is.  See also [**"Shuffling"**](#Shuffling).| `xoroshiro128+`, `xorshift128+` |
+| [**Statistical RNG**](#Statistical_RNGs)   | When information security is not a concern, but speed is. | `xoroshiro128+`, `xorshift128+` |
 | [**Seeded PRNG**](#Seeded_PRNGs)   | When generating reproducible "randomness" in a way not practical otherwise.   | High-quality PRNG with custom seed |
 
 <a id=About_This_Document></a>
@@ -360,7 +360,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 
 <small>(D) Java's `java.util.Random` class uses a 48-bit seed, so doesn't meet the statistical RNG requirements.  However, a subclass of `java.util.Random` might be implemented to meet those requirements.</small>
 
-<small>(E) Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` return a number from 0 to 1 exclusive, and `rand(N)` returns an integer from 0 to N exclusive.</small>
+<small>(E) Ruby's `Random#rand` and `SecureRandom.rand` methods present a beautiful and simple API for random number generation, in my opinion.  Namely, `rand()` returns a number from 0 to 1 exclusive, and `rand(N)` returns an integer from 0 to N exclusive.</small>
 
 <small>(F) Calling the `setSeed` method of `SecureRandom` before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, `setSeed` _supplements_ the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup>[**(16)**](#Note16)</sup>.</small>
 
