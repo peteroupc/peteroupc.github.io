@@ -534,7 +534,7 @@ The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>
 - the Rec. 709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [**JPEG File Interchange Format**](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant (with all three components 0 or greater and 255 or less), as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-For all these variants, the transformation should be done using [**_encoded RGB_ colors**](#RGB_Color_Spaces).<sup>[**(16)**](#Note16)</sup>
+The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB color space, but should be done using [**_encoded RGB_ colors**](#RGB_Color_Spaces).<sup>[**(16)**](#Note16)</sup>
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
@@ -611,9 +611,9 @@ The [**CIE 1931 standard colorimetric system**](https://en.wikipedia.org/wiki/CI
 Conventions for XYZ colors include the following:
 
 - **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
-- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[**(17)**](#Note17)</sup>
+- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.<sup>[**(17)**](#Note17)</sup> (In sRGB, the white point's luminance is 80 cd/m<sup>2</sup>.)
 
-The following methods, in the pseudocode below, convert a color between encoded sRGB (`rgb`) and relative XYZ:
+The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Space).  For example, the following methods, in the pseudocode below, convert a color between **encoded sRGB** (`rgb`) and relative XYZ:
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.
 - For `XYZFromsRGBD50(rgb)` and  `XYZTosRGBD50(xyz)`, the white point is the D50/2 white point (see note 2 later in this section)<sup>[**(18)**](#Note18)</sup>.
 

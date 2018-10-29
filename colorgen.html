@@ -525,7 +525,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>In most applications, hue is in degrees and is 0 or greater and less than 360.</li>
+<li>Usually, hue is in degrees and is 0 or greater and less than 360.</li>
 <li>The HSV color model is not perception-based, as the HWB article acknowledges<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
 </ul>
 </blockquote>
@@ -660,7 +660,7 @@ END METHOD
 <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf"><strong>JPEG File Interchange Format</strong></a> variant (with all three components 0 or greater and 255 or less), as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.</li>
 </ul>
 
-<p>For all these variants, the transformation should be done using <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a>.<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
+<p>The Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> transformation is independent of RGB color space, but should be done using <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a>.<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
 
 <pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
 // in the NTSC color space
@@ -745,10 +745,10 @@ END METHOD
 
 <ul>
 <li><strong>Absolute XYZ.</strong> In this convention, the Y component represents an absolute <em>luminance</em> in candelas per square meter (cd/m<sup>2</sup>).</li>
-<li><strong>Relative XYZ.</strong> In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a <em>luminance factor</em>; the white point has a luminance factor of 1.<sup><a href="#Note17"><strong>(17)</strong></a></sup></li>
+<li><strong>Relative XYZ.</strong> In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a <em>luminance factor</em>; the white point has a luminance factor of 1.<sup><a href="#Note17"><strong>(17)</strong></a></sup> (In sRGB, the white point&#39;s luminance is 80 cd/m<sup>2</sup>.)</li>
 </ul>
 
-<p>The following methods, in the pseudocode below, convert a color between encoded sRGB (<code>rgb</code>) and relative XYZ:</p>
+<p>The conversion between RGB and XYZ varies by <a href="#RGB_Color_Space"><strong>RGB color space</strong></a>.  For example, the following methods, in the pseudocode below, convert a color between <strong>encoded sRGB</strong> (<code>rgb</code>) and relative XYZ:</p>
 
 <ul>
 <li>For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.</li>
