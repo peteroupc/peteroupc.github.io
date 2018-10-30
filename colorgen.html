@@ -223,9 +223,9 @@
 
 <p>There are many <a href="#RGB_Color_Spaces"><strong>RGB color spaces</strong></a>, not just one.</p>
 
-<p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;; and each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
+<p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;.  Often, each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
 
-<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered to be fully opaque (and to have an implicit alpha component of 1).</p>
+<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque (so with an implicit alpha component of 1).</p>
 
 <p><a id=RGB_Integer_Formats></a></p>
 
@@ -1043,15 +1043,13 @@ END METHOD
 
 <h3>CMYK and Other Ink-Mixture Color Models</h3>
 
-<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.  However, since color mixture of inks is considerably complex (see &quot;<a href="#Color_Mixture"><strong>Color Mixture</strong></a>&quot;, later), the proper interpretation of CMYK colors depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.</p>
+<p>The <em>CMYK color model</em>, ideally, describes the proportion of cyan, magenta, yellow, and black (K) inks to use to reproduce certain colors on a surface.<sup><a href="#Note41"><strong>(41)</strong></a></sup> However, since <a href="#Color_Mixture"><strong>color mixture</strong></a> of inks is very complex, the proper interpretation of any recipe of inks, including CMYK colors, depends on the <em>printing condition</em> (as defined in ISO 12647-1), including what inks are used, how the inks are printed, and what surface (e.g., paper) the printed output appears on.</p>
 
 <p><strong>Characterization tables.</strong> In printing industry practice, a given printing condition is characterized by finding out how it forms colors using different mixtures of inks.  This is usually done by printing CMYK color &quot;patches&quot; and using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a> to measure their <a href="#CIELAB"><strong>CIELAB</strong></a> colors under standardized lighting and measurement conditions.</p>
 
 <p>The International Color Consortium maintains a <a href="http://www.color.org/chardata/drsection1.xalter"><strong>list of standardized conversions</strong></a> of CMYK color &quot;patches&quot;, usually to CIELAB colors, for different standardized printing conditions.  Such conversions are generally known as <em>characterization data</em> or <em>characterization tables</em>.</p>
 
 <p>Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table&#39;s &quot;patches&quot;.<sup><a href="#Note25"><strong>(25)</strong></a></sup></p>
-
-<p><strong>Other ink mixtures.</strong> Just as with CMYK, the interpretation of any recipe of inks as a color depends on the printing condition.  However, printing systems that involve inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of five or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</p>
 
 <p><strong>Rough conversions.</strong> The following pseudocode shows <em>very rough</em> and <em>approximate</em> conversions between an RGB color (<code>color</code>) and a CMYK color (<code>cmyk</code>):</p>
 
@@ -1993,6 +1991,8 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 <p><small><sup id=Note39>(39)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
 <p><small><sup id=Note40>(40)</sup> Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</small></p>
+
+<p><small><sup id=Note41>(41)</sup> This section focuses on CMYK because printing systems that involve inks other than cyan, magenta, yellow, and black (notably &quot;extended gamut&quot; systems of five or more inks, and systems that use custom &quot;spot&quot; color inks) are not yet of general interest to programmers.</small></p>
 
 <p><a id=License></a></p>
 
