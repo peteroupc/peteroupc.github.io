@@ -253,7 +253,7 @@
 <li><strong>16-bpc:</strong> As 48-bit integers (16 bpc RGB), or as 64-bit integers with an alpha component.</li>
 </ul>
 
-<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a series of 8-bit bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; 8-bit byte order, or the order in which the color&#39;s components are packed into an integer can vary.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
+<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; 8-bit byte order, or the order in which the color&#39;s components are packed into an integer can vary.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
 
 <p>The following pseudocode presents methods to convert RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):</p>
 
@@ -379,7 +379,7 @@ END METHOD
 
 <ul>
 <li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color"><strong>CSS Color Module Level 3</strong></a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
-<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes RGBA colors with four 8-bit integer components (0 or greater, 255 or less).</li>
+<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8-bpc RGBA colors.</li>
 </ul></li>
 <li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as encoded RGB colors).</li>
 </ol>
@@ -423,9 +423,7 @@ END METHOD
 
 <p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
 
-<p>The following methods convert colors between linear and encoded sRGB.
-(Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard;
-the sRGB proposal has a different value for this threshold.)</p>
+<p>The following methods convert colors between linear and encoded sRGB. (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for this threshold.)</p>
 
 <pre>// Convert a color component from encoded to linear sRGB
 // NOTE: This is not gamma decoding; it&#39;s similar to, but
@@ -522,12 +520,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>Usually, hue is in degrees and is 0 or greater and less than 360.</li>
-<li>The HSV color model is not perception-based, as the HWB article acknowledges<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
-</ul>
+<p><strong>Note:</strong> The HSV color model is not perception-based, as the HWB article acknowledges<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=HSL></a></p>
@@ -1998,7 +1991,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note33>(33)</sup> This document does not cover how to implement hash tables.</small></p>
 
-<p><small><sup id=Note34>(34)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an image data transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small></p>
+<p><small><sup id=Note34>(34)</sup> An example of scene-referred image data is a raw image from a digital camera after applying an input device transform as defined in Academy Procedure P-2013-001.  Scene-referred image data have not undergone operations such as look modification transforms (as defined in P-2013-001), tone mapping, gamut mapping, or other color rendering.</small></p>
 
 <p><small><sup id=Note35>(35)</sup> In general, a color can be considered &quot;print friendly&quot; if it lies within the extent of colors (<em>color gamut</em>) that can be reproduced under a given or standardized printing condition (see also &quot;<a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a>&quot;).</small></p>
 
