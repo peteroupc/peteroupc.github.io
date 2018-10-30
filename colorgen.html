@@ -73,11 +73,8 @@
 <li><a href="#Other_Color_Models"><strong>Other Color Models</strong></a>
 
 <ul>
-<li><a href="#CIE_XYZ"><strong>CIE XYZ</strong></a>
-
-<ul>
+<li><a href="#CIE_XYZ"><strong>CIE XYZ</strong></a></li>
 <li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a></li>
-</ul></li>
 <li><a href="#CIELAB"><strong>CIELAB</strong></a></li>
 <li><a href="#CIELUV"><strong>CIELUV</strong></a></li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a></li>
@@ -807,14 +804,11 @@ END METHOD
 
 <p><a id=Chromaticity_Coordinates></a></p>
 
-<h4>Chromaticity Coordinates</h4>
+<h3>Chromaticity Coordinates</h3>
 
-<p>Some kinds of <em>chromaticity coordinates</em> follow.</p>
+<p>The chromaticity coordinates <em>x</em>, <em>y</em>, and <em>z</em> are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.<sup><a href="#Note20"><strong>(20)</strong></a></sup>  &quot;xyY&quot; form consists of <em>x</em> then <em>y</em> then the Y component of an XYZ color. &quot;Yxy&quot; form consists of the Y component then <em>x</em> then <em>y</em> of an XYZ color.</p>
 
-<ul>
-<li><strong><em>xy</em> chromaticity.</strong> The chromaticity coordinates <em>x</em>, <em>y</em>, and <em>z</em> are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.<sup><a href="#Note20"><strong>(20)</strong></a></sup>  &quot;xyY&quot; form consists of <em>x</em> then <em>y</em> then the Y component of an XYZ color. &quot;Yxy&quot; form consists of the Y component then <em>x</em> then <em>y</em> of an XYZ color.</li>
-<li><strong><em>u&prime;v&prime;</em> chromaticity.</strong>  <em>u&prime;</em> and <em>v&prime;</em> describe what are considered uniform chromaticity coordinates for light sources.<sup><a href="#Note21"><strong>(21)</strong></a></sup> &quot;u&prime;v&prime;Y&quot; form consists of <em>u&prime;</em> then <em>v&prime;</em>  then  the Y component of an XYZ color.  &quot;Yu&prime;v&prime;&quot; form consists of the Y component then <em>u&prime;</em> then <em>v&prime;</em> of an XYZ color.</li>
-</ul>
+<p>The CIE 1976 uniform chromaticity scale diagram is drawn using coordinates <em>u&prime;</em> and <em>v&prime;</em>.<sup><a href="#Note21"><strong>(21)</strong></a></sup> &quot;u&prime;v&prime;Y&quot; form consists of <em>u&prime;</em> then <em>v&prime;</em>  then  the Y component of an XYZ color.  &quot;Yu&prime;v&prime;&quot; form consists of the Y component then <em>u&prime;</em> then <em>v&prime;</em> of an XYZ color.</p>
 
 <p>In the following pseudocode, <code>XYZToxyY</code> and <code>XYZFromxyY</code> convert XYZ colors to and from their &quot;xyY&quot; form, respectively, and <code>XYZTouvY</code> and <code>XYZFromuvY</code> convert XYZ colors to and from their &quot;u&prime;v&prime;Y&quot; form, respectively.</p>
 
@@ -997,8 +991,8 @@ METHOD LabChromaHueDifference(lab1, lab2)
     sum=xyz[0]+xyz[1]*15+xyz[2]*3
     lt=lab[0]
     if sum==0: return [lt, 0, 0]
-    upr=4*xyz[0]/sum // U-prime chromaticity
-    vpr=9*xyz[1]/sum // V-prime chromaticity
+    upr=4*xyz[0]/sum // U-prime
+    vpr=9*xyz[1]/sum // V-prime
     sumwhite=wpoint[0]+15*wpoint[1]+wpoint[2]*3
     return [lt,
             lt*13*(upr - 4*wpoint[0]/sumwhite),
@@ -1810,7 +1804,7 @@ END METHOD
 <p><strong>Note:</strong> If <code>TEMP</code> is 2856, the <code>BlackbodySPD</code> function above is substantially equivalent to the CIE illuminant A.</p>
 </blockquote>
 
-<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><strong><em>correlated color temperature</em></strong></a> (CCT) as the temperature of the blackbody with the closest <em>uv</em> chromaticity<sup><a href="#Note21"><strong>(21)</strong></a></sup> to that of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two <em>uv</em> chromaticities is more than 0.05.)</p>
+<p>The concept &quot;color temperature&quot; properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody&#39;s, the CIE defines <a href="http://eilv.cie.co.at/term/258"><strong><em>correlated color temperature</em></strong></a> (CCT) as the temperature of the blackbody with the closest (<em>u</em>, <em>v</em>) coordinates<sup><a href="#Note21"><strong>(21)</strong></a></sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (<em>u</em>, <em>v</em>) coordinates is more than 0.05.)</p>
 
 <p>The following method (<code>XYZToCCT</code>), which computes an approximate CCT from an <a href="#CIE_XYZ"><strong>XYZ color</strong></a>, is based on McCamy&#39;s formula from 1992.</p>
 
@@ -1955,11 +1949,11 @@ END METHOD
 
 <p><small><sup id=Note19>(19)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Chromaticies of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., <em>rg</em> chromaticity for RGB).  Such chromaticities are calculated analogously to <em>xy</em> chromaticity.</small></p>
+<p><small><sup id=Note20>(20)</sup> Chromaticity coordinates of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> <a href="http://www.cie.co.at/publications/technical-notes"><strong>CIE Technical Note 001:2014</strong></a> says the chromaticity difference (<em>&Delta;<sub>u&prime;v&prime;</sub></em>) should be calculated as the <a href="#Color_Differences"><strong>Euclidean distance</strong></a> between two <em>u&prime;v&prime;</em> pairs and that a chromaticity difference of 0.0013 is just noticeable &quot;at 50% probability&quot;.</p>
 
-<p><em>uv</em> chromaticity, a former 1960 version of <em>u&prime;v&prime;</em> chromaticity, is found by taking <em>u</em> as <em>u&prime;</em> and <em>v</em> as (<em>v&prime;</em> * 2.0 / 3).</small></p>
+<p>(<em>u</em>, <em>v</em>) coordinates, a former 1960 version of <em>u&prime;</em> and <em>v&prime;</em>, are found by taking <em>u</em> as <em>u&prime;</em> and <em>v</em> as (<em>v&prime;</em> * 2.0 / 3).</small></p>
 
 <p><small><sup id=Note22>(22)</sup> Although the CIELAB color model is also often called &quot;perceptually uniform&quot;&mdash;</p>
 

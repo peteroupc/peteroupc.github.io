@@ -49,7 +49,7 @@ This document presents an overview of many common color topics that are of gener
     - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R)
 - [**Other Color Models**](#Other_Color_Models)
     - [**CIE XYZ**](#CIE_XYZ)
-        - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
+    - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
     - [**CIELAB**](#CIELAB)
     - [**CIELUV**](#CIELUV)
     - [**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)
@@ -662,12 +662,11 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 >     - `blackSrc` and `blackDest` are the luminance factors of the source and destination black points.
 
 <a id=Chromaticity_Coordinates></a>
-#### Chromaticity Coordinates
+### Chromaticity Coordinates
 
-Some kinds of _chromaticity coordinates_ follow.
+The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.<sup>[**(20)**](#Note20)</sup>  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
 
-- **_xy_ chromaticity.** The chromaticity coordinates _x_, _y_, and _z_ are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.<sup>[**(20)**](#Note20)</sup>  "xyY" form consists of _x_ then _y_ then the Y component of an XYZ color. "Yxy" form consists of the Y component then _x_ then _y_ of an XYZ color.
-- **_u&prime;v&prime;_ chromaticity.**  _u&prime;_ and _v&prime;_ describe what are considered uniform chromaticity coordinates for light sources.<sup>[**(21)**](#Note21)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
+The CIE 1976 uniform chromaticity scale diagram is drawn using coordinates _u&prime;_ and _v&prime;_.<sup>[**(21)**](#Note21)</sup> "u&prime;v&prime;Y" form consists of _u&prime;_ then _v&prime;_  then  the Y component of an XYZ color.  "Yu&prime;v&prime;" form consists of the Y component then _u&prime;_ then _v&prime;_ of an XYZ color.
 
 In the following pseudocode, `XYZToxyY` and `XYZFromxyY` convert XYZ colors to and from their "xyY" form, respectively, and `XYZTouvY` and `XYZFromuvY` convert XYZ colors to and from their "u&prime;v&prime;Y" form, respectively.
 
@@ -831,8 +830,8 @@ In the following pseudocode&mdash;
         sum=xyz[0]+xyz[1]*15+xyz[2]*3
         lt=lab[0]
         if sum==0: return [lt, 0, 0]
-        upr=4*xyz[0]/sum // U-prime chromaticity
-        vpr=9*xyz[1]/sum // V-prime chromaticity
+        upr=4*xyz[0]/sum // U-prime
+        vpr=9*xyz[1]/sum // V-prime
         sumwhite=wpoint[0]+15*wpoint[1]+wpoint[2]*3
         return [lt,
                 lt*13*(upr - 4*wpoint[0]/sumwhite),
@@ -1490,7 +1489,7 @@ The `Planckian` method shown below models the spectral power distribution (SPD) 
 
 > **Note:** If `TEMP` is 2856, the `BlackbodySPD` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest _uv_ chromaticity<sup>[**(21)**](#Note21)</sup> to that of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two _uv_ chromaticities is more than 0.05.)
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates<sup>[**(21)**](#Note21)</sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) coordinates is more than 0.05.)
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [**XYZ color**](#CIE_XYZ), is based on McCamy's formula from 1992.
 
@@ -1609,11 +1608,11 @@ The following topics would greatly enrich this document:
 
 <small><sup id=Note19>(19)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
-<small><sup id=Note20>(20)</sup> Chromaticies of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., _rg_ chromaticity for RGB).  Such chromaticities are calculated analogously to _xy_ chromaticity.</small>
+<small><sup id=Note20>(20)</sup> Chromaticity coordinates of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.</small>
 
 <small><sup id=Note21>(21)</sup> [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
-_uv_ chromaticity, a former 1960 version of _u&prime;v&prime;_ chromaticity, is found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).</small>
+(_u_, _v_) coordinates, a former 1960 version of _u&prime;_ and _v&prime;_, are found by taking _u_ as _u&prime;_ and _v_ as (_v&prime;_ \* 2.0 / 3).</small>
 
 <small><sup id=Note22>(22)</sup> Although the CIELAB color model is also often called "perceptually uniform"&mdash;
 - CIELAB "was not designed to have the perceptual qualities needed for gamut mapping", according to [**B. Lindbloom**](http://www.brucelindbloom.com/index.html?UPLab.html), and
