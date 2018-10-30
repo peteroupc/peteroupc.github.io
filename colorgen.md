@@ -225,12 +225,9 @@ The following pseudocode presents methods to convert RGB colors to and from diff
 <a id=HTML_Related_Color_Formats></a>
 ### HTML-Related Color Formats
 
-A color string in the **HTML color format** (also known as "hex" format), which expresses 8-bpc RGB colors as text strings, consists of&mdash;
+A color string in the **HTML color format** (also known as "hex" format), which expresses 8-bpc RGB colors as text strings, consists of the character "#", two base-16 (hexadecimal) digits<sup>[**(9)**](#Note9)</sup> for the red component, two for the green, and two for the blue, in that order.
 
-1. the character "#", followed by
-2. six base-16 (hexadecimal) digits<sup>[**(9)**](#Note9)</sup>, two each for the red, green, and blue components, in that order.
-
-For example, the HTML color `#003F86` expresses the 8-bpc RGB color (0, 63, 134).
+For example, `#003F86` expresses the 8-bpc RGB color (0, 63, 134).
 
 The following pseudocode presents methods to convert RGB colors to and from the HTML color format or the 3-digit variant described in note 1 to this section.
 
