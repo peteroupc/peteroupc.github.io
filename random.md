@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Oct. 28, 2018.
+Begun on Mar. 5, 2016; last updated on Oct. 31, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -225,7 +225,7 @@ Using seeded RNGs ties the application to a particular RNG or RNG implementation
 <a id=Which_Seeded_PRNG_to_Use></a>
 ### Which Seeded PRNG to Use
 
-If an application decides to use a seeded PRNG for repeatable "randomness", that PRNG SHOULD meet or exceed the requirements of a [**statistical RNG**](#Statistical_RNGs) (except it may use a custom seed) and SHOULD be reasonably fast.
+If an application decides to use a seeded PRNG for repeatable "randomness", that PRNG SHOULD meet or exceed the requirements of a [**statistical RNG**](#Statistical_RNGs) (except the seed is application-defined instead) and SHOULD be reasonably fast.
 
 <a id=Seed_Generation_for_Seeded_PRNGs></a>
 ### Seed Generation for Seeded PRNGs
@@ -346,6 +346,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 | JavaScript (B) | `crypto.randomBytes(byteCount)` (node.js only); `random-number-csprng` package (node.js only); `crypto.getRandomValues()` (Web) | `pcg-random` or `xoroshiro128starstar` package |
 | Ruby (A) (E) | (C); `SecureRandom.rand()` (ranges from 0 to 1 exclusive) (E); `SecureRandom.rand(N)` (integer) (E) (for both, `require 'securerandom'`) |  |
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
+| Go | `crypto/rand` package |  |
 
 <small>(A) The general RNGs of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random`, `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
@@ -396,13 +397,9 @@ For cryptographic RNGs, an application SHOULD use only one thread-safe instance 
 For statistical and seeded RNGs, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
 - one thread-safe instance of an RNG for the entire application to use, or
 - one instance of an RNG for each thread of the application, where each instance&mdash;
-    - is accessible to only one thread (such as with thread-local storage), and
-    - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs).
-
-An application that generates **random numbers in parallel** can also do one or both of&mdash;
-
-- using a different conforming RNG scheme for each instance, and
-- using a conforming RNG scheme specially designed for parallel random number generation (such as so-called "splittable" PRNGs).
+    - is accessible to only one thread (such as with thread-local storage),
+    - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
+    - MAY use a different conforming RNG scheme from the others.
 
 (Many questions on _Stack Overflow_ highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator `System.Random`.)
 

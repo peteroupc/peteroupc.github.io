@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 28, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Oct. 31, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -332,7 +332,7 @@
 
 <h3>Which Seeded PRNG to Use</h3>
 
-<p>If an application decides to use a seeded PRNG for repeatable &quot;randomness&quot;, that PRNG SHOULD meet or exceed the requirements of a <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> (except it may use a custom seed) and SHOULD be reasonably fast.</p>
+<p>If an application decides to use a seeded PRNG for repeatable &quot;randomness&quot;, that PRNG SHOULD meet or exceed the requirements of a <a href="#Statistical_RNGs"><strong>statistical RNG</strong></a> (except the seed is application-defined instead) and SHOULD be reasonably fast.</p>
 
 <p><a id=Seed_Generation_for_Seeded_PRNGs></a></p>
 
@@ -517,6 +517,11 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <td><code>random_int()</code>, <code>random_bytes()</code> (both since PHP 7)</td>
 <td></td>
 </tr>
+<tr>
+<td>Go</td>
+<td><code>crypto/rand</code> package</td>
+<td></td>
+</tr>
 </tbody></table>
 
 <p><small>(A) The general RNGs of Python and Ruby implement <a href="https://en.wikipedia.org/wiki/Mersenne_Twister"><strong>Mersenne Twister</strong></a>, which is not preferred for a statistical RNG.  PHP&#39;s <code>mt_rand()</code> implements or implemented a flawed version of Mersenne Twister. <code>prngine</code>, a Java library, also has <code>MT19937_32Random</code>, <code>MT19937_64Random</code> classes that implement Mersenne Twister.</small></p>
@@ -584,16 +589,10 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 <li>one instance of an RNG for each thread of the application, where each instance&mdash;
 
 <ul>
-<li>is accessible to only one thread (such as with thread-local storage), and</li>
-<li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs).</li>
+<li>is accessible to only one thread (such as with thread-local storage),</li>
+<li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs), and</li>
+<li>MAY use a different conforming RNG scheme from the others.</li>
 </ul></li>
-</ul>
-
-<p>An application that generates <strong>random numbers in parallel</strong> can also do one or both of&mdash;</p>
-
-<ul>
-<li>using a different conforming RNG scheme for each instance, and</li>
-<li>using a conforming RNG scheme specially designed for parallel random number generation (such as so-called &quot;splittable&quot; PRNGs).</li>
 </ul>
 
 <p>(Many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator <code>System.Random</code>.)</p>
