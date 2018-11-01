@@ -946,8 +946,8 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 > 1. **Single channel** of a multicomponent color; for example, `color[0]`, `color[1]`, or `color[2]` for an RGB color's red, green, or blue component, respectively.
 > 2. **Average**: `(color[0] + color[1] + color[2]) / 3.0`.
 > 3. **Maximum**: `max(max(color[0], color[1]), color[2])`.
-> 4. **Minimum**: `min(min(color[0], color[1]), color[2])`. (Techniques 2-4 as well as RGB channel extraction are also seen on [**T. Helland's site**](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/), for example.)
-> 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness"; see J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/)).
+> 4. **Minimum**: `min(min(color[0], color[1]), color[2])`. (For techniques 1-4, see also (Helland)<sup>[**(42)**](#Note42)</sup>.)
+> 5. **Light/dark factor**: A [**CIELAB**](#CIELAB) or [**CIELUV**](#CIELUV) color's lightness (_L\*_) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as [**HSL**](#HSL) "lightness" (Cook 2009)<sup>[**(43)**](#Note43)</sup>.
 
 <a id=Alpha_Blending></a>
 ### Alpha Blending
@@ -955,7 +955,7 @@ An **_encoded RGB_ color** needs to be converted to linear RGB (in the same RGB 
 An _alpha blend_ is a linear interpolation of two multicomponent colors (such as two RGB colors) that works component-by-component.  For example, the `Lerp3` function below<sup>[**(27)**](#Note27)</sup> does an alpha blend of two three-component colors, where&mdash;
 
 - `color1` and `color2` are the two colors, and
-- `alpha`, the _alpha component_, is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (see P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)").
+- `alpha`, the _alpha component_, is usually 0 or greater and 1 or less (from `color1` to `color2`), but need not be (Haeberli and Voorhees)<sup>[**(44)**](#Note44)</sup>.
 
 &nbsp;
 
@@ -1132,7 +1132,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
 > - For CIELAB or CIELUV, the 1976 _&Delta;E\*_<sub>ab</sub> ("delta E a b") or _&Delta;E\*_<sub>uv</sub> color difference method, respectively<sup>[**(33)**](#Note33)</sup>, is the Euclidean distance between two CIELAB or two CIELUV colors, respectively.
 > - If Euclidean distances are merely being compared (so that, for example, two distances are not added or multiplied), then the square root operation can be omitted.
 
-**Riemersma's method.** T. Riemersma suggests an algorithm for color difference, to be applied to **encoded RGB colors**, in his article [**"Colour metric"**](https://www.compuphase.com/cmetric.htm) (section "A low-cost approximation").
+**Riemersma's method.** (Riemersma)<sup>[**(45)**](#Note45)</sup> suggests an algorithm for color difference, to be applied to **encoded RGB colors**.
 
 **CMC.** The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two [**CIELAB**](#CIELAB) colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(`LPARAM`:`CPARAM`) where&mdash;
 
@@ -1332,7 +1332,7 @@ color space (that is, where the smallest [**color difference**](#Color_Differenc
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
 can be limited to those in a particular _color gamut_. Here, the color difference method
-should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".)
+should be _&Delta;E\*_<sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup>[**(46)**](#Note46)</sup>.)
 
 <a id=Pseudocode></a>
 ### Pseudocode
@@ -1603,7 +1603,7 @@ The following topics would greatly enrich this document:
 
 <small><sup id=Note19>(19)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, "[**The Luminance of an sRGB Color**](https://ninedegreesbelow.com/photography/srgb-luminance.html)", 2013.)</small>
 
-<small><sup id=Note20>(20)</sup> Chromaticity coordinates of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.</small>
+<small><sup id=Note20>(20)</sup> Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (_r_, _g_, _b_) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (_x_, _y_, _z_) coordinates.</small>
 
 <small><sup id=Note21>(21)</sup> [**CIE Technical Note 001:2014**](http://www.cie.co.at/publications/technical-notes) says the chromaticity difference (_&Delta;<sub>u&prime;v&prime;</sub>_) should be calculated as the [**Euclidean distance**](#Color_Differences) between two _u&prime;v&prime;_ pairs and that a chromaticity difference of 0.0013 is just noticeable "at 50% probability".
 
@@ -1651,6 +1651,16 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 <small><sup id=Note40>(40)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
 <small><sup id=Note41>(41)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+
+<small><sup id=Note42>(42)</sup> T. Helland, [**"Seven grayscale conversion algorithms (with pseudocode and VB6 source code)"**](http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/).</small>
+
+<small><sup id=Note43>(43)</sup> J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/), Aug. 24, 2009.</small>
+
+<small><sup id=Note44>(44)</sup> P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)".</small>
+
+<small><sup id=Note45>(45)</sup> T. Riemersma, [**"Colour metric"**](https://www.compuphase.com/cmetric.htm), "A low-cost approximation".</small>
+
+<small><sup id=Note46>(46)</sup> Tatarize, "[**Color Distribution Methodology**](http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html)".</small>
 
 <a id=License></a>
 ## License

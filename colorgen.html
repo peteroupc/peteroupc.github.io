@@ -1122,8 +1122,8 @@ END METHOD
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
 <li><strong>Average</strong>: <code>(color[0] + color[1] + color[2]) / 3.0</code>.</li>
 <li><strong>Maximum</strong>: <code>max(max(color[0], color[1]), color[2])</code>.</li>
-<li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (Techniques 2-4 as well as RGB channel extraction are also seen on <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>T. Helland&#39;s site</strong></a>, for example.)</li>
-<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot;; see J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>).</li>
+<li><strong>Minimum</strong>: <code>min(min(color[0], color[1]), color[2])</code>. (For techniques 1-4, see also (Helland)<sup><a href="#Note42"><strong>(42)</strong></a></sup>.)</li>
+<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</li>
 </ol>
 </blockquote>
 
@@ -1135,7 +1135,7 @@ END METHOD
 
 <ul>
 <li><code>color1</code> and <code>color2</code> are the two colors, and</li>
-<li><code>alpha</code>, the <em>alpha component</em>, is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (see P. Haeberli and D. Voorhees, &quot;<a href="http://www.graficaobscura.com/interp/index.html"><strong>Image Processing by Interpolation and Extrapolation</strong></a>&quot;).</li>
+<li><code>alpha</code>, the <em>alpha component</em>, is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (Haeberli and Voorhees)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1363,7 +1363,7 @@ END METHOD
 </ul>
 </blockquote>
 
-<p><strong>Riemersma&#39;s method.</strong> T. Riemersma suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>, in his article <a href="https://www.compuphase.com/cmetric.htm"><strong>&quot;Colour metric&quot;</strong></a> (section &quot;A low-cost approximation&quot;).</p>
+<p><strong>Riemersma&#39;s method.</strong> (Riemersma)<sup><a href="#Note45"><strong>(45)</strong></a></sup> suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>.</p>
 
 <p><strong>CMC.</strong> The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two <a href="#CIELAB"><strong>CIELAB</strong></a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where&mdash;</p>
 
@@ -1607,7 +1607,7 @@ color space (that is, where the smallest <a href="#Color_Differences"><strong>co
 between them is maximized as much as feasible) can be used to select visually
 distinct colors. Such colors can be pregenerated or generated at runtime, and such colors
 can be limited to those in a particular <em>color gamut</em>. Here, the color difference method
-should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html"><strong>Color Distribution Methodology</strong></a>&quot;.)</p>
+should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.)</p>
 
 <p><a id=Pseudocode></a></p>
 
@@ -1942,7 +1942,7 @@ END METHOD
 
 <p><small><sup id=Note19>(19)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Chromaticity coordinates of this form can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</small></p>
+<p><small><sup id=Note20>(20)</sup> Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> <a href="http://www.cie.co.at/publications/technical-notes"><strong>CIE Technical Note 001:2014</strong></a> says the chromaticity difference (<em>&Delta;<sub>u&prime;v&prime;</sub></em>) should be calculated as the <a href="#Color_Differences"><strong>Euclidean distance</strong></a> between two <em>u&prime;v&prime;</em> pairs and that a chromaticity difference of 0.0013 is just noticeable &quot;at 50% probability&quot;.</p>
 
@@ -1993,6 +1993,16 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 <p><small><sup id=Note40>(40)</sup> As <a href="http://www.handprint.com/HP/WCL/color18a.html#compmatch"><strong>B. MacEvoy explains</strong></a> (at &quot;Other Factors in Material Mixtures&quot;), things that affect the mixture of two colorants include their &quot;refractive index, particle size, crystal form, hiding power and tinting strength&quot; (see also his <a href="http://www.handprint.com/HP/WCL/color18a.html#ctprin39"><strong>principles 39 to 41</strong></a>), and &quot;the material attributes of the support [e.g., the paper or canvas] and the paint application methods&quot; are also relevant here.  These factors, to the extent the reflectance curves don&#39;t take them into account, are not dealt with in this method.</small></p>
 
 <p><small><sup id=Note41>(41)</sup> Walowit, E.  &quot;Spectrophotometric color formulation based on two-constant Kubelka-Munk theory&quot;. Thesis, Rochester Institute of Technology, 1985.</small></p>
+
+<p><small><sup id=Note42>(42)</sup> T. Helland, <a href="http://www.tannerhelland.com/3643/grayscale-image-algorithm-vb6/"><strong>&quot;Seven grayscale conversion algorithms (with pseudocode and VB6 source code)&quot;</strong></a>.</small></p>
+
+<p><small><sup id=Note43>(43)</sup> J. Cook, <a href="https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/"><strong>&quot;Converting color to grayscale&quot;</strong></a>, Aug. 24, 2009.</small></p>
+
+<p><small><sup id=Note44>(44)</sup> P. Haeberli and D. Voorhees, &quot;<a href="http://www.graficaobscura.com/interp/index.html"><strong>Image Processing by Interpolation and Extrapolation</strong></a>&quot;.</small></p>
+
+<p><small><sup id=Note45>(45)</sup> T. Riemersma, <a href="https://www.compuphase.com/cmetric.htm"><strong>&quot;Colour metric&quot;</strong></a>, &quot;A low-cost approximation&quot;.</small></p>
+
+<p><small><sup id=Note46>(46)</sup> Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html"><strong>Color Distribution Methodology</strong></a>&quot;.</small></p>
 
 <p><a id=License></a></p>
 
