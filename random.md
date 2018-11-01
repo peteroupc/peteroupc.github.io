@@ -119,7 +119,7 @@ as well as for applications that generate random numbers so infrequently that th
 
 A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation's internal state at the given point in time, and/or extremely many outputs of the RNG.
 
-If a cryptographic RNG implementation uses a PRNG, the following requirements apply:
+If a cryptographic RNG implementation uses a PRNG, the following requirements apply.
 
 1. The PRNG's _state length_ MUST be at least 128 bits and SHOULD be at least 256 bits.  The _security strength_ used by the RNG MUST be at least 112 bits, SHOULD be at least 128 bits, and is less than or equal to the PRNG's _state length_.
 
