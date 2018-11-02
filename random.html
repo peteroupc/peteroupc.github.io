@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Oct. 31, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Nov. 4, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -184,7 +184,7 @@
 
 <h3>Requirements</h3>
 
-<p>A cryptographic RNG implementation generates uniformly distributed random bits such that it would be at least cost-prohibitive for an outside party to guess prior unseen bits of the random sequence correctly with more than a 50% chance per bit, even with knowledge of the randomness-generating procedure, the implementation&#39;s internal state at the given point in time, and/or extremely many outputs of the RNG.</p>
+<p>A cryptographic RNG generates uniformly distributed random bits such that it would be cost-prohibitive for an outside party to correctly guess, with more than a 50% chance per bit, prior or future unseen outputs of that RNG after knowing how the RNG works and/or extremely many outputs of the RNG, or prior unseen outputs of that RNG after knowing the RNG&#39;s internal state at the given point in time.</p>
 
 <p>If a cryptographic RNG implementation uses a PRNG, the following requirements apply.</p>
 
