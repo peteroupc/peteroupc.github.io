@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Nov. 4, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Nov. 3, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -468,11 +468,12 @@
 <p>As much as possible, <strong>applications SHOULD use existing libraries and techniques</strong> that already meet the requirements for cryptographic and statistical RNGs.</p>
 
 <p>The following table lists application programming interfaces (APIs) for
-cryptographic and statistical RNGs for popular programming languages. Note the following:</p>
+cryptographic and statistical RNGs for popular programming languages.</p>
 
 <ul>
 <li>Methods and libraries mentioned in the &quot;Statistical&quot; column need to be initialized with a seed before use (for example, a seed generated using an implementation in the &quot;Cryptographic&quot; column).</li>
 <li>The mention of a third-party library in this section does not imply sponsorship or endorsement of that library, or imply a preference of that library over others. The list is not comprehensive.</li>
+<li>See also <a href="https://paragonie.com/blog/2016/05/how-generate-secure-random-numbers-in-various-programming-languages"><strong>Paragon&#39;s blog post</strong></a> on existing cryptographic RNGs.</li>
 </ul>
 
 <table><thead>
@@ -509,7 +510,7 @@ cryptographic and statistical RNGs for popular programming languages. Note the f
 </tr>
 <tr>
 <td>Ruby (A) (E)</td>
-<td>(C); <code>SecureRandom.rand()</code> (ranges from 0 to 1 exclusive) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>)</td>
+<td>(C); <code>SecureRandom.rand()</code> (ranges from 0 to 1 exclusive) (E); <code>SecureRandom.rand(N)</code> (integer) (E) (for both, <code>require &#39;securerandom&#39;</code>); <code>sysrandom</code> gem</td>
 <td></td>
 </tr>
 <tr>
