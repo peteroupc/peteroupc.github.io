@@ -134,7 +134,7 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
 ### Examples
 
 Examples of cryptographic RNG implementations include the following:
-- The `/dev/urandom` device on many Unix-based operating systems (using `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available; see also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom)).
+- The `/dev/urandom` device on many Unix-based operating systems<sup>[**(22)**](#Note22)</sup>.
 - The `BCryptGenRandom` method in Windows 7 and later.
 - Two-source extractors, multi-source extractors, or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.
 - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(4)**](#Note4)</sup>.
@@ -420,7 +420,7 @@ On the other hand, for a list big enough, it's generally more important to have 
 An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `B` or greater, or
-2. using a PRNG that&mdash;
+2. if information security is not involved, using a PRNG that&mdash;
     - has a state length of `B` or greater, and
     - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness", and
     - qualifies as a statistical RNG except it uses a seed derived as given above.
@@ -523,6 +523,8 @@ I acknowledge&mdash;
 <small><sup id=Note20>(20)</sup> van Staveren, Hans. [**"Big Deal: A new program for dealing bridge hands"**](https://sater.home.xs4all.nl/doc.html), Sep. 8, 2000</small>
 
 <small><sup id=Note21>(21)</sup> Note that although PRNGs can also act like hash functions (if they're seeded with the input and the PRNG is "large enough" for the input), some PRNGs (such as `xorshift128+`) are not well suited to serve as hash functions, because they don't mix their state before generating a random number from that state.</small>
+
+<small><sup id=Note22>(22)</sup> Using the similar `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 
 <a id=Appendix></a>
 ## Appendix

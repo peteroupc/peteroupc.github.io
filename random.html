@@ -207,7 +207,7 @@
 <p>Examples of cryptographic RNG implementations include the following:</p>
 
 <ul>
-<li>The <code>/dev/urandom</code> device on many Unix-based operating systems (using <code>/dev/random</code> is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available; see also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>).</li>
+<li>The <code>/dev/urandom</code> device on many Unix-based operating systems<sup><a href="#Note22"><strong>(22)</strong></a></sup>.</li>
 <li>The <code>BCryptGenRandom</code> method in Windows 7 and later.</li>
 <li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
 <li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
@@ -618,7 +618,7 @@ cryptographic and statistical RNGs for popular programming languages.</p>
 
 <ol>
 <li>using a cryptographic RNG, preferably one with a security strength of <code>B</code> or greater, or</li>
-<li>using a PRNG that&mdash;
+<li>if information security is not involved, using a PRNG that&mdash;
 
 <ul>
 <li>has a state length of <code>B</code> or greater, and</li>
@@ -743,6 +743,8 @@ cryptographic and statistical RNGs for popular programming languages.</p>
 <p><small><sup id=Note20>(20)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
 <p><small><sup id=Note21>(21)</sup> Note that although PRNGs can also act like hash functions (if they&#39;re seeded with the input and the PRNG is &quot;large enough&quot; for the input), some PRNGs (such as <code>xorshift128+</code>) are not well suited to serve as hash functions, because they don&#39;t mix their state before generating a random number from that state.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> Using the similar <code>/dev/random</code> is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also <a href="https://www.2uo.de/myths-about-urandom"><strong>&quot;Myths about /dev/urandom&quot;</strong></a>.</small></p>
 
 <p><a id=Appendix></a></p>
 
