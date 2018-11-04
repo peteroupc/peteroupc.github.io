@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 3, 2018.
+Begun on Mar. 5, 2016; last updated on Nov. 4, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -128,14 +128,13 @@ If a cryptographic RNG implementation uses a PRNG, the following requirements ap
     - MUST consist of data that ultimately derives from the output of one or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation), where the output is at least as hard to predict as ideal random data with as many bits as the _security strength_, and
     - MAY be mixed with arbitrary data other than the seed as long as the result is no easier to predict<sup>[**(3)**](#Note3)</sup>.
 
-3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier. If the RNG reseeds, it SHOULD do so as often as feasible (whenever doing so would not slow down applications undesirably).  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
+3. The RNG SHOULD reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of bits without reseeding, that threshold SHOULD be 2<sup>67</sup> or less.
 
 <a id=Examples></a>
 ### Examples
 
 Examples of cryptographic RNG implementations include the following:
-- The `/dev/random` device on many Unix-based operating systems, which generally uses only nondeterministic sources; however, in some implementations of the device it can block for seconds at a time, especially if not enough randomness is available.
-- The `/dev/urandom` device on many Unix-based operating systems, which often relies on both a PRNG and the same nondeterministic sources used by `/dev/random`.
+- The `/dev/urandom` device on many Unix-based operating systems (using `/dev/random` is NOT RECOMMENDED, since in some implementations it can block for seconds at a time, especially if not enough randomness is available; see also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom)).
 - The `BCryptGenRandom` method in Windows 7 and later.
 - Two-source extractors, multi-source extractors, or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more nondeterministic sources as input.
 - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(4)**](#Note4)</sup>.
@@ -416,17 +415,17 @@ An application can **shuffle a list**&mdash;
 
 Either way, however, if a PRNG's period is less than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
-If an application uses PRNGs for shuffling purposes, it is encouraged to&mdash;
+On the other hand, for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.
 
-1. choose a PRNG with a state length `B` or greater, then
-2. gather data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation) (randomness), then
-3. [**generate a full-length seed**](#Seed_Generation) with the data gathered this way, then
-4. pass the seed to the chosen PRNG, then
-5. use the PRNG to do a Fisher&ndash;Yates shuffle.
+An application that shuffles a list can do the shuffling&mdash;
 
-Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(20)**](#Note20)</sup>.  For example, `B` is 226 bits for a 52-item list.  (However, if information security is not involved, an application can instead choose any number 256 or more for `B` and follow the steps above accordingly &mdash; for a list big enough, it's generally more important to have shuffles act random than to choose from among all permutations.)
+1. using a cryptographic RNG, preferably one with a security strength of `B` or greater, or
+2. using a PRNG that&mdash;
+    - has a state length of `B` or greater, and
+    - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness", and
+    - qualifies as a statistical RNG except it uses a seed derived as given above.
 
-The PRNG chosen this way SHOULD meet or exceed the requirements of a statistical RNG (except it uses a seed generated as given above) and SHOULD have the highest feasible period for its state length.
+Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(20)**](#Note20)</sup>.  For example, `B` is 226 bits for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
