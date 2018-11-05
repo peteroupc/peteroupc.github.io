@@ -417,7 +417,7 @@ On the other hand, for a list big enough, it's generally **more important to hav
 An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `B` or greater, or
-2. if information security is not involved, using a PRNG that&mdash;
+2. if a noncryptographic RNG is otherwise appropriate, using a PRNG that&mdash;
     - has a state length of `B` or greater, and
     - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness", and
     - qualifies as a statistical RNG except it uses a seed derived as given above.

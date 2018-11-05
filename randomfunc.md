@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Oct. 9, 2018.
+Begun on June 4, 2017; last updated on Nov. 4, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -103,6 +103,7 @@ All the random number methods presented on this page are ultimately based on an 
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
+    - [**Norm Calculation**](#Norm_Calculation)
 - [**License**](#License)
 
 <a id=Notation_and_Definitions></a>
@@ -114,7 +115,6 @@ All the random number methods presented on this page are ultimately based on an 
     - (`a`, `b`) means "greater than `a`, but less than `b`".
     - (`a`, `b`] means "greater than `a` and less than or equal to `b`".
     - [`a`, `b`] means "`a` or greater and `b` or less".
-* **Norm.** The norm of one or more real numbers is the square root of the sum of squares of those numbers, that is, `sqrt(num1 * num1 + num2 * num2 + ... + numN * numN)`.
 - **Random number generator (RNG).** Software and/or hardware that seeks to generate independent numbers that seem to occur by chance and that are approximately uniformly distributed<sup>[**(1)**](#Note1)</sup>.
 
 <a id=Uniform_Random_Numbers></a>
@@ -327,14 +327,14 @@ This section defines four methods that generate a **random number bounded by 0 a
 - for the 64-bit IEEE 754 binary floating-point format (e.g., Java `double`), `X` is 2<sup>53</sup> (9007199254740992),
 - for the 32-bit IEEE 754 binary floating-point format (e.g., Java `float`), `X` is 2<sup>24</sup> (16777216),
 - for the 64-bit IEEE 754 decimal floating-point format, `X` is 10<sup>16</sup>, and
-- for the .NET Framework decimal format (`System.Decimal`), `X` is 2<sup>96</sup>.
+- for the .NET Framework decimal format (`System.Decimal`), `X` is 10<sup>29</sup>.
 
 `INVX` is the constant 1 divided by `X`.
 
 <a id=Alternative_Implementation_for_RNDU01></a>
 #### Alternative Implementation for `RNDU01`
 
-For fixed-precision binary floating-point numbers with fixed exponent range (such as Java's `double` and `float`), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that dividing a random number by a constant usually does not yield all representable binary floating-point numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
+For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that for Java `double`, dividing a random number by a constant usually does not yield all representable numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -1522,7 +1522,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 >
 > 1. A **binormal distribution** (two-variable multinormal distribution) can be sampled using the following idiom: `MultivariateNormal([mu1, mu2], [[s1*s1, s1*s2*rho], [rho*s1*s2, s2*s2]])`, where `mu1` and `mu2` are the means of the two random variables, `s1` and `s2` are their standard deviations, and `rho` is a _correlation coefficient_ greater than -1 and less than 1 (0 means no correlation).
 > 2. A **log-multinormal distribution** can be sampled by generating numbers from a multinormal distribution, then applying `exp(n)` to the resulting numbers, where `n` is each number generated this way.
-> 3. A **Beckmann distribution** can be sampled by calculating the norm of a binormal random pair (see example 1); that is, calculate `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in the binormal pair.
+> 3. A **Beckmann distribution** can be sampled by calculating `sqrt(x*x+y*y)`, where `x` and `y` are the two numbers in a binormal random pair (see example 1).
 
 <a id=Random_Numbers_with_a_Given_Positive_Sum></a>
 ### Random Numbers with a Given Positive Sum
@@ -1738,9 +1738,15 @@ The following pseudocode generates, uniformly at random, a point inside an _n_-d
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
 
-To generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius R, generate N `Normal(0, 1)` random numbers, then multiply them by `R / X`, where `X` is those numbers' [**_norm_**](#Notation_and_Definitions) (if `X` is 0, the process should repeat). A hypersphere's surface is formed by all points lying R units away from a common point in N-dimensional space. Based on a technique described in [**MathWorld**](http://mathworld.wolfram.com/HyperspherePointPicking.html).
+The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(16)**](#Note16)</sup>.
 
-This problem is equivalent to generating, uniformly at random, a unit vector (vector with length 1) in N-dimensional space.
+    METHOD RandomPointInHypersphere(dims, radius)
+      ret=[]
+      for i in 0...dims: AddItem(ret, Normal(0, 1))
+      invnorm=1.0/Norm(ret)
+      for i in 0...dims: ret[i]=ret[i]*invnorm
+      return ret
+    END METHOD
 
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
@@ -1748,12 +1754,12 @@ This problem is equivalent to generating, uniformly at random, a unit vector (ve
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(15)**](#Note15)</sup> until their [**_norm_**](#Notation_and_Definitions) is R or less,
+- generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(15)**](#Note15)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
 To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
-- generate, uniformly at random, a point for a ball of radius B until the [**_norm_**](#Notation_and_Definitions) of the numbers making up that point is A or greater;
+- generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix));
 - for 2 dimensions, generate, uniformly at random, a point on the surface of a circle with radius equal to `sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)` (Dupree and Fraley 2004); or
 - for 3 dimensions, generate, uniformly at random, a point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)` (Dupree and Fraley 2004).
 
@@ -1830,6 +1836,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note15>(15)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
+<small><sup id=Note16>(16)</sup>  Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1885,7 +1893,18 @@ The following method calculates the mean and the [**bias-corrected sample varian
             xs = xs + cxm * (c - xm)
         end
         return [xm, xs*1.0/(size(list)-1)]
-    END
+    END METHOD
+
+<a id=Norm_Calculation></a>
+### Norm Calculation
+
+The following method calculates the norm of a vector (list of numbers).
+
+   METHOD Norm(vec)
+      ret=0
+      for i in 0...size(vec): ret=ret+vec[i]*vec[i]
+      return sqrt(ret)
+   END METHOD
 
 <a id=License></a>
 ## License
