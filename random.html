@@ -452,7 +452,7 @@
 
 <p>In general, especially for cryptographic RNGs, <strong>to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more</strong>.</p>
 
-<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, it is suggested to generate an N-bit seed by using an HMAC or &quot;cascade&quot; hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
+<p>Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.</p>
 
 <p><a id=Programming_Language_APIs></a></p>
 

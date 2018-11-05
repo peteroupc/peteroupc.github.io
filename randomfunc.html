@@ -417,7 +417,7 @@ END METHOD
 <li>for the 64-bit IEEE 754 binary floating-point format (e.g., Java <code>double</code>), <code>X</code> is 2<sup>53</sup> (9007199254740992),</li>
 <li>for the 32-bit IEEE 754 binary floating-point format (e.g., Java <code>float</code>), <code>X</code> is 2<sup>24</sup> (16777216),</li>
 <li>for the 64-bit IEEE 754 decimal floating-point format, <code>X</code> is 10<sup>16</sup>, and</li>
-<li>for the .NET Framework decimal format (<code>System.Decimal</code>), <code>X</code> is 10<sup>29</sup>.</li>
+<li>for the .NET Framework decimal format (<code>System.Decimal</code>), <code>X</code> is 10<sup>28</sup>.</li>
 </ul>
 
 <p><code>INVX</code> is the constant 1 divided by <code>X</code>.</p>
@@ -439,7 +439,7 @@ END METHOD
     sig = sig + (1 &lt;&lt; (SIGBITS - 1))
     // NOTE: This multiplication should result in
     // a floating-point number; if `e` is sufficiently
-    // small, the number will underflow to 0
+    // small, the number may underflow to 0
     return sig * pow(2, e)
 END METHOD
 </pre>
@@ -448,7 +448,7 @@ END METHOD
 
 <h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
 
-<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random number in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note4"><strong>(4)</strong></a></sup>:</p>
+<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random integer in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note4"><strong>(4)</strong></a></sup>:</p>
 
 <pre> METHOD RNDINTEXC(maxExclusive)
     if maxExclusive &lt;= 0: return error
@@ -456,22 +456,20 @@ END METHOD
  END METHOD
 </pre>
 
-<blockquote>
-<p><strong>Note:</strong> The following are alternative ways of generating a random integer in the interval [**0, <code>maxExclusive</code>):</p>
+<p><code>RNDINTEXC</code> can also be implemented in terms of <code>RNDU01OneExc()</code> as follows (this can be better for some programming languages, such as JavaScript, but not for others that readily allow the approach above)<sup><a href="#Note5"><strong>(5)</strong></a></sup>:</p>
 
-<ul>
-<li><code>floor(RNDNUMEXCRANGE(0, maxExclusive))</code>.</li>
-<li>Generate <code>N = floor(RNDU01OneExc()*(maxExclusive))</code> until <code>N &lt; maxExclusive</code>. (The loop is needed because otherwise, rounding error due to the nature of certain floating-point formats can result in <code>maxExclusive</code> being returned in rare cases.<sup><a href="#Note5"><strong>(5)</strong></a></sup>)</li>
-</ul>
-
-<p>These approaches, though, are recommended only if the programming language&mdash;</p>
-
-<ul>
-<li>supports floating-point number types and no other number types (an example is JavaScript),</li>
-<li>is a dialect of SQL, or</li>
-<li>doesn&#39;t support an integer type that is big enough to fit the number <code>maxExclusive - 1</code>.</li>
-</ul>
-</blockquote>
+<pre> METHOD RNDINTEXC(maxExclusive)
+   if maxExclusive &lt;= 0: return error
+   while true
+     // The loop is needed because otherwise, rounding
+     // error due to the nature of certain floating-point
+     // formats can result in `maxExclusive` being returned
+     // in rare cases.
+     n = floor(RNDU01OneExc()*(maxExclusive));
+     if n &lt; maxExclusive: return n
+   end
+ END METHOD
+</pre>
 
 <p><a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a></p>
 
@@ -504,7 +502,7 @@ END METHOD
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
     if minInclusive &gt; maxInclusive: return error
     return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-END
+END METHOD
 </pre>
 
 <p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
@@ -532,7 +530,7 @@ END
      // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
      if ret &gt;= minInclusive and ret &lt;= maxInclusive: return ret
    end
-END
+END METHOD
 </pre>
 
 <p><a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a></p>
@@ -2087,7 +2085,7 @@ END METHOD
 
 <h3>Random Points on the Surface of a Hypersphere</h3>
 
-<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
+<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
 
 <pre>METHOD RandomPointInHypersphere(dims, radius)
   ret=[]
@@ -2106,7 +2104,7 @@ END METHOD
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
-<li>generate a vector (list) of N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note15"><strong>(15)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).</li>
+<li>generate a vector (list) of N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note16"><strong>(16)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).</li>
 </ul>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for the two methods given here.</p>
@@ -2206,9 +2204,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note14>(14)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
 
-<p><small><sup id=Note15>(15)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+<p><small><sup id=Note15>(15)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
-<p><small><sup id=Note16>(16)</sup>  Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
+<p><small><sup id=Note16>(16)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
 <p><a id=Appendix></a></p>
 

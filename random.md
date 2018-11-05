@@ -318,7 +318,7 @@ _Entropy_ is a value that describes how hard it is to predict a nondeterministic
 
 In general, especially for cryptographic RNGs, **to generate an N-bit seed, enough data needs to be gathered from nondeterministic sources to reach N bits of entropy or more**.
 
-Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>, it is suggested to generate an N-bit seed by using an HMAC or "cascade" hash function (such as SHA-256 or SHA-512), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
+Once data with enough entropy is gathered, it might need to be condensed into a seed to initialize a PRNG with. Following (Cliff et al., 2009)<sup>[**(16)**](#Note16)</sup>, it is suggested to generate an N-bit seed by using an HMAC (hash-based message authentication code), with outputs at least N times 3 bits long, on data with at least N times 3 bits of entropy, then truncating the output to N bits.  See also NIST SP 800-90B sec. 3.1.5.1 and RFC 4086 sec. 4.2 and 5.2.
 
 <a id=Programming_Language_APIs></a>
 ## Programming Language APIs
