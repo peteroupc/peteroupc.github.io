@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 4, 2018.
+Begun on June 4, 2017; last updated on Nov. 5, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -487,7 +487,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly (see also Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)").  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood)<sup>[**(17)**](#Note17)</sup>.  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -593,7 +593,7 @@ There are several techniques for choosing `k` unique items or values uniformly a
 6. **If `n - k` is much smaller than `n`, and the order in which the items are sampled need not be random:**
      - **If the items are stored in a list whose order can be changed**, then proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
      - Otherwise, **if `n` is not very large**, then proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
-7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  J. Preshing discusses [**different ways**](http://preshing.com/20121224/how-to-generate-a-sequence-of-unique-random-integers/) to generate unique random integers.
+7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.
 
 Choosing several unique items as just described is also known as _sampling without replacement_.
 
@@ -973,7 +973,7 @@ Generating random numbers (or data points) based on how a list of numbers (or da
     1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
     2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(9)**](#Note9)</sup>.
 
-This document doesn't detail how to build a density estimation model. Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).
+This document doesn't detail how to build a density estimation model.<sup>[**(18)**](#Note18)</sup>
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -1049,7 +1049,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Correlated_Random_Numbers></a>
 ### Correlated Random Numbers
 
-According to (Saucier 2000), sec. 3.8, to generate two correlated (dependent) random variables&mdash;
+According to (Saucier 2000)<sup>[**(19)**](#Note19)</sup>, sec. 3.8, to generate two correlated (dependent) random variables&mdash;
 
 - generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
 - calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
@@ -1534,7 +1534,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
 Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
-The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(20)**](#Note20)</sup>.)  In the pseudocode below&mdash;
 
 - the method `NonzeroIntegersWithSum` returns `n` positive integers that sum to `total`,
 - the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`, and
@@ -1843,6 +1843,14 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note16>(16)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
+<small><sup id=Note17>(17)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
+
+<small><sup id=Note18>(18)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).</small>
+
+<small><sup id=Note19>(19)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
+
+<small><sup id=Note20>(20)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
+
 <a id=Appendix></a>
 ## Appendix
 
@@ -1905,11 +1913,11 @@ The following method calculates the mean and the [**bias-corrected sample varian
 
 The following method calculates the norm of a vector (list of numbers).
 
-   METHOD Norm(vec)
+    METHOD Norm(vec)
       ret=0
       for i in 0...size(vec): ret=ret+vec[i]*vec[i]
       return sqrt(ret)
-   END METHOD
+    END METHOD
 
 <a id=License></a>
 ## License

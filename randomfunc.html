@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 4, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 5, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -604,7 +604,7 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h3>Shuffling</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly (see also Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;).  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle method</strong></a> shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The following pseudocode is designed to shuffle a list&#39;s contents.</p>
 
 <pre>METHOD Shuffle(list)
    // NOTE: Check size of the list early to prevent
@@ -745,7 +745,7 @@ END METHOD
 <li><strong>If the items are stored in a list whose order can be changed</strong>, then proceed as in step 4, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
 <li>Otherwise, <strong>if <code>n</code> is not very large</strong>, then proceed as in step 5, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items or indices are chosen rather than the last <code>k</code>.</li>
 </ul></li>
-<li><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is <code>n</code> is otherwise very large):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table"><strong>hash table</strong></a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way. If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.  J. Preshing discusses <a href="http://preshing.com/20121224/how-to-generate-a-sequence-of-unique-random-integers/"><strong>different ways</strong></a> to generate unique random integers.</li>
+<li><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup> or is <code>n</code> is otherwise very large):</strong> Create a <a href="https://en.wikipedia.org/wiki/Hash_table"><strong>hash table</strong></a> storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it&#39;s there already.  If it&#39;s not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until <code>k</code> indices were added to the hash table this way. If the items are to be chosen in order, then a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, rather than a hash table, can be used to store the indices this way; after <code>k</code> indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.</li>
 </ol>
 
 <p>Choosing several unique items as just described is also known as <em>sampling without replacement</em>.</p>
@@ -1189,7 +1189,7 @@ number = -ln(RNDU01ZeroOneExc()) / rates[index]
 </ol></li>
 </ol>
 
-<p>This document doesn&#39;t detail how to build a density estimation model. Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</p>
+<p>This document doesn&#39;t detail how to build a density estimation model.<sup><a href="#Note18"><strong>(18)</strong></a></sup></p>
 
 <p><a id=Transformations_of_Random_Numbers></a></p>
 
@@ -1287,7 +1287,7 @@ END METHOD
 
 <h3>Correlated Random Numbers</h3>
 
-<p>According to (Saucier 2000), sec. 3.8, to generate two correlated (dependent) random variables&mdash;</p>
+<p>According to (Saucier 2000)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, sec. 3.8, to generate two correlated (dependent) random variables&mdash;</p>
 
 <ul>
 <li>generate two independent and identically distributed random variables <code>x</code> and <code>y</code> (for example, two <code>Normal(0, 1)</code> variables or two <code>RNDU01()</code> variables), and</li>
@@ -1844,7 +1844,7 @@ end
 
 <p>Generating N <code>GammaDist(total, 1)</code> numbers and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
 
-<p>The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
 <li>the method <code>NonzeroIntegersWithSum</code> returns <code>n</code> positive integers that sum to <code>total</code>,</li>
@@ -2208,6 +2208,14 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note16>(16)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
+<p><small><sup id=Note17>(17)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
+
+<p><small><sup id=Note18>(18)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</small></p>
+
+<p><small><sup id=Note19>(19)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
+
+<p><small><sup id=Note20>(20)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
+
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -2276,11 +2284,12 @@ END METHOD
 
 <p>The following method calculates the norm of a vector (list of numbers).</p>
 
-<p>METHOD Norm(vec)
-      ret=0
-      for i in 0...size(vec): ret=ret+vec[i]*vec[i]
-      return sqrt(ret)
-   END METHOD</p>
+<pre>METHOD Norm(vec)
+  ret=0
+  for i in 0...size(vec): ret=ret+vec[i]*vec[i]
+  return sqrt(ret)
+END METHOD
+</pre>
 
 <p><a id=License></a></p>
 
