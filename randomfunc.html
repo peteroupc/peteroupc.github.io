@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 5, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 6, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -426,7 +426,7 @@ END METHOD
 
 <h4>Alternative Implementation for <code>RNDU01</code></h4>
 
-<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead.  It&#39;s based on a <a href="http://allendowney.com/research/rand/"><strong>technique devised by Allen Downey</strong></a>, who found that for Java <code>double</code>, dividing a random number by a constant usually does not yield all representable numbers in the desired range.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
+<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead. See also (Downey 2007)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
 
 <pre>METHOD RNDU01()
     e=-SIGBITS
@@ -2173,7 +2173,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code> returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> The following illustrates some of the differences in RNGs between SQL dialects. MySQL and T-SQL both have a <code>RAND()</code> akin to <code>RNDU01OneExc()</code>; however, T-SQL&#39;s <code>RAND()</code> is constant per expression, rather than per row.  PL/SQL (Oracle) has <code>DBMS_RANDOM.VALUE</code> akin to either <code>RNDU01OneExc()</code> or <code>RNDNUMEXCRANGE</code>.  PostgreSQL has <code>RANDOM()</code>. SQLite sometimes has <code>RANDOM()</code> which returns a random integer in the interval [-2<sup>63</sup>, 2<sup>63</sup>).  Most likely, none of these were designed for information security.</small></p>
+<p><small><sup id=Note6>(6)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
 
 <p><small><sup id=Note7>(7)</sup> Jeff Atwood, &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
 
@@ -2215,6 +2215,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note19>(19)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note20>(20)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note21>(21)</sup> Downey, A. B. &quot;<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>&quot;, 2007</small></p>
 
 <p><a id=Appendix></a></p>
 

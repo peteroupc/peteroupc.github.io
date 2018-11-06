@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 5, 2018.
+Begun on June 4, 2017; last updated on Nov. 6, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -334,7 +334,7 @@ This section defines four methods that generate a **random number bounded by 0 a
 <a id=Alternative_Implementation_for_RNDU01></a>
 #### Alternative Implementation for `RNDU01`
 
-For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead.  It's based on a [**technique devised by Allen Downey**](http://allendowney.com/research/rand/), who found that for Java `double`, dividing a random number by a constant usually does not yield all representable numbers in the desired range.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
+For Java's `double` and `float` (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for `RNDU01()` can be used instead. See also (Downey 2007)<sup>[**(21)**](#Note21)</sup>.  In the pseudocode below, `SIGBITS` is the binary floating-point format's precision (the number of binary digits the format can represent without loss; e.g., 53 for Java's `double`).
 
     METHOD RNDU01()
         e=-SIGBITS
@@ -1813,7 +1813,7 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note5>(5)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))` returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`.</small>
 
-<small><sup id=Note6>(6)</sup> The following illustrates some of the differences in RNGs between SQL dialects. MySQL and T-SQL both have a `RAND()` akin to `RNDU01OneExc()`; however, T-SQL's `RAND()` is constant per expression, rather than per row.  PL/SQL (Oracle) has `DBMS_RANDOM.VALUE` akin to either `RNDU01OneExc()` or `RNDNUMEXCRANGE`.  PostgreSQL has `RANDOM()`. SQLite sometimes has `RANDOM()` which returns a random integer in the interval \[-2<sup>63</sup>, 2<sup>63</sup>).  Most likely, none of these were designed for information security.</small>
+<small><sup id=Note6>(6)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
 
 <small><sup id=Note7>(7)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
 
@@ -1850,6 +1850,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note19>(19)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note20>(20)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note21>(21)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007</small>
 
 <a id=Appendix></a>
 ## Appendix
