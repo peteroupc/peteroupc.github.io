@@ -156,7 +156,7 @@ A color can be specified in one of two ways:
 
 The **red-green-blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.
 
-The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on electronic displays.<sup>[**(8)**](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
+The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on display devices.<sup>[**(8)**](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
 
 There are many [**RGB color spaces**](#RGB_Color_Spaces), not just one.
 
@@ -1574,7 +1574,7 @@ The following topics would greatly enrich this document:
 
 <small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
 
-<small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent electronic displays and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or electronic displays.</small>
+<small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or display devices.</small>
 
 <small><sup id=Note9>(9)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small>
 

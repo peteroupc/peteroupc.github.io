@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 7, 2018.
+Begun on Mar. 5, 2016; last updated on Nov. 8, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -458,7 +458,7 @@ What has motivated me to write a more rigorous definition of random number gener
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`, although it also includes a much stronger `SecureRandom` class),
 - implement RNGs by default that leave something to be desired (particularly the Mersenne Twister algorithm found in PHP's `mt_rand` as well as in Python and Ruby),
 - seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
-- leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html); see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_).
+- leave the default seeding fixed (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C; see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_).
 
 Many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).  Thus, a distinction between _statistical_ and _cryptographic_ RNGs seems natural.
 

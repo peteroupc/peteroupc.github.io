@@ -13,6 +13,11 @@ This document registers a tag for serializing internationalized resource identif
 <li>Data item: text string
 <li>Semantics: Internationalized resource identifier (IRI)
 </ul>
+<ul>
+<li>Tag:  ???
+<li>Data item: text string
+<li>Semantics: Internationalized resource identifier reference (IRI reference)
+</ul>
 <h2>
 Introduction
 </h2>
@@ -22,13 +27,14 @@ The existing CBOR tag 32 is nominally limited to URIs (uniform resource identifi
 <h2>
 Detailed Semantics
 </h2>
-<p>Tag 266 can be applied to a CBOR text string to indicate that it is an internationalized resource identifier (IRI) under RFC 3987 (ref. 2) (which in turn extends RFC 3986 (ref. 3), which defines uniform resource identifiers, URIs.)</p><p>
+<p>Tag 266 can be applied to a CBOR text string to indicate that it is an internationalized resource identifier (IRI) under RFC 3987 (ref. 2) (which in turn extends RFC 3986 (ref. 3), which defines uniform resource identifiers, URIs.)</p>
+<p>Tag ??? can be applied to a CBOR text string to indicate that it is an internationalized resource identifier reference (IRI reference) under RFC 3987 (ref. 2) (which in turn extends RFC 3986 (ref. 3), which defines uniform resource identifiers, URIs.)</p><p>
 
-A CBOR decoder can treat data items with tag 266 that are syntactically invalid IRIs as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case.  Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
+A CBOR decoder can treat data items with tag 266 or ??? that are syntactically invalid IRIs as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case.  Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
 </p>
 
 <h2>Security Considerations</h2>
-<p>This tag definition shares the security considerations of RFC 3986 sec. 7 and RFC 3987 sec. 8.  If an IRI or URI contains a domain name, the security considerations of RFC 5890 sec. 4 apply.</p>
+<p>This tag definition shares the security considerations of RFC 3986 sec. 7 and RFC 3987 sec. 8.  If an IRI, IRI reference, or URI contains a domain name, the security considerations of RFC 5890 sec. 4 apply.</p>
 
 <h2>
 References
