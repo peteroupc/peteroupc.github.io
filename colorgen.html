@@ -74,7 +74,11 @@
 
 <ul>
 <li><a href="#CIE_XYZ"><strong>CIE XYZ</strong></a></li>
-<li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a></li>
+<li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a>
+
+<ul>
+<li><a href="#Encoding_XYZ_Through_RGB"><strong>Encoding XYZ Through RGB</strong></a></li>
+</ul></li>
 <li><a href="#CIELAB"><strong>CIELAB</strong></a></li>
 <li><a href="#CIELUV"><strong>CIELUV</strong></a></li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a></li>
@@ -385,14 +389,7 @@ END METHOD
 
 <ul>
 <li><p><strong>&quot;Primaries&quot;.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; include Rec. 601 (NTSC), Rec. 709, and DCI-P3.</p></li>
-<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert a <em>linear RGB</em> color to an <em>encoded RGB</em> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
-</ul>
-
-<p>In a given RGB color space:</p>
-
-<ul>
-<li>A <strong>linear RGB</strong> color has a linear relationship of emitted light (as opposed to perceived light).</li>
-<li>An <strong>encoded RGB (<em>R&prime;G&prime;B&prime;</em>)</strong> color has been encoded (<em>companded</em>) from linear RGB using the &quot;transfer function&quot;. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in encoded form as 8-bpc or 10-bpc RGB colors.</li>
+<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
 </ul>
 
 <p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note11"><strong>(11)</strong></a></sup> contains further information on many RGB color spaces.</p>
@@ -403,6 +400,7 @@ END METHOD
 <ol>
 <li>In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.</li>
 <li>Some industries (notably TV and film) distinguish between <em>standard dynamic range</em> (SDR) and <em>high dynamic range</em> (HDR) color spaces; SDR color spaces include sRGB, while HDR color spaces often cover a wider range of colors, a wider luminance range, or both. (Mano 2018)<sup><a href="#Note12"><strong>(12)</strong></a></sup> contains an introduction to HDR images.</li>
+<li>RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc <em>encoded RGB</em> colors.</li>
 </ol>
 </blockquote>
 
@@ -742,7 +740,7 @@ END METHOD
 
 <ul>
 <li>For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.</li>
-<li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point (see note 3 later in this section)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
+<li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -789,9 +787,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The exact matrix depends on the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot;.</li>
-<li>The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse of the matrix</strong></a> shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
-<li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point, a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> from one white point to another needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse</strong></a> of the adapted matrix. The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
+<li>In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form.  The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse of the matrix</strong></a> shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
 <li><code>XYZTosRGB</code> and <code>XYZTosRGBD50</code> can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom <code>min(max(compo,0), 1)</code>, where <code>compo</code> is that component.</li>
 <li>XYZ colors that have undergone <strong>black point compensation</strong> (see also ISO 18619) can be expressed as <code>Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))</code>, where&mdash;
 
@@ -838,6 +834,21 @@ END METHOD
             return [x,uvy[2],z]
     END METHOD
 </pre>
+
+<p><a id=Encoding_XYZ_Through_RGB></a></p>
+
+<h4>Encoding XYZ Through RGB</h4>
+
+<p>The following summarizes the transformations needed to convert a color from CIE XYZ through RGB to an encoding form suitable for images or video.</p>
+
+<ol>
+<li>An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot; (see the methods in the previous section), but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
+<li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
+<li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
+<li>The final color form is serialized into an integer or sequence of 8-bit bytes.</li>
+</ol>
+
+<p>The corresponding conversions to XYZ are then the inverse of the conversions just given.</p>
 
 <p><a id=CIELAB></a></p>
 
