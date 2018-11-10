@@ -22,7 +22,7 @@
 <li><a href="#Notation_and_Definitions"><strong>Notation and Definitions</strong></a></li>
 <li><a href="#Kinds_of_Color_Spaces"><strong>Kinds of Color Spaces</strong></a></li>
 <li><a href="#Calculating_the_Mean_Hue_Angle"><strong>Calculating the Mean Hue Angle</strong></a></li>
-<li><a href="#Additional_Color_Formats"><strong>Additional Color Formats</strong></a></li>
+<li><a href="#Additional_Text_based_RGB_colors"><strong>Additional Text-based RGB colors</strong></a></li>
 <li><a href="#Additional_Color_Models"><strong>Additional Color Models</strong></a>
 
 <ul>
@@ -93,17 +93,17 @@
 END
 </pre>
 
-<p><a id=Additional_Color_Formats></a></p>
+<p><a id=Additional_Text_based_RGB_colors></a></p>
 
-<h2>Additional Color Formats</h2>
+<h2>Additional Text-based RGB colors</h2>
 
-<p>The following color formats express RGB colors in <a href="https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats"><strong>8/8/8 format</strong></a> as text strings:</p>
+<p>The following color formats express <a href="https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats"><strong>8-bpc <em>encoded RGB</em> colors</strong></a> as text strings:</p>
 
 <ul>
 <li><strong>Delphi</strong> format: Consists of &quot;$00&quot; followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.</li>
 <li><strong>Visual Basic</strong> format: Consists of &quot;&amp;H&quot; followed by six base-16 digits, two each for the blue, green, and red components, in that order.</li>
 <li><strong>C++</strong> format: Consists of &quot;0x00&quot; followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows <code>COLORREF</code> color, the three components are blue, green, and red, in that order.</li>
-<li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8/8/8 format color, packed red/green/blue, in that order from lowest to highest bits.</li>
+<li><strong>PowerBuilder</strong> format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.</li>
 </ul>
 
 <p><a id=Additional_Color_Models></a></p>

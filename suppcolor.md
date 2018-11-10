@@ -15,7 +15,7 @@ This document presents supplemental topics about color.  They add to my article 
 - [**Notation and Definitions**](#Notation_and_Definitions)
 - [**Kinds of Color Spaces**](#Kinds_of_Color_Spaces)
 - [**Calculating the Mean Hue Angle**](#Calculating_the_Mean_Hue_Angle)
-- [**Additional Color Formats**](#Additional_Color_Formats)
+- [**Additional Text-based RGB colors**](#Additional_Text_based_RGB_colors)
 - [**Additional Color Models**](#Additional_Color_Models)
     - [**HSI**](#HSI)
     - [**Hunter L,a,b**](#Hunter_L_a_b)
@@ -68,15 +68,15 @@ The `MeanAngle` method, as given in the pseudocode below, finds the average of o
         return atan2(ym, xm)
     END
 
-<a id=Additional_Color_Formats></a>
-## Additional Color Formats
+<a id=Additional_Text_based_RGB_colors></a>
+## Additional Text-based RGB colors
 
-The following color formats express RGB colors in [**8/8/8 format**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
+The following color formats express [**8-bpc _encoded RGB_ colors**](https://peteroupc.github.io/colorgen.html#RGB_Integer_Formats) as text strings:
 
 - **Delphi** format: Consists of "$00" followed by six base-16 (hexadecimal) digits, two each for the blue, green, and red components, in that order.
 - **Visual Basic** format: Consists of "&H" followed by six base-16 digits, two each for the blue, green, and red components, in that order.
 - **C++** format: Consists of "0x00" followed by six base-16 digits, two each for the three RGB components.  If the format expresses a Windows `COLORREF` color, the three components are blue, green, and red, in that order.
-- **PowerBuilder** format: Consists of the integer form of the 8/8/8 format color, packed red/green/blue, in that order from lowest to highest bits.
+- **PowerBuilder** format: Consists of the integer form of the 8-bpc format color, packed red/green/blue, in that order from lowest to highest bits.
 
 <a id=Additional_Color_Models></a>
 ## Additional Color Models

@@ -57,10 +57,14 @@
 <li><a href="#RGB_Color_Model"><strong>RGB Color Model</strong></a>
 
 <ul>
-<li><a href="#RGB_Integer_Formats"><strong>RGB Integer Formats</strong></a></li>
-<li><a href="#HTML_Related_Color_Formats"><strong>HTML-Related Color Formats</strong></a></li>
 <li><a href="#RGB_Color_Spaces"><strong>RGB Color Spaces</strong></a></li>
 <li><a href="#sRGB"><strong>sRGB</strong></a></li>
+<li><a href="#Representing_RGB_Colors"><strong>Representing RGB Colors</strong></a>
+
+<ul>
+<li><a href="#Binary_Formats"><strong>Binary Formats</strong></a></li>
+</ul></li>
+<li><a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML Format and Other Text Formats</strong></a></li>
 </ul></li>
 <li><a href="#Transformations_of_RGB_Colors"><strong>Transformations of RGB Colors</strong></a>
 
@@ -77,8 +81,8 @@
 
 <ul>
 <li><a href="#Encoding_XYZ_Through_RGB"><strong>Encoding XYZ Through RGB</strong></a></li>
-</ul></li>
 <li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a></li>
+</ul></li>
 <li><a href="#CIELAB"><strong>CIELAB</strong></a></li>
 <li><a href="#CIELUV"><strong>CIELUV</strong></a></li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a></li>
@@ -225,17 +229,92 @@
 
 <p>The RGB model is ideally based on the intensity that &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; dots of light should have in order to reproduce certain colors on display devices.<sup><a href="#Note8"><strong>(8)</strong></a></sup> The RGB model is a cube with one vertex set to &quot;black&quot;, the opposite vertex set to &quot;white&quot;, and the remaining vertices set to &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;cyan&quot;, &quot;yellow&quot;, and &quot;magenta&quot;.</p>
 
-<p>There are many <a href="#RGB_Color_Spaces"><strong>RGB color spaces</strong></a>, not just one.</p>
-
 <p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;.  Often, each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
 
 <p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque (so with an implicit alpha component of 1).</p>
 
-<p><a id=RGB_Integer_Formats></a></p>
+<p><a id=RGB_Color_Spaces></a></p>
 
-<h3>RGB Integer Formats</h3>
+<h3>RGB Color Spaces</h3>
 
-<p>RGB and RGBA colors are often expressed by packing their components as integers, as follows:</p>
+<p>There are many <strong>RGB color spaces</strong>, not just one, and they generally differ in their <strong>red, green, blue, and white points (&quot;primaries&quot;)</strong> as well as in their <strong>color component transfer functions (&quot;transfer functions&quot;)</strong>:</p>
+
+<ul>
+<li><p><strong>&quot;Primaries&quot;.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; include Rec. 601 (NTSC), Rec. 709, and DCI-P3.</p></li>
+<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
+</ul>
+
+<p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note9"><strong>(9)</strong></a></sup> contains further information on many RGB color spaces.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.</li>
+<li>Some industries (notably TV and film) distinguish between <em>standard dynamic range</em> (SDR) and <em>high dynamic range</em> (HDR) color spaces; SDR color spaces include sRGB, while HDR color spaces often cover a wider range of colors, a wider luminance range, or both. (Mano 2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> contains an introduction to HDR images.</li>
+<li>RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc <em>encoded RGB</em> colors.</li>
+</ol>
+</blockquote>
+
+<p><a id=sRGB></a></p>
+
+<h3>sRGB</h3>
+
+<p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>.  In sRGB&mdash;</p>
+
+<ul>
+<li>the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard <a href="https://en.wikipedia.org/wiki/Rec._709"><strong>Rec. 709</strong></a>),</li>
+<li>the white point was chosen as the D65/2 white point, and</li>
+<li>the color component transfer function (implemented as <code>SRGBFromLinear</code> below) was based on the gamma encoding used for cathode-ray-tube monitors.</li>
+</ul>
+
+<p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
+
+<p>The following methods convert colors between linear and encoded sRGB. (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for this threshold.)</p>
+
+<pre>// Convert a color component from encoded to linear sRGB
+// NOTE: This is not gamma decoding; it&#39;s similar to, but
+// not exactly, c^2.2.  This function was designed &quot;to
+// allow for invertability in integer math&quot;, according to
+// the sRGB proposal.
+METHOD SRGBToLinear(c)
+ // NOTE: Threshold here would more properly be
+ // 12.92 * 0.0031308 = 0.040449936, but 0.04045
+ // is what the IEC standard uses
+  if c &lt;= 0.04045: return c / 12.92
+  return pow((0.055 + c) / 1.055, 2.4)
+END METHOD
+
+// Convert a color component from linear to encoded sRGB
+// NOTE: This is not gamma encoding; it&#39;s similar to, but
+// not exactly, c^(1/2.2).
+METHOD SRGBFromLinear(c)
+  if c &lt;= 0.0031308: return 12.92 * c
+  return pow(c, 1.0 / 2.4) * 1.055 - 0.055
+END METHOD
+
+// Convert a color from encoded to linear sRGB
+METHOD SRGBToLinear3(c)
+   return [SRGBToLinear(c[0]), SRGBToLinear(c[1]), SRGBToLinear(c[2])]
+END METHOD
+
+// Convert a color from linear to encoded sRGB
+METHOD SRGBFromLinear3(c)
+   return [SRGBFromLinear(c[0]), SRGBFromLinear(c[1]), SRGBFromLinear(c[2])]
+END METHOD
+</pre>
+
+<p><a id=Representing_RGB_Colors></a></p>
+
+<h3>Representing RGB Colors</h3>
+
+<p>The following shows how linear or encoded RGB colors can be represented as integers or as text.</p>
+
+<p><a id=Binary_Formats></a></p>
+
+<h4>Binary Formats</h4>
+
+<p>RGB and RGBA colors are often expressed by packing their components as binary integers, as follows:</p>
 
 <ul>
 <li><strong>RGB colors:</strong> With an RN-bit red component, a GN-bit green, and a BN-bit blue, resulting in an integer that&#39;s (RN + GN + BN) bits long.</li>
@@ -254,7 +333,7 @@
 <li><strong>16-bpc:</strong> As 48-bit integers (16 bpc RGB), or as 64-bit integers with an alpha component.</li>
 </ul>
 
-<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; 8-bit byte order, or the order in which the color&#39;s components are packed into an integer can vary.  A thorough survey of the integer color formats in common use is outside the scope of this document.</p>
+<p>There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color&#39;s components can be in &quot;little endian&quot; or &quot;big endian&quot; 8-bit byte order, or the order in which the color&#39;s components are packed into an integer can vary.  This document does not seek to survey the RGB binary storage formats available.</p>
 
 <p>The following pseudocode presents methods to convert RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):</p>
 
@@ -296,11 +375,11 @@ METHOD From565(rgb, scale)
 END METHOD
 </pre>
 
-<p><a id=HTML_Related_Color_Formats></a></p>
+<p><a id=HTML_Format_and_Other_Text_Formats></a></p>
 
-<h3>HTML-Related Color Formats</h3>
+<h3>HTML Format and Other Text Formats</h3>
 
-<p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses 8-bpc RGB colors as text strings, consists of the character &quot;#&quot;, two base-16 (hexadecimal) digits<sup><a href="#Note9"><strong>(9)</strong></a></sup> for the red component, two for the green, and two for the blue, in that order.</p>
+<p>A color string in the <strong>HTML color format</strong> (also known as &quot;hex&quot; format), which expresses 8-bpc RGB colors as text strings, consists of the character &quot;#&quot;, two base-16 (hexadecimal) digits<sup><a href="#Note11"><strong>(11)</strong></a></sup> for the red component, two for the green, and two for the blue, in that order.</p>
 
 <p>For example, <code>#003F86</code> expresses the 8-bpc RGB color (0, 63, 134).</p>
 
@@ -367,90 +446,17 @@ METHOD HtmlToColor(colorString)
 END METHOD
 </pre>
 
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>Other variants of the HTML color format<sup><a href="#Note10"><strong>(10)</strong></a></sup>:
+<p>Other text-based color formats include the following<sup><a href="#Note12"><strong>(12)</strong></a></sup>:</p>
 
 <ul>
-<li>The <a href="https://www.w3.org/TR/css3-color/#rgb-color"><strong>CSS Color Module Level 3</strong></a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</li>
-<li>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8-bpc RGBA colors.</li>
-</ul></li>
-<li>As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as encoded RGB colors).</li>
-</ol>
-</blockquote>
-
-<p><a id=RGB_Color_Spaces></a></p>
-
-<h3>RGB Color Spaces</h3>
-
-<p><strong>RGB color spaces</strong> are numerous, and they generally differ in their <strong>red, green, blue, and white points (&quot;primaries&quot;)</strong> as well as in their <strong>color component transfer functions (&quot;transfer functions&quot;)</strong>:</p>
-
-<ul>
-<li><p><strong>&quot;Primaries&quot;.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; include Rec. 601 (NTSC), Rec. 709, and DCI-P3.</p></li>
-<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
+<li><p>The <a href="https://www.w3.org/TR/css3-color/#rgb-color"><strong>CSS Color Module Level 3</strong></a>, which specifies this format, also mentions a <strong>3-digit variant</strong>, consisting of &quot;#&quot; followed by three base-16 digits, one each for the red, green, and blue components, in that order. Conversion to the 6-digit format involves replicating each base-16 component (for example, &quot;#345&quot; is the same as &quot;#334455&quot; in the 6-digit format).</p></li>
+<li><p>An <strong>8-digit variant</strong> used in the Android operating system consists of &quot;#&quot; followed by eight base-16 digits, two each for the alpha, red, green, and blue components, in that order.  This variant thus describes 8-bpc RGBA colors.</p></li>
+<li><p>Additional formats are given in the <a href="https://peteroupc.github.io/suppcolor.html#Additional_Color_Formats"><strong>supplemental color topics</strong></a>.</p></li>
 </ul>
 
-<p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note11"><strong>(11)</strong></a></sup> contains further information on many RGB color spaces.</p>
-
 <blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li>In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.</li>
-<li>Some industries (notably TV and film) distinguish between <em>standard dynamic range</em> (SDR) and <em>high dynamic range</em> (HDR) color spaces; SDR color spaces include sRGB, while HDR color spaces often cover a wider range of colors, a wider luminance range, or both. (Mano 2018)<sup><a href="#Note12"><strong>(12)</strong></a></sup> contains an introduction to HDR images.</li>
-<li>RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc <em>encoded RGB</em> colors.</li>
-</ol>
+<p><strong>Note:</strong> As used in the <a href="http://www.w3.org/TR/css3-color/"><strong>CSS Color Module Level 3</strong></a>, for example, colors in the HTML color format or its 3-digit variant are in the <a href="#sRGB"><strong><em>sRGB color space</em></strong></a> (as encoded RGB colors).</p>
 </blockquote>
-
-<p><a id=sRGB></a></p>
-
-<h3>sRGB</h3>
-
-<p>Among RGB color spaces, one of the most popular is the <em>sRGB color space</em>.  In sRGB&mdash;</p>
-
-<ul>
-<li>the red, green, and blue points were chosen to cover the range of colors displayed by typical cathode-ray-tube displays (as in the high-definition standard <a href="https://en.wikipedia.org/wiki/Rec._709"><strong>Rec. 709</strong></a>),</li>
-<li>the white point was chosen as the D65/2 white point, and</li>
-<li>the color component transfer function (implemented as <code>SRGBFromLinear</code> below) was based on the gamma encoding used for cathode-ray-tube monitors.</li>
-</ul>
-
-<p>For background, see the <a href="https://www.w3.org/Graphics/Color/sRGB"><strong>sRGB proposal</strong></a>, which recommends RGB image data in an unidentified RGB color space to be treated as sRGB.</p>
-
-<p>The following methods convert colors between linear and encoded sRGB. (Note that the threshold <code>0.0031308</code> is that of IEC 61966-2-1, the official sRGB standard; the sRGB proposal has a different value for this threshold.)</p>
-
-<pre>// Convert a color component from encoded to linear sRGB
-// NOTE: This is not gamma decoding; it&#39;s similar to, but
-// not exactly, c^2.2.  This function was designed &quot;to
-// allow for invertability in integer math&quot;, according to
-// the sRGB proposal.
-METHOD SRGBToLinear(c)
- // NOTE: Threshold here would more properly be
- // 12.92 * 0.0031308 = 0.040449936, but 0.04045
- // is what the IEC standard uses
-  if c &lt;= 0.04045: return c / 12.92
-  return pow((0.055 + c) / 1.055, 2.4)
-END METHOD
-
-// Convert a color component from linear to encoded sRGB
-// NOTE: This is not gamma encoding; it&#39;s similar to, but
-// not exactly, c^(1/2.2).
-METHOD SRGBFromLinear(c)
-  if c &lt;= 0.0031308: return 12.92 * c
-  return pow(c, 1.0 / 2.4) * 1.055 - 0.055
-END METHOD
-
-// Convert a color from encoded to linear sRGB
-METHOD SRGBToLinear3(c)
-   return [SRGBToLinear(c[0]), SRGBToLinear(c[1]), SRGBToLinear(c[2])]
-END METHOD
-
-// Convert a color from linear to encoded sRGB
-METHOD SRGBFromLinear3(c)
-   return [SRGBFromLinear(c[0]), SRGBFromLinear(c[1]), SRGBFromLinear(c[2])]
-END METHOD
-</pre>
 
 <p><a id=Transformations_of_RGB_Colors></a></p>
 
@@ -648,7 +654,7 @@ END METHOD
 <li>the <a href="https://www.w3.org/Graphics/JPEG/jfif3.pdf"><strong>JPEG File Interchange Format</strong></a> variant (with all three components 0 or greater and 255 or less), as the <code>YCbCrToRgbJpeg</code> and <code>RgbToYCbCrJpeg</code> methods.</li>
 </ul>
 
-<p>The Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> transformation is independent of RGB color space, but should be done using <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a>.<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
+<p>The Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> transformation is independent of RGB color space, but should be done using <a href="#RGB_Color_Spaces"><strong><em>encoded RGB</em> colors</strong></a> rather than <em>linear RGB</em> colors.<sup><a href="#Note16"><strong>(16)</strong></a></sup></p>
 
 <pre>// NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
 // in the NTSC color space
@@ -803,20 +809,20 @@ END METHOD
 
 <h4>Encoding XYZ Through RGB</h4>
 
-<p>The following summarizes the transformations needed to convert a color from CIE XYZ through RGB to an encoding form suitable for images or video.</p>
+<p>The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.</p>
 
 <ol>
 <li>An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot; (see the methods in the previous section), but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
 <li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
 <li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
-<li>The final color form is serialized into an integer or sequence of 8-bit bytes.</li>
+<li>The final color form is serialized into a binary or text representation (see also &quot;<a href="#Representing_RGB_Colors"><strong>Representing RGB Colors</strong></a>&quot;).</li>
 </ol>
 
 <p>The corresponding conversions to XYZ are then the inverse of the conversions just given.</p>
 
 <p><a id=Chromaticity_Coordinates></a></p>
 
-<h3>Chromaticity Coordinates</h3>
+<h4>Chromaticity Coordinates</h4>
 
 <p>The chromaticity coordinates <em>x</em>, <em>y</em>, and <em>z</em> are each the ratios of the corresponding component of an XYZ color to the sum of those components; therefore, those three coordinates sum to 1.<sup><a href="#Note20"><strong>(20)</strong></a></sup>  &quot;xyY&quot; form consists of <em>x</em> then <em>y</em> then the Y component of an XYZ color. &quot;Yxy&quot; form consists of the Y component then <em>x</em> then <em>y</em> of an XYZ color.</p>
 
@@ -1068,7 +1074,7 @@ END METHOD
 
 <p>Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to and from a CIELAB color by multidimensional interpolation of the table&#39;s &quot;patches&quot;.<sup><a href="#Note26"><strong>(26)</strong></a></sup></p>
 
-<p><strong>Rough conversions.</strong> The following pseudocode shows <em>very rough</em> and <em>approximate</em> conversions between an RGB color (<code>color</code>) and a CMYK color (<code>cmyk</code>):</p>
+<p><strong>Rough conversions.</strong> The following pseudocode shows <em>very rough</em> conversions between an RGB color (<code>color</code>) and a CMYK color (<code>cmyk</code>):</p>
 
 <pre>    // RGB to CMYK
     k = min(min(1.0 - color[0], 1.0 - color[1]), 1.0 - color[2])
@@ -1666,7 +1672,7 @@ should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method tha
 <p>The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> colors</strong></a> rather than encoded RGB colors, unless noted otherwise.  In this section, <code>RNDNUMRANGE</code>, <code>RNDU01</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</p>
 
 <ul>
-<li>Generating a random string in the <a href="#HTML_Color_Format"><strong>HTML color format</strong></a> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.</li>
+<li>Generating a random string in the <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a> is equivalent to generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.</li>
 <li>Generating a random color in the <strong>0-1 format</strong> is equivalent to generating <code>[RNDU01(), RNDU01(), RNDU01()]</code>.</li>
 <li>Generating a random <strong>8-bpc encoded RGB color</strong> is equivalent to calling <code>From888(RNDINT(16777215))</code>.</li>
 <li>To generate a random <strong>dark color</strong>, either&mdash;
@@ -1927,18 +1933,18 @@ END METHOD
 
 <p><small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel (&quot;red&quot;, &quot;green&quot;, and &quot;blue&quot;), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;, or RGBW &mdash; and ideally, color spaces following the <em>RGBW color model</em>, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or display devices.</small></p>
 
-<p><small><sup id=Note9>(9)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small></p>
+<p><small><sup id=Note9>(9)</sup> B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html"><strong>RGB Working Space Information</strong></a>&quot;.</small></p>
 
-<p><small><sup id=Note10>(10)</sup> A <a href="http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation"><strong>Working Draft</strong></a> of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;</p>
+<p><small><sup id=Note10>(10)</sup> Mano, Y., et al.  &quot;Enhancing the Netflix UI Experience with HDR&quot;, Netflix Technology Blog, Medium.com, Sep. 24, 2018.</small></p>
+
+<p><small><sup id=Note11>(11)</sup> The base-16 digits, in order, are 0 through 9, followed by A through F. The digits A through F can be uppercase or lowercase.</small></p>
+
+<p><small><sup id=Note12>(12)</sup> A <a href="http://www.w3.org/TR/2016/WD-css-color-4-20160705/#hex-notation"><strong>Working Draft</strong></a> of the CSS Color Module Level 4 mentions two additional formats, namely&mdash;</p>
 
 <ul>
 <li>an 8-digit format, consisting of &quot;#&quot; followed by eight base-16 digits, two each for the red, green, blue, and alpha components, in that order, and</li>
 <li>a 4-digit format, consisting of &quot;#&quot; followed by four base-16 digits, one each for the red, green, blue, and alpha components, in that order (where, for example, &quot;#345F&quot; is the same as &quot;#334455FF&quot; in the 8-digit format).</small></li>
 </ul>
-
-<p><small><sup id=Note11>(11)</sup> B. Lindbloom, &quot;<a href="http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html"><strong>RGB Working Space Information</strong></a>&quot;.</small></p>
-
-<p><small><sup id=Note12>(12)</sup> Mano, Y., et al.  &quot;Enhancing the Netflix UI Experience with HDR&quot;, Netflix Technology Blog, Medium.com, Sep. 24, 2018.</small></p>
 
 <p><small><sup id=Note13>(13)</sup> The hue angle is in radians, and the angle is 0 or greater and less than 2&pi;. Radians can be converted to degrees by multiplying by <code>180 / pi</code>.  Degrees can be converted to radians by multiplying by <code>pi / 180</code>.</small></p>
 
@@ -2011,7 +2017,7 @@ where <code>FUNC</code> is an arbitrary function of one or more variables) can b
 
 <p><small><sup id=Note41>(41)</sup> Many color collections are represented by printed or dyed color swatches and/or found in printed &quot;fan decks&quot;.  Most color collections of this kind, however, are proprietary. &quot;5RP 5/6&quot; is an example from a famous color system and color space from the early 20th century.</small></p>
 
-<p><small><sup id=Note42>(42)</sup> An approximation of the colors, in order, to encoded sRGB in <a href="#HTML_Color_Format"><strong>HTML color format</strong></a>, is as follows: &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour</code> package.</small></p>
+<p><small><sup id=Note42>(42)</sup> An approximation of the colors, in order, to encoded sRGB in <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a>, is as follows: &quot;#F0F0F1&quot;, &quot;#181818&quot;, &quot;#F7C100&quot;, &quot;#875392&quot;, &quot;#F78000&quot;, &quot;#9EC9EF&quot;, &quot;#C0002D&quot;, &quot;#C2B280&quot;, &quot;#838382&quot;, &quot;#008D4B&quot;, &quot;#E68DAB&quot;, &quot;#0067A8&quot;, &quot;#F99178&quot;, &quot;#5E4B97&quot;, &quot;#FBA200&quot;, &quot;#B43E6B&quot;, &quot;#DDD200&quot;, &quot;#892610&quot;, &quot;#8DB600&quot;, &quot;#65421B&quot;, &quot;#E4531B&quot;, &quot;#263A21&quot;. The list was generated by converting the Munsell renotations (and a similar renotation for black) to sRGB using the Python <code>colour</code> package.</small></p>
 
 <p><small><sup id=Note43>(43)</sup> Tatarize, &quot;<a href="http://godsnotwheregodsnot.blogspot.com/2012/09/color-distribution-methodology.html"><strong>Color Distribution Methodology</strong></a>&quot;.</small></p>
 
