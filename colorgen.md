@@ -49,8 +49,8 @@ This document presents an overview of many common color topics that are of gener
     - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R)
 - [**Other Color Models**](#Other_Color_Models)
     - [**CIE XYZ**](#CIE_XYZ)
-    - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
         - [**Encoding XYZ Through RGB**](#Encoding_XYZ_Through_RGB)
+    - [**Chromaticity Coordinates**](#Chromaticity_Coordinates)
     - [**CIELAB**](#CIELAB)
     - [**CIELUV**](#CIELUV)
     - [**CMYK and Other Ink-Mixture Color Models**](#CMYK_and_Other_Ink_Mixture_Color_Models)
@@ -662,7 +662,7 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 <a id=Encoding_XYZ_Through_RGB></a>
 #### Encoding XYZ Through RGB
 
-The following summarizes the transformations needed to convert a color from CIE XYZ through RGB to an encoding form suitable for images or video.
+The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.
 
 1. An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the [**RGB color space**](#RGB_Color_Spaces)'s "primaries" (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(19)**](#Note19)</sup>.
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
@@ -670,6 +670,7 @@ The following summarizes the transformations needed to convert a color from CIE 
 4. The final color form is serialized into an integer or sequence of 8-bit bytes.
 
 The corresponding conversions to XYZ are then the inverse of the conversions just given.
+
 <a id=Chromaticity_Coordinates></a>
 ### Chromaticity Coordinates
 

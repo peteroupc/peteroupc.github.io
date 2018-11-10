@@ -73,12 +73,12 @@
 <li><a href="#Other_Color_Models"><strong>Other Color Models</strong></a>
 
 <ul>
-<li><a href="#CIE_XYZ"><strong>CIE XYZ</strong></a></li>
-<li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a>
+<li><a href="#CIE_XYZ"><strong>CIE XYZ</strong></a>
 
 <ul>
 <li><a href="#Encoding_XYZ_Through_RGB"><strong>Encoding XYZ Through RGB</strong></a></li>
 </ul></li>
+<li><a href="#Chromaticity_Coordinates"><strong>Chromaticity Coordinates</strong></a></li>
 <li><a href="#CIELAB"><strong>CIELAB</strong></a></li>
 <li><a href="#CIELUV"><strong>CIELUV</strong></a></li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK and Other Ink-Mixture Color Models</strong></a></li>
@@ -389,7 +389,7 @@ END METHOD
 
 <ul>
 <li><p><strong>&quot;Primaries&quot;.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; include Rec. 601 (NTSC), Rec. 709, and DCI-P3.</p></li>
-<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
+<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
 </ul>
 
 <p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note11"><strong>(11)</strong></a></sup> contains further information on many RGB color spaces.</p>
@@ -799,6 +799,21 @@ END METHOD
 </ol>
 </blockquote>
 
+<p><a id=Encoding_XYZ_Through_RGB></a></p>
+
+<h4>Encoding XYZ Through RGB</h4>
+
+<p>The following summarizes the transformations needed to convert a color from CIE XYZ through RGB to an encoding form suitable for images or video.</p>
+
+<ol>
+<li>An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot; (see the methods in the previous section), but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
+<li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
+<li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
+<li>The final color form is serialized into an integer or sequence of 8-bit bytes.</li>
+</ol>
+
+<p>The corresponding conversions to XYZ are then the inverse of the conversions just given.</p>
+
 <p><a id=Chromaticity_Coordinates></a></p>
 
 <h3>Chromaticity Coordinates</h3>
@@ -834,21 +849,6 @@ END METHOD
             return [x,uvy[2],z]
     END METHOD
 </pre>
-
-<p><a id=Encoding_XYZ_Through_RGB></a></p>
-
-<h4>Encoding XYZ Through RGB</h4>
-
-<p>The following summarizes the transformations needed to convert a color from CIE XYZ through RGB to an encoding form suitable for images or video.</p>
-
-<ol>
-<li>An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot; (see the methods in the previous section), but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
-<li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
-<li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
-<li>The final color form is serialized into an integer or sequence of 8-bit bytes.</li>
-</ol>
-
-<p>The corresponding conversions to XYZ are then the inverse of the conversions just given.</p>
 
 <p><a id=CIELAB></a></p>
 
