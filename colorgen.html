@@ -381,16 +381,21 @@ END METHOD
 
 <h3>RGB Color Spaces</h3>
 
-<p><strong>RGB color spaces</strong> are numerous, and they generally differ in their <strong>red, green, blue, and white points</strong> as well as in their <strong>color component transfer functions</strong>. In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note11"><strong>(11)</strong></a></sup> contains further information on many RGB color spaces.</p>
+<p><strong>RGB color spaces</strong> are numerous, and they generally differ in their <strong>red, green, blue, and white points (&quot;primaries&quot;)</strong> as well as in their <strong>color component transfer functions (&quot;transfer functions&quot;)</strong>:</p>
 
-<p><strong>Red, green, blue, and white points.</strong> RGB color spaces generally differ in what they consider &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  But they need not define the red, green, and/or blue points as actual colors.  For example, the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a> of the Academy of Motion Picture Arts and Sciences covers almost all colors but has imaginary green and blue points.</p>
+<ul>
+<li><p><strong>&quot;Primaries&quot;.</strong> These are what a given RGB color space considers &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, and &quot;white&quot;.  Each of these points need not be an actual color (this is illustrated by the <a href="http://www.oscars.org/science-technology/sci-tech-projects/aces"><strong>ACES2065-1 color space</strong></a>, for example).  Examples of &quot;primaries&quot; include Rec. 601 (NTSC), Rec. 709, and DCI-P3.</p></li>
+<li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert a <em>linear RGB</em> color to an <em>encoded RGB</em> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
+</ul>
 
-<p><strong>Color component transfer function.</strong> This is a function used to convert a <em>linear RGB</em> color to an <em>encoded RGB</em> color in the same color space. For many RGB color spaces (but not sRGB, described <a href="#sRGB"><strong>later</strong></a>), this is a simple power function, such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number. (In this case, the function is also called <em>gamma encoding</em>.)  In a given RGB color space:</p>
+<p>In a given RGB color space:</p>
 
 <ul>
 <li>A <strong>linear RGB</strong> color has a linear relationship of emitted light (as opposed to perceived light).</li>
-<li>An <strong>encoded RGB</strong> color has been encoded (<em>companded</em>) from linear RGB. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in encoded form as 8-bpc or 10-bpc RGB colors.</li>
+<li>An <strong>encoded RGB (<em>R&prime;G&prime;B&prime;</em>)</strong> color has been encoded (<em>companded</em>) from linear RGB using the &quot;transfer function&quot;. Depending on the color space, the resulting color has a more or less linear relationship of perceived light, since human color perception is nonlinear.  RGB colors encoded in images and video or specified in documents are usually in encoded form as 8-bpc or 10-bpc RGB colors.</li>
 </ul>
+
+<p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note11"><strong>(11)</strong></a></sup> contains further information on many RGB color spaces.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -737,7 +742,7 @@ END METHOD
 
 <ul>
 <li>For <code>XYZFromsRGB(rgb)</code> and  <code>XYZTosRGB(xyz)</code>, the white point is the D65/2 white point.</li>
-<li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point (see note 2 later in this section)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
+<li>For <code>XYZFromsRGBD50(rgb)</code> and  <code>XYZTosRGBD50(xyz)</code>, the white point is the D50/2 white point (see note 3 later in this section)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -784,8 +789,9 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse of the matrix</strong></a> shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
-<li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point, a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> from one white point to another (such as a linear Bradford transformation) needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse</strong></a> of the adapted matrix. The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
+<li>In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form. The exact matrix depends on the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s &quot;primaries&quot;.</li>
+<li>The matrix shown in <code>XYZTosRGB</code> or <code>XYZTosRGBD50</code> is the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse of the matrix</strong></a> shown in <code>XYZFromsRGB</code> or <code>XYZFromsRGBD50</code>, respectively.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
+<li>Where the XYZ color will be relative to a different white point than the RGB color space&#39;s usual white point, a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> from one white point to another needs to be done to the RGB-to-XYZ matrix.  The XYZ-to-RGB matrix is then the <a href="http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions"><strong>inverse</strong></a> of the adapted matrix. The <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods are examples of such adaptation.<sup><a href="#Note19"><strong>(19)</strong></a></sup></li>
 <li><code>XYZTosRGB</code> and <code>XYZTosRGBD50</code> can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom <code>min(max(compo,0), 1)</code>, where <code>compo</code> is that component.</li>
 <li>XYZ colors that have undergone <strong>black point compensation</strong> (see also ISO 18619) can be expressed as <code>Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))</code>, where&mdash;
 
@@ -1940,7 +1946,7 @@ END METHOD
 <li>The printing industry uses the D50 illuminant for historical reasons (see A. Kraushaar, <a href="https://fogra.org/plugin.php?menuid=125&amp;template=mv/templates/mv_show_front.html&amp;mv_id=10&amp;extern_meta=x&amp;mv_content_id=140332&amp;getlang=en"><strong>&quot;Why the printing industry is not using D65?&quot;</strong></a>, 2009).</small></li>
 </ul>
 
-<p><small><sup id=Note19>(19)</sup> Further details on chromatic adaptation transforms are outside the scope of this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</small></p>
+<p><small><sup id=Note19>(19)</sup> Chromatic adaptation transforms include linear Bradford transformations, but are not further detailed in this document. (See also E. Stone, &quot;<a href="https://ninedegreesbelow.com/photography/srgb-luminance.html"><strong>The Luminance of an sRGB Color</strong></a>&quot;, 2013.)</small></p>
 
 <p><small><sup id=Note20>(20)</sup> Chromaticity coordinates can be defined for any three-dimensional Cartesian color space, not just XYZ (e.g., (<em>r</em>, <em>g</em>, <em>b</em>) chromaticity coordinates for RGB).  Such coordinates are calculated analogously to (<em>x</em>, <em>y</em>, <em>z</em>) coordinates.</small></p>
 
