@@ -42,7 +42,7 @@ This document presents an overview of many common color topics that are of gener
     - [**sRGB**](#sRGB)
     - [**Representing RGB Colors**](#Representing_RGB_Colors)
         - [**Binary Formats**](#Binary_Formats)
-    - [**HTML Format and Other Text Formats**](#HTML_Format_and_Other_Text_Formats)
+        - [**HTML Format and Other Text Formats**](#HTML_Format_and_Other_Text_Formats)
 - [**Transformations of RGB Colors**](#Transformations_of_RGB_Colors)
     - [**HSV**](#HSV)
     - [**HSL**](#HSL)
@@ -167,9 +167,9 @@ The RGB model is ideally based on the intensity that "red", "green", and "blue" 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
 
-There are many **RGB color spaces**, not just one, and they generally differ in their **red, green, blue, and white points ("primaries")** as well as in their **color component transfer functions ("transfer functions")**:
+There are many **RGB color spaces**, not just one, and they generally differ in their red, green, blue, and white points and in their color component transfer functions (_"transfer functions"_):
 
-- **"Primaries".** These are what a given RGB color space considers "red", "green", "blue", and "white".  Each of these points need not be an actual color (this is illustrated by the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), for example).  Examples of "primaries" include Rec. 601 (NTSC), Rec. 709, and DCI-P3.
+- **Red, green, blue, and white points.** These are what a given RGB color space considers "red", "green", "blue", and "white". (The first three are commonly called "primaries".)  Each of these points need not be an actual color (this is illustrated by the [**ACES2065-1 color space**](http://www.oscars.org/science-technology/sci-tech-projects/aces), for example).  Examples of "primaries" are Rec. 601 (NTSC), Rec. 709, and DCI-P3.  Examples of white points are the D50/2 and D65/2 white points.
 
 - **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
 
@@ -289,7 +289,7 @@ The following pseudocode presents methods to convert RGB colors to and from diff
     END METHOD
 
 <a id=HTML_Format_and_Other_Text_Formats></a>
-### HTML Format and Other Text Formats
+#### HTML Format and Other Text Formats
 
 A color string in the **HTML color format** (also known as "hex" format), which expresses 8-bpc RGB colors as text strings, consists of the character "#", two base-16 (hexadecimal) digits<sup>[**(11)**](#Note11)</sup> for the red component, two for the green, and two for the blue, in that order.
 
@@ -671,10 +671,10 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
 The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.
 
-1. An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the [**RGB color space**](#RGB_Color_Spaces)'s "primaries" (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(19)**](#Note19)</sup>.
+1. An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white point (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(19)**](#Note19)</sup>.
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
 3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R) or another form.  This can be left out.
-4. The final color form is serialized into a binary or text representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
+4. The final color form is serialized into a binary, text, or other representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
 
 The corresponding conversions to XYZ are then the inverse of the conversions just given.
 
@@ -922,7 +922,7 @@ Given a CMYK-to-CIELAB characterization table, a CMYK color can be converted to 
 <a id=Color_Operations></a>
 ## Color Operations
 
-This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [**_linear RGB_ colors**](#RGB_Color_Spaces), unless noted otherwise.
+This section goes over many of the operations that can be done on colors.  Note that for best results, these operations need to be carried out with [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than _encoded RGB_ colors, unless noted otherwise.
 
 <a id=Luminance_Factor_Grayscale></a>
 ### Luminance Factor (Grayscale)
@@ -1594,7 +1594,7 @@ The following topics would greatly enrich this document:
 
 <small><sup id=Note7>(7)</sup> For information on how defective color vision can be simulated, see "[**Color Blindness Simulation Research**](http://ixora.io/projects/colorblindness/color-blindness-simulation-research/)", by "Jim".</small>
 
-<small><sup id=Note8>(8)</sup> Although most electronic color displays in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or display devices.</small>
+<small><sup id=Note8>(8)</sup> Although most color display devices in the past used three dots per pixel ("red", "green", and "blue"), this may hardly be the case today.  Nowadays, recent display devices and luminaires are likely to use more than three dots per pixel &mdash; such as "red", "green", "blue", and "white", or RGBW &mdash; and ideally, color spaces following the _RGBW color model_, or similar color models, describe the intensity those dots should have in order to reproduce certain colors.  Such color spaces, though, are not yet of practical interest to most programmers outside of hardware and driver development for light-emitting diodes, luminaires, or display devices.</small>
 
 <small><sup id=Note9>(9)</sup> B. Lindbloom, "[**RGB Working Space Information**](http://www.brucelindbloom.com/index.html?WorkingSpaceInfo.html)".</small>
 
