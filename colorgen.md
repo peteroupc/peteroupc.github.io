@@ -150,19 +150,19 @@ A color can be specified in one of two ways:
     - [**HSV**](#HSV), [**HSL**](#HSL), and [**HWB**](#HWB) color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.
     - [**XYZ**](#CIE_XYZ), [**CIELAB**](#CIELAB), and [**CIELUV**](#CIELUV) color spaces are based on human color perception.
     - [**CMYK**](#CMYK_and_Other_Ink_Mixture_Color_Models) color spaces are especially used to describe proportions of four specific kinds of ink.
-    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R) color spaces are especially used in video encoding.
+    - [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) is especially used in video encoding.
 * **As a _spectral curve_**, which gives the behavior of light across the electromagnetic spectrum (see "[**Spectral Color Functions**](#Spectral_Color_Functions)").  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.
 
 <a id=RGB_Color_Model></a>
 ## RGB Color Model
 
-The **red-green-blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.
+The **red-green-blue (RGB) color model** is the most commonly seen color model in mainstream computer programming.  The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on display devices.<sup>[**(8)**](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
 
-The RGB model is ideally based on the intensity that "red", "green", and "blue" dots of light should have in order to reproduce certain colors on display devices.<sup>[**(8)**](#Note8)</sup> The RGB model is a cube with one vertex set to "black", the opposite vertex set to "white", and the remaining vertices set to "red", "green", "blue", "cyan", "yellow", and "magenta".
+**RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue".
 
-**RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue".  Often, each component is 0 or greater and 1 or less. (In this document, this format is called the  **0-1 format** and all RGB colors are in this format unless noted otherwise.)
+**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_, which ranges from fully transparent to fully opaque). Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque.
 
-**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque (so with an implicit alpha component of 1).
+**0-1 format.** In this document, an RGB or RGBA color is in the **0-1 format** if all its components are 0 or greater and 1 or less.  This document understands all RGB and RGBA colors to be in this format unless noted otherwise.
 
 <a id=RGB_Color_Spaces></a>
 ### RGB Color Spaces
@@ -678,7 +678,7 @@ The following summarizes the transformations needed to convert a color from (rel
 
 1. An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white point (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(18)**](#Note18)</sup>.
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
-3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R) or another form.  This can be left out.
+3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) or another form.  This can be left out.
 4. The final color form is serialized into a binary, text, or other representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
 
 The corresponding conversions to XYZ are then the inverse of the conversions just given.

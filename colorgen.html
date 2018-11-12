@@ -216,7 +216,7 @@
 <li><a href="#HSV"><strong>HSV</strong></a>, <a href="#HSL"><strong>HSL</strong></a>, and <a href="#HWB"><strong>HWB</strong></a> color spaces transform RGB colors to make their presentation more intuitive, but are not perception-based.</li>
 <li><a href="#CIE_XYZ"><strong>XYZ</strong></a>, <a href="#CIELAB"><strong>CIELAB</strong></a>, and <a href="#CIELUV"><strong>CIELUV</strong></a> color spaces are based on human color perception.</li>
 <li><a href="#CMYK_and_Other_Ink_Mixture_Color_Models"><strong>CMYK</strong></a> color spaces are especially used to describe proportions of four specific kinds of ink.</li>
-<li><a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> color spaces are especially used in video encoding.</li>
+<li><a href="#Y_prime_C_B_C_R_and_Other_Video_Color_Formats"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> is especially used in video encoding.</li>
 </ul></li>
 <li><strong>As a <em>spectral curve</em></strong>, which gives the behavior of light across the electromagnetic spectrum (see &quot;<a href="#Spectral_Color_Functions"><strong>Spectral Color Functions</strong></a>&quot;).  Colors given as spectral curves, unlike colors in RGB or other color spaces, have the advantage that they are not specific to a lighting condition, whereas colors in a given color space assume a specific lighting, viewing, or printing condition.</li>
 </ul>
@@ -225,13 +225,13 @@
 
 <h2>RGB Color Model</h2>
 
-<p>The <strong>red-green-blue (RGB) color model</strong> is the most commonly seen color model in mainstream computer programming.</p>
+<p>The <strong>red-green-blue (RGB) color model</strong> is the most commonly seen color model in mainstream computer programming.  The RGB model is ideally based on the intensity that &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; dots of light should have in order to reproduce certain colors on display devices.<sup><a href="#Note8"><strong>(8)</strong></a></sup> The RGB model is a cube with one vertex set to &quot;black&quot;, the opposite vertex set to &quot;white&quot;, and the remaining vertices set to &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;cyan&quot;, &quot;yellow&quot;, and &quot;magenta&quot;.</p>
 
-<p>The RGB model is ideally based on the intensity that &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; dots of light should have in order to reproduce certain colors on display devices.<sup><a href="#Note8"><strong>(8)</strong></a></sup> The RGB model is a cube with one vertex set to &quot;black&quot;, the opposite vertex set to &quot;white&quot;, and the remaining vertices set to &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;cyan&quot;, &quot;yellow&quot;, and &quot;magenta&quot;.</p>
+<p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;.</p>
 
-<p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;.  Often, each component is 0 or greater and 1 or less. (In this document, this format is called the  <strong>0-1 format</strong> and all RGB colors are in this format unless noted otherwise.)</p>
+<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which ranges from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque.</p>
 
-<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which is 0 greater and 1 or less (from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque (so with an implicit alpha component of 1).</p>
+<p><strong>0-1 format.</strong> In this document, an RGB or RGBA color is in the <strong>0-1 format</strong> if all its components are 0 or greater and 1 or less.  This document understands all RGB and RGBA colors to be in this format unless noted otherwise.</p>
 
 <p><a id=RGB_Color_Spaces></a></p>
 
@@ -821,7 +821,7 @@ END METHOD
 <ol>
 <li>An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s red, green, blue, and white point (see the methods in the previous section), but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 <li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
-<li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
+<li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R_and_Other_Video_Color_Formats"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
 <li>The final color form is serialized into a binary, text, or other representation (see also &quot;<a href="#Representing_RGB_Colors"><strong>Representing RGB Colors</strong></a>&quot;).</li>
 </ol>
 
