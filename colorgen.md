@@ -1248,7 +1248,7 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
 
 The **nearest color algorithm** is used, for example, to categorize colors or to reduce the number of colors used by an image.
 
-In the pseudocode below,the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors, all in the same color space as `color`.  `NearestColorIndex` is independent of color model.
+In the pseudocode below, the method `NearestColorIndex` finds, for a given color (`color`), the index of the color nearest it in a given list (`list`) of colors, all in the same color space as `color`.  `NearestColorIndex` is independent of color model.
 
     METHOD NearestColorIndex(color, list)
        if size(list) == 0: return error
