@@ -114,7 +114,7 @@ Unfortunately, most popular programming languages today&mdash;
 - seed RNGs with a timestamp by default (such as the [**.NET Framework implementation of `System.Random`**](https://docs.microsoft.com/dotnet/api/system.random)), and/or
 - use fixed seeds by default in their RNGs (as is the case in [**MATLAB**](https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html) and C; see also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_),
 
-so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.  This is why this document includes a more rigorous definition of RNGs, and also suggests [**existing RNGs**](#Existing_RNG_APIs_in_Programming_Languages) an application could consider using.
+so that as a result, many applications use RNGs, especially built-in RNGs, that have little assurance of high quality or security.  That is why this document includes a more rigorous definition of RNGs, and also suggests [**existing RNGs**](#Existing_RNG_APIs_in_Programming_Languages) an application could consider using.
 
 <a id=Cryptographic_RNGs></a>
 ## Cryptographic RNGs
