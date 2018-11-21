@@ -665,7 +665,7 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 > **Notes:**
 >
 > 1. In the pseudocode just given, 3x3 matrices are used to transform a linear RGB color to or from XYZ form.  The matrix shown in `XYZTosRGB` or `XYZTosRGBD50` is the [**inverse of the matrix**](http://peteroupc.github.io/html3dutil/tutorial-matrixdetails.html#Matrix_Inversions) shown in `XYZFromsRGB` or `XYZFromsRGBD50`, respectively.<sup>[**(18)**](#Note18)</sup>
-> 2. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, each component of the sRGB color can be clamped to be in range using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
+> 2. `XYZTosRGB` and `XYZTosRGBD50` can return sRGB colors with components less than 0 or greater than 1, to make out-of-range XYZ colors easier to identify.  If that is not desired, then the sRGB color can be converted to an in-range one. There are many such _gamut mapping_ conversions; for example, one such conversion involves clamping each component of the sRGB color using the idiom `min(max(compo,0), 1)`, where `compo` is that component.
 > 3. XYZ colors that have undergone **black point compensation** (see also ISO 18619) can be expressed as `Lerp3(wpoint, xyz, (1.0 - blackDest) / (1.0 - blackSrc))`, where&mdash;
 >     - `wpoint` is the white point as an absolute or relative XYZ color,
 >     - `xyz` is a relative XYZ color (relative to `wpoint`), and
@@ -676,7 +676,7 @@ The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Sp
 
 The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.
 
-1. An XYZ-to-linear-RGB transform.  This is usually a matrix generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white point (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(18)**](#Note18)</sup>.
+1. An XYZ-to-linear-RGB transform.  This is usually a [**matrix**](http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html) generated using the [**RGB color space**](#RGB_Color_Spaces)'s red, green, blue, and white point (see the methods in the previous section), but can also include a [**_chromatic adaptation transform_**](https://en.wikipedia.org/wiki/Chromatic_adaptation) if the XYZ and RGB color spaces use different white points (see the `XYZFromsRGBD50` and `XYZTosRGBD50` methods above)<sup>[**(18)**](#Note18)</sup>.
 2. A linear-to-encoded-RGB transform.  This is the RGB color space's "transfer function".  This can be left out if linear RGB colors are desired.
 3. A pixel encoding transform.  This transforms the RGB color into [**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](#Y_prime_C_B_C_R_and_Other_Video_Color_Formats) or another form.  This can be left out.
 4. The final color form is serialized into a binary, text, or other representation (see also "[**Representing RGB Colors**](#Representing_RGB_Colors)").
