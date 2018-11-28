@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 6, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 24, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -564,10 +564,10 @@ END METHOD
 
 <ul>
 <li>Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and <code>bash</code> (a shell script interpreter) might support a variable which returns a random integer in the interval [0, 32767] (called <code>%RANDOM%</code> and <code>$RANDOM</code>, respectively); neither variable is designed for information security.</li>
-<li>Standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note7"><strong>(7)</strong></a></sup></li>
+<li>Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup><a href="#Note7"><strong>(7)</strong></a></sup></li>
 </ul>
 
-<p>Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than SQL, shell scripts, and batch files, especially if information security is a goal.</p>
+<p>Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.</p>
 
 <p><a id=Randomization_Techniques></a></p>
 

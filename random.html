@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Nov. 14, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Nov. 28, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -412,7 +412,7 @@
 
 <ol>
 <li>Online services that make random numbers available to applications, as well as outputs of audio and video devices (see RFC 4086 sec. 3.2.1), are additional nondeterministic sources.  However, online services require Internet or other network access, and some of them require access credentials.  Also, many mobile operating systems require applications to declare network, camera, and microphone access to users upon installation.  For these reasons, these kinds of sources are NOT RECOMMENDED if other approaches are adequate.</li>
-<li>For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.</li>
+<li>For noncryptographic RNGs, timestamps from the system clock are commonly used.  Timestamps with millisecond or coarser granularity are not encouraged, however, because multiple instances of a PRNG automatically seeded with a timestamp, when they are created at about the same time, run the risk of starting with the same seed and therefore generating the same sequence of random numbers.<sup><a href="#Note23"><strong>(23)</strong></a></sup></li>
 <li>For general-purpose use, nondeterministic sources that enable many high-quality seeds per second to be generated are highly advantageous, especially for a cryptographic RNG.</li>
 </ol>
 </blockquote>
@@ -541,7 +541,7 @@
 </ul></li>
 </ul>
 
-<p>(Many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new RNG instance each time a random number is needed, rather than only once in the application.  This is notably the case with the .NET generator <code>System.Random</code>.)</p>
+<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup> goes in greater detail on how to initialize PRNGs for parallel random number generation, including how to ensure repeatable &quot;randomness&quot; this way if that is desired.</p>
 
 <p><a id=Shuffling></a></p>
 
@@ -582,6 +582,8 @@
 <p>In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves), so random number generators for such environments are often designed as <a href="#Hash_Functions"><strong>hash functions</strong></a>, because their output is determined solely by the input rather than both the input and state (as with PRNGs).</p>
 
 <p>However, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.</p>
+
+<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note25"><strong>(25)</strong></a></sup> discusses parallel generation of random numbers using PRNGs, especially on GPUs.</p>
 
 <p><a id=Hash_Functions></a></p>
 
@@ -745,6 +747,12 @@
 <p><small><sup id=Note21>(21)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note22>(22)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note23>(23)</sup> For example, many questions on <em>Stack Overflow</em> highlight the pitfalls of creating a new instance of .NET&#39;s <code>System.Random</code> instances each time a random number is needed, rather than only once in the application.  See also the section &quot;How to Initialize RNGs&quot;.</small></p>
+
+<p><small><sup id=Note24>(24)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
+
+<p><small><sup id=Note25>(25)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
 
 <p><a id=Appendix></a></p>
 
