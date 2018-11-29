@@ -532,16 +532,16 @@
 
 <ul>
 <li>one thread-safe instance of an RNG for the entire application to use, or</li>
-<li>one instance of an RNG for each thread of the application, where each instance&mdash;
+<li>one or more instances of an RNG, where each instance&mdash;
 
 <ul>
-<li>is accessible to only one thread (such as with thread-local storage),</li>
+<li>is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),</li>
 <li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs), and</li>
 <li>MAY use a different conforming RNG scheme from the others.</li>
 </ul></li>
 </ul>
 
-<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup> goes in greater detail on how to initialize PRNGs for parallel random number generation, including how to ensure repeatable &quot;randomness&quot; this way if that is desired.</p>
+<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, section 4, goes in greater detail on how to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable &quot;randomness&quot; this way if that is desired.</p>
 
 <p><a id=Shuffling></a></p>
 

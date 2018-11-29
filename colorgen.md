@@ -24,7 +24,7 @@ This document presents an overview of many common color topics that are of gener
 - Determining which colors are used, or used by default, in user interface elements or documents.
 - Color pickers, including how to choose colors with them.
 - Specifics on setting and getting pixel, palette, and other colors in images (including screenshots) with the exception of finding dominant colors.
-- Colorization of command line outputs, or terminal or shell outputs. [**ANSI graphic codes**](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.
+- Colorization of command line outputs, or terminal or shell outputs. [**"ANSI" graphic codes**](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.
 - In general, topics that are specific to a programming language or application programming interface.
 
 <a id=Contents></a>
@@ -160,7 +160,7 @@ The **red-green-blue (RGB) color model** is the most commonly seen color model i
 
 **RGB colors.** An RGB color consists of three components in the following order: "red", "green", "blue".
 
-**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_, which ranges from fully transparent to fully opaque). Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque.
+**RGBA colors.** Some RGB colors also contain a fourth component, called the _alpha component_, which ranges from fully transparent to fully opaque. Such RGB colors are called _RGBA colors_ in this document.  RGB colors without an alpha component are generally considered fully opaque.
 
 **0-1 format.** In this document, an RGB or RGBA color is in the **0-1 format** if all its components are 0 or greater and 1 or less.  This document understands all RGB and RGBA colors to be in this format unless noted otherwise.
 
@@ -173,7 +173,7 @@ There are many **RGB color spaces**, not just one, and they generally differ in 
 
 - **"Transfer function".** This is a function used to convert, component by component, a so-called **_linear RGB_** color to an **_encoded RGB_ (_R&prime;G&prime;B&prime;_)** color in the same color space.  Examples include the sRGB transfer function given [**later**](#sRGB); _gamma_ functions such as _c_<sup>1/_&gamma;_</sup>, where _c_ is the red, green, or blue component and _&gamma;_ is a positive number; and the PQ and HLG functions.
 
-In this document, the only RGB color space described in detail is [**sRGB**](#sRGB), and converting between RGB color spaces is not covered.  (Lindbloom)<sup>[**(9)**](#Note9)</sup> contains further information on many RGB color spaces.
+In this document, the only RGB color space described in detail is [**sRGB**](#sRGB).  (Lindbloom)<sup>[**(9)**](#Note9)</sup> contains further information on many RGB color spaces.
 
 > **Notes:**
 >
@@ -525,7 +525,7 @@ The conversions given below are independent of RGB color space, but should be do
 
 An RGB color can be transformed to a specialized form to improve image and video encoding.
 
-[**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a family of color formats designed for this purpose. A Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> consists of three components in the following order:
+[**Y&prime;C<sub>_B_</sub>C<sub>_R_</sub>**](https://en.wikipedia.org/wiki/YCbCr) (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a family of color formats designed for this purpose. A Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> color consists of three components in the following order:
 
 - Y&prime;, or _luma_, expresses an approximate "brightness".<sup>[**(15)**](#Note15)</sup>
 - C<sub>_B_</sub>, or _blue chroma_, is based on the difference between blue and luma.

@@ -362,7 +362,7 @@ For statistical and seeded RNGs, to **reduce the chance of correlated random num
     - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
     - MAY use a different conforming RNG scheme from the others.
 
-(L'Ecuyer et al. 2015)<sup>[**(18)**](#Note18)</sup> goes in greater detail on how to initialize PRNGs for parallel random number generation, including how to ensure repeatable "randomness" this way if that is desired.
+(L'Ecuyer et al. 2015)<sup>[**(18)**](#Note18)</sup>, section 4, goes in greater detail on how to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
 
 <a id=Shuffling></a>
 ### Shuffling
