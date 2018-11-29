@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 24, 2018.
+Begun on June 4, 2017; last updated on Nov. 28, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -11,7 +11,7 @@ Discusses many ways applications can do random number generation and sampling fr
 
 This page discusses many ways applications can do random number generation and sampling from an underlying random number generator (RNG), often with pseudocode. Those methods include&mdash;
 - ways to generate uniform random numbers from an underlying RNG (such as the [**core method, `RNDINT(N)`**](#Core_Random_Generation_Method)),
-- ways to generate randomized content and conditions, such as [**Boolean conditions**](#Boolean_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
+- ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - generating non-uniform random numbers, including [**weighted choice**](#Discrete_Weighted_Choice), the [**normal distribution**](#Normal_Gaussian_Distribution), and [**other probability distributions**](#Other_Non_Uniform_Distributions).
 
 [**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available.
@@ -55,7 +55,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Uniform Random Bits**](#Uniform_Random_Bits)
     - [**Certain Programming Environments**](#Certain_Programming_Environments)
 - [**Randomization Techniques**](#Randomization_Techniques)
-    - [**Boolean Conditions**](#Boolean_Conditions)
+    - [**Boolean (True/False) Conditions**](#Boolean_True_False_Conditions)
     - [**Shuffling**](#Shuffling)
     - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
         - [**Example: Random Character Strings**](#Example_Random_Character_Strings)
@@ -467,8 +467,8 @@ Whenever possible, the methods in this document should be implemented in a more 
 
 This section describes commonly used randomization techniques, such as shuffling, selection of several unique items, and creating random strings of text.
 
-<a id=Boolean_Conditions></a>
-### Boolean Conditions
+<a id=Boolean_True_False_Conditions></a>
+### Boolean (True/False) Conditions
 
 To generate a condition that is true at the specified probabilities, use
 the following idioms in an `if` condition:

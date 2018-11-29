@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Nov. 24, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Nov. 28, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -18,7 +18,7 @@
 
 <ul>
 <li>ways to generate uniform random numbers from an underlying RNG (such as the <a href="#Core_Random_Generation_Method"><strong>core method, <code>RNDINT(N)</code></strong></a>),</li>
-<li>ways to generate randomized content and conditions, such as <a href="#Boolean_Conditions"><strong>Boolean conditions</strong></a>, <a href="#Shuffling"><strong>shuffling</strong></a>, and <a href="#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>sampling unique items from a list</strong></a>, and</li>
+<li>ways to generate randomized content and conditions, such as <a href="#Boolean_True_False_Conditions"><strong>true/false conditions</strong></a>, <a href="#Shuffling"><strong>shuffling</strong></a>, and <a href="#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>sampling unique items from a list</strong></a>, and</li>
 <li>generating non-uniform random numbers, including <a href="#Discrete_Weighted_Choice"><strong>weighted choice</strong></a>, the <a href="#Normal_Gaussian_Distribution"><strong>normal distribution</strong></a>, and <a href="#Other_Non_Uniform_Distributions"><strong>other probability distributions</strong></a>.</li>
 </ul>
 
@@ -82,7 +82,7 @@
 <li><a href="#Randomization_Techniques"><strong>Randomization Techniques</strong></a>
 
 <ul>
-<li><a href="#Boolean_Conditions"><strong>Boolean Conditions</strong></a></li>
+<li><a href="#Boolean_True_False_Conditions"><strong>Boolean (True/False) Conditions</strong></a></li>
 <li><a href="#Shuffling"><strong>Shuffling</strong></a></li>
 <li><a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>Sampling With Replacement: Choosing a Random Item from a List</strong></a>
 
@@ -575,9 +575,9 @@ END METHOD
 
 <p>This section describes commonly used randomization techniques, such as shuffling, selection of several unique items, and creating random strings of text.</p>
 
-<p><a id=Boolean_Conditions></a></p>
+<p><a id=Boolean_True_False_Conditions></a></p>
 
-<h3>Boolean Conditions</h3>
+<h3>Boolean (True/False) Conditions</h3>
 
 <p>To generate a condition that is true at the specified probabilities, use
 the following idioms in an <code>if</code> condition:</p>
