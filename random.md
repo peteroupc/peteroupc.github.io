@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Nov. 28, 2018.
+Begun on Mar. 5, 2016; last updated on Nov. 29, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -353,16 +353,16 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 <a id=How_to_Initialize_RNGs></a>
 ### How to Initialize RNGs
 
-For cryptographic RNGs, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.
+For **cryptographic RNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.
 
-For statistical and seeded RNGs, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create&mdash;
-- one thread-safe instance of an RNG for the entire application to use, or
-- one or more instances of an RNG, where each instance&mdash;
+For **statistical RNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one RNG instance for each thread, as described below for seeded PRNGs.)
+
+For **seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
     - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
     - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
     - MAY use a different conforming RNG scheme from the others.
 
-(L'Ecuyer et al. 2015)<sup>[**(18)**](#Note18)</sup>, section 4, goes in greater detail on how to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
+(L'Ecuyer et al. 2015)<sup>[**(18)**](#Note18)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
 
 <a id=Shuffling></a>
 ### Shuffling

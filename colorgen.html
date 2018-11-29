@@ -35,7 +35,7 @@
 <li>Determining which colors are used, or used by default, in user interface elements or documents.</li>
 <li>Color pickers, including how to choose colors with them.</li>
 <li>Specifics on setting and getting pixel, palette, and other colors in images (including screenshots) with the exception of finding dominant colors.</li>
-<li>Colorization of command line outputs, or terminal or shell outputs. <a href="https://peteroupc.github.io/suppcolor.html#Terminal_Graphics"><strong>ANSI graphic codes</strong></a> are discussed elsewhere.</li>
+<li>Colorization of command line outputs, or terminal or shell outputs. <a href="https://peteroupc.github.io/suppcolor.html#Terminal_Graphics"><strong>&quot;ANSI&quot; graphic codes</strong></a> are discussed elsewhere.</li>
 <li>In general, topics that are specific to a programming language or application programming interface.</li>
 </ul>
 
@@ -229,7 +229,7 @@
 
 <p><strong>RGB colors.</strong> An RGB color consists of three components in the following order: &quot;red&quot;, &quot;green&quot;, &quot;blue&quot;.</p>
 
-<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which ranges from fully transparent to fully opaque). Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque.</p>
+<p><strong>RGBA colors.</strong> Some RGB colors also contain a fourth component, called the <em>alpha component</em>, which ranges from fully transparent to fully opaque. Such RGB colors are called <em>RGBA colors</em> in this document.  RGB colors without an alpha component are generally considered fully opaque.</p>
 
 <p><strong>0-1 format.</strong> In this document, an RGB or RGBA color is in the <strong>0-1 format</strong> if all its components are 0 or greater and 1 or less.  This document understands all RGB and RGBA colors to be in this format unless noted otherwise.</p>
 
@@ -244,7 +244,7 @@
 <li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
 </ul>
 
-<p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>, and converting between RGB color spaces is not covered.  (Lindbloom)<sup><a href="#Note9"><strong>(9)</strong></a></sup> contains further information on many RGB color spaces.</p>
+<p>In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>.  (Lindbloom)<sup><a href="#Note9"><strong>(9)</strong></a></sup> contains further information on many RGB color spaces.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -640,7 +640,7 @@ END METHOD
 
 <p>An RGB color can be transformed to a specialized form to improve image and video encoding.</p>
 
-<p><a href="https://en.wikipedia.org/wiki/YCbCr"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a family of color formats designed for this purpose. A Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> consists of three components in the following order:</p>
+<p><a href="https://en.wikipedia.org/wiki/YCbCr"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> (also known as YCbCr, YCrCb, or  Y&prime;CrCb) is a family of color formats designed for this purpose. A Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub> color consists of three components in the following order:</p>
 
 <ul>
 <li>Y&prime;, or <em>luma</em>, expresses an approximate &quot;brightness&quot;.<sup><a href="#Note15"><strong>(15)</strong></a></sup></li>

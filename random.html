@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Nov. 28, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Nov. 29, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -526,22 +526,16 @@
 
 <h3>How to Initialize RNGs</h3>
 
-<p>For cryptographic RNGs, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.</p>
+<p>For <strong>cryptographic RNGs</strong>, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.</p>
 
-<p>For statistical and seeded RNGs, to <strong>reduce the chance of correlated random numbers or identical random number sequences</strong>, an application is encouraged to create&mdash;</p>
+<p>For <strong>statistical RNGs</strong>, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one RNG instance for each thread, as described below for seeded PRNGs.)</p>
 
-<ul>
-<li>one thread-safe instance of an RNG for the entire application to use, or</li>
-<li>one or more instances of an RNG, where each instance&mdash;
+<p>For <strong>seeded PRNGs</strong>, to <strong>reduce the chance of correlated random numbers or identical random number sequences</strong>, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
+    - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
+    - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs), and
+    - MAY use a different conforming RNG scheme from the others.</p>
 
-<ul>
-<li>is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),</li>
-<li>is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause <a href="https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/"><strong>undesirable correlations</strong></a> in some PRNGs), and</li>
-<li>MAY use a different conforming RNG scheme from the others.</li>
-</ul></li>
-</ul>
-
-<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, section 4, goes in greater detail on how to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable &quot;randomness&quot; this way if that is desired.</p>
+<p>(L&#39;Ecuyer et al. 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable &quot;randomness&quot; this way if that is desired.</p>
 
 <p><a id=Shuffling></a></p>
 
