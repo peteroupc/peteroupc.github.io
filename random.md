@@ -11,8 +11,8 @@ Most apps that use random numbers care about either unpredictability, speed/high
 
 Many applications rely on random number generators (RNGs); these RNGs include&mdash;
 
-- _statistical RNGs_, which seek to generate numbers that follow a uniform random distribution,
-- _cryptographic RNGs_, which seek to generate numbers that are cost-prohibitive to predict, and
+- _cryptographic RNGs_, which seek to generate numbers that are cost-prohibitive to predict,
+- _statistical RNGs_, which seek to generate numbers that follow a uniform random distribution, and
 - _seeded PRNGs_ (pseudorandom number generators), which generate numbers that "seem" random given an initial "seed".
 
 A distinction between _statistical_ and _cryptographic_ RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as `java.security.SecureRandom`).  However, for many programming languages, the built-in RNG offers little assurance of quality.
@@ -358,9 +358,9 @@ For **cryptographic RNGs**, an application SHOULD use only one thread-safe insta
 For **statistical RNGs**, an application SHOULD use only one thread-safe instance of the RNG for the entire application to use.  (If doing so is a performance bottleneck for the application and a PRNG is used, the application MAY instead create one RNG instance for each thread, as described below for seeded PRNGs.)
 
 For **seeded PRNGs**, to **reduce the chance of correlated random numbers or identical random number sequences**, an application is encouraged to create one or more instances of a PRNG, where each instance&mdash;
-    - is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
-    - is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
-    - MAY use a different conforming RNG scheme from the others.
+- is accessible to only one thread, task, or subtask of the application (such as with thread-local storage),
+- is initialized with a seed that is unrelated to the other seeds (using sequential or linearly related seeds can cause [**undesirable correlations**](https://blogs.unity3d.com/2015/01/07/a-primer-on-repeatable-random-numbers/) in some PRNGs), and
+- MAY use a different conforming RNG scheme from the others.
 
 (L'Ecuyer et al. 2015)<sup>[**(18)**](#Note18)</sup>, section 4, goes in greater detail on ways to initialize PRNGs for generating random numbers in parallel, including how to ensure repeatable "randomness" this way if that is desired.
 
