@@ -178,7 +178,7 @@ In this document, the only RGB color space described in detail is [**sRGB**](#sR
 > **Notes:**
 >
 > 1. In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.
-> 2. In the TV and film industries, some RGB color spaces, including sRGB, belong in the category of so-called _standard dynamic range_ (_SDR_) color spaces, while others cover a wider range of colors (_wide color gamut_ or _WCG_), a wider luminance range (_high dynamic range_ or _HDR_), or both. (Mano 2018)<sup>[**(10)**](#Note10)</sup> contains an introduction to WCG/HDR images.
+> 2. In the TV and film industries, some RGB color spaces, including sRGB, belong in the category of so-called _standard dynamic range_ (_SDR_) color spaces, while others cover a wider range of colors (_wide color gamut_ or _WCG_), a wider "brightness" range (_high dynamic range_ or _HDR_), or both. (Mano 2018)<sup>[**(10)**](#Note10)</sup> contains an introduction to WCG/HDR images.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.
 > 3. RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc _encoded RGB_ colors.
 
 <a id=sRGB></a>
@@ -598,7 +598,7 @@ The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB 
 > **Notes:**
 >
 > 1. This document does not seek to survey the various ways in which Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> and similar colors are built up into pixels in images and video.  In general, such ways take into account the human eye's normally greater spatial sensitivity to luminance (e.g., Y, as approximated by Y&prime;, luma) than chromatic sensitivity (e.g., C<sub>_B_</sub>, C<sub>_R_</sub>).
-> 2. The [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020) standard defines a color format, commonly called "BT.2020 constant luminance", for encoding ultra-high-definition video.  In converting to this color format, _linear RGB_ colors are used rather than _encoded RGB_ colors; in exchange, the [**RGB color space**](#RGB_Color_Spaces)'s "transfer function" is applied to the "Yc" ("brightness") component of the converted color form. However, "BT.2020 constant luminance" is not yet of general interest to programmers.
+> 2. Other video color formats include "BT.2020 constant luminance", in [**Rec. 2020**](https://en.wikipedia.org/wiki/Rec._2020), and IC<sub>_T_</sub>C<sub>_P_</sub>, mentioned in Rep. 2390-4.  Both formats are not detailed here.
 
 <a id=Other_Color_Models></a>
 ## Other Color Models
