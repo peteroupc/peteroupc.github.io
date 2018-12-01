@@ -156,6 +156,7 @@
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat">RemainderNaturalScale(PeterO.Numbers.EFloat)</a></code> - Calculates the remainder of a number by the formula&quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;)</li>
 <li><code><a href="#RemainderNaturalScale_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNaturalScale(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Calculates the remainder of a number by the formula &quot;this&quot; - ((&quot;this&quot; / &quot;divisor&quot;) * &quot;divisor&quot;).</li>
 <li><code><a href="#RemainderNear_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNear(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the distance to the closest multiple of the given divisor, based on the result of dividing this object&#39;s value by another object&#39;s value.</li>
+<li><code><a href="#RemainderNoRoundAfterDivide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">RemainderNoRoundAfterDivide(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EFloat_PeterO_Numbers_EContext">Remainder(PeterO.Numbers.EFloat, PeterO.Numbers.EContext)</a></code> - Finds the remainder that results when dividing two arbitrary-precision binary floats.</li>
 <li><code><a href="#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_EContext">RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.EContext)</a></code> - Returns a binary float with the same value as this object but rounded to the given exponent, and signals an inexact flag if the result would be inexact.</li>
 <li><code><a href="#RoundToExponentExact_PeterO_Numbers_EInteger_PeterO_Numbers_ERounding">RoundToExponentExact(PeterO.Numbers.EInteger, PeterO.Numbers.ERounding)</a></code> - Returns a binary number with the same value as this object but rounded to the given exponent.</li>
@@ -2739,6 +2740,29 @@ is an EContext object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>The distance of the closest multiple. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or either the result of integer division (the quotient) or the remainder wouldn&#39;t fit the given precision.</p>
+
+<p><a id="RemainderNoRoundAfterDivide_PeterO_Numbers_EFloat_PeterO_Numbers_EContext"></a></p>
+
+<h3>RemainderNoRoundAfterDivide</h3>
+
+<pre>public PeterO.Numbers.EFloat RemainderNoRoundAfterDivide(
+    PeterO.Numbers.EFloat divisor,
+    PeterO.Numbers.EContext ctx);
+</pre>
+
+<p>Finds the remainder that results when dividing two arbitrary-precision binary floats. The remainder is the value that remains when the absolute value of this object is divided by the absolute value of the other object; the remainder has the same sign (positive or negative) as this object&#39;s value.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>divisor</i>: An arbitrary-precision binary floating-point number.</p></li>
+<li><p><i>ctx</i>: The parameter <i>ctx</i>
+is an EContext object.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The remainder of the two numbers. Signals FlagInvalid and returns not-a-number (NaN) if the divisor is 0, or if the result doesn&#39;t fit the given precision.</p>
 
 <p><a id="RoundToExponent_int_PeterO_Numbers_EContext"></a></p>
 

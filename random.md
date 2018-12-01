@@ -324,7 +324,7 @@ As much as possible, **applications SHOULD use existing libraries and techniques
 | PHP (A) | `random_int()`, `random_bytes()` (both since PHP 7) |  |
 | Go | `crypto/rand` package |  |
 
-<small>(A) The general RNGs of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random`, `MT19937_64Random` classes that implement Mersenne Twister.</small>
+<small>(A) The general RNGs of Python and Ruby implement [**Mersenne Twister**](https://en.wikipedia.org/wiki/Mersenne_Twister), which is not preferred for a statistical RNG.  PHP's `mt_rand()` implements or implemented a flawed version of Mersenne Twister. `prngine`, a Java library, also has `MT19937_32Random` and `MT19937_64Random` classes that implement Mersenne Twister.</small>
 
 <small>(B) JavaScript's `Math.random()` (which ranges from 0 to 1 exclusive) is implemented using `xorshift128+` (or a variant) in the V8 engine, Firefox, and certain other modern browsers as of late 2017; `Math.random()` uses an "implementation-dependent algorithm or strategy", though (see ECMAScript sec. 20.2.2.27).</small>
 
