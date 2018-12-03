@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Nov. 29, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Dec. 1, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -29,7 +29,7 @@
 <ul>
 <li>Statistical and cryptographic RNGs, as well as recommendations on their use and properties.</li>
 <li>A discussion on when an application that needs numbers that &quot;seem&quot; random SHOULD specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
-<li>Nondeterministic RNGs, entropy, and seed generation.</li>
+<li>Nondeterministic sources, entropy, and seed generation.</li>
 <li>An explanation of how to implement RNGs in programming code, including APIs that help in doing so.</li>
 <li>Issues on shuffling with an RNG.</li>
 </ul>
@@ -159,10 +159,7 @@
 <li><strong>Pseudorandom number generator (PRNG).</strong> A random number generator that outputs seemingly random numbers using a deterministic algorithm (that is, an algorithm that returns the same output for the same input and state every time), and in which its state can be initialized and possibly reinitialized with arbitrary data.</li>
 <li><strong>Seed.</strong>  Arbitrary data for initializing the state of a PRNG.</li>
 <li><strong>State length.</strong>  The maximum size of the seed a PRNG can take to initialize its state without shortening or compressing that seed.</li>
-<li><strong>Period.</strong> The maximum number of values in a generated sequence for a PRNG before that sequence repeats.  The period will not be greater than 2<sup><em>L</em></sup> where <em>L</em> is the PRNG&#39;s <em>state length</em>.</li>
-<li><strong>Stable.</strong> A programming interface is <em>stable</em> if it has no behavior that is unspecified, implementation-dependent, nondeterministic, or subject to future change.</li>
 <li><strong>Information security.</strong> Defined in ISO/IEC 27000.</li>
-<li><strong>Nondeterministic source.</strong> Data source that does not always return the same output for the same input.</li>
 <li><strong>MUST, SHOULD, SHOULD NOT, MAY, RECOMMENDED, NOT RECOMMENDED.</strong>  As defined in RFC 2119 and RFC 8174.</li>
 </ul>
 
@@ -209,7 +206,7 @@
 <ul>
 <li>The <code>/dev/urandom</code> device on many Unix-based operating systems<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</li>
 <li>The <code>BCryptGenRandom</code> method in Windows 7 and later.</li>
-<li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more nondeterministic sources as input.</li>
+<li>Two-source extractors, multi-source extractors, or cryptographic <a href="#Hash_Functions"><strong>hash functions</strong></a> that take very hard-to-predict signals from two or more <a href="#Nondeterministic_Sources"><strong>nondeterministic sources</strong></a> as input.</li>
 <li>A &quot;fast-key-erasure&quot; random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</li>
 <li>An RNG implementation complying with NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of the &quot;Cryptographic RNGs&quot; section.</li>
 </ul>
@@ -294,13 +291,11 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> Meeting statement 3 is aided by using <em>stable</em> PRNGs; see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a> and the following examples:</p>
+<p><strong>Note:</strong> Meeting statement 3 is aided by using documented PRNGs with implementation-independent behavior that will not change in the future.  An example is <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a>.  On the other hand, the following are non-examples:</p>
 
 <ul>
-<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Random.html"><strong><code>java.util.Random</code></strong></a> is stable.</li>
-<li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a> is not stable (because the algorithm it uses is unspecified).</li>
-<li>C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, are not stable (because the algorithms they use are implementation-defined according to the specification).</li>
-<li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> is not stable (because its generation behavior could change in the future).</li>
+<li>The C <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong><code>rand</code> method</strong></a>, as well as C++&#39;s random number distribution classes, such as <a href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution"><strong><code>std::uniform_int_distribution</code></strong></a>, use implementation-defined algorithms for random number generation.</li>
+<li>.NET&#39;s <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong><code>System.Random</code></strong></a> has random number generation behavior that could change in the future.</li>
 </ul>
 </blockquote>
 
@@ -374,7 +369,7 @@
 <p><em>Noise</em> is a randomized variation in images, sound, and other data.  (See also Red Blob Games, <a href="http://www.redblobgames.com/articles/noise/introduction.html"><strong>&quot;Noise Functions and Map Generation&quot;</strong></a>).  For the purposes of RNG recommendations, there are two kinds of noise:</p>
 
 <ol>
-<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note11"><strong>(11)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  As much as possible, procedural noise implementations SHOULD <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  If using a <a href="#When_to_Use_a_Seeded_PRNG"><strong>custom-seeded PRNG</strong></a> is appropriate for the application, the additional data MAY be <strong>&quot;hard-coded&quot;</strong> instead.  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function SHOULD be reasonably fast, be <em>stable</em> (see <a href="#Definitions"><strong>&quot;Definitions&quot;</strong></a>), and have the so-called <em>avalanche property</em>.</p></li>
+<li><p><strong><em>Procedural noise</em></strong> is generated using a <em>noise function</em>, which is a function that outputs seemingly random numbers given an <em>n</em>-dimensional point and, optionally, additional data (such as gradients or hash values).<sup><a href="#Note11"><strong>(11)</strong></a></sup>  Procedural noise includes <a href="https://en.wikipedia.org/wiki/Cellular_noise"><strong>cellular noise</strong></a>, <a href="https://en.wikipedia.org/wiki/Value_noise"><strong>value noise</strong></a>, and <a href="https://en.wikipedia.org/wiki/Gradient_noise"><strong>gradient noise</strong></a> (such as <a href="https://en.wikipedia.org/wiki/Perlin_noise"><strong>Perlin noise</strong></a>).  As much as possible, procedural noise implementations SHOULD <strong>use an RNG to generate the additional data</strong> for the noise function in advance.  If using a <a href="#When_to_Use_a_Seeded_PRNG"><strong>custom-seeded PRNG</strong></a> is appropriate for the application, the additional data MAY be <strong>&quot;hard-coded&quot;</strong> instead.  If the noise function <strong>incorporates a</strong> <a href="#Hash_Functions"><strong><em>hash function</em></strong></a>, that hash function SHOULD have the so-called <em>avalanche property</em>.</p></li>
 <li><p><strong><em>Nonprocedural noise</em></strong> is generated using the help of an RNG.  Nonprocedural noise includes <a href="https://en.wikipedia.org/wiki/Colors_of_noise"><strong>colored noise</strong></a> (including white noise and pink noise), periodic noise, and noise following a Gaussian or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>.  For nonprocedural noise, the same considerations apply to any RNGs the noise implementation uses as in cases not involving noise.</p></li>
 </ol>
 
@@ -388,7 +383,7 @@
 
 <h2>Nondeterministic Sources and Seed Generation</h2>
 
-<p>RNGs ultimately rely on nondeterministic sources to generate random numbers.  Such sources are used to help generate a <em>seed</em> for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.</p>
+<p>To generate random numbers, RNGs ultimately rely on <em>nondeterministic sources</em>, that is, sources that don&#39;t return the same output for the same input every time.  Such sources are used to help generate a <em>seed</em> for a PRNG, for example.  The best nondeterministic sources for this purpose are those whose output is very hard to predict.</p>
 
 <p><a id=Examples_of_Nondeterministic_Sources></a></p>
 
@@ -553,7 +548,7 @@
 <li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood)<sup><a href="#Note20"><strong>(20)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
 </ul>
 
-<p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
+<p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.  A PRNG&#39;s <em>period</em> is the maximum size of a &quot;random&quot; number sequence it can generate before that sequence repeats; this size is no greater than 2<sup>L</sup> where L is the PRNG&#39;s state length.)</p>
 
 <p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
 
@@ -652,7 +647,7 @@
 <li>MUST consist of data that ultimately derives from the output of one or more <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong>nondeterministic sources</strong></a> and/or cryptographic RNGs, where the output is encouraged to cover a state space of at least as many bits as the PRNG&#39;s <em>state length</em>, and</li>
 <li>MAY be mixed with arbitrary data other than the seed.</li>
 </ul></li>
-<li><p>The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be the PRNG&#39;s period&#39;s square root or less.</p></li>
+<li><p>The RNG MAY reseed itself from time to time, using a newly generated seed as described earlier.  If the RNG reseeds if it would generate more than a threshold number of values without reseeding, that threshold SHOULD be 2<sup>L</sup> or less, where <em>L</em> is the PRNG&#39;s state length.</p></li>
 </ol>
 
 <p><a id=Implementing_New_RNG_APIs></a></p>
@@ -664,7 +659,7 @@
 <ol>
 <li> The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits (see example 1).</li>
 <li> If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable &quot;randomness&quot;<sup><a href="#Note25"><strong>(25)</strong></a></sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.</li>
-<li> If the API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, that PRNG SHOULD be <em>stable</em> and documented, and so SHOULD any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation). See example 2.</li>
+<li> If the API provides a PRNG that an application can seed for repeatable &quot;randomness&quot;, it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the &quot;random&quot; numbers they deliver for a given seed. See example 2.</li>
 <li> My document on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a> includes details on ten uniform random number methods. In my opinion, a new programming language&#39;s <strong>standard library</strong> ought to include those ten methods separately for cryptographic and for statistical RNGs.</li>
 </ol>
 

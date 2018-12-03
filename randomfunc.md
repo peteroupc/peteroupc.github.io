@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Nov. 28, 2018.
+Begun on June 4, 2017; last updated on Dec. 2, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -576,26 +576,23 @@ To generate a random string of characters:
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
 
-There are several techniques for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
+There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.
-2. **If items are to be chosen in order:**
-    - **If `n` is relatively small,** then the `RandomKItemsInOrder` method, in the pseudocode below, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).
-    - **If `n` is relatively large,** see the item "If `n` is relatively large", later.
-3. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):** Do one of the following:
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen in order**, then the `RandomKItemsInOrder` method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
-4. **If `k` is much smaller than `n` and the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
-5. **If `k` is much smaller than `n` and `n` is not very large (for example, less than 5000):** Do one of the following:
-    - Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
-    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-6. **If `n - k` is much smaller than `n`, and the order in which the items are sampled need not be random:**
-     - **If the items are stored in a list whose order can be changed**, then proceed as in step 4, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
-     - Otherwise, **if `n` is not very large**, then proceed as in step 5, except the partial shuffle involves `n - k` swaps and the _first_ `k` items or indices are chosen rather than the last `k`.
-7. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup> or is `n` is otherwise very large):** Create a [**hash table**](https://en.wikipedia.org/wiki/Hash_table) storing the indices to items already chosen.  When a new index to an item is randomly chosen, check the hash table to see if it's there already.  If it's not there already, add it to the hash table.  Otherwise, choose a new random index.  Repeat this process until `k` indices were added to the hash table this way. If the items are to be chosen in order, then a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), rather than a hash table, can be used to store the indices this way; after `k` indices are added to the tree, the indices (and the items corresponding to them) can be retrieved in sorted order.
-
-Choosing several unique items as just described is also known as _sampling without replacement_.
+3. **If `k` is much smaller than `n` and the sampled items must be in random order:**
+    - **If the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
+    - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
+    - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
+    - Otherwise, see item 5.
+4. **If `n - k` is much smaller than `n` and the sampled items need not be in random or sorted order:**  Proceed as in step 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):** Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures include&mdash;
+    - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
+    - a compressed bit set (e.g, "roaring bitmap", EWAH), and
+    - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in order.
 
 The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItemsInOrder` methods referred to in this section.
 
@@ -693,14 +690,15 @@ meets certain requirements.  To implement rejection sampling:
 1. Generate the random content (such as a random number) by any method and with any distribution and range.
 2. If the content doesn't meet predetermined criteria, go to step 1.
 
-Example criteria include checking any one or more of&mdash;
+Example criteria include checking&mdash;
 - whether a random number is prime,
 - whether a random number is divisible or not by certain numbers,
 - whether a random number is not among recently chosen random numbers,
 - whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
-- whether a random string matches a regular expression, and
-- whether a random number is not included in a "blacklist" of numbers.
+- whether a random string matches a regular expression,
+- whether a random number is not included in a "blacklist" of numbers, or
+- two or more of the foregoing criteria.
 
 (KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
