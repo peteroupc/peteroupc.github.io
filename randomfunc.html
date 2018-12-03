@@ -88,6 +88,7 @@
 
 <ul>
 <li><a href="#Example_Random_Character_Strings"><strong>Example: Random Character Strings</strong></a></li>
+<li><a href="#Example_Filtering"><strong>Example: Filtering</strong></a></li>
 </ul></li>
 <li><a href="#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>Sampling Without Replacement: Choosing Several Unique Items</strong></a></li>
 <li><a href="#Choosing_a_Random_Date_Time"><strong>Choosing a Random Date/Time</strong></a></li>
@@ -655,7 +656,7 @@ END METHOD
 <p>Choosing an item this way is also known as <em>sampling with replacement</em>.</p>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
+<p><strong>Example:</strong></p>
 
 <ul>
 <li>Generating a random number in the interval [<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code> is equivalent to&mdash;
@@ -709,6 +710,21 @@ END METHOD
 <li>For a base-10 digit string, the characters can be the basic digits only.</li>
 <li>For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters &quot;A&quot; to &quot;F&quot; or &quot;a&quot; to &quot;f&quot;.</li>
 </ol>
+</blockquote>
+
+<p><a id=Example_Filtering></a></p>
+
+<h4>Example: Filtering</h4>
+
+<p>Given a list of items, if a random item is to be selected only if that item meets certain criteria, then the following procedure can be done<sup><a href="#Note22"><strong>(22)</strong></a></sup>:</p>
+
+<ul>
+<li><strong>Filtering:</strong> Create a new list consisting of items in the original list that meet those criteria, or indices to those items in the original list (see &quot;<a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a>&quot; for example criteria).</li>
+<li><strong>Sampling:</strong> Choose an item (or index) from the list created this way at random.  Multiple items (or indices) can also be chosen this way instead; see the <a href="#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>next section</strong></a>.</li>
+</ul>
+
+<blockquote>
+<p><strong>Example:</strong> If we have the list <code>[&quot;f&quot;,&quot;o&quot;,&quot;o&quot;,&quot;d&quot;]</code>, we create a list of indices to all &quot;o&quot;&#39;s starting at 0.  That list is <code>newList = [1, 2]</code>, for the second and third letters, which are &quot;o&quot;&#39;s.  Finally we choose an index from the list with <code>newList[RNDINTEXC(size(newList))]</code>.</p>
 </blockquote>
 
 <p><a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a></p>
@@ -2212,6 +2228,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note20>(20)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> See also the <em>Stack Overflow</em> question &quot;Random index of a non zero value in a numpy array&quot;.</small></p>
 
 <p><a id=Appendix></a></p>
 

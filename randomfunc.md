@@ -59,6 +59,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Shuffling**](#Shuffling)
     - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
         - [**Example: Random Character Strings**](#Example_Random_Character_Strings)
+        - [**Example: Filtering**](#Example_Filtering)
     - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
@@ -533,7 +534,7 @@ To choose a random item from a list&mdash;
 
 Choosing an item this way is also known as _sampling with replacement_.
 
-> **Notes:**
+> **Example:**
 >
 > - Generating a random number in the interval [`mn`, `mx`) in increments equal to `step` is equivalent to&mdash;
 >     - generating a list of all numbers in the interval [`mn`, `mx`) of the form `mn + step * x`, where `x >= 0` is an integer, then
@@ -572,6 +573,16 @@ To generate a random string of characters:
 > 1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
 > 2. For a base-10 digit string, the characters can be the basic digits only.
 > 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f".
+
+<a id=Example_Filtering></a>
+#### Example: Filtering
+
+Given a list of items, if a random item is to be selected only if that item meets certain criteria, then the following procedure can be done<sup>[**(22)**](#Note22)</sup>:
+
+- **Filtering:** Create a new list consisting of items in the original list that meet those criteria, or indices to those items in the original list (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
+- **Sampling:** Choose an item (or index) from the list created this way at random.  Multiple items (or indices) can also be chosen this way instead; see the [**next section**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
+
+> **Example:** If we have the list `["f","o","o","d"]`, we create a list of indices to all "o"'s starting at 0.  That list is `newList = [1, 2]`, for the second and third letters, which are "o"'s.  Finally we choose an index from the list with `newList[RNDINTEXC(size(newList))]`.
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -1850,6 +1861,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note20>(20)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note21>(21)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note22>(22)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 
 <a id=Appendix></a>
 ## Appendix
