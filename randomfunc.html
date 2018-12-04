@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 3, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Dec. 4, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -557,7 +557,7 @@ END METHOD
 
 <h3>Uniform Random Bits</h3>
 
-<p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code> is a na&iuml;ve way of generating a <strong>uniform random <code>b</code>-bit integer</strong> (with maximum 2<sup><code>b</code> - 1</sup>).</p>
+<p>The idiom <code>RNDINT((1 &lt;&lt; b) - 1)</code> is a na&iuml;ve way of generating a <strong>uniform random <code>b</code>-bit integer</strong> (with maximum 2<sup><code>b</code></sup> - 1).</p>
 
 <p>In practice, memory is usually divided into <em>bytes</em>, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to <code>RNDINT(255)</code>. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)</p>
 
@@ -688,7 +688,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
+<li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
 <li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)</li>
 <li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
 <li>Generating &quot;pronounceable&quot; words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves <em>Markov chains</em>.  A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
@@ -726,7 +726,7 @@ END METHOD
 
 <ol>
 <li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.</li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen in order</strong>, then the <code>RandomKItemsInOrder</code> method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
 
 <ul>
 <li>Store all the items in a list, <a href="#Shuffling"><strong>shuffle</strong></a> that list, then choose the first <code>k</code> items from that list.</li>
@@ -741,7 +741,7 @@ END METHOD
 <li>Otherwise, <strong>if <code>n</code> is not very large:</strong> Store all the items in a list, do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.</li>
 <li>Otherwise, see item 5.</li>
 </ul></li>
-<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the sampled items need not be in random or sorted order:</strong>  Proceed as in step 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
+<li><strong>If <code>n - k</code> is much smaller than <code>n</code> and the sampled items need not be in random order:</strong>  Proceed as in step 3, except the partial shuffle involves <code>n - k</code> swaps and the <em>first</em> <code>k</code> items are chosen rather than the last <code>k</code>.</li>
 <li><strong>Otherwise (for example, if 32-bit or larger integers will be chosen so that <code>n</code> is 2<sup>32</sup>, or if <code>n</code> is otherwise very large):</strong> Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it&#39;s not already there, or if it is, choose a new random index.  Repeat this process until <code>k</code> indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
 
 <ul>

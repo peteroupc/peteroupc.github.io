@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 3, 2018.
+Begun on June 4, 2017; last updated on Dec. 4, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -121,7 +121,7 @@ All the random number methods presented on this page are ultimately based on an 
 <a id=Uniform_Random_Numbers></a>
 ## Uniform Random Numbers
 
-This section describes how an underlying RNG can be used to generate uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
+This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
 
 * Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTRANGEEXC`.
 * Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
@@ -133,8 +133,6 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 ### `RNDINT`: Random Integers in [0, N]
 
 In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  If `RNG()` outputs integers in the interval **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup> (RNGs that output numbers in the interval \[0, 1\), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building `RNDINT` for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed, so that they can be transformed into an RNG that outputs integers instead.)
-
-&nbsp;
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -348,7 +346,7 @@ For Java's `double` and `float` (or generally, any fixed-precision binary floati
         sig = sig + (1 << (SIGBITS - 1))
         // NOTE: This multiplication should result in
         // a floating-point number; if `e` is sufficiently
-        // small, the number may underflow to 0
+        // small, the number might underflow to 0
         return sig * pow(2, e)
     END METHOD
 
@@ -451,7 +449,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
 <a id=Uniform_Random_Bits></a>
 ### Uniform Random Bits
 
-The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `b`-bit integer** (with maximum 2<sup>`b` - 1</sup>).
+The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `b`-bit integer** (with maximum 2<sup>`b`</sup> - 1).
 
 In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
@@ -559,7 +557,7 @@ To generate a random string of characters:
 
 > **Notes:**
 >
-> 1. If the list of characters is fixed, the list can be statically created at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
+> 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)
 > 3. Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
 > 4. Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
@@ -586,7 +584,7 @@ Given a list of items, if a random item is to be selected only if that item meet
 There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen in order**, then the `RandomKItemsInOrder` method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
@@ -595,11 +593,11 @@ There are several techniques (each a _sampling without replacement_) for choosin
     - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
     - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
     - Otherwise, see item 5.
-4. **If `n - k` is much smaller than `n` and the sampled items need not be in random or sorted order:**  Proceed as in step 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+4. **If `n - k` is much smaller than `n` and the sampled items need not be in random order:**  Proceed as in step 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
 5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):** Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
     - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
-    - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in order.
+    - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
 The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItemsInOrder` methods referred to in this section.
 
