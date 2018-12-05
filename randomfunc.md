@@ -59,8 +59,8 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Shuffling**](#Shuffling)
     - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
         - [**Example: Random Character Strings**](#Example_Random_Character_Strings)
-        - [**Example: Filtering**](#Example_Filtering)
     - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
+    - [**Pseudocode for Sampling With and Without Replacement**](#Pseudocode_for_Sampling_With_and_Without_Replacement)
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
@@ -530,7 +530,7 @@ An important consideration with respect to shuffling is the nature of the underl
 To choose a random item from a list&mdash;
 
 - whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
-- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in pseudocode given in a [**later section**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items) (the result will be a 1-item list or be an empty list if there are no items).
+- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement) (the result will be a 1-item list or be an empty list if there are no items).
 
 Choosing an item this way is also known as _sampling with replacement_.
 
@@ -568,23 +568,13 @@ To generate a random string of characters:
 > 2. For a base-10 digit string, the characters can be the basic digits only.
 > 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f".
 
-<a id=Example_Filtering></a>
-#### Example: Filtering
-
-Given a list of items, if a random item is to be selected only if that item meets certain criteria, then the following procedure can be done<sup>[**(10)**](#Note10)</sup>:
-
-1. **Filtering:** Create a new list consisting of items in the original list that meet those criteria, or indices to those items in the original list (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
-2. **Sampling:** Choose an item (or index) from the list created this way at random.  Multiple items (or indices) can also be chosen this way instead; see the [**next section**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
-
-> **Example:** If we have the list `["f","o","o","d"]`, we create a list of indices to all "o"'s starting at 0.  That list is `newList = [1, 2]`, for the second and third letters, which are "o"'s.  Finally we choose an index from the list with `newList[RNDINTEXC(size(newList))]`.
-
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
 
 There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
-1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method in the pseudocode below.  Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in pseudocode given later, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
+1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement).
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
@@ -599,75 +589,86 @@ There are several techniques (each a _sampling without replacement_) for choosin
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItemsInOrder` methods referred to in this section.
+<a id=Pseudocode_for_Sampling_With_and_Without_Replacement></a>
+### Pseudocode for Sampling With and Without Replacement
 
-        METHOD RandomKItemsFromFile(file, k)
-           list = NewList()
-           j = 0
-           endOfFile = false
-           while j < k
-              // The end of the file was reached, break
-              if item == nothing:
-                 endOfFile = true
-                 break
-              end
-              AddItem(list, item)
-              j = j + 1
-           end
-           i = 1 + k
-           while endOfFile == false
-              // Get the next line from the file
-              item = GetNextLine(file)
-              // The following three lines are OPTIONAL
-              // and can be used to choose only random lines
-              // in the file that meet certain criteria,
-              // expressed as MEETS_CRITERIA below.
-              // ------
-              // while item!=nothing and not MEETS_CRITERIA(file)
-              //    item=GetNextLine(file)
-              // end
-              // ------
-              // If the end of the file was reached, break
-              if item == nothing: break
-              if j < k // phase 1 (fewer than k items)
-                AddItem(list, item)
-                j = j + 1
-              else // phase 2
-                j = RNDINTEXC(i)
-                if j < k: list[j] = item
-                i = i + 1
-              end
-           end
-           // We shuffle at the end in case k or fewer
-           // lines were in the file, since in that
-           // case the items would appear in the same
-           // order as they appeared in the file
-           // if the list weren't shuffled.  This line
-           // can be removed, however, if the items
-           // in the returned list need not appear
-           // in random order.
-           Shuffle(list)
-           return list
+The following pseudocode implements two methods:
+
+1. `RandomKItemsFromFile` chooses up to _K_ random items from a file of unknown size. Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how `RandomKItemsFromFile` can be used to choose an item at random only if it meets certain criteria (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
+2. `RandomKItemsInOrder` returns a list of up to _K_ random items from the given list, in the order in which they appeared in the list.
+
+&nbsp;
+
+    METHOD RandomKItemsFromFile(file, k)
+      list = NewList()
+      j = 0
+      index = 0
+      while true
+        // Get the next line from the file
+        item = GetNextLine(file)
+        // NOTE 1: The following three lines are OPTIONAL
+        // and can be used to choose only random lines
+        // in the file that meet certain criteria,
+        // expressed as MEETS_CRITERIA below.
+        // ------
+        // while item!=nothing and not MEETS_CRITERIA(item)
+        //    item=GetNextLine(item)
+        // end
+        // ------
+        // If the end of the file was reached, break
+        if item == nothing: break
+        if j < k // phase 1 (fewer than k items)
+          AddItem(list, item)
+          // NOTE 2: To add the line number (starting at
+          // 0) rather than the item, use the following
+          // line instead of the previous one:
+          // AddItem(list, index)
+          j = j + 1
+        else // phase 2
+          j = RNDINTEXC(i)
+          if j < k: list[j] = item
+          // NOTE 3: To add the line number (starting at
+          // 0) rather than the item, use the following
+          // line instead of the previous one:
+          // if j < k: list[j] = index
         end
+        index = index + 1
+      end
+      // NOTE 4: We shuffle at the end in case k or
+      // fewer lines were in the file, since in that
+      // case the items would appear in the same
+      // order as they appeared in the file
+      // if the list weren't shuffled.  This line
+      // can be removed, however, if the items
+      // in the returned list need not appear
+      // in random order.
+      if size(list)>=2: Shuffle(list)
+      return list
+    end
 
-       METHOD RandomKItemsInOrder(list, k)
-               i = 0
-               kk = k
-               ret = NewList()
-               n = size(list)
-               while i  < n and size(ret) < k
-                 u = RNDINTEXC(n - i)
-                 if u <= kk
-                  AddItem(ret, list[i])
-                  kk = kk - 1
-                 end
-                 i = i + 1
-              end
-              return ret
-        END METHOD
+    METHOD RandomKItemsInOrder(list, k)
+      i = 0
+      kk = k
+      ret = NewList()
+      n = size(list)
+      while i < n and size(ret) < k
+        u = RNDINTEXC(n - i)
+        if u <= kk
+          AddItem(ret, list[i])
+          kk = kk - 1
+        end
+        i = i + 1
+      end
+      return ret
+    END METHOD
 
-> **Note:** Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
+> **Examples:**
+>
+> 1. Assume a file (`file`) has the lines `"f"`, `"o"`, `"o"`, `"d"`, in that order.  If we modify `RandomKItemsFromFile` as given in notes 2 and 3 there, and treat `MEETS_CRITERIA(item)` above as `item == "o"` (in note 1 of that method), then
+we can choose a random line number of an "o" line by `RandomKItemsFromFile(file, 1)`.
+> 2. Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
+> 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(10)**](#Note10)</sup>  This won't work well, though, for lists of unknown or very large size.
 
 <a id=Choosing_a_Random_Date_Time></a>
 ### Choosing a Random Date/Time
