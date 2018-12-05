@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 4, 2018.
+Begun on June 4, 2017; last updated on Dec. 5, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -559,14 +559,14 @@ To generate a random string of characters:
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)
-> 3. Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
-> 4. Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
+> 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
+> 4. **Word generation:** Generating "pronounceable" words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves _Markov chains_.  A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include "start" and "stop" states for the start and end of the word, respectively.
 
 > **Examples of character lists:**
 >
 > 1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
 > 2. For a base-10 digit string, the characters can be the basic digits only.
-> 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f".
+> 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f" (not both).
 
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 ### Sampling Without Replacement: Choosing Several Unique Items
@@ -574,11 +574,12 @@ To generate a random string of characters:
 There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement).
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution.  Otherwise, one of the following will choose `k` items in random order:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
-3. **If `k` is much smaller than `n` and the sampled items must be in random order:**
+    - If `k` is much smaller than `n`, proceed as in item 3 instead.
+3. **If `k` is much smaller than `n`:**  The first three cases below will choose `k` items in random order:
     - **If the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
     - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
     - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
@@ -595,7 +596,7 @@ There are several techniques (each a _sampling without replacement_) for choosin
 The following pseudocode implements two methods:
 
 1. `RandomKItemsFromFile` chooses up to _K_ random items from a file of unknown size. Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how `RandomKItemsFromFile` can be used to choose an item at random only if it meets certain criteria (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
-2. `RandomKItemsInOrder` returns a list of up to _K_ random items from the given list, in the order in which they appeared in the list.
+2. `RandomKItemsInOrder` returns a list of up to _K_ random items from the given list, in the order in which they appeared in the list.  It is based on a technique presented in Devroye 1986, p. 620.
 
 &nbsp;
 
@@ -684,7 +685,7 @@ If either input date/time was generated as the random date, but that is not desi
 <a id=Generating_Random_Numbers_in_Sorted_Order></a>
 ### Generating Random Numbers in Sorted Order
 
-The following pseudocode describes a method that generates random numbers in the interval [0, 1] in sorted order.   `count` is the number of random numbers to generate this way. The method is based on an algorithm from Bentley and Saxe 1979.
+The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup>[**(23)**](#Note23)</sup>.   `count` is the number of random numbers to generate this way.
 
      METHOD SortedRandom(count)
         list = NewList()
@@ -693,6 +694,7 @@ The following pseudocode describes a method that generates random numbers in the
         while k > 0
             c = pow(RNDU01(), 1.0 / k) * c
             AddItem(list, c)
+            k = k - 1
         end
         return list
      END METHOD
@@ -1870,6 +1872,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note21>(21)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note22>(22)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note23>(23)</sup> Bentley, Jon Louis and JJames B. Saxe.  "Generating Sorted Lists of Random Numbers." _ACM Trans. Math. Softw._ 6 (1980): 359-364.</small>
 
 <a id=Appendix></a>
 ## Appendix

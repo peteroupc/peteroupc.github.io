@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 4, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Dec. 5, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -688,8 +688,8 @@ END METHOD
 <ol>
 <li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
 <li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)</li>
-<li>Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
-<li>Generating &quot;pronounceable&quot; words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves <em>Markov chains</em>.  A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
+<li><strong>Unique random strings:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
+<li><strong>Word generation:</strong> Generating &quot;pronounceable&quot; words or words similar to natural-language words is generally more sophisticated than shown above.  Often, doing so involves <em>Markov chains</em>.  A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition between these states (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  A Markov chain modeling random word generation, for example, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
 
 <p><strong>Examples of character lists:</strong></p>
@@ -697,7 +697,7 @@ END METHOD
 <ol>
 <li>For an <em>alphanumeric string</em>, or string of letters and digits, the characters can be the basic digits &quot;0&quot; to &quot;9&quot; (U+0030-U+0039, nos. 48-57), the basic upper case letters &quot;A&quot; to &quot;Z&quot; (U+0041-U+005A, nos. 65-90), and the basic lower case letters &quot;a&quot; to &quot;z&quot; (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.</li>
 <li>For a base-10 digit string, the characters can be the basic digits only.</li>
-<li>For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters &quot;A&quot; to &quot;F&quot; or &quot;a&quot; to &quot;f&quot;.</li>
+<li>For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters &quot;A&quot; to &quot;F&quot; or &quot;a&quot; to &quot;f&quot; (not both).</li>
 </ol>
 </blockquote>
 
@@ -709,14 +709,15 @@ END METHOD
 
 <ol>
 <li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>.</li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>, demonstrates a solution (based on a technique presented in Devroye 1986, p. 620).  Otherwise, do one of the following:
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>, demonstrates a solution.  Otherwise, one of the following will choose <code>k</code> items in random order:
 
 <ul>
 <li>Store all the items in a list, <a href="#Shuffling"><strong>shuffle</strong></a> that list, then choose the first <code>k</code> items from that list.</li>
 <li>If the items are already stored in a list and the list&#39;s order can be changed, then shuffle that list and choose the first <code>k</code> items from the shuffled list.</li>
 <li>If the items are already stored in a list and the list&#39;s order can&#39;t be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first <code>k</code> indices (or the items corresponding to those indices) from the latter list.</li>
+<li>If <code>k</code> is much smaller than <code>n</code>, proceed as in item 3 instead.</li>
 </ul></li>
-<li><strong>If <code>k</code> is much smaller than <code>n</code> and the sampled items must be in random order:</strong>
+<li><strong>If <code>k</code> is much smaller than <code>n</code>:</strong>  The first three cases below will choose <code>k</code> items in random order:
 
 <ul>
 <li><strong>If the items are stored in a list whose order can be changed:</strong> Do a <em>partial shuffle</em> of that list, then choose the <em>last</em> <code>k</code> items from that list.  A <em>partial shuffle</em> proceeds as given in the section &quot;<a href="#Shuffling"><strong>Shuffling</strong></a>&quot;, except the partial shuffle stops after <code>k</code> swaps have been made (where swapping one item with itself counts as a swap).</li>
@@ -742,7 +743,7 @@ END METHOD
 
 <ol>
 <li><code>RandomKItemsFromFile</code> chooses up to <em>K</em> random items from a file of unknown size. Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how <code>RandomKItemsFromFile</code> can be used to choose an item at random only if it meets certain criteria (see &quot;<a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a>&quot; for example criteria).</li>
-<li><code>RandomKItemsInOrder</code> returns a list of up to <em>K</em> random items from the given list, in the order in which they appeared in the list.</li>
+<li><code>RandomKItemsInOrder</code> returns a list of up to <em>K</em> random items from the given list, in the order in which they appeared in the list.  It is based on a technique presented in Devroye 1986, p. 620.</li>
 </ol>
 
 <p>&nbsp;</p>
@@ -768,22 +769,22 @@ END METHOD
     if j &lt; k // phase 1 (fewer than k items)
       AddItem(list, item)
       // NOTE 2: To add the line number (starting at
-      // 0) rather than the item, use the following line
-      // instead of the previous one:
+      // 0) rather than the item, use the following
+      // line instead of the previous one:
       // AddItem(list, index)
       j = j + 1
     else // phase 2
       j = RNDINTEXC(i)
       if j &lt; k: list[j] = item
       // NOTE 3: To add the line number (starting at
-      // 0) rather than the item, use the following line
-      // instead of the previous one:
+      // 0) rather than the item, use the following
+      // line instead of the previous one:
       // if j &lt; k: list[j] = index
     end
     index = index + 1
   end
-  // We shuffle at the end in case k or fewer
-  // lines were in the file, since in that
+  // NOTE 4: We shuffle at the end in case k or
+  // fewer lines were in the file, since in that
   // case the items would appear in the same
   // order as they appeared in the file
   // if the list weren&#39;t shuffled.  This line
@@ -841,7 +842,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 
 <h3>Generating Random Numbers in Sorted Order</h3>
 
-<p>The following pseudocode describes a method that generates random numbers in the interval [0, 1] in sorted order.   <code>count</code> is the number of random numbers to generate this way. The method is based on an algorithm from Bentley and Saxe 1979.</p>
+<p>The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.   <code>count</code> is the number of random numbers to generate this way.</p>
 
 <pre> METHOD SortedRandom(count)
     list = NewList()
@@ -850,6 +851,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
     while k &gt; 0
         c = pow(RNDU01(), 1.0 / k) * c
         AddItem(list, c)
+        k = k - 1
     end
     return list
  END METHOD
@@ -2232,6 +2234,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note21>(21)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note22>(22)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note23>(23)</sup> Bentley, Jon Louis and JJames B. Saxe.  &quot;Generating Sorted Lists of Random Numbers.&quot; <em>ACM Trans. Math. Softw.</em> 6 (1980): 359-364.</small></p>
 
 <p><a id=Appendix></a></p>
 
