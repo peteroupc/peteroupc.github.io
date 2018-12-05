@@ -175,7 +175,7 @@
 
 <h2>Uniform Random Numbers</h2>
 
-<p>This section describes how an underlying RNG can be used to generate uniformly-distributed random numbers.  Here is an overview of the methods described in this section.</p>
+<p>This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this section.</p>
 
 <ul>
 <li>Random Integers: <code>RNDINT</code>, <code>RNDINTEXC</code>, <code>RNDINTRANGE</code>, <code>RNDINTRANGEEXC</code>.</li>
@@ -190,8 +190,6 @@
 <h3><code>RNDINT</code>: Random Integers in [0, N]</h3>
 
 <p>In this document, <strong><code>RNDINT(maxInclusive)</code></strong> is the core method for generating independent uniform random integers from an underlying RNG, which is called <strong><code>RNG()</code></strong> in this section. The random integer is <strong>in the interval [0, <code>maxInclusive</code>]</strong>.  If <code>RNG()</code> outputs integers in the interval <strong>[0, positive <code>MODULUS</code>)</strong> (examples of <code>MODULUS</code> include 1,000,000 and 6), then <code>RNDINT(maxInclusive)</code> can be implemented as in the pseudocode below.<sup><a href="#Note2"><strong>(2)</strong></a></sup> (RNGs that output numbers in the interval [0, 1), such as Wichmann&ndash;Hill and dSFMT, are also seen in practice, but building <code>RNDINT</code> for those RNGs is more complicated unless the set of numbers they could return, as opposed to their probability, is evenly distributed, so that they can be transformed into an RNG that outputs integers instead.)</p>
-
-<p>&nbsp;</p>
 
 <pre>METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
     cx = floor(maxInclusive / MODULUS) + 1
@@ -440,7 +438,7 @@ END METHOD
     sig = sig + (1 &lt;&lt; (SIGBITS - 1))
     // NOTE: This multiplication should result in
     // a floating-point number; if `e` is sufficiently
-    // small, the number may underflow to 0
+    // small, the number might underflow to 0
     return sig * pow(2, e)
 END METHOD
 </pre>
@@ -747,7 +745,7 @@ END METHOD
 <ul>
 <li>a <a href="https://en.wikipedia.org/wiki/Hash_table"><strong>hash table</strong></a>,</li>
 <li>a compressed bit set (e.g, &quot;roaring bitmap&quot;, EWAH), and</li>
-<li>a self-sorting data structure such as a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, if the random items are to be retrieved in order.</li>
+<li>a self-sorting data structure such as a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, if the random items are to be retrieved in sorted order or in index order.</li>
 </ul></li>
 </ol>
 

@@ -606,8 +606,6 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
            j = 0
            endOfFile = false
            while j < k
-              // Get the next line from the file
-              item = GetNextLine(file)
               // The end of the file was reached, break
               if item == nothing:
                  endOfFile = true
@@ -620,11 +618,25 @@ The following pseudocode implements the `RandomKItemsFromFile` and `RandomKItems
            while endOfFile == false
               // Get the next line from the file
               item = GetNextLine(file)
-              // The end of the file was reached, break
+              // The following three lines are OPTIONAL
+              // and can be used to choose only random lines
+              // in the file that meet certain criteria,
+              // expressed as MEETS_CRITERIA below.
+              // ------
+              // while item!=nothing and not MEETS_CRITERIA(file)
+              //    item=GetNextLine(file)
+              // end
+              // ------
+              // If the end of the file was reached, break
               if item == nothing: break
-              j = RNDINTEXC(i)
-              if j < k: list[j] = item
-              i = i + 1
+              if j < k // phase 1 (fewer than k items)
+                AddItem(list, item)
+                j = j + 1
+              else // phase 2
+                j = RNDINTEXC(i)
+                if j < k: list[j] = item
+                i = i + 1
+              end
            end
            // We shuffle at the end in case k or fewer
            // lines were in the file, since in that
