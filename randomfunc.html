@@ -104,6 +104,7 @@
 <li><a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>
 
 <ul>
+<li><a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement.</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_Multiple_Copies"><strong>Weighted Choice Without Replacement (Multiple Copies)</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_Single_Copies"><strong>Weighted Choice Without Replacement (Single Copies)</strong></a></li>
 </ul></li>
@@ -689,7 +690,7 @@ END METHOD
 <li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
 <li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)</li>
 <li><strong>Unique random strings:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.</li>
-<li><strong>Word generation:</strong> This technique could also be used to generate &quot;pronounceable&quot; words, but this is less flexible than other approaches; see also &quot;<a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>.</li>
+<li><strong>Word generation:</strong> This technique could also be used to generate &quot;pronounceable&quot; words, but this is less flexible than other approaches; see also &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.</li>
 </ol>
 
 <p><strong>Examples of character lists:</strong></p>
@@ -709,7 +710,7 @@ END METHOD
 
 <ol>
 <li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>.</li>
-<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>, demonstrates a solution.  Otherwise, one of the following will choose <code>k</code> items in random order:
+<li><strong>If <code>n</code> is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):</strong>  If <strong>items are to be chosen from a list in relative order</strong>, then the <code>RandomKItemsInOrder</code> method, in <a href="#Pseudocode_for_Sampling_With_and_Without_Replacement"><strong>pseudocode given later</strong></a>, demonstrates a solution.  Otherwise, one of the following will choose <code>k</code> items <strong>in random order</strong>:
 
 <ul>
 <li>Store all the items in a list, <a href="#Shuffling"><strong>shuffle</strong></a> that list, then choose the first <code>k</code> items from that list.</li>
@@ -955,7 +956,13 @@ END METHOD
 
 <h3>Weighted Choice</h3>
 
-<p>The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.  These probabilities don&#39;t change as items are chosen, making this method a weighted choice <em>with replacement</em>, which can be thought of as drawing a ball, then putting it back.</p>
+<p>The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.  There are several kinds of weighted choice.</p>
+
+<p><a id=Weighted_Choice_With_Replacement></a></p>
+
+<h4>Weighted Choice With Replacement.</h4>
+
+<p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back), where the probabilities of each item don&#39;t change as items are chosen.</p>
 
 <p>The following pseudocode implements a method <code>WeightedChoice</code> that takes a single list <code>weights</code> of weights (numbers 0 or greater), and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)</p>
 
@@ -1001,11 +1008,11 @@ END METHOD
 <li><p>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.</p>
 
 <p>index = WeightedChoice(weights)
-// Get the actual item
-item = list[index]</p></li>
+ // Get the actual item
+ item = list[index]</p></li>
 <li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDNUMEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
 <li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDNUMEXCRANGE(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
-<li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  Thus, each state can be seen as having its own list of <em>weights</em> for each state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
+<li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
 </blockquote>
 
@@ -2196,7 +2203,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note10>(10)</sup> See also the <em>Stack Overflow</em> question &quot;Random index of a non zero value in a numpy array&quot;.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> Bentley, Jon Louis and JJames B. Saxe.  &quot;Generating Sorted Lists of Random Numbers.&quot; <em>ACM Trans. Math. Softw.</em> 6 (1980): 359-364.</small></p>
+<p><small><sup id=Note11>(11)</sup> Bentley, Jon Louis and James B. Saxe.  &quot;Generating Sorted Lists of Random Numbers.&quot; <em>ACM Trans. Math. Softw.</em> 6 (1980): 359-364.</small></p>
 
 <p><small><sup id=Note12>(12)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small></p>
 

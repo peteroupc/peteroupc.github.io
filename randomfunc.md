@@ -69,6 +69,7 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Randomization in Simulations**](#Randomization_in_Simulations)
 - [**General Non-Uniform Distributions**](#General_Non_Uniform_Distributions)
     - [**Weighted Choice**](#Weighted_Choice)
+        - [**Weighted Choice With Replacement.**](#Weighted_Choice_With_Replacement)
         - [**Weighted Choice Without Replacement (Multiple Copies)**](#Weighted_Choice_Without_Replacement_Multiple_Copies)
         - [**Weighted Choice Without Replacement (Single Copies)**](#Weighted_Choice_Without_Replacement_Single_Copies)
     - [**Continuous Weighted Choice**](#Continuous_Weighted_Choice)
@@ -560,7 +561,7 @@ To generate a random string of characters:
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)
 > 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
-> 4. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice**](#Weighted_Choice).
+> 4. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
 
 > **Examples of character lists:**
 >
@@ -574,7 +575,7 @@ To generate a random string of characters:
 There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement).
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution.  Otherwise, one of the following will choose `k` items in random order:
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
     - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
     - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
     - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
@@ -775,7 +776,12 @@ Some applications need to choose random items or numbers such that some of them 
 <a id=Weighted_Choice></a>
 ### Weighted Choice
 
-The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.  These probabilities don't change as items are chosen, making this method a weighted choice _with replacement_, which can be thought of as drawing a ball, then putting it back.
+The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.  There are several kinds of weighted choice.
+
+<a id=Weighted_Choice_With_Replacement></a>
+#### Weighted Choice With Replacement.
+
+The first kind is called weighted choice _with replacement_ (which can be thought of as drawing a ball, then putting it back), where the probabilities of each item don't change as items are chosen.
 
 The following pseudocode implements a method `WeightedChoice` that takes a single list `weights` of weights (numbers 0 or greater), and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)
 
@@ -817,13 +823,13 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
 >
->     index = WeightedChoice(weights)
->     // Get the actual item
->     item = list[index]
+>      index = WeightedChoice(weights)
+>      // Get the actual item
+>      item = list[index]
 >
 > 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random number can be chosen from that range using code like the following: `number = RNDNUMEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
 > 3. Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDNUMEXCRANGE(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
-> 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  Thus, each state can be seen as having its own list of _weights_ for each state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
+> 4. A [**Markov chain**](https://en.wikipedia.org/wiki/Markov_chain) models one or more _states_ (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., "b" to "e" with a probability of 0.2, or "b" to "b" with a probability of 0.01).  Thus, each state can be seen as having its own list of _weights_ for each relevant state transition.  For example, a Markov chain for generating **"pronounceable" words**, or words similar to natural-language words, can include "start" and "stop" states for the start and end of the word, respectively.
 
 <a id=Weighted_Choice_Without_Replacement_Multiple_Copies></a>
 #### Weighted Choice Without Replacement (Multiple Copies)
