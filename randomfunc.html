@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 5, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Dec. 6, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -104,11 +104,11 @@
 <li><a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>
 
 <ul>
-<li><a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement.</strong></a></li>
+<li><a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_Multiple_Copies"><strong>Weighted Choice Without Replacement (Multiple Copies)</strong></a></li>
 <li><a href="#Weighted_Choice_Without_Replacement_Single_Copies"><strong>Weighted Choice Without Replacement (Single Copies)</strong></a></li>
-</ul></li>
 <li><a href="#Continuous_Weighted_Choice"><strong>Continuous Weighted Choice</strong></a></li>
+</ul></li>
 <li><a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
 <li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a></li>
@@ -514,12 +514,14 @@ END METHOD
 <pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
    if minInclusive == maxInclusive: return minInclusive
-   // Difference does not exceed maxInclusive
-   if minInclusive &gt;= 0 or minInclusive + NUM_MAX &gt;= maxInclusive
-       return minInclusive + (maxInclusive - minInclusive) * RNDU01()
-   end
+   // usual: Difference does not exceed maxInclusive
+   usual=minInclusive &gt;= 0 or
+       minInclusive + NUM_MAX &gt;= maxInclusive
+   rng=NUM_MAX
+   if usual: rng = (maxInclusive - minInclusive)
    while true
-     ret = RNDU01() * NUM_MAX
+     ret = rng * RNDU01()
+     if usual: return minInclusive + ret
      // NOTE: If the number format has positive and negative
      // zero, as is the case for Java `float` and
      // `double` and .NET&#39;s implementation of `System.Decimal`,
@@ -956,13 +958,13 @@ END METHOD
 
 <h3>Weighted Choice</h3>
 
-<p>The weighted choice method generates a random item from among a collection of them with separate probabilities of each item being chosen.  There are several kinds of weighted choice.</p>
+<p>The weighted choice method generates a random item or number from among a collection of them with separate probabilities of each item or number being chosen.  There are several kinds of weighted choice.</p>
 
 <p><a id=Weighted_Choice_With_Replacement></a></p>
 
-<h4>Weighted Choice With Replacement.</h4>
+<h4>Weighted Choice With Replacement</h4>
 
-<p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back), where the probabilities of each item don&#39;t change as items are chosen.</p>
+<p>The first kind is called weighted choice <em>with replacement</em> (which can be thought of as drawing a ball, then putting it back), where the probability of choosing each item doesn&#39;t change as items are chosen.</p>
 
 <p>The following pseudocode implements a method <code>WeightedChoice</code> that takes a single list <code>weights</code> of weights (numbers 0 or greater), and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen. (Note that there are two possible ways to generate the random number depending on whether the weights are all integers or can be fractional numbers.)</p>
 
@@ -1086,7 +1088,7 @@ end
 
 <p><a id=Continuous_Weighted_Choice></a></p>
 
-<h3>Continuous Weighted Choice</h3>
+<h4>Continuous Weighted Choice</h4>
 
 <p>The continuous weighted choice method generates a random number that follows a continuous probability distribution (here, a <a href="http://en.cppreference.com/w/cpp/numeric/random/piecewise_linear_distribution"><strong><em>piecewise linear distribution</em></strong></a>).</p>
 
@@ -1573,6 +1575,7 @@ end
 <li><strong>4-parameter gamma distribution</strong>: <code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value.</li>
 <li><strong>Exponential distribution</strong>: <code>GammaDist(1, 1.0 / lamda)</code> or <code>-ln(RNDU01ZeroOneExc()) / lamda</code>, where <code>lamda</code> is the inverse scale. Usually, <code>lamda</code> is the probability that an independent event of a given kind will occur in a given span of time (such as in a given day or year), and the random result is the number of spans of time until that event happens.  (This distribution is thus useful for modeling a <em>Poisson process</em>.) <code>1.0 / lamda</code> is the scale (mean), which is usually the average waiting time between two independent events of the same kind.</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Expresses a sum of <code>n</code> exponential random variables with the given <code>lamda</code> parameter.</li>
+<li><strong>Max-of-uniform distribution</strong> (Devroye 1986, p. 675):  <code>1.0 - x/(x+GammaDist(n,1))</code>, where <code>n</code> is the number of uniform random variables, and <code>x</code> is <code>GammaDist(1,1)</code>.  Using <code>x/(x+GammaDist(n,1))</code> instead results in a <strong>min-of-uniform distribution</strong> (Devroye 1986, p. 210).</li>
 </ul>
 
 <p><a id=Beta_Distribution></a></p>
@@ -2193,7 +2196,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note5>(5)</sup> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</small></p>
 
-<p><small><sup id=Note6>(6)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code> returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>.</small></p>
+<p><small><sup id=Note6>(6)</sup> In situations where loops are not possible, such as within an SQL query, the idiom <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code> returns an integer in the interval [0, <code>maxExclusive</code>); however, such an idiom can have a slight, but for most purposes negligible, bias toward <code>maxExclusive - 1</code>. It should be used only in cases outside of information security.</small></p>
 
 <p><small><sup id=Note7>(7)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning RNGs.</small></p>
 
