@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 6, 2018.
+Begun on June 4, 2017; last updated on Dec. 9, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -435,6 +435,8 @@ For other number formats (including Java's `double` and `float`), the pseudocode
          if ret >= minInclusive and ret <= maxInclusive: return ret
        end
     END METHOD
+
+**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDNUMRANGE`, but they are relatively hard to find.
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
@@ -1719,7 +1721,7 @@ Miscellaneous:
 - **Pascal distribution**: `NegativeBinomial(successes, p) + successes`, where `successes` and `p` have the same meaning as in the negative binomial distribution, except `successes` is always an integer.
 - **Pearson VI distribution**: `GammaDist(v, 1) / (GammaDist(w, 1))`, where `v` and `w` are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional `b` parameter is defined, but that parameter is canceled out in the source code).
 - **Power distribution**: `pow(RNDU01ZeroOneExc(), 1.0 / alpha) / b`, where `alpha`  is the shape and `b` is the domain.  Nominally in the interval (0, 1).
-- **Power law distribution**: `pow(pow(mn,n+1) + (pow(mx,n+1) - pow(mn,n+1)) * RNDU01(), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
+- **Power law distribution**: `pow(RNDNUMRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Skellam distribution**: `Poisson(mean1) - Poisson(mean2)`, where `mean1` and `mean2` are the means of the two Poisson variables.
 - **Skewed normal distribution**: `Normal(0, x) + mu + alpha * abs(Normal(0, x))`, where `x` is `sigma / sqrt(alpha * alpha + 1.0)`, `mu` and `sigma` have the same meaning as in the normal distribution, and `alpha` is a shape parameter.
 - **Snedecor's (Fisher's) _F_-distribution**: `GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)`, where `m` and `n` are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if `sms` is other than 0, one of those distributions is _noncentral_ with sum of mean squares equal to `sms`.
@@ -1839,7 +1841,9 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
 <small><sup id=Note5>(5)</sup> `RNDINTEXC` is not given as the core random generation method because it's harder to fill integers in popular integer formats with random bits with this method.</small>
 
-<small><sup id=Note6>(6)</sup> In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))` returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`. It should be used only in cases outside of information security.</small>
+<small><sup id=Note6>(6)</sup> Depending on how `RNDU01*()` methods are implemented, some integers can never occur with this implementation if `maxExclusive` is very large.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, the resulting number will have no more than 8 bits set to 1, so that not all numbers can "randomly" occur with `maxExclusive` greater than 256.
+
+ In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))` returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`. It should be used only in cases outside of information security.</small>
 
 <small><sup id=Note7>(7)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
 
@@ -1922,7 +1926,7 @@ The pseudocode below shows how the [**error function**](https://en.wikipedia.org
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
 
-The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.
+The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers.   It returns a two-item list containing the mean and that kind of variance in that order. It uses the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  (Sample variance is the estimated variance of a population or distribution based on a random sample of that population or distribution.)
 
     METHOD MeanAndVariance(list)
         if size(list)==0: return [0, 0]
@@ -1930,7 +1934,7 @@ The following method calculates the mean and the [**bias-corrected sample varian
         xm=list[0]
         xs=0
         i=1
-        while i < len(list)
+        while i < size(list)
             c = list[i]
             i = i + 1
             cxm = (c - xm)

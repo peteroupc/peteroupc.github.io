@@ -47,7 +47,7 @@ Pseudocode may also use `for` loops, defined as follows:
 
 In the pseudocode, lists are indexed starting with 0.  That means the first item in the list is 0, the second item in the list is 1, and so on, up to the last item, whose index is the list's size minus 1.
 
-In this context, a _list_ is to be understood as an resizable array of items, not as a linked list.
+In this context, a _list_ is to be understood as a resizable array of items, not as a linked list.
 
 * `NewList()` creates a new empty list.
 * `AddItem(list, item)` adds the item `item` to the list `list`.
