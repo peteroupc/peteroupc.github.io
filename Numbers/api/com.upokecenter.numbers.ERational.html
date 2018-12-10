@@ -17,7 +17,7 @@
  threads. Multiple instances of this object with the same properties
  are interchangeable, so they should not be compared using the &quot;==&quot;
  operator (which might only check if each side of the operator is the
- same instance).</p></p>
+ same instance). </p></p>
 
 <h2>Fields</h2>
 
@@ -154,7 +154,8 @@ Returns whether this object is a quiet not-a-number value.</li>
 Returns whether this object is a signaling not-a-number value (which causes
 an error if the value is passed to any arithmetic operation in this
 class).</li>
-<li><code>boolean isZero()</code><br></li>
+<li><code>boolean isZero()</code><br>
+Gets a value indicating whether this object&#39;s value equals 0.</li>
 <li><code>ERational Multiply​(ERational otherValue)</code><br>
 Multiplies this instance by the value of an arbitrary-precision rational
 number.</li>
@@ -354,7 +355,7 @@ Converts this object to a text string.</li>
 
 <ul>
 <li><code>true</code> if this object is finite (not infinity or NaN);
-otherwise, <code>false</code>.</li>
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>isNegative</h3>
@@ -369,14 +370,24 @@ otherwise, <code>false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value is negative (including negative
-zero); otherwise, <code>false</code>. <code>true</code> if this object&#39;s value
-is negative; otherwise, <code>false</code>.</li>
+zero); otherwise, <code>false</code> . <code>true</code> if this object&#39;s value
+is negative; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>isZero</h3>
 
 <pre>public final boolean isZero()
 </pre>
+
+<p>Gets a value indicating whether this object&#39;s value equals 0.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value equals 0; otherwise, <code>
+false</code> . <code>true</code> if this object&#39; s value equals 0; otherwise, .
+<code>false</code> .</li>
+</ul>
 
 <h3>getNumerator</h3>
 
@@ -430,10 +441,8 @@ returns the diagnostic information.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>numeratorSmall</code> - The parameter <code>numeratorSmall</code> is not documented
-yet.</p></li>
-<li><p><code>denominatorSmall</code> - The parameter <code>denominatorSmall</code> is not
-documented yet.</p></li>
+<li><p><code>numeratorSmall</code> - The numerator.</p></li>
+<li><p><code>denominatorSmall</code> - The denominator.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -458,8 +467,8 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>numerator</code> - The parameter <code>numerator</code> is not documented yet.</p></li>
-<li><p><code>denominator</code> - The parameter <code>denominator</code> is not documented yet.</p></li>
+<li><p><code>numerator</code> - The numerator.</p></li>
+<li><p><code>denominator</code> - The denominator.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -484,7 +493,8 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>diag</code> - The parameter <code>diag</code> is not documented yet.</li>
+<li><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -509,9 +519,11 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>diag</code> - The parameter <code>diag</code> is not documented yet.</p></li>
-<li><p><code>signaling</code> - The parameter <code>signaling</code> is not documented yet.</p></li>
-<li><p><code>negative</code> - The parameter <code>negative</code> is not documented yet.</p></li>
+<li><p><code>diag</code> - A number to use as diagnostic information associated with this
+object. If none is needed, should be zero.</p></li>
+<li><p><code>signaling</code> - Whether the return value will be signaling (true) or quiet
+(false).</p></li>
+<li><p><code>negative</code> - Whether the return value is negative.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -540,7 +552,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - The parameter <code>flt</code> is not documented yet.</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 64-bit floating-point number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -561,7 +573,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The parameter <code>ef</code> is not documented yet.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -582,7 +594,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The parameter <code>ef</code> is not documented yet.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -601,7 +613,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The parameter <code>ef</code> is not documented yet.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -626,7 +638,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ef</code> - The parameter <code>ef</code> is not documented yet.</li>
+<li><code>ef</code> - The number to convert as an arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -651,7 +663,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigint</code> - The parameter <code>bigint</code> is not documented yet.</li>
+<li><code>bigint</code> - The number to convert as an arbitrary-precision integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -673,7 +685,8 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>flt</code> - The parameter <code>flt</code> is not documented yet.</li>
+<li><code>flt</code> - The parameter <code>flt</code> is a 32-bit binary floating-point
+number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -693,7 +706,7 @@ documented yet.</p></li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>str</code> - The parameter <code>str</code> is not documented yet.</li>
+<li><code>str</code> - A string that represents a number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -734,7 +747,7 @@ formatted number string.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>str</code> - The parameter <code>str</code> is not documented yet.</p></li>
+<li><p><code>str</code> - A text string, a portion of which represents a number.</p></li>
 <li><p><code>offset</code> - A zero-based index showing where the desired portion of <code>
 str</code> begins.</p></li>
 <li><p><code>length</code> - The length, in code units, of the desired portion of <code>
@@ -763,18 +776,19 @@ formatted number string.</p></li>
 <p>Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In this
  method: <ul> <li>For objects with the same value, the one with the
- higher denominator has a greater &quot;absolute value&quot;.</li> <li>Negative
- zero and positive zero are considered equal.</li> <li>Quiet NaN has a
- higher &quot;absolute value&quot; than signaling NaN. If both objects are quiet
- NaN or both are signaling NaN, the one with the higher diagnostic
- information has a greater &quot;absolute value&quot;.</li> <li>NaN has a higher
- &quot;absolute value&quot; than infinity.</li> <li>Infinity has a higher
- &quot;absolute value&quot; than any finite number.</li></ul></p>
+ higher denominator has a greater &quot;absolute value&quot;. </li> <li>Negative
+ zero and positive zero are considered equal. </li> <li>Quiet NaN has
+ a higher &quot;absolute value&quot; than signaling NaN. If both objects are
+ quiet NaN or both are signaling NaN, the one with the higher
+ diagnostic information has a greater &quot;absolute value&quot;. </li> <li>NaN
+ has a higher &quot;absolute value&quot; than infinity. </li> <li>Infinity has a
+ higher &quot;absolute value&quot; than any finite number. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision rational number to compare with this
+one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -792,19 +806,20 @@ object is less than the other value, or 1 if this object is greater.</li>
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For objects
  with the same value, the one with the higher denominator has a
- greater &quot;absolute value&quot;.</li> <li>Negative zero is less than
- positive zero.</li> <li>Quiet NaN has a higher &quot;absolute value&quot; than
+ greater &quot;absolute value&quot;. </li> <li>Negative zero is less than
+ positive zero. </li> <li>Quiet NaN has a higher &quot;absolute value&quot; than
  signaling NaN. If both objects are quiet NaN or both are signaling
  NaN, the one with the higher diagnostic information has a greater
- &quot;absolute value&quot;.</li> <li>NaN has a higher &quot;absolute value&quot; than
- infinity.</li> <li>Infinity has a higher &quot;absolute value&quot; than any
- finite number.</li> <li>Negative numbers are less than positive
- numbers.</li></ul></p>
+ &quot;absolute value&quot;. </li> <li>NaN has a higher &quot;absolute value&quot; than
+ infinity. </li> <li>Infinity has a higher &quot;absolute value&quot; than any
+ finite number. </li> <li>Negative numbers are less than positive
+ numbers. </li> </ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision rational number to compare with this
+one.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -838,7 +853,7 @@ object is less than the other value, or 1 if this object is greater.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.</li>
+<li><code>otherValue</code> - Another arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -870,7 +885,7 @@ operand is NaN.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -897,7 +912,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision binary float.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -924,7 +939,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision decimal number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -952,7 +967,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - A number whose sign will be copied.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -978,7 +993,7 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.</li>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1012,13 +1027,13 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - The parameter <code>obj</code> is not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is an arbitrary object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li><code>true</code> if the objects are equal; otherwise, <code>false</code>.</li>
+<li><code>true</code> if the objects are equal; otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>equals</h3>
@@ -1033,13 +1048,13 @@ satisfy other.isFinite().</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>other</code> - The parameter <code>other</code> is not documented yet.</li>
+<li><code>other</code> - An arbitrary-precision rational number to compare to.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li>Either <code>true</code> or <code>false</code> .</li>
 </ul>
 
 <h3>hashCode</h3>
@@ -1073,7 +1088,7 @@ satisfy other.isFinite().</li>
 
 <ul>
 <li><code>true</code> if this object&#39;s value is infinity; otherwise, <code>
-false</code>.</li>
+false</code> .</li>
 </ul>
 
 <h3>IsNaN</h3>
@@ -1087,7 +1102,7 @@ false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object is a not-a-number value; otherwise,
-<code>false</code>.</li>
+<code>false</code> .</li>
 </ul>
 
 <h3>IsNegativeInfinity</h3>
@@ -1101,7 +1116,7 @@ false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object is negative infinity; otherwise, <code>
-false</code>.</li>
+false</code> .</li>
 </ul>
 
 <h3>IsPositiveInfinity</h3>
@@ -1115,7 +1130,7 @@ false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object is positive infinity; otherwise, <code>
-false</code>.</li>
+false</code> .</li>
 </ul>
 
 <h3>IsQuietNaN</h3>
@@ -1129,7 +1144,7 @@ false</code>.</li>
 
 <ul>
 <li><code>true</code> if this object is a quiet not-a-number value;
-otherwise, <code>false</code>.</li>
+otherwise, <code>false</code> .</li>
 </ul>
 
 <h3>IsSignalingNaN</h3>
@@ -1160,7 +1175,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.</li>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1200,7 +1215,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.</li>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1225,7 +1240,7 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>otherValue</code> - The parameter <code>otherValue</code> is not documented yet.</li>
+<li><code>otherValue</code> - An arbitrary-precision rational number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1251,7 +1266,9 @@ this class); otherwise, <code>false</code> .</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 64-bit floating-point number.</li>
+<li>The closest 64-bit floating-point number to this value. The return
+value can be positive infinity or negative infinity if this value
+exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
 <h3>ToEInteger</h3>
@@ -1329,7 +1346,9 @@ not-a-number (NaN).</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating decimal
+expansion.</li>
 </ul>
 
 <h3>ToEDecimal</h3>
@@ -1343,7 +1362,11 @@ not-a-number (NaN).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1366,7 +1389,13 @@ can&#39;t be exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating decimal expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1390,7 +1419,9 @@ exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating decimal
+expansion.</li>
 </ul>
 
 <h3>ToExtendedDecimal</h3>
@@ -1405,7 +1436,11 @@ exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1428,7 +1463,13 @@ can&#39;t be exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating decimal expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1450,7 +1491,9 @@ exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating binary
+expansion.</li>
 </ul>
 
 <h3>ToEFloat</h3>
@@ -1464,7 +1507,11 @@ exact because it has a nonterminating decimal expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1487,7 +1534,13 @@ can&#39;t be exact because it has a nonterminating binary expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating binary expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1511,7 +1564,9 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision binary floating-point number.</li>
+<li>The exact value of the rational number, or not-a-number (NaN) if the
+result can&#39;t be exact because it has a nonterminating binary
+expansion.</li>
 </ul>
 
 <h3>ToExtendedFloat</h3>
@@ -1526,7 +1581,11 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. If HasFlags of the context is true,
+will also store the flags resulting from the operation (the flags are
+in addition to the pre-existing flags). Can be null, in which case
+the precision is unlimited and no rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1549,7 +1608,13 @@ can&#39;t be exact because it has a nonterminating binary expansion.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</li>
+<li><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result. This context will be used only if
+the exact result would have a nonterminating binary expansion. If
+HasFlags of the context is true, will also store the flags resulting
+from the operation (the flags are in addition to the pre-existing
+flags). Can be null, in which case the precision is unlimited and no
+rounding is needed.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1572,7 +1637,9 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit floating-point number.</li>
+<li>The closest 32-bit binary floating-point number to this value. The
+return value can be positive infinity or negative infinity if this
+value exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
 <h3>toString</h3>
@@ -1591,7 +1658,10 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A text string.</li>
+<li>A string representation of this object. If this object&#39;s value is
+infinity or not-a-number, the result is the analogous return value of
+the <code>EDecimal.toString</code> method. Otherwise, the return value has
+the following form: <code>[-]numerator/denominator</code> .</li>
 </ul>
 
 <h3>ToByteChecked</h3>
@@ -1605,7 +1675,7 @@ exact because it has a nonterminating binary expansion.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte (from 0 to 255).</li>
+<li>This number&#39;s value, truncated to a byte (from 0 to 255).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1627,7 +1697,8 @@ the truncated integer is less than 0 or greater than 255.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte (from 0 to 255).</li>
+<li>This number, converted to a byte (from 0 to 255). Returns 0 if this
+value is infinity or not-a-number.</li>
 </ul>
 
 <h3>ToByteIfExact</h3>
@@ -1641,7 +1712,7 @@ the truncated integer is less than 0 or greater than 255.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A byte (from 0 to 255).</li>
+<li>This number&#39;s value as a byte (from 0 to 255).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1661,7 +1732,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>inputByte</code> - The parameter <code>inputByte</code> is not documented yet.</li>
+<li><code>inputByte</code> - The number to convert as a byte (from 0 to 255).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1681,7 +1752,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 16-bit signed integer.</li>
+<li>This number&#39;s value, truncated to a 16-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1703,7 +1774,8 @@ the truncated integer is less than -32768 or greater than 32767.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 16-bit signed integer.</li>
+<li>This number, converted to a 16-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
 </ul>
 
 <h3>ToInt16IfExact</h3>
@@ -1718,7 +1790,7 @@ the truncated integer is less than -32768 or greater than 32767.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 16-bit signed integer.</li>
+<li>This number&#39;s value as a 16-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1738,7 +1810,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>inputInt16</code> - The parameter <code>inputInt16</code> is not documented yet.</li>
+<li><code>inputInt16</code> - The number to convert as a 16-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1758,7 +1830,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>This number&#39;s value, truncated to a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1781,7 +1853,8 @@ the truncated integer is less than -2147483648 or greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>This number, converted to a 32-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
 </ul>
 
 <h3>ToInt32IfExact</h3>
@@ -1796,7 +1869,7 @@ the truncated integer is less than -2147483648 or greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 32-bit signed integer.</li>
+<li>This number&#39;s value as a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1817,7 +1890,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>inputInt32</code> - The parameter <code>inputInt32</code> is not documented yet.</li>
+<li><code>inputInt32</code> - The number to convert as a 32-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -1837,7 +1910,7 @@ an exact integer, or is less than -2147483648 or greater than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 64-bit signed integer.</li>
+<li>This number&#39;s value, truncated to a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1860,7 +1933,8 @@ than 9223372036854775807.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 64-bit signed integer.</li>
+<li>This number, converted to a 64-bit signed integer. Returns 0 if this
+value is infinity or not-a-number.</li>
 </ul>
 
 <h3>ToInt64IfExact</h3>
@@ -1875,7 +1949,7 @@ than 9223372036854775807.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A 64-bit signed integer.</li>
+<li>This number&#39;s value as a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -1896,7 +1970,7 @@ than 9223372036854775807.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>inputInt64</code> - The parameter <code>inputInt64</code> is not documented yet.</li>
+<li><code>inputInt64</code> - The number to convert as a 64-bit signed integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>

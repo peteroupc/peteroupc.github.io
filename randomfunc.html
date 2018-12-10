@@ -539,7 +539,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDNUMRANGE</code>, but they are relatively hard to find.</p>
+<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDNUMRANGE</code>.<sup><a href="#Note24"><strong>(24)</strong></a></sup></p>
 
 <p><a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a></p>
 
@@ -2248,6 +2248,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note22>(22)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note23>(23)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note24>(24)</sup> See, for example, the <em>Stack Overflow</em> question &quot;How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?&quot;, <code>questions/8019589</code>.</small></p>
 
 <p><a id=Appendix></a></p>
 

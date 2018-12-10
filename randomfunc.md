@@ -436,7 +436,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END METHOD
 
-**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDNUMRANGE`, but they are relatively hard to find.
+**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDNUMRANGE`.<sup>[**(24)**](#Note24)</sup>
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
@@ -1886,6 +1886,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note22>(22)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note23>(23)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note24>(24)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
 
 <a id=Appendix></a>
 ## Appendix
