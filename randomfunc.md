@@ -436,7 +436,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
        end
     END METHOD
 
-**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDNUMRANGE`.<sup>[**(24)**](#Note24)</sup>
+**REMARK:** Multiplying by `RNDU01()` in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in `RNDNUMRANGE`.<sup>[**(7)**](#Note7)</sup>
 
 <a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a>
 ### `RNDNUMEXCRANGE`: Random Numbers in [X, Y)
@@ -464,7 +464,7 @@ In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers 
 For certain programming environments, there are special considerations:
 
 - Shell scripts and Microsoft Windows batch files are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` and `$RANDOM`, respectively); neither variable is designed for information security.
-- Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(7)**](#Note7)</sup>
+- Query languages such as SQL have no procedural elements such as loops and branches.  Moreover, standard SQL does not include an RNG in its suite of functionality, but popular SQL dialects often do &mdash; with idiosyncratic behavior.<sup>[**(8)**](#Note8)</sup>
 
 Whenever possible, the methods in this document should be implemented in a more general-purpose programming language than query languages, shell scripts, and batch files, especially if information security is a goal.
 
@@ -493,7 +493,7 @@ the following idioms in an `if` condition:
 <a id=Shuffling></a>
 ### Shuffling
 
-The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood)<sup>[**(8)**](#Note8)</sup>.  The following pseudocode is designed to shuffle a list's contents.
+The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood)<sup>[**(9)**](#Note9)</sup>.  The following pseudocode is designed to shuffle a list's contents.
 
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
@@ -527,7 +527,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
        return list
     END METHOD
 
-An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).<sup>[**(9)**](#Note9)</sup>
+An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).<sup>[**(10)**](#Note10)</sup>
 
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 ### Sampling With Replacement: Choosing a Random Item from a List
@@ -674,7 +674,7 @@ The following pseudocode implements two methods:
 we can choose a random line number of an "o" line by `RandomKItemsFromFile(file, 1)`.
 > 2. Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
-> 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(10)**](#Note10)</sup>  This won't work well, though, for lists of unknown or very large size.
+> 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(11)**](#Note11)</sup>  This won't work well, though, for lists of unknown or very large size.
 
 <a id=Choosing_a_Random_Date_Time></a>
 ### Choosing a Random Date/Time
@@ -690,7 +690,7 @@ If either input date/time was generated as the random date, but that is not desi
 <a id=Generating_Random_Numbers_in_Sorted_Order></a>
 ### Generating Random Numbers in Sorted Order
 
-The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup>[**(11)**](#Note11)</sup>.   `count` is the number of random numbers to generate this way.
+The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup>[**(12)**](#Note12)</sup>.   `count` is the number of random numbers to generate this way.
 
      METHOD SortedRandom(count)
         list = NewList()
@@ -982,7 +982,7 @@ To generate random content from a mixture&mdash;
 >         // Generate an exponential random number with chosen rate
 >         number = -ln(RNDU01ZeroOneExc()) / rates[index]
 >
-> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(12)**](#Note12)</sup>
+> 3. Choosing a point uniformly at random from a complex shape (in any number of dimensions) is equivalent to sampling uniformly from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the content of each simpler shape).  (Content is called area in 2D and volume in 3D.) For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(13)**](#Note13)</sup>
 > 4. For generating a random integer from multiple nonoverlapping ranges of integers&mdash;
 >     - each range has a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum, and
 >     - the chosen range is sampled by generating `RNDINTRANGE(mn, mx)`, where `mn` is the that range's minimum and `mx` is its maximum.
@@ -998,9 +998,9 @@ Generating random numbers (or data points) based on how a list of numbers (or da
 2. **Gaussian mixture models** are also mixtures, in this case, mixtures of one or more [**Gaussian (normal) distributions**](#Normal_Gaussian_Distribution).
 3. **Kernel distributions** are mixtures of sampling distributions, one for each data point. Estimating a kernel distribution is called _kernel density estimation_.  To sample from a kernel distribution:
     1. Choose one of the numbers or points in the list at random [**with replacement**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
-    2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(13)**](#Note13)</sup>.
+    2. Add a randomized "jitter" to the chosen number or point; for example, add a separately generated `Normal(0, sigma)` to the chosen number or each component of the chosen point, where `sigma` is the _bandwidth_<sup>[**(14)**](#Note14)</sup>.
 
-This document doesn't detail how to build a density estimation model.<sup>[**(14)**](#Note14)</sup>
+This document doesn't detail how to build a density estimation model.<sup>[**(15)**](#Note15)</sup>
 
 <a id=Transformations_of_Random_Numbers></a>
 ### Transformations of Random Numbers
@@ -1008,7 +1008,7 @@ This document doesn't detail how to build a density estimation model.<sup>[**(14
 Random numbers can be generated by combining and/or transforming one or more random numbers
 and/or discarding some of them.
 
-As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(15)**](#Note15)</sup>  These and similar distributions can be generalized as follows.
+As an example, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup>[**(16)**](#Note16)</sup>  These and similar distributions can be generalized as follows.
 
 Generate two or more random numbers, each with a separate probability distribution, then:
 
@@ -1039,7 +1039,7 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 Many probability distributions can be defined in terms of any of the following:
 
 * The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(16)**](#Note16)</sup>
+* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(17)**](#Note17)</sup>
 
 If a probability distribution's **PDF is known**, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.
 
@@ -1076,7 +1076,7 @@ To sample from a _truncated_ probability distribution, generate a random number 
 <a id=Correlated_Random_Numbers></a>
 ### Correlated Random Numbers
 
-According to (Saucier 2000)<sup>[**(17)**](#Note17)</sup>, sec. 3.8, to generate two correlated (dependent) random variables&mdash;
+According to (Saucier 2000)<sup>[**(18)**](#Note18)</sup>, sec. 3.8, to generate two correlated (dependent) random variables&mdash;
 
 - generate two independent and identically distributed random variables `x` and `y` (for example, two `Normal(0, 1)` variables or two `RNDU01()` variables), and
 - calculate `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, the variables are uncorrelated).
@@ -1091,7 +1091,7 @@ This section contains information on some of the most common non-uniform probabi
 <a id=Dice></a>
 ### Dice
 
-The following method generates a random result of rolling virtual dice.<sup>[**(18)**](#Note18)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
+The following method generates a random result of rolling virtual dice.<sup>[**(19)**](#Note19)</sup>  It takes three parameters: the number of dice (`dice`), the number of sides in each die (`sides`), and a number to add to the result (`bonus`) (which can be negative, but the result of the subtraction is 0 if that result is greater).
 
     METHOD DiceRoll(dice, sides, bonus)
         if dice < 0 or sides < 1: return error
@@ -1130,7 +1130,7 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
 
-The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup>[**(19)**](#Note19)</sup> to generate two normally-distributed random numbers:
+The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup>[**(20)**](#Note20)</sup> to generate two normally-distributed random numbers:
 - `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.
@@ -1562,7 +1562,7 @@ The following pseudocode calculates a random point in space that follows a [**_m
 
 Generating N `GammaDist(total, 1)` numbers and dividing them by their sum will result in N random numbers that (approximately) sum to `total` (see a [**Wikipedia article**](https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution)).  For example, if `total` is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.
 
-The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(20)**](#Note20)</sup>.)  In the pseudocode below&mdash;
+The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup>[**(21)**](#Note21)</sup>.)  In the pseudocode below&mdash;
 
 - the method `NonzeroIntegersWithSum` returns `n` positive integers that sum to `total`,
 - the method `IntegersWithSum` returns `n` nonnegative integers that sum to `total`, and
@@ -1667,7 +1667,7 @@ Other kinds of copulas describe different kinds of correlation between random nu
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDU01()`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDU01()`,
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no correlation between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(21)**](#Note21)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(22)**](#Note22)</sup>.
 
 <a id=Other_Non_Uniform_Distributions></a>
 ### Other Non-Uniform Distributions
@@ -1771,7 +1771,7 @@ The following pseudocode generates, uniformly at random, a point inside an _n_-d
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(22)**](#Note22)</sup>.
+The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(23)**](#Note23)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       ret=[]
@@ -1787,7 +1787,7 @@ The following pseudocode shows how to generate, uniformly at random, an N-dimens
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(23)**](#Note23)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).
+- generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(24)**](#Note24)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
@@ -1845,49 +1845,49 @@ Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the
 
  In situations where loops are not possible, such as within an SQL query, the idiom `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))` returns an integer in the interval \[0, `maxExclusive`\); however, such an idiom can have a slight, but for most purposes negligible, bias toward `maxExclusive - 1`. It should be used only in cases outside of information security.</small>
 
-<small><sup id=Note7>(7)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
+<small><sup id=Note7>(7)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
 
-<small><sup id=Note8>(8)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
+<small><sup id=Note8>(8)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning RNGs.</small>
 
-<small><sup id=Note9>(9)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
+<small><sup id=Note9>(9)</sup> Jeff Atwood, "[**The danger of na&iuml;vet&eacute;**](https://blog.codinghorror.com/the-danger-of-naivete/)".</small>
 
-<small><sup id=Note10>(10)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
+<small><sup id=Note10>(10)</sup> It suffices to say here that in general, whenever a deterministic RNG is otherwise called for, such an RNG is good enough for shuffling a 52-item list if its period is 2<sup>226</sup> or greater. (The _period_ is the maximum number of values in a generated sequence for a deterministic RNG before that sequence repeats.)</small>
 
-<small><sup id=Note11>(11)</sup> Bentley, Jon Louis and James B. Saxe.  "Generating Sorted Lists of Random Numbers." _ACM Trans. Math. Softw._ 6 (1980): 359-364.</small>
+<small><sup id=Note11>(11)</sup> See also the _Stack Overflow_ question "Random index of a non zero value in a numpy array".</small>
 
-<small><sup id=Note12>(12)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
+<small><sup id=Note12>(12)</sup> Bentley, Jon Louis and James B. Saxe.  "Generating Sorted Lists of Random Numbers." _ACM Trans. Math. Softw._ 6 (1980): 359-364.</small>
 
-<small><sup id=Note13>(13)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
+<small><sup id=Note13>(13)</sup> A convex polygon can be trivially decomposed into triangles that have one vertex in common and each have two other adjacent vertices of the original polygon. Triangulation of other polygons is nontrivial and outside the scope of this document.</small>
 
-<small><sup id=Note14>(14)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).</small>
+<small><sup id=Note14>(14)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be as low or as high as allows the estimated distribution to fit the data and remain smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
 
-<small><sup id=Note15>(15)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
+<small><sup id=Note15>(15)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](http://mark-kay.net/2013/12/24/kernel-density-estimation/).</small>
 
-<small><sup id=Note16>(16)</sup> More formally&mdash;
+<small><sup id=Note16>(16)</sup> That article also mentions a critical-hit distribution, which is actually a [**mixture**](#Mixtures_of_Distributions) of two distributions: one roll of dice and the sum of two rolls of dice.</small>
+
+<small><sup id=Note17>(17)</sup> More formally&mdash;
 - the PDF is the _derivative_ (instantaneous rate of change) of the distribution's CDF (that is, PDF(x) = CDF&prime;(x)), and
 - the CDF is also defined as the _integral_ of the PDF,
 
 provided the PDF's values are all 0 or greater and the area under the PDF's curve is 1.</small>
 
-<small><sup id=Note17>(17)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
+<small><sup id=Note18>(18)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
 
-<small><sup id=Note18>(18)</sup> The "Dice" section used the following sources:
+<small><sup id=Note19>(19)</sup> The "Dice" section used the following sources:
 
 - Red Blob Games, [**"Probability and Games: Damage Rolls"**](http://www.redblobgames.com/articles/probability/damage-rolls.html) was the main source for the dice-roll distribution.  The method `random(N)` in that document corresponds to `RNDINTEXC(N)` in this document.
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note19>(19)</sup> The method that formerly appeared here is the _Box&dash;Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
+<small><sup id=Note20>(20)</sup> The method that formerly appeared here is the _Box&dash;Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
 
-<small><sup id=Note20>(20)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
+<small><sup id=Note21>(21)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 
-<small><sup id=Note21>(21)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
+<small><sup id=Note22>(22)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small>
 
-<small><sup id=Note22>(22)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
+<small><sup id=Note23>(23)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
-<small><sup id=Note23>(23)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
-
-<small><sup id=Note24>(24)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
+<small><sup id=Note24>(24)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
 
 <a id=Appendix></a>
 ## Appendix
