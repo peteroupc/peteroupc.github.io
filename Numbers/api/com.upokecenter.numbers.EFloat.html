@@ -103,6 +103,8 @@ positive).</li>
 <li><code>EFloat Abs​(EContext context)</code><br>
 Finds the absolute value of this object (if it&#39;s negative, it becomes
 positive).</li>
+<li><code>EFloat Add​(int intValue)</code><br>
+Adds this object and another object.</li>
 <li><code>EFloat Add​(EFloat otherValue)</code><br>
 Adds this object and another binary float and returns the result.</li>
 <li><code>EFloat Add​(EFloat otherValue,
@@ -144,6 +146,8 @@ Creates a not-a-number arbitrary-precision binary float.</li>
      boolean negative,
      EContext ctx)</code><br>
 Creates a not-a-number arbitrary-precision binary float.</li>
+<li><code>EFloat Divide​(int intValue)</code><br>
+Divides this instance by the value of an arbitrary-precision integer.</li>
 <li><code>EFloat Divide​(EFloat divisor)</code><br>
 Divides this object by another binary float and returns the result.</li>
 <li><code>EFloat Divide​(EFloat divisor,
@@ -338,6 +342,9 @@ the right.</li>
           EContext ctx)</code><br>
 Returns a number similar to this number but with the radix point moved to
 the right.</li>
+<li><code>EFloat Multiply​(int intValue)</code><br>
+Multiplies this instance by the value of an arbitrary-precision integer
+object.</li>
 <li><code>EFloat Multiply​(EFloat otherValue)</code><br>
 Multiplies two binary floats.</li>
 <li><code>EFloat Multiply​(EFloat op,
@@ -472,6 +479,9 @@ Finds the square root of this object&#39;s value.</li>
 Deprecated.
 Renamed to Sqrt.
 Renamed to Sqrt.</li>
+<li><code>EFloat Subtract​(int intValue)</code><br>
+Subtracts an arbitrary-precision integer from this arbitrary-precision
+integer.</li>
 <li><code>EFloat Subtract​(EFloat otherValue)</code><br>
 Subtracts an arbitrary-precision binary float from this instance and returns
 the result.</li>
@@ -1269,6 +1279,119 @@ which case the precision is unlimited and no rounding is needed.</li>
 <ul>
 <li>The absolute value of this object. Signals FlagInvalid and returns
 quiet NaN if this value is signaling NaN.</li>
+</ul>
+
+<h3>Add</h3>
+
+<pre>public EFloat Add​(int intValue)
+</pre>
+
+<p>Adds this object and another object.<p> </p><pre>EInteger result =
+ EInteger.FromString(&quot;5&quot;).Add(200);</pre></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The sum of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
+null.</li>
+</ul>
+
+<h3>Subtract</h3>
+
+<pre>public EFloat Subtract​(int intValue)
+</pre>
+
+<p>Subtracts an arbitrary-precision integer from this arbitrary-precision
+ integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The difference of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is
+null.</li>
+</ul>
+
+<h3>Multiply</h3>
+
+<pre>public EFloat Multiply​(int intValue)
+</pre>
+
+<p>Multiplies this instance by the value of an arbitrary-precision integer
+ object.<p> </p><pre>EInteger result =
+ EInteger.FromString(&quot;5&quot;).Multiply(200);</pre></p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The product of the two numbers.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is
+null.</li>
+</ul>
+
+<h3>Divide</h3>
+
+<pre>public EFloat Divide​(int intValue)
+</pre>
+
+<p>Divides this instance by the value of an arbitrary-precision integer. The
+ result is rounded down (the fractional part is discarded). Except if
+ the result is 0, it will be negative if this object is positive and
+ the other is negative, or vice versa, and will be positive if both
+ are positive or both are negative.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The quotient of the two objects.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
+null.</p></li>
+<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
 </ul>
 
 <h3>Add</h3>
