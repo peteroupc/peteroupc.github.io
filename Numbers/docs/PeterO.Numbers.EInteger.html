@@ -245,6 +245,9 @@
 
 <p>Adds this object and another object.</p>
 
+<pre>EInteger result = EInteger.FromString(&quot;5&quot;).Add(200);
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -255,14 +258,6 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>The sum of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>bigintAugend</i>
-is null.</li>
-</ul>
 
 <p><a id="Add_PeterO_Numbers_EInteger"></a></p>
 
@@ -485,8 +480,7 @@ is a 32-bit signed integer.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>intValue</i>: The parameter <i>intValue</i>
-is a 32-bit signed integer.</li>
+<li><i>intValue</i>: The divisor.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -496,11 +490,8 @@ is a 32-bit signed integer.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li><p>System.ArgumentNullException:
-The parameter <i>bigintDivisor</i>
-is null.</p></li>
-<li><p>System.DivideByZeroException:
-Attempted to divide by zero.</p></li>
+<li>System.DivideByZeroException:
+Attempted to divide by zero.</li>
 </ul>
 
 <p><a id="Divide_PeterO_Numbers_EInteger"></a></p>
@@ -516,7 +507,7 @@ Attempted to divide by zero.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bigintDivisor</i>: Another arbitrary-precision integer.</li>
+<li><i>bigintDivisor</i>: The divisor.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -1240,6 +1231,9 @@ is null.</li>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer object.</p>
 
+<pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);
+</pre>
+
 <p><b>Parameters:</b></p>
 
 <ul>
@@ -1250,14 +1244,6 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>The product of the two numbers.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>bigintMult</i>
-is null.</li>
-</ul>
 
 <p><a id="Multiply_PeterO_Numbers_EInteger"></a></p>
 
@@ -2029,14 +2015,6 @@ is a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>The difference of the two objects.</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter <i>subtrahend</i>
-is null.</li>
-</ul>
 
 <p><a id="Subtract_PeterO_Numbers_EInteger"></a></p>
 

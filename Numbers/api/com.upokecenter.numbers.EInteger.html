@@ -691,7 +691,7 @@ less, or a positive number if this instance is greater.</li>
 <pre>public EInteger Add​(int intValue)
 </pre>
 
-<p>Adds this object and another object.<p> </p><pre>EInteger result =
+<p>Adds this object and another object.<p/><pre>EInteger result =
  EInteger.FromString(&quot;5&quot;).Add(200);</pre></p>
 
 <p><strong>Parameters:</strong></p>
@@ -704,13 +704,6 @@ less, or a positive number if this instance is greater.</li>
 
 <ul>
 <li>The sum of the two objects.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>bigintAugend</code> is
-null.</li>
 </ul>
 
 <h3>Subtract</h3>
@@ -733,20 +726,13 @@ null.</li>
 <li>The difference of the two objects.</li>
 </ul>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>subtrahend</code> is
-null.</li>
-</ul>
-
 <h3>Multiply</h3>
 
 <pre>public EInteger Multiply​(int intValue)
 </pre>
 
 <p>Multiplies this instance by the value of an arbitrary-precision integer
- object.<p> </p><pre>EInteger result =
+ object.<p/><pre>EInteger result =
  EInteger.FromString(&quot;5&quot;).Multiply(200);</pre></p>
 
 <p><strong>Parameters:</strong></p>
@@ -759,13 +745,6 @@ null.</li>
 
 <ul>
 <li>The product of the two numbers.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>NullPointerException</code> - The parameter <code>bigintMult</code> is
-null.</li>
 </ul>
 
 <h3>Divide</h3>
@@ -782,7 +761,7 @@ null.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>intValue</code> - The parameter <code>intValue</code> is a 32-bit signed integer.</li>
+<li><code>intValue</code> - The divisor.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -794,9 +773,7 @@ null.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - The parameter <code>bigintDivisor</code> is
-null.</p></li>
-<li><p><code>ArithmeticException</code> - Attempted to divide by zero.</p></li>
+<li><code>ArithmeticException</code> - Attempted to divide by zero.</li>
 </ul>
 
 <h3>Remainder</h3>
@@ -863,7 +840,7 @@ less, or a positive number if this instance is greater.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigintDivisor</code> - Another arbitrary-precision integer.</li>
+<li><code>bigintDivisor</code> - The divisor.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
