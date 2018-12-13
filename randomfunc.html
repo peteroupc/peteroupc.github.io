@@ -93,8 +93,8 @@
 <li><a href="#Pseudocode_for_Random_Sampling"><strong>Pseudocode for Random Sampling</strong></a></li>
 </ul></li>
 <li><a href="#Choosing_a_Random_Date_Time"><strong>Choosing a Random Date/Time</strong></a></li>
-<li><a href="#Generating_Random_Numbers_in_Sorted_Order"><strong>Generating Random Numbers in Sorted Order</strong></a></li>
 <li><a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a></li>
+<li><a href="#Generating_Random_Numbers_in_Sorted_Order"><strong>Generating Random Numbers in Sorted Order</strong></a></li>
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
 <li><a href="#Low_Discrepancy_Sequences"><strong>Low-Discrepancy Sequences</strong></a></li>
 <li><a href="#Randomization_in_Simulations"><strong>Randomization in Simulations</strong></a></li>
@@ -116,7 +116,6 @@
 <li><a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a></li>
 <li><a href="#Random_Numbers_from_an_Arbitrary_Distribution"><strong>Random Numbers from an Arbitrary Distribution</strong></a></li>
 <li><a href="#Censored_and_Truncated_Distributions"><strong>Censored and Truncated Distributions</strong></a></li>
-<li><a href="#Correlated_Random_Numbers"><strong>Correlated Random Numbers</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Non_Uniform_Distributions"><strong>Specific Non-Uniform Distributions</strong></a>
 
@@ -614,7 +613,7 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h3>Random Sampling</h3>
 
-<p>This section contains ways to choose one or several item from among a collection of them where each item has an equal chance to be chosen as any other.  This is called <em>random sampling</em> and can be done <em>with replacement</em> or <em>without replacement</em>.</p>
+<p>This section contains ways to choose one or more items from among a collection of them, where each item has the same chance to be chosen as any other.  This is called <em>random sampling</em> and can be done <em>with replacement</em> or <em>without replacement</em>.</p>
 
 <p><a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a></p>
 
@@ -852,33 +851,11 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 
 <p>If either input date/time was generated as the random date, but that is not desired, the process just given can be repeated until such a date/time is not generated this way.</p>
 
-<p><a id=Generating_Random_Numbers_in_Sorted_Order></a></p>
-
-<h3>Generating Random Numbers in Sorted Order</h3>
-
-<p>The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.   <code>count</code> is the number of random numbers to generate this way.</p>
-
-<pre> METHOD SortedRandom(count)
-    list = NewList()
-    k = count
-    c = 1.0
-    while k &gt; 0
-        c = pow(RNDU01(), 1.0 / k) * c
-        AddItem(list, c)
-        k = k - 1
-    end
-    return list
- END METHOD
-</pre>
-
-<p>Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.</p>
-
 <p><a id=Rejection_Sampling></a></p>
 
 <h3>Rejection Sampling</h3>
 
-<p><em>Rejection sampling</em> is a simple and flexible approach for generating random content that
-meets certain requirements.  To implement rejection sampling:</p>
+<p><em>Rejection sampling</em> is a simple and flexible approach for generating random content that meets certain requirements.  To implement rejection sampling:</p>
 
 <ol>
 <li>Generate the random content (such as a random number) by any method and with any distribution and range.</li>
@@ -899,6 +876,27 @@ meets certain requirements.  To implement rejection sampling:</p>
 </ul>
 
 <p>(KD-trees, hash tables, red-black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
+
+<p><a id=Generating_Random_Numbers_in_Sorted_Order></a></p>
+
+<h3>Generating Random Numbers in Sorted Order</h3>
+
+<p>The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.   <code>count</code> is the number of random numbers to generate this way.</p>
+
+<pre> METHOD SortedRandom(count)
+    list = NewList()
+    k = count
+    c = 1.0
+    while k &gt; 0
+        c = pow(RNDU01(), 1.0 / k) * c
+        AddItem(list, c)
+        k = k - 1
+    end
+    return list
+ END METHOD
+</pre>
+
+<p>Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.</p>
 
 <p><a id=Random_Walks></a></p>
 
@@ -1148,6 +1146,10 @@ end
 end
 </pre>
 
+<blockquote>
+<p><strong>Note:</strong> As (Efraimidis 2015)<sup><a href="#Note15"><strong>(15)</strong></a></sup> points out, weighted choice <em>with replacement</em> on an indefinite-length data set is equivalent to doing one or more concurrent runs of weighted choice without replacement on that data set with <code>k = 1</code>.  (In the algorithm above, each run starts at the same position in the data set, but <code>file</code> is treated as a <em>view</em> of that data set that traverses that data set independently of any other view.)</p>
+</blockquote>
+
 <p><a id=Continuous_Weighted_Choice></a></p>
 
 <h4>Continuous Weighted Choice</h4>
@@ -1295,12 +1297,18 @@ and/or discarding some of them.</p>
 <li><strong>Reroll-the-highest:</strong>  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.</li>
 <li><strong>Sum:</strong> Add all generated numbers.</li>
 <li><strong>Mean:</strong> Find the mean of all generated numbers (see the appendix).</li>
+<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em> dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note28"><strong>(28)</strong></a></sup>, to that point.</li>
 </ol>
 
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
 
 <blockquote>
-<p><strong>Notes:</strong> Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-<strong>order statistics distributions</strong>, respectively.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-<strong>order statistics distributions</strong>, respectively.</li>
+<li>As an extension of strategy 9 (geometric transformations), a random point (<code>x</code>, <code>y</code>) can be <strong>rotated</strong> to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers from the same distribution, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
+</ol>
 
 <p><strong>Examples:</strong></p>
 
@@ -1321,7 +1329,7 @@ and/or discarding some of them.</p>
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note20"><strong>(20)</strong></a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
 </ul>
 
 <p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.</p>
@@ -1341,12 +1349,7 @@ END METHOD
 </pre></li>
 </ol>
 
-<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Do the same process as method 1, given earlier, except&mdash;</p>
-
-<ul>
-<li>divide the weights in the <code>weights</code> list by the sum of all weights, and</li>
-<li>use a modified version of <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice</code></strong></a> that uses <code>randomVariable</code> rather than generating a new random number.</li>
-</ul>
+<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Create <code>list</code> and <code>weights</code> as given in method 1, then divide each item in <code>weights</code> by the sum of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDNUMEXCRANGE(0, sum)</code>).</p>
 
 <p>If the distribution&#39;s <strong>CDF is known</strong>, an approach called <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a> can be used: Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse CDF</em>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes <code>from_interp</code> and <code>numbers_from_cdf</code> methods that implement this approach numerically.</p>
 
@@ -1366,19 +1369,6 @@ END METHOD
 </ul>
 
 <p>To sample from a <em>truncated</em> probability distribution, generate a random number from that distribution and, if that number is less than a minimum threshold and/or higher than a maximum threshold, repeat this process.</p>
-
-<p><a id=Correlated_Random_Numbers></a></p>
-
-<h3>Correlated Random Numbers</h3>
-
-<p>According to (Saucier 2000)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, sec. 3.8, to generate two correlated (dependent) random variables&mdash;</p>
-
-<ul>
-<li>generate two independent and identically distributed random variables <code>x</code> and <code>y</code> (for example, two <code>Normal(0, 1)</code> variables or two <code>RNDU01()</code> variables), and</li>
-<li>calculate <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
-</ul>
-
-<p>Other ways to generate correlated random numbers are explained in the section &quot;<a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>&quot;.</p>
 
 <p><a id=Specific_Non_Uniform_Distributions></a></p>
 
@@ -1753,7 +1743,7 @@ END METHOD
 
 <h3>Stable Distribution</h3>
 
-<p>As more and more independent and identically distributed random variables are added
+<p>As more and more independent random numbers from the same distribution are added
 together, their distribution tends to a <a href="https://en.wikipedia.org/wiki/Stable_distribution"><strong><em>stable distribution</em></strong></a>,
 which resembles a curve with a single peak, but with generally &quot;fatter&quot; tails than the normal distribution.  The pseudocode below uses the Chambers&ndash;Mallows&ndash;Stuck algorithm.  The <code>Stable</code> method, implemented below, takes two parameters:</p>
 
@@ -2276,7 +2266,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note13>(13)</sup> Brownlee, J. &quot;<a href="https://machinelearningmastery.com/a-gentle-introduction-to-the-bootstrap-method/"><strong>A Gentle Introduction to the Bootstrap Method</strong></a>&quot;, <em>Machine Learning Mastery</em>, May 25, 2018.</small></p>
 
-<p><small><sup id=Note14>(14)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling</strong></a>&quot;, 2005.</small></p>
+<p><small><sup id=Note14>(14)</sup> Efraimidis, P. and Spirakis, P. &quot;<a href="http://utopia.duth.gr/%7Epefraimi/research/data/2007EncOfAlg.pdf"><strong>Weighted Random Sampling (2005; Efraimidis, Spirakis)</strong></a>&quot;, 2005.</small></p>
 
 <p><small><sup id=Note15>(15)</sup> Efraimidis, P. &quot;Weighted Random Sampling over Data Streams&quot;. arXiv:1012.0256v2 [cs.DS], 2015.</small></p>
 
@@ -2288,7 +2278,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note19>(19)</sup> That article also mentions a critical-hit distribution, which is actually a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of two distributions: one roll of dice and the sum of two rolls of dice.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> More formally&mdash;</p>
+<p><small><sup id=Note20>(20)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
+
+<p><small><sup id=Note21>(21)</sup> More formally&mdash;</p>
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
@@ -2296,8 +2288,6 @@ generation (including by extracting uniformly distributed bits from two or more 
 </ul>
 
 <p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
-
-<p><small><sup id=Note21>(21)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
 
 <p><small><sup id=Note22>(22)</sup> The &quot;Dice&quot; section used the following sources:</p>
 
@@ -2316,6 +2306,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note26>(26)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note27>(27)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note28>(28)</sup> An <em>affine transformation</em> is one that keeps parallel lines parallel.</small></p>
 
 <p><a id=Appendix></a></p>
 
