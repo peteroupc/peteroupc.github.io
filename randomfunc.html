@@ -92,7 +92,6 @@
 <li><a href="#Random_Character_Strings"><strong>Random Character Strings</strong></a></li>
 <li><a href="#Pseudocode_for_Random_Sampling"><strong>Pseudocode for Random Sampling</strong></a></li>
 </ul></li>
-<li><a href="#Choosing_a_Random_Date_Time"><strong>Choosing a Random Date/Time</strong></a></li>
 <li><a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a></li>
 <li><a href="#Generating_Random_Numbers_in_Sorted_Order"><strong>Generating Random Numbers in Sorted Order</strong></a></li>
 <li><a href="#Random_Walks"><strong>Random Walks</strong></a></li>
@@ -353,13 +352,21 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Examples:</strong></p>
+<p><strong>Examples:</strong>
+1. To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by <code>RNDINTRANGE(1, N)</code>.
+2. Generating a random integer with one base-10 digit is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.
+3. Generating a random integer with N base-10 digits (where N is 2 or greater), where the first digit can&#39;t be 0, is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.
+4. Pseudocode like the following can be used to choose a <strong>random date and time</strong> bounded by two others (<code>date1</code>, <code>date2</code>).  In the following pseudocode, <code>DATETIME_TO_NUMBER</code> and <code>NUMBER_TO_DATETIME</code> convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date/time format and are outside the scope of this document).</p>
 
-<ul>
-<li>To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval [1, N] by <code>RNDINTRANGE(1, N)</code>.</li>
-<li>Generating a random integer with one base-10 digit is equivalent to generating <code>RNDINTRANGE(0, 9)</code>.</li>
-<li>Generating a random integer with N base-10 digits (where N is 2 or greater) is equivalent to generating <code>RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)</code>.</li>
-</ul>
+<pre>    dtnum1 = DATETIME_TO_NUMBER(date1)
+    dtnum2 = DATETIME_TO_NUMBER(date2)
+    // Choose a random date-and-time
+    // in [dtnum1, dtnum2].  Any other
+    // random selection strategy can be
+    // used here.
+    num = RNDINTRANGE(date1, date2)
+    result = NUMBER_TO_DATETIME(num)
+</pre>
 </blockquote>
 
 <p><a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a></p>
@@ -837,20 +844,6 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 </ol>
 </blockquote>
 
-<p><a id=Choosing_a_Random_Date_Time></a></p>
-
-<h3>Choosing a Random Date/Time</h3>
-
-<p>Choosing a random date/time at or between two others is equivalent to&mdash;</p>
-
-<ul>
-<li>converting the two input date/times to an integer or number (here called <code>date1</code> and <code>date2</code>, where <code>date1</code> represents the earlier date/time and <code>date2</code> the other) at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date/time format and are outside the scope of this document),</li>
-<li>generating <code>newDate = RNDINTRANGE(date1, date2)</code> or <code>newDate = RNDNUMRANGE(date1, date2)</code>, respectively, and</li>
-<li>converting <code>newDate</code> to a date/time.</li>
-</ul>
-
-<p>If either input date/time was generated as the random date, but that is not desired, the process just given can be repeated until such a date/time is not generated this way.</p>
-
 <p><a id=Rejection_Sampling></a></p>
 
 <h3>Rejection Sampling</h3>
@@ -869,6 +862,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <li>whether a random number is divisible or not by certain numbers,</li>
 <li>whether a random number is not among recently chosen random numbers,</li>
 <li>whether a random number was not already chosen (with the aid of a hash table, red-black tree, or similar structure),</li>
+<li>whether a random number was not chosen more often in a row than desired,</li>
 <li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),</li>
 <li>whether a random string matches a regular expression,</li>
 <li>whether a random number is not included in a &quot;blacklist&quot; of numbers, or</li>
@@ -1277,6 +1271,8 @@ number = -ln(RNDU01ZeroOneExc()) / rates[index]
 
 <p>This document doesn&#39;t detail how to build a density estimation model.<sup><a href="#Note18"><strong>(18)</strong></a></sup></p>
 
+<p>Another way to generate random numbers based on a distribution of data points is known as <em>stochastic interpolation</em>, described in (Saucier 2000)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, sec. 5.3.4.</p>
+
 <p><a id=Transformations_of_Random_Numbers></a></p>
 
 <h3>Transformations of Random Numbers</h3>
@@ -1284,7 +1280,7 @@ number = -ln(RNDU01ZeroOneExc()) / rates[index]
 <p>Random numbers can be generated by combining and/or transforming one or more random numbers
 and/or discarding some of them.</p>
 
-<p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup><a href="#Note19"><strong>(19)</strong></a></sup>  These and similar distributions can be generalized as follows.</p>
+<p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup><a href="#Note20"><strong>(20)</strong></a></sup>  These and similar distributions can be generalized as follows.</p>
 
 <p>Generate two or more random numbers, each with a separate probability distribution, then:</p>
 
@@ -1297,7 +1293,7 @@ and/or discarding some of them.</p>
 <li><strong>Reroll-the-highest:</strong>  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.</li>
 <li><strong>Sum:</strong> Add all generated numbers.</li>
 <li><strong>Mean:</strong> Find the mean of all generated numbers (see the appendix).</li>
-<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em> dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note28"><strong>(28)</strong></a></sup>, to that point.</li>
+<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em> dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note21"><strong>(21)</strong></a></sup>, to that point.</li>
 </ol>
 
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
@@ -1307,7 +1303,7 @@ and/or discarding some of them.</p>
 
 <ol>
 <li>Variants of strategy 4 &mdash; e.g., choosing the second-, third-, or nth-lowest number &mdash; are formally called second-, third-, or nth-<strong>order statistics distributions</strong>, respectively.</li>
-<li>As an extension of strategy 9 (geometric transformations), a random point (<code>x</code>, <code>y</code>) can be <strong>rotated</strong> to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers from the same distribution, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
+<li>As an extension of strategy 9 (geometric transformations), a random point (<code>x</code>, <code>y</code>) can be <strong>rotated</strong> to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers from the same distribution, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, the variables are uncorrelated).</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -1329,7 +1325,7 @@ and/or discarding some of them.</p>
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability for a randomly generated variable to be equal to or less than that number; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note21"><strong>(21)</strong></a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup><a href="#Note22"><strong>(22)</strong></a></sup></li>
 </ul>
 
 <p>If a probability distribution&#39;s <strong>PDF is known</strong>, one of the following techniques, among others, can be used to generate random numbers that follow that distribution.</p>
@@ -1380,7 +1376,7 @@ END METHOD
 
 <h3>Dice</h3>
 
-<p>The following method generates a random result of rolling virtual dice.<sup><a href="#Note22"><strong>(22)</strong></a></sup>  It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
+<p>The following method generates a random result of rolling virtual dice.<sup><a href="#Note23"><strong>(23)</strong></a></sup>  It takes three parameters: the number of dice (<code>dice</code>), the number of sides in each die (<code>sides</code>), and a number to add to the result (<code>bonus</code>) (which can be negative, but the result of the subtraction is 0 if that result is greater).</p>
 
 <pre>METHOD DiceRoll(dice, sides, bonus)
     if dice &lt; 0 or sides &lt; 1: return error
@@ -1426,7 +1422,7 @@ END METHOD
 
 <h3>Normal (Gaussian) Distribution</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><strong><em>normal distribution</em></strong></a> (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup><a href="#Note23"><strong>(23)</strong></a></sup> to generate two normally-distributed random numbers:</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><strong><em>normal distribution</em></strong></a> (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup><a href="#Note24"><strong>(24)</strong></a></sup> to generate two normally-distributed random numbers:</p>
 
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or where the peak of the distribution&#39;s &quot;bell curve&quot; is.</li>
@@ -1919,7 +1915,7 @@ end
 
 <p>Generating N <code>GammaDist(total, 1)</code> numbers and dividing them by their sum will result in N random numbers that (approximately) sum to <code>total</code> (see a <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution#Gamma_distribution"><strong>Wikipedia article</strong></a>).  For example, if <code>total</code> is 1, the numbers will (approximately) sum to 1.  Note that in the exceptional case that all numbers are 0, the process should repeat.</p>
 
-<p>The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
+<p>The following pseudocode shows how to generate random integers with a given positive sum. (The algorithm for this was presented in (Smith and Tromble 2004)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.)  In the pseudocode below&mdash;</p>
 
 <ul>
 <li>the method <code>NonzeroIntegersWithSum</code> returns <code>n</code> positive integers that sum to <code>total</code>,</li>
@@ -2043,7 +2039,7 @@ END METHOD
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no correlation between the numbers), and</li>
-<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</li>
 </ul>
 
 <p><a id=Other_Non_Uniform_Distributions></a></p>
@@ -2160,7 +2156,7 @@ END METHOD
 
 <h3>Random Points on the Surface of a Hypersphere</h3>
 
-<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.</p>
+<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.</p>
 
 <pre>METHOD RandomPointInHypersphere(dims, radius)
   ret=[]
@@ -2179,7 +2175,7 @@ END METHOD
 
 <ul>
 <li>generate N <code>Normal(0, 1)</code> random numbers, generate <code>X = sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the random numbers, and multiply each random number by <code>R / X</code> (if <code>X</code> is 0, the process should repeat), or</li>
-<li>generate a vector (list) of N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note27"><strong>(27)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).</li>
+<li>generate a vector (list) of N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note28"><strong>(28)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).</li>
 </ul>
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for the two methods given here.</p>
@@ -2276,11 +2272,13 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note18>(18)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="http://mark-kay.net/2013/12/24/kernel-density-estimation/"><strong>blog post by M. Kay</strong></a>.</small></p>
 
-<p><small><sup id=Note19>(19)</sup> That article also mentions a critical-hit distribution, which is actually a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of two distributions: one roll of dice and the sum of two rolls of dice.</small></p>
+<p><small><sup id=Note19>(19)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></p>
+<p><small><sup id=Note20>(20)</sup> That article also mentions a critical-hit distribution, which is actually a <a href="#Mixtures_of_Distributions"><strong>mixture</strong></a> of two distributions: one roll of dice and the sum of two rolls of dice.</small></p>
 
-<p><small><sup id=Note21>(21)</sup> More formally&mdash;</p>
+<p><small><sup id=Note21>(21)</sup> An <em>affine transformation</em> is one that keeps parallel lines parallel.</small></p>
+
+<p><small><sup id=Note22>(22)</sup> More formally&mdash;</p>
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
@@ -2289,7 +2287,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p>
 
-<p><small><sup id=Note22>(22)</sup> The &quot;Dice&quot; section used the following sources:</p>
+<p><small><sup id=Note23>(23)</sup> The &quot;Dice&quot; section used the following sources:</p>
 
 <ul>
 <li>Red Blob Games, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> was the main source for the dice-roll distribution.  The method <code>random(N)</code> in that document corresponds to <code>RNDINTEXC(N)</code> in this document.</li>
@@ -2297,17 +2295,15 @@ generation (including by extracting uniformly distributed bits from two or more 
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
 
-<p><small><sup id=Note23>(23)</sup> The method that formerly appeared here is the <em>Box&dash;Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
+<p><small><sup id=Note24>(24)</sup> The method that formerly appeared here is the <em>Box&dash;Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
 
-<p><small><sup id=Note24>(24)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
+<p><small><sup id=Note25>(25)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
-<p><small><sup id=Note25>(25)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
+<p><small><sup id=Note26>(26)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  Journal of Statistical Software 39(9), 2011, pp. 1-20.</small></p>
 
-<p><small><sup id=Note26>(26)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
+<p><small><sup id=Note27>(27)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
-<p><small><sup id=Note27>(27)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
-
-<p><small><sup id=Note28>(28)</sup> An <em>affine transformation</em> is one that keeps parallel lines parallel.</small></p>
+<p><small><sup id=Note28>(28)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
 <p><a id=Appendix></a></p>
 
