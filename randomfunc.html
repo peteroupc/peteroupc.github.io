@@ -712,9 +712,12 @@ END METHOD
 
 <ol>
 <li>Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.</li>
-<li><p>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</p>
+<li>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</li>
+</ol>
 
-<p>METHOD RandomString(characterList, stringSize)
+<p>&nbsp;</p>
+
+<pre>METHOD RandomString(characterList, stringSize)
   i = 0
   newString = NewList()
   while i &lt; stringSize
@@ -725,8 +728,8 @@ END METHOD
     i = i + 1
   end
   return newString
-END METHOD</p></li>
-</ol>
+END METHOD
+</pre>
 
 <p>The following are examples of character lists:</p>
 

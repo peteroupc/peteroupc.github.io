@@ -576,6 +576,8 @@ To generate a random string of characters:
 1. Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.
 2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)
 
+&nbsp;
+
     METHOD RandomString(characterList, stringSize)
       i = 0
       newString = NewList()
