@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 12, 2018.
+Begun on June 4, 2017; last updated on Dec. 13, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -56,11 +56,12 @@ All the random number methods presented on this page are ultimately based on an 
     - [**Certain Programming Environments**](#Certain_Programming_Environments)
 - [**Randomization Techniques**](#Randomization_Techniques)
     - [**Boolean (True/False) Conditions**](#Boolean_True_False_Conditions)
-    - [**Shuffling**](#Shuffling)
-    - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
-        - [**Example: Random Character Strings**](#Example_Random_Character_Strings)
-    - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
-    - [**Pseudocode for Sampling With and Without Replacement**](#Pseudocode_for_Sampling_With_and_Without_Replacement)
+    - [**Random Sampling**](#Random_Sampling)
+        - [**Sampling With Replacement: Choosing a Random Item from a List**](#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List)
+        - [**Sampling Without Replacement: Choosing Several Unique Items**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items)
+        - [**Shuffling**](#Shuffling)
+        - [**Random Character Strings**](#Random_Character_Strings)
+        - [**Pseudocode for Random Sampling**](#Pseudocode_for_Random_Sampling)
     - [**Choosing a Random Date/Time**](#Choosing_a_Random_Date_Time)
     - [**Generating Random Numbers in Sorted Order**](#Generating_Random_Numbers_in_Sorted_Order)
     - [**Rejection Sampling**](#Rejection_Sampling)
@@ -491,8 +492,45 @@ the following idioms in an `if` condition:
 > - True with odds of 100 to 1: `RNDINTEXC(101) < 1`.
 > - True with 20% probability: `RNDINTEXC(100) < 20`.
 
+<a id=Random_Sampling></a>
+### Random Sampling
+
+This section contains ways to choose one or several item from among a collection of them where each item has an equal chance to be chosen as any other.  This is called _random sampling_ and can be done _with replacement_ or _without replacement_.
+
+<a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
+#### Sampling With Replacement: Choosing a Random Item from a List
+
+To choose a random item from a list&mdash;
+
+- whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
+- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling) (the result will be a 1-item list or be an empty list if there are no items).
+
+Choosing an item this way is also known as _sampling with replacement_.
+
+<a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
+#### Sampling Without Replacement: Choosing Several Unique Items
+
+There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
+
+1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling).
+2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
+    - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
+    - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
+    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
+    - If `k` is much smaller than `n`, proceed as in item 3 instead.
+3. **If `k` is much smaller than `n`:**  The first three cases below will choose `k` items in random order:
+    - **If the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
+    - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
+    - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
+    - Otherwise, see item 5.
+4. **If `n - k` is much smaller than `n` and the sampled items need not be in random order:**  Proceed as in step 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
+5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):** Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
+    - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
+    - a compressed bit set (e.g, "roaring bitmap", EWAH), and
+    - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
+
 <a id=Shuffling></a>
-### Shuffling
+#### Shuffling
 
 The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle) shuffles a list (puts its items in a random order) such that all permutations (arrangements) of that list are equally likely to occur, assuming the RNG it uses can choose any one of those permutations.  However, that method is also easy to write incorrectly &mdash; see also (Atwood 2007)<sup>[**(9)**](#Note9)</sup>.  The following pseudocode is designed to shuffle a list's contents.
 
@@ -530,78 +568,46 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 
 An important consideration with respect to shuffling is the nature of the underlying RNG, as I discuss in further detail in my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).<sup>[**(10)**](#Note10)</sup>
 
-<a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
-### Sampling With Replacement: Choosing a Random Item from a List
-
-To choose a random item from a list&mdash;
-
-- whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
-- whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement) (the result will be a 1-item list or be an empty list if there are no items).
-
-Choosing an item this way is also known as _sampling with replacement_.
-
-<a id=Example_Random_Character_Strings></a>
-#### Example: Random Character Strings
+<a id=Random_Character_Strings></a>
+#### Random Character Strings
 
 To generate a random string of characters:
 
 1. Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.
 2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)
 
-        METHOD RandomString(characterList, stringSize)
-                i = 0
-                newString = NewList()
-                while i < stringSize
-                        // Choose a character from the list
-                        randomChar = characterList[RNDINTEXC(size(characterList))]
-                        // Add the character to the string
-                        AddItem(newString, randomChar)
-                        i = i + 1
-                end
-                return newString
-        END METHOD
+    METHOD RandomString(characterList, stringSize)
+      i = 0
+      newString = NewList()
+      while i < stringSize
+        // Choose a character from the list
+        randomChar = characterList[RNDINTEXC(size(characterList))]
+        // Add the character to the string
+        AddItem(newString, randomChar)
+        i = i + 1
+      end
+      return newString
+    END METHOD
+
+The following are examples of character lists:
+
+1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
+2. For a base-10 digit string, the characters can be the basic digits only.
+3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f" (not both).
 
 > **Notes:**
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-> 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the individual strings or items should not be stored as a single string.)
+> 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the sum of those strings or items should not be stored as a single string.)
 > 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
 > 4. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
 
-> **Examples of character lists:**
->
-> 1. For an _alphanumeric string_, or string of letters and digits, the characters can be the basic digits "0" to "9" (U+0030-U+0039, nos. 48-57), the basic upper case letters "A" to "Z" (U+0041-U+005A, nos. 65-90), and the basic lower case letters "a" to "z" (U+0061-U+007A, nos. 96-122), as given in the Unicode Standard.
-> 2. For a base-10 digit string, the characters can be the basic digits only.
-> 3. For a base-16 digit (hexadecimal) string, the characters can be the basic digits as well as the basic letters "A" to "F" or "a" to "f" (not both).
-
-<a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
-### Sampling Without Replacement: Choosing Several Unique Items
-
-There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
-
-1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement).
-2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Sampling_With_and_Without_Replacement), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
-    - Store all the items in a list, [**shuffle**](#Shuffling) that list, then choose the first `k` items from that list.
-    - If the items are already stored in a list and the list's order can be changed, then shuffle that list and choose the first `k` items from the shuffled list.
-    - If the items are already stored in a list and the list's order can't be changed, then store the indices to those items in another list, shuffle the latter list, then choose the first `k` indices (or the items corresponding to those indices) from the latter list.
-    - If `k` is much smaller than `n`, proceed as in item 3 instead.
-3. **If `k` is much smaller than `n`:**  The first three cases below will choose `k` items in random order:
-    - **If the items are stored in a list whose order can be changed:** Do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.  A _partial shuffle_ proceeds as given in the section "[**Shuffling**](#Shuffling)", except the partial shuffle stops after `k` swaps have been made (where swapping one item with itself counts as a swap).
-    - Otherwise, **if the items are stored in a list and `n` is not very large (for example, less than 5000):** Store the indices to those items in another list, do a _partial shuffle_ of the latter list, then choose the _last_ `k` indices (or the items corresponding to those indices) from the latter list.
-    - Otherwise, **if `n` is not very large:** Store all the items in a list, do a _partial shuffle_ of that list, then choose the _last_ `k` items from that list.
-    - Otherwise, see item 5.
-4. **If `n - k` is much smaller than `n` and the sampled items need not be in random order:**  Proceed as in step 3, except the partial shuffle involves `n - k` swaps and the _first_ `k` items are chosen rather than the last `k`.
-5. **Otherwise (for example, if 32-bit or larger integers will be chosen so that `n` is 2<sup>32</sup>, or if `n` is otherwise very large):** Create a data structure to store the indices to items already chosen.  When a new index to an item is randomly chosen, add it to the data structure if it's not already there, or if it is, choose a new random index.  Repeat this process until `k` indices were added to the data structure this way.  Examples of suitable data structures are&mdash;
-    - a [**hash table**](https://en.wikipedia.org/wiki/Hash_table),
-    - a compressed bit set (e.g, "roaring bitmap", EWAH), and
-    - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
-
-<a id=Pseudocode_for_Sampling_With_and_Without_Replacement></a>
-### Pseudocode for Sampling With and Without Replacement
+<a id=Pseudocode_for_Random_Sampling></a>
+#### Pseudocode for Random Sampling
 
 The following pseudocode implements two methods:
 
-1. `RandomKItemsFromFile` implements _reservoir sampling_; it chooses up to `k` random items from a file of indefinite size (`file`). Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how `RandomKItemsFromFile` can be used to choose an item at random only if it meets certain criteria (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
+1. `RandomKItemsFromFile` implements [**_reservoir sampling_**](https://en.wikipedia.org/wiki/Reservoir_sampling); it chooses up to `k` random items from a file of indefinite size (`file`). Although the pseudocode refers to files and lines, the technique applies to any situation when items are retrieved one at a time from a data set or list whose size is not known in advance.  See the comments to find out how `RandomKItemsFromFile` can be used to choose an item at random only if it meets certain criteria (see "[**Rejection Sampling**](#Rejection_Sampling)" for example criteria).
 2. `RandomKItemsInOrder` returns a list of up to `k` random items from the given list (`list`), in the order in which they appeared in the list.  It is based on a technique presented in Devroye 1986, p. 620.
 
 &nbsp;
@@ -613,33 +619,32 @@ The following pseudocode implements two methods:
       while true
         // Get the next line from the file
         item = GetNextLine(file)
-        // NOTE 1: The following three lines are OPTIONAL
+        thisIndex = index
+        index = index + 1
+        // If the end of the file was reached, break
+        if item == nothing: break
+        // NOTE 1: The following line is OPTIONAL
         // and can be used to choose only random lines
         // in the file that meet certain criteria,
         // expressed as MEETS_CRITERIA below.
         // ------
-        // while item!=nothing and not MEETS_CRITERIA(item)
-        //    item=GetNextLine(item)
-        // end
+        // if not MEETS_CRITERIA(item): continue
         // ------
-        // If the end of the file was reached, break
-        if item == nothing: break
         if j < k // phase 1 (fewer than k items)
           AddItem(list, item)
           // NOTE 2: To add the line number (starting at
           // 0) rather than the item, use the following
           // line instead of the previous one:
-          // AddItem(list, index)
+          // AddItem(list, thisIndex)
           j = j + 1
         else // phase 2
-          j = RNDINT(index)
+          j = RNDINT(thisIndex)
           if j < k: list[j] = item
           // NOTE 3: To add the line number (starting at
           // 0) rather than the item, use the following
           // line instead of the previous one:
-          // if j < k: list[j] = index
+          // if j < k: list[j] = thisIndex
         end
-        index = index + 1
       end
       // NOTE 4: We shuffle at the end in case k or
       // fewer lines were in the file, since in that
@@ -869,7 +874,7 @@ To implement weighted choice _without replacement_ (which can be thought of as d
 
 Alternatively, if all the weights are integers 0 or greater and their sum is relatively small, create a list with as many copies of each item as its weight, then [**shuffle**](#Shuffling) that list.  The resulting list will be ordered in a way that corresponds to a weighted random choice without replacement.
 
-> **Note:** Weighted choice without replacement can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., "good" or "bad"), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
+> **Note:** The weighted sampling described in this section can be useful to some applications (particularly some games) that wish to control which random numbers appear, to make the random outcomes appear fairer to users (e.g., to avoid long streaks of good outcomes or of bad outcomes).  When used for this purpose, each item represents a different outcome (e.g., "good" or "bad"), and the lists are replenished once no further items can be chosen.  However, this kind of sampling should not be used for this purpose whenever information security (ISO/IEC 27000) is involved, including when predicting future random numbers would give a player or user a significant and unfair advantage.
 
 <a id=Weighted_Choice_Without_Replacement_Single_Copies></a>
 #### Weighted Choice Without Replacement (Single Copies)
@@ -901,7 +906,7 @@ The technique presented here can solve the problem of sorting a list of items su
 <a id=Weighted_Choice_Without_Replacement_Indefinite_Size_List></a>
 #### Weighted Choice Without Replacement (Indefinite-Size List)
 
-If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Sampling_With_and_Without_Replacement)).  See (Efraimidis and Spirakis 2005)<sup>[**(14)**](#Note14)</sup>, and see also (Efraimidis 2015)<sup>[**(15)**](#Note15)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, index)` calculates the weight of an individual item based on its value and its index (starting at 0); each weight must be greater than 0.
+If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(14)**](#Note14)</sup>, and see also (Efraimidis 2015)<sup>[**(15)**](#Note15)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is an arbitrary function that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 
     METHOD RandomKItemsFromFileWeighted(file, k)
       list = NewList()
@@ -913,15 +918,16 @@ If the number of items in a list is not known in advance, then the following pse
       while true
         // Get the next line from the file
         item = GetNextLine(file)
-        // Optional filtering here.
-        // See NOTE 1 in RandomKItemsFromFile code.
-        // --------
+        thisIndex = index
+        index = index + 1
         // If the end of the file was reached, break
         if item == nothing: break
-        weight = WEIGHT_OF_ITEM(item, index)
+        weight = WEIGHT_OF_ITEM(item, thisIndex)
+        // Ignore if item's weight is 0 or less
+        if weight <= 0: continue
         key = pow(RNDU01(),1.0/weight)
         t = smallestKey
-        if index == 0 || key < smallestKey
+        if index == 0 or key < smallestKey
           skIndex = index
           smallestKey = key
         end
@@ -930,18 +936,17 @@ If the number of items in a list is not known in advance, then the following pse
           // To add the line number (starting at
           // 0) rather than the item, use the following
           // line instead of the previous one:
-          // AddItem(list, index)
+          // AddItem(list, thisIndex)
           j = j + 1
         else // phase 2
           if t < key: list[skIndex] = item
           // To add the line number (starting at
           // 0) rather than the item, use the following
           // line instead of the previous one:
-          // if t < key: list[skIndex] = index
+          // if t < key: list[skIndex] = thisIndex
         end
-        index = index + 1
       end
-      // Optional filtering here.
+      // Optional shuffling here.
       // See NOTE 4 in RandomKItemsFromFile code.
       if size(list)>=2: Shuffle(list)
       return list
