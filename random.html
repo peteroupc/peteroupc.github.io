@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Dec. 7, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Dec. 12, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -545,7 +545,7 @@
 
 <ul>
 <li>by generating a random integer at least 0 and less than the number of permutations, and converting that integer to a permutation, or</li>
-<li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood)<sup><a href="#Note20"><strong>(20)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
+<li>by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a> (which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note20"><strong>(20)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>).</li>
 </ul>
 
 <p>Either way, however, if a PRNG&#39;s period is less than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.  A PRNG&#39;s <em>period</em> is the maximum size of a &quot;random&quot; number sequence it can generate before that sequence repeats; this size is no greater than 2<sup>L</sup> where L is the PRNG&#39;s state length.)</p>
@@ -734,7 +734,7 @@
 
 <p><small><sup id=Note19>(19)</sup> More generally, a list has <code>N! / (W_1! * W_2! * ... * W_K!)</code> permutations (a <a href="http://mathworld.wolfram.com/MultinomialCoefficient.html"><strong>multinomial coefficient</strong></a>), where <code>N</code> is the list&#39;s size, <code>K</code> is the number of different items in the list, and <code>W_i</code> is the number of times the item identified by <code>i</code> appears in the list.  However, this number is never more than <code>N!</code> and suggests using less randomness, so an application need not use this more complicated formula and MAY assume that a list has <code>N!</code> permutations even if some of its items occur more than once.</small></p>
 
-<p><small><sup id=Note20>(20)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;.</small></p>
+<p><small><sup id=Note20>(20)</sup> Atwood, Jeff. &quot;<a href="https://blog.codinghorror.com/the-danger-of-naivete/"><strong>The danger of na&iuml;vet&eacute;</strong></a>&quot;, Dec. 7, 2007.</small></p>
 
 <p><small><sup id=Note21>(21)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
