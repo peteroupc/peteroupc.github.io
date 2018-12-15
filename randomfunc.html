@@ -665,7 +665,7 @@ the following idioms in an <code>if</code> condition:</p>
 <li>a self-sorting data structure such as a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, if the random items are to be retrieved in sorted order or in index order.</li>
 </ul>
 
-<p>An alternative approach is to use a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong><em>linear congruential generator</em></strong></a> with <em>full period</em> and with modulus <code>n</code> or greater.  When using this approach, generate a seed with <code>RNDINTEXC(n)</code>, initialize the generator with the seed, then take the first <code>k</code> integers less than <code>n</code> with that generator.  These will be the randomly sampled indices to items in the list.<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
+<p>An alternative approach is to use a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong><em>linear congruential generator</em></strong></a> with <em>full period</em> and with modulus greater than <code>n</code>.  When using this approach, generate a seed with <code>RNDINTRANGE(1, n)</code>, initialize the generator with the seed, then take the first <code>k</code> integers less than or equal to <code>n</code> with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
 </ol>
 
 <p><a id=Shuffling></a></p>

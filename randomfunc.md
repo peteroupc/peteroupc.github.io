@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 14, 2018.
+Begun on June 4, 2017; last updated on Dec. 15, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -535,7 +535,7 @@ There are several techniques (each a _sampling without replacement_) for choosin
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-    An alternative approach is to use a [**_linear congruential generator_**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with _full period_ and with modulus `n` or greater.  When using this approach, generate a seed with `RNDINTEXC(n)`, initialize the generator with the seed, then take the first `k` integers less than `n` with that generator.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup>[**(9)**](#Note9)</sup>
+    An alternative approach is to use a [**_linear congruential generator_**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with _full period_ and with modulus greater than `n`.  When using this approach, generate a seed with `RNDINTRANGE(1, n)`, initialize the generator with the seed, then take the first `k` integers less than or equal to `n` with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup>[**(9)**](#Note9)</sup>
 
 <a id=Shuffling></a>
 #### Shuffling
@@ -582,7 +582,7 @@ An important consideration with respect to shuffling is the nature of the underl
 To generate a random string of characters:
 
 1. Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.
-2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `size`.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)
+2. Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named `stringSize`.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)
 
 &nbsp;
 
@@ -607,10 +607,9 @@ The following are examples of character lists:
 
 > **Notes:**
 >
-> 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
-> 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the sum of those strings or items should not be stored as a single string.)
-> 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(12)**](#Note12)</sup>
-> 4. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
+> 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.
+> 2. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(12)**](#Note12)</sup>
+> 3. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
 
 <a id=Pseudocode_for_Random_Sampling></a>
 #### Pseudocode for Random Sampling
