@@ -21,7 +21,7 @@ This document presents an overview of many common color topics that are of gener
     - in text, foregrounds, or backgrounds of user interface elements (such as buttons, text boxes, and windows),
     - in text or backgrounds of documents (such as HTML documents), or
     - when generating graphics (such as plots and charts).
-- Determining which colors are used, or used by default, in user interface elements or documents.
+- Determining which colors are used, or used by default, in user interface elements, documents, plots, or charts.
 - Color pickers, including how to choose colors with them.
 - Specifics on setting and getting pixel, palette, and other colors in images (including screenshots) with the exception of finding dominant colors.
 - Colorization of command line outputs, or terminal or shell outputs. [**"ANSI" graphic codes**](https://peteroupc.github.io/suppcolor.html#Terminal_Graphics) are discussed elsewhere.

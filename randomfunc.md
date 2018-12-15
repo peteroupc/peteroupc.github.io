@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 13, 2018.
+Begun on June 4, 2017; last updated on Dec. 14, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -284,6 +284,7 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
     END METHOD
 
 > **Examples:**
+>
 > 1. To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
 > 2. Generating a random integer with one base-10 digit is equivalent to generating `RNDINTRANGE(0, 9)`.
 > 3. Generating a random integer with N base-10 digits (where N is 2 or greater), where the first digit can't be 0, is equivalent to generating `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
@@ -609,7 +610,7 @@ The following are examples of character lists:
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.
 > 2. Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the sum of those strings or items should not be stored as a single string.)
-> 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access, but are not discussed further in this document.
+> 3. **Unique random strings:** Often applications need to generate a string of characters that's not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup>[**(29)**](#Note29)</sup>
 > 4. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Weighted Choice With Replacement**](#Weighted_Choice_With_Replacement)".
 
 <a id=Pseudocode_for_Random_Sampling></a>
@@ -1945,6 +1946,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note27>(27)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note28>(28)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note29>(29)</sup> If the strings identify database records, file system paths, or other shared resources, special considerations apply, including the need to synchronize access to those resources.  If the string will uniquely identify database records (e.g., Web site users) and is not secret, an application should consider using an auto-incrementing row number instead, if supported by the database.</small>
 
 <a id=Appendix></a>
 ## Appendix
