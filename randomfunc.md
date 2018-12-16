@@ -685,8 +685,7 @@ The following pseudocode implements two methods:
 
 > **Examples:**
 >
-> 1. Assume a file (`file`) has the lines `"f"`, `"o"`, `"o"`, `"d"`, in that order.  If we modify `RandomKItemsFromFile` as given in notes 2 and 3 there, and treat `MEETS_CRITERIA(item)` above as `item == "o"` (in note 1 of that method), then
-we can choose a random line number of an "o" line by `RandomKItemsFromFile(file, 1)`.
+> 1. Assume a file (`file`) has the lines `"f"`, `"o"`, `"o"`, `"d"`, in that order.  If we modify `RandomKItemsFromFile` as given in notes 2 and 3 there, and treat `MEETS_CRITERIA(item)` above as `item == "o"` (in note 1 of that method), then we can choose a random line number of an "o" line by `RandomKItemsFromFile(file, 1)`.
 > 2. Removing `k` random items from a list of `n` items (`list`) is equivalent to generating a new
 list by `RandomKItemsInOrder(list, n - k)`.
 > 3. **Filtering:** If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list's items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup>[**(13)**](#Note13)</sup>  This won't work well, though, for lists of indefinite or very large size.
@@ -760,7 +759,18 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 <a id=Low_Discrepancy_Sequences></a>
 ### Low-Discrepancy Sequences
 
-A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  Sobol and Halton sequences are examples of this kind of sequence.  Unfortunately, the methods to produce low-discrepancy sequences are too complicated to show here.  Moreover, RNGs have a limited role to play in most kinds of low-discrepancy sequences, such as by generating a "seed" to start the sequence at.
+A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy_sequence) (or _quasirandom sequence_) is a sequence of numbers that follow a uniform distribution, but are less likely to form "clumps" than independent uniform random numbers are.  The following are examples:
+- Sobol and Halton sequences are too complicated to show here.
+- Linear congruential generators with modulus `m`, a full period, and "good lattice structure"; a sequence of `n`-dimensional points is thus `[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]` for each integer `i` in the interval [1, `m`] (L'Ecuyer 1999)<sup>[**(31)**](#Note31)</sup> (see example pseudocode below).
+
+&nbsp;
+
+    METHOD MLCG(seed) // m = 262139
+      if seed<=0: return error
+      return rem(92717*seed,262139)/262139.0
+    END METHOD
+
+In most cases, RNGs can be used to generate a "seed" to start the low-discrepancy sequence at.
 
 <a id=Randomization_in_Simulations></a>
 ### Randomization in Simulations
@@ -1948,6 +1958,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note29>(29)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note30>(30)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note31>(31)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", January 1999.</small>
 
 <a id=Appendix></a>
 ## Appendix

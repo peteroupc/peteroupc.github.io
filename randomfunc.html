@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 14, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Dec. 15, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -717,7 +717,7 @@ END METHOD
 
 <ol>
 <li>Generate a list of the letters, digits, and/or other characters the string can have.  Examples are given later in this section.</li>
-<li>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>size</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</li>
+<li>Build a new string whose characters are chosen from that character list.  The pseudocode below demonstrates this by creating a list, rather than a string, where the random characters will be held.  It also takes the number of characters as a parameter named <code>stringSize</code>.  (How to convert this list to a text string depends on the programming language and is outside the scope of this page.)</li>
 </ol>
 
 <p>&nbsp;</p>
@@ -748,8 +748,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or a string type as provided in the programming language can be used to store the list as a string.</li>
-<li>Instead of individual characters, the list can consist of strings of one or more characters each (e.g., words or syllables), or indeed any other items.  (In that case, the sum of those strings or items should not be stored as a single string.)</li>
+<li>If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.</li>
 <li><strong>Unique random strings:</strong> Often applications need to generate a string of characters that&#39;s not only random, but also unique.  This can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.<sup><a href="#Note12"><strong>(12)</strong></a></sup></li>
 <li><strong>Word generation:</strong> This technique could also be used to generate &quot;pronounceable&quot; words, but this is less flexible than other approaches; see also &quot;<a href="#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;.</li>
 </ol>
@@ -835,8 +834,7 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Assume a file (<code>file</code>) has the lines <code>&quot;f&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;d&quot;</code>, in that order.  If we modify <code>RandomKItemsFromFile</code> as given in notes 2 and 3 there, and treat <code>MEETS_CRITERIA(item)</code> above as <code>item == &quot;o&quot;</code> (in note 1 of that method), then
-we can choose a random line number of an &quot;o&quot; line by <code>RandomKItemsFromFile(file, 1)</code>.</li>
+<li>Assume a file (<code>file</code>) has the lines <code>&quot;f&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;o&quot;</code>, <code>&quot;d&quot;</code>, in that order.  If we modify <code>RandomKItemsFromFile</code> as given in notes 2 and 3 there, and treat <code>MEETS_CRITERIA(item)</code> above as <code>item == &quot;o&quot;</code> (in note 1 of that method), then we can choose a random line number of an &quot;o&quot; line by <code>RandomKItemsFromFile(file, 1)</code>.</li>
 <li>Removing <code>k</code> random items from a list of <code>n</code> items (<code>list</code>) is equivalent to generating a new
 list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <li><strong>Filtering:</strong> If an application needs to sample the same list (with or without replacement) repeatedly, but only from among a selection of that list&#39;s items, it can create a list of items it wants to sample from (or a list of indices to those items), and sample from the new list instead.<sup><a href="#Note13"><strong>(13)</strong></a></sup>  This won&#39;t work well, though, for lists of indefinite or very large size.</li>
@@ -929,7 +927,22 @@ END METHOD
 
 <h3>Low-Discrepancy Sequences</h3>
 
-<p>A <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that follow a uniform distribution, but are less likely to form &quot;clumps&quot; than independent uniform random numbers are.  Sobol and Halton sequences are examples of this kind of sequence.  Unfortunately, the methods to produce low-discrepancy sequences are too complicated to show here.  Moreover, RNGs have a limited role to play in most kinds of low-discrepancy sequences, such as by generating a &quot;seed&quot; to start the sequence at.</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Low-discrepancy_sequence"><strong><em>low-discrepancy sequence</em></strong></a> (or <em>quasirandom sequence</em>) is a sequence of numbers that follow a uniform distribution, but are less likely to form &quot;clumps&quot; than independent uniform random numbers are.  The following are examples:</p>
+
+<ul>
+<li>Sobol and Halton sequences are too complicated to show here.</li>
+<li>Linear congruential generators with modulus <code>m</code>, a full period, and &quot;good lattice structure&quot;; a sequence of <code>n</code>-dimensional points is thus <code>[MLCG(i), MLCG(i+1), ..., MLCG(i+n-1)]</code> for each integer <code>i</code> in the interval <a href="L&#x27;Ecuyer%201999">1, <code>m</code></a><sup><a href="#Note31"><strong>(31)</strong></a></sup> (see example pseudocode below).</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<pre>METHOD MLCG(seed) // m = 262139
+  if seed&lt;=0: return error
+  return rem(92717*seed,262139)/262139.0
+END METHOD
+</pre>
+
+<p>In most cases, RNGs can be used to generate a &quot;seed&quot; to start the low-discrepancy sequence at.</p>
 
 <p><a id=Randomization_in_Simulations></a></p>
 
@@ -2307,6 +2320,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note29>(29)</sup> Weisstein, Eric W.  &quot;<a href="http://mathworld.wolfram.com/HyperspherePointPicking.html"><strong>Hypersphere Point Picking</strong></a>&quot;.  From MathWorld&mdash;A Wolfram Web Resource.</small></p>
 
 <p><small><sup id=Note30>(30)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
+
+<p><small><sup id=Note31>(31)</sup> P. L&#39;Ecuyer, &quot;Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure&quot;, January 1999.</small></p>
 
 <p><a id=Appendix></a></p>
 
