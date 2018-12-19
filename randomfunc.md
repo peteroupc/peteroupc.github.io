@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 15, 2018.
+Begun on June 4, 2017; last updated on Dec. 16, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -506,17 +506,15 @@ This section contains ways to choose one or more items from among a collection o
 <a id=Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List></a>
 #### Sampling With Replacement: Choosing a Random Item from a List
 
-To choose a random item from a list&mdash;
+_Sampling with replacement_  essentially means taking a random item and putting it back.  To choose a random item from a list&mdash;
 
 - whose size is known in advance, use the idiom `list[RNDINTEXC(size(list))]`; or
 - whose size is not known in advance, generate `RandomKItemsFromFile(file, 1)`, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling) (the result will be a 1-item list or be an empty list if there are no items).
 
-Choosing an item this way is also known as _sampling with replacement_.
-
 <a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a>
 #### Sampling Without Replacement: Choosing Several Unique Items
 
-There are several techniques (each a _sampling without replacement_) for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
+_Sampling without replacement_  essentially means taking a random item _without_ putting it back.   There are several approaches for choosing `k` unique items or values uniformly at random from among `n` available items or values, depending on such things as whether `n` is known and how big `n` and `k` are.
 
 1. **If `n` is not known in advance:** Use the _reservoir sampling_ method; see the `RandomKItemsFromFile` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling).
 2. **If `n` is relatively small (for example, if there are 200 available items, or there is a range of numbers from 0 to 200 to choose from):**  If **items are to be chosen from a list in relative order**, then the `RandomKItemsInOrder` method, in [**pseudocode given later**](#Pseudocode_for_Random_Sampling), demonstrates a solution.  Otherwise, one of the following will choose `k` items **in random order**:
@@ -535,7 +533,7 @@ There are several techniques (each a _sampling without replacement_) for choosin
     - a compressed bit set (e.g, "roaring bitmap", EWAH), and
     - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-    An alternative approach is to use a [**_linear congruential generator_**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with _full period_ and with modulus greater than `n`.  When using this approach, generate a seed with `RNDINTRANGE(1, n - 1)`, initialize the generator with the seed, then take the first `k` integers less than or equal to `n` with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup>[**(9)**](#Note9)</sup>
+    If memory is at a premium, an alternative approach is to use a [**_linear congruential generator_**](https://en.wikipedia.org/wiki/Linear_congruential_generator) with _full period_ and with modulus greater than `n`.  When using this approach, generate a seed with `RNDINTRANGE(1, n - 1)`, initialize the generator with the seed, then take the first `k` integers less than or equal to `n` with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup>[**(9)**](#Note9)</sup>
 
 <a id=Shuffling></a>
 #### Shuffling
@@ -841,9 +839,9 @@ The following pseudocode implements a method `WeightedChoice` that takes a singl
 >
 > 1. Assume we have the following list: `["apples", "oranges", "bananas", "grapes"]`, and `weights` is the following: `[3, 15, 1, 2]`.  The weight for "apples" is 3, and the weight for "oranges" is 15.  Since "oranges" has a higher weight than "apples", the index for "oranges" (1) is more likely to be chosen than the index for "apples" (0) with the `WeightedChoice` method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.
 >
->        index = WeightedChoice(weights)
->        // Get the actual item
->        item = list[index]
+>          index = WeightedChoice(weights)
+>          // Get the actual item
+>          item = list[index]
 >
 > 2. Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: `[[0, 5], [5, 10], [10, 11], [11, 13]]`.  If a random range is chosen, a random number can be chosen from that range using code like the following: `number = RNDNUMEXCRANGE(item[0], item[1])`. (See also "[**Mixtures of Distributions**](#Mixtures_of_Distributions)".)
 > 3. Assume the weights from example 1 are used and the list contains the following: `[0, 5, 10, 11, 13]` (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with `index = WeightedChoice(weights)`, a random number can be chosen from the corresponding range using code like the following: `number = RNDNUMEXCRANGE(list[index], list[index + 1])`. (This is how the C++ library expresses a _piecewise constant distribution_.)
@@ -960,7 +958,7 @@ If the number of items in a list is not known in advance, then the following pse
       return list
     end
 
-> **Note:** As (Efraimidis 2015)<sup>[**(18)**](#Note18)</sup> points out, weighted choice _with replacement_ on an indefinite-length data set is equivalent to doing one or more concurrent runs of weighted choice without replacement on that data set with `k = 1`.  (In the algorithm above, each run starts at the same position in the data set, but `file` is treated as a _view_ of that data set that traverses that data set independently of any other view.)
+> **Note:** Weighted choice _with replacement_ can be implemented by doing one or more concurrent runs of `RandomKItemsFromFileWeighted(file, 1)` (making sure each run traverses `file` the same way for multiple runs as for a single run) (Efraimidis 2015)<sup>[**(18)**](#Note18)</sup>.
 
 <a id=Continuous_Weighted_Choice></a>
 #### Continuous Weighted Choice

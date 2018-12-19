@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Dec. 15, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Dec. 16, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -623,20 +623,18 @@ the following idioms in an <code>if</code> condition:</p>
 
 <h4>Sampling With Replacement: Choosing a Random Item from a List</h4>
 
-<p>To choose a random item from a list&mdash;</p>
+<p><em>Sampling with replacement</em>  essentially means taking a random item and putting it back.  To choose a random item from a list&mdash;</p>
 
 <ul>
 <li>whose size is known in advance, use the idiom <code>list[RNDINTEXC(size(list))]</code>; or</li>
 <li>whose size is not known in advance, generate <code>RandomKItemsFromFile(file, 1)</code>, in <a href="#Pseudocode_for_Random_Sampling"><strong>pseudocode given later</strong></a> (the result will be a 1-item list or be an empty list if there are no items).</li>
 </ul>
 
-<p>Choosing an item this way is also known as <em>sampling with replacement</em>.</p>
-
 <p><a id=Sampling_Without_Replacement_Choosing_Several_Unique_Items></a></p>
 
 <h4>Sampling Without Replacement: Choosing Several Unique Items</h4>
 
-<p>There are several techniques (each a <em>sampling without replacement</em>) for choosing <code>k</code> unique items or values uniformly at random from among <code>n</code> available items or values, depending on such things as whether <code>n</code> is known and how big <code>n</code> and <code>k</code> are.</p>
+<p><em>Sampling without replacement</em>  essentially means taking a random item <em>without</em> putting it back.   There are several approaches for choosing <code>k</code> unique items or values uniformly at random from among <code>n</code> available items or values, depending on such things as whether <code>n</code> is known and how big <code>n</code> and <code>k</code> are.</p>
 
 <ol>
 <li><strong>If <code>n</code> is not known in advance:</strong> Use the <em>reservoir sampling</em> method; see the <code>RandomKItemsFromFile</code> method, in <a href="#Pseudocode_for_Random_Sampling"><strong>pseudocode given later</strong></a>.</li>
@@ -665,7 +663,7 @@ the following idioms in an <code>if</code> condition:</p>
 <li>a self-sorting data structure such as a <a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><strong>red&ndash;black tree</strong></a>, if the random items are to be retrieved in sorted order or in index order.</li>
 </ul>
 
-<p>An alternative approach is to use a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong><em>linear congruential generator</em></strong></a> with <em>full period</em> and with modulus greater than <code>n</code>.  When using this approach, generate a seed with <code>RNDINTRANGE(1, n - 1)</code>, initialize the generator with the seed, then take the first <code>k</code> integers less than or equal to <code>n</code> with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
+<p>If memory is at a premium, an alternative approach is to use a <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong><em>linear congruential generator</em></strong></a> with <em>full period</em> and with modulus greater than <code>n</code>.  When using this approach, generate a seed with <code>RNDINTRANGE(1, n - 1)</code>, initialize the generator with the seed, then take the first <code>k</code> integers less than or equal to <code>n</code> with that generator, then subtract 1 from each such integer.  These will be the randomly sampled indices (starting at 0) to items in the list.<sup><a href="#Note9"><strong>(9)</strong></a></sup></p></li>
 </ol>
 
 <p><a id=Shuffling></a></p>
@@ -1024,9 +1022,10 @@ END METHOD
 <ol>
 <li><p>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following pseudocode implements how to get a randomly chosen item from the list with that method.</p>
 
-<p>index = WeightedChoice(weights)
-   // Get the actual item
-   item = list[index]</p></li>
+<pre> index = WeightedChoice(weights)
+ // Get the actual item
+ item = list[index]
+</pre></li>
 <li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDNUMEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
 <li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDNUMEXCRANGE(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
@@ -1153,7 +1152,7 @@ end
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> As (Efraimidis 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup> points out, weighted choice <em>with replacement</em> on an indefinite-length data set is equivalent to doing one or more concurrent runs of weighted choice without replacement on that data set with <code>k = 1</code>.  (In the algorithm above, each run starts at the same position in the data set, but <code>file</code> is treated as a <em>view</em> of that data set that traverses that data set independently of any other view.)</p>
+<p><strong>Note:</strong> Weighted choice <em>with replacement</em> can be implemented by doing one or more concurrent runs of <code>RandomKItemsFromFileWeighted(file, 1)</code> (making sure each run traverses <code>file</code> the same way for multiple runs as for a single run) (Efraimidis 2015)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Continuous_Weighted_Choice></a></p>

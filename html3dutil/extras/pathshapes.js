@@ -109,6 +109,59 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
   this.closePath();
   return this;
 };
+
+/**
+ * Adds path segments to this path that form an axis-aligned rectangle with cut corners.
+ * <p>To use this method, you must include the script "extras/pathshapes.js";
+ * this is in addition to "extras/path.js". Example:<pre>
+ * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
+ * &lt;script type="text/javascript" src="extras/pathshapes.js">&lt;/script></pre>
+ * @param {number} x X coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's X axis points right and the Y axis down).
+ * @param {number} y Y coordinate of the rectangle's upper-left corner (assuming the
+ * coordinate system's X axis points right and the Y axis down).
+ * @param {number} w Width of the rectangle.
+ * @param {number} h Height of the rectangle.
+ * @param {number} arccx Horizontal extent (from end to end) of the rectangle's corners.
+ * Will be adjusted to be not less than 0 and not greater than "w".
+ * @param {number} arccy Vertical extent (from end to end) of the rectangle's corners.
+ * Will be adjusted to be not less than 0 and not greater than "h".
+ * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
+ */
+H3DU.GraphicsPath.prototype.cutRect = function(x, y, w, h, arccx, arccy) {
+  "use strict";
+  if(w < 0 || h < 0)return this;
+  var px, py;
+  arccx = Math.min(w, Math.max(0, arccx));
+  arccy = Math.min(h, Math.max(0, arccy));
+  var harccx = arccx * 0.5;
+  var harccy = arccy * 0.5;
+  px = x + harccx;
+  py = y;
+  this.moveTo(px, py);
+  px += w - arccx;
+  this.lineTo(px, py);
+  px += harccx;
+  py += harccy;
+  this.lineTo(px, py);
+  py += h - arccy;
+  this.lineTo(px, py);
+  px -= harccx;
+  py += harccy;
+  this.lineTo(px, py);
+  px -= w - arccx;
+  this.lineTo(px, py);
+  px -= harccx;
+  py -= harccy;
+  this.lineTo(px, py);
+  py -= h - arccy;
+  this.lineTo(px, py);
+  px += harccx;
+  py -= harccy;
+  this.lineTo(px, py);
+  this.closePath();
+  return this;
+};
 /**
  * Adds path segments to this path that form an axis-aligned ellipse given its center
  * and dimensions.
