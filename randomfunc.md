@@ -1838,7 +1838,7 @@ although the former method "may ... be slower" "in practice", according to a [**
 
 To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
-- generate, uniformly at random, a point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
+- generate, uniformly at random, a point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
