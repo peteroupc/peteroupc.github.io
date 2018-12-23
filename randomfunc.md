@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 21, 2018.
+Begun on June 4, 2017; last updated on Dec. 23, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -121,9 +121,9 @@ In general, this document does not cover how to choose an underlying RNG for a p
 
 This section describes how an underlying RNG can be used to generate independent uniformly-distributed random numbers.  Here is an overview of the methods described in this section.
 
-* Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTRANGEEXC`.
+* Random Integers: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDINTEXCRANGE`.
 * Random Numbers in 0-1 Bounded Interval: `RNDU01`, `RNDU01ZeroExc`, `RNDU01OneExc`, `RNDU01ZeroOneExc`.
-* Other Random Numbers: `RNDNUMRANGE`, `RNDNUMRANGEEXC`.
+* Other Random Numbers: `RNDNUMRANGE`, `RNDNUMEXCRANGE`.
 
 One method, `RNDINT`, described next, can serve as the basis for the remaining methods.
 
@@ -243,7 +243,7 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating i
 <a id=RNDINTRANGE_Random_Integers_in_N_M></a>
 ### `RNDINTRANGE`: Random Integers in [N, M]
 
-The na&iuml;ve way of generating a **random integer in the interval [`minInclusive`, `maxInclusive`]**, shown below, works well for unsigned integers and arbitrary-precision integers.
+The na&iuml;ve way of generating a **random integer in the interval [`minInclusive`, `maxInclusive`]**, shown below, works well for nonnegative integers and arbitrary-precision integers.
 
      METHOD RNDINTRANGE(minInclusive, maxInclusive)
        // minInclusive must not be greater than maxInclusive
@@ -380,7 +380,8 @@ For Java's `double` and `float` (or generally, any fixed-precision binary floati
 
     METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
        if minInclusive >= maxExclusive: return error
-       // NOTE: For signed integer formats, replace the following line
+       // NOTE: For integer formats that can express negative
+       // or nonnegative integers, replace the following line
        // with "if minInclusive >=0 or minInclusive + INT_MAX >=
        // maxExclusive", where `INT_MAX` has the same meaning
        // as in the pseudocode for `RNDINTRANGE`.
@@ -424,7 +425,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
          if negative: ret = 0 - ret
          if negative and ret == 0: continue
          // NOTE: For fixed-precision fixed-point numbers implemented
-         // using two's complement numbers (note 1), use the following line
+         // using two's complement numbers (note 3), use the following line
          // instead of the preceding three lines, where `QUANTUM` is the
          // smallest representable positive number in the fixed-point format:
          // if RNDINT(1) == 0: ret = (0 - QUANTUM) - ret
@@ -452,7 +453,7 @@ For other number formats (including Java's `double` and `float`), the pseudocode
 
 The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `b`-bit integer** (with maximum 2<sup>`b`</sup> - 1).
 
-In practice, memory is usually divided into _bytes_, or 8-bit unsigned integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
+In practice, memory is usually divided into _bytes_, or 8-bit nonnegative integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
 <a id=Certain_Programming_Environments></a>
 ### Certain Programming Environments
@@ -531,8 +532,8 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
     METHOD Shuffle(list)
        // NOTE: Check size of the list early to prevent
        // `i` from being less than 0 if the list's size is 0 and
-       // `i` is implemented using an unsigned type available
-       // in certain programming languages.
+       // `i` is implemented using an nonnegative integer
+       // type available in certain programming languages.
        if size(list) >= 2
           // Set i to the last item's index
           i = size(list) - 1
@@ -1058,7 +1059,7 @@ Generate two or more random numbers, each with a separate probability distributi
 6. **Reroll-the-highest:**  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.
 7. **Sum:** Add all generated numbers.
 8. **Mean:** Find the mean of all generated numbers (see the appendix).
-9. **Geometric transformation:** Treat the numbers as an _n_ dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(20)**](#Note20)</sup>, to that point.
+9. **Geometric transformation:** Treat the numbers as an _n_-dimensional point, then apply a geometric transformation, such as a rotation or other _affine transformation_<sup>[**(20)**](#Note20)</sup>, to that point.
 
 If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.
 
@@ -1831,14 +1832,13 @@ The following pseudocode shows how to generate, uniformly at random, an N-dimens
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
 - generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
-- generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(30)**](#Note30)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)).
+- generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(30)**](#Note30)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)),
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
 To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
-- generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix));
-- for 2 dimensions, generate, uniformly at random, a point on the surface of a circle with radius equal to `sqrt(RNDNUMRANGE(0, B * B - A * A) + A * A)` (Dupree and Fraley 2004); or
-- for 3 dimensions, generate, uniformly at random, a point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(0, pow(B, 3) - pow(A, 3)) + pow(A, 3), 1.0 / 3.0)` (Dupree and Fraley 2004).
+- generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
+- generate, uniformly at random, a point on the surface of a sphere with radius equal to `pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
@@ -1875,9 +1875,9 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
 If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _unbiasing_, _deskewing_, or _randomness extraction_, which are outside the scope of this document.</small>
 
-<small><sup id=Note2>(2)</sup>Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given in the pseudocode may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
+<small><sup id=Note2>(2)</sup> Note that if `MODULUS` is a power of 2 (for example, 256 or 2<sup>32</sup>), the `RNDINT` implementation given in the pseudocode may leave unused bits (for example, when truncating a random number to `wordBits` bits or in the special cases at the start of the method).  How a more sophisticated implementation may save those bits for later reuse is beyond this page's scope.
 
-There are other RNGs besides those that generate integers 0 or greater.  For example, Wichmann&ndash;Hill and dSFMT output numbers in the interval \[0, 1\).  For such RNGs, if the RNG is known to output numbers in the interval [**0, 1) evenly spaced by a number _p_, it can be transformed into an RNG that outputs integers in the interval [0, 1/_p_) by multiplying its outputs by _p_.  Otherwise, several of its outputs can be serialized to a sequence of 8-bit bytes, then the byte sequence sent to a [**hash function**](https://peteroupc.github.io/random.html#Hash_Functions) with an _n_-bit output (shorter than the byte sequence), thus turning the RNG into an RNG that outputs integers in the interval [0, 2<sup>_n_</sup>).
+There are other RNGs besides those that generate integers 0 or greater.  For example, Wichmann&ndash;Hill and dSFMT output numbers in the interval \[0, 1\).  For such RNGs, if the RNG is known to output numbers in the interval [**0, 1) evenly spaced by a number _p_, it can be transformed into an RNG that outputs integers in the interval [**0, 1/_p_) by multiplying its outputs by _p_.  Otherwise, several of its outputs can be serialized to a sequence of 8-bit bytes, then the byte sequence sent to a [**hash function**](https://peteroupc.github.io/random.html#Hash_Functions) with an _n_-bit output (shorter than the byte sequence), thus turning the RNG into an RNG that outputs integers in the interval [0, 2<sup>_n_</sup>).
 
 For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).</small>
 
@@ -1890,7 +1890,7 @@ For an exercise solved by this method, see A. Koenig and B. E. Moo, _Accelerated
 1. Depending on how `RNDU01OneExc()` is implemented, some integers can never occur with this idiom for large `maxExclusive` values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, the resulting number will have no more than 8 bits set to 1, so that not all numbers can "randomly" occur with `maxExclusive` greater than 256.
 2. Depending on the number format, rounding error can result in `maxExclusive` being returned in rare cases.  A more robust implementation could use a loop to check whether `maxExclusive` was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`.  Both modifications could still have the issue given in item 1.
 
-In most cases, a better approach is to transform the `RNDU01OneExc()` implementation (e.g., `Math.random()`) to an RNG that outputs positive integers or 0, and use that as the underlying RNG for `RNDINT` and thus `RNDINTEXC`; see the second paragraph of Note 2.</small>
+If an application is concerned about these issues, it can transform the `RNDU01OneExc()` implementation (e.g., `Math.random()`) to an RNG that outputs integers 0 or greater, and use that as the underlying RNG for `RNDINT` and thus `RNDINTEXC`; see the second paragraph of Note 2.</small>
 
 <small><sup id=Note6>(6)</sup> See, for example, the _Stack Overflow_ question "How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?", `questions/8019589`.</small>
 
@@ -1949,6 +1949,8 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 <small><sup id=Note29>(29)</sup> Weisstein, Eric W.  "[**Hypersphere Point Picking**](http://mathworld.wolfram.com/HyperspherePointPicking.html)".  From MathWorld&mdash;A Wolfram Web Resource.</small>
 
 <small><sup id=Note30>(30)</sup> The N numbers generated this way will form a point inside an N-dimensional _hypercube_ with length `2 * R` in each dimension and centered at the origin of space.</small>
+
+<small><sup id=Note31>(31)</sup> See the _Mathematics Stack Exchange_ question titled "Random multivariate in hyperannulus", `questions/1885630`.</small>
 
 <a id=Appendix></a>
 ## Appendix
