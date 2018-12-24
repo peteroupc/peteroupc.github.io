@@ -764,6 +764,55 @@ of failures of each kind of failure.
              ret[j]=ret[j]+points[i][j]*gammas[i-1]
        return ret
 
+  def hypercube_point(self, dims, radius = 1):
+      return [self.rndnumrange(-radius,radius) \
+         for _ in range(dims)]
+
+  def _norm(self, vec):
+      return math.sqrt(sum([x*x for x in vec]))
+
+  def _sumsq(self, vec):
+      return sum([x*x for x in vec])
+
+  def hypersphere_point(self, dims, radius = 1):
+      """ Generates a point on a 'dims'-dimensional
+           hypersphere (circle, sphere, etc.)
+         surface uniformly at random. """
+      x=0
+      while x==0:
+        ret=[self.normal() for _ in range(dims)]
+        x=self._norm(ret)
+      return [i*radius/x for i in ret]
+
+  def ball_point(self, dims, radius = 1):
+      """ Generates a point inside a 'dims'-dimensional
+           ball (disc, solid sphere, etc.) uniformly at random. """
+      x=0
+      while x==0:
+        ret=[self.normal() for _ in range(dims)]
+        x=math.sqrt(self._sumsq(ret)+self.exponential())
+      return [i*radius/x for i in ret]
+
+  def shell_point(self, dims, outerRadius = 1, innerRadius = 0.5):
+      """ Generates a point inside a 'dims'-dimensional
+           spherical shell (donut, hollow sphere, etc.)
+           uniformly at random. """
+      r=self.rndnumrange(innerRadius**dims,\
+           outerRadius**dims)**(1.0/dims)
+      return self.hypersphere_point(dims, r)
+
+  def latlon(self):
+      """ Generates a latitude and longitude, in radians,
+          uniformly at random.  West and south coordinates
+          are negative. """
+      lon=self.rndnumexcrange(-math.pi,math.pi)
+      latx=self.rndnumrange(-1,1)
+      while latx==-1 or latx==1:
+        latx=self.rndnumrange(-1,1)
+      lat=math.atan2(math.sqrt(1-latx*latx),latx) -\
+        math.pi * 0.5
+      return [lat,lon]
+
   def numbers_from_cdf(self, cdf, mn, mx, n = 1):
       """ Generates one or more random numbers from a probability
          distribution by numerically inverting its cumulative

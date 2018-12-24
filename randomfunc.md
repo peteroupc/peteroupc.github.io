@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 23, 2018.
+Begun on June 4, 2017; last updated on Dec. 24, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1794,8 +1794,8 @@ The following pseudocode generates, uniformly at random, a point inside an _n_-d
        end
        gammas=NewList()
        // Sample from a Dirichlet distribution
-       simplexDims=size(points)-1
-       for i in 0...size(points): AddItem(gammas, -ln(RNDU01ZeroOneExc()))
+       for i in 0...size(points): AddItem(gammas,
+           -ln(RNDU01ZeroOneExc()))
        tsum=0
        for i in 0...size(gammas): tsum = tsum + gammas[i]
        tot = 0
@@ -1819,9 +1819,13 @@ The following pseudocode generates, uniformly at random, a point inside an _n_-d
 The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(29)**](#Note29)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
-      ret=[]
-      for i in 0...dims: AddItem(ret, Normal(0, 1))
-      invnorm=1.0/Norm(ret)
+      x=0
+      while x==0
+        ret=[]
+        for i in 0...dims: AddItem(ret, Normal(0, 1))
+        x=Norm(ret)
+      end
+      invnorm=radius/x
       for i in 0...dims: ret[i]=ret[i]*invnorm
       return ret
     END METHOD
@@ -1831,7 +1835,7 @@ The following pseudocode shows how to generate, uniformly at random, an N-dimens
 
 To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
 
-- generate N `Normal(0, 1)` random numbers, generate `X = sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the random numbers, and multiply each random number by `R / X` (if `X` is 0, the process should repeat), or
+- follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`, or
 - generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(30)**](#Note30)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)),
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
@@ -1845,10 +1849,8 @@ To generate, uniformly at random, a point inside an N-dimensional spherical shel
 
 To generate, uniformly at random, a point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;
 
-- generate the longitude `RNDNUMEXCRANGE(-pi, pi)`, where the longitude ranges from -&pi; to &pi;, and
-- generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where&mdash;
-    - `x = RNDNUMRANGE(-1, 1)` and the latitude ranges from -&pi;/2 to &pi;/2 (the range includes the poles, which have many equivalent forms), or
-    - `x = 2 * RNDU01ZeroOneExc() - 1` and the latitude ranges from -&pi;/2 to &pi;/2 (the range excludes the poles).
+- generate the longitude `RNDNUMEXCRANGE(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
+- generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDNUMRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval includes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
 
 Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).
 
