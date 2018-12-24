@@ -742,10 +742,10 @@ of failures of each kind of failure.
         for i in range(len(mt))]
 
   def simplex_point(self, points):
-      """ Generates a point on the surface of an N-dimensional
+       """ Generates a point on the surface of an N-dimensional
            simplex (line segment, triangle, tetrahedron, etc.)
            with the given coordinates,
-          uniformly at random. """
+           uniformly at random. """
        ret=[]
        if len(points) > len(points[0])+1: raise ValueError
        if len(points)==1: # Return a copy of the point
@@ -894,6 +894,40 @@ of failures of each kind of failure.
       ret+=[[i, lastv]]
       return ret
 
+class ConvexPolygonSampler:
+  """ A class for uniform random sampling of
+      points from a convex polygon.  This
+      class only supports convex polygons because
+      the random sampling process involves
+      triangulating a polygon, which is trivial
+      for convex polygons only. "randgen" is a RandomGen
+      object, and "points" is a list of points
+      (two-item lists) that make up the polygon.  """
+  def __init__(self, randgen, points):
+    if len(points)<3: raise ValueError
+    self.randgen=randgen
+    self.points=[[p[0],p[1]] for p in points]
+    # Triangulate polygon
+    self.triangles=[\
+      [self.points[0],self.points[i],self.points[i+1]]\
+      for i in range(1,len(self.points)-1)]
+    # Calculate areas for each triangle
+    self.areas=[self._area(t) for t in self.triangles]
+
+  def _area(self,tri):
+    return abs(\
+            (tri[1][0]-tri[0][0])*\
+            (tri[2][1]-tri[0][1])-\
+            (tri[2][0]-tri[0][0])*\
+            (tri[1][1]-tri[0][1]))*0.5
+
+  def sample(self):
+    """ Choose a random point in the convex polygon
+        uniformly at random. """
+    index=self.randgen.weighted_choice(self.areas)
+    tri=self.triangles[index]
+    return self.randgen.simplex_point(tri)
+
 class AlmostRandom:
   def __init__(self, randgen, list):
     if len(list)==0:
@@ -943,14 +977,23 @@ if __name__ == "__main__":
     print("Times to failure (rate: %f)" % (rate))
     print([randgen.exponential(rate) for i in range(25)])
     #  Multinormal
+    print("Multinormal sample")
     for i in range(10):
        print(randgen.multinormal(None, [[1, 0],[0, 1]]))
     # Random walks
+    print("Random walks")
     print(randgen.randomwalk_u01(50))
     print(randgen.randomwalk_posneg1(50))
     # White noise
+    print("White noise")
     print([randgen.normal() for i in range(20)])
     # Demonstrate numerical CDF inversion
     print("Gaussian values by CDF inversion")
     normal_cdf = lambda x: 0.5*(1+math.erf(x/math.sqrt(2)))
     print(randgen.numbers_from_cdf(normal_cdf, -6, 6, n=30))
+    # Convex polygon sampler
+    poly=[[0,0],[0,20],[20,20],[20,0]]
+    cps=ConvexPolygonSampler(randgen, poly)
+    print("Sampling a rectangle")
+    for i in range(10):
+       print(cps.sample())
