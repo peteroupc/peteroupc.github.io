@@ -200,47 +200,47 @@
 END METHOD
 
 METHOD RndIntHelperPowerOfTwo(maxInclusive)
-        // NOTE: Finds the number of bits minus 1 needed
-        // to represent MODULUS (in other words, the number
-        // of random bits returned by RNG() ). This will
-        // be a constant here, though.
-        modBits = ln(MODULUS)/ln(2)
-        // Calculate the bit count of maxInclusive
-        bitCount = 0
-        tempnumber = maxInclusive
-        while tempnumber &gt; 0
-               // NOTE: If the programming language implements
-               // division with two integers by truncating to an
-               // integer, the division can be used as is without
-               // using a &quot;floor&quot; function.
-               tempnumber = floor(tempnumber / 2)
-               bitCount = bitCount + 1
-        end
-        while true
-               // Build a number with `bitCount` bits
-                tempnumber = 0
-                while bitCount &gt; 0
-                     wordBits = modBits
-                     rngNumber = RNG()
-                     if wordBits &gt; bitCount
-                        wordBits = bitCount
-                        // Truncate number to &#39;wordBits&#39; bits
-                        // NOTE: If the programming language supports a bitwise
-                        // AND operator, the mod operation can be implemented
-                        // as &quot;rndNumber AND ((1 &lt;&lt; wordBits) - 1)&quot;
-                        rngNumber = rem(rngNumber, (1 &lt;&lt; wordBits))
-                     end
-                     tempnumber = tempnumber &lt;&lt; wordBits
-                     // NOTE: In programming languages that
-                     // support the OR operator between two
-                     // integers, that operator can replace the
-                     // plus operator below.
-                     tempnumber = tempnumber + rngNumber
-                     bitCount = bitCount - wordBits
-                end
-                // Accept the number if allowed
-                if tempnumber &lt;= maxInclusive: return tempnumber
-         end
+  // NOTE: Finds the number of bits minus 1 needed
+  // to represent MODULUS (in other words, the number
+  // of random bits returned by RNG() ). This will
+  // be a constant here, though.
+  modBits = ln(MODULUS)/ln(2)
+  // Calculate the bit count of maxInclusive
+  bitCount = 0
+  tempnumber = maxInclusive
+  while tempnumber &gt; 0
+    // NOTE: If the programming language implements
+    // division with two integers by truncating to an
+    // integer, the division can be used as is without
+    // using a &quot;floor&quot; function.
+    tempnumber = floor(tempnumber / 2)
+    bitCount = bitCount + 1
+  end
+  while true
+    // Build a number with `bitCount` bits
+    tempnumber = 0
+    while bitCount &gt; 0
+      wordBits = modBits
+      rngNumber = RNG()
+      if wordBits &gt; bitCount
+        wordBits = bitCount
+        // Truncate number to &#39;wordBits&#39; bits
+        // NOTE: If the programming language supports a bitwise
+        // AND operator, the mod operation can be implemented
+        // as &quot;rndNumber AND ((1 &lt;&lt; wordBits) - 1)&quot;
+        rngNumber = rem(rngNumber, (1 &lt;&lt; wordBits))
+      end
+      tempnumber = tempnumber &lt;&lt; wordBits
+      // NOTE: In programming languages that
+      // support the OR operator between two
+      // integers, that operator can replace the
+      // plus operator below.
+      tempnumber = tempnumber + rngNumber
+      bitCount = bitCount - wordBits
+    end
+    // Accept the number if allowed
+    if tempnumber &lt;= maxInclusive: return tempnumber
+  end
 END METHOD
 
 METHOD RNDINT(maxInclusive)
@@ -2155,7 +2155,7 @@ END METHOD
 
 <h3>Random Points on the Surface of a Hypersphere</h3>
 
-<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
+<p>The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius <code>radius</code> (if <code>radius</code> is 1, the result can also serve as a unit vector in N-dimensional space).  Here, <code>Norm</code> is given in the appendix.  See also (Weisstein)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
 
 <pre>METHOD RandomPointInHypersphere(dims, radius)
   x=0
@@ -2174,7 +2174,7 @@ END METHOD
 
 <h3>Random Points Inside a Ball or Shell</h3>
 
-<p>To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;</p>
+<p>To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;</p>
 
 <ul>
 <li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code>, or</li>
@@ -2183,7 +2183,7 @@ END METHOD
 
 <p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for the two methods given here.</p>
 
-<p>To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
+<p>To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
 
 <ul>
 <li>generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the <a href="#Appendix"><strong>appendix</strong></a>), or</li>

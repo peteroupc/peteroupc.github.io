@@ -146,47 +146,47 @@ In this document, **`RNDINT(maxInclusive)`** is the core method for generating i
     END METHOD
 
     METHOD RndIntHelperPowerOfTwo(maxInclusive)
-            // NOTE: Finds the number of bits minus 1 needed
-            // to represent MODULUS (in other words, the number
-            // of random bits returned by RNG() ). This will
-            // be a constant here, though.
-            modBits = ln(MODULUS)/ln(2)
-            // Calculate the bit count of maxInclusive
-            bitCount = 0
-            tempnumber = maxInclusive
-            while tempnumber > 0
-                   // NOTE: If the programming language implements
-                   // division with two integers by truncating to an
-                   // integer, the division can be used as is without
-                   // using a "floor" function.
-                   tempnumber = floor(tempnumber / 2)
-                   bitCount = bitCount + 1
-            end
-            while true
-                   // Build a number with `bitCount` bits
-                    tempnumber = 0
-                    while bitCount > 0
-                         wordBits = modBits
-                         rngNumber = RNG()
-                         if wordBits > bitCount
-                            wordBits = bitCount
-                            // Truncate number to 'wordBits' bits
-                            // NOTE: If the programming language supports a bitwise
-                            // AND operator, the mod operation can be implemented
-                            // as "rndNumber AND ((1 << wordBits) - 1)"
-                            rngNumber = rem(rngNumber, (1 << wordBits))
-                         end
-                         tempnumber = tempnumber << wordBits
-                         // NOTE: In programming languages that
-                         // support the OR operator between two
-                         // integers, that operator can replace the
-                         // plus operator below.
-                         tempnumber = tempnumber + rngNumber
-                         bitCount = bitCount - wordBits
-                    end
-                    // Accept the number if allowed
-                    if tempnumber <= maxInclusive: return tempnumber
-             end
+      // NOTE: Finds the number of bits minus 1 needed
+      // to represent MODULUS (in other words, the number
+      // of random bits returned by RNG() ). This will
+      // be a constant here, though.
+      modBits = ln(MODULUS)/ln(2)
+      // Calculate the bit count of maxInclusive
+      bitCount = 0
+      tempnumber = maxInclusive
+      while tempnumber > 0
+        // NOTE: If the programming language implements
+        // division with two integers by truncating to an
+        // integer, the division can be used as is without
+        // using a "floor" function.
+        tempnumber = floor(tempnumber / 2)
+        bitCount = bitCount + 1
+      end
+      while true
+        // Build a number with `bitCount` bits
+        tempnumber = 0
+        while bitCount > 0
+          wordBits = modBits
+          rngNumber = RNG()
+          if wordBits > bitCount
+            wordBits = bitCount
+            // Truncate number to 'wordBits' bits
+            // NOTE: If the programming language supports a bitwise
+            // AND operator, the mod operation can be implemented
+            // as "rndNumber AND ((1 << wordBits) - 1)"
+            rngNumber = rem(rngNumber, (1 << wordBits))
+          end
+          tempnumber = tempnumber << wordBits
+          // NOTE: In programming languages that
+          // support the OR operator between two
+          // integers, that operator can replace the
+          // plus operator below.
+          tempnumber = tempnumber + rngNumber
+          bitCount = bitCount - wordBits
+        end
+        // Accept the number if allowed
+        if tempnumber <= maxInclusive: return tempnumber
+      end
     END METHOD
 
     METHOD RNDINT(maxInclusive)
@@ -1816,7 +1816,7 @@ The following pseudocode generates, uniformly at random, a point inside an _n_-d
 <a id=Random_Points_on_the_Surface_of_a_Hypersphere></a>
 ### Random Points on the Surface of a Hypersphere
 
-The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(29)**](#Note29)</sup>.
+The following pseudocode shows how to generate, uniformly at random, an N-dimensional point on the surface of an N-dimensional hypersphere, centered at the origin, of radius `radius` (if `radius` is 1, the result can also serve as a unit vector in N-dimensional space).  Here, `Norm` is given in the appendix.  See also (Weisstein)<sup>[**(29)**](#Note29)</sup>.
 
     METHOD RandomPointInHypersphere(dims, radius)
       x=0
@@ -1833,14 +1833,14 @@ The following pseudocode shows how to generate, uniformly at random, an N-dimens
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
 
-To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball of radius R, either&mdash;
+To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;
 
 - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt( S - ln(RNDU01ZeroExc()))`, where `S` is the sum of squares of the numbers in `ret`, or
 - generate a vector (list) of N `RNDNUMRANGE(-R, R)` random numbers<sup>[**(30)**](#Note30)</sup> until its _norm_ is R or less (see the [**appendix**](#Appendix)),
 
 although the former method "may ... be slower" "in practice", according to a [**MathWorld article**](http://mathworld.wolfram.com/BallPointPicking.html), which was the inspiration for the two methods given here.
 
-To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball) with inner radius A and outer radius B (where A is less than B), either&mdash;
+To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
 - generate, uniformly at random, a point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
 

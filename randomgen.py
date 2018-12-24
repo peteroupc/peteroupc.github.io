@@ -742,6 +742,10 @@ of failures of each kind of failure.
         for i in range(len(mt))]
 
   def simplex_point(self, points):
+      """ Generates a point on the surface of an N-dimensional
+           simplex (line segment, triangle, tetrahedron, etc.)
+           with the given coordinates,
+          uniformly at random. """
        ret=[]
        if len(points) > len(points[0])+1: raise ValueError
        if len(points)==1: # Return a copy of the point
@@ -764,8 +768,12 @@ of failures of each kind of failure.
              ret[j]=ret[j]+points[i][j]*gammas[i-1]
        return ret
 
-  def hypercube_point(self, dims, radius = 1):
-      return [self.rndnumrange(-radius,radius) \
+  def hypercube_point(self, dims, sizeFromCenter = 1):
+      """ Generates a point on the surface of a 'dims'-dimensional
+           hypercube (square, cube, etc.)
+           centered at the origin,
+          uniformly at random. """
+      return [self.rndnumrange(-sizeFromCenter,sizeFromCenter) \
          for _ in range(dims)]
 
   def _norm(self, vec):
@@ -775,9 +783,10 @@ of failures of each kind of failure.
       return sum([x*x for x in vec])
 
   def hypersphere_point(self, dims, radius = 1):
-      """ Generates a point on a 'dims'-dimensional
+      """ Generates a point on the surface of a 'dims'-dimensional
            hypersphere (circle, sphere, etc.)
-         surface uniformly at random. """
+           centered at the origin,
+          uniformly at random. """
       x=0
       while x==0:
         ret=[self.normal() for _ in range(dims)]
@@ -785,8 +794,9 @@ of failures of each kind of failure.
       return [i*radius/x for i in ret]
 
   def ball_point(self, dims, radius = 1):
-      """ Generates a point inside a 'dims'-dimensional
-           ball (disc, solid sphere, etc.) uniformly at random. """
+      """ Generates, uniformly at random,
+           a point inside a 'dims'-dimensional
+           ball (disc, solid sphere, etc.) centered at the origin. """
       x=0
       while x==0:
         ret=[self.normal() for _ in range(dims)]
@@ -796,6 +806,7 @@ of failures of each kind of failure.
   def shell_point(self, dims, outerRadius = 1, innerRadius = 0.5):
       """ Generates a point inside a 'dims'-dimensional
            spherical shell (donut, hollow sphere, etc.)
+           centered at the origin,
            uniformly at random. """
       r=self.rndnumrange(innerRadius**dims,\
            outerRadius**dims)**(1.0/dims)
