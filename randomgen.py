@@ -41,14 +41,18 @@ def numericalTable(func, x, y, n=100):
   return [[func(b), b] for b in ret]
 
 class RandomGen:
+  """ A class that implements many methods for
+      random number generation and sampling.  It takes
+      an underlying RNG as specified in the constructor."""
   def __init__(self,rng=None):
-    """ NOTES:
+    """ Initializes a new RandomGen instance.
+     NOTES:
 
      1. Assumes that 'rng' implements
      a 'randint(a, b)' method that returns a random
      integer in the interval [a, b].  Currently, this
      class assumes 'a' is always 0.
-     2. _rndint_ (and functions that ultimately call it) may be
+     2. 'rndint' (and functions that ultimately call it) may be
      slower than desirable if many random numbers are
      needed at once.  Ways to improve the performance
      of generating many random numbers at once, such
@@ -87,8 +91,9 @@ class RandomGen:
   def rndintexcrange(self, minInclusive, maxExclusive):
     return minInclusive + self.rndint(maxExclusive - minInclusive - 1)
 
-  def rndbits(self, bits):
-    return self.rndint((1 << bits) - 1)
+  def rndbits(self, n):
+    """ Generates an n-bit random integer. """
+    return self.rndint((1 << n) - 1)
 
   def rndu01(self):
     e=-_SIGBITS
