@@ -49,7 +49,9 @@ In the pseudocode, lists are indexed starting with 0.  That means the first item
 
 In this context, a _list_ is to be understood as a resizable array of items, not as a linked list.
 
-* `NewList()` creates a new empty list.
+A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]` is a three-item list.
+
+* `NewList()` or `[]` creates a new empty list.
 * `AddItem(list, item)` adds the item `item` to the list `list`.
 * `size(list)` returns the size of the list `list`.
 * `list[k]` refers to the item at index `k` of the list `list`.
