@@ -111,7 +111,7 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
 };
 
 /**
- * Adds path segments to this path that form an axis-aligned rectangle with cut corners.
+ * Adds path segments to this path that form an axis-aligned rectangle with beveled corners.
  * <p>To use this method, you must include the script "extras/pathshapes.js";
  * this is in addition to "extras/path.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/path.js">&lt;/script>
@@ -128,7 +128,7 @@ H3DU.GraphicsPath.prototype.roundRect = function(x, y, w, h, arccx, arccy) {
  * Will be adjusted to be not less than 0 and not greater than "h".
  * @returns {H3DU.GraphicsPath} This object. If "w" or "h" is 0, no path segments will be appended.
  */
-H3DU.GraphicsPath.prototype.cutRect = function(x, y, w, h, arccx, arccy) {
+H3DU.GraphicsPath.prototype.bevelRect = function(x, y, w, h, arccx, arccy) {
   "use strict";
   if(w < 0 || h < 0)return this;
   var px, py;

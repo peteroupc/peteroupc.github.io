@@ -90,7 +90,7 @@ and dimensions, start angle, and sweep angle.</li>
 ellipse, or a shape based on that arc and ellipse, given the ellipse&#39;s corner point
 and dimensions, start angle, and sweep angle.</li>
 <li><a href="#H3DU.GraphicsPath_arrow">arrow</a><br>Adds path segments to this path in the form of an arrow shape.</li>
-<li><a href="#H3DU.GraphicsPath_cutRect">cutRect</a><br>Adds path segments to this path that form an axis-aligned rectangle with cut corners.</li>
+<li><a href="#H3DU.GraphicsPath_bevelRect">bevelRect</a><br>Adds path segments to this path that form an axis-aligned rectangle with beveled corners.</li>
 <li><a href="#H3DU.GraphicsPath_ellipse">ellipse</a><br>Adds path segments to this path that form an axis-aligned ellipse given its center
 and dimensions.</li>
 <li><a href="#H3DU.GraphicsPath_ellipseForBox">ellipseForBox</a><br>Adds path segments to this path that form an axis-aligned ellipse, given the ellipse&#39;s corner point
@@ -597,11 +597,10 @@ segments before applying the operation.
 or holes. Subpaths that are holes have the opposite winding
 order (clockwise or counterclockwise) from the subpath
 that contains them.
-<li>To use this method, you must include the script &quot;extras/pathclip.js&quot;;
-this is in addition to &quot;extras/path.js&quot;. Example:</p>
+<li>To use this method, you must include the script
+&quot;extras/path.js&quot;. Example:</p>
 
 <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/path.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;extras/pathclip.js&quot;&gt;&lt;/script&gt;
 </pre>
 
 <p></ul></p>
@@ -756,11 +755,11 @@ this is in addition to &quot;extras/path.js&quot;. Example:</p>
 <p>This object. Nothing will be added to the path if the distance
 from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)</p>
 
-<p><a name='H3DU.GraphicsPath_cutRect'></a></p>
+<p><a name='H3DU.GraphicsPath_bevelRect'></a></p>
 
-<h3>H3DU.GraphicsPath#cutRect(x, y, w, h, arccx, arccy)</h3>
+<h3>H3DU.GraphicsPath#bevelRect(x, y, w, h, arccx, arccy)</h3>
 
-<p>Adds path segments to this path that form an axis-aligned rectangle with cut corners.</p>
+<p>Adds path segments to this path that form an axis-aligned rectangle with beveled corners.</p>
 
 <p>To use this method, you must include the script &quot;extras/pathshapes.js&quot;;
 this is in addition to &quot;extras/path.js&quot;. Example:</p>
