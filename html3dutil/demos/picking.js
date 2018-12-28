@@ -467,6 +467,18 @@ function makeRay(startPt, focusPt) {
 }
 
 /* exported raypick */
+/**
+ * @param x Same meaning as X coordinate of first parameter of
+ * H3DU.Math.vec3fromWindowPoint.
+ * @param y Same meaning as Y coordinate of first parameter of
+ * H3DU.Math.vec3fromWindowPoint.
+ * @param projView Same meaning as second parameter of
+ * H3DU.Math.vec3fromWindowPoint.
+ * @param viewport Same meaning as third parameter of
+ * H3DU.Math.vec3fromWindowPoint.
+ * @param objects Shape objects from which this method
+ * will choose one.
+ */
 function raypick(x, y, projView, viewport, objects) {
   "use strict";
   var near = H3DU.Math.vec3fromWindowPoint([x, y, 0], projView, viewport);

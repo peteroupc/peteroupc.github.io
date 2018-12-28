@@ -480,7 +480,7 @@ var InputTracker = H3DU.InputTracker;
  * @param {HTMLCanvasElement} [canvas] A canvas to associate with this
  * camera object. <i>This argument is deprecated.</i>
  */
-H3DU.Camera = function(batch, fov, nearZ, farZ, canvas) {
+H3DU.Camera = function(batch, fov, nearZ, farZ) {
   "use strict";
   if(nearZ <= 0)throw new Error("invalid nearZ");
   this.near = nearZ;
@@ -493,23 +493,7 @@ H3DU.Camera = function(batch, fov, nearZ, farZ, canvas) {
   this.lon = 270;
   this._updateView();
   this.perspectiveParams = {};
-  if(batch instanceof H3DU.Scene3D) {
-    console.warn("Using Scene3D in the Camera constructor is deprecated");
-    batch.setPerspective(fov, batch.getClientAspect(), nearZ, farZ);
-    this.perspectiveParams = {
-      "fov":fov,
-      "nearZ":nearZ,
-      "farZ":farZ
-    };
-  } else {
-    batch.perspectiveAspect(fov, nearZ, farZ);
-  }
-  // NOTE: For compatibility only, may be removed in the future
-  if(!canvas) {
-    canvas = document.getElementsByTagName("canvas")[0] || document;
-  }
-  // NOTE: For compatibility only, may be removed in the future
-  this.input = new H3DU.InputTracker(canvas);
+  batch.perspectiveAspect(fov, nearZ, farZ);
 };
 
 /** @ignore */

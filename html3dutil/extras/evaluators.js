@@ -431,8 +431,7 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * <li>Nephroid: R = O/2; D = O/2.</li>
  * <li>Ranunculoid: R = O/5; D = O/5.</li>
  * <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
- * <li>Circle: O = 0; the radius will be R - D.</li>
- * <li>Epicycloid: R = D.</li></ul>
+ * <li>Circle: O = 0; the radius will be R - D.</li></ul>
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>

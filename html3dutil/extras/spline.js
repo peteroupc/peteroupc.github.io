@@ -10,8 +10,8 @@
 
 /**
  * Creates a piecewise curve made up of B-spline curves from the control points of a
- * cubic TCB spline (tension/continuity/bias spline, also known as Kochanek-Bartels spline).
- * (If tension, continuity, and bias are all 0, the result is a cubic Catmull-Rom spline
+ * cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
+ * (If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
  * in uniform parameterization.)
  * <p>To use this method, you must include the script "extras/spline.js". Example:<pre>
  * &lt;script type="text/javascript" src="extras/spline.js">&lt;/script></pre>
@@ -154,7 +154,7 @@ H3DU.PiecewiseCurve.fromHermiteSpline = function(spline) {
 
 /**
  * Creates a piecewise curve made up of B-spline curves from the control points of a
- * cubic Catmull-Rom spline. A Catmull-Rom spline is defined by
+ * cubic Catmull&ndash;Rom spline. A Catmull&ndash;Rom spline is defined by
  * a collection of control points that the spline
  * will go through, and the shape of each curve segment is also determined by the positions
  * of neighboring points on the spline.
@@ -169,7 +169,7 @@ H3DU.PiecewiseCurve.fromHermiteSpline = function(spline) {
  * Default is 0.5.
  * @param {number} [closed] If true, connects the last control point of the curve with the first.
  * Default is false.
- * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull-Rom spline.
+ * @returns {H3DU.PiecewiseCurve} A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline.
  */
 H3DU.PiecewiseCurve.fromCatmullRomSpline = function(spline, param, closed) {
   "use strict";

@@ -471,7 +471,7 @@ illustrating a simple animation of 3D shapes.</li>
 the difference between <a href="H3DU.Math.html#H3DU.Math.quatNlerp">H3DU.Math.quatNlerp</a> and <a href="H3DU.Math.html#H3DU.Math.quatSlerp">H3DU.Math.quatSlerp</a>,
 both functions for interpolating quaternion rotations.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/demos/underlay.html"><strong>demos/underlay.html</strong></a> - Shows how
-<a href="H3DU.RenderPass.html">H3DU.RenderPass</a> can be used to draw a two-dimensional background under three-dimensional
+H3DU.RenderPass can be used to draw a two-dimensional background under three-dimensional
 content.</li>
 </ul>
 
@@ -604,16 +604,16 @@ interpolation and improved code on path triangulation.</li>
 
 <ul>
 <li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now <a href="H3DU.Mesh.html">H3DU.Mesh</a>.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
-<li><code>Scene3D</code>, now <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new <a href="H3DU.Batch3D.html">H3DU.Batch3D</a> class. Scene3D&#39;s <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
-<li>Alpha is disabled in WebGL contexts created with the <a href="H3DU.html#H3DU.get3DOr2DContext">H3DU.get3DOr2DContext</a> method.</li>
-<li>The <code>Scene3D</code> <a href="H3DU.Scene3D.html#H3DU.Scene3D_useProgram">H3DU.Scene3D#useProgram</a> method was deprecated and now does nothing.</li>
-<li>New <a href="H3DU.RenderPass.html">H3DU.RenderPass</a> class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> <a href="H3DU.Scene3D.html#H3DU.Scene3D_useFilter">H3DU.Scene3D#useFilter</a> method, which now does nothing.</li>
-<li>New <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a> class holds information about a frame buffer; it replaces <a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a>.</li>
-<li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>, <a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a>, and <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a>, respectively, which are not coupled to WebGL contexts.</li>
+<li><code>Scene3D</code>, now H3DU.Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new H3DU.Batch3D class. Scene3D&#39;s <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
+<li>Alpha is disabled in WebGL contexts created with the H3DU.get3DOr2DContext method.</li>
+<li>The <code>Scene3D</code> H3DU.Scene3D#useProgram method was deprecated and now does nothing.</li>
+<li>New H3DU.RenderPass class holds information about how a batch of 3D models is to be rendered. It replaces the <code>Scene3D</code> H3DU.Scene3D#useFilter method, which now does nothing.</li>
+<li>New H3DU.FrameBufferInfo class holds information about a frame buffer; it replaces H3DU.FrameBuffer.</li>
+<li>The <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code> classes are deprecated because they are too tightly coupled with a particular WebGL context. Instead, use <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>, H3DU.FrameBufferInfo, and H3DU.ShaderInfo, respectively, which are not coupled to WebGL contexts.</li>
 <li>Rendering can make use of vertex array objects internally, if supported by the WebGL implementation.</li>
 <li>The <a href="H3DU.Shape.html">H3DU.Shape</a> object is no longer coupled to vertex buffers.</li>
-<li>The <a href="H3DU.LightSource.html">H3DU.LightSource</a> class now supports a radius of the light.</li>
-<li>The <a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a> class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code>, which are tied to the WebGL context.</li>
+<li>The H3DU.LightSource class now supports a radius of the light.</li>
+<li>The H3DU.TextureLoader class was added for loading textures; a single object of this class can load and upload images from multiple WebGL contexts. This is unlike <code>BufferedMesh</code>, <code>FrameBuffer</code>, and <code>ShaderProgram</code>, which are tied to the WebGL context.</li>
 <li><code>GLMath</code>, now <a href="H3DU.Math.html">H3DU.Math</a>, was expanded with many new methods. The documentation for it is now very detailed. New methods include <a href="H3DU.Math.html#H3DU.Math.vec3perp">H3DU.Math.vec3perp</a>, <a href="H3DU.Math.html#H3DU.Math.vec3toWindowPoint">H3DU.Math.vec3toWindowPoint</a>, and <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a>.</li>
 <li>Two new classes in the &quot;extras&quot; folder support 2D text rendering and texture atlases (as sprite sheets), namely, <a href="H3DU.TextFont.html">H3DU.TextFont</a> and <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a>.</li>
 <li>The &quot;doc&quot; folder contains the documentation to the library in the form of Markdown text files.</li>
@@ -629,12 +629,12 @@ interpolation and improved code on path triangulation.</li>
 <li>Added <code>getBounds</code> and <code>toLinePath</code> methods to <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>, an extra, as well
 as an extra that adds methods that compute the intersection, difference, union, and XOR of two
 polygons. Path triangulation now supports polygons with holes.</li>
-<li>The default light configuration is no lights when creating a <a href="H3DU.LightSource.html">H3DU.LightSource</a>. The exception, for compatibility purposes, is when using a <a href="H3DU.Scene3D.html">H3DU.Scene3D</a> without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
-<li>The default value for specular materials (<a href="H3DU.Material.html">H3DU.Material</a>) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.</li>
+<li>The default light configuration is no lights when creating a H3DU.LightSource. The exception, for compatibility purposes, is when using a H3DU.Scene3D without rendering a custom <code>Batch3D</code>, in which case the default is one light source with its default values.</li>
+<li>The default value for specular materials (H3DU.Material) is now (0.1, 0.1, 0.1). The default value for shininess is now 32.</li>
 <li>The Mesh class no longer supports multiple primitive types (lines, triangles, points). Using different modes that use the same primitive type (for example, <code>TRIANGLE_FAN</code> and <code>QUAD_STRIP</code>) in the same mesh is still supported.</li>
 <li>Many of the tutorials were edited heavily to accommodate the new version. The <code>GraphicsPath</code> tutorial was added.</li>
 <li>There were also numerous bug fixes.</li>
-<li>A known issue: When using the <a href="H3DU.Camera.html">H3DU.Camera</a> in conjunction with the compatibility behavior of <a href="H3DU.Scene3D.html">H3DU.Scene3D</a>, only one side of the scene will appear lighted by default.</li>
+<li>A known issue: When using the <a href="H3DU.Camera.html">H3DU.Camera</a> in conjunction with the compatibility behavior of H3DU.Scene3D, only one side of the scene will appear lighted by default.</li>
 </ul>
 
 <p>See <a href="https://peteroupc.github.io/html3dutil/tutorial-history.html"><strong>older version history</strong></a>.</p>
@@ -667,53 +667,33 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
-<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
-<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
-<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
-<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
-<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
-<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
-<li><a href="H3DU.Material.html">H3DU.Material</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
-<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
-<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
-<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
-<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
-<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
-<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
-<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
-<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
