@@ -625,8 +625,7 @@ has an unsupported type.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
-is a CBOR object.</li>
+<li><i>obj</i>: A CBOR object (or an object convertible to a CBOR object) to add to this CBOR array.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -637,7 +636,7 @@ is a CBOR object.</li>
 
 <ul>
 <li><p>System.InvalidOperationException:
-This object is not an array.</p></li>
+This instance is not an array.</p></li>
 <li><p>System.ArgumentException:
 The type of  <i>obj</i>
 is not supported.</p></li>
