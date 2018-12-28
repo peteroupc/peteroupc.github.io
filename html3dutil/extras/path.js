@@ -1254,11 +1254,7 @@
    * Gets an array of points evenly spaced across the length
    * of the path.
    * @param {number} numPoints Number of points to return.
-   * @param {number} [flatness] When curves and arcs
-   * are decomposed to line segments for the purpose of
-   * calculating their length, the
-   * segments will be close to the true path of the curve by this
-   * value, given in units. If null, undefined, or omitted, default is 1.
+   * @param {number} [flatness] This parameter is no longer used.
    * @returns {Array<Array<number>>} Array of points lying on
    * the path and evenly spaced across the length of the path,
    * starting and ending with the path's endPoints. Returns
@@ -1268,6 +1264,9 @@
    * @memberof! H3DU.GraphicsPath#
    */
   GraphicsPath.prototype.getPoints = function(numPoints, flatness) {
+  // TODO: Add option to return points as {x:...,y:...}
+  // instead of three-element arrays. And add example for
+  // initializing THREE.js's BufferGeometry with such points
     if(numPoints < 1)return [];
     if(numPoints === 1) {
       return [this._start()];
@@ -4530,7 +4529,7 @@
      * Computes the combination of this path's shape with another
      * path's shape. The following points apply to this method:<ul>
      * <li>This method treats unclosed subpaths as implicitly closed
-     * by connecting their endPoints with their start points.
+     * by connecting their end points with their start points.
      * <li>Currently, the algorithm supports only polygons made up
      * of line segments, so curves and arcs are converted to line
      * segments before applying the operation.

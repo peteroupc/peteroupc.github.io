@@ -309,7 +309,7 @@ of the path.</p>
 
 <ul>
 <li><code>numPoints</code> (Type: number)<br>Number of points to return.</li>
-<li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments for the purpose of calculating their length, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
+<li><code>flatness</code> (Type: number) (optional)<br>This parameter is no longer used.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -589,7 +589,7 @@ that keeps straight lines straight and parallel lines parallel).</p>
 <p>Computes the combination of this path&#39;s shape with another
 path&#39;s shape. The following points apply to this method:<ul>
 <li>This method treats unclosed subpaths as implicitly closed
-by connecting their endPoints with their start points.
+by connecting their end points with their start points.
 <li>Currently, the algorithm supports only polygons made up
 of line segments, so curves and arcs are converted to line
 segments before applying the operation.

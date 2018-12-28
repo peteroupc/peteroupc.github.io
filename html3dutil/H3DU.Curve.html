@@ -81,6 +81,8 @@ path as this one but has its U coordinates remapped to fit the given range.</li>
 <li><a href="#H3DU.Curve_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
 <li><a href="#H3DU.Curve_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
 of U coordinates.</li>
+<li><a href="#H3DU.Curve_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
 <li><a href="#H3DU.Curve_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.Curve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.Curve_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
@@ -241,7 +243,38 @@ an arc-length parameterization.</p>
 
 <p>An array of curve positions. The first
 element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
-will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<p><a name='H3DU.Curve_getPointsAsObjects'></a></p>
+
+<h3>H3DU.Curve#getPointsAsObjects(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<h4>Example</h4>
+
+<pre>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.
+var points=curve.getPointsAsObjects(50)
+var buffer=new THREE.BufferGeometry()
+.setFromPoints(points);
+</pre>
 
 <p><a name='H3DU.Curve_jerk'></a></p>
 
