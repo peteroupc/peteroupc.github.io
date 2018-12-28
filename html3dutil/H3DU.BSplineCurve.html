@@ -128,7 +128,7 @@ have the same path as the original curve.</p>
 // the control points will initially be of this type of curve.
 // var srcBasis = [ .... ]; // To be supplied or filled in.
 // &quot;dstBasis&quot; is a 4x4 basis matrix for the destination curve type.
-// It&#39;s defined here as the Bezier basis matrix for this example
+// It&#39;s defined here as the B&amp;eacute;zier basis matrix for this example
 var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
 // Step 1: Invert the destination basis matrix
 var invertedDest=H3DU.Math.mat4invert(destBasis)
@@ -149,11 +149,11 @@ newControlPoints[1][i]=cp[1]
 newControlPoints[2][i]=cp[2]
 newControlPoints[3][i]=cp[3]
 }
-// Finally, generate a Bezier curve (which is a special case
+// Finally, generate a B&amp;eacute;zier curve (which is a special case
 // of a B-spline curve)
 var curve=new BSplineCurve(
 newControlPoints,
-[0,0,0,0,1,1,1,1] // cubic Bezier knot vector
+[0,0,0,0,1,1,1,1] // cubic B&amp;eacute;zier knot vector
 );
 // Alternatively, the curve could be generated with the
 // fromBezierCurve method:
@@ -737,8 +737,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
-<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
