@@ -85,21 +85,47 @@ of 3 vertices each.</li>
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.Mesh_bitangent3">bitangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
+semantic.</b></li>
 <li><a href="#H3DU.Mesh_color3">color3</a><br>Sets the current color for this mesh.</li>
+<li><a href="#H3DU.Mesh_enumPrimitives">enumPrimitives</a><br><b>Deprecated: For a replacement of this method,
+see the example given in <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_getAttribute">H3DU.MeshBuffer#getAttribute</a>.</b></li>
+<li><a href="#H3DU.Mesh_getBoundingBox">getBoundingBox</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().getBounds()</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_getVertex">getVertex</a><br>Gets the position of the vertex with the given
 index in this mesh.</li>
 <li><a href="#H3DU.Mesh_getVertexNormal">getVertexNormal</a><br>Gets the normal of the vertex with the given
 index in this mesh.</li>
+<li><a href="#H3DU.Mesh_merge">merge</a><br><b>Deprecated: Use <code>(mesh).toMeshBuffer().merge(other)</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_mode">mode</a><br>Changes the primitive mode for this mesh.</li>
 <li><a href="#H3DU.Mesh_normal3">normal3</a><br>Sets the current normal for this mesh.</li>
+<li><a href="#H3DU.Mesh_normalizeNormals">normalizeNormals</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().reverseNormals()</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 or points) that this mesh contains.</li>
+<li><a href="#H3DU.Mesh_recalcNormals">recalcNormals</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().recalcNormals()</code> instead.</b></li>
+<li><a href="#H3DU.Mesh_recalcTangents">recalcTangents</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. A similar method to
+this one may be exposed in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class&#39;s public API
+in the future.</b></li>
+<li><a href="#H3DU.Mesh_reverseNormals">reverseNormals</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().reverseNormals()</code> instead.</b></li>
+<li><a href="#H3DU.Mesh_reverseWinding">reverseWinding</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().reverseWinding()</code> instead.</b></li>
+<li><a href="#H3DU.Mesh_setColor3">setColor3</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().setColor(r)</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_setVertex">setVertex</a><br>Sets the X, Y, and Z coordinates of the vertex with the
 given index.</li>
 <li><a href="#H3DU.Mesh_setVertexNormal">setVertexNormal</a><br>Sets the normal associated with the vertex with the
 given index.</li>
+<li><a href="#H3DU.Mesh_tangent3">tangent3</a><br><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
+semantic.</b></li>
 <li><a href="#H3DU.Mesh_texCoord2">texCoord2</a><br>Sets the current texture coordinates for this mesh.</li>
 <li><a href="#H3DU.Mesh_toMeshBuffer">toMeshBuffer</a><br>Generates a mesh buffer from the information in this mesh object.</li>
+<li><a href="#H3DU.Mesh_toWireFrame">toWireFrame</a><br><b>Deprecated: Use <code>mesh.toMeshBuffer().wireFrame()</code>
+instead.</b></li>
+<li><a href="#H3DU.Mesh_transform">transform</a><br><b>Deprecated: Use <code>(this).toMeshBuffer().transform()</code> instead.</b></li>
 <li><a href="#H3DU.Mesh_vertex2">vertex2</a><br>Adds a new vertex to this mesh.</li>
 <li><a href="#H3DU.Mesh_vertex3">vertex3</a><br>Adds a new vertex to this mesh.</li>
 <li><a href="#H3DU.Mesh_vertexCount">vertexCount</a><br>Gets the number of vertices included in this mesh.</li>
@@ -259,6 +285,35 @@ vertices are swapped when generating that triangle.</p>
 
 <p>Default Value: <code>5</code></p>
 
+<p><a name='H3DU.Mesh_bitangent3'></a></p>
+
+<h3>H3DU.Mesh#bitangent3(x, [y], [z])</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+bitangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.BITANGENT">H3DU.Semantic.BITANGENT</a>
+semantic.</b></p>
+
+<p>Sets the current bitangent vector for this mesh. Future vertex positions
+defined (with vertex3()) will have this bitangent. The new current
+bitangent will apply to future vertices even if the current mode
+is TRIANGLE_FAN and some vertices were already given for
+that mode. The bitangent passed to this method will
+not automatically be normalized to unit length.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the bitangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate of the bitangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
 <p><a name='H3DU.Mesh_color3'></a></p>
 
 <h3>H3DU.Mesh#color3(r, [g], [b])</h3>
@@ -280,6 +335,45 @@ that mode. Only the red, green, and blue components will be used.</p>
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_enumPrimitives'></a></p>
+
+<h3>H3DU.Mesh#enumPrimitives(func)</h3>
+
+<p><b>Deprecated: For a replacement of this method,
+see the example given in <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_getAttribute">H3DU.MeshBuffer#getAttribute</a>.</b></p>
+
+<p>Enumerates the primitives (lines, triangles, and points) included
+in this mesh.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>func</code> (Type: function)<br>A function that will be called for each primitive in the mesh. The function takes a single parameter, consisting of an array of one, two, or three vertex objects. A point will have one vertex, a line two vertices and a triangle three. Each vertex object may have these properties:<ul> <li>&quot;position&quot;: A 3-element array of the vertex&#39;s position. Always present. <li>&quot;normal&quot;: A 3-element array of the vertex&#39;s normal. May be absent. <li>&quot;color&quot;: An at least 3-element array of the vertex&#39;s color. Each component generally ranges from 0 to 1. May be absent. <li>&quot;uv&quot;: A 2-element array of the vertex&#39;s texture coordinates (the first element is U, the second is V). Each component generally ranges from 0 to 1. May be absent. </ul></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_getBoundingBox'></a></p>
+
+<h3>H3DU.Mesh#getBoundingBox()</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().getBounds()</code> instead.</b></p>
+
+<p>Finds the tightest axis-aligned
+bounding box that holds all vertices in the mesh.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of six numbers describing the tightest
+axis-aligned bounding box
+that fits all vertices in the mesh. The first three numbers
+are the smallest-valued X, Y, and Z coordinates, and the
+last three are the largest-valued X, Y, and Z coordinates.
+If the mesh is empty, returns the array [Inf, Inf, Inf, -Inf,
+-Inf, -Inf]. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.Mesh_getVertex'></a></p>
 
@@ -322,6 +416,29 @@ normal, or null if the index is less than 0 or
 equals the number of vertices in this mesh or greater.
 Returns (0,0,0) if the given vertex exists but doesn&#39;t define
 a normal. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='H3DU.Mesh_merge'></a></p>
+
+<h3>H3DU.Mesh#merge(other)</h3>
+
+<p><b>Deprecated: Use <code>(mesh).toMeshBuffer().merge(other)</code> instead.</b></p>
+
+<p>Merges the vertices from another mesh into this one.
+The vertices from the other mesh will be copied into this one,
+and the other mesh&#39;s indices copied or adapted.
+Also, resets the primitive
+mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+will not build upon previous vertices.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>other</code> (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a> | <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is incompatible with the the other mesh&#39;s primitive type (for example, a triangle type with LINE_STRIP). <i>Passing a MeshBuffer to this method is for compatibility only.</i></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
 <p><a name='H3DU.Mesh_mode'></a></p>
 
@@ -373,6 +490,19 @@ not automatically be normalized to unit length.</p>
 
 <p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
+<p><a name='H3DU.Mesh_normalizeNormals'></a></p>
+
+<h3>H3DU.Mesh#normalizeNormals()</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().reverseNormals()</code> instead.</b></p>
+
+<p>Modifies this mesh by converting the normals it defines
+to &quot;unit vectors&quot; (&quot;normalized&quot; vectors with a length of 1).</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
 <p><a name='H3DU.Mesh_primitiveCount'></a></p>
 
 <h3>H3DU.Mesh#primitiveCount()</h3>
@@ -383,6 +513,97 @@ or points) that this mesh contains.</p>
 <h4>Return Value</h4>
 
 <p>Return value. (Type: number)</p>
+
+<p><a name='H3DU.Mesh_recalcNormals'></a></p>
+
+<h3>H3DU.Mesh#recalcNormals(flat, inward)</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().recalcNormals()</code> instead.</b></p>
+
+<p>Recalculates the normal vectors for triangles
+in this mesh. For this to properly affect shading, each triangle in
+the mesh must have its vertices defined in
+counterclockwise order (if the triangle is being rendered
+in a right-handed coordinate system). Each normal calculated will
+be normalized to have a length of 1 (unless the normal is (0,0,0)).</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>flat</code> (Type: Boolean)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance.</li>
+<li><code>inward</code> (Type: Boolean)<br>If true, the generated normals will point inward; otherwise, outward.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_recalcTangents'></a></p>
+
+<h3>H3DU.Mesh#recalcTangents()</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. A similar method to
+this one may be exposed in the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class&#39;s public API
+in the future.</b></p>
+
+<p>Recalculates the tangent and bitangent vectors for triangles
+in this mesh. This method only has an effect if this mesh
+includes normals and texture coordinates.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_reverseNormals'></a></p>
+
+<h3>H3DU.Mesh#reverseNormals()</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().reverseNormals()</code> instead.</b></p>
+
+<p>Modifies this mesh by reversing the sign of normals it defines.
+If this mesh defines normals, also resets the primitive
+mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+will not build upon previous vertices.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_reverseWinding'></a></p>
+
+<h3>H3DU.Mesh#reverseWinding()</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().reverseWinding()</code> instead.</b></p>
+
+<p>Reverses the winding order of the triangles in this mesh
+by swapping the second and third vertex indices of each one.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_setColor3'></a></p>
+
+<h3>H3DU.Mesh#setColor3(r, g, b)</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().setColor(r)</code> instead.</b></p>
+
+<p>Sets all the vertices in this mesh to the given color.
+This method doesn&#39;t change this mesh&#39;s current color.
+Only the color&#39;s red, green, and blue components will be used.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="H3DU.html#H3DU.toGLColor">color vector or string</a>, or the red color component (0-1).</li>
+<li><code>g</code> (Type: number)<br>Green component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number)<br>Blue component of the color (0-1). May be null or omitted if a string is given as the &quot;r&quot; parameter.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
 <p><a name='H3DU.Mesh_setVertex'></a></p>
 
@@ -426,6 +647,35 @@ equals the number of vertices in this mesh or greater.</p>
 
 <p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
+<p><a name='H3DU.Mesh_tangent3'></a></p>
+
+<h3>H3DU.Mesh#tangent3(x, [y], [z])</h3>
+
+<p><b>Deprecated: Deprecated because the default shader no longer
+uses tangent and bitangent attributes for normal mapping. To define
+tangent vectors for a mesh, use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class
+and create a buffer attribute with the <a href="H3DU.Semantic.html#H3DU.Semantic.TANGENT">H3DU.Semantic.TANGENT</a>
+semantic.</b></p>
+
+<p>Sets the current tangent vector for this mesh. Future vertex positions
+defined (with vertex3()) will have this normal. The new current
+tangent will apply to future vertices even if the current mode
+is TRIANGLE_FAN and some vertices were already given for
+that mode. The tangent passed to this method will
+not automatically be normalized to unit length.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of the tangent vector. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate of the tangent vector. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
 <p><a name='H3DU.Mesh_texCoord2'></a></p>
 
 <h3>H3DU.Mesh#texCoord2(u, [v])</h3>
@@ -461,6 +711,48 @@ right corner (by default).</p>
 <h4>Return Value</h4>
 
 <p>The generated mesh buffer. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+
+<p><a name='H3DU.Mesh_toWireFrame'></a></p>
+
+<h3>H3DU.Mesh#toWireFrame()</h3>
+
+<p><b>Deprecated: Use <code>mesh.toMeshBuffer().wireFrame()</code>
+instead.</b></p>
+
+<p>Converts this mesh to a new mesh with triangles converted
+to line segments. If the mesh consists
+of points or line segments, it will remain
+unchanged. Unlike in previous versions, the new mesh will
+not necessarily reuse the vertices contained in this one.</p>
+
+<h4>Return Value</h4>
+
+<p>A new mesh with triangles converted
+to lines. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
+
+<p><a name='H3DU.Mesh_transform'></a></p>
+
+<h3>H3DU.Mesh#transform(matrix)</h3>
+
+<p><b>Deprecated: Use <code>(this).toMeshBuffer().transform()</code> instead.</b></p>
+
+<p>Transforms the positions and normals of all the vertices currently
+in this mesh. The matrix won&#39;t affect vertices added afterwards, and
+won&#39;t affect other attributes, including tangents and bitangents.
+Also, resets the primitive
+mode (see <a href="H3DU.Mesh.html#H3DU.Mesh_mode">H3DU.Mesh#mode</a>) so that future vertices given
+will not build upon previous vertices. Future vertices should not be
+added after calling this method without calling mode() first.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="H3DU.Math.html#H3DU.Math.mat4projectVec3">H3DU.Math.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="H3DU.Math.html#H3DU.Math.mat4inverseTranspose3">H3DU.Math.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="H3DU.Mesh.html">H3DU.Mesh</a>)</p>
 
 <p><a name='H3DU.Mesh_vertex2'></a></p>
 
@@ -539,33 +831,53 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>

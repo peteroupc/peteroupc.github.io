@@ -21,6 +21,11 @@ library.</p>
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.createCanvasElement">createCanvasElement</a><br>Creates an HTML canvas element, optionally appending
+it to an existing HTML element.</li>
+<li><a href="#H3DU.get3DContext">get3DContext</a><br>Creates a 3D rendering context from an HTML canvas element.</li>
+<li><a href="#H3DU.get3DOr2DContext">get3DOr2DContext</a><br>Creates a 3D rendering context from an HTML canvas element,
+falling back to a 2D context if that fails.</li>
 <li><a href="#H3DU.getPromiseResults">getPromiseResults</a><br>Utility function that returns a promise that
 resolves after the given list of promises finishes
 its work.</li>
@@ -28,12 +33,74 @@ its work.</li>
 resolves or is rejected after the given list of promises finishes
 its work.</li>
 <li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
+<li><a href="#H3DU.is3DContext">is3DContext</a><br>Returns whether the given object is a 3D rendering context.</li>
 <li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.</li>
 <li><a href="#H3DU.loadStlFromUrl">loadStlFromUrl</a><br>Loads a .STL file asynchronously.</li>
 <li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.</li>
+<li><a href="#H3DU.renderLoop">renderLoop</a><br>This method will call a function once before returning,
+and queue requests to call that function once per frame,
+using <code>window.requestAnimationFrame</code>
+or a &quot;polyfill&quot; method.</li>
 <li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
 </ul>
+
+<p><a name='H3DU.createCanvasElement'></a></p>
+
+<h3>(static) H3DU.createCanvasElement(parent, width, height)</h3>
+
+<p>Creates an HTML canvas element, optionally appending
+it to an existing HTML element.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>parent</code> (Type: HTMLElement | null)<br>If non-null, the parent element of the new HTML canvas element. The element will be appended as a child of this parent.</li>
+<li><code>width</code> (Type: number | null)<br>Width of the new canvas element, or if null, the width a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting width will be rounded up. This parameter can&#39;t be a negative number.</li>
+<li><code>height</code> (Type: number | null)<br>Height of the new canvas element, or if null, the height a <code>canvas</code> element would ordinarily have under the CSS rules currently in effect where the canvas is. The resulting height will be rounded up. This parameter can&#39;t be a negative number.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting canvas element. (Type: Element)</p>
+
+<p><a name='H3DU.get3DContext'></a></p>
+
+<h3>(static) H3DU.get3DContext(canvasElement, err)</h3>
+
+<p>Creates a 3D rendering context from an HTML canvas element.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.</li>
+<li><code>err</code> (Type: function)<br>A function to call if an error occurs in creating the context. The function takes one parameter consisting of a human- readable error message. If &quot;err&quot; is null, window.alert() will be used instead.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3D rendering context, or null
+if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
+is null or not an HTML canvas element. (Type: Object)</p>
+
+<p><a name='H3DU.get3DOr2DContext'></a></p>
+
+<h3>(static) H3DU.get3DOr2DContext(canvasElement)</h3>
+
+<p>Creates a 3D rendering context from an HTML canvas element,
+falling back to a 2D context if that fails.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>canvasElement</code> (Type: HTMLCanvasElement)<br>An HTML canvas element.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3D or 2D rendering context, or null
+if an error occurred in creating the context. Returns null if &quot;canvasElement&quot;
+is null or not an HTML canvas element. (Type: Object)</p>
 
 <p><a name='H3DU.getPromiseResults'></a></p>
 
@@ -126,6 +193,22 @@ value in milliseconds, such as the parameter of a
 <pre>var angle = 360 * export var getTimePosition(timer, time, 5000);
 </pre>
 
+<p><a name='H3DU.is3DContext'></a></p>
+
+<h3>(static) H3DU.is3DContext(context)</h3>
+
+<p>Returns whether the given object is a 3D rendering context.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>context</code> (Type: Object)<br>The object to check.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: boolean)</p>
+
 <p><a name='H3DU.loadFileFromUrl'></a></p>
 
 <h3>(static) H3DU.loadFileFromUrl(url, [responseType])</h3>
@@ -204,6 +287,25 @@ This method should be called only once each frame.</p>
 the last known time held in the parameter &quot;timer&quot;.
 The number can include fractional frames. If an
 initial time or last known time wasn&#39;t set, returns 0. (Type: number)</p>
+
+<p><a name='H3DU.renderLoop'></a></p>
+
+<h3>(static) H3DU.renderLoop(func)</h3>
+
+<p>This method will call a function once before returning,
+and queue requests to call that function once per frame,
+using <code>window.requestAnimationFrame</code>
+or a &quot;polyfill&quot; method.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>func</code> (Type: function)<br>The function to call. The function takes one parameter, &quot;time&quot;, which is the number of milliseconds since the page was loaded.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This function doesn&#39;t return a value. (Type: void)</p>
 
 <p><a name='H3DU.toGLColor'></a></p>
 
@@ -293,33 +395,53 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>

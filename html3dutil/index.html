@@ -17,15 +17,29 @@ as Web sites, in browsers that support 3D drawing using the HTML5 Canvas.</li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.</li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A <a href="H3DU.Surface.html">surface evaluator object</a> for a B-spline (basis spline) surface,
 whose edges are made up of B-spline curves.</li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a><br>A <code>Batch3D</code> represents a so-called &quot;scene graph&quot;.</li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
+to create a B&eacute;zier curve.</b></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a><br><b>Deprecated: Instead of this class, use <a href="H3DU.BSplineSurface.html#H3DU.BSplineSurface.fromBezierSurface">H3DU.BSplineSurface.fromBezierSurface</a>
+to create a B&eacute;zier surface.</b></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a><br>A <b>vertex attribute object</b>.</li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a><br><b>Deprecated: This class is likely to become a private class.
+Use the <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> class instead, which is not coupled to WebGL
+contexts.</b></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a><br>A class for controlling the projection and
 view of a 3D scene, in the nature of an abstract &quot;camera&quot;.</li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a><br>A cube map, or a set of six textures forming the sides of a cube.</li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a><br>A curve evaluator object for a parametric curve.</li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a><br>An evaluator of curve evaluator objects for generating
 vertex attributes for a curve.</li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a><br><b>Deprecated: Use <a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a> instead.</b></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a><br>A <a href="H3DU.Surface.html">surface evaluator object</a> for a tube extruded from a parametric curve.</li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).</li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a><br><strong>Deprecated: This class is likely to become a private class.
+Use the FrameBufferInfo class instead, which is not coupled to WebGL
+contexts.</strong></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a><br>Describes a frame buffer.</li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a><br>A class for finding the frame rate of an HTML rendering.</li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a><br>A class that displays a frame counter HTML element.</li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a><br>Represents a two-dimensional path.</li>
@@ -33,6 +47,10 @@ of another circle, whose position is fixed, with a center of (0,0).</li>
 of another circle, whose position is fixed, with a center of (0,0).</li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a><br>A class for tracking key press, mouse, touch, and mouse wheel
 events.</li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a><br>Specifies parameters for light sources.</li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a><br>A collection of light sources.</li>
+<li><a href="H3DU.Material.html">H3DU.Material</a><br>Specifies parameters for geometry materials, which describe the appearance of a
+3D object.</li>
 <li><a href="H3DU.Math.html">H3DU.Math</a><br>A collection of math functions for working
 with vectors, matrices, quaternions, and other
 mathematical objects.</li>
@@ -43,12 +61,21 @@ of 4x4 transformation matrices.</li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a><br>Contains methods that create meshes
 of various geometric shapes and solids.</li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a><br>WaveFront OBJ format.</li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a><br>A material for physically-based rendering.</li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve
 made up of one or more individual curves.</li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.</li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a><br>Describes a batch (a scene graph of 3D objects) and options for
+rendering that batch.</li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a><br>An object that holds a rendering context for rendering
+3D objects.</li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.</li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a><br>Holds source code for a WebGL shader program.</li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a><br><b>Deprecated: This class is likely to become a private class.
+Use the <a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a> class instead, which is not coupled to WebGL
+contexts.</b></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a><br>An object that associates a geometric mesh (the shape of the object) with
 material data (which defines what is seen on the object&#39;s surface)
 and a transformation matrix (which defines the object&#39;s position and size).</li>
@@ -56,13 +83,24 @@ and a transformation matrix (which defines the object&#39;s position and size).<
 <li><a href="H3DU.Surface.html">H3DU.Surface</a><br>A surface evaluator object for a parametric surface.</li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a><br>An evaluator of surface evaluator objects for generating
 vertex attributes for a surface.</li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a><br><b>Deprecated: Use <a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a> instead.</b></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a><br>A <a href="H3DU.Surface.html">surface evaluator object</a> for a surface of revolution,
 which results by revolving
 a two-dimensional curve around an axis.</li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a><br>Represents a bitmap font, which supports drawing two-dimensional
 text.</li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a><br>Specifies a texture, which can serve as image data applied to
+the surface of a shape, or even a 2-dimensional array of pixels
+used for some other purpose, such as a depth map, a height map,
+a bump map, a specular map, and so on.</li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a><br>A texture atlas specifies the location and size of images within a single
 texture.</li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a><br>Specifies information about a texture, which can serve as image data applied to
+the surface of a shape, or even a 2-dimensional array of pixels
+used for some other purpose, such as a depth map, a height map,
+a bump map, a specular map, and so on.</li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a><br>An object that caches loaded textures and uploads them
+to WebGL contexts.</li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a><br>A class offering a convenient way to set a transformation
 from one coordinate system to another.</li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a><br>A <a href="H3DU.Curve.html">curve evaluator object</a> for a curve drawn by a circle that rolls along the X axis.</li>
@@ -198,33 +236,53 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.Batch3D.html">H3DU.Batch3D</a></li>
+<li><a href="H3DU.BezierCurve.html">H3DU.BezierCurve</a></li>
+<li><a href="H3DU.BezierSurface.html">H3DU.BezierSurface</a></li>
 <li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.BufferedMesh.html">H3DU.BufferedMesh</a></li>
 <li><a href="H3DU.Camera.html">H3DU.Camera</a></li>
+<li><a href="H3DU.CubeMap.html">H3DU.CubeMap</a></li>
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.CurveEval.html">H3DU.CurveEval</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
+<li><a href="H3DU.FrameBuffer.html">H3DU.FrameBuffer</a></li>
+<li><a href="H3DU.FrameBufferInfo.html">H3DU.FrameBufferInfo</a></li>
 <li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
 <li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
+<li><a href="H3DU.LightSource.html">H3DU.LightSource</a></li>
+<li><a href="H3DU.Lights.html">H3DU.Lights</a></li>
+<li><a href="H3DU.Material.html">H3DU.Material</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
 <li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
+<li><a href="H3DU.PbrMaterial.html">H3DU.PbrMaterial</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
+<li><a href="H3DU.RenderPass.html">H3DU.RenderPass</a></li>
+<li><a href="H3DU.Scene3D.html">H3DU.Scene3D</a></li>
 <li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
+<li><a href="H3DU.ShaderInfo.html">H3DU.ShaderInfo</a></li>
+<li><a href="H3DU.ShaderProgram.html">H3DU.ShaderProgram</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.SurfaceEval.html">H3DU.SurfaceEval</a></li>
 <li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.Texture.html">H3DU.Texture</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.TextureInfo.html">H3DU.TextureInfo</a></li>
+<li><a href="H3DU.TextureLoader.html">H3DU.TextureLoader</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
