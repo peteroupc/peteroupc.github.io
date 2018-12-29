@@ -22,6 +22,11 @@ can store vertices that make up triangles, line segments, or points.</p>
 <h3>Methods</h3>
 
 <ul>
+<li><a href="#H3DU.MeshBuffer.fromPositions">fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.</li>
+<li><a href="#H3DU.MeshBuffer.fromPositionsNormals">fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
+and vertex normals.</li>
+<li><a href="#H3DU.MeshBuffer.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br>Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and texture coordinates.</li>
 <li><a href="#H3DU.MeshBuffer_getAttribute">getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</li>
@@ -52,8 +57,8 @@ to the given color.</li>
 <li><a href="#H3DU.MeshBuffer_setColor3">setColor3</a><br><b>Deprecated: Use <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> instead.</b></li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer_toWireFrame">toWireFrame</a><br><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.html">H3DU.Mesh</a>.
-Use H3DU.MeshBuffer.wireFrame instead.</b></li>
+<li><a href="#H3DU.MeshBuffer_toWireFrame">toWireFrame</a><br><strong>Deprecated: Included here for compatibility with H3DU.Mesh.
+Use H3DU.MeshBuffer.wireFrame instead.</strong></li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
@@ -63,6 +68,56 @@ may be duplicates).</li>
 or point) in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_wireFrame">wireFrame</a><br>Converts the triangles in this mesh to line segments.</li>
 </ul>
+
+<p><a name='H3DU.MeshBuffer.fromPositions'></a></p>
+
+<h3>(static) H3DU.MeshBuffer.fromPositions(ret)</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ret</code> (Type: Array.&lt;number&gt;)<br>An array of vertex positions. This array&#39;s length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: MeshBuffer)</p>
+
+<p><a name='H3DU.MeshBuffer.fromPositionsNormals'></a></p>
+
+<h3>(static) H3DU.MeshBuffer.fromPositionsNormals(ret)</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions
+and vertex normals.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ret</code> (Type: Array.&lt;number&gt;)<br>An array of vertex positions. This array&#39;s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: MeshBuffer)</p>
+
+<p><a name='H3DU.MeshBuffer.fromPositionsNormalsUV'></a></p>
+
+<h3>(static) H3DU.MeshBuffer.fromPositionsNormalsUV(ret)</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and texture coordinates.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ret</code> (Type: Array.&lt;number&gt;)<br>An array of vertex positions. This array&#39;s length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: MeshBuffer)</p>
 
 <p><a name='H3DU.MeshBuffer_getAttribute'></a></p>
 
@@ -220,8 +275,8 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>,
-<a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>. (Type: number)</p>
+<p>Either H3DU.MeshBuffer.TRIANGLES,
+H3DU.MeshBuffer.LINES, or H3DU.MeshBuffer.POINTS. (Type: number)</p>
 
 <p><a name='H3DU.MeshBuffer_recalcNormals'></a></p>
 
@@ -345,7 +400,7 @@ stored in a vertex buffer.</p>
 <ul>
 <li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
 <li><code>index</code> (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
-<li><code>buffer</code> (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored.</li>
+<li><code>buffer</code> (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.</li>
 <li><code>countPerValue</code> (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;countPerValue&quot; is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.</li>
 <li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;offset&quot; is taken from that accessor and this parameter is ignored.</li>
 <li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as &quot;countPerValue&quot;. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;stride&quot; is taken from that accessor and this parameter is ignored.</li>
@@ -415,7 +470,7 @@ for compatibility.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>primType</code> (Type: number)<br>The primitive type, either <a href="H3DU.Mesh.html#H3DU.Mesh.TRIANGLES">H3DU.Mesh.TRIANGLES</a>, <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>.</li>
+<li><code>primType</code> (Type: number)<br>The primitive type, either H3DU.MeshBuffer.TRIANGLES, H3DU.MeshBuffer.LINES, or H3DU.MeshBuffer.POINTS.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -426,8 +481,8 @@ for compatibility.</p>
 
 <h3>H3DU.MeshBuffer#toWireFrame()</h3>
 
-<p><b>Deprecated: Included here for compatibility with <a href="H3DU.Mesh.html">H3DU.Mesh</a>.
-Use H3DU.MeshBuffer.wireFrame instead.</b></p>
+<p><strong>Deprecated: Included here for compatibility with H3DU.Mesh.
+Use H3DU.MeshBuffer.wireFrame instead.</strong></p>
 
 <p>Creates a new mesh with triangles converted
 to line segments.</p>
@@ -516,11 +571,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="_anonymous__TriangleFan.html">&lt;anonymous&gt;~TriangleFan</a></li>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -531,14 +584,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
-<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
-<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
@@ -558,7 +608,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="InputTracker.html">InputTracker</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

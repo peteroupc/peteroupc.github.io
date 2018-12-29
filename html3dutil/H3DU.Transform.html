@@ -35,7 +35,6 @@ for describing 3D rotations).</li>
 in the form of an angle and an axis of
 rotation.</li>
 <li><a href="#H3DU.Transform_reset">reset</a><br>Resets this transform to the untransformed state.</li>
-<li><a href="#H3DU.Transform_resetTransform">resetTransform</a><br><strong>Deprecated: Use the &quot;reset&quot; method instead.</strong></li>
 <li><a href="#H3DU.Transform_setMatrix">setMatrix</a><br>Sets this transform&#39;s transformation matrix.</li>
 <li><a href="#H3DU.Transform_setOrientation">setOrientation</a><br><b>Deprecated: Use <a href="H3DU.Transform.html#H3DU.Transform_setRotation">H3DU.Transform#setRotation</a> instead.
 This method&#39;s name is inaccurate because orientations are not rotations.</b></li>
@@ -69,7 +68,7 @@ position, and matrix data.</p>
 on the state of this transform, will return either:<ul>
 <li>The 4x4 matrix passed to <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>, if the
 matrix was defined with that method
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.
 <li>The matrix resulting from the position, rotation, and scale properties,
 multiplied in that order, otherwise.
 </ul></p>
@@ -127,7 +126,7 @@ For each component, 1 means no scaling.</p>
 
 <p>Moves the relative position of an object from its original
 position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -153,7 +152,7 @@ in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -177,7 +176,7 @@ described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations). The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -209,7 +208,7 @@ in the form of an angle and an axis of
 rotation. The combined rotation will have the
 same effect as the new rotation followed by the existing rotation.
 Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -227,18 +226,6 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 <p><a name='H3DU.Transform_reset'></a></p>
 
 <h3>H3DU.Transform#reset()</h3>
-
-<p>Resets this transform to the untransformed state.</p>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)</p>
-
-<p><a name='H3DU.Transform_resetTransform'></a></p>
-
-<h3>H3DU.Transform#resetTransform()</h3>
-
-<p><strong>Deprecated: Use the &quot;reset&quot; method instead.</strong></p>
 
 <p>Resets this transform to the untransformed state.</p>
 
@@ -273,7 +260,7 @@ This method&#39;s name is inaccurate because orientations are not rotations.</b>
 
 <p>Sets this transform&#39;s rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -294,7 +281,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <p>Sets the relative position of an object from its original
 position. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -314,7 +301,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <p>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations). Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -343,7 +330,7 @@ transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
 
 <p>Sets this transform&#39;s rotation in the form of an angle and an axis of
 rotation. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -364,7 +351,7 @@ and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Tr
 
 <p>Sets the scale of an object relative to its original
 size. Has no effect if a matrix was defined with <a href="H3DU.Transform.html#H3DU.Transform_setMatrix">H3DU.Transform#setMatrix</a>
-and the transform wasn&#39;t reset yet with <a href="H3DU.Transform.html#H3DU.Transform_resetTransform">H3DU.Transform#resetTransform</a>.</p>
+and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 
 <h4>Parameters</h4>
 
@@ -397,11 +384,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="_anonymous__TriangleFan.html">&lt;anonymous&gt;~TriangleFan</a></li>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -412,14 +397,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
-<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
-<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
@@ -439,7 +421,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="InputTracker.html">InputTracker</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

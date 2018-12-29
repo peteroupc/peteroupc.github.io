@@ -71,7 +71,7 @@ cover the given surface.</p>
 
 <ul>
 <li><code>curve</code> (Type: Object)<br>A <a href="H3DU.Curve.html">curve evaluator object</a> that describes the parametric curve used to generate positions.</li>
-<li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is H3DU.MeshBuffer.LINES, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is H3DU.MeshBuffer.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
 <li><code>n</code> (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24.</li>
 <li><code>u1</code> (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
 <li><code>u2</code> (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
@@ -90,7 +90,7 @@ cover the given surface.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mode</code> (Type: number) (optional)<br>If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.LINES">H3DU.Mesh.LINES</a>, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is <a href="H3DU.Mesh.html#H3DU.Mesh.POINTS">H3DU.Mesh.POINTS</a>, generates a series of points along the curve. For any other value, this method has no effect.</li>
+<li><code>mode</code> (Type: number) (optional)<br>If this value is H3DU.MeshBuffer.LINES, or is null, undefined, or omitted, generates a series of lines defining the curve. If this value is H3DU.MeshBuffer.POINTS, generates a series of points along the curve. For any other value, this method has no effect.</li>
 <li><code>n</code> (Type: number) (optional)<br>Number of subdivisions of the curve to be drawn. Default is 24. If 0, this method has no effect. Throws an error if this value is less than 0.</li>
 <li><code>u1</code> (Type: number) (optional)<br>Starting point of the curve. Default is the starting coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 0 if not given.</li>
 <li><code>u2</code> (Type: number) (optional)<br>Ending point of the curve. Default is the ending coordinate given by the <a href="H3DU.Curve.html">curve evaluator object</a>, or 1 if not given.</li>
@@ -148,11 +148,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="_anonymous__TriangleFan.html">&lt;anonymous&gt;~TriangleFan</a></li>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -163,14 +161,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
-<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
-<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
@@ -190,7 +185,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="InputTracker.html">InputTracker</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

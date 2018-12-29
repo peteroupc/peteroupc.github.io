@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, define, exports, flatness */
+/* global H3DU, define, exports, flatness, tri */
 (function (g, f) {
   "use strict";
   if (typeof define === "function" && define.amd) {
@@ -3333,6 +3333,25 @@
       }
     }
     return tris;
+  };
+/**
+ * TODO: Not documented yet.
+ * @param {*} z
+ * @param {*} flatness
+ * @returns {*} Return value.
+ */
+  GraphicsPath.prototype.toMeshBuffer = function(z, flatness) {
+    if(typeof z === "undefined" || z === null)z = 0;
+    var tris = this.getTriangles(flatness);
+    var vertices = [];
+    for(var i = 0; i < tris.length; i++) {
+    // Position X, Y, Z; Normal NX, NY, NZ
+      vertices.push(
+      tri[0], tri[1], z, 0, 0, 1,
+      tri[2], tri[3], z, 0, 0, 1,
+      tri[4], tri[5], z, 0, 0, 1);
+    }
+    return H3DU.MeshBuffer.fromPositionsNormals(vertices);
   };
   /** @ignore */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {

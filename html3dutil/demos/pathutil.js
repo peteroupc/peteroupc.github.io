@@ -22,22 +22,6 @@ function getPoints(curves, numPoints, offset) {
   return points;
 }
 
-/* exported pathFloor */
-function pathFloor(path, z, flatness) {
-  "use strict";
-  if(typeof z === "undefined" || z === null)z = 0;
-  var tris = path.getTriangles(flatness);
-  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-    .normal3(0, 0, 1);
-  for(var i = 0; i < tris.length; i++) {
-    var tri = tris[i];
-    mesh.vertex3(tri[0], tri[1], z)
-      .vertex3(tri[2], tri[3], z)
-      .vertex3(tri[4], tri[5], z);
-  }
-  return mesh.toMeshBuffer();
-}
-
 /* exported pointMarch */
 function pointMarch(
   group, // shape group containing the marching points
@@ -74,6 +58,7 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
       Math.ceil(2 * thickness / flatness)).toMeshBuffer();
 }
 
+/* exported starPolygon */
 function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
   "use strict";
   var coords = [];
@@ -124,15 +109,4 @@ function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
     }
   }
   return retval;
-}
-
-/* exported starPolygonMesh */
-function starPolygonMesh(mesh, x, y, radius, points, skip) {
-  "use strict";
-  var sp = starPolygon(x, y, radius, points, skip);
-  mesh.mode(H3DU.Mesh.LINES);
-  for(var i = 0; i < sp.length; i += 2) {
-    mesh.vertex3(sp[i][0], sp[i][1], 0);
-    mesh.vertex3(sp[i + 1][0], sp[i + 1][1], 0);
-  }
 }

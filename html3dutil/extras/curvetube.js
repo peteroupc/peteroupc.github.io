@@ -308,11 +308,3 @@ H3DU.CurveTube.prototype.evaluate = function(u, v) {
   }
   return [sx, sy, sz];
 };
-/* exported CurveTube */
-/**
- * Alias for the {@link H3DU.CurveTube} class.
- * @constructor
- * @alias CurveTube
- * @deprecated Use {@link H3DU.CurveTube} instead.
- */
-var CurveTube = H3DU.CurveTube;

@@ -603,7 +603,7 @@ interpolation and improved code on path triangulation.</li>
 <h3>Version 2.0.0-beta1:</h3>
 
 <ul>
-<li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now <a href="H3DU.Mesh.html">H3DU.Mesh</a>.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
+<li>All classes in the main library are moved to a new namespace called <code>H3DU</code>.  For example, <code>Shape</code> is now <a href="H3DU.Shape.html">H3DU.Shape</a> and <code>Mesh</code> is now H3DU.Mesh.  Many classes in the &quot;extras&quot; directory are also moved to the <code>H3DU</code> namespace.</li>
 <li><code>Scene3D</code>, now H3DU.Scene3D, is no longer meant to be a scene graph of objects to draw. That job now belongs to the new H3DU.Batch3D class. Scene3D&#39;s <code>render</code> method now takes an array of <code>Batch3D</code>s to render. For compatibility, though, the methods allowing it to manage 3D models and the coordinate system, such as <code>makeShape</code> and <code>setPerspective</code>, can still be used until <code>H3DU.Scene3D</code> renders a custom <code>H3DU.Batch3D</code>. This compatibility behavior may be dropped in the future.</li>
 <li>Alpha is disabled in WebGL contexts created with the H3DU.get3DOr2DContext method.</li>
 <li>The <code>Scene3D</code> H3DU.Scene3D#useProgram method was deprecated and now does nothing.</li>
@@ -658,11 +658,9 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="_anonymous__TriangleFan.html">&lt;anonymous&gt;~TriangleFan</a></li>
 <li><a href="Camera.html">Camera</a></li>
-<li><a href="CurveTube.html">CurveTube</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="FrameCounter.html">FrameCounter</a></li>
-<li><a href="FrameCounterDiv.html">FrameCounterDiv</a></li>
 <li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -673,14 +671,11 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
-<li><a href="H3DU.FrameCounter.html">H3DU.FrameCounter</a></li>
-<li><a href="H3DU.FrameCounterDiv.html">H3DU.FrameCounterDiv</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MatrixStack.html">H3DU.MatrixStack</a></li>
-<li><a href="H3DU.Mesh.html">H3DU.Mesh</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
@@ -700,7 +695,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="InputTracker.html">InputTracker</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="ObjData.html">ObjData</a></li>
-<li><a href="PrimitiveCounter.html">PrimitiveCounter</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

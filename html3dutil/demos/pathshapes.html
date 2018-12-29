@@ -74,37 +74,38 @@ function makeLinePath(path, z, flatness) {
 function extrudePath(path, zStart, zEnd, flatness) {
   "use strict";
   var lines = path.getLines(flatness);
-  var mesh = new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES);
   var z1 = Math.min(zStart, zEnd);
   var z2 = Math.max(zStart, zEnd);
+  var vertices=[]
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
     var dx = line[2] - line[0];
     var dy = line[3] - line[1];
     var dot = dx * dx + dy * dy;
     if(dot === 0)continue;
-    mesh.vertex3(line[0], line[1], z1)
-   .vertex3(line[2], line[3], z1)
-   .vertex3(line[0], line[1], z2)
-   .vertex3(line[2], line[3], z1)
-   .vertex3(line[2], line[3], z2)
-   .vertex3(line[0], line[1], z2);
+    vertices.push(line[0], line[1], z1,
+     line[2], line[3], z1,
+     line[0], line[1], z2,
+     line[2], line[3], z1,
+     line[2], line[3], z2,
+     line[0], line[1], z2);
   }
-  return mesh.toMeshBuffer().recalcNormals(true);
+  return H3DU.MeshBuffer.fromPositions(vertices)
+     .recalcNormals(true);
 }
 function pathClosedFigure(path, zBottom, zTop, flatness) {
   "use strict";
   var mesh = new H3DU.MeshBuffer();
   mesh.merge(extrudePath(path, zBottom, zTop, flatness));
-  mesh.merge(pathFloor(path, zTop, flatness));
-  mesh.merge(pathFloor(path, zBottom, flatness).reverseWinding().reverseNormals());
+  mesh.merge(path.toMeshBuffer(zTop, flatness));
+  mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
   return mesh;
 }
 function createSampleShape(index) {
   "use strict";
   switch(index) {
   case 0:
-     return pathFloor(path, 0, 0.01);
+     return path.toMeshBuffer(0, 0.01);
   case 1:
     return extrudePath(path, -0.2, 0.2, 0.01);
   case 2:
