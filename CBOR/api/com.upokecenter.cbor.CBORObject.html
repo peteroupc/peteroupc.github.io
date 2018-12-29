@@ -11,8 +11,8 @@
 
 <p>Represents an object in Concise Binary Object Representation (CBOR) and
  contains methods for reading and writing CBOR data. CBOR is defined
- in RFC 7049.</p> <p><b>Converting CBOR objects</b> </p> <p>There are
- many ways to get a CBOR object, including from bytes, objects,
+ in RFC 7049.</p><p> </p><p><b>Converting CBOR objects</b> </p> <p>There
+ are many ways to get a CBOR object, including from bytes, objects,
  streams and JSON, as described below. </p> <p><b>To and from byte
  arrays:</b> The CBORObject.DecodeFromBytes method converts a byte
  array in CBOR format to a CBOR object. The EncodeToBytes method
@@ -2885,7 +2885,8 @@ valueOb</code> has an unsupported type.</p></li>
 
 **Parameters:**
 
-* <code>obj</code> - The parameter <code>obj</code> is a CBOR object.
+* <code>obj</code> - A CBOR object (or an object convertible to a CBOR object) to add
+ to this CBOR array.
 
 **Returns:**
 
@@ -2893,7 +2894,7 @@ valueOb</code> has an unsupported type.</p></li>
 
 **Throws:**
 
-* <code>IllegalStateException</code> - This object is not an array.
+* <code>IllegalStateException</code> - This instance is not an array.
 
 * <code>IllegalArgumentException</code> - The type of <code>obj</code> is not supported.
 
