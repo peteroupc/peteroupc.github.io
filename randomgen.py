@@ -447,6 +447,21 @@ class RandomGen:
        x=math.log(sigma)*2.0/pi if alpha==1 else math.tan(pi*0.5*alpha)
        return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
 
+  def moyal(self, mu=0, sigma=1):
+    """ Sample from a Moyal distribution, using the
+         method given in C. Walck, "Handbook on
+         Statistical Distributions for Experimentalists",
+         pp. 93-94."""
+    while True:
+      y=self.rndnumexcrange(-math.pi/2,math.pi/2)
+      while y==math.pi/2: y=self.rndnumexcrange(-math.pi/2,math.pi/2)
+      h=
+      tany=math.tan(y)
+      hy=math.exp(-(tany+math.exp(-tany))*0.5)
+      hy=hy/((math.cos(y)**2)*sqrt(2.0*math.pi))
+      if self.rndnumrange(0,0.912)<=hy:
+        return tany*sigma+mu
+
   def geometric(self, p):
      return self.negativebinomial(1, p)
 

@@ -39,15 +39,12 @@ in this shape group at the given index.</li>
 <li><a href="#H3DU.ShapeGroup_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this shape group.</li>
 <li><a href="#H3DU.ShapeGroup_removeShape">removeShape</a><br>Removes all instances of a 3D shape from this shape group</li>
-<li><a href="#H3DU.ShapeGroup_setMaterial">setMaterial</a><br>Sets the material used by all shapes in this shape group.</li>
 <li><a href="#H3DU.ShapeGroup_setPosition">setPosition</a><br>Sets the relative position of the shapes in this group
 from their original position.</li>
 <li><a href="#H3DU.ShapeGroup_setQuaternion">setQuaternion</a><br>Sets this shape group&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
 <li><a href="#H3DU.ShapeGroup_setScale">setScale</a><br>Sets the scale of this shape group relative to its original
 size.</li>
-<li><a href="#H3DU.ShapeGroup_setShader">setShader</a><br>Sets the shader program used by all shapes in this shape group.</li>
 <li><a href="#H3DU.ShapeGroup_setShape">setShape</a><br>Sets a shape or shape group at the given index in this shape group.</li>
-<li><a href="#H3DU.ShapeGroup_setTexture">setTexture</a><br>Sets the texture used by all shapes in this shape group.</li>
 <li><a href="#H3DU.ShapeGroup_setTransform">setTransform</a><br>Sets the transform used by this shape group to a copy
 of the given transform.</li>
 <li><a href="#H3DU.ShapeGroup_setVisible">setVisible</a><br>Sets whether this shape group will be drawn on rendering.</li>
@@ -196,22 +193,6 @@ and points) composed by all shapes in this shape group.</p>
 
 <p>This object. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
-<p><a name='H3DU.ShapeGroup_setMaterial'></a></p>
-
-<h3>H3DU.ShapeGroup#setMaterial(material)</h3>
-
-<p>Sets the material used by all shapes in this shape group.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>material</code> (Type: H3DU.Material)<br>The material to use.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
-
 <p><a name='H3DU.ShapeGroup_setPosition'></a></p>
 
 <h3>H3DU.ShapeGroup#setPosition(x, y, z)</h3>
@@ -274,22 +255,6 @@ rather than the transform for each shape in the group.</p>
 
 <p>This object. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
-<p><a name='H3DU.ShapeGroup_setShader'></a></p>
-
-<h3>H3DU.ShapeGroup#setShader(material)</h3>
-
-<p>Sets the shader program used by all shapes in this shape group.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>material</code> (Type: H3DU.ShaderInfo)<br>Source code for a WebGL shader program. <i>Using a H3DU.ShaderProgram here is deprecated.</i></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
-
 <p><a name='H3DU.ShapeGroup_setShape'></a></p>
 
 <h3>H3DU.ShapeGroup#setShape(index, shape)</h3>
@@ -306,22 +271,6 @@ rather than the transform for each shape in the group.</p>
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
-
-<p><a name='H3DU.ShapeGroup_setTexture'></a></p>
-
-<h3>H3DU.ShapeGroup#setTexture(material)</h3>
-
-<p>Sets the texture used by all shapes in this shape group.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>material</code> (Type: H3DU.Texture | String)<br>H3DU.Texture object, or a string with the URL of the texture data. In the case of a string the texture will be loaded via the JavaScript DOM&#39;s Image class. However, this method will not load that image if it hasn&#39;t been loaded yet. This parameter can also be a H3DU.FrameBuffer object that refers to a frame buffer; this can be useful if that frame buffer refers to a shader-generated texture (see the <code>procedtexture</code> demo in the HTML 3D Library to see how this is done). NOTE: The default shader program assumes that the texture is in <a href="H3DU.Math.html#H3DU.Math.colorTosRGB">companded sRGB</a>.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: Object)</p>
 
 <p><a name='H3DU.ShapeGroup_setTransform'></a></p>
 

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 25, 2018.
+Begun on June 4, 2017; last updated on Dec. 29, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -1777,7 +1777,7 @@ Miscellaneous:
 - **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDU01()` and `lamda` is a shape parameter (if 0, the result is a logistic distribution).
 - **Zeta distribution**: Generate `n = floor(pow(RNDU01ZeroOneExc(), -1.0 / r))`, and if `d / pow(2, r) < (d - 1) * RNDU01OneExc() * n / (pow(2, r) - 1.0)`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in Devroye 1986. A zeta distribution [**truncated**](#Censoring_and_Truncation) by rejecting random values greater than some positive integer is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 
-The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, the **multivariate _t_-copula**, and the **multivariate Poisson distribution**.
+The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) also contains implementations of the **power normal distribution**, the **power lognormal distribution**, the **Moyal distribution**, the **negative multinomial distribution**,  the **multivariate _t_-distribution**, the **multivariate _t_-copula**, and the **multivariate Poisson distribution**.
 
 <a id=Geometric_Sampling></a>
 ## Geometric Sampling
