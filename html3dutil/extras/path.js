@@ -2785,7 +2785,6 @@
   function orient2D(pa, pb, pc) {
     var detleft, detright, det;
     var detsum, errbound;
-    var cx, cy;
 
     detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
     detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
