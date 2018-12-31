@@ -2778,76 +2778,15 @@
   var EPSILON = 1.1102230246251565e-16;
   var ORIENT_ERROR_BOUND_2D = (3.0 + 16.0 * EPSILON) * EPSILON;
 
-  // orient2D and dependent functions were
+  // orient2D was
   // Adapted by Peter O. from the HE_Mesh library
   // written by Frederik Vanhoutte.
-
-  function cmpDoubleDouble(a, b) {
-    if(a[0] < b[0])return -1;
-    if(a[0] > b[0])return 1;
-    if(a[1] < b[1])return -1;
-    if(a[1] > b[1])return 1;
-    return 0;
-  }
-  function addDoubleDouble(a, b) {
-    var hi = a[0];
-    var lo = a[1];
-    var yhi = b[0];
-    var ylo = b[1];
-    if(isNaN(hi))return a;
-    if(isNaN(yhi))return b;
-    var H, h, T, t, S, s, e, f;
-    S = hi + yhi;
-    T = lo + ylo;
-    e = S - hi;
-    f = T - lo;
-    s = S - e;
-    t = T - f;
-    s = yhi - e + (hi - s);
-    t = ylo - f + (lo - t);
-    e = s + T;
-    H = S + e;
-    h = e + (S - H);
-    e = t + h;
-    var zhi = H + e;
-    var zlo = e + (H - zhi);
-    return [zhi, zlo];
-  }
-  function subDoubleDouble(a, b) {
-    if(isNaN(b[0]))return b;
-    return addDoubleDouble(a, [-b[0], -b[1]]);
-  }
-
-  function mulDoubleDouble(a, b) {
-    var hi = a[0];
-    var lo = a[1];
-    var yhi = b[0];
-    var ylo = b[1];
-    if(isNaN(hi))return a;
-    if(isNaN(yhi))return b;
-    var hx, tx, hy, ty, C, c;
-    C = 134217729.0 * hi;
-    hx = C - hi;
-    c = 134217729.0 * yhi;
-    hx = C - hx;
-    tx = hi - hx;
-    hy = c - yhi;
-    C = hi * yhi;
-    hy = c - hy;
-    ty = yhi - hy;
-    c = hx * hy - C + hx * ty + tx * hy + tx * ty +
-    (hi * ylo + lo * yhi);
-    var zhi = C + c;
-    hx = C - zhi;
-    return [zhi, c + hx];
-  }
 
   function orient2D(pa, pb, pc) {
     var detleft, detright, det;
     var detsum, errbound;
-    var ax, ay, bx, by, cx, cy;
-    var acx, bcx, acy, bcy;
-    var detleft1, det1;
+    var cx, cy;
+
     detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
     detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
     det = detleft - detright;
@@ -2870,21 +2809,12 @@
     if (det >= errbound || -det >= errbound) {
       return det < 0 ? -1 : det === 0 ? 0 : 1;
     }
-    det1 = [0.0, 0];
-    ax = [pa[0], 0];
-    ay = [pa[1], 0];
-    bx = [pb[0], 0];
-    by = [pb[1], 0];
-    cx = [pc[0], 0];
-    cy = [pc[1], 0];
-    acx = subDoubleDouble(ax, cx);
-    bcx = subDoubleDouble(bx, cx);
-    acy = subDoubleDouble(ay, cy);
-    bcy = subDoubleDouble(by, cy);
-    detleft1 = mulDoubleDouble(acx, bcy);
-    var detright1 = mulDoubleDouble(acy, bcx);
-    det1 = subDoubleDouble(detleft1, detright1);
-    return cmpDoubleDouble(det1, [0, 0]);
+/* TODO: use higher precision math for:
+    detleft = (pa[0] - pc[0]) * (pb[1] - pc[1]);
+    detright = (pa[1] - pc[1]) * (pb[0] - pc[0]);
+    det = detleft - detright;
+    return sgn(det); */
+    return 0;
   }
 
   /** @ignore */
@@ -2964,13 +2894,23 @@
     this.bounds = bounds;
     // Find the prevailing winding of the polygon
     var ori = 0;
+    var convex = true;
+    var convexOri = -2;
     var vert = this.vertexList.first();
+    var lastVert = this.vertexList.last().data;
     var firstVert = vert.data;
     while(vert) {
       var vn = vert.next ? vert.next.data : firstVert;
+      var vp = vert.prev ? vert.prev.data : lastVert;
+      if(convex) {
+        var cori = orient2D(vp, vert.data, vn);
+        if(convexOri !== -2 && cori !== convexOri)convex = false;
+        convexOri = cori;
+      }
       ori += vert.data[0] * vn[1] - vert.data[1] * vn[0];
       vert = vert.next;
     }
+    this.convex = convex;
     this.winding = ori === 0 ? 0 : ori < 0 ? -1 : 1;
   };
   Triangulate._Contour.prototype.findVisiblePoint = function(x, y) {
@@ -3079,14 +3019,7 @@
     return innerReflexes[0][2];
   };
 
-  // decomposePolygon and dependent functions were
-  // Adapted by Peter O. from the HE_Mesh library
-  // written by Frederik Vanhoutte.
-
-/* exported getLineIntersectionInto2D */
-/* exported getLineIntersectionInto2D */
-/* exported getLineIntersectionInto2D */
-/* exported getLineIntersectionInto2D */
+/*
   function getLineIntersectionInto2D(a1, a2, b1, b2, p) {
     var s1 = [a1[0] - a2[0], a1[1] - a2[1]];
     var s2 = [b1[0] - b2[0], b1[1] - b2[1]];
@@ -3102,10 +3035,6 @@
     }
   }
 
-/* exported getSegmentIntersection2D */
-/* exported getSegmentIntersection2D */
-/* exported getSegmentIntersection2D */
-/* exported getSegmentIntersection2D */
   function getSegmentIntersection2D(ap1, ap2, bp1, bp2) {
     var A = [ap2[0] - ap1[0], ap2[1] - ap1[1], 0];
     var B = [bp2[0] - bp1[0], bp2[1] - bp1[1], 0];
@@ -3132,27 +3061,25 @@
     }
     return ip;
   }
-
-/* exported addSublist */
-/* exported addSublist */
-/* exported addSublist */
-/* exported addSublist */
-  function addSublist(dst, src, i1, i2) {
-    for(var i = i1; i < i2; i++) {
-      dst.push(src[i]);
-    }
-  }
+*/
   function decomposePolygon(pointlist, accumulator) {
     if (pointlist.length < 3) {
       return;
     }
     // TODO
-    throw new Error("not implemented");
+    console.warn("not implemented");
+    accumulator.push(pointlist);
   }
 
-  function decomposeTriangles(points, tris) {
+  function decomposeTriangles(points, tris, isConvex) {
     var polys = [];
-    decomposePolygon(points, polys);
+    if(isConvex) {
+      // Already found to be convex, so
+      // this is trivial
+      polys.push(points);
+    } else {
+      decomposePolygon(points, polys);
+    }
     if(points.length > 0 && polys.length === 0)throw new Error();
     for(var i = 0; i < polys.length; i++) {
       var poly = polys[i];
@@ -3257,13 +3184,13 @@
     var vertices = [];
     for(var i = 0; i < tris.length; i++) {
       var tri = tris[i];
-    // Position X, Y, Z; Normal NX, NY, NZ
+    // Position X, Y, Z; Normal NX, NY, NZ; texture U, V
       vertices.push(
-      tri[0], tri[1], z, 0, 0, 1,
-      tri[2], tri[3], z, 0, 0, 1,
-      tri[4], tri[5], z, 0, 0, 1);
+      tri[0], tri[1], z, 0, 0, 1, tri[0], tri[1],
+      tri[2], tri[3], z, 0, 0, 1, tri[2], tri[3],
+      tri[4], tri[5], z, 0, 0, 1, tri[4], tri[5]);
     }
-    return H3DU.MeshBuffer.fromPositionsNormals(vertices);
+    return H3DU.MeshBuffer.fromPositionsNormalsUV(vertices);
   };
   /** @ignore */
   Triangulate._connectContours = function(src, dst, maxPoint, dstNode) {
@@ -3283,6 +3210,9 @@
     }
     vpnode = dst.insertAfter(maxPoint.data, vpnode);
     dst.insertAfter(dstNode.data, vpnode);
+    // Connecting two polygons, even if convex, may not
+    // result in a convex polygon
+    dst.convex = false;
     count += 2;
     return count;
   };
@@ -3312,7 +3242,7 @@
       vertices.push([vert.data[0], vert.data[1]]);
       vert = vert.next;
     }
-    decomposeTriangles(vertices, tris);
+    decomposeTriangles(vertices, tris, contour.convex);
   };
 
   // //////////////////////////////////////////////////////////////////////////////////////////////
