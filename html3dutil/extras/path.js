@@ -2069,8 +2069,6 @@
 
 /**
  * Adds a line segment to this path.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {number} x0 X coordinate of the line segment's starting point.
  * The <code>moveTo</code> method will be called on the starting point.
  * @param {number} y0 Y coordinate of the line segment's starting point.
@@ -2084,8 +2082,6 @@
   };
 /**
  * Adds path segments to this path that form a polygon or a connected line segment strand.
- * <p>To use this method, you must include the script "extras/path.js". Example:<pre>
- * &lt;script type="text/javascript" src="extras/path.js">&lt;/script></pre>
  * @param {Array<number>} pointCoords An array of numbers containing the X and Y coordinates
  * of each point in the sequence of line segments. Each pair of numbers gives the X and Y
  * coordinates, in that order, of one of the points in the sequence.

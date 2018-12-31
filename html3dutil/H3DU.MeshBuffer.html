@@ -17,7 +17,8 @@ the values of one attribute of the mesh, such as positions,
 vertex normals, and texture coordinates. A mesh buffer
 can store vertices that make up triangles, line segments, or points.</p>
 
-<p>This constructor creates an empty mesh buffer.</p>
+<p>This constructor creates an empty mesh buffer and sets the array
+of vertex indices to null.</p>
 
 <h3>Methods</h3>
 
@@ -63,7 +64,8 @@ Use H3DU.MeshBuffer.wireFrame instead.</strong></li>
 in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates).</li>
+may be duplicates), or if there is no index buffer, the maximum
+number of items that a buffer attribute can hold.</li>
 <li><a href="#H3DU.MeshBuffer_vertexIndices">vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
 or point) in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_wireFrame">wireFrame</a><br>Converts the triangles in this mesh to line segments.</li>
@@ -328,7 +330,8 @@ Due to the z-fighting effect, drawing a two-sided mesh is
 recommended only if face culling is enabled.</p>
 
 <pre>var twoSidedMesh = originalMesh.merge(
-new H3DU.MeshBuffer().merge(originalMesh).reverseWinding().reverseNormals()
+new H3DU.MeshBuffer().merge(originalMesh)
+.reverseWinding().reverseNormals()
 );
 </pre>
 
@@ -517,7 +520,8 @@ other attributes will be unaffected.</p>
 
 <p>Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
-may be duplicates).</p>
+may be duplicates), or if there is no index buffer, the maximum
+number of items that a buffer attribute can hold.</p>
 
 <h4>Return Value</h4>
 
