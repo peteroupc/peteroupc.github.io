@@ -17,7 +17,7 @@
 <li><code><a href="#AllowDuplicateKeys">AllowDuplicateKeys</a></code> - Gets a value indicating whether to allow duplicate keys when reading CBOR objects from a data stream.</li>
 <li><code><a href="#Ctap2Canonical">Ctap2Canonical</a></code> - Gets a value indicating whether CBOR objects are written out using the CTAP2 canonical CBOR encoding form, which is useful for implementing Web Authentication.</li>
 <li><code><a href="#Default">public static readonly PeterO.Cbor.CBOREncodeOptions Default;</a></code> - Default options for CBOR objects.</li>
-<li><code><a href="#DefaultCtap2Canonical">public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;</a></code> - Not documented yet.</li>
+<li><code><a href="#DefaultCtap2Canonical">public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;</a></code> - Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications).</li>
 <li><code><a href="#UseIndefLengthStrings">UseIndefLengthStrings</a></code> - Gets a value indicating whether to encode strings with an indefinite-length encoding under certain circumstances.</li>
 </ul>
 
@@ -66,7 +66,7 @@
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions Default;
 </pre>
 
-<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding. These are recommended settings for the options that may be adopted by certain CBORObject methods in the next major version.</p>
+<p>Default options for CBOR objects. Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
 
 <p><a id="DefaultCtap2Canonical"></a></p>
 
@@ -75,7 +75,7 @@
 <pre>public static readonly PeterO.Cbor.CBOREncodeOptions DefaultCtap2Canonical;
 </pre>
 
-<p>Not documented yet.</p>
+<p>Default options for CBOR objects serialized using the CTAP2 canonicalization (used in Web Authentication, among other specifications). Disallow duplicate keys, and always encode strings using definite-length encoding.</p>
 
 <p><a id="AllowDuplicateKeys"></a></p>
 
