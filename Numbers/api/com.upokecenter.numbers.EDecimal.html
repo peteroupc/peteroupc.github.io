@@ -3531,8 +3531,13 @@ there may still be some trailing zeros in the mantissa (significand).</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>divisor</code> - The parameter <code>divisor</code> is an EDecimal object.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is an EContext object.</p></li>
+<li><p><code>divisor</code> - The number to divide by, .</p></li>
+<li><p><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result, and of the intermediate integer
+division. If <code>HasFlags</code> of the context is true, will also store
+the flags resulting from the operation (the flags are in addition to
+the pre-existing flags). Can be null, in which the precision is
+unlimited.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3553,14 +3558,21 @@ the given precision.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>divisor</code> - The number to divide by.</p></li>
-<li><p><code>ctx</code> - The parameter <code>ctx</code> is not documented yet.</p></li>
+<li><p><code>divisor</code> - The number to divide by, .</p></li>
+<li><p><code>ctx</code> - An arithmetic context object to control the precision, rounding,
+and exponent range of the result, but not also of the intermediate
+integer division. If <code>HasFlags</code> of the context is true, will
+also store the flags resulting from the operation (the flags are in
+addition to the pre-existing flags). Can be null, in which the
+precision is unlimited.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An EDecimal object.</li>
+<li>The remainder of the two numbers. Signals FlagInvalid and returns
+not-a-number (NaN) if the divisor is 0, or if the result doesn&#39;t fit
+the given precision.</li>
 </ul>
 
 <h3>RemainderNaturalScale</h3>
