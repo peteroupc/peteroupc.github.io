@@ -295,7 +295,9 @@ Gets the outermost tag for this CBOR data item, or -1 if the item is
 untagged.</li>
 <li><code>CBORObject GetOrDefault​(Object key,
         CBORObject defaultValue)</code><br>
-Not documented yet.</li>
+Gets the value of a CBOR object by integer index in this array or by CBOR
+object key in this map, or a default value if that value is not
+found.</li>
 <li><code>int getSimpleValue()</code><br>
 Gets the simple value ID of this object, or -1 if this object is not a
 simple value (including if the value is a floating-point number).</li>
@@ -307,9 +309,11 @@ array.</li>
 <li><code>int hashCode()</code><br>
 Calculates the hash code of this object.</li>
 <li><code>boolean HasMostOuterTag​(int tagValue)</code><br>
-Not documented yet.</li>
+Returns whether this object has an outermost tag and that tag is of the
+given number.</li>
 <li><code>boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
-Not documented yet.</li>
+Returns whether this object has an outermost tag and that tag is of the
+given number.</li>
 <li><code>boolean HasTag​(int tagValue)</code><br>
 Returns whether this object has a tag of the given number.</li>
 <li><code>boolean HasTag​(com.upokecenter.numbers.EInteger bigTagValue)</code><br>
@@ -921,20 +925,29 @@ opposed to CBORObject.Null).</p></li>
 <pre>public CBORObject GetOrDefault​(Object key, CBORObject defaultValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Gets the value of a CBOR object by integer index in this array or by CBOR
+ object key in this map, or a default value if that value is not
+ found.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>key</code> - The parameter <code>key</code> is not documented yet.</p></li>
-<li><p><code>defaultValue</code> - The parameter <code>defaultValue</code> is not documented
-yet.</p></li>
+<li><p><code>key</code> - An arbitrary object. If this is a CBOR map, this parameter is
+converted to a CBOR object serving as the key to the map or index to
+the array, and can be null. If this is a CBOR array, the key must be
+an integer 0 or greater and less than the size of the array, and may
+be any object convertible to a CBOR integer.</p></li>
+<li><p><code>defaultValue</code> - A value to return if an item with the given key doesn&#39;t
+exist, or if the CBOR object is an array and the key is not an
+integer 0 or greater and less than the size of the array.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>A CBORObject object.</li>
+<li>The CBOR object referred to by index or key in this array or map. If
+this is a CBOR map, returns null if an item with the given key
+doesn&#39;t exist.</li>
 </ul>
 
 <h3>get</h3>
@@ -3467,18 +3480,27 @@ if the given key is not found or this object is not a map.</li>
 <pre>public boolean HasMostOuterTag​(int tagValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object has an outermost tag and that tag is of the
+ given number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>tagValue</code> - The parameter <code>tagValue</code> is not documented yet.</li>
+<li><code>tagValue</code> - The tag number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if this object has an outermost tag and that tag is of
+the given number; otherwise, <code>false</code>.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than
+0.</li>
 </ul>
 
 <h3>HasMostOuterTag</h3>
@@ -3486,25 +3508,29 @@ if the given key is not found or this object is not a map.</li>
 <pre>public boolean HasMostOuterTag​(com.upokecenter.numbers.EInteger bigTagValue)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns whether this object has an outermost tag and that tag is of the
+ given number.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigTagValue</code> - The parameter <code>bigTagValue</code> is not documented yet.</li>
+<li><code>bigTagValue</code> - The tag number.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either <code>true</code> or <code>false</code>.</li>
+<li><code>true</code> if this object has an outermost tag and that tag is of
+the given number; otherwise, <code>false</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is
-null.</li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less
+than 0.</p></li>
 </ul>
 
 <h3>HasTag</h3>
@@ -3530,8 +3556,9 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>IllegalArgumentException</code> - TagValue is less than 0.</p></li>
-<li><p><code>NullPointerException</code> - The parameter &quot;obj&quot; is null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>tagValue</code> is less than
+0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>tagValue</code> is null.</p></li>
 </ul>
 
 <h3>HasTag</h3>
@@ -3557,8 +3584,10 @@ otherwise, <code>false</code>.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>NullPointerException</code> - BigTagValue is null.</p></li>
-<li><p><code>IllegalArgumentException</code> - BigTagValue is less than 0.</p></li>
+<li><p><code>NullPointerException</code> - The parameter <code>bigTagValue</code> is
+null.</p></li>
+<li><p><code>IllegalArgumentException</code> - The parameter <code>bigTagValue</code> is less
+than 0.</p></li>
 </ul>
 
 <h3>Insert</h3>
