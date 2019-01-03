@@ -2348,10 +2348,6 @@ This object is not a byte string.</li>
 
 <p>The CBOR object referred to by index or key in this array or map. If this is a CBOR map, returns null if an item with the given key doesn&#39;t exist.</p>
 
-<p><b>Return Value:</b></p>
-
-<p>The CBOR object with the given key or index.</p>
-
 <p><a id="HasMostOuterTag_int"></a></p>
 
 <h3>HasMostOuterTag</h3>
@@ -2370,13 +2366,14 @@ This object is not a byte string.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li>System.ArgumentException:
-&quot;tagValue&quot; is less than 0.</li>
+The parameter <i>tagValue</i>
+is less than 0.</li>
 </ul>
 
 <p><a id="HasMostOuterTag_PeterO_Numbers_EInteger"></a></p>
@@ -2397,15 +2394,17 @@ This object is not a byte string.</li>
 
 <p><b>Return Value:</b></p>
 
-<p><code>true</code> if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
+<p><code>true</code>  if this object has an outermost tag and that tag is of the given number; otherwise,  <code>false</code> .</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
 <li><p>System.ArgumentNullException:
-&quot;bigTagValue&quot; is null.</p></li>
+The parameter <i>bigTagValue</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-&quot;bigTagValue&quot; is less than 0.</p></li>
+The parameter <i>bigTagValue</i>
+is less than 0.</p></li>
 </ul>
 
 <p><a id="HasTag_int"></a></p>
@@ -2431,8 +2430,12 @@ This object is not a byte string.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentException:
-&quot;tagValue&quot; is less than 0.</li>
+<li><p>System.ArgumentException:
+The parameter <i>tagValue</i>
+is less than 0.</p></li>
+<li><p>System.ArgumentNullException:
+The parameter  <i>tagValue</i>
+is null.</p></li>
 </ul>
 
 <p><a id="HasTag_PeterO_Numbers_EInteger"></a></p>
@@ -2459,9 +2462,11 @@ This object is not a byte string.</li>
 
 <ul>
 <li><p>System.ArgumentNullException:
-&quot;bigTagValue&quot; is null.</p></li>
+The parameter <i>bigTagValue</i>
+is null.</p></li>
 <li><p>System.ArgumentException:
-&quot;bigTagValue&quot; is less than 0.</p></li>
+The parameter <i>bigTagValue</i>
+is less than 0.</p></li>
 </ul>
 
 <p><a id="Insert_int_object"></a></p>
