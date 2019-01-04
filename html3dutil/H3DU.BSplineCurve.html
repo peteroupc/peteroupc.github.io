@@ -21,7 +21,7 @@ point is spaced along the curve. Together with rational B-spline curves (see
 below), this makes B-spline curves very powerful,
 since they can describe nearly all curves commonly used in computer
 graphics, including line segments, circles, ellipses, parabolas, and
-irregular smooth curves.</p>
+irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve&#39;s control points leads to the same transformation of the resulting curve.</p>
 
 <p><b>B&eacute;zier Curves</b></p>
 
@@ -115,10 +115,34 @@ another, see the example.</p>
 <ul>
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
 <li><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.</li>
-<li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.WEIGHTED_BIT">H3DU.BSplineCurve.WEIGHTED_BIT</a>, <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.HOMOGENEOUS_BIT">H3DU.BSplineCurve.HOMOGENEOUS_BIT</a>, and <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.DIVIDE_BIT">H3DU.BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.</li>
 </ul>
 
 <h4>Example</h4>
+
+<p>The following function can be used
+to convert an array of control points, each consisting of conventional
+coordinates and a weight, to homogeneous coordinates.
+For example, the single-control point
+&#39;[[2, 3, 4, 0.1]]&#39; becomes &#39;[[0.2, 0.3, 0.4, 0.1]]&#39;; the
+return value can then be used in the BSplineCurve constructor
+to create a rational B-Spline curve.</p>
+
+<pre>function convertToHomogen(cp) {
+var ret = [];
+var cplen = cp[0].length;
+for(var i = 0; i &lt; cp.length; i++) {
+var outp = [];
+var w = cp[i][cplen - 1];
+for(var j = 0; j &lt; cplen - 1; j++) {
+outp[j] = cp[i][j] * w;
+}
+outp[cplen - 1] = w;
+ret.push(outp);
+}
+return ret;
+};
+</pre>
 
 <p>The following code converts a cubic (degree-3)
 curve from one kind to another. The converted curve will generally
@@ -166,15 +190,6 @@ newControlPoints,
 <li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
 by the last coordinate of the point and omit the last
 coordinate.</li>
-<li><a href="#H3DU.BSplineCurve.HOMOGENEOUS_BIT">HOMOGENEOUS_BIT</a><br><strong>Deprecated: This bit is deprecated because the B-spline
-equation works the same whether control points are in conventional
-coordinates or in homogeneous coordinates.</strong></li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_BIT">WEIGHTED_BIT</a><br><b>Deprecated: Support for this control point format may be dropped
-in the future. Instead of using this bit, supply control points in homogeneous
-coordinates (where each other coordinate is premultiplied by the last)
-and use <code>DIVIDE_BIT</code> to convert the
-results to conventional coordinates.</b></li>
-<li><a href="#H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS">WEIGHTED_DIVIDE_BITS</a><br><strong>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</strong></li>
 </ul>
 
 <h3>Methods</h3>
@@ -192,7 +207,7 @@ be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.clampedKnots">clampedKnots</a><br>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector curve will start and end at the first and last control points and will
+except that with the knot vector the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve_endPoints">endPoints</a><br>Returns the starting and coordinates of this curve.</li>
@@ -238,47 +253,6 @@ If this bit is set, the length of each control point must be at least 2.</p>
 1 is a <i>rational</i> B-spline curve.</p>
 
 <p>Default Value: <code>2</code></p>
-
-<p><a name='H3DU.BSplineCurve.HOMOGENEOUS_BIT'></a></p>
-
-<h3>H3DU.BSplineCurve.HOMOGENEOUS_BIT (constant)</h3>
-
-<p><strong>Deprecated: This bit is deprecated because the B-spline
-equation works the same whether control points are in conventional
-coordinates or in homogeneous coordinates.</strong></p>
-
-<p>Indicates that each other coordinate of each control point
-was premultiplied by the last coordinate of the point, that is,
-each control point is in homogeneous coordinates.
-Only used with WEIGHTED_BIT.</p>
-
-<p>Default Value: <code>4</code></p>
-
-<p><a name='H3DU.BSplineCurve.WEIGHTED_BIT'></a></p>
-
-<h3>H3DU.BSplineCurve.WEIGHTED_BIT (constant)</h3>
-
-<p><b>Deprecated: Support for this control point format may be dropped
-in the future. Instead of using this bit, supply control points in homogeneous
-coordinates (where each other coordinate is premultiplied by the last)
-and use <code>DIVIDE_BIT</code> to convert the
-results to conventional coordinates.</b></p>
-
-<p>Indicates whether the last coordinate of each control point is a
-weight. If some of the weights differ, the curve is
-considered a <i>rational</i> B-spline curve.
-If this bit is set, points returned by the curve&#39;s <code>evaluate</code>
-method will be in homogeneous coordinates.</p>
-
-<p>Default Value: <code>1</code></p>
-
-<p><a name='H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS'></a></p>
-
-<h3>H3DU.BSplineCurve.WEIGHTED_DIVIDE_BITS (constant)</h3>
-
-<p><strong>Deprecated: Deprecated because WEIGHTED_BIT is deprecated.</strong></p>
-
-<p>Combination of WEIGHTED_BIT and DIVIDE_BIT.</p>
 
 <p><a name='H3DU.BSplineCurve_accel'></a></p>
 
@@ -380,7 +354,7 @@ versions.) (Type: <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a>)</p>
 
 <p>Generates a knot vector with uniform knots, to be
 passed to the <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> or <a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a> constructor,
-except that with the knot vector curve will start and end at the first and last control points and will
+except that with the knot vector the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</p>
 
@@ -394,8 +368,7 @@ and to the line between the next-to-last and last control points.</p>
 <h4>Return Value</h4>
 
 <p>A clamped uniform knot vector.
-The first knot will be 0 and the last knot will be 1.
-(This is a change in version 2.0.) (Type: Array.&lt;number&gt;)</p>
+The first knot will be 0 and the last knot will be 1. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.BSplineCurve_endPoints'></a></p>
 
@@ -418,7 +391,7 @@ in a B-spline curve.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>u</code> (Type: number)<br>Point on the curve to evaluate. NOTE: Since version 2.0, this parameter is no longer scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate. This parameter is not scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -765,7 +738,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="_anonymous__TriangleFan.html">&lt;anonymous&gt;~TriangleFan</a></li>
 <li><a href="Camera.html">Camera</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
-<li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
