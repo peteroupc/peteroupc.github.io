@@ -10,8 +10,7 @@
 
 /**
  * A [surface evaluator object]{@link H3DU.Surface} for a surface of revolution,
- * which results by revolving
- * a two-dimensional curve around an axis.
+ * which results by revolving a two-dimensional curve around an axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -151,7 +150,8 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * part of the torus.
  * @param {Object} [curve] A [curve evaluator object]{@link H3DU.Curve} that
  * describes a 2-dimensional curve to serve as
- * the cross section of the torus. The curve need not be closed; in fact, certain special surfaces can result
+ * the cross section of the torus. The curve need not be closed; in fact, certain
+ * special surfaces can result
  * by leaving the ends open.
  * If null, undefined, or omitted, uses a circular cross section with a radius of 1.
  * @param {Array<number>} [axis] Axis of rotation, which the torus

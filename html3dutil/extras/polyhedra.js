@@ -42,15 +42,6 @@ H3DU.Polyhedra.normDistances = function(vertices, radius) {
     vertices[i + 2] *= norm;
   }
 };
-/** @ignore */
-H3DU.Polyhedra.scaleVertices = function(vertices, radius) {
-  "use strict";
-  for(var i = 0; i < vertices.length; i += 3) {
-    vertices[i] *= radius;
-    vertices[i + 1] *= radius;
-    vertices[i + 2] *= radius;
-  }
-};
 /**
  * Modifies the vertices and indices of a solid to
  * generate an approximation of a sphere.
@@ -71,12 +62,17 @@ H3DU.Polyhedra.makeSphere = function(vi, radius, level) {
   var vertices = vi[0];
   var indices = vi[1];
   if(typeof level === "undefined" || level === null || level <= 0) {
-    H3DU.Polyhedra.scaleVertices(vertices, radius);
+    // Scale the vertices to the given radius
+    for(var i = 0; i < vertices.length; i += 3) {
+      vertices[i] *= radius;
+      vertices[i + 1] *= radius;
+      vertices[i + 2] *= radius;
+    }
     return vi;
   }
   H3DU.Polyhedra.normDistances(vertices, radius);
   // Subdivide the triangles into many smaller triangles
-  for(var i = 0; i < level; i++) {
+  for(i = 0; i < level; i++) {
     var tris = indices.length;
     for(var j = 0; j < tris; j += 3) {
       var i1 = indices[j];

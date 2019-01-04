@@ -9,7 +9,7 @@
 /* global H3DU */
 
 /**
- * H3DU.MatrixStack is a class that implements a stack
+ * This class implements a stack
  * of 4x4 transformation matrices.<p>
  * When the constructor is called, it will create a stack whose
  * only element is the identity matrix.
@@ -23,7 +23,7 @@
  * @memberof H3DU
  * @constructor
  */
-H3DU.MatrixStack = function() {
+export var MatrixStack = function() {
   "use strict";
   this.stack = [
     [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -33,7 +33,7 @@ H3DU.MatrixStack = function() {
  * Gets a copy of the matrix at the top of this stack.
  * @returns {Array<number>}.
  */
-H3DU.MatrixStack.prototype.get = function() {
+MatrixStack.prototype.get = function() {
   "use strict";
   return this.stack[this.stack.length - 1].slice(0, 16);
 };
@@ -41,7 +41,7 @@ H3DU.MatrixStack.prototype.get = function() {
  * Modifies the matrix at the top of this stack by replacing it with the identity matrix.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.loadIdentity = function() {
+MatrixStack.prototype.loadIdentity = function() {
   "use strict";
   this.stack[this.stack.length - 1] = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   return this;
@@ -51,7 +51,7 @@ H3DU.MatrixStack.prototype.loadIdentity = function() {
  * @param {Array<number>} mat A matrix to replace the top of the stack with.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.loadMatrix = function(mat) {
+MatrixStack.prototype.loadMatrix = function(mat) {
   "use strict";
   this.stack[this.stack.length - 1] = mat.slice(0, 16);
   return this;
@@ -63,7 +63,7 @@ H3DU.MatrixStack.prototype.loadMatrix = function(mat) {
  * replace the top of the stack.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.loadTransposeMatrix = function(mat) {
+MatrixStack.prototype.loadTransposeMatrix = function(mat) {
   "use strict";
   var m = mat.slice(0, 16);
   var tmp;
@@ -86,7 +86,7 @@ H3DU.MatrixStack.prototype.loadTransposeMatrix = function(mat) {
  * @param {Array<number>} mat A matrix to multiply the current one by.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.multMatrix = function(mat) {
+MatrixStack.prototype.multMatrix = function(mat) {
   "use strict";
   var curmat = this.stack[this.stack.length - 1];
   var dst = [];
@@ -110,7 +110,7 @@ H3DU.MatrixStack.prototype.multMatrix = function(mat) {
  * matrix will be multiplied by.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.multTransposeMatrix = function(mat) {
+MatrixStack.prototype.multTransposeMatrix = function(mat) {
   "use strict";
   return this.multMatrix(H3DU.Math.mat4transpose(mat));
 };
@@ -128,7 +128,7 @@ H3DU.MatrixStack.prototype.multTransposeMatrix = function(mat) {
  * of rotation.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.rotate = function(angle, x, y, z) {
+MatrixStack.prototype.rotate = function(angle, x, y, z) {
   "use strict";
   var ang = angle * Math.PI / 180;
   var v0 = x;
@@ -174,7 +174,7 @@ H3DU.MatrixStack.prototype.rotate = function(angle, x, y, z) {
  * @param {number} z Translation along the Z axis.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.translate = function(x, y, z) {
+MatrixStack.prototype.translate = function(x, y, z) {
   "use strict";
   var mat = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
@@ -196,7 +196,7 @@ H3DU.MatrixStack.prototype.translate = function(x, y, z) {
  * @param {number} z Scale factor along the Z axis.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.scale = function(x, y, z) {
+MatrixStack.prototype.scale = function(x, y, z) {
   "use strict";
   var mat = this.stack[this.stack.length - 1];
   mat[0] *= x;
@@ -218,7 +218,7 @@ H3DU.MatrixStack.prototype.scale = function(x, y, z) {
  * and puts the copy on top of the stack.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.pushMatrix = function() {
+MatrixStack.prototype.pushMatrix = function() {
   "use strict";
   this.stack.push(this.stack[this.stack.length - 1].slice(0, 16));
   return this;
@@ -229,7 +229,7 @@ H3DU.MatrixStack.prototype.pushMatrix = function() {
  * effect if the stack has only one matrix.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.popMatrix = function() {
+MatrixStack.prototype.popMatrix = function() {
   "use strict";
   if(this.stack.length > 1) {
     this.stack.pop();
@@ -254,7 +254,7 @@ H3DU.MatrixStack.prototype.popMatrix = function() {
  * plane. A positive value means the plane is in front of the viewer.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
+MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
   "use strict";
   var m = this.stack[this.stack.length - 1];
   var invrl = 1.0 / (r - l);
@@ -297,7 +297,7 @@ H3DU.MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * to be seen.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
+MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
   "use strict";
   var m = this.stack[this.stack.length - 1];
   var invrl = 1.0 / (r - l);
@@ -339,7 +339,7 @@ H3DU.MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
  * @param {number} uz Z coordinate of the up vector.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
+MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
   "use strict";
   var viewerPos = [ex, ey, ez];
   var lookingAt = [cx, cy, cz];
@@ -417,7 +417,7 @@ H3DU.MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz)
  * (Note that t can be greater than b or vice versa.)
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.ortho2d = function(l, r, b, t) {
+MatrixStack.prototype.ortho2d = function(l, r, b, t) {
   "use strict";
   var invrl = 1.0 / (r - l);
   var invtb = 1.0 / (t - b);
@@ -455,7 +455,7 @@ H3DU.MatrixStack.prototype.ortho2d = function(l, r, b, t) {
  * to be seen.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
+MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
   "use strict";
   var ftan = 1 / Math.tan(fov * Math.PI / 360);
   var v0 = ftan / aspect;
@@ -485,7 +485,7 @@ H3DU.MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
  * of a rectangle indicating the current viewport.
  * @returns {H3DU.MatrixStack} This object.
  */
-H3DU.MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
+MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
   "use strict";
   var invww = 1.0 / ww;
   var invwh = 1.0 / wh;
