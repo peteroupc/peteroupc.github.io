@@ -11,7 +11,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 <body>
 <canvas id=canvas></canvas>
 <div style="position:absolute;left:0;top:0;width:25%"></div>
-<script id="demo">
+<script id="demo" type="module">
 /* global H3DU */
 // <!--
 /*
@@ -22,57 +22,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-
-function ellipseArc(x,y,radiusX,radiusY,start,sweep) {
-  var abssweep=sweep
-  var sweepdir=(sweep<0) ? -1 : 1
-  var sweepSegments=(abssweep>Math.PI*0.5 &&
-    abssweep<=Math.PI*2) ? abssweep*0.25 : Math.PI*0.5;
-  var arcstart=start
-  var curves=[]
-  while(abssweep>0) {
-  var arcangle=Math.min(sweepSegments,abssweep)
-        var arcend=arcstart+arcangle*sweepdir
-  var ca0=Math.cos(arcstart)
-  var sa0=Math.sin(arcstart)
-  var ca1=Math.cos(arcend)
-  var sa1=Math.sin(arcend)
-  abssweep-=arcangle
-  arcstart+=arcangle*sweepdir
-  var p0=[ca0,sa0,1]
-  var p2=[ca1,sa1,1]
-  var halfAngle=(Math.PI-arcangle)*0.5
-  var weight=Math.sin(halfAngle)
-  var dx=p2[0]-p0[0]
-  var dy=p2[1]-p0[1]
-  var dist=Math.sqrt(dx*dx+dy*dy)
-  var m0=p0[0]+dx*0.5
-  var m1=p0[1]+dy*0.5
-  var dcx=m0
-  var dcy=m1
-  var mdist=Math.sqrt(dcx*dcx+dcy*dcy)
-  var clen=1.0/mdist
-  var p1dist=1.0/weight
-        var p1=[
-    (dcx*clen*p1dist),
-       (dcy*clen*p1dist),
-    weight
-  ]
-  p0[0]=x+p0[0]*radiusX
-  p0[1]=y+p0[1]*radiusY
-  p2[0]=x+p2[0]*radiusX
-  p2[1]=y+p2[1]*radiusY
-  p1[0]=(x+p1[0]*radiusX)*weight
-  p1[1]=(y+p1[1]*radiusY)*weight
-  curves.push(H3DU.BSplineCurve.fromBezierCurve(
-    [p0,p1,p2],H3DU.BSplineCurve.DIVIDE_BIT))
-   }
-   return new H3DU.PiecewiseCurve(curves)
-}
-
-function ellipse(x,y,radiusX,radiusY) {
- return ellipseArc(x,y,radiusX,radiusY,0,Math.PI*2)
-};
+import { ellipseArc }
 
 function drawCurve(ce,curve,lines) {
   "use strict";
@@ -82,24 +32,16 @@ function drawCurve(ce,curve,lines) {
 function circleDesign() {
   "use strict";
   var ce = new H3DU.CurveBuilder();
-  ce.attribute({
-    "evaluate":function() {
-      return [0, 0, 1];
-    }
-  },H3DU.Semantic.COLOR);
-  drawCurve(ce,ellipse(0,0,1.5,1.8),240)
-  drawCurve(ce,ellipse(0,0,1.6,1.7),240)
-  drawCurve(ce,ellipse(0,0,1.7,1.6),240)
-  drawCurve(ce,ellipse(0,0,1.8,1.5),240)
-  ce.attribute({
-    "evaluate":function() {
-      return [1, 0, 0];
-    }
-  },H3DU.Semantic.COLOR);
-  drawCurve(ce,ellipse(0,0,2.8,2.8),240)
-  drawCurve(ce,ellipse(0,1.0,3.8,3.8),240)
-  drawCurve(ce,ellipse(-1.0,0,4.8,4.8),240)
-  drawCurve(ce,ellipse(1.1,1.4,5.8,5.8),240)
+  ce.constantAttribute([0, 0, 1],H3DU.Semantic.COLOR);
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,0,1.5,1.8),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,0,1.6,1.7),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,0,1.7,1.6),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,0,1.8,1.5),240)
+  ce.constantAttribute([1, 0, 0],H3DU.Semantic.COLOR);
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,0,2.8,2.8),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(0,1.0,3.8,3.8),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(-1.0,0,4.8,4.8),240)
+  drawCurve(ce,PiecewiseCurve.fromEllipseArc(1.1,1.4,5.8,5.8),240)
   return ce.toMeshBuffer();
 }
 var scene = new H3DU.Scene3D(document.getElementById("canvas"));

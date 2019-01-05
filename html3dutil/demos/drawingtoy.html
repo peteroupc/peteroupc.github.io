@@ -79,27 +79,15 @@ function drawingToyDesign() {
   "use strict";
   var ce = new H3DU.CurveBuilder();
  // Inner design
-  ce.attribute({
-    "evaluate":function() {
-      return [0, 0, 1];
-    }
-  },H3DU.Semantic.COLOR);
+  ce.constantAttribute([0, 0, 1],H3DU.Semantic.COLOR);
   hypo(ce, 2, 96, 52, 0.75);
   hypo(ce, 2, 96, 50, 0.65, 2);
   hypo(ce, 2, 96, 48, 0.55, 4);
-  ce.attribute({
-    "evaluate":function() {
-      return [1, 0, 0];
-    }
-  },H3DU.Semantic.COLOR);
+  ce.constantAttribute([1, 0, 0],H3DU.Semantic.COLOR);
   hypo(ce, 2, 96, 46, 0.45, 6);
   hypo(ce, 2, 96, 52, 0.35, 8);
  // Outer design
-  ce.attribute({
-    "evaluate":function() {
-      return [0, 1, 0];
-    }
-  },H3DU.Semantic.COLOR);
+  ce.constantAttribute([0, 1, 0],H3DU.Semantic.COLOR);
   epi(ce, 2.3, 144, 64, 0.9);
   epi(ce, 2.3, 144, 64, 0.8, 5);
   epi(ce, 2.3, 144, 64, 0.7, 10);
