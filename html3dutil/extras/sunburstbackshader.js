@@ -7,11 +7,11 @@
  http://peteroupc.github.io/
 */
 
-export var checkerboardShader = {
+export var sunburstBackShader = {
   "uniform":{
     "blackColor":[0, 0, 0],
     "whiteColor":[1, 1, 1],
-    "squaresPerRow":8
+    "time":0
   },
   "vertexShader":[
     "varying vec2 posVar;",
@@ -23,11 +23,13 @@ export var checkerboardShader = {
     "uniform vec3 blackColor;",
     "uniform vec3 whiteColor;",
     "varying vec2 posVar;",
-    "uniform float squaresPerRow;",
+    "uniform float time;",
     "void main() {",
-    " vec2 pos=mod(posVar*squaresPerRow,4.0);",
-    " float sgn=(pos.x>=2.0 ? 1.0 : -1.0)*(pos.y>=2.0 ? 1.0 : -1.0);",
-    " float s=(sgn>0.0) ? 1.0 : 0.0;",
+    " float angle=atan(posVar.y,posVar.x);",
+    " angle/=6.283185307;",
+    " angle=mod(angle+time*0.001,1.0); // Time range is [0,1000)",
+    " angle=floor(angle*24.0);",
+    " float s=(mod(angle,2.0)>=1.0) ? 1.0 : 0.0;",
     " vec3 color=mix(blackColor,whiteColor,s);",
     " gl_FragColor=vec4(color,1.0);",
     "}"].join("\n")

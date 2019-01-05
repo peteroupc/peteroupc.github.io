@@ -18,7 +18,6 @@
  * &lt;script type="text/javascript" src="extras/objmtl.js">&lt;/script></pre>
  * @constructor */
 H3DU.ObjData = function() {
-  "use strict";
   /** URL of the OBJ file. */
   this.url = null;
   /** An array of meshes. Two or more meshes may have
@@ -32,7 +31,6 @@ H3DU.ObjData = function() {
 };
 /** @ignore */
 H3DU.ObjData._MtlData = function() {
-  "use strict";
   this.url = null;
   this.list = [];
 };
@@ -42,7 +40,6 @@ H3DU.ObjData._MtlData = function() {
  * @returns {H3DU.ShapeGroup} Group of shapes.
  */
 H3DU.ObjData.prototype.toShape = function() {
-  "use strict";
   var multi = new H3DU.ShapeGroup();
   for(var i = 0; i < this.meshes.length; i++) {
     var shape = new H3DU.Shape(this.meshes[i].data);
@@ -54,7 +51,6 @@ H3DU.ObjData.prototype.toShape = function() {
 };
 /** @ignore */
 H3DU.ObjData.prototype._gatherTextureNames = function() {
-  "use strict";
   var textures = [];
   if(this.mtl) {
     for(var i = 0; i < this.mtl.list.length; i++) {
@@ -76,7 +72,6 @@ H3DU.ObjData.prototype._gatherTextureNames = function() {
  * will be empty if no shapes with the given name exist.
  */
 H3DU.ObjData.prototype.toShapeFromName = function(name) {
-  "use strict";
   var multi = new H3DU.ShapeGroup();
   for(var i = 0; i < this.meshes.length; i++) {
     if(this.meshes[i].name !== name)continue;
@@ -89,7 +84,6 @@ H3DU.ObjData.prototype.toShapeFromName = function(name) {
 };
 /** @ignore */
 H3DU.ObjData._resolvePath = function(path, name) {
-  "use strict";
   // Relatively dumb for a relative path
   // resolver, but sufficient here, as it will
   // only be used with relative "mtllib"/"map_Kd"
@@ -107,7 +101,6 @@ H3DU.ObjData._resolvePath = function(path, name) {
 
 /** @ignore */
 H3DU.ObjData.prototype._getMaterial = function(mesh) {
-  "use strict";
   if(!this.mtl || !mesh) {
     return new H3DU.Material();
   } else if(mesh.usemtl) {
@@ -121,7 +114,6 @@ H3DU.ObjData.prototype._getMaterial = function(mesh) {
 
 /** @ignore */
 H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
-  "use strict";
   for(var i = 0; i < this.list.length; i++) {
     var mtl = this.list[i].data;
     if(mtl.texture) {
@@ -134,7 +126,6 @@ H3DU.ObjData._MtlData.prototype._resolveTextures = function() {
 };
 /** @ignore */
 H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
-  "use strict";
   var names = [];
   for(var i = 0; i < this.list.length; i++) {
     names.push(this.list[i].name);
@@ -144,7 +135,6 @@ H3DU.ObjData._MtlData.prototype.getMaterialNames = function() {
 
 /** @ignore */
 H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
-  "use strict";
   for(var i = 0; i < this.list.length; i++) {
     if(this.list[i].name === name) {
       return this.list[i].data;
@@ -154,7 +144,6 @@ H3DU.ObjData._MtlData.prototype.getMaterial = function(name) {
 };
 /** @ignore */
 H3DU.ObjData._MtlData._getMaterial = function(mtl) {
-  "use strict";
   var shininess = 1.0;
   var ambient = null;
   var diffuse = null;
@@ -236,7 +225,6 @@ H3DU.ObjData._MtlData._getMaterial = function(mtl) {
  * </ul>
  */
 H3DU.ObjData.loadMtlFromUrl = function(url) {
-  "use strict";
   return H3DU.loadFileFromUrl(url).then(
     function(e) {
       var mtl = H3DU.ObjData._MtlData._loadMtl(e.data);
@@ -267,7 +255,6 @@ H3DU.ObjData.loadMtlFromUrl = function(url) {
  * its textures.
  */
 H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
-  "use strict";
   return H3DU.ObjData.loadObjFromUrl(url).then(function(obj) {
     var o = obj;
     return textureLoader.loadTexturesAll(o._gatherTextureNames())
@@ -292,7 +279,6 @@ H3DU.ObjData.loadObjFromUrlWithTextures = function(url, textureLoader) {
  * and is rejected when an error occurs when loading the OBJ file.
  */
 H3DU.ObjData.loadObjFromUrl = function(url) {
-  "use strict";
   return H3DU.loadFileFromUrl(url).then(
     function(e) {
       var obj;
@@ -326,7 +312,6 @@ H3DU.ObjData.loadObjFromUrl = function(url) {
 };
 /** @ignore */
 H3DU.ObjData._MtlData._loadMtl = function(str) {
-  "use strict";
   function xyzToRgb(xyz) {
   // convert CIE XYZ to RGB
     var x = xyz[0];
@@ -456,7 +441,6 @@ H3DU.ObjData._MtlData._loadMtl = function(str) {
 };
 /** @ignore */
 H3DU.ObjData._refIndex = function(idxstr, arr) {
-  "use strict";
   var ret = parseInt(idxstr, 10);
   ret = ret < 0 ? arr.length - ret : ret - 1;
   if(ret < 0 || ret >= arr.length)ret = 0;
@@ -464,7 +448,6 @@ H3DU.ObjData._refIndex = function(idxstr, arr) {
 };
 /** @ignore */
 H3DU.ObjData._loadObj = function(str) {
-  "use strict";
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   var signedInteger = "(-?\\d+)";
   var vertexOnly = new RegExp("^" + signedInteger + "($|\\s+)");
@@ -709,4 +692,3 @@ H3DU.ObjData._loadObj = function(str) {
  * @alias ObjData
  * @deprecated Use {@link H3DU.ObjData} instead.
  */
-var ObjData = H3DU.ObjData;

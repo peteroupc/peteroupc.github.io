@@ -27,7 +27,6 @@
  * @memberof H3DU
  */
 H3DU.InputTracker = function(element) {
-  "use strict";
   /** True if the left mouse button was detected as being down.
    * @type {Boolean}
    * @readonly */
@@ -191,7 +190,6 @@ H3DU.InputTracker = function(element) {
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.dispose = function() {
-  "use strict";
   for(var i = 0; i < this.handlers.length; i++) {
     var h = this.handlers[i];
     h[0].removeEventListener(h[1], h[2]);
@@ -214,7 +212,6 @@ H3DU.InputTracker.prototype.dispose = function() {
  * @returns {boolean} True if the key is currently pressed; otherwise, false.
  */
 H3DU.InputTracker.prototype.getKey = function(key) {
-  "use strict";
   return this.keys[key];
 };
 
@@ -227,13 +224,11 @@ H3DU.InputTracker.prototype.getKey = function(key) {
  * @returns {Object} Return value.
  */
 H3DU.InputTracker.prototype.mousewheel = function(func) {
-  "use strict";
   this.mouseWheelCallback = func;
 };
 
 /** @ignore */
 H3DU.InputTracker._getPageX = function(o) {
-  "use strict";
   var x = 0;
   while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetLeft !== "undefined")
@@ -244,7 +239,6 @@ H3DU.InputTracker._getPageX = function(o) {
 };
 /** @ignore */
 H3DU.InputTracker._getPageY = function(o) {
-  "use strict";
   var x = 0;
   while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetTop !== "undefined")
@@ -377,7 +371,6 @@ H3DU.InputTracker.SUBTRACT = 109;
  * will be 0.
  */
 H3DU.InputTracker.prototype.mousePos = function() {
-  "use strict";
   return {
     "x":this.deltas.x,
     "y":this.deltas.y,
@@ -409,7 +402,6 @@ H3DU.InputTracker.prototype.deltaXY = H3DU.InputTracker.prototype.mousePos;
  * @returns {H3DU.InputTracker} This object.
  */
 H3DU.InputTracker.prototype.update = function() {
-  "use strict";
   var deltaX = 0;
   var deltaY = 0;
   if(typeof this.clientX === "undefined" || this.clientX === null) {
@@ -446,7 +438,6 @@ H3DU.InputTracker.prototype.update = function() {
  * @alias InputTracker
  * @deprecated Use {@link H3DU.InputTracker} instead.
  */
-var InputTracker = H3DU.InputTracker;
 
 // ////////////////////////////////////////////////////
 
@@ -481,7 +472,6 @@ var InputTracker = H3DU.InputTracker;
  * camera object. <i>This argument is deprecated.</i>
  */
 H3DU.Camera = function(batch, fov, nearZ, farZ) {
-  "use strict";
   if(nearZ <= 0)throw new Error("invalid nearZ");
   this.near = nearZ;
   this.center = [0, 0, 0];
@@ -498,7 +488,6 @@ H3DU.Camera = function(batch, fov, nearZ, farZ) {
 
 /** @ignore */
 H3DU.Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
-  "use strict";
   var x = deltaMouseX * angleMultiplier;
   var y = deltaMouseY * angleMultiplier;
   this.lat += y;
@@ -521,7 +510,6 @@ H3DU.Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplie
 
 /** @ignore */
 H3DU.Camera.prototype._trackball = function(deltaMouseX, deltaMouseY, angleMultiplier) {
-  "use strict";
   var x = deltaMouseX * angleMultiplier;
   var y = deltaMouseY * angleMultiplier;
   this.moveAngleHorizontal(x);
@@ -529,7 +517,6 @@ H3DU.Camera.prototype._trackball = function(deltaMouseX, deltaMouseY, angleMulti
 };
 /** @ignore */
 H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
-  "use strict";
   var x = deltaMouseX * multiplier;
   var y = deltaMouseY * multiplier;
   this.moveHorizontal(x);
@@ -537,7 +524,6 @@ H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
 };
 /** @ignore */
 H3DU.Camera.prototype._updateView = function() {
-  "use strict";
   var mat = H3DU.Math.mat4lookat(
     this.position, this.center, this.up);
   this.scene.setViewMatrix(mat);
@@ -545,7 +531,6 @@ H3DU.Camera.prototype._updateView = function() {
 };
 /** @ignore */
 H3DU.Camera._velocity = function(toVec, fromVec) {
-  "use strict";
   var velocity = H3DU.Math.vec3normalize( H3DU.Math.vec3sub(toVec, fromVec));
   if(velocity[0] === 0 && velocity[1] === 0 && velocity[2] === 0) {
     // Both vectors are likely the same, so return a default vector
@@ -563,7 +548,6 @@ H3DU.Camera._velocity = function(toVec, fromVec) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.setDistance = function(dist) {
-  "use strict";
   if(dist <= 0)return this;
   // don't move closer than the near plane
   dist = Math.max(this.near, dist);
@@ -579,13 +563,11 @@ H3DU.Camera.prototype.setDistance = function(dist) {
  * @returns {number} Return value.
  */
 H3DU.Camera.prototype.getDistance = function() {
-  "use strict";
   return H3DU.Math.vec3length(
     H3DU.Math.vec3sub(this.position, this.center));
 };
 /** @ignore */
 H3DU.Camera._transformRel = function(quat, point, origin) {
-  "use strict";
   var rotPoint = H3DU.Math.vec3sub(point, origin);
   var ret = H3DU.Math.quatTransform(quat, rotPoint);
   return H3DU.Math.vec3addInPlace(ret, origin);
@@ -602,7 +584,6 @@ H3DU.Camera._transformRel = function(quat, point, origin) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
-  "use strict";
   if(angleDegrees !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
@@ -639,7 +620,6 @@ H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
-  "use strict";
   if(angleDegrees !== 0) {
     var quat = H3DU.Math.quatFromAxisAngle(-angleDegrees, this.up);
     this.position = H3DU.Camera._transformRel(quat, this.position, this.center);
@@ -673,7 +653,6 @@ H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
-  "use strict";
   if(angleDegrees !== 0) {
     var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, this.up);
     this.center = H3DU.Camera._transformRel(quat, this.center, this.position);
@@ -692,7 +671,6 @@ H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
-  "use strict";
   if(angleDegrees !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
@@ -713,7 +691,6 @@ H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
-  "use strict";
   if(typeof cx === "number") {
     if(isNaN(cx) || isNaN(cy) || isNaN(cz))throw new Error();
     this.position[0] = cx;
@@ -754,7 +731,6 @@ H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
  * the X, Y, and Z coordinates of the camera's position, respectively.
  */
 H3DU.Camera.prototype.getPosition = function() {
-  "use strict";
   return H3DU.Math.vec3copy(this.position);
 };
 
@@ -766,7 +742,6 @@ H3DU.Camera.prototype.getPosition = function() {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveClose = function(dist) {
-  "use strict";
   return this.setDistance(this.getDistance() - dist);
 };
 /**
@@ -776,7 +751,6 @@ H3DU.Camera.prototype.moveClose = function(dist) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveForward = function(dist) {
-  "use strict";
   if(dist !== 0) {
     var velocity = H3DU.Camera._velocity(this.center, this.position);
     H3DU.Math.vec3scaleInPlace(velocity, dist);
@@ -793,7 +767,6 @@ H3DU.Camera.prototype.moveForward = function(dist) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
-  "use strict";
   return this.moveHorizontal(dist);
 };
 /**
@@ -803,7 +776,6 @@ H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveCenterVertical = function(dist) {
-  "use strict";
   return this.moveVertical(dist);
 };
 /**
@@ -812,7 +784,6 @@ H3DU.Camera.prototype.moveCenterVertical = function(dist) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveHorizontal = function(dist) {
-  "use strict";
   if(dist !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
     var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
@@ -829,7 +800,6 @@ H3DU.Camera.prototype.moveHorizontal = function(dist) {
  * @returns {H3DU.Camera} This object.
  */
 H3DU.Camera.prototype.moveVertical = function(dist) {
-  "use strict";
   if(dist !== 0) {
     var viewVector = H3DU.Math.vec3normalize(this.up);
     H3DU.Math.vec3scaleInPlace(viewVector, dist);
@@ -847,7 +817,6 @@ H3DU.Camera.prototype.moveVertical = function(dist) {
  * Returns (0,0,0) if the reference point is the same as the camera's position.
  */
 H3DU.Camera.prototype.getVectorFromCenter = function() {
-  "use strict";
   var posSub = H3DU.Math.vec3sub(this.position, this.center);
   return H3DU.Math.vec3normalizeInPlace(posSub);
 };
@@ -861,7 +830,6 @@ H3DU.Camera.prototype.getVectorFromCenter = function() {
  * @returns {Object} Return value.
  */
 H3DU.Camera.prototype.update = function(input) {
-  "use strict";
   if(!input) {
     this.input.update();
   }
@@ -876,7 +844,6 @@ H3DU.Camera.prototype.update = function(input) {
 };
 /** @ignore */
 H3DU.Camera.prototype._updateNew = function(input) {
-  "use strict";
   if(!input)return this;
   var delta = input.deltaXY();
   var deltaTicks = delta.ticks;
@@ -912,4 +879,3 @@ H3DU.Camera.prototype._updateNew = function(input) {
  * @alias Camera
  * @deprecated Use {@link H3DU.Camera} instead.
  */
-var Camera = H3DU.Camera;

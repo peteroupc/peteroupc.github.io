@@ -24,7 +24,6 @@
  * @constructor
  */
 export var MatrixStack = function() {
-  "use strict";
   this.stack = [
     [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   ];
@@ -34,7 +33,6 @@ export var MatrixStack = function() {
  * @returns {Array<number>}.
  */
 MatrixStack.prototype.get = function() {
-  "use strict";
   return this.stack[this.stack.length - 1].slice(0, 16);
 };
 /**
@@ -42,7 +40,6 @@ MatrixStack.prototype.get = function() {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.loadIdentity = function() {
-  "use strict";
   this.stack[this.stack.length - 1] = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
   return this;
 };
@@ -52,7 +49,6 @@ MatrixStack.prototype.loadIdentity = function() {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.loadMatrix = function(mat) {
-  "use strict";
   this.stack[this.stack.length - 1] = mat.slice(0, 16);
   return this;
 };
@@ -64,7 +60,6 @@ MatrixStack.prototype.loadMatrix = function(mat) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.loadTransposeMatrix = function(mat) {
-  "use strict";
   var m = mat.slice(0, 16);
   var tmp;
   tmp = m[1]; m[1] = m[4]; m[4] = tmp;
@@ -87,7 +82,6 @@ MatrixStack.prototype.loadTransposeMatrix = function(mat) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.multMatrix = function(mat) {
-  "use strict";
   var curmat = this.stack[this.stack.length - 1];
   var dst = [];
   for(var i = 0; i < 16; i += 4) {
@@ -111,7 +105,6 @@ MatrixStack.prototype.multMatrix = function(mat) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.multTransposeMatrix = function(mat) {
-  "use strict";
   return this.multMatrix(H3DU.Math.mat4transpose(mat));
 };
 /**
@@ -129,7 +122,6 @@ MatrixStack.prototype.multTransposeMatrix = function(mat) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.rotate = function(angle, x, y, z) {
-  "use strict";
   var ang = angle * Math.PI / 180;
   var v0 = x;
   var v1 = y;
@@ -175,7 +167,6 @@ MatrixStack.prototype.rotate = function(angle, x, y, z) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.translate = function(x, y, z) {
-  "use strict";
   var mat = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     mat[0], mat[1], mat[2], mat[3],
@@ -197,7 +188,6 @@ MatrixStack.prototype.translate = function(x, y, z) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.scale = function(x, y, z) {
-  "use strict";
   var mat = this.stack[this.stack.length - 1];
   mat[0] *= x;
   mat[1] *= x;
@@ -219,7 +209,6 @@ MatrixStack.prototype.scale = function(x, y, z) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.pushMatrix = function() {
-  "use strict";
   this.stack.push(this.stack[this.stack.length - 1].slice(0, 16));
   return this;
 };
@@ -230,7 +219,6 @@ MatrixStack.prototype.pushMatrix = function() {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.popMatrix = function() {
-  "use strict";
   if(this.stack.length > 1) {
     this.stack.pop();
   }
@@ -255,7 +243,6 @@ MatrixStack.prototype.popMatrix = function() {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
-  "use strict";
   var m = this.stack[this.stack.length - 1];
   var invrl = 1.0 / (r - l);
   var invtb = 1.0 / (t - b);
@@ -298,7 +285,6 @@ MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
-  "use strict";
   var m = this.stack[this.stack.length - 1];
   var invrl = 1.0 / (r - l);
   var invtb = 1.0 / (t - b);
@@ -340,7 +326,6 @@ MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
-  "use strict";
   var viewerPos = [ex, ey, ez];
   var lookingAt = [cx, cy, cz];
   var up = [ux, uy, uz];
@@ -418,7 +403,6 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.ortho2d = function(l, r, b, t) {
-  "use strict";
   var invrl = 1.0 / (r - l);
   var invtb = 1.0 / (t - b);
   var v0 = 2.0 * invrl;
@@ -456,7 +440,6 @@ MatrixStack.prototype.ortho2d = function(l, r, b, t) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
-  "use strict";
   var ftan = 1 / Math.tan(fov * Math.PI / 360);
   var v0 = ftan / aspect;
   var invnf = 1.0 / (n - f);
@@ -486,7 +469,6 @@ MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
-  "use strict";
   var invww = 1.0 / ww;
   var invwh = 1.0 / wh;
   var t5 = -(wx - vp[0]) * 2.0 * invww;
@@ -537,4 +519,4 @@ MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
  * @alias MatrixStack
  * @deprecated Use {@link H3DU.MatrixStack} instead.
  */
-var MatrixStack = H3DU.MatrixStack;
+MatrixStack = H3DU.MatrixStack;

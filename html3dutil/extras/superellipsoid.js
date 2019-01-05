@@ -10,18 +10,15 @@
 import {H3DU} from "../h3du_min";
 
 function sinpow(x, n) {
-  "use strict";
   var r = Math.sin(x);
   return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
-};
+}
 function cospow(x, n) {
-  "use strict";
   var r = Math.cos(x);
   return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
-};
+}
 
 export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
-  "use strict";
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.zRadius = zRadius;
@@ -43,7 +40,6 @@ export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
 };
 
 export var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
-  "use strict";
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;

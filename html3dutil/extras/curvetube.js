@@ -9,7 +9,6 @@
 /* global H3DU */
 /** @ignore */
 H3DU._TBNFrames = function(func) {
-  "use strict";
   this.func = typeof H3DU.Curve !== "undefined" && H3DU.Curve !== null ? new H3DU.Curve(func) : func;
   this.normals = [];
   this.binormals = [];
@@ -82,7 +81,6 @@ H3DU._TBNFrames = function(func) {
 };
 /** @ignore */
 H3DU._TBNFrames.getEndPoints = function(func) {
-  "use strict";
   if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
     return func.endPoints();
   } else {
@@ -91,7 +89,6 @@ H3DU._TBNFrames.getEndPoints = function(func) {
 };
 /** @ignore */
 H3DU._TBNFrames._getTangent = function(func, t, sampleAtPoint) {
-  "use strict";
   var tangent;
   if(typeof func.velocity !== "undefined" && func.velocity !== null) {
     tangent = func.velocity(t);
@@ -117,7 +114,6 @@ H3DU._TBNFrames._getTangent = function(func, t, sampleAtPoint) {
 };
 /** @ignore */
 H3DU._TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
-  "use strict";
   var vx = vec[0];
   var vy = vec[1];
   var vz = vec[2];
@@ -133,14 +129,12 @@ H3DU._TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
 
 /** @ignore */
 H3DU._TBNFrames.normalFromTangent = function(tangent) {
-  "use strict";
   return H3DU.Math.vec3normalizeInPlace(H3DU.Math.vec3perp(tangent));
 };
 /** @ignore */
 H3DU._TBNFrames._EPSILON = 0.000001;
 /** @ignore */
 H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
-  "use strict";
   var uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
   var sample;
   var b, n, t;
@@ -219,7 +213,6 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
 };
 /** @ignore */
 H3DU._TBNFrames._distSq = function(a, b) {
-  "use strict";
   var dx = b[0] - a[0];
   var dy = b[1] - a[1];
   var dz = b[2] - a[2];
@@ -249,7 +242,6 @@ H3DU._TBNFrames._distSq = function(a, b) {
  * will affect the meaning of the "thickness" parameter.
  */
 H3DU.CurveTube = function(func, thickness, sweptCurve) {
-  "use strict";
   this.thickness = typeof thickness === "undefined" || thickness === null ? 0.125 : thickness;
   this.sweptCurve = sweptCurve;
   this.func = func;
@@ -269,7 +261,6 @@ H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
  * if it doesn't implement an <code>endPoints</code> method).
  */
 H3DU.CurveTube.prototype.endPoints = function() {
-  "use strict";
   var ep = H3DU._TBNFrames.getEndPoints(this.func);
   if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {
     var sp = H3DU._TBNFrames.getEndPoints(this.sweptCurve);
@@ -286,7 +277,6 @@ H3DU.CurveTube.prototype.endPoints = function() {
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  */
 H3DU.CurveTube.prototype.evaluate = function(u, v) {
-  "use strict";
   var basisVectors = this.tangentFinder.getSampleAndBasisVectors(u);
   var sampleX = basisVectors[9];
   var sampleY = basisVectors[10];

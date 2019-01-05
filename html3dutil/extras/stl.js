@@ -8,7 +8,6 @@
 */
 /* global H3DU, Promise */
 (function(H3DU) {
-  "use strict";
   if(typeof H3DU === "undefined" || H3DU === null) {
     H3DU = {};
   }

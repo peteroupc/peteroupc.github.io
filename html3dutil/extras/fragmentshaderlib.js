@@ -6,8 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-export var fragmentShaderLib=function() {
-  "use strict";
+export var fragmentShaderLib = function() {
   return ["",
     "// NOTE: The online Book of Shaders, chapter 10, has",
     "// a very good explanation on how this function works.",
@@ -159,4 +158,4 @@ export var fragmentShaderLib=function() {
     " return ret;",
     "}",
     ""].join("\n");
-}
+};

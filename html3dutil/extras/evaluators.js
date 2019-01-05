@@ -37,7 +37,6 @@
  * parameter need not be a [unit vector]{@tutorial glmath}.
  */
 H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
-  "use strict";
   this.curve = curve;
   this.minval = Math.min(minval, maxval);
   this.maxval = Math.max(minval, maxval);
@@ -51,7 +50,6 @@ H3DU.SurfaceOfRevolution.prototype = Object.create(H3DU.Surface.prototype);
 H3DU.SurfaceOfRevolution.prototype.constructor = H3DU.SurfaceOfRevolution;
 /** @inheritdoc */
 H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
-  "use strict";
   return [0, H3DU.Math.PiTimes2, this.minval, this.maxval];
 };
 /**
@@ -62,7 +60,6 @@ H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
  * of the position at the given point. It will have three elements.
  */
 H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
-  "use strict";
   var curvepos = this.curve.evaluate(v);
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
@@ -79,7 +76,6 @@ H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
 };
 /** @ignore */
 H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
-  "use strict";
   var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
   var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
   var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
@@ -135,7 +131,6 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * 5, 10);
  */
 H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
-  "use strict";
   return new H3DU.SurfaceOfRevolution({
     "evaluate":function(u) {
       return [u, func(u), 0];
@@ -164,7 +159,6 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * @returns {H3DU.SurfaceOfRevolution} Return value.
  */
 H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
-  "use strict";
   if(!curve)curve = {
     "evaluate":function(u) {
       var cosu = Math.cos(u);
@@ -197,7 +191,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
  * @alias SurfaceOfRevolution
  * @deprecated Use {@link H3DU.SurfaceOfRevolution} instead.
  */
-var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
+
 /**
  * A [curve evaluator object]{@link H3DU.Curve} for a curve drawn by a circle that rolls along the inside
  * of another circle, whose position is fixed, with a center of (0,0).<p>
@@ -232,7 +226,6 @@ var SurfaceOfRevolution = H3DU.SurfaceOfRevolution;
  * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
-  "use strict";
   this.outer = outerRadius;
   this.inner = innerRadius;
   this.distFromInner = distFromInnerCenter;
@@ -256,7 +249,6 @@ H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
  * Only the X and Y coordinates can be other than 0.
  */
 H3DU.Hypotrochoid.prototype.evaluate = function(u) {
-  "use strict";
   var oi = this.outer - this.inner;
   var term = oi * u / this.inner;
   var uangle = u;
@@ -279,7 +271,6 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve.
  */
 H3DU.Hypotrochoid.prototype.endPoints = function() {
-  "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
 /**
@@ -290,7 +281,6 @@ H3DU.Hypotrochoid.prototype.endPoints = function() {
  * @returns {H3DU.Hypotrochoid} Return value.
  */
 H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
-  "use strict";
   var oi = this.outer - this.inner;
   var mx = Math.abs(Math.max(
     -oi - this.distFromInner,
@@ -310,7 +300,6 @@ H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
  * @returns {Array<number>} The approximate arc length of this curve at the given U coordinate.
  */
 H3DU.Hypotrochoid.prototype.arcLength = function(u) {
-  "use strict";
   var b = this.inner - this.distFromInner;
   if(b === 0) {
     // Hypocycloid; drawing pen is at center of inner circle
@@ -340,7 +329,6 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
  * @returns {H3DU.Hypotrochoid} The resulting curve evaluator object.
  */
 H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
-  "use strict";
   var denom = n + 1;
   return new H3DU.Hypotrochoid(2 * n * distFromInnerCenter / denom,
     distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
@@ -368,7 +356,6 @@ H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * rolling circle to the drawing pen.
  */
 H3DU.Trochoid = function(radius, distFromCenter) {
-  "use strict";
   this.inner = radius;
   this.distFromCenter = distFromCenter;
 };
@@ -383,7 +370,6 @@ H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
  * Only the X and Y coordinates will be other than 0.
  */
 H3DU.Trochoid.prototype.evaluate = function(u) {
-  "use strict";
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
   return [
@@ -402,7 +388,6 @@ H3DU.Trochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve. *
  */
 H3DU.Trochoid.prototype.endPoints = function() {
-  "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
 /**
@@ -411,7 +396,6 @@ H3DU.Trochoid.prototype.endPoints = function() {
  * @returns {Array<number>} An array giving the velocity vector.
  */
 H3DU.Trochoid.prototype.velocity = function(u) {
-  "use strict";
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
   return [this.inner - this.distFromCenter * cosu,
@@ -450,7 +434,6 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
 H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
-  "use strict";
   this.outer = outerRadius;
   this.roller = rollerRadius;
   this.distFromRoller = distFromRollerCenter;
@@ -474,7 +457,6 @@ H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
  * Only the X and Y coordinates will be other than 0.
  */
 H3DU.Epitrochoid.prototype.evaluate = function(u) {
-  "use strict";
   var oi = this.outer + this.roller;
   var term = oi * u / this.roller;
   var uangle = u;
@@ -498,7 +480,6 @@ H3DU.Epitrochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve. *
  */
 H3DU.Epitrochoid.prototype.endPoints = function() {
-  "use strict";
   return [0, H3DU.Math.PiTimes2];
 };
 /**
@@ -509,7 +490,6 @@ H3DU.Epitrochoid.prototype.endPoints = function() {
  * @returns {H3DU.Epitrochoid} Return value.
  */
 H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
-  "use strict";
   var oi = this.outer + this.roller;
   var mx = Math.abs(Math.max(
     -oi - this.distFromRoller,
@@ -530,7 +510,6 @@ H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
  * @alias Hypotrochoid
  * @deprecated Use {@link H3DU.Hypotrochoid} instead.
  */
-var Hypotrochoid = H3DU.Hypotrochoid;
 
 /* exported Trochoid */
 /**
@@ -539,7 +518,6 @@ var Hypotrochoid = H3DU.Hypotrochoid;
  * @alias Trochoid
  * @deprecated Use {@link H3DU.Trochoid} instead.
  */
-var Trochoid = H3DU.Trochoid;
 
 /* exported Epitrochoid */
 /**
@@ -548,4 +526,3 @@ var Trochoid = H3DU.Trochoid;
  * @alias Epitrochoid
  * @deprecated Use {@link H3DU.Epitrochoid} instead.
  */
-var Epitrochoid = H3DU.Epitrochoid;
