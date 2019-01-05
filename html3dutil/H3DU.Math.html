@@ -888,7 +888,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 
 <ul>
 <li><code>l</code> (Type: number)<br>X coordinate of the point in eye space where the left clipping plane meets the near clipping plane.</li>
-<li><code>r</code> (Type: number)<br>X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
+<li><code>r</code> (Type: number)<br>X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Y coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.</li>
 <li><code>t</code> (Type: number)<br>Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
@@ -897,7 +897,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1122,11 +1122,11 @@ reverse the sign of the 11th element of the result (zero-based index 10).</p>
 
 <ul>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the orthographic view.</li>
-<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
+<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1150,7 +1150,7 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 
 <ul>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the orthographic view.</li>
-<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 </ul>
@@ -1182,7 +1182,7 @@ of coordinates when using this matrix and on adjusting the matrix for other conv
 
 <ul>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
-<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
@@ -1215,11 +1215,11 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 
 <ul>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
-<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase leftward. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
+<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
 </ul>
 
@@ -1255,7 +1255,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1290,7 +1290,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 <p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
 
 <ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects beyond this distance will be too far to be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -3071,7 +3071,7 @@ other vector's endpoint.
 <li>If the two vectors are the same, the return value indicates
 the vector's length squared. This is illustrated in the example.
 <li>Switching the order of the two vectors results in the
-same cross product. (Thus, the dot product is <i>commutative</i>.)
+same dot product. (Thus, the dot product is <i>commutative</i>.)
 </ul>
 
 <h4>Parameters</h4>
