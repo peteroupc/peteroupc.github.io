@@ -20,6 +20,14 @@ can store vertices that make up triangles, line segments, or points.</p>
 <p>This constructor creates an empty mesh buffer and sets the array
 of vertex indices to null.</p>
 
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU.MeshBuffer.LINES">LINES</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer.POINTS">POINTS</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer.TRIANGLES">TRIANGLES</a><br>TODO: Not documented yet.</li>
+</ul>
+
 <h3>Methods</h3>
 
 <ul>
@@ -55,11 +63,8 @@ an additional parameter.</li>
 <li><a href="#H3DU.MeshBuffer_setColor">setColor</a><br>Sets all the vertices in this mesh to the given color, by
 assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.</li>
-<li><a href="#H3DU.MeshBuffer_setColor3">setColor3</a><br><b>Deprecated: Use <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> instead.</b></li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer_toWireFrame">toWireFrame</a><br><strong>Deprecated: Included here for compatibility with H3DU.Mesh.
-Use H3DU.MeshBuffer.wireFrame instead.</strong></li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
@@ -70,6 +75,24 @@ number of items that a buffer attribute can hold.</li>
 or point) in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_wireFrame">wireFrame</a><br>Converts the triangles in this mesh to line segments.</li>
 </ul>
+
+<p><a name='H3DU.MeshBuffer.LINES'></a></p>
+
+<h3>H3DU.MeshBuffer.LINES (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p><a name='H3DU.MeshBuffer.POINTS'></a></p>
+
+<h3>H3DU.MeshBuffer.POINTS (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p><a name='H3DU.MeshBuffer.TRIANGLES'></a></p>
+
+<h3>H3DU.MeshBuffer.TRIANGLES (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
 
 <p><a name='H3DU.MeshBuffer.fromPositions'></a></p>
 
@@ -133,7 +156,7 @@ vertex normals, and texture coordinates.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
 <li><code>semanticIndex</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. Otherwise, if null or omitted, the default value is 0.</li>
 </ul>
 
@@ -158,8 +181,10 @@ var t=mesh.getAttribute(&quot;TEXCOORD_0&quot;)
 var c=mesh.getAttribute(&quot;COLOR&quot;)
 var ind=mesh.getIndices()
 var primSize = 3;
-if(mesh.primitiveType() === Mesh.LINES)primSize = 2;
-if(mesh.primitiveType() === Mesh.POINTS)primSize = 1;
+if(mesh.primitiveType() === H3DU.MeshBuffer.LINES)
+primSize = 2;
+if(mesh.primitiveType() === H3DU.MeshBuffer.POINTS)
+primSize = 1;
 var ret=[]
 for(var i=0;i&lt;ind.length;i+=primSize) {
 var prim=[]
@@ -280,8 +305,8 @@ and points) composed by all shapes in this mesh.</p>
 
 <h4>Return Value</h4>
 
-<p>Either H3DU.MeshBuffer.TRIANGLES,
-H3DU.MeshBuffer.LINES, or H3DU.MeshBuffer.POINTS. (Type: number)</p>
+<p>Either MeshBuffer.TRIANGLES,
+MeshBuffer.LINES, or MeshBuffer.POINTS. (Type: number)</p>
 
 <p><a name='H3DU.MeshBuffer_recalcNormals'></a></p>
 
@@ -378,7 +403,7 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid. If this isn&#39;t a string, the set index of the attribute will be 0 (see <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>).</li>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid. If this isn&#39;t a string, the set index of the attribute will be 0 (see <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>).</li>
 <li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
 <li><code>countPerValue</code> (Type: number)<br>The number of elements in each per-vertex item. See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
 <li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setAttributeEx">H3DU.MeshBuffer#setAttributeEx</a>.</li>
@@ -404,7 +429,7 @@ stored in a vertex buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="H3DU.Semantic.html#H3DU.Semantic.POSITION">H3DU.Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as Semantic.POSITION, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
 <li><code>index</code> (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
 <li><code>buffer</code> (Type: Float32Array | Array | BufferAccessor)<br>The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.</li>
 <li><code>countPerValue</code> (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>, the value of &quot;countPerValue&quot; is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.</li>
@@ -442,15 +467,6 @@ regardless of semantic index, are affected by this method.</p>
 
 <p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
-<p><a name='H3DU.MeshBuffer_setColor3'></a></p>
-
-<h3>H3DU.MeshBuffer#setColor3()</h3>
-
-<p><b>Deprecated: Use <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> instead.</b></p>
-
-<p>Alias for the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_setColor">H3DU.MeshBuffer#setColor</a> method
-for compatibility.</p>
-
 <p><a name='H3DU.MeshBuffer_setIndices'></a></p>
 
 <h3>H3DU.MeshBuffer#setIndices(indices)</h3>
@@ -476,27 +492,12 @@ for compatibility.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>primType</code> (Type: number)<br>The primitive type, either H3DU.MeshBuffer.TRIANGLES, H3DU.MeshBuffer.LINES, or H3DU.MeshBuffer.POINTS.</li>
+<li><code>primType</code> (Type: number)<br>The primitive type, either MeshBuffer.TRIANGLES, MeshBuffer.LINES, or MeshBuffer.POINTS.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
-
-<p><a name='H3DU.MeshBuffer_toWireFrame'></a></p>
-
-<h3>H3DU.MeshBuffer#toWireFrame()</h3>
-
-<p><strong>Deprecated: Included here for compatibility with H3DU.Mesh.
-Use H3DU.MeshBuffer.wireFrame instead.</strong></p>
-
-<p>Creates a new mesh with triangles converted
-to line segments.</p>
-
-<h4>Return Value</h4>
-
-<p>A new mesh with triangles converted
-to lines. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
 
 <p><a name='H3DU.MeshBuffer_transform'></a></p>
 
