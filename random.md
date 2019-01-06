@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Dec. 12, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 5, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -195,7 +195,7 @@ By using a seeded PRNG for repeatable "randomness", an application will be tied 
         - by distributing the "random" numbers or results to networked users as they are generated, and
 3. any feature that uses such a PRNG to generate that "random" result will remain backward compatible with respect to the "random" results it generates, for as long as that feature is still in use by the application.
 
-> **Note:** Meeting statement 3 is aided by using documented PRNGs with implementation-independent behavior that will not change in the future.  An example is [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html).  On the other hand, the following are non-examples:
+> **Note:** Meeting statement 3 is not exactly trivial, as it implies that the feature that generates "random" content from a seed has to be deterministic, among other things.<sup>[**(26)**](#Note26)</sup>  Using only documented PRNGs, with implementation-independent behavior that will not change in the future, can help meet the determinism requirement.  [**`java.util.Random`**](https://docs.oracle.com/javase/8/docs/api/java/util/Random.html) is one such PRNG.  On the other hand, the following are non-examples:
 >
 > - The C [**`rand` method**](http://en.cppreference.com/w/cpp/numeric/random/rand), as well as C++'s random number distribution classes, such as [**`std::uniform_int_distribution`**](http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution), use implementation-defined algorithms for random number generation.
 > - .NET's [**`System.Random`**](https://docs.microsoft.com/dotnet/api/system.random) has random number generation behavior that could change in the future.
@@ -531,6 +531,8 @@ I acknowledge&mdash;
 <small><sup id=Note24>(24)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
 <small><sup id=Note25>(25)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note26>(26)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.</small>
 
 <a id=Appendix></a>
 ## Appendix

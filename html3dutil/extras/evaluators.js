@@ -518,7 +518,6 @@ H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
  * @deprecated Use {@link H3DU.Trochoid} instead.
  */
 
-/* exported Epitrochoid */
 /**
  * Alias for the {@link H3DU.Epitrochoid} class.
  * @constructor
