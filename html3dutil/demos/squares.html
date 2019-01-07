@@ -151,33 +151,6 @@ function makeKernelMatrix() {
     "}"].join("\n"));
 }
 
-function makeWave() {
-  "use strict";
-  return H3DU.ShaderInfo.makeEffect([
-    "uniform float time; // range [0,100)",
-    "const float pi = 3.14159265;",
-    "float interp(float t) {",
-    " return sin(t*pi*2.0);",
-    "}",
-    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-    " float t=float(time)*0.01;",
-    " t=t+uvCoord.y;",
-    " float offset=interp(fract(t*8.0));",
-    " float x=clamp(uvCoord.x+offset*0.02,0.0,1.0);",
-    " vec4 color=texture2D(sampler,vec2(x,uvCoord.y));",
-    " return color;",
-    "}"].join("\n"));
-}
-
-function makeMirror() {
-  "use strict";
-  return H3DU.ShaderInfo.makeEffect([
-    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-    " vec4 color=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
-    " return color;",
-    "}"].join("\n"));
-}
-
 /* exported linkvignette */
 function linkvignette() {
   "use strict";

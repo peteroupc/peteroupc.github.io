@@ -177,7 +177,7 @@ function drawCurve(contours) {
  * @param {*} v2
  * @param {*} usize
  * @param {*} vsize
- * @returns {*}
+ * @returns {*} Return value.
  */
 Meshes.prototype.contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
   var contours = conrec(func, levels, u1, u2, v1, v2, usize, vsize);
