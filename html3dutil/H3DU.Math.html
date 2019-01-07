@@ -954,7 +954,7 @@ the bottom right.</p>
 var lookPoint=[0,0,0];
 var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
 cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
-var matrix=HMath.mat4lookat(cameraPoint,lookPoint);
+var matrix=H3DU.Math.mat4lookat(cameraPoint,lookPoint);
 </pre>
 
 <p>The following example is like the previous
@@ -964,7 +964,17 @@ example, but with the Z axis pointing up.</p>
 var cameraPoint=H3DU.Math.vec3normalize([1,1,1]);
 cameraPoint=H3DU.Math.vec3add(cameraPoint,lookPoint);
 // Positive Z axis is the up vector
-var matrix=HMath.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
+var matrix=H3DU.Math.mat4lookat(cameraPoint,lookPoint,[0,0,1]);
+</pre>
+
+<p>The following example creates a camera view matrix using the
+viewer position, the viewing direction, and the up vector (a &quot;look-to&quot; matrix)</p>
+
+<pre>var viewDirection=[0,0,1]
+var viewerPos=[0,0,0]
+var upVector=[0,1,0]
+var lookingAt=H3DU.Math.vec3add(viewerPos,viewDirection);
+var matrix=H3DU.Math.mat4lookat(viewerPos,lookingAt,upVector);
 </pre>
 
 <p><a name='H3DU.Math.mat4multiply'></a></p>

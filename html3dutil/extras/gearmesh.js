@@ -55,7 +55,7 @@ function QuadStrips() {
   };
 }
 
-export function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
+export var createGear = function(innerRadius, outerRadius, width, teeth, toothDepth) {
   var i;
   var r0, r1, r2;
   var angle, da;
@@ -172,4 +172,4 @@ export function createGear(innerRadius, outerRadius, width, teeth, toothDepth) {
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
   }
   return mesh.toMeshBuffer();
-}
+};

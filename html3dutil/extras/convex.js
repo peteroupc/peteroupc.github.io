@@ -686,7 +686,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
 };
 
   /**
-   * Generates the convex hull of a set of points, that is, the smallest convex set
+   * Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
    * that contains all the points given.
    * <p>To use this method, you must include the script "extras/convex.js". Example:<pre>
    * &lt;script type="text/javascript" src="extras/convex.js">&lt;/script></pre>
