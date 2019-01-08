@@ -17,6 +17,7 @@ export var mirrorShader = {
   "fragmentShader":[
     "varying vec2 uvCoord;",
     "uniform sampler2D sampler;",
+    "void main() {",
     " vec4 c=texture2D(sampler,vec2(1.0-uvCoord.x,uvCoord.y));",
     " gl_FragColor=c;",
     "}"

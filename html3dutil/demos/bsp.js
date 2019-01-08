@@ -1,4 +1,4 @@
-/* global AABBTree, H3DU, classifyPointToPlane3D, classifyPolygonToPlane3D, getIntersectionRayPlane, makeRay, triangleToPlane */
+/* global AABBTree, H3DU, MeshBuffer, classifyPointToPlane3D, classifyPolygonToPlane3D, getIntersectionRayPlane, makeRay, triangleToPlane */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -31,26 +31,23 @@ BspTree._negatePlane = function(plane) {
 BspTree._MiniBuilder = function() {
   "use strict";
   this.vertices = [];
-  this.normals = [];
   this.indices = [];
   this.addPoly = function(poly) {
     var index = this.vertices.length / 3;
     for(var i = 0; i < poly.vertices.length; i++) {
       var v = poly.vertices[i];
-      this.normals.push(poly.plane[0], poly.plane[1], poly.plane[2]);
-      this.vertices.push(v[0], v[1], v[2]);
+      // Push vertex positions, then vertex normals
+      this.vertices.push(v[0], v[1], v[2],
+            poly.plane[0], poly.plane[1], poly.plane[2]);
     }
     for(i = 0; i < poly.vertices.length - 2; i++) {
-      this.indices.push(index);
-      this.indices.push(index + i + 1);
-      this.indices.push(index + i + 2);
+      this.indices.push(index,
+         index + i + 1, index + i + 2);
     }
   };
   this.toMeshBuffer = function() {
-    return new H3DU.MeshBuffer()
-      .setAttribute("POSITION", this.vertices, 3)
-      .setAttribute("NORMAL", this.normals, 3)
-      .setIndices(this.indices);
+    return MeshBuffer.fromPositionsNormals(
+       this.vertices, this.indices);
   };
 };
 

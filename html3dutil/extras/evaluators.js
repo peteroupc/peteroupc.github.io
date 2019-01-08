@@ -197,7 +197,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
  * of another circle, whose position is fixed, with a center of (0,0).<p>
  * The following curves can be generated with this class (in the following
  * descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
- * and D = <code>distFromRollerCenter</code>).<ul>
+ * and D = <code>distFromInnerCenter</code>).<ul>
  * <li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
  * <li>Curtate hypocycloid: D < R (hypotrochoid not touching the fixed circle).</li>
  * <li>Prolate hypocycloid: D > R (hypotrochoid crossing the fixed circle).</li>

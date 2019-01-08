@@ -54,8 +54,16 @@ function QuadStrips() {
    this.vertices, this.indices);
   };
 }
-
-export var createGear = function(innerRadius, outerRadius, width, teeth, toothDepth) {
+/**
+ * Builds a mesh buffer representing a gear centered at the origin.
+ * @param {number} innerRadius Inner radius of the gear wheel
+ * @param {number} outerRadius Outer radius of the gear wheel, at the valleys between teeth.
+ * @param {number} thickness Thickness of the gear
+ * @param {number} teeth Number of teeth.
+ * @param {number} toothDepth Depth of each gear tooth.
+ * @returns {H3DU.MeshBuffer} Return value.
+ */
+export var createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
   var i;
   var r0, r1, r2;
   var angle, da;
@@ -76,10 +84,10 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
   cosAngle = 1.0; // cos(0.0deg)
   for(i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
-    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, width * 0.5 );
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
-    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), width * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, thickness * 0.5 );
+    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, thickness * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, thickness * 0.5 );
+    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), thickness * 0.5 );
     var ts = cosStep * sinAngle + sinStep * cosAngle;
     var tc = cosStep * cosAngle - sinStep * sinAngle;
     sinAngle = ts;
@@ -96,10 +104,10 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
   cosAngle = 1.0; // cos(0.0deg)
   for(i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
-    mesh.quad([r1 * cosAngle, r1 * sinAngle, width * 0.5,
-      r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), width * 0.5,
-      r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), width * 0.5,
-      r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), width * 0.5]);
+    mesh.quad([r1 * cosAngle, r1 * sinAngle, thickness * 0.5,
+      r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), thickness * 0.5,
+      r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), thickness * 0.5,
+      r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), thickness * 0.5]);
     ts = cosStep * sinAngle + sinStep * cosAngle;
     tc = cosStep * cosAngle - sinStep * sinAngle;
     sinAngle = ts;
@@ -114,10 +122,10 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
-    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, -width * 0.5 );
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -width * 0.5 );
-    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -width * 0.5 );
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -width * 0.5 );
+    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, -thickness * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -thickness * 0.5 );
+    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -thickness * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -thickness * 0.5 );
   }
 
 /* draw back sides of teeth */
@@ -126,10 +134,10 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
-    mesh.quad([r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -width * 0.5,
-      r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), -width * 0.5,
-      r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), -width * 0.5,
-      r1 * cosAngle, r1 * sinAngle, -width * 0.5] );
+    mesh.quad([r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -thickness * 0.5,
+      r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), -thickness * 0.5,
+      r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), -thickness * 0.5,
+      r1 * cosAngle, r1 * sinAngle, -thickness * 0.5] );
   }
 
 /* draw outward faces of teeth */
@@ -138,28 +146,28 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
     angle = i * 2.0 * Math.PI / teeth;
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
-    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, width * 0.5 );
-    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, -width * 0.5 );
+    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, thickness * 0.5 );
+    mesh.vertex3( r1 * cosAngle, r1 * sinAngle, -thickness * 0.5 );
     u = r2 * Math.cos(angle + da) - r1 * cosAngle;
     v = r2 * Math.sin(angle + da) - r1 * sinAngle;
     len = Math.sqrt( u * u + v * v );
     u /= len;
     v /= len;
     mesh.normal3( v, -u, 0.0 );
-    mesh.vertex3( r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), width * 0.5 );
-    mesh.vertex3( r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), -width * 0.5 );
+    mesh.vertex3( r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), thickness * 0.5 );
+    mesh.vertex3( r2 * Math.cos(angle + da), r2 * Math.sin(angle + da), -thickness * 0.5 );
     mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
-    mesh.vertex3( r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), width * 0.5 );
-    mesh.vertex3( r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), -width * 0.5 );
+    mesh.vertex3( r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), thickness * 0.5 );
+    mesh.vertex3( r2 * Math.cos(angle + 2 * da), r2 * Math.sin(angle + 2 * da), -thickness * 0.5 );
     u = r1 * Math.cos(angle + 3 * da) - r2 * Math.cos(angle + 2 * da);
     v = r1 * Math.sin(angle + 3 * da) - r2 * Math.sin(angle + 2 * da);
     mesh.normal3( v, -u, 0.0 );
-    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), width * 0.5 );
-    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -width * 0.5 );
+    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), thickness * 0.5 );
+    mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), -thickness * 0.5 );
     mesh.normal3( Math.cos(angle), Math.sin(angle), 0.0 );
   }
-  mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), width * 0.5 );
-  mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), -width * 0.5 );
+  mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), thickness * 0.5 );
+  mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), -thickness * 0.5 );
 
 /* draw inside radius cylinder */
   mesh.newStrip();
@@ -168,8 +176,8 @@ export var createGear = function(innerRadius, outerRadius, width, teeth, toothDe
     cosAngle = Math.cos(angle);
     sinAngle = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(angle);
     mesh.normal3( -cosAngle, -sinAngle, 0.0 );
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -width * 0.5 );
-    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, width * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -thickness * 0.5 );
+    mesh.vertex3( r0 * cosAngle, r0 * sinAngle, thickness * 0.5 );
   }
   return mesh.toMeshBuffer();
 };

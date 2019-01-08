@@ -1,24 +1,3 @@
-<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
-<meta charset=utf-8>
-<style>
-body { margin: 0px; }
-canvas { width:100%; height:100%; overflow: hidden; }
-</style>
-<script type="text/javascript" src="../h3du_min.js"></script>
-<script type="text/javascript" src="../extras/frame.js"></script>
-<script type="text/javascript" src="../extras/curvetube.js"></script>
-<script type="text/javascript" src="../extras/evaluators.js"></script>
-<script type="text/javascript" src="../extras/path.js"></script>
-<script type="text/javascript" src="demoutil.js"></script>
-<script type="text/javascript" src="../extras/meshjson.js"></script>
-</head>
-<body>
-<canvas id=canvas></canvas>
-<div style="position:absolute;left:0;top:0;width:25%">Involute, evolute, and inverse curve
-of an ellipse</div>
-<script id="demo">
-/* global H3DU */
-// <!--
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -28,13 +7,9 @@ of an ellipse</div>
  http://peteroupc.github.io/
 */
 
-function makeCurvePath(curve) {
-  "use strict";
-  return new H3DU.CurveBuilder().position(curve).evalCurve(H3DU.Mesh.LINES, 60).toMeshBuffer()
-}
+import {H3DU} from "../h3du_min";
 
 function _vecNormInPlaceAndScale(vec, scale) {
-  "use strict";
   var len = 0;
   for(var i = 0; i < vec.length; i++) {
     len += vec[i] * vec[i];
@@ -53,7 +28,6 @@ function _vecNormInPlaceAndScale(vec, scale) {
   return vec;
 }
 function _vecAdd(v1, v2) {
-  "use strict";
   var ret = [];
   for(var i = 0; i < v1.length; i++) {
     ret[i] = v1[i] + v2[i];
@@ -61,7 +35,6 @@ function _vecAdd(v1, v2) {
   return ret;
 }
 function _vecScale(v1, s) {
-  "use strict";
   var ret = [];
   for(var i = 0; i < v1.length; i++) {
     ret[i] = v1[i] * s;
@@ -70,7 +43,6 @@ function _vecScale(v1, s) {
 }
 
 export function curveInvolute(evaluator) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -86,7 +58,6 @@ export function curveInvolute(evaluator) {
   };
 }
 export function curveEvolute(evaluator) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -108,7 +79,6 @@ export function curveEvolute(evaluator) {
 }
 /* exported curveRadialCurve */
 export function curveRadialCurve(evaluator, ox, oy) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -128,7 +98,6 @@ export function curveRadialCurve(evaluator, ox, oy) {
   };
 }
 export function curveOrthotomic(evaluator, ox, oy) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -147,12 +116,10 @@ export function curveOrthotomic(evaluator, ox, oy) {
 }
 /* exported curveCatacaustic */
 export function curveCatacaustic(evaluator, ox, oy) {
-  "use strict";
   return curveEvolute(curveOrthotomic(evaluator, ox, oy));
 }
 /* exported curvePedalCurve */
 export function curvePedalCurve(evaluator, ox, oy) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -174,7 +141,6 @@ export function curvePedalCurve(evaluator, ox, oy) {
 }
 
 export function curveInverse(evaluator, ox, oy, radius) {
-  "use strict";
   var neweval = evaluator;
   return {
     "evaluate":function(u) {
@@ -193,7 +159,6 @@ export function curveInverse(evaluator, ox, oy, radius) {
 
 /* exported ruledSurface */
 export function ruledSurface(directrix, director) {
-  "use strict";
   return new H3DU.Surface({
     "evaluate":function(u, v) {
       var dx = directrix.evaluate(u);
@@ -206,41 +171,3 @@ export function ruledSurface(directrix, director) {
     }
   });
 }
-
-var simpleCurve = new H3DU.Curve({
-  "evaluate":function(u) {
-    "use strict";
-    return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
-  },
-  "endPoints":function() {
-    "use strict"; return [-Math.PI, Math.PI];
-  }
-});
-
-var scene = new H3DU.Scene3D(document.getElementById("canvas"));
-scene.setClearColor("white");
-var sub = new H3DU.Batch3D()
-   .perspectiveAspect(45, 1, 1000)
-   .setLookAt([0, 0, 10]);
-var group = new H3DU.ShapeGroup();
-sub.getLights().setBasic();
-var mesh = makeCurvePath(simpleCurve);
-group.addShape(
-    new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("blue")));
-mesh = makeCurvePath(curveInvolute(simpleCurve));
-group.addShape(
-    new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("red")));
-mesh = makeCurvePath(curveEvolute(simpleCurve));
-group.addShape(
-    new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("orange")));
-mesh = makeCurvePath(curveInverse(simpleCurve, 0, 0, 1));
-group.addShape(
-    new H3DU.Shape(mesh).setMaterial(H3DU.Material.fromBasic("green")));
-sub.addShape(group);
-H3DU.renderLoop(function() {
-  "use strict";
-  scene.render(sub);
-});
-// -->
-</script>
-</body>

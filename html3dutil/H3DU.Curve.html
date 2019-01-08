@@ -35,6 +35,18 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 
 <h4>Example</h4>
 
+<p>The following is a simple example of a parametric curve.</p>
+
+<pre>var simpleCurve = new H3DU.Curve({
+&quot;evaluate&quot;:function(u) {
+return [Math.cos(u) * 1.5, Math.sin(u) * 0.8, 0];
+},
+&quot;endPoints&quot;:function() {
+return [-Math.PI, Math.PI];
+}
+});
+</pre>
+
 <p>The following function defines a parametric circle curve. It demonstrates how all methods
 defined for curve evaluator objects can be implemented.</p>
 
@@ -151,6 +163,9 @@ in the same proportion, unless the curve&#39;s path runs at
 constant speed with respect to time. For example, shrinking the range of a curve
 from [0, 1] to [0, 0.5] will not generally result in a curve that&#39;s exactly half as
 long as the original curve.</p>
+
+<p>For some curves, this method can
+also be used to grow the path of the curve.</p>
 
 <h4>Parameters</h4>
 
@@ -437,6 +452,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.exports.MatrixStack.html">H3DU.exports.MatrixStack</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Superellipsoid.html">Superellipsoid</a></li>
+<li><a href="Supertoroid.html">Supertoroid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

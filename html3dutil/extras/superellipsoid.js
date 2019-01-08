@@ -17,14 +17,20 @@ function cospow(x, n) {
   var r = Math.cos(x);
   return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {number} xRadius
+ * @param {number} yRadius
+ * @param {number} zRadius
+ * @param {number} n Exponent for the sines and cosines in the U axis.
+ * @param {number} m Exponent for the sines and cosines in the V axis.
+ * @constructor
+ */
 export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.zRadius = zRadius;
- // exponent for the sines and cosines in U axis
   this.n = typeof n === "undefined" || n === null ? 1 : n;
- // exponent for the sines and cosines in V axis
   this.m = typeof m === "undefined" || m === null ? 1 : m;
   this.endPoints = function() {
     return [-Math.PI / 2, Math.PI / 2, -Math.PI, Math.PI];
@@ -38,15 +44,19 @@ export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
     ];
   };
 };
-
-export var Supertoroid = function(xRadius, yRadius, innerRadius, n, m) {
+/**
+ * TODO: Not documented yet.
+ * @param {number} xRadius
+ * @param {number} yRadius
+ * @param {number} innerRadius
+ * @param {number} n Exponent for the sines and cosines in the U axis.
+ * @param {number} m Exponent for the sines and cosines in the V axis.
+ * @constructor
+ */
+export var Supertoroid = function(xRadius, yRadius, innerRadius) {
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;
- // exponent for the sines and cosines in U axis
-  this.n = typeof n === "undefined" || n === null ? 1 : n;
- // exponent for the sines and cosines in V axis
-  this.m = typeof m === "undefined" || m === null ? 1 : m;
   this.endPoints = function() {
     return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
   };

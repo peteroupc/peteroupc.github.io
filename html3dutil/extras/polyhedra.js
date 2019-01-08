@@ -18,6 +18,7 @@
  * @memberof H3DU
  */
 H3DU.Polyhedra = function() {
+  // NOTE: empty because no instance properties
 };
 /**
  * Normalizes the distance from the origin to each vertex in the given

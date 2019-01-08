@@ -89,25 +89,6 @@ function makeWaterpaint() {
     "}"].join("\n"));
 }
 
-function makeVignette() {
-  "use strict";
-  // Based on a public domain vignette shader by Landon Manning
-  return H3DU.ShaderInfo.makeEffect([
-    "uniform float radius;",
-    "uniform float softness;",
-    "uniform float opacity;",
-    "#define tolinear(c) pow(c, vec3(2.2))",
-    "#define fromlinear(c) pow(c, vec3(0.45454545))",
-    "vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize) {",
-    " vec4 tex=texture2D(sampler,uvCoord);",
-    " tex.rgb=tolinear(tex.rgb);",
-    " float vignette=smoothstep(radius,radius-softness,length(uvCoord-vec2(0.5)));",
-    " vec3 color=mix(tex.rgb,tex.rgb*vignette,opacity);",
-    " tex.rgb=fromlinear(color);",
-    " return tex;",
-    "}"].join("\n"));
-}
-
 function setKernelMatrix(program, matrix) {
   "use strict";
   var weight = matrix[0] + matrix[1] + matrix[2] +
@@ -135,8 +116,8 @@ function makeKernelMatrix() {
     " vec2 xy2=uvCoord+pixel;",
     " xy2=vec2(min(xy2.x,1.0),min(xy2.y,1.0));",
     " vec4 mainColor=texture2D(sampler,uvCoord);",
-    " // NOTE: Assumes row-major matrices; e.g. [0][0] means ",
-    " // index 0, and [0][1] means index 1",
+    // NOTE: Assumes row-major matrices; e.g. [0][0] means
+    // index 0, and [0][1] means index 1
     " vec4 x0y0=texture2D(sampler,xy0)*matrix[0][0];",
     " vec4 x1y0=texture2D(sampler,vec2(xy1.x,xy0.y))*matrix[0][1];",
     " vec4 x2y0=texture2D(sampler,vec2(xy2.x,xy0.y))*matrix[0][2];",
@@ -151,19 +132,6 @@ function makeKernelMatrix() {
     "}"].join("\n"));
 }
 
-/* exported linkvignette */
-function linkvignette() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeVignette();
-    currentFilter.setUniforms({
-      "radius":0.75,
-      "softness":0.45,
-      "opacity":0.5
-    });
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
 /* exported link1a */
 function link1a() {
   "use strict";
@@ -191,30 +159,7 @@ function link4() {
     renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
 }
-/* exported link5 */
-function link5() {
-  "use strict";
-  if(scene) {
-    currentFilter = makePixelate();
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-/* exported link6 */
-function link6() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeWaterpaint();
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-/* exported link7 */
-function link7() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeMirror(scene);
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
+
 /* exported link8 */
 function link8() {
   "use strict";

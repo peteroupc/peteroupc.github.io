@@ -1019,12 +1019,13 @@ The following techniques generate new colors that are related to existing colors
     - **Complementary**: 0, &pi;.  This is the base hue with its opposite hue.
     - **Split complementary**: 0, &pi; - Y, &pi; + Y, where Y is greater than 0 and &pi;/2 or less.  The base hue and two hues close to the opposite hue.
     - **Triadic**: 0, 2&pi;/3, 4&pi;/3.  Base hue and the two hues at 120 degrees from that hue.
-    - **Off-complementary** (mentioned by B. MacEvoy): 0, 2&pi;/3. Alternatively, 0, -2&pi;/3.
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
+    - **Off-complementary**: 0, Y, where Y is -&pi;/2 or less but greater than -&pi;, or Y is &pi;/2 or greater but less than &pi;.  B. MacEvoy mentions Y = 2&pi;/3.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
     - **Tetradic**: Double complementary with Y = &pi/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
 - **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, and/or tones**](#Alpha_Blending) of a given color are monochrome colors.
+- **Achromatic colors**: Colors without hue; that is, black, white, and/or shades of gray.
 
 <a id=Contrast_Ratio></a>
 ### Contrast Ratio
