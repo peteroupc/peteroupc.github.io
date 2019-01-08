@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 5, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 8, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -377,9 +377,8 @@ An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `B` or greater, or
 2. if a noncryptographic RNG is otherwise appropriate, using a PRNG that&mdash;
-    - has a state length of `B` or greater,
-    - is initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness", and
-    - qualifies as a statistical RNG except it uses a seed derived as given above.
+    - has a state length of `B` or greater, and
+    - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
 Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(22)**](#Note22)</sup>.  For example, `B` is 226 bits for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 

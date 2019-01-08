@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Jan. 5, 2018.</p>
+<p>Begun on Mar. 5, 2016; last updated on Jan. 8, 2018.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -559,9 +559,8 @@
 <li>if a noncryptographic RNG is otherwise appropriate, using a PRNG that&mdash;
 
 <ul>
-<li>has a state length of <code>B</code> or greater,</li>
-<li>is initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;, and</li>
-<li>qualifies as a statistical RNG except it uses a seed derived as given above.</li>
+<li>has a state length of <code>B</code> or greater, and</li>
+<li>qualifies as a statistical RNG except it&#39;s initialized with a seed derived from data with at least <strong><code>B</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
 </ul></li>
 </ol>
 

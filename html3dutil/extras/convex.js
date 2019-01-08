@@ -8,8 +8,8 @@
  http://peteroupc.github.io/
 */
 
-import {Meshes} from "../h3du-meshes";
 import {HMath} from "../h3du-math";
+import {Meshes} from "../h3du-meshes";
 
 // Adapted by Peter O. from a public-domain
 // C++ implementation found at https://github.com/akuukka/quickhull

@@ -40,7 +40,7 @@ export var colorMatrixShader = {
 /**
  * TODO: Not documented yet.
  * @param {*} kind
- * @returns {*}
+ * @returns {*} Return value.
  */
 export var getColorMatrix = function(kind) {
   if(kind === "grayscale") {
