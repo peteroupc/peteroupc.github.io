@@ -37,7 +37,7 @@ canvas { width:100%; height:100%; overflow: hidden; }
 * @param {number} timeStep Time step for integration. This is usually
 * a fractional number of seconds.
 */
-H3DU.Math.integrateVerlet = function(particle, timeStep) {
+H3DU.MathUtil.integrateVerlet = function(particle, timeStep) {
   "use strict";
   var x = particle[0];
   var y = particle[1];
@@ -77,7 +77,7 @@ H3DU.Math.integrateVerlet = function(particle, timeStep) {
 * @param {number} timeStep Optimal time step.
 * @return {Array<Number>} The parameter "particle".
 */
-H3DU.Math.initParticle = function(particle,
+H3DU.MathUtil.initParticle = function(particle,
   x, y, z, vx, vy, vz, ax, ay, az, timeStep) {
   "use strict";
   particle[0] = x;
@@ -93,7 +93,7 @@ H3DU.Math.initParticle = function(particle,
   particle[9] = timeStep;
   return particle;
 };
-H3DU.Math.constrainPointToBox = function(p, radius, pointIndex, bounds) {
+H3DU.MathUtil.constrainPointToBox = function(p, radius, pointIndex, bounds) {
   "use strict";
   var xmin = bounds[0] + radius;
   var xmax = bounds[3] - radius;
@@ -109,7 +109,7 @@ H3DU.Math.constrainPointToBox = function(p, radius, pointIndex, bounds) {
 function CubicBody(radius, mass, x, y, z) {
   "use strict";
   this.divmass = 1.0 / mass;
-  this.particle = H3DU.Math.initParticle([],
+  this.particle = H3DU.MathUtil.initParticle([],
    x, y, z,
    0, 0, 0,
    0, CubicBody.GRAVITY, 0,
@@ -132,11 +132,11 @@ CubicBody.prototype.z = function() {
 };
 CubicBody.prototype.constrainToBox = function(bounds) {
   "use strict";
-  H3DU.Math.constrainPointToBox(this.particle, this.radius, 0, bounds);
+  H3DU.MathUtil.constrainPointToBox(this.particle, this.radius, 0, bounds);
 };
 CubicBody.prototype.integrate = function(timeStep) {
   "use strict";
-  H3DU.Math.integrateVerlet(this.particle, timeStep);
+  H3DU.MathUtil.integrateVerlet(this.particle, timeStep);
 };
 
 function Particles(scene, count, width, height) {
@@ -152,7 +152,7 @@ function Particles(scene, count, width, height) {
     p[1] = Math.random() * height;
     p[2] = 0;
     var scale = width / 100 * mass;
-    H3DU.Math.constrainPointToBox(p, scale, 0, this.bounds);
+    H3DU.MathUtil.constrainPointToBox(p, scale, 0, this.bounds);
     this.bodies.push(new CubicBody(scale, mass, p[0], p[1], p[2]));
     var shape = sphere.copy();
     shape.setScale(scale, scale, scale);

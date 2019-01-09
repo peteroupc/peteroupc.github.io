@@ -193,7 +193,7 @@ CanvasBackground.prototype.drawOne = function() {
   rgb[0] /= 255;
   rgb[1] /= 255;
   rgb[2] /= 255;
-  var vector = H3DU.Math.quatFromTaitBryan(
+  var vector = H3DU.MathUtil.quatFromTaitBryan(
      this.constructor.rand(360),
      this.constructor.rand(360),
      this.constructor.rand(360));

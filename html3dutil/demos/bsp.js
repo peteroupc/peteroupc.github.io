@@ -246,7 +246,7 @@ BspTree._handleOnAndCrossing = function(info, plane) {
   for(var i = 0; i < info.onFaces.length; i++) {
     var polygon = info.onFaces[i];
     var polyNormal = polygon.plane.slice(0, 3);
-    var dot = H3DU.Math.vec3dot(splittingPlaneNormal, polyNormal);
+    var dot = H3DU.MathUtil.vec3dot(splittingPlaneNormal, polyNormal);
     if (dot > 0) {
       info.frontFaces.push(polygon);
     } else {

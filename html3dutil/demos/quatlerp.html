@@ -48,9 +48,9 @@ Red box was animated with quatNlerp, blue box with quatSlerp</div>
     return Math.random() * 2.0 - 1;
   }
   function randquat() {
-    return H3DU.Math.vec4normInPlace([rn(), rn(), rn(), rn()]);
+    return H3DU.MathUtil.vec4normInPlace([rn(), rn(), rn(), rn()]);
   }
-  var quatLast = H3DU.Math.quatIdentity();
+  var quatLast = H3DU.MathUtil.quatIdentity();
   var quatNext = randquat();
   var renderFrames = 0;
   // Set up the render loop
@@ -66,10 +66,10 @@ Red box was animated with quatNlerp, blue box with quatSlerp</div>
       quatNext = newq;
     }
     // Animate red box using Nlerp
-    q = H3DU.Math.quatNlerp(quatLast, quatNext, renderFrames / frameCount);
+    q = H3DU.MathUtil.quatNlerp(quatLast, quatNext, renderFrames / frameCount);
     shape.setQuaternion(q);
     // Animate blue box using Nlerp
-    q = H3DU.Math.quatSlerp(quatLast, quatNext, renderFrames / frameCount);
+    q = H3DU.MathUtil.quatSlerp(quatLast, quatNext, renderFrames / frameCount);
     shape2.setQuaternion(q);
    // Render the scene
     scene.render(sub);

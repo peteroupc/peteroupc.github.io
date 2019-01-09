@@ -13,15 +13,15 @@ function getIntersectingPoint(p1, p2, p3) {
   var n1 = p1.slice(0, 3);
   var n2 = p2.slice(0, 3);
   var n3 = p3.slice(0, 3);
-  var d = H3DU.Math.vec3dot(n1, H3DU.Math.vec3cross(n2, n3));
+  var d = H3DU.MathUtil.vec3dot(n1, H3DU.MathUtil.vec3cross(n2, n3));
   if(Math.abs(d) >= 1e-9) {
-    var n12 = H3DU.Math.vec3cross(n1, n2);
-    var n23 = H3DU.Math.vec3cross(n2, n3);
-    var n31 = H3DU.Math.vec3cross(n3, n1);
-    var p = H3DU.Math.vec3scale(n23, -p1[3]);
-    H3DU.Math.vec3addInPlace(p, H3DU.Math.vec3scale(n31, -p2[3]));
-    H3DU.Math.vec3addInPlace(p, H3DU.Math.vec3scale(n12, -p3[3]));
-    H3DU.Math.vec3scaleInPlace(p, 1.0 / d);
+    var n12 = H3DU.MathUtil.vec3cross(n1, n2);
+    var n23 = H3DU.MathUtil.vec3cross(n2, n3);
+    var n31 = H3DU.MathUtil.vec3cross(n3, n1);
+    var p = H3DU.MathUtil.vec3scale(n23, -p1[3]);
+    H3DU.MathUtil.vec3addInPlace(p, H3DU.MathUtil.vec3scale(n31, -p2[3]));
+    H3DU.MathUtil.vec3addInPlace(p, H3DU.MathUtil.vec3scale(n12, -p3[3]));
+    H3DU.MathUtil.vec3scaleInPlace(p, 1.0 / d);
     return p;
   }
   return null;
@@ -30,7 +30,7 @@ function getIntersectingPoint(p1, p2, p3) {
 var getSignedDistanceToPlane = function(v, p) {
   "use strict";
   // NOTE: Fast, not robust
-  return p[3] + H3DU.Math.vec3dot([p[0], p[1], p[2]], v);
+  return p[3] + H3DU.MathUtil.vec3dot([p[0], p[1], p[2]], v);
 };
 
 function getIntersectingPoints(planes) {
@@ -90,9 +90,9 @@ function randomConvexPoly(avgsize, maxfaces) {
   "use strict";
   var planes = [];
   for(var i = 0; i < maxfaces; i++) {
-    var n = H3DU.Math.vec3normalize([Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1]);
-    var ns = H3DU.Math.vec3scale(n, avgsize);
-    planes.push(H3DU.Math.planeFromNormalAndPoint(n, ns));
+    var n = H3DU.MathUtil.vec3normalize([Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1]);
+    var ns = H3DU.MathUtil.vec3scale(n, avgsize);
+    planes.push(H3DU.MathUtil.planeFromNormalAndPoint(n, ns));
   }
   var ints = getIntersectingPoints(planes);
   return H3DU.Meshes.createConvexHull(ints, true);
@@ -101,20 +101,20 @@ function randomConvexPoly(avgsize, maxfaces) {
 function prismMesh(size, height, sides) {
   "use strict";
   var planes = [];
-  var angleStep = H3DU.Math.PiTimes2 / sides;
+  var angleStep = H3DU.MathUtil.PiTimes2 / sides;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var s = 0.0; // sin(0deg)
   var c = 1.0; // cos(0deg)
   for(var i = 0; i < sides; i++) {
-    planes.push(H3DU.Math.planeFromNormalAndPoint([c, s, 0], [c * size, s * size, 0]));
+    planes.push(H3DU.MathUtil.planeFromNormalAndPoint([c, s, 0], [c * size, s * size, 0]));
     var ts = cosStep * s + sinStep * c;
     var tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
-  planes.push(H3DU.Math.planeFromNormalAndPoint([0, 0, -1], [0, 0, -1 * height / 2]));
-  planes.push(H3DU.Math.planeFromNormalAndPoint([0, 0, 1], [0, 0, 1 * height / 2]));
+  planes.push(H3DU.MathUtil.planeFromNormalAndPoint([0, 0, -1], [0, 0, -1 * height / 2]));
+  planes.push(H3DU.MathUtil.planeFromNormalAndPoint([0, 0, 1], [0, 0, 1 * height / 2]));
   var ints = getIntersectingPoints(planes);
   return H3DU.Meshes.createConvexHull(ints, true);
 }

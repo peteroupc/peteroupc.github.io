@@ -36,7 +36,7 @@ function Label(text, pos) {
   document.body.appendChild(this.label);
   this.pos = pos;
   this.update = function(matrix, width, height) {
-    var pos = H3DU.Math.vec3toWindowPoint(this.pos, matrix, [0, 0, width, height]);
+    var pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, matrix, [0, 0, width, height]);
     if(pos[2] < -1 || pos[2] > 1) {
       // Too close, too far, or behind the camera
       this.label.style.display = "none";
@@ -62,7 +62,7 @@ function Labels(scene, batch) {
     var view = this.batch.getViewMatrix();
     var width = this.scene.getWidth();
     var height = this.scene.getHeight();
-    proj = H3DU.Math.mat4multiply(proj, view);
+    proj = H3DU.MathUtil.mat4multiply(proj, view);
     for(var i = 0; i < this.labels.length; i++) {
       this.labels[i].update(proj, width, height);
     }
@@ -107,7 +107,7 @@ H3DU.renderLoop(function(time) {
   "use strict";
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
     shapeGroup.getShape(i).setQuaternion(
-      H3DU.Math.quatFromTaitBryan(rotation));
+      H3DU.MathUtil.quatFromTaitBryan(rotation));
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
   rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);

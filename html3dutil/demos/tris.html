@@ -48,7 +48,7 @@ TriangleParticles.prototype.update = function(time) {
       this.group.setShape(i, TriangleParticles.makeShapeFromTri(tri, this.scene));
     } else {
       var trans = this.group.getShape(i).getTransform();
-      trans.movePosition(H3DU.Math.vec3scale(this.tris[i].movement, frames));
+      trans.movePosition(H3DU.MathUtil.vec3scale(this.tris[i].movement, frames));
       trans.multRotation(this.tris[i].rotation * frames, 0, 0, 1);
     }
   }
@@ -73,8 +73,8 @@ TriangleParticles._getArea = function(tri) {
   "use strict";
   var tx = [tri[0] - tri[3], tri[1] - tri[4], tri[2] - tri[5]];
   var ty = [tri[6] - tri[3], tri[7] - tri[4], tri[8] - tri[5]];
-  var tz = H3DU.Math.vec3cross(tx, ty);
-  return H3DU.Math.vec3length(tz) * 0.5;
+  var tz = H3DU.MathUtil.vec3cross(tx, ty);
+  return H3DU.MathUtil.vec3length(tz) * 0.5;
 };
 
 TriangleParticles.generateTri = function(width, height) {

@@ -8,7 +8,7 @@
  http://peteroupc.github.io/
 */
 
-import {HMath} from "../h3du-math";
+import {MathUtil} from "../h3du-math";
 import {Meshes} from "../h3du-meshes";
 
 // Adapted by Peter O. from a public-domain
@@ -242,7 +242,7 @@ QuickHull._MeshBuilder = function(a, b, c, d) {
 QuickHull.prototype.addPointToFace = function(f, pointIndex) {
   var D = QuickHull._getSignedDistanceToPlane(this.vertexData[ pointIndex ], f.P);
   var n = f.P.slice(0, 3);
-  var sqrNLength = HMath.vec3dot(n, n);
+  var sqrNLength = MathUtil.vec3dot(n, n);
   if (D > 0 && D * D > this.epsilonSquared * sqrNLength) {
     f.pointsOnPositiveSide.push(pointIndex);
     if (D > f.mostDistantPointDist) {
@@ -448,7 +448,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
       var newFace = this.mesh.faces[newFaceIndex];
 
       var planeNormal = QuickHull._getTriangleNormal(this.vertexData[A], this.vertexData[B], activePoint);
-      newFace.P = HMath.planeFromNormalAndPoint(planeNormal, activePoint);
+      newFace.P = MathUtil.planeFromNormalAndPoint(planeNormal, activePoint);
       newFace.he = AB;
 
       this.mesh.halfEdges[CA].opp = this.newHalfEdgeIndices[i > 0 ? i * 2 - 1 : 2 * horizonEdgeCount - 1];
@@ -544,17 +544,17 @@ QuickHull.prototype.getScale = function(extremeValues) {
 };
   /** @ignore */
 QuickHull._getTriangleNormal = function(a, b, c) {
-  return HMath.vec3cross(HMath.vec3sub(a, c), HMath.vec3sub(b, c));
+  return MathUtil.vec3cross(MathUtil.vec3sub(a, c), MathUtil.vec3sub(b, c));
 };
   /** @ignore */
 QuickHull._getSignedDistanceToPlane = function(v, p) {
     // NOTE: Fast, not robust
-  return p[3] + HMath.vec3dot([p[0], p[1], p[2]], v);
+  return p[3] + MathUtil.vec3dot([p[0], p[1], p[2]], v);
 };
   /** @ignore */
 QuickHull._isPointOnNonnegativeSide = function(n, p, q) {
   return QuickHull._getSignedDistanceToPlane(q,
-      HMath.planeFromNormalAndPoint(n, p)) >= 0;
+      MathUtil.planeFromNormalAndPoint(n, p)) >= 0;
 };
   /** @ignore */
 QuickHull.prototype.getInitialTetrahedron = function() {
@@ -576,8 +576,8 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     for (var j = i + 1; j < 6; j++) {
       var v1 = this.vertexData[ this.extremeValues[i] ];
       var v2 = this.vertexData[ this.extremeValues[j] ];
-      var vsub = HMath.vec3sub(v1, v2);
-      var d = HMath.vec3dot(vsub, vsub); // Squared distance
+      var vsub = MathUtil.vec3sub(v1, v2);
+      var d = MathUtil.vec3dot(vsub, vsub); // Squared distance
       if (d > maxD) {
         maxD = d;
         selectedPoints = [this.extremeValues[i], this.extremeValues[j]];
@@ -591,14 +591,14 @@ QuickHull.prototype.getInitialTetrahedron = function() {
   if(selectedPoints[0] === selectedPoints[1])throw new Error();
     // Find the most distant point to the line between the two chosen extreme points.
   var rayOrigin = this.vertexData[selectedPoints[0]];
-  var rayDir = HMath.vec3sub(this.vertexData[selectedPoints[1]], this.vertexData[selectedPoints[0]]);
+  var rayDir = MathUtil.vec3sub(this.vertexData[selectedPoints[1]], this.vertexData[selectedPoints[0]]);
   maxD = this.epsilonSquared;
   var maxI = Number.POSITIVE_INFINITY;
   var vCount = this.vertexData.length;
   for (i = 0; i < vCount; i++) {
-    var s = HMath.vec3sub(this.vertexData[i], rayOrigin);
-    var t = HMath.vec3dot(s, rayDir);
-    var distToRay = HMath.vec3dot(s, s) - t * t / HMath.vec3dot(rayDir, rayDir);
+    var s = MathUtil.vec3sub(this.vertexData[i], rayOrigin);
+    var t = MathUtil.vec3dot(s, rayDir);
+    var distToRay = MathUtil.vec3dot(s, s) - t * t / MathUtil.vec3dot(rayDir, rayDir);
     if (distToRay > maxD) {
       maxD = distToRay;
       maxI = i;
@@ -639,7 +639,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
   maxD = this.epsilon;
   maxI = 0;
   N = QuickHull._getTriangleNormal(baseTriangleVertices[0], baseTriangleVertices[1], baseTriangleVertices[2]);
-  var trianglePlane = HMath.planeFromNormalAndPoint(N, baseTriangleVertices[0]);
+  var trianglePlane = MathUtil.planeFromNormalAndPoint(N, baseTriangleVertices[0]);
   for (i = 0; i < vCount; i++) {
     d = Math.abs(QuickHull._getSignedDistanceToPlane(this.vertexData[i], trianglePlane));
     if (d > maxD) {
@@ -652,7 +652,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     this.planar = true;
     N = QuickHull._getTriangleNormal(baseTriangleVertices[1], baseTriangleVertices[2], baseTriangleVertices[0]);
     this.planarPointCloudTemp = this.vertexData.slice(0, this.vertexData.length);
-    var extraPoint = HMath.vec3add(N, this.vertexData[0]);
+    var extraPoint = MathUtil.vec3add(N, this.vertexData[0]);
     this.planarPointCloudTemp.push(extraPoint);
     maxI = this.planarPointCloudTemp.length - 1;
     this.vertexData = this.planarPointCloudTemp;
@@ -670,7 +670,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     var vb = this.vertexData[v[1]];
     var vc = this.vertexData[v[2]];
     N = QuickHull._getTriangleNormal(va, vb, vc);
-    f.P = HMath.planeFromNormalAndPoint(N, va);
+    f.P = MathUtil.planeFromNormalAndPoint(N, va);
   }
 
     // Finally we assign a face for each vertex outside the tetrahedron (vertices inside the tetrahedron have no role anymore)

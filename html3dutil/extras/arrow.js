@@ -19,9 +19,9 @@ H3DU.Meshes.createArrow = function(shaftLength, pointerLength, shaftRadius, poin
   var base = H3DU.Meshes.createDisk(0, shaftRadius, slices, 1, true);
   var pointerBase = H3DU.Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
  // move the pointer base to the top of the shaft
-  pointerBase.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
+  pointerBase.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
-  pointer.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
+  pointer.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };
@@ -48,9 +48,9 @@ H3DU.Meshes.createMultiColoredArrow = function(shaftLength, pointerLength, shaft
   base.setColor(shaftColor);
   pointerBase.setColor(pointerColor);
  // move the pointer base to the top of the shaft
-  pointerBase.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
+  pointerBase.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
-  pointer.transform(H3DU.Math.mat4translated(0, 0, shaftLength));
+  pointer.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };

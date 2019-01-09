@@ -99,13 +99,13 @@ MatrixStack.prototype.multMatrix = function(mat) {
 /**
  * Modifies the matrix at the top of this stack by multiplying it by the transpose of
  * another matrix.
- * @deprecated Use <code>multMatrix(H3DU.Math.mat4transpose(mat))</code> instead.
+ * @deprecated Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.
  * @param {Array<number>} mat A matrix whose transpose the current
  * matrix will be multiplied by.
  * @returns {H3DU.MatrixStack} This object.
  */
 MatrixStack.prototype.multTransposeMatrix = function(mat) {
-  return this.multMatrix(H3DU.Math.mat4transpose(mat));
+  return this.multMatrix(H3DU.MathUtil.mat4transpose(mat));
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.

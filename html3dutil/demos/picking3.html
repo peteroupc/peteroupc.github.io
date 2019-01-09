@@ -45,7 +45,7 @@ mesh = H3DU.Polyhedra.octahedron(4.5, 0);
 shapeGroup.addShape(
     new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
 mesh = H3DU.Polyhedra.icosahedron(4.5, 0);
-var mesh2=new H3DU.MeshBuffer().merge(mesh).transform(H3DU.Math.mat4translated(2, 2, 0))
+var mesh2=new H3DU.MeshBuffer().merge(mesh).transform(H3DU.MathUtil.mat4translated(2, 2, 0))
 var bsp = BspTree.fromMeshBuffer(mesh);
 var bsp2 = BspTree.fromMeshBuffer(mesh2);
 mesh = bsp.intersection(bsp2).toMeshBuffer();
@@ -91,7 +91,7 @@ H3DU.renderLoop(function(time) {
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
     var shape = shapeGroup.getShape(i);
     shape.setQuaternion(
-      H3DU.Math.quatFromTaitBryan(rotation));
+      H3DU.MathUtil.quatFromTaitBryan(rotation));
     if(shape === pickedShape) {
       shape.getMaterial().setParams({"emission":[0.5, 0.5, 0.5]});
     } else {

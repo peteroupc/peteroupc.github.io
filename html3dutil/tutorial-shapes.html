@@ -295,7 +295,7 @@ all the vertices in the mesh buffer with a <a href="tutorial-glmath.html">4x4 ma
 this method to adjust some of the mesh bufferes to make them look better on the screen.
 Example:</p>
 
-<pre>var matrix = H3DU.Math.mat4scaled(2,2,2);
+<pre>var matrix = H3DU.MathUtil.mat4scaled(2,2,2);
 // Use the transform to double the mesh buffer&#39;s size
 meshBuffer.transform(matrix);
 </pre>
@@ -421,9 +421,9 @@ shape.setPosition(2,4,5);
 shape.setPosition([2,4,5]);
 // rotate the shape 40 units about X axis, 20 units about Y axis,
 // and 50 units about Z axis
-shape.setQuaternion(H3DU.Math.quatFromTaitBryan(40,20,50));
+shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
 // rotate the shape 20 units about Y axis
-shape.setQuaternion(H3DU.Math.quatFromAxisAngle(20,0,1,0));
+shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
 // scale the shape by 2x in all axes
 shape.setScale(2,2,2);
 // same, but passing an array
@@ -530,7 +530,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>

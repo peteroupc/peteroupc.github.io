@@ -121,7 +121,7 @@ var timer = {};
 H3DU.renderLoop(function(time) {
   "use strict";
   fc.update();
-  var q = H3DU.Math.quatFromTaitBryan([
+  var q = H3DU.MathUtil.quatFromTaitBryan([
     360 * H3DU.getTimePosition(timer, time, 6000),
     360 * H3DU.getTimePosition(timer, time, 12000),
     0

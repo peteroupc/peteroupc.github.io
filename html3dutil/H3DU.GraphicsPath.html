@@ -136,7 +136,7 @@ HTML Canvas 2D Context.</p>
 <li><code>radius</code> (Type: number)<br>Radius of the circle.</li>
 <li><code>startAngle</code> (Type: number)<br>Starting angle of the arc, in radians. 0 means the positive X axis, &pi;/2 means the positive Y axis, &pi; means the negative X axis, and &pi;*1.5 means the negative Y axis.</li>
 <li><code>endAngle</code> (Type: number)<br>Ending angle of the arc, in radians.</li>
-<li><code>ccw</code> (Type: Boolean)<br>Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).</li>
+<li><code>ccw</code> (Type: boolean)<br>Whether the arc runs counterclockwise (assuming the X axis points right and the Y axis points down under the coordinate system).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -204,8 +204,8 @@ using the parameterization used by the SVG specification.</p>
 <li><code>rx</code> (Type: number)<br>X axis radius of the ellipse that the arc will be formed from.</li>
 <li><code>ry</code> (Type: number)<br>Y axis radius of the ellipse that the arc will be formed from.</li>
 <li><code>rot</code> (Type: number)<br>Rotation of the ellipse in degrees (clockwise assuming the X axis points right and the Y axis points down under the coordinate system).</li>
-<li><code>largeArc</code> (Type: Boolean)<br>In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.</li>
-<li><code>sweep</code> (Type: Boolean)<br>If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.</li>
+<li><code>largeArc</code> (Type: boolean)<br>In general, there are four possible solutions for arcs given the start and end points, rotation, and x- and y-radii. If true, chooses an arc solution with the larger arc length; if false, smaller.</li>
+<li><code>sweep</code> (Type: boolean)<br>If true, the arc solution chosen will run clockwise (assuming the X axis points right and the Y axis points down under the coordinate system); if false, counterclockwise.</li>
 <li><code>x2</code> (Type: number)<br>X coordinate of the arc&#39;s end point.</li>
 <li><code>y2</code> (Type: number)<br>Y coordinate of the arc&#39;s end point.</li>
 </ul>
@@ -583,7 +583,7 @@ in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 <li><code>t</code> (Type: number)<br>An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to &quot;other&quot;. If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path&#39;s arc are used if &quot;t&quot; is less than 0.5; and the flags from the second path&#39;s arc are used otherwise.</li>
 </ul>
 
-<p>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for HMathvec3lerp for examples of interpolation functions.</p>
+<p>For a nonlinear interpolation, define a function that takes a value that usually ranges from 0 through 1 and generally returns a value that usually ranges from 0 through 1, and pass the result of that function to this method. See the documentation for MathUtil.vec3lerp for examples of interpolation functions.</p>
 
 <h4>Return Value</h4>
 
@@ -997,7 +997,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>

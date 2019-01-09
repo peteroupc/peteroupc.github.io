@@ -31,12 +31,12 @@
 // thickness - thickness of the line in units, default 1
 function create3DLine(point1,point2,thickness){
   if(thickness==null)thickness=1
-  var vector=H3DU.Math.vec3sub(point1,point2);
-  var dist=H3DU.Math.vec3length(vector);
-  var normVector=H3DU.Math.vec3norm(vector);
-  var midPoint=H3DU.Math.vec3lerp(point1,point2,0.5);
+  var vector=H3DU.MathUtil.vec3sub(point1,point2);
+  var dist=H3DU.MathUtil.vec3length(vector);
+  var normVector=H3DU.MathUtil.vec3norm(vector);
+  var midPoint=H3DU.MathUtil.vec3lerp(point1,point2,0.5);
   var line=H3DU.Meshes.createCapsule(thickness/2,dist,6,4);
-  var matrix=H3DU.Math.quatToMat4(H3DU.Math.quatFromVectors([0,0,1],normVector));
+  var matrix=H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0,0,1],normVector));
   matrix[12]=midPoint[0]
   matrix[13]=midPoint[1]
   matrix[14]=midPoint[2]
@@ -127,7 +127,7 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
   var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
   var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
   // move the top disk to the top of the cylinder
-  top.transform(H3DU.Math.mat4translated(0,0,height));
+  top.transform(H3DU.MathUtil.mat4translated(0,0,height));
   // merge the base and the top
   return innerCylinder.merge(outerCylinder).merge(base).merge(top);
 }
@@ -153,8 +153,8 @@ function createPathDisk(path, z, flatness){
 }
 
 function setBoxSizeAndBounds(shape,box){
- shape.setPosition(H3DU.Math.boxCenter(box))
- shape.setScale(H3DU.Math.boxDimensions(box))
+ shape.setPosition(H3DU.MathUtil.boxCenter(box))
+ shape.setScale(H3DU.MathUtil.boxDimensions(box))
  return shape
 }
 
@@ -197,7 +197,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>

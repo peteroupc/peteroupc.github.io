@@ -136,7 +136,7 @@ function makeKernelMatrix() {
 function link1a() {
   "use strict";
   if(scene) {
-    subScene.setProjectionMatrix(H3DU.Math.mat4ortho(-1, 1, -1, 1, -10, 10));
+    subScene.setProjectionMatrix(H3DU.MathUtil.mat4ortho(-1, 1, -1, 1, -10, 10));
     subScene.removeShape(platonic);
     subScene.addShape(blinds);
   }
@@ -297,11 +297,11 @@ H3DU.renderLoop(function(time) {
   }
   for(i = 0; i < blinds.shapeCount(); i++) {
     blinds.getShape(i).setQuaternion(
-      H3DU.Math.quatFromAxisAngle(rot, 0, 1, 0));
+      H3DU.MathUtil.quatFromAxisAngle(rot, 0, 1, 0));
   }
   for(i = 0; i < platonic.shapeCount(); i++) {
     platonic.getShape(i).setQuaternion(
-      H3DU.Math.quatFromTaitBryan(rotation));
+      H3DU.MathUtil.quatFromTaitBryan(rotation));
   }
   rot = 360 * H3DU.getTimePosition(timer, time, 2000);
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);

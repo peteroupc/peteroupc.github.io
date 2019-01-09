@@ -181,7 +181,7 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> or <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>.</li>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromAxisAngle">H3DU.MathUtil.quatFromAxisAngle</a> or <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan</a>.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -191,12 +191,12 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 <h4>Example</h4>
 
 <pre>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
-transform.multQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+transform.multQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,1,0,0));
 // Combine an object&#39;s rotation with identity
-transform.multQuaternion(H3DU.Math.quatIdentity());
+transform.multQuaternion(H3DU.MathUtil.quatIdentity());
 // Combine an object&#39;s rotation with 30 degree pitch multiplied
 // by 40 degree roll
-transform.multQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+transform.multQuaternion(H3DU.MathUtil.quatFromTaitBryan(30,0,40));
 </pre>
 
 <p><a name='H3DU.Transform_multRotation'></a></p>
@@ -306,7 +306,7 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> and <a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a>, among others.</li>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromAxisAngle">H3DU.MathUtil.quatFromAxisAngle</a> and <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan</a>, among others.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -316,12 +316,12 @@ and the transform wasn&#39;t reset yet with H3DU.Transform#resetTransform.</p>
 <h4>Example</h4>
 
 <pre>// Set an object&#39;s rotation to 30 degrees about the X axis
-transform.setQuaternion(H3DU.Math.quatFromAxisAngle(20,1,0,0));
+transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,1,0,0));
 // Set an object&#39;s rotation to identity (the object isn&#39;t transformed)
-transform.setQuaternion(H3DU.Math.quatIdentity());
+transform.setQuaternion(H3DU.MathUtil.quatIdentity());
 // Set an object&#39;s rotation to 30 degree pitch multiplied
 // by 40 degree roll
-transform.setQuaternion(H3DU.Math.quatFromTaitBryan(30,0,40));
+transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(30,0,40));
 </pre>
 
 <p><a name='H3DU.Transform_setRotation'></a></p>
@@ -395,7 +395,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>

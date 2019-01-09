@@ -461,13 +461,13 @@ H3DU.InputTracker.prototype.update = function() {
  * camera object. <i>Using a {@link H3DU.Scene3D} here is deprecated.</i>
  * @param {number} fov Vertical field of view, in degrees. Should be less
  * than 180 degrees. (The smaller
- * this number, the bigger close objects appear to be.) See {@link H3DU.Math.mat4perspective}.
+ * this number, the bigger close objects appear to be.) See {@link H3DU.MathUtil.mat4perspective}.
  * @param {number} nearZ The distance from the camera to
  * the near clipping plane. Objects closer than this distance won't be seen.
- * See {@link H3DU.Math.mat4perspective}. This should be slightly greater than 0.
+ * See {@link H3DU.MathUtil.mat4perspective}. This should be slightly greater than 0.
  * @param {number} farZ The distance from the camera to
  * the far clipping plane. Objects beyond this distance will be too far
- * to be seen. See {@link H3DU.Math.mat4perspective}.
+ * to be seen. See {@link H3DU.MathUtil.mat4perspective}.
  * @param {HTMLCanvasElement} [canvas] A canvas to associate with this
  * camera object. <i>This argument is deprecated.</i>
  */
@@ -524,14 +524,14 @@ H3DU.Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
 };
 /** @ignore */
 H3DU.Camera.prototype._updateView = function() {
-  var mat = H3DU.Math.mat4lookat(
+  var mat = H3DU.MathUtil.mat4lookat(
     this.position, this.center, this.up);
   this.scene.setViewMatrix(mat);
   return this;
 };
 /** @ignore */
 H3DU.Camera._velocity = function(toVec, fromVec) {
-  var velocity = H3DU.Math.vec3normalize( H3DU.Math.vec3sub(toVec, fromVec));
+  var velocity = H3DU.MathUtil.vec3normalize( H3DU.MathUtil.vec3sub(toVec, fromVec));
   if(velocity[0] === 0 && velocity[1] === 0 && velocity[2] === 0) {
     // Both vectors are likely the same, so return a default vector
     return [0, 0, 1];
@@ -552,8 +552,8 @@ H3DU.Camera.prototype.setDistance = function(dist) {
   // don't move closer than the near plane
   dist = Math.max(this.near, dist);
   var velocity = H3DU.Camera._velocity(this.position, this.center);
-  H3DU.Math.vec3scaleInPlace(velocity, dist);
-  this.position = H3DU.Math.vec3add(this.center, velocity);
+  H3DU.MathUtil.vec3scaleInPlace(velocity, dist);
+  this.position = H3DU.MathUtil.vec3add(this.center, velocity);
   this._updateView();
   return this;
 };
@@ -563,14 +563,14 @@ H3DU.Camera.prototype.setDistance = function(dist) {
  * @returns {number} Return value.
  */
 H3DU.Camera.prototype.getDistance = function() {
-  return H3DU.Math.vec3length(
-    H3DU.Math.vec3sub(this.position, this.center));
+  return H3DU.MathUtil.vec3length(
+    H3DU.MathUtil.vec3sub(this.position, this.center));
 };
 /** @ignore */
 H3DU.Camera._transformRel = function(quat, point, origin) {
-  var rotPoint = H3DU.Math.vec3sub(point, origin);
-  var ret = H3DU.Math.quatTransform(quat, rotPoint);
-  return H3DU.Math.vec3addInPlace(ret, origin);
+  var rotPoint = H3DU.MathUtil.vec3sub(point, origin);
+  var ret = H3DU.MathUtil.quatTransform(quat, rotPoint);
+  return H3DU.MathUtil.vec3addInPlace(ret, origin);
 };
 
 /**
@@ -586,10 +586,10 @@ H3DU.Camera._transformRel = function(quat, point, origin) {
 H3DU.Camera.prototype.moveAngleVertical = function(angleDegrees) {
   if(angleDegrees !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
-    var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
-    var quat = H3DU.Math.quatFromAxisAngle(-angleDegrees, orthoVector);
+    var orthoVector = H3DU.MathUtil.vec3normalize(H3DU.MathUtil.vec3cross(viewVector, this.up));
+    var quat = H3DU.MathUtil.quatFromAxisAngle(-angleDegrees, orthoVector);
     this.position = H3DU.Camera._transformRel(quat, this.position, this.center);
-    this.up = H3DU.Math.vec3normalizeInPlace(H3DU.Camera._transformRel(quat, this.up, [0, 0, 0]));
+    this.up = H3DU.MathUtil.vec3normalizeInPlace(H3DU.Camera._transformRel(quat, this.up, [0, 0, 0]));
     this._updateView();
   }
   return this;
@@ -621,7 +621,7 @@ H3DU.Camera.prototype.turnVertical = H3DU.Camera.prototype.moveAngleVertical;
  */
 H3DU.Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var quat = H3DU.Math.quatFromAxisAngle(-angleDegrees, this.up);
+    var quat = H3DU.MathUtil.quatFromAxisAngle(-angleDegrees, this.up);
     this.position = H3DU.Camera._transformRel(quat, this.position, this.center);
     this._updateView();
   }
@@ -654,7 +654,7 @@ H3DU.Camera.prototype.turnHorizontal = H3DU.Camera.prototype.moveAngleHorizontal
  */
 H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, this.up);
+    var quat = H3DU.MathUtil.quatFromAxisAngle(angleDegrees, this.up);
     this.center = H3DU.Camera._transformRel(quat, this.center, this.position);
     this._updateView();
   }
@@ -673,10 +673,10 @@ H3DU.Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
 H3DU.Camera.prototype.turnAngleVertical = function(angleDegrees) {
   if(angleDegrees !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
-    var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
-    var quat = H3DU.Math.quatFromAxisAngle(angleDegrees, orthoVector);
+    var orthoVector = H3DU.MathUtil.vec3normalize(H3DU.MathUtil.vec3cross(viewVector, this.up));
+    var quat = H3DU.MathUtil.quatFromAxisAngle(angleDegrees, orthoVector);
     this.center = H3DU.Camera._transformRel(quat, this.center, this.position);
-    this.up = H3DU.Math.vec3normalizeInPlace(H3DU.Camera._transformRel(quat, this.up, [0, 0, 0]));
+    this.up = H3DU.MathUtil.vec3normalizeInPlace(H3DU.Camera._transformRel(quat, this.up, [0, 0, 0]));
     this._updateView();
   }
   return this;
@@ -731,7 +731,7 @@ H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
  * the X, Y, and Z coordinates of the camera's position, respectively.
  */
 H3DU.Camera.prototype.getPosition = function() {
-  return H3DU.Math.vec3copy(this.position);
+  return H3DU.MathUtil.vec3copy(this.position);
 };
 
 /**
@@ -753,9 +753,9 @@ H3DU.Camera.prototype.moveClose = function(dist) {
 H3DU.Camera.prototype.moveForward = function(dist) {
   if(dist !== 0) {
     var velocity = H3DU.Camera._velocity(this.center, this.position);
-    H3DU.Math.vec3scaleInPlace(velocity, dist);
-    H3DU.Math.vec3addInPlace(this.position, velocity);
-    H3DU.Math.vec3addInPlace(this.center, velocity);
+    H3DU.MathUtil.vec3scaleInPlace(velocity, dist);
+    H3DU.MathUtil.vec3addInPlace(this.position, velocity);
+    H3DU.MathUtil.vec3addInPlace(this.center, velocity);
     this._updateView();
   }
   return this;
@@ -786,10 +786,10 @@ H3DU.Camera.prototype.moveCenterVertical = function(dist) {
 H3DU.Camera.prototype.moveHorizontal = function(dist) {
   if(dist !== 0) {
     var viewVector = H3DU.Camera._velocity(this.center, this.position);
-    var orthoVector = H3DU.Math.vec3normalize(H3DU.Math.vec3cross(viewVector, this.up));
-    H3DU.Math.vec3scaleInPlace(orthoVector, dist);
-    H3DU.Math.vec3addInPlace(this.position, orthoVector);
-    H3DU.Math.vec3addInPlace(this.center, orthoVector);
+    var orthoVector = H3DU.MathUtil.vec3normalize(H3DU.MathUtil.vec3cross(viewVector, this.up));
+    H3DU.MathUtil.vec3scaleInPlace(orthoVector, dist);
+    H3DU.MathUtil.vec3addInPlace(this.position, orthoVector);
+    H3DU.MathUtil.vec3addInPlace(this.center, orthoVector);
     this._updateView();
   }
   return this;
@@ -801,10 +801,10 @@ H3DU.Camera.prototype.moveHorizontal = function(dist) {
  */
 H3DU.Camera.prototype.moveVertical = function(dist) {
   if(dist !== 0) {
-    var viewVector = H3DU.Math.vec3normalize(this.up);
-    H3DU.Math.vec3scaleInPlace(viewVector, dist);
-    H3DU.Math.vec3addInPlace(this.position, viewVector);
-    H3DU.Math.vec3addInPlace(this.center, viewVector);
+    var viewVector = H3DU.MathUtil.vec3normalize(this.up);
+    H3DU.MathUtil.vec3scaleInPlace(viewVector, dist);
+    H3DU.MathUtil.vec3addInPlace(this.position, viewVector);
+    H3DU.MathUtil.vec3addInPlace(this.center, viewVector);
     this._updateView();
   }
   return this;
@@ -813,12 +813,12 @@ H3DU.Camera.prototype.moveVertical = function(dist) {
  * Gets the 3-element vector that points from the reference
  * point to the camera's position.
  * @returns {Array<number>} The return value as a unit
- * vector (a ["normalized" vector]{@link H3DU.Math.vec3normalize} with a length of 1).
+ * vector (a ["normalized" vector]{@link H3DU.MathUtil.vec3normalize} with a length of 1).
  * Returns (0,0,0) if the reference point is the same as the camera's position.
  */
 H3DU.Camera.prototype.getVectorFromCenter = function() {
-  var posSub = H3DU.Math.vec3sub(this.position, this.center);
-  return H3DU.Math.vec3normalizeInPlace(posSub);
+  var posSub = H3DU.MathUtil.vec3sub(this.position, this.center);
+  return H3DU.MathUtil.vec3normalizeInPlace(posSub);
 };
 /**
  * Updates information about this camera based

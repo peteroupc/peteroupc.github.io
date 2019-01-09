@@ -1,4 +1,3 @@
-/* global gcd, toGLColor */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -8,13 +7,32 @@
  http://peteroupc.github.io/
 */
 
-import {Curve, CurveBuilder, HMath, MeshBuffer} from "../h3du_module";
-import {Epitrochoid, Hypotrochoid} from "evaluators";
+import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module";
+import {Epitrochoid, Hypotrochoid} from "./evaluators";
 
-export function DrawingToy() {
+function gcd(u, v) {
+  u = Math.abs(u);
+  v = Math.abs(v);
+  if (u === 0 || v === 0 || u === v) {
+    return u === 0 ? v : u;
+  }
+  do {
+    if (u > v) {
+      u -= v;
+    } else {
+      v -= u;
+    }
+  } while (u !== v);
+  return u;
+}
+/**
+ * TODO: Not documented yet.
+ * @returns {*}
+ */
+export var DrawingToy = function() {
   this.color = [0, 0, 0];
   this.ce = new CurveBuilder();
-}
+};
 /**
  * TODO: Not documented yet.
  * @param {*} color
@@ -47,7 +65,7 @@ DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = HMath.PiTimes2 * trips;
+  var extent = MathUtil.PiTimes2 * trips;
   curve = curve.changeEnds(0, extent);
   return curve;
 };
@@ -62,7 +80,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   var firstHole = (innerRadius - 2.3) / innerRadius;
   var holeDist = 0.392 / innerRadius;
   var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
-  var toothDist = radius * HMath.PiTimes2 / ringTeeth;
+  var toothDist = radius * MathUtil.PiTimes2 / ringTeeth;
   toothDist *= 0.8; // magic number here
     // console.log(toothDist)
     // console.log([firstHole,holeDist,relDistFromWheelCenter])
@@ -77,7 +95,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = HMath.PiTimes2 * trips;
+  var extent = MathUtil.PiTimes2 * trips;
   curve = curve.changeEnds(0, extent);
   if(typeof offset === "undefined" || offset === null)return curve;
   if(offset === 0)return curve;

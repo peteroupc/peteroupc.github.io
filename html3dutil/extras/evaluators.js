@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {Curve, HMath, Surface} from "../h3du_module";
+import {Curve, MathUtil, Surface} from "../h3du_module";
 
 /**
  * A [surface evaluator object]{@link Surface} for a surface of revolution,
@@ -39,14 +39,14 @@ export var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   this._axis = axis;
   this._axisQuat = null;
   if(this._axis) {
-    this._axisQuat = HMath.quatFromVectors([0, 0, 1], this._axis);
+    this._axisQuat = MathUtil.quatFromVectors([0, 0, 1], this._axis);
   }
 };
 SurfaceOfRevolution.prototype = Object.create(Surface.prototype);
 SurfaceOfRevolution.prototype.constructor = SurfaceOfRevolution;
 /** @inheritdoc */
 SurfaceOfRevolution.prototype.endPoints = function() {
-  return [0, HMath.PiTimes2, this.minval, this.maxval];
+  return [0, MathUtil.PiTimes2, this.minval, this.maxval];
 };
 /**
  * Finds the coordinates of the given point of this surface.
@@ -175,9 +175,9 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
       return [x, y, 0];
     },
     "endPoints":function() {
-      return [0, HMath.PiTimes2];
+      return [0, MathUtil.PiTimes2];
     }
-  }, 0, HMath.PiTimes2, axis);
+  }, 0, MathUtil.PiTimes2, axis);
 };
 
 /**
@@ -220,7 +220,7 @@ export var Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter
   var phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMath.ToRadians;
+  phase *= MathUtil.ToRadians;
   var cosPhase = Math.cos(phase);
   var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
   this.sinPhase = sinPhase;
@@ -259,7 +259,7 @@ Hypotrochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve.
  */
 Hypotrochoid.prototype.endPoints = function() {
-  return [0, HMath.PiTimes2];
+  return [0, MathUtil.PiTimes2];
 };
 /**
  * Creates a modified version of this curve so that it
@@ -376,7 +376,7 @@ Trochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve.
  */
 Trochoid.prototype.endPoints = function() {
-  return [0, HMath.PiTimes2];
+  return [0, MathUtil.PiTimes2];
 };
 /**
  * Finds the velocity (derivative) of this curve at the given point.
@@ -428,7 +428,7 @@ export var Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCente
   var phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= HMath.ToRadians;
+  phase *= MathUtil.ToRadians;
   var cosPhase = Math.cos(phase);
   var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
   this.sinPhase = sinPhase;
@@ -468,7 +468,7 @@ Epitrochoid.prototype.evaluate = function(u) {
  * and the second number is the end of the curve. *
  */
 Epitrochoid.prototype.endPoints = function() {
-  return [0, HMath.PiTimes2];
+  return [0, MathUtil.PiTimes2];
 };
 /**
  * Creates a modified version of this curve so that it

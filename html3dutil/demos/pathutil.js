@@ -69,8 +69,8 @@ function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
   for(var i = 0; i < points; i++) {
     connected[i] = false;
   }
-  var phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.Math.ToRadians;
-  var angleStep = H3DU.Math.PiTimes2 / points;
+  var phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.MathUtil.ToRadians;
+  var angleStep = H3DU.MathUtil.PiTimes2 / points;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   var c = Math.cos(phase);

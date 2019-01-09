@@ -15,7 +15,7 @@ function createWasher(inner, outer, height, slices) {
   var base = H3DU.Meshes.createDisk(inner, outer, slices, 2, true).reverseWinding();
   var top = H3DU.Meshes.createDisk(inner, outer, slices, 2, false);
   // move the top disk to the top of the cylinder
-  top.transform(H3DU.Math.mat4translated(0, 0, height));
+  top.transform(H3DU.MathUtil.mat4translated(0, 0, height));
   // merge the base and the top
   return innerCylinder.merge(outerCylinder).merge(base).merge(top);
 }
@@ -134,7 +134,7 @@ Animator.prototype.update = function(time) {
       // in progress
       var t = (time - a[2]) / (a[3] - a[2]);
       t = t * t * (3 - 2 * t); // smoothstep
-      this.shape.setPosition(H3DU.Math.vec3lerp(a[0], a[1], t));
+      this.shape.setPosition(H3DU.MathUtil.vec3lerp(a[0], a[1], t));
     }
   }
   for(i = 0; i < this.visibleAnim.length; i++) {
@@ -181,6 +181,6 @@ function makeFloor(xStart, yStart, width, height, tileSize, z) {
 /* exported rotateVec */
 function rotateVec(vec, angle) {
   "use strict";
-  return H3DU.Math.mat4projectVec3(
-    H3DU.Math.mat4rotated(angle, 0, 0, 1), vec);
+  return H3DU.MathUtil.mat4projectVec3(
+    H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
 }

@@ -260,7 +260,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * by this method.
  * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
  * Can also contain the following keys:<ul>
- * <li><code>color</code> - A [color vector or string]{@link H3DU.toGLColor} giving
+ * <li><code>color</code> - A [color vector or string]{@link toGLColor} giving
  * the color to draw the text with.
  * If this value is given, the bitmap font is assumed to be a signed distance field
  * font.

@@ -49,7 +49,7 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
     ];
   };
   this.endPoints = function() {
-    return [0, H3DU.Math.PiTimes2];
+    return [0, H3DU.MathUtil.PiTimes2];
   };
 }
 
@@ -67,7 +67,7 @@ TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
       return ret;
     },
     "endPoints":function() {
-      return [0, H3DU.Math.PiTimes2];
+      return [0, H3DU.MathUtil.PiTimes2];
     }
   };
 };

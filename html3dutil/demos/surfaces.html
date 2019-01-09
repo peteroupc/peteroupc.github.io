@@ -45,7 +45,7 @@ function FourierKnot(a, b) {
     throw new Error("a and b must be the same length");
   }
   this.endPoints = function() {
-    return [0, H3DU.Math.PITimes2];
+    return [0, H3DU.MathUtil.PITimes2];
   };
   this.evaluate = function(u) {
     var ret = [0, 0, 0];
@@ -71,7 +71,7 @@ function FourierKnot(a, b) {
 var KleinBottle = function() {
   "use strict";
   this.endPoints = function() {
-    return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
+    return [0, H3DU.MathUtil.PiTimes2, 0, H3DU.MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     var x, y, z;
@@ -97,7 +97,7 @@ var MoebiusLikeStrip = function(maj, a, b) {
   this.a = typeof a === "undefined" || a === null ? 0.125 : a;
   this.b = typeof b === "undefined" || b === null ? 0.5 : b;
   this.endPoints = function() {
-    return [0, Math.PI, 0, H3DU.Math.PiTimes2];
+    return [0, Math.PI, 0, H3DU.MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     var x, y, z;
@@ -121,7 +121,7 @@ var MoebiusStrip = function(radius, width) {
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;
   this.width = typeof width === "undefined" || width === null ? 0.5 : width;
   this.endPoints = function() {
-    return [-this.width, this.width, 0, H3DU.Math.PiTimes2];
+    return [-this.width, this.width, 0, H3DU.MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     var x, y, z;

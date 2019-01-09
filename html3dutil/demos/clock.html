@@ -32,27 +32,27 @@ function ClockShape(scene) {
   "use strict";
   var clock = new H3DU.ShapeGroup();
   var border = H3DU.Meshes.createTorus(0.1, 1, 16, 64);
-  var frontTransform = H3DU.Math.mat4translated(0, 0, 0.05);
+  var frontTransform = H3DU.MathUtil.mat4translated(0, 0, 0.05);
   var front = H3DU.Meshes.createDisk(0, 1, 64).transform(frontTransform);
   var hourhand = H3DU.Meshes.createCapsule(0.01, 0.5, 6, 4)
-   .transform(H3DU.Math.mat4translated(0, 0, -0.25))
-   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
+   .transform(H3DU.MathUtil.mat4translated(0, 0, -0.25))
+   .transform(H3DU.MathUtil.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
   var minutehand = H3DU.Meshes.createCapsule(0.0075, 0.7, 6, 4)
-   .transform(H3DU.Math.mat4translated(0, 0, -0.35))
-   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
+   .transform(H3DU.MathUtil.mat4translated(0, 0, -0.35))
+   .transform(H3DU.MathUtil.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
   var secondhand = H3DU.Meshes.createCapsule(0.005, 0.9, 6, 4)
-   .transform(H3DU.Math.mat4translated(0, 0, -0.30))
-   .transform(H3DU.Math.mat4rotated(90, 1, 0, 0))
+   .transform(H3DU.MathUtil.mat4translated(0, 0, -0.30))
+   .transform(H3DU.MathUtil.mat4rotated(90, 1, 0, 0))
    .transform(frontTransform);
   var center = H3DU.Meshes.createSphere(0.03, 4, 4)
    .transform(frontTransform);
   var twelveoclock = H3DU.Meshes.createSphere(0.03, 4, 4)
-   .transform(H3DU.Math.mat4translated(0, 0.85, 0))
+   .transform(H3DU.MathUtil.mat4translated(0, 0.85, 0))
    .transform(frontTransform);
   var back = H3DU.Meshes.createDisk(0, 1, 64).reverseWinding().reverseNormals()
-   .transform(H3DU.Math.mat4translated(0, 0, -0.05));
+   .transform(H3DU.MathUtil.mat4translated(0, 0, -0.05));
   clock.addShape(new H3DU.Shape(border));
   clock.addShape(new H3DU.Shape(front));
   clock.addShape(new H3DU.Shape(back));
@@ -88,25 +88,25 @@ function ClockShape(scene) {
   this.setColor = function(color) {
     var rgb = H3DU.toGLColor(color);
     if((rgb[0] + rgb[1] + rgb[2]) / 3 >= 0.5) {
-      var halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [0, 0, 0], 0.5);
+      var halftoneColor = H3DU.MathUtil.vec3lerp(rgb.slice(0, 4), [0, 0, 0], 0.5);
       this.shape.getShape(3).setColor("black");
       this.shape.getShape(4).setColor("black");
       this.shape.getShape(5).setColor(halftoneColor);
       this.shape.getShape(6).setColor("black");
       this.shape.getShape(7).setColor(halftoneColor);
     } else {
-      halftoneColor = H3DU.Math.vec3lerp(rgb.slice(0, 4), [1, 1, 1], 0.5);
+      halftoneColor = H3DU.MathUtil.vec3lerp(rgb.slice(0, 4), [1, 1, 1], 0.5);
       this.shape.getShape(3).setColor("white");
       this.shape.getShape(4).setColor("white");
       this.shape.getShape(5).setColor(halftoneColor);
       this.shape.getShape(6).setColor("white");
       this.shape.getShape(7).setColor(halftoneColor);
     }
-    var borderColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.5);
+    var borderColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 0.5);
     this.shape.getShape(0).setColor(borderColor);
-    var frontColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 1.0);
+    var frontColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 1.0);
     this.shape.getShape(1).setColor(frontColor);
-    var backColor = H3DU.Math.vec3scaleInPlace(rgb.slice(0, 4), 0.75);
+    var backColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 0.75);
     this.shape.getShape(2).setColor(backColor);
   };
   this.setColor("#ffffff");

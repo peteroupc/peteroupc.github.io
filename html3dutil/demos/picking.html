@@ -100,7 +100,7 @@ H3DU.renderLoop(function(time) {
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
     var shape = shapeGroup.getShape(i);
     shape.setQuaternion(
-      H3DU.Math.quatFromTaitBryan(rotation));
+      H3DU.MathUtil.quatFromTaitBryan(rotation));
     if(shape === pickdotShape && scalePickedObject()) {
       shape.getTransform().setScale(1.5);
     } else {
@@ -109,7 +109,7 @@ H3DU.renderLoop(function(time) {
   }
   if(pickdotShape) {
     var matrix = pickdotShape.getMatrix();
-    var world = H3DU.Math.mat4projectVec3(matrix, pickdotLocal);
+    var world = H3DU.MathUtil.mat4projectVec3(matrix, pickdotLocal);
     pickdot.setPosition(world);
   }
   rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);

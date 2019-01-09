@@ -102,10 +102,10 @@ the vector&#39;s direction).</p>
 <p>The following functions normalize vectors and find their length.</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.vec3normalize">H3DU.Math.vec3normalize</a> - Converts a 3-element vector to a unit vector.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.vec4normalize">H3DU.Math.vec4normalize</a> - Converts a 4-element vector to a unit vector.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.vec3length">H3DU.Math.vec3length</a> - Finds a 3-element vector&#39;s length.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.vec4length">H3DU.Math.vec4length</a> - Finds a 4-element vector&#39;s length.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.vec3normalize">H3DU.MathUtil.vec3normalize</a> - Converts a 3-element vector to a unit vector.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.vec4normalize">H3DU.MathUtil.vec4normalize</a> - Converts a 4-element vector to a unit vector.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.vec3length">H3DU.MathUtil.vec3length</a> - Finds a 3-element vector&#39;s length.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.vec4length">H3DU.MathUtil.vec4length</a> - Finds a 4-element vector&#39;s length.</li>
 </ul>
 
 <p>Note that due to rounding error, normalizing a vector with an <code>H3DU.Math</code> method
@@ -128,12 +128,12 @@ For more details, see the <a href="tutorial-matrixdetails.html">Matrix Details</
 
 <p>A translation is a shifting of an object&#39;s position.</p>
 
-<p>To create a translation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4translated">H3DU.Math.mat4translated()</a>,
+<p>To create a translation matrix, use <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4translated">H3DU.MathUtil.mat4translated()</a>,
 and specify the X-offset, the Y-offset, and the Z-offset. For example, an X-offset of 1 moves
 an object 1 unit to the right, and a Y offset of -1 moves it 1 unit down.</p>
 
 <p>To multiply an existing matrix by a translation, use
-<a href="H3DU.Math.html#H3DU.Math.mat4translate">H3DU.Math.mat4translate()</a>. This will put the translation
+<a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4translate">H3DU.MathUtil.mat4translate()</a>. This will put the translation
 before the other transformations.</p>
 
 <p><a id=Scaling></a></p>
@@ -142,12 +142,12 @@ before the other transformations.</p>
 
 <p>Scaling changes an object&#39;s size.</p>
 
-<p>To create a scaling matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4scaled">H3DU.Math.mat4scaled()</a>,
+<p>To create a scaling matrix, use <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4scaled">H3DU.MathUtil.mat4scaled()</a>,
 and specify the scaling factors for the X, Y, and Z axis. Each point is multiplied by the scaling
 factors to change the object&#39;s size. For example, a Y-factor of 2 doubles an object&#39;s height.</p>
 
 <p>To multiply an existing matrix by a scaling, use
-<a href="H3DU.Math.html#H3DU.Math.mat4scale">H3DU.Math.mat4scale()</a>. This will put the scaling
+<a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4scale">H3DU.MathUtil.mat4scale()</a>. This will put the scaling
 before the other transformations.</p>
 
 <p><a id=Rotation></a></p>
@@ -156,7 +156,7 @@ before the other transformations.</p>
 
 <p>Rotation changes an object&#39;s orientation.</p>
 
-<p>To create a rotation matrix, use <a href="H3DU.Math.html#H3DU.Math.mat4rotated">H3DU.Math.mat4rotated()</a>,
+<p>To create a rotation matrix, use <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4rotated">H3DU.MathUtil.mat4rotated()</a>,
 and specify the angle (in degrees) to rotate, and the <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>. For example:</p>
 
 <ul>
@@ -169,7 +169,7 @@ starts at the origin (0, 0, 0) and points toward the point (0, 2, 3).</li>
  <code>[0, 1, 0]</code> is the Y axis, and  <code>[0, 0, 1]</code> is the Z axis.</p>
 
 <p>To multiply an existing matrix by a rotation, use
-<a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate()</a>. This will put the rotation
+<a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4rotate">H3DU.MathUtil.mat4rotate()</a>. This will put the rotation
 before the other transformations.</p>
 
 <p><a id=Combining_Transforms></a></p>
@@ -181,16 +181,16 @@ not the same as translating then scaling. Assuming your geometry is centered at 
 (0, 0, 0), you should create a transformation in this order:</p>
 
 <ul>
-<li>Call <a href="H3DU.Math.html#H3DU.Math.mat4identity"><code>H3DU.Math.mat4identity()</code></a>, creating a matrix without a transformation.</li>
-<li>Do your translations if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4translate"><code>mat4translate()</code></a>.</li>
-<li>Do your rotations if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4rotate"><code>mat4rotate()</code></a>.</li>
-<li>Do your scalings if needed, using <a href="H3DU.Math.html#H3DU.Math.mat4scale"><code>mat4scale()</code></a>.</li>
+<li>Call <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4identity"><code>H3DU.MathUtil.mat4identity()</code></a>, creating a matrix without a transformation.</li>
+<li>Do your translations if needed, using <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4translate"><code>mat4translate()</code></a>.</li>
+<li>Do your rotations if needed, using <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4rotate"><code>mat4rotate()</code></a>.</li>
+<li>Do your scalings if needed, using <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4scale"><code>mat4scale()</code></a>.</li>
 </ul>
 
 <p>This way, the scalings and rotations will affect the object while it&#39;s still centered, and
 before the translations (shifts) take place.</p>
 
-<p>You can also multiply transforms using <a href="H3DU.Math.html#H3DU.Math.mat4multiply">H3DU.Math.mat4multiply()</a>.
+<p>You can also multiply transforms using <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4multiply">H3DU.MathUtil.mat4multiply()</a>.
 This takes two matrices and returns one combined matrix. The combined matrix will have the effect
 of doing the second matrix&#39;s transform, then the first matrix&#39;s transform.</p>
 
@@ -206,7 +206,7 @@ quaternions, Tait-Bryan angles, and an angle and axis.</p>
 <h3>Axis of Rotation</h3>
 
 <p>A rotation of vectors or points can be described using an <em>angle</em>
-and an <em>axis of rotation</em>, for example, in the <a href="H3DU.Math.html#H3DU.Math.mat4rotate">H3DU.Math.mat4rotate</a> method.</p>
+and an <em>axis of rotation</em>, for example, in the <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4rotate">H3DU.MathUtil.mat4rotate</a> method.</p>
 
 <p>An axis of rotation is a vector pointing in a certain direction.  When a point (or vector)
 is rotated at any angle around this axis, the new point (or vector) will lie
@@ -251,13 +251,13 @@ method need not be a <a href="#Unit_Vectors"><strong>unit vector</strong></a>.</
 <p>Functions that generate quaternions include:</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.quatIdentity">H3DU.Math.quatIdentity</a> - Generates a quaternion describing an
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatIdentity">H3DU.MathUtil.quatIdentity</a> - Generates a quaternion describing an
 absence of rotations.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromVectors">H3DU.Math.quatFromVectors</a> - Generates a quaternion describing
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromVectors">H3DU.MathUtil.quatFromVectors</a> - Generates a quaternion describing
 a rotation from one vector to another.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromMat4">H3DU.Math.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromAxisAngle">H3DU.Math.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromMat4">H3DU.MathUtil.quatFromMat4</a> - Generates a quaternion from a <a href="#Matrices"><strong>4x4 matrix</strong></a>.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromAxisAngle">H3DU.MathUtil.quatFromAxisAngle</a> - Generates a quaternion from an angle and <a href="#Axis_of_Rotation"><strong>axis of rotation</strong></a>.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan</a> - Generates a quaternion from Tait-Bryan angles.</li>
 </ul>
 
 <p><a id=Using_Quaternions></a></p>
@@ -271,10 +271,10 @@ a rotation from one vector to another.</li>
 <li>As rotations happen each frame, convert the rotation (which may be
 in pitch/yaw/roll or another form, depending on the input device) to a quaternion
 (see <a href="#Generating_Quaternions"><strong>&quot;Generating Quaternions&quot;</strong></a>
-and <a href="H3DU.Math.html#H3DU.Math.quatMultiply">multiply</a> that quaternion by the current
+and <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatMultiply">multiply</a> that quaternion by the current
 quaternion to get the object&#39;s new rotation.</li>
-<li>Normalize the rotation quaternion (using <a href="H3DU.Math.html#H3DU.Math.quatNormalize"><code>quatNormalize()</code></a>
-or <a href="H3DU.Math.html#H3DU.Math.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
+<li>Normalize the rotation quaternion (using <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatNormalize"><code>quatNormalize()</code></a>
+or <a href="H3DU.MathUtil.html#H3DU.MathUtil.quatNormalizeInPlace"><code>quatNormalizeInPlace()</code></a>)
 every few frames. (Quaternions that describe a 3D rotation should be <a href="#Unit_Vectors"><strong>unit vectors</strong></a>.)</li>
 </ul>
 
@@ -282,7 +282,7 @@ every few frames. (Quaternions that describe a 3D rotation should be <a href="#U
 
 <h4>Multiplying Quaternions</h4>
 
-<p>When two quaternions are multiplied (for example, with {@H3DU.Math.quatMultiply}),
+<p>When two quaternions are multiplied (for example, with {@H3DU.MathUtil.quatMultiply}),
 the result is a combined rotation in which the second rotation happens
 before the first rotation (when applied in the global coordinate frame).
 Like matrix multiplication, the order in which you multiply quaternions is important.</p>
@@ -310,9 +310,9 @@ axis), so that a rotation along that axis will do nothing.</li>
 <p>Related functions:</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.quatFromTaitBryan">H3DU.Math.quatFromTaitBryan()</a> -
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatFromTaitBryan">H3DU.MathUtil.quatFromTaitBryan()</a> -
 Converts from Tait-Bryan angles to a quaternion</li>
-<li><a href="H3DU.Math.html#H3DU.Math.quatToTaitBryan">H3DU.Math.quatToTaitBryan()</a> -
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.quatToTaitBryan">H3DU.MathUtil.quatToTaitBryan()</a> -
 Converts from a quaternion to Tait-Bryan angles</li>
 </ul>
 
@@ -349,7 +349,7 @@ plane&#39;s normal and any point on the plane.</li>
 <p>There is one method that deals with planes:</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.planeNormalizeInPlace">H3DU.Math.planeNormalizeInPlace</a> - Converts the plane to a form in which
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.planeNormalizeInPlace">H3DU.MathUtil.planeNormalizeInPlace</a> - Converts the plane to a form in which
 its normal has a length of 1.</li>
 </ul>
 
@@ -367,9 +367,9 @@ box is considered empty.</p>
 <p>Methods that deal with boxes include:</p>
 
 <ul>
-<li><a href="H3DU.Math.html#H3DU.Math.boxCenter">H3DU.Math.boxCenter</a> - Finds a box&#39;s center.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.boxDimensions">H3DU.Math.boxDimensions</a> - Finds a box&#39;s dimensions.</li>
-<li><a href="H3DU.Math.html#H3DU.Math.boxIsEmpty">H3DU.Math.boxIsEmpty</a> - Determines whether a box is empty.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.boxCenter">H3DU.MathUtil.boxCenter</a> - Finds a box&#39;s center.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.boxDimensions">H3DU.MathUtil.boxDimensions</a> - Finds a box&#39;s dimensions.</li>
+<li><a href="H3DU.MathUtil.html#H3DU.MathUtil.boxIsEmpty">H3DU.MathUtil.boxIsEmpty</a> - Determines whether a box is empty.</li>
 </ul>
 
 <p><a id=Coordinate_Systems></a></p>
@@ -393,7 +393,7 @@ right-handed), if the positive X axis points in the thumb&#39;s
 direction and the positive Y axis points in the index finger&#39;s direction, the Z axis will
 point in the direction the other three fingers point.</p>
 
-<p>As used here, the Z axis is the <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a>
+<p>As used here, the Z axis is the <a href="H3DU.MathUtil.html#H3DU.MathUtil.vec3cross">cross product</a>
 of two perpendicular axes, namely the X axis and the Y axis, in that order.
 Which of the X, Y, or Z axes is the right, up, or forward axis is essentially
 arbitrary; for example, some conventions may have the Z axis, rather than Y,
@@ -410,7 +410,7 @@ confusion.</p>
 
 <p>The difference between a left-handed and right-handed coordinate system
 affects how 3D points are transformed, mainly in the projection and view
-matrices.  The projection and view matrices returned by <a href="H3DU.Math.html">H3DU.Math</a>
+matrices.  The projection and view matrices returned by H3DU.Math
 matrix methods are designed for a right-handed coordinate system.  Their
 documentation describes how to adjust them for a left-handed coordinate system.</p>
 
@@ -440,7 +440,7 @@ is negative, then the angle runs in the opposite direction.</p>
 <li>points A, B, and (0, 0, 0), in that order,</li>
 </ul>
 
-<p>the <a href="H3DU.Math.html#H3DU.Math.vec3cross">cross product</a> of the first point with the second,
+<p>the <a href="H3DU.MathUtil.html#H3DU.MathUtil.vec3cross">cross product</a> of the first point with the second,
 in that order, is a <em>normal</em> of that triangle (a vector that&#39;s perpendicular to the triangle&#39;s surface).</p>
 
 <p>While this particular normal points toward the viewer, the triangle&#39;s vertices
@@ -506,7 +506,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
-<li><a href="H3DU.Math.html">H3DU.Math</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>

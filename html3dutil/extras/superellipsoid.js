@@ -58,7 +58,7 @@ export var Supertoroid = function(xRadius, yRadius, innerRadius) {
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;
   this.endPoints = function() {
-    return [0, H3DU.Math.PiTimes2, 0, H3DU.Math.PiTimes2];
+    return [0, H3DU.MathUtil.PiTimes2, 0, H3DU.MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     var cosu = cospow(u, this.n);

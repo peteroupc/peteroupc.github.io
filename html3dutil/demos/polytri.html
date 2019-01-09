@@ -61,11 +61,11 @@ function segsIntersect(a1,a2,b1,b2) {
 function randomPolygon(cx,cy,avgRadius,sides,irregular,spiky) {
   var irregularValue=((typeof irregular==="undefined" || irregular===null) ? (0) : (irregular))
   var spikyValue=((typeof spiky==="undefined" || spiky===null) ? (0) : (spiky))
-  var step=H3DU.Math.PiTimes2/sides
+  var step=H3DU.MathUtil.PiTimes2/sides
   var avg2=avgRadius*2
   var failed=false
   do {
-  var theta=Math.random()*H3DU.Math.PiTimes2
+  var theta=Math.random()*H3DU.MathUtil.PiTimes2
   var deltas=[]
   var points=[]
   var k=0
@@ -73,7 +73,7 @@ function randomPolygon(cx,cy,avgRadius,sides,irregular,spiky) {
   for(var i=0;i<sides;i++) {
     var d=(step-irregularValue)+Math.random()*
        ((step+irregularValue)-(step-irregularValue))
-    k+=d/H3DU.Math.PiTimes2
+    k+=d/H3DU.MathUtil.PiTimes2
     deltas.push(d)
   }
   if(k==0)k=0.01

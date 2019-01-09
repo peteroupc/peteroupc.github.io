@@ -92,7 +92,7 @@ H3DU.renderLoop(function(time) {
   for(var i = 0; i < shapeGroup.shapeCount(); i++) {
     var shape = shapeGroup.getShape(i);
     shape.setQuaternion(
-      H3DU.Math.quatFromTaitBryan(rotation));
+      H3DU.MathUtil.quatFromTaitBryan(rotation));
     if(shape === pickedShape) {
       shape.getMaterial().setParams({"emission":[0.5, 0.5, 0.5]});
     } else {
