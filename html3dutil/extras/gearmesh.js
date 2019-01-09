@@ -9,7 +9,7 @@
 // Adapted by Peter O. from gears.c (3D Gears), a public domain program
 // written by Brian Paul.
 
-import {MathUtil, MeshBuffer} from "../h3du_module";
+import {MathUtil, MeshBuffer} from "../h3du_module.js";
 
 function QuadStrips() {
   this.vertices = [];
@@ -29,9 +29,10 @@ function QuadStrips() {
   };
   this.quad = function(quad) {
     this.newStrip();
-    for(var i = 0; i < 12; i++) {
-      this.vertex3(quad[i * 3], quad[i * 3 + 1], quad[i * 3 + 2]);
-    }
+    this.vertex3(quad[0], quad[1], quad[2]);
+    this.vertex3(quad[3], quad[4], quad[5]);
+    this.vertex3(quad[9], quad[10], quad[11]);
+    this.vertex3(quad[6], quad[7], quad[8]);
   };
   this.vertex3 = function(x, y, z) {
     var vertexIndex = this.vertices.length / 6;

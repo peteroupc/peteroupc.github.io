@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 
-import {H3DU} from "../h3du_min";
+import {MathUtil} from "../h3du_module.js";
 
 function sinpow(x, n) {
   var r = Math.sin(x);
@@ -58,7 +58,7 @@ export var Supertoroid = function(xRadius, yRadius, innerRadius) {
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;
   this.endPoints = function() {
-    return [0, H3DU.MathUtil.PiTimes2, 0, H3DU.MathUtil.PiTimes2];
+    return [0, MathUtil.PiTimes2, 0, MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     var cosu = cospow(u, this.n);

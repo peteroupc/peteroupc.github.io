@@ -7,8 +7,8 @@
  http://peteroupc.github.io/
 */
 
-import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module";
-import {Epitrochoid, Hypotrochoid} from "./evaluators";
+import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module.js";
+import {Epitrochoid, Hypotrochoid} from "./evaluators.js";
 
 function gcd(u, v) {
   u = Math.abs(u);

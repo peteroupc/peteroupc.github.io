@@ -1,4 +1,3 @@
-/* global Meshes */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -8,7 +7,7 @@
  http://peteroupc.github.io/
 */
 
-import {H3DU} from "../h3du_min";
+import {MeshBuffer} from "../h3du_module.js";
 
 /** @ignore */
 function contourOne(p1, p2, u1, v1, u2, v2, level, lines) {
@@ -163,23 +162,35 @@ function drawCurve(contours) {
       vertices.push(contour[i + 2], contour[i + 3], 0);
     }
   }
-  return H3DU.MeshBuffer.fromPositions(vertices)
-    .setPrimitiveType(H3DU.MeshBuffer.LINES)
+  return MeshBuffer.fromPositions(vertices)
+    .setPrimitiveType(MeshBuffer.LINES)
     .setColor([0, 0, 0]);
 }
 /**
- * TODO: Not documented yet.
- * @param {*} func
- * @param {*} levels
- * @param {*} u1
- * @param {*} u2
- * @param {*} v1
- * @param {*} v2
- * @param {*} usize
- * @param {*} vsize
- * @returns {*} Return value.
+ * Generates contour lines for two-dimensional data.
+ * @param {Function} func A function that takes two parameters--a U coordinate
+ * and a V coordinate--and returns a number at that point.
+ * @param {Array<number>} levels An array of values at which to draw contour lines.
+ * For example, if levels is `[20, 25]`, this function will draw contour
+ * lines along the values 20 and 25.
+ * @param {number} u1 Starting U coordinate to sample.
+ * @param {number} u2 Ending U coordinate to sample.
+ * @param {number} v1 Starting V coordinate to sample.
+ * @param {number} v2 Ending V coordinate to sample.
+ * @param {number} usize The number of levels between grid points
+ * along the U axis. This method will sample (usize+1)*(vsize+1)
+ * grid points in total.
+ * @param {number} vsize The number of levels between grid points
+ * along the V axis.
+ * @returns {MeshBuffer} A mesh buffer of line segments for the contour lines.
+ * @example <caption>This example generates contour lines for a simple
+ * function. This method samples the function at integer grid points.
+ * </caption>
+ * var mesh=contourLines((u,v)=>(Math.sin((u+v)/6)),
+ * [0, 1, 2, 3],
+ * 0,10,0,10,10,10);
  */
-Meshes.prototype.contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
+export var contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
   var contours = conrec(func, levels, u1, u2, v1, v2, usize, vsize);
   return drawCurve(contours);
 };

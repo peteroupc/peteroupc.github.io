@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {Curve, MathUtil, Surface} from "../h3du_module";
+import {Curve, MathUtil, Surface} from "../h3du_module.js";
 
 /**
  * A [surface evaluator object]{@link Surface} for a surface of revolution,

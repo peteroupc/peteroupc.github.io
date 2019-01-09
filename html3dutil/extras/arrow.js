@@ -7,50 +7,50 @@
  http://peteroupc.github.io/
 */
 
-import {H3DU} from "../h3du_min";
+import {MathUtil, MeshBuffer, Meshes} from "../h3du_module.js";
 
 // Generate a composite mesh representing an arrow
-H3DU.Meshes.createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
+export var createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
   var slices = 32;
  // generate the four parts of the arrow
-  var shaft = H3DU.Meshes.createCylinder(shaftRadius, shaftRadius,
+  var shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
    shaftLength, slices);
-  var pointer = H3DU.Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
-  var base = H3DU.Meshes.createDisk(0, shaftRadius, slices, 1, true);
-  var pointerBase = H3DU.Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
+  var pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
+  var base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
+  var pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
  // move the pointer base to the top of the shaft
-  pointerBase.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
+  pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
-  pointer.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
+  pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };
 /**
  * TODO: Not documented yet.
- * @param {*} shaftLength
- * @param {*} pointerLength
- * @param {*} shaftRadius
- * @param {*} pointerRadius
- * @param {*} shaftColor
- * @param {*} pointerColor
- * @returns {*} Return value.
+ * @param {number} shaftLength
+ * @param {number} pointerLength
+ * @param {number} shaftRadius
+ * @param {number} pointerRadius
+ * @param {Array<number>|number|string} shaftColor A [color vector or string]{@link toGLColor} specifying the color of the shaft.
+ * @param {Array<number>|number|string} pointerColor A [color vector or string]{@link toGLColor} specifying the color of the pointer.
+ * @returns {MeshBuffer} A mesh buffer of the resulting shape.
  */
-H3DU.Meshes.createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
+export var createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
   var slices = 32;
  // generate the four parts of the arrow
-  var shaft = H3DU.Meshes.createCylinder(shaftRadius, shaftRadius,
+  var shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
    shaftLength, slices);
-  var pointer = H3DU.Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
-  var base = H3DU.Meshes.createDisk(0, shaftRadius, slices, 1, true);
-  var pointerBase = H3DU.Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
+  var pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
+  var base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
+  var pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
   shaft.setColor(shaftColor);
   pointer.setColor(pointerColor);
   base.setColor(shaftColor);
   pointerBase.setColor(pointerColor);
  // move the pointer base to the top of the shaft
-  pointerBase.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
+  pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
  // move the pointer to the top of the shaft
-  pointer.transform(H3DU.MathUtil.mat4translated(0, 0, shaftLength));
+  pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };
