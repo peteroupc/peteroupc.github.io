@@ -1,4 +1,3 @@
-/* global MeshBuffer */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -10,7 +9,7 @@
 // Adapted by Peter O. from gears.c (3D Gears), a public domain program
 // written by Brian Paul.
 
-import {H3DU} from "../h3du_min";
+import {HMath, MeshBuffer} from "../h3du_module";
 
 function QuadStrips() {
   this.vertices = [];
@@ -61,7 +60,7 @@ function QuadStrips() {
  * @param {number} thickness Thickness of the gear
  * @param {number} teeth Number of teeth.
  * @param {number} toothDepth Depth of each gear tooth.
- * @returns {H3DU.MeshBuffer} Return value.
+ * @returns {MeshBuffer} Return value.
  */
 export var createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
   var i;
@@ -77,7 +76,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
   mesh.normal3( 0.0, 0.0, 1.0 );
 /* draw front face */
   mesh.newStrip();
-  var angleStep = H3DU.Math.PiTimes2 / teeth;
+  var angleStep = HMath.PiTimes2 / teeth;
   var cosStep = Math.cos(angleStep);
   var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sinAngle = 0.0; // sin(0.0deg)
@@ -97,7 +96,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
 
 /* draw front sides of teeth */
   da = 2.0 * Math.PI / teeth / 4.0;
-  angleStep = H3DU.Math.PiTimes2 / teeth;
+  angleStep = HMath.PiTimes2 / teeth;
   cosStep = Math.cos(angleStep);
   sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sinAngle = 0.0; // sin(0.0deg)

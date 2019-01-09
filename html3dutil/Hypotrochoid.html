@@ -8,11 +8,143 @@
 
 <p><a name='Hypotrochoid'></a></p>
 
-<h3>Hypotrochoid()</h3>
+<h3>Hypotrochoid(outerRadius, innerRadius, distFromInnerCenter, [rotationDegrees])</h3>
 
-<p><b>Deprecated: Use <a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a> instead.</b></p>
+<p><strong>Augments:</strong> Curve</p>
 
-<p>Alias for the <a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a> class.</p>
+<p>A curve evaluator object for a curve drawn by a circle that rolls along the inside
+of another circle, whose position is fixed, with a center of (0,0).</p>
+
+<p>The following curves can be generated with this class (in the following
+descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
+and D = <code>distFromInnerCenter</code>).<ul>
+<li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
+<li>Curtate hypocycloid: D &lt; R (hypotrochoid not touching the fixed circle).</li>
+<li>Prolate hypocycloid: D &gt; R (hypotrochoid crossing the fixed circle).</li>
+<li>Circle: O = R*2; the circle will have radius R - D.</li>
+<li>Ellipse: O = R*2; the ellipse (unrotated) will have width abs(R+D)*2
+and height abs(R-D)*2.</li>
+<li>Line segment with length O*2: O = R*2; D = R.</li>
+<li>Deltoid: O = R*3; D = R.</li>
+<li>Astroid: O = R*4; D = R.</li>
+<li>N-pointed hypocycloid: O = R * N; D = R.</li></ul></p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/evaluators.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/evaluators.js&quot;&gt;&lt;/script&gt;
+</pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>outerRadius</code> (Type: number)<br>Radius of the circle whose position is fixed.</li>
+<li><code>innerRadius</code> (Type: number)<br>Radius of the rolling circle. A hypocycloid results when distFromInnerCenter=innerRadius.</li>
+<li><code>distFromInnerCenter</code> (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#Hypotrochoid_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
+<li><a href="#Hypotrochoid_endPoints">endPoints</a><br>Gets the endpoints of this curve.</li>
+<li><a href="#Hypotrochoid_evaluate">evaluate</a><br>Finds the coordinates of a point on the curve from the given U coordinate.</li>
+<li><a href="#Hypotrochoid.rose">rose</a><br>Creates a curve evaluator object for a rose, a special
+form of hypotrochoid.</li>
+<li><a href="#Hypotrochoid_scaleTo">scaleTo</a><br>Creates a modified version of this curve so that it
+fits the given radius.</li>
+</ul>
+
+<p><a name='Hypotrochoid_arcLength'></a></p>
+
+<h3>Hypotrochoid#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Hypotrochoid_endPoints'></a></p>
+
+<h3>Hypotrochoid#endPoints()</h3>
+
+<p>Gets the endpoints of this curve.
+For this curve evaluator object, the curve
+starts at 0 and ends at &pi;*2.</p>
+
+<h4>Return Value</h4>
+
+<p>An array containing the two
+endpoints of the curve. The first number is the start of the curve,
+and the second number is the end of the curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Hypotrochoid_evaluate'></a></p>
+
+<h3>Hypotrochoid#evaluate(u)</h3>
+
+<p>Finds the coordinates of a point on the curve from the given U coordinate.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A 3-element array specifying a 3D point.
+Only the X and Y coordinates can be other than 0. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Hypotrochoid.rose'></a></p>
+
+<h3>(static) Hypotrochoid.rose(n, distFromInnerCenter, [rotationDegrees])</h3>
+
+<p>Creates a curve evaluator object for a rose, a special
+form of hypotrochoid.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>n</code> (Type: number)<br>Parameter that determines the petal form of the rose. For example, the rose is symmetrical if this number is even.</li>
+<li><code>distFromInnerCenter</code> (Type: number)<br>Distance from the center of the rolling circle to the drawing pen.</li>
+<li><code>rotationDegrees</code> (Type: number) (optional)<br>Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting curve evaluator object. (Type: <a href="Hypotrochoid.html">Hypotrochoid</a>)</p>
+
+<p><a name='Hypotrochoid_scaleTo'></a></p>
+
+<h3>Hypotrochoid#scaleTo(radius)</h3>
+
+<p>Creates a modified version of this curve so that it
+fits the given radius.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>radius</code> (Type: number)<br>Desired radius of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="Hypotrochoid.html">Hypotrochoid</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -33,6 +165,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -41,9 +174,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
 <li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
 <li><a href="H3DU.CurveTube.html">H3DU.CurveTube</a></li>
-<li><a href="H3DU.Epitrochoid.html">H3DU.Epitrochoid</a></li>
 <li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
-<li><a href="H3DU.Hypotrochoid.html">H3DU.Hypotrochoid</a></li>
 <li><a href="H3DU.InputTracker.html">H3DU.InputTracker</a></li>
 <li><a href="H3DU.Math.html">H3DU.Math</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
@@ -56,16 +187,17 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
 <li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
-<li><a href="H3DU.SurfaceOfRevolution.html">H3DU.SurfaceOfRevolution</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="H3DU.Trochoid.html">H3DU.Trochoid</a></li>
 <li><a href="H3DU.exports.MatrixStack.html">H3DU.exports.MatrixStack</a></li>
+<li><a href="H3DU.exports.SurfaceOfRevolution.html">H3DU.exports.SurfaceOfRevolution</a></li>
+<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
+<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

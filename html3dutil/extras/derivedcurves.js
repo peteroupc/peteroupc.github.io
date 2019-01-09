@@ -1,3 +1,4 @@
+/* global Surface */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -6,8 +7,6 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-
-import {H3DU} from "../h3du_min";
 
 function _vecNormInPlaceAndScale(vec, scale) {
   var len = 0;
@@ -159,7 +158,7 @@ export function curveInverse(evaluator, ox, oy, radius) {
 
 /* exported ruledSurface */
 export function ruledSurface(directrix, director) {
-  return new H3DU.Surface({
+  return new Surface({
     "evaluate":function(u, v) {
       var dx = directrix.evaluate(u);
       var dr = _vecScale(director.evaluate(u), v);

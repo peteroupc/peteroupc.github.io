@@ -6,21 +6,17 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
+import {Curve, HMath, Surface} from "../h3du_module";
 
 /**
- * A [surface evaluator object]{@link H3DU.Surface} for a surface of revolution,
+ * A [surface evaluator object]{@link Surface} for a surface of revolution,
  * which results by revolving a two-dimensional curve around an axis.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
- * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
  * @memberof H3DU
- * @param {Object} curve A [curve evaluator object]{@link H3DU.Curve} that describes a 2-dimensional curve to rotate about the axis of rotation, as
+ * @param {Object} curve A [curve evaluator object]{@link Curve} that describes a 2-dimensional curve to rotate about the axis of rotation, as
  * specified in the "axis" parameter. The curve's X coordinates
  * correspond to elevation, and its Y coordinates correspond to radius.<p>
  * If the curve function draws a curve that goes both above and below the axis of rotation, such
@@ -36,21 +32,21 @@
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  */
-H3DU.SurfaceOfRevolution = function(curve, minval, maxval, axis) {
+export var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   this.curve = curve;
   this.minval = Math.min(minval, maxval);
   this.maxval = Math.max(minval, maxval);
   this._axis = axis;
   this._axisQuat = null;
   if(this._axis) {
-    this._axisQuat = H3DU.Math.quatFromVectors([0, 0, 1], this._axis);
+    this._axisQuat = HMath.quatFromVectors([0, 0, 1], this._axis);
   }
 };
-H3DU.SurfaceOfRevolution.prototype = Object.create(H3DU.Surface.prototype);
-H3DU.SurfaceOfRevolution.prototype.constructor = H3DU.SurfaceOfRevolution;
+SurfaceOfRevolution.prototype = Object.create(Surface.prototype);
+SurfaceOfRevolution.prototype.constructor = SurfaceOfRevolution;
 /** @inheritdoc */
-H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
-  return [0, H3DU.Math.PiTimes2, this.minval, this.maxval];
+SurfaceOfRevolution.prototype.endPoints = function() {
+  return [0, HMath.PiTimes2, this.minval, this.maxval];
 };
 /**
  * Finds the coordinates of the given point of this surface.
@@ -59,7 +55,7 @@ H3DU.SurfaceOfRevolution.prototype.endPoints = function() {
  * @returns {Array<number>} An array containing the coordinates
  * of the position at the given point. It will have three elements.
  */
-H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
+SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   var curvepos = this.curve.evaluate(v);
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
@@ -70,12 +66,12 @@ H3DU.SurfaceOfRevolution.prototype.evaluate = function(u, v) {
   var z = cp0;
   var ret = [x, y, z];
   if(this._axisQuat) {
-    H3DU.SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
+    SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
   }
   return ret;
 };
 /** @ignore */
-H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
+SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
   var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
   var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
@@ -85,7 +81,7 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
   v[2] = t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4;
 };
 /**
- * Creates a [surface evaluator object]{@link H3DU.Surface} for a surface of revolution
+ * Creates a [surface evaluator object]{@link Surface} for a surface of revolution
  * whose curve is the graph of a single-variable function.
  * The resulting surface will have a circular cross section
  * along its length.
@@ -110,40 +106,40 @@ H3DU.SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
- * @returns {H3DU.SurfaceOfRevolution} Return value.
+ * @returns {SurfaceOfRevolution} Return value.
  * @example <caption>The following creates an evaluator for a cone
  * which starts at the origin and runs 10 units along the Z axis.</caption>
- * var surf=H3DU.SurfaceOfRevolution.fromFunction(
+ * var surf=SurfaceOfRevolution.fromFunction(
  * function(x) {
  * "use strict"; return x/2; }, // use a constantly increasing function
  * 0, 10);
  * @example <caption>This is an evaluator for the same cone, but
  * shifted 3 units back.</caption>
- * var surf=H3DU.SurfaceOfRevolution.fromFunction(
+ * var surf=SurfaceOfRevolution.fromFunction(
  * function(x) {
  * "use strict"; x+=3; return x/2; },
  * -3,7);
  * @example <caption>The following creates an evaluator for a cylinder
  * which runs from 5 to 10 units, and with a radius of 2 units.</caption>
- * var surf=H3DU.SurfaceOfRevolution.fromFunction(
+ * var surf=SurfaceOfRevolution.fromFunction(
  * function(x) {
  * "use strict"; return 2; }, // use a constant radius
  * 5, 10);
  */
-H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
-  return new H3DU.SurfaceOfRevolution({
+SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
+  return new SurfaceOfRevolution({
     "evaluate":function(u) {
       return [u, func(u), 0];
     }
   }, minval, maxval, axis);
 };
 /**
- * A [surface evaluator object]{@link H3DU.Surface} for a torus, a special case of a surface of revolution.
+ * A [surface evaluator object]{@link Surface} for a torus, a special case of a surface of revolution.
  * @param {number} outerRadius Radius from the center to the innermost
  * part of the torus.
  * @param {number} innerRadius Radius from the inner edge to the innermost
  * part of the torus.
- * @param {Object} [curve] A [curve evaluator object]{@link H3DU.Curve} that
+ * @param {Object} [curve] A [curve evaluator object]{@link Curve} that
  * describes a 2-dimensional curve to serve as
  * the cross section of the torus. The curve need not be closed; in fact, certain
  * special surfaces can result
@@ -156,9 +152,9 @@ H3DU.SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
  * the X, Y, and Z coordinates, respectively, of a 3D point. The axis of rotation will
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
- * @returns {H3DU.SurfaceOfRevolution} Return value.
+ * @returns {SurfaceOfRevolution} Return value.
  */
-H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
+SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   if(!curve)curve = {
     "evaluate":function(u) {
       var cosu = Math.cos(u);
@@ -171,7 +167,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
       return [-sinu, cosu];
     }
   };
-  return new H3DU.SurfaceOfRevolution({
+  return new SurfaceOfRevolution({
     "evaluate":function(u) {
       var curvept = curve.evaluate(u);
       var x = innerRadius * curvept[1];
@@ -179,21 +175,13 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
       return [x, y, 0];
     },
     "endPoints":function() {
-      return [0, H3DU.Math.PiTimes2];
+      return [0, HMath.PiTimes2];
     }
-  }, 0, H3DU.Math.PiTimes2, axis);
+  }, 0, HMath.PiTimes2, axis);
 };
 
-/* exported SurfaceOfRevolution */
 /**
- * Alias for the {@link H3DU.SurfaceOfRevolution} class.
- * @constructor
- * @alias SurfaceOfRevolution
- * @deprecated Use {@link H3DU.SurfaceOfRevolution} instead.
- */
-
-/**
- * A [curve evaluator object]{@link H3DU.Curve} for a curve drawn by a circle that rolls along the inside
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the inside
  * of another circle, whose position is fixed, with a center of (0,0).<p>
  * The following curves can be generated with this class (in the following
  * descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
@@ -216,7 +204,7 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
- * @augments H3DU.Curve
+ * @augments Curve
  * @param {number} outerRadius Radius of the circle whose position
  * is fixed.
  * @param {number} innerRadius Radius of the rolling circle.
@@ -225,21 +213,21 @@ H3DU.SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis)
  * rolling circle to the drawing pen.
  * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
-H3DU.Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
+export var Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
   this.outer = outerRadius;
   this.inner = innerRadius;
   this.distFromInner = distFromInnerCenter;
   var phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= H3DU.Math.ToRadians;
+  phase *= HMath.ToRadians;
   var cosPhase = Math.cos(phase);
   var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
   this.sinPhase = sinPhase;
   this.cosPhase = cosPhase;
 };
-H3DU.Hypotrochoid.prototype = Object.create(H3DU.Curve.prototype);
-H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
+Hypotrochoid.prototype = Object.create(Curve.prototype);
+Hypotrochoid.prototype.constructor = Hypotrochoid;
 
 /**
  * Finds the coordinates of a point on the curve from the given U coordinate.
@@ -248,7 +236,7 @@ H3DU.Hypotrochoid.prototype.constructor = H3DU.Hypotrochoid;
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  * Only the X and Y coordinates can be other than 0.
  */
-H3DU.Hypotrochoid.prototype.evaluate = function(u) {
+Hypotrochoid.prototype.evaluate = function(u) {
   var oi = this.outer - this.inner;
   var term = oi * u / this.inner;
   var uangle = u;
@@ -270,17 +258,17 @@ H3DU.Hypotrochoid.prototype.evaluate = function(u) {
  * endpoints of the curve. The first number is the start of the curve,
  * and the second number is the end of the curve.
  */
-H3DU.Hypotrochoid.prototype.endPoints = function() {
-  return [0, H3DU.Math.PiTimes2];
+Hypotrochoid.prototype.endPoints = function() {
+  return [0, HMath.PiTimes2];
 };
 /**
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
- * @returns {H3DU.Hypotrochoid} Return value.
+ * @returns {Hypotrochoid} Return value.
  */
-H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
+Hypotrochoid.prototype.scaleTo = function(radius) {
   var oi = this.outer - this.inner;
   var mx = Math.abs(Math.max(
     -oi - this.distFromInner,
@@ -288,7 +276,7 @@ H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
     oi - this.distFromInner,
     oi + this.distFromInner));
   var ratio = radius / mx;
-  return new H3DU.Hypotrochoid(
+  return new Hypotrochoid(
     this.outer * ratio,
     this.inner * ratio,
     this.distFromInner * ratio);
@@ -299,7 +287,7 @@ H3DU.Hypotrochoid.prototype.scaleTo = function(radius) {
  * @param {number} u U coordinate of a point on the curve.
  * @returns {Array<number>} The approximate arc length of this curve at the given U coordinate.
  */
-H3DU.Hypotrochoid.prototype.arcLength = function(u) {
+Hypotrochoid.prototype.arcLength = function(u) {
   var b = this.inner - this.distFromInner;
   if(b === 0) {
     // Hypocycloid; drawing pen is at center of inner circle
@@ -308,7 +296,7 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
     return x * s * s / this.outer;
   }
   var that = this;
-  return new H3DU.Curve({
+  return new Curve({
     "evaluate":function(u) {
       return that.evaluate(u);
     },
@@ -319,22 +307,22 @@ H3DU.Hypotrochoid.prototype.arcLength = function(u) {
 };
 
 /**
- * Creates a [curve evaluator object]{@link H3DU.Curve} for a rose, a special
+ * Creates a [curve evaluator object]{@link Curve} for a rose, a special
  * form of hypotrochoid.
  * @param {number} n Parameter that determines the petal form of the rose.
  * For example, the rose is symmetrical if this number is even.
  * @param {number} distFromInnerCenter Distance from the center of the
  * rolling circle to the drawing pen.
  * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
- * @returns {H3DU.Hypotrochoid} The resulting curve evaluator object.
+ * @returns {Hypotrochoid} The resulting curve evaluator object.
  */
-H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
+Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
   var denom = n + 1;
-  return new H3DU.Hypotrochoid(2 * n * distFromInnerCenter / denom,
+  return new Hypotrochoid(2 * n * distFromInnerCenter / denom,
     distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
 };
 /**
- * A [curve evaluator object]{@link H3DU.Curve} for a curve drawn by a circle that rolls along the X axis.
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the X axis.
  * <p>
  * The following curves can be generated with this class (in the following
  * descriptions, R means <code>radius</code>
@@ -350,17 +338,17 @@ H3DU.Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
- * @augments H3DU.Curve
+ * @augments Curve
  * @param {number} radius Radius of the rolling circle.
  * @param {number} distFromCenter Distance from the center of the
  * rolling circle to the drawing pen.
  */
-H3DU.Trochoid = function(radius, distFromCenter) {
+export var Trochoid = function(radius, distFromCenter) {
   this.inner = radius;
   this.distFromCenter = distFromCenter;
 };
-H3DU.Trochoid.prototype = Object.create(H3DU.Curve.prototype);
-H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
+Trochoid.prototype = Object.create(Curve.prototype);
+Trochoid.prototype.constructor = Trochoid;
 
 /**
  * Generates a point on the curve from the given U coordinate.
@@ -369,7 +357,7 @@ H3DU.Trochoid.prototype.constructor = H3DU.Trochoid;
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  * Only the X and Y coordinates will be other than 0.
  */
-H3DU.Trochoid.prototype.evaluate = function(u) {
+Trochoid.prototype.evaluate = function(u) {
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
   return [
@@ -385,24 +373,24 @@ H3DU.Trochoid.prototype.evaluate = function(u) {
  * @function
  * @returns {Array<number>} An array containing the two
  * endpoints of the curve. The first number is the start of the curve,
- * and the second number is the end of the curve. *
+ * and the second number is the end of the curve.
  */
-H3DU.Trochoid.prototype.endPoints = function() {
-  return [0, H3DU.Math.PiTimes2];
+Trochoid.prototype.endPoints = function() {
+  return [0, HMath.PiTimes2];
 };
 /**
  * Finds the velocity (derivative) of this curve at the given point.
  * @param {number} u Point on the curve to evaluate.
  * @returns {Array<number>} An array giving the velocity vector.
  */
-H3DU.Trochoid.prototype.velocity = function(u) {
+Trochoid.prototype.velocity = function(u) {
   var cosu = Math.cos(u);
   var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
   return [this.inner - this.distFromCenter * cosu,
     this.distFromCenter * sinu, 0];
 };
 /**
- * A [curve evaluator object]{@link H3DU.Curve} for a curve drawn by a circle that rolls along the outside
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
  * The rolling circle will start at the positive X axis of the fixed circle.<p>
  * The following curves can be generated with this class (in the following
@@ -424,7 +412,7 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
- * @augments H3DU.Curve
+ * @augments Curve
  * @param {number} outerRadius Radius of the circle whose position
  * is fixed.
  * @param {number} rollerRadius Radius of the rolling circle.
@@ -433,21 +421,21 @@ H3DU.Trochoid.prototype.velocity = function(u) {
  * rolling circle to the drawing pen.
  * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
  */
-H3DU.Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
+export var Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
   this.outer = outerRadius;
   this.roller = rollerRadius;
   this.distFromRoller = distFromRollerCenter;
   var phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
-  phase *= H3DU.Math.ToRadians;
+  phase *= HMath.ToRadians;
   var cosPhase = Math.cos(phase);
   var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
   this.sinPhase = sinPhase;
   this.cosPhase = cosPhase;
 };
-H3DU.Epitrochoid.prototype = Object.create(H3DU.Curve.prototype);
-H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
+Epitrochoid.prototype = Object.create(Curve.prototype);
+Epitrochoid.prototype.constructor = Epitrochoid;
 
 /**
  * Generates a point on the curve from the given U coordinate.
@@ -456,7 +444,7 @@ H3DU.Epitrochoid.prototype.constructor = H3DU.Epitrochoid;
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  * Only the X and Y coordinates will be other than 0.
  */
-H3DU.Epitrochoid.prototype.evaluate = function(u) {
+Epitrochoid.prototype.evaluate = function(u) {
   var oi = this.outer + this.roller;
   var term = oi * u / this.roller;
   var uangle = u;
@@ -479,17 +467,17 @@ H3DU.Epitrochoid.prototype.evaluate = function(u) {
  * endpoints of the curve. The first number is the start of the curve,
  * and the second number is the end of the curve. *
  */
-H3DU.Epitrochoid.prototype.endPoints = function() {
-  return [0, H3DU.Math.PiTimes2];
+Epitrochoid.prototype.endPoints = function() {
+  return [0, HMath.PiTimes2];
 };
 /**
  * Creates a modified version of this curve so that it
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
- * @returns {H3DU.Epitrochoid} Return value.
+ * @returns {Epitrochoid} Return value.
  */
-H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
+Epitrochoid.prototype.scaleTo = function(radius) {
   var oi = this.outer + this.roller;
   var mx = Math.abs(Math.max(
     -oi - this.distFromRoller,
@@ -497,30 +485,8 @@ H3DU.Epitrochoid.prototype.scaleTo = function(radius) {
     oi - this.distFromRoller,
     oi + this.distFromRoller));
   var ratio = radius / mx;
-  return new H3DU.Epitrochoid(
+  return new Epitrochoid(
     this.outer * ratio,
     this.roller * ratio,
     this.distFromRoller * ratio);
 };
-
-/* exported Hypotrochoid */
-/**
- * Alias for the {@link H3DU.Hypotrochoid} class.
- * @constructor
- * @alias Hypotrochoid
- * @deprecated Use {@link H3DU.Hypotrochoid} instead.
- */
-
-/**
- * Alias for the {@link H3DU.Trochoid} class.
- * @constructor
- * @alias Trochoid
- * @deprecated Use {@link H3DU.Trochoid} instead.
- */
-
-/**
- * Alias for the {@link H3DU.Epitrochoid} class.
- * @constructor
- * @alias Epitrochoid
- * @deprecated Use {@link H3DU.Epitrochoid} instead.
- */
