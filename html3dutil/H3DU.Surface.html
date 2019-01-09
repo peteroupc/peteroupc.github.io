@@ -52,7 +52,7 @@ derive the normal calculation, first look at the vector function:</p>
 
 <p>The result is the gradient, which will point up and away from the surface.</p>
 
-<pre>var surface=new H3DU.Surface({&quot;evaluate&quot;:function(u,v) {
+<pre>var surface=new Surface({&quot;evaluate&quot;:function(u,v) {
 &quot;use strict&quot;;
 return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
 },
@@ -82,7 +82,7 @@ Math.sin(u)*-Math.sin(v)*Math.sin(u),
 
 <p>Finds an approximate bitangent vector of this surface at the given U and V coordinates.</p>
 
-<p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>bitangent</code>
+<p>The implementation in Surface calls the evaluator&#39;s <code>bitangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the V axis using the <code>evaluate</code> method.</p>
 
@@ -141,7 +141,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 
 <p>Finds an approximate gradient vector of this surface at the given U and V coordinates.</p>
 
-<p>The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>gradient</code>
+<p>The implementation in Surface calls the evaluator&#39;s <code>gradient</code>
 method if it implements it; otherwise uses the surface&#39;s tangent and bitangent vectors to implement the gradient
 (however, this approach is generally only meaningful for a three-dimensional surface).</p>
 
@@ -149,8 +149,8 @@ method if it implements it; otherwise uses the surface&#39;s tangent and bitange
 If the evaluator describes a regular three-dimensional surface (usually
 a continuous, unbroken surface such as a sphere, an open
 cylinder, or a disk rotated in three dimensions), this can be the cross product
-of the <a href="H3DU.Surface.html#H3DU.Surface_tangent">tangent vector</a>
-and <a href="H3DU.Surface.html#H3DU.Surface_bitangent">bitangent vector</a>,
+of the tangent vector
+and bitangent vector,
 in that order. The gradient returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
 
 <h4>Parameters</h4>
@@ -189,7 +189,7 @@ elements as the number of dimensions of the underlying surface. (Type: Array.&lt
 <h3>H3DU.Surface#tangent(u, v)</h3>
 
 <p>Finds an approximate tangent vector of this surface at the given U and V coordinates.
-The implementation in <a href="H3DU.Surface.html">H3DU.Surface</a> calls the evaluator&#39;s <code>tangent</code>
+The implementation in Surface calls the evaluator&#39;s <code>tangent</code>
 method if it implements it; otherwise, does a numerical differentiation
 with respect to the U axis using the <code>evaluate</code> method.</p>
 
@@ -245,7 +245,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
-<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
@@ -258,6 +257,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

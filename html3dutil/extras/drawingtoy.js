@@ -27,7 +27,7 @@ function gcd(u, v) {
 }
 /**
  * TODO: Not documented yet.
- * @returns {*}
+ * @returns {*} Return value.
  */
 export var DrawingToy = function() {
   this.color = [0, 0, 0];

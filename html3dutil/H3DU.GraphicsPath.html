@@ -15,8 +15,6 @@
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.GraphicsPath.GraphicsPath.fromString">GraphicsPath.fromString</a><br>Creates a graphics path from a string whose format follows
-the SVG specification.</li>
 <li><a href="#H3DU.GraphicsPath_arc">arc</a><br>Adds path segments in the form of a circular arc to this path,
 using the parameterization specified in the &quot;arc&quot; method of the
 HTML Canvas 2D Context.</li>
@@ -45,7 +43,7 @@ and dimensions.</li>
 <li><a href="#H3DU.GraphicsPath_getBounds">getBounds</a><br>Calculates an axis-aligned bounding box that tightly
 fits this graphics path.</li>
 <li><a href="#H3DU.GraphicsPath_getCurrentPoint">getCurrentPoint</a><br>Gets the current point stored in this path.</li>
-<li><a href="#H3DU.GraphicsPath_getCurves">getCurves</a><br>Gets a <a href="H3DU.Curve.html">curve evaluator object</a> for
+<li><a href="#H3DU.GraphicsPath_getCurves">getCurves</a><br>Gets a curve evaluator object for
 the curves described by this path.</li>
 <li><a href="#H3DU.GraphicsPath_getLinePoints">getLinePoints</a><br>Gets an array of the end points of
 line segments approximating the path.</li>
@@ -92,33 +90,6 @@ path&#39;s shape.</li>
 <li><a href="#H3DU.GraphicsPath_xor">xor</a><br>Computes the shape contained in either this path or another path,
 but not both.</li>
 </ul>
-
-<p><a name='H3DU.GraphicsPath.GraphicsPath.fromString'></a></p>
-
-<h3>(static) H3DU.GraphicsPath.GraphicsPath.fromString(str)</h3>
-
-<p>Creates a graphics path from a string whose format follows
-the SVG specification.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: string)<br>A string, in the SVG path format, representing a two-dimensional path. An SVG path consists of a number of path segments, starting with a single letter, as follows: <ul> <li>M/m (x y) - Moves the current position to (x, y). Further XY pairs specify line segments. <li>L/l (x y) - Specifies line segments to the given XY points. <li>H/h (x) - Specifies horizontal line segments to the given X points. <li>V/v (y) - Specifies vertical line segments to the given Y points. <li>Q/q (cx cx x y) - Specifies quadratic B&eacute;zier curves (see quadraticCurveTo). <li>T/t (x y) - Specifies quadratic curves tangent to the previous quadratic curve. <li>C/c (c1x c1y c2x c2y x y) - Specifies cubic B&eacute;zier curves (see bezierCurveTo). <li>S/s (c2x c2y x y) - Specifies cubic curves tangent to the previous cubic curve. <li>A/a (rx ry rot largeArc sweep x y) - Specifies arcs (see arcSvgTo). &quot;largeArc&quot; and &quot;sweep&quot; are flags, &quot;0&quot; for false and &quot;1&quot; for true. &quot;rot&quot; is in degrees. <li>Z/z - Closes the current path; similar to adding a line segment to the first XY point given in the last M/m command. </ul> Lower-case letters mean any X and Y coordinates are relative to the current position of the path. Each group of parameters can be repeated in the same path segment. Each parameter after the starting letter is separated by whitespace and/or a single comma, and the starting letter can be separated by whitespace. This separation can be left out as long as doing so doesn&#39;t introduce ambiguity. All commands set the current point to the end of the path segment (including Z/z, which adds a line segment if needed).</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The resulting path. If an error
-occurs while parsing the path, the path&#39;s &quot;isIncomplete() method
-will return <code>true</code>. (Type: GraphicsPath)</p>
-
-<h4>Example</h4>
-
-<p>The following example creates a graphics path
-from an SVG string describing a polyline.</p>
-
-<pre>var path=H3DU.GraphicsPath.fromString(&quot;M10,20L40,30,24,32,55,22&quot;)
-</pre>
 
 <p><a name='H3DU.GraphicsPath_arc'></a></p>
 
@@ -319,13 +290,13 @@ path&#39;s start position, if necessary.</p>
 <h3>H3DU.GraphicsPath#difference(path, [flatness])</h3>
 
 <p>Computes the difference between this path&#39;s shape and another
-path&#39;s shape. The points given in the <a href="H3DU.GraphicsPath.html#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+path&#39;s shape. The points given in the GraphicsPath#union method
 apply to this method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>A path to combine with this one.</li>
+<li><code>path</code> (Type: GraphicsPath)<br>A path to combine with this one.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
@@ -403,14 +374,14 @@ returns the array (Infinity, Infinity, -Infinity, -Infinity). (Type: Array.&lt;n
 
 <h3>H3DU.GraphicsPath#getCurves()</h3>
 
-<p>Gets a <a href="H3DU.Curve.html">curve evaluator object</a> for
+<p>Gets a curve evaluator object for
 the curves described by this path. The return value doesn&#39;t track changes to the path.</p>
 
 <h4>Return Value</h4>
 
-<p>A <a href="H3DU.Curve.html">curve evaluator object</a> that implements
+<p>A curve evaluator object that implements
 the following additional method:<ul>
-<li><code>getCurves()</code> - Returns a list of <a href="H3DU.Curve.html">curve evaluator objects</a>
+<li><code>getCurves()</code> - Returns a list of curve evaluator objects
 described by this path. The list will contain one curve evaluator object for each disconnected
 portion of the path. For example, if the path contains one polygon, the list will contain
 one curve object. And if the path is empty, the list will be empty too. Each curve
@@ -579,7 +550,7 @@ in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>other</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>The second graphics path.</li>
+<li><code>other</code> (Type: GraphicsPath)<br>The second graphics path.</li>
 <li><code>t</code> (Type: number)<br>An interpolation factor, generally ranging from 0 through 1. Closer to 0 means closer to this path, and closer to 1 means closer to &quot;other&quot;. If the input paths contain arc segments that differ in the large arc and sweep flags, the flags from the first path&#39;s arc are used if &quot;t&quot; is less than 0.5; and the flags from the second path&#39;s arc are used otherwise.</li>
 </ul>
 
@@ -594,13 +565,13 @@ in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
 <h3>H3DU.GraphicsPath#intersection(path, [flatness])</h3>
 
 <p>Computes the intersection, or the area common to both this path&#39;s shape
-and another path&#39;s shape. The points given in the <a href="H3DU.GraphicsPath.html#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+and another path&#39;s shape. The points given in the GraphicsPath#union method
 apply to this method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>A path to combine with this one.</li>
+<li><code>path</code> (Type: GraphicsPath)<br>A path to combine with this one.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
@@ -670,7 +641,7 @@ sets the end position to the end of the segment.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>Another graphics path. Can be null.</li>
+<li><code>path</code> (Type: GraphicsPath)<br>Another graphics path. Can be null.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -894,7 +865,7 @@ segments and close commands. (Type: GraphicsPath)</p>
 <h3>H3DU.GraphicsPath#toString()</h3>
 
 <p>Returns this path in the form of a string in SVG path format.
-See H3DU.GraphicsPath.fromString.</p>
+See <a href="GraphicsPath.html#GraphicsPath.fromString">GraphicsPath.fromString</a>.</p>
 
 <h4>Return Value</h4>
 
@@ -939,7 +910,7 @@ that contains them.
 <h4>Parameters</h4>
 
 <ul>
-<li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>A path to combine with this one.</li>
+<li><code>path</code> (Type: GraphicsPath)<br>A path to combine with this one.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
@@ -952,13 +923,13 @@ that contains them.
 <h3>H3DU.GraphicsPath#xor(path, [flatness])</h3>
 
 <p>Computes the shape contained in either this path or another path,
-but not both. The points given in the <a href="H3DU.GraphicsPath.html#H3DU.GraphicsPath_union">H3DU.GraphicsPath#union</a> method
+but not both. The points given in the GraphicsPath#union method
 apply to this method.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>path</code> (Type: <a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a>)<br>A path to combine with this one.</li>
+<li><code>path</code> (Type: GraphicsPath)<br>A path to combine with this one.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
@@ -1003,7 +974,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
-<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
@@ -1016,6 +986,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

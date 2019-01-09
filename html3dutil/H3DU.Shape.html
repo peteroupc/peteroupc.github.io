@@ -17,12 +17,12 @@ See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.
 
 <p>NOTE: The default shader program assumes that all colors and the diffuse texture
 specified in this object are in
-<a href="H3DU.MathUtil.html#H3DU.MathUtil.colorTosRGB">companded sRGB</a>.</p>
+companded sRGB.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)<br>A mesh in the form of a buffer object. Cannot be null.</li>
+<li><code>mesh</code> (Type: MeshBuffer)<br>A mesh in the form of a buffer object. Cannot be null.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -61,7 +61,7 @@ The copied shape won&#39;t have a parent.</p>
 
 <h4>Return Value</h4>
 
-<p>A copy of this object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>A copy of this object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_getBounds'></a></p>
 
@@ -87,7 +87,7 @@ If the shape has no vertices, returns the array [Inf, Inf, Inf, -Inf,
 <h3>H3DU.Shape#getMatrix()</h3>
 
 <p>Gets the transformation matrix used by this shape.
-See <a href="H3DU.Transform.html#H3DU.Transform_getMatrix">H3DU.Transform#getMatrix</a>.</p>
+See Transform#getMatrix.</p>
 
 <h4>Return Value</h4>
 
@@ -101,7 +101,7 @@ See <a href="H3DU.Transform.html#H3DU.Transform_getMatrix">H3DU.Transform#getMat
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>)</p>
+<p>Return value. (Type: MeshBuffer)</p>
 
 <p><a name='H3DU.Shape_getTransform'></a></p>
 
@@ -112,7 +112,7 @@ The transform won&#39;t be copied.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)</p>
+<p>Return value. (Type: Transform)</p>
 
 <p><a name='H3DU.Shape_getVisible'></a></p>
 
@@ -140,26 +140,26 @@ and points) composed by all shapes in this scene.</p>
 <h3>H3DU.Shape#setPosition(x, y, z)</h3>
 
 <p>Sets the relative position of this shape from its original
-position. See <a href="H3DU.Transform.html#H3DU.Transform_setPosition">H3DU.Transform#setPosition</a></p>
+position. See Transform#setPosition</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate or a 3-element position array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.</li>
 <li><code>y</code> (Type: number)<br>Y coordinate.</li>
 <li><code>z</code> (Type: number)<br>Z coordinate.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_setQuaternion'></a></p>
 
 <h3>H3DU.Shape#setQuaternion(quat)</h3>
 
 <p>Sets this object&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a>.
-See <a href="H3DU.Transform.html#H3DU.Transform_setQuaternion">H3DU.Transform#setQuaternion</a>.</p>
+See Transform#setQuaternion.</p>
 
 <h4>Parameters</h4>
 
@@ -169,26 +169,26 @@ See <a href="H3DU.Transform.html#H3DU.Transform_setQuaternion">H3DU.Transform#se
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_setScale'></a></p>
 
 <h3>H3DU.Shape#setScale(x, y, z)</h3>
 
 <p>Sets the scale of this shape relative to its original
-size. See <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a></p>
+size. See Transform#setScale</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in <a href="H3DU.Transform.html#H3DU.Transform_setScale">H3DU.Transform#setScale</a>.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in Transform#setScale.</li>
 <li><code>y</code> (Type: number)<br>Scaling factor for this object&#39;s height.</li>
 <li><code>z</code> (Type: number)<br>Scaling factor for this object&#39;s depth.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_setTransform'></a></p>
 
@@ -200,12 +200,12 @@ to a copy of the given transformation.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>transform</code> (Type: <a href="H3DU.Transform.html">H3DU.Transform</a>)<br>The transformation to set to a copy of.</li>
+<li><code>transform</code> (Type: Transform)<br>The transformation to set to a copy of.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_setVisible'></a></p>
 
@@ -216,12 +216,12 @@ to a copy of the given transformation.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>value</code> (Type: Boolean)<br>True if this shape will be visible; otherwise, false.</li>
+<li><code>value</code> (Type: boolean)<br>True if this shape will be visible; otherwise, false.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.Shape.html">H3DU.Shape</a>)</p>
+<p>This object. (Type: Shape)</p>
 
 <p><a name='H3DU.Shape_vertexCount'></a></p>
 
@@ -270,7 +270,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
-<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
@@ -283,6 +282,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>

@@ -15,10 +15,10 @@
 <h4>Parameters</h4>
 
 <ul>
-<li><code>buffer</code> (Type: Float32Array)<br>A buffer to store vertex attribute data; see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_buffer">H3DU.BufferAccessor#buffer</a>.</li>
-<li><code>countPerValue</code> (Type: number)<br>Number of elements per value; see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>. Throws an error if 0 or less.</li>
-<li><code>offset</code> (Type: number) (optional)<br>Offset to the first value; see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_offset">H3DU.BufferAccessor#offset</a>. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.</li>
-<li><code>stride</code> (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_stride">H3DU.BufferAccessor#stride</a>. If null, undefined, or omitted, has the same value as &quot;countPerValue&quot;. Throws an error if 0 or less.</li>
+<li><code>buffer</code> (Type: Float32Array)<br>A buffer to store vertex attribute data; see BufferAccessor#buffer.</li>
+<li><code>countPerValue</code> (Type: number)<br>Number of elements per value; see BufferAccessor#countPerValue. Throws an error if 0 or less.</li>
+<li><code>offset</code> (Type: number) (optional)<br>Offset to the first value; see BufferAccessor#offset. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.</li>
+<li><code>stride</code> (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see BufferAccessor#stride. If null, undefined, or omitted, has the same value as &quot;countPerValue&quot;. Throws an error if 0 or less.</li>
 </ul>
 
 <h3>Members</h3>
@@ -36,7 +36,7 @@ value to the start of the next.</li>
 
 <ul>
 <li><a href="#H3DU.BufferAccessor_copy">copy</a><br>Copies the values of this accessor into a new vertex attribute object.</li>
-<li><a href="#H3DU.BufferAccessor_count">count</a><br>Gets the number of <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_buffer">values</a> defined for this accessor.</li>
+<li><a href="#H3DU.BufferAccessor_count">count</a><br>Gets the number of values defined for this accessor.</li>
 <li><a href="#H3DU.BufferAccessor_get">get</a><br>Gets the first element of the attribute value with the given vertex index.</li>
 <li><a href="#H3DU.BufferAccessor_getVec">getVec</a><br>Gets the elements of a vertex attribute value.</li>
 <li><a href="#H3DU.BufferAccessor.makeBlank">makeBlank</a><br>Generates a vertex attribute buffer, with each value set to all zeros.</li>
@@ -90,7 +90,7 @@ more than 6 elements long).</p>
 
 <p>A stride, which gives the number of elements from the start of one
 value to the start of the next. A &quot;packed&quot; buffer will have a stride
-equal to the <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue">count per value</a>.</p>
+equal to the count per value.</p>
 
 <p>Type: number</p>
 
@@ -102,13 +102,13 @@ equal to the <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue
 
 <h4>Return Value</h4>
 
-<p>A copy of the vertex attribute object. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+<p>A copy of the vertex attribute object. (Type: BufferAccessor)</p>
 
 <p><a name='H3DU.BufferAccessor_count'></a></p>
 
 <h3>H3DU.BufferAccessor#count()</h3>
 
-<p>Gets the number of <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_buffer">values</a> defined for this accessor.</p>
+<p>Gets the number of values defined for this accessor.</p>
 
 <h4>Return Value</h4>
 
@@ -146,7 +146,7 @@ checking naturally done when accessing the attribute&#39;s buffer.</p>
 
 <ul>
 <li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute&#39;s count per value (see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>).</li>
+<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute&#39;s count per value (see BufferAccessor#countPerValue).</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -162,13 +162,13 @@ checking naturally done when accessing the attribute&#39;s buffer.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>count</code> (Type: number)<br>The number of <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_buffer">values</a> the buffer will hold. For example, (10, 20, 5) is a 3-element value.</li>
+<li><code>count</code> (Type: number)<br>The number of values the buffer will hold. For example, (10, 20, 5) is a 3-element value.</li>
 <li><code>countPerValue</code> (Type: number)<br>The number of elements each value will take in the buffer.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>A blank vertex attribute buffer. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+<p>A blank vertex attribute buffer. (Type: BufferAccessor)</p>
 
 <p><a name='H3DU.BufferAccessor.makeIndices'></a></p>
 
@@ -196,9 +196,9 @@ combined vertex attribute.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>attr1</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices1&quot; and all the values are zeros.</li>
+<li><code>attr1</code> (Type: BufferAccessor)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices1&quot; and all the values are zeros.</li>
 <li><code>indices1</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.</li>
-<li><code>attr2</code> (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices2&quot; and all the values are zeros.</li>
+<li><code>attr2</code> (Type: BufferAccessor)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices2&quot; and all the values are zeros.</li>
 <li><code>indices2</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.</li>
 </ul>
 
@@ -206,7 +206,7 @@ combined vertex attribute.</p>
 
 <p>The merged attribute, where the vertices from the first vertex
 attribute come before those from the second. The merged attribute will have as many
-values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: BufferAccessor)</p>
 
 <p><a name='H3DU.BufferAccessor_set'></a></p>
 
@@ -226,7 +226,7 @@ checking naturally done when writing to the attribute&#39;s buffer.</p>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+<p>This object. (Type: BufferAccessor)</p>
 
 <p><a name='H3DU.BufferAccessor_setVec'></a></p>
 
@@ -242,12 +242,12 @@ where noted otherwise.</p>
 
 <ul>
 <li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
-<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array&#39;s length or the attribute&#39;s count per value (see <a href="H3DU.BufferAccessor.html#H3DU.BufferAccessor_countPerValue">H3DU.BufferAccessor#countPerValue</a>), whichever is less.</li>
+<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array&#39;s length or the attribute&#39;s count per value (see BufferAccessor#countPerValue), whichever is less.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>This object. (Type: <a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a>)</p>
+<p>This object. (Type: BufferAccessor)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -285,7 +285,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Polyhedra.html">H3DU.Polyhedra</a></li>
-<li><a href="H3DU.Semantic.html">H3DU.Semantic</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
 <li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
@@ -298,6 +297,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
