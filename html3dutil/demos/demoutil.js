@@ -89,6 +89,32 @@ function addRange(label, min, max, step, defvalue, func) {
   return div;
 }
 
+// Class that positions an HTML text element
+/* exported Label */
+function Label(text, pos) {
+  "use strict";
+  this.label = document.createElement("div");
+  this.label.innerHTML = text;
+  this.label.style.width = "150px";
+  this.label.style.textAlign = "center";
+  this.label.style.display = "none";
+  this.label.style.position = "absolute";
+  this.label.style.overflow = "hidden";
+  document.body.appendChild(this.label);
+  this.pos = pos;
+  this.update = function(projViewMatrix, width, height) {
+    var pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, projViewMatrix, [0, 0, width, height]);
+    if(pos[2] < -1 || pos[2] > 1) {
+      // Too close, too far, or behind the camera
+      this.label.style.display = "none";
+    } else {
+      this.label.style.display = "block";
+      this.label.style.left = pos[0] - 75 + "px";
+      this.label.style.top = pos[1] + "px";
+    }
+  };
+}
+
 function setRanges(ranges) {
   "use strict";
   var settings = document.getElementById("settings");

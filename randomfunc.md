@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Dec. 29, 2018.
+Begun on June 4, 2017; last updated on Jan. 10, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -484,7 +484,7 @@ the following idioms in an `if` condition:
 - True with X percent probability: `RNDINTEXC(100) < X`.
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
 - True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
-- True with probability X, where X is from 0 through 1 (a _Bernoulli trial_): `RNDU01OneExc() < X`.
+- True with probability P, where P is in the interval \[0, 1\] (a _Bernoulli trial_): Convert P to its closest rational number X/Y, then do `RNDINTEXC(Y) < X`.
 
 > **Examples:**
 > - True with probability 3/8: `RNDINTEXC(8) < 3`.
@@ -705,21 +705,13 @@ Example criteria include checking&mdash;
 <a id=Generating_Random_Numbers_in_Sorted_Order></a>
 ### Generating Random Numbers in Sorted Order
 
-The following pseudocode describes a method that generates random numbers in the interval [0, 1] in descending order; see (Bentley and Saxe 1980)<sup>[**(13)**](#Note13)</sup>.   `count` is the number of random numbers to generate this way.
+To generate random numbers in sorted order&mdash;
 
-     METHOD SortedRandom(count)
-        list = NewList()
-        k = count
-        c = 1.0
-        while k > 0
-            c = pow(RNDU01(), 1.0 / k) * c
-            AddItem(list, c)
-            k = k - 1
-        end
-        return list
-     END METHOD
+1. generate them using any method and where the numbers have any distribution and range, then
+2. store them in a list, then
+3. sort the list using a sorting algorithm (details on sorting algorithms are beyond the scope of this document).
 
-Alternatively, random numbers can be generated (using any method and where the numbers have any distribution and range) and stored in a list, and the list then sorted using a sorting algorithm.  Details on sorting algorithms, however, are beyond the scope of this document.
+(Bentley and Saxe 1980)<sup>[**(13)**](#Note13)</sup> describes a way to generate random numbers in sorted order, but it's not given here because it relies on a method akin to `RNDU01()`, which may not be adequate for large numbers of sorted random numbers depending on how `RNDU01()` is implemented.
 
 <a id=Random_Walks></a>
 ### Random Walks
