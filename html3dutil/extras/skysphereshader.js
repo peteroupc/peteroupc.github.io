@@ -26,7 +26,7 @@ export var skySphereShader = {
     "  (atan(pos.x,pos.z)+PI)*ONE_DIV_TWOPI, acos(clamp(-pos.y,-1.0,1.0))*ONE_DIV_PI ));",
     "}"
   ].join("\n"),
-  "uniform":{"texture":@param {boolean|@param {boolean|@param {boolean|null}
+  "uniform":{"texture":@param {boolean|@param {boolean|@param {boolean|@param {boolean|null}
 };
 export var skySphereCubeMapShader = {
   "vertexShader":["varying vec4 positionVar;",
@@ -43,5 +43,5 @@ export var skySphereCubeMapShader = {
     " gl_FragColor=textureCube(texture,pos);",
     "}"
   ].join("\n"),
-  "uniform":{"texture":@param {boolean|@param {boolean|@param {boolean|null}
+  "uniform":{"texture":@param {boolean|@param {boolean|@param {boolean|@param {boolean|null}
 };
