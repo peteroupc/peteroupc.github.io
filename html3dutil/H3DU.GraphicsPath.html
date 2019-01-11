@@ -82,8 +82,8 @@ at this path&#39;s current position.</li>
 <li><a href="#H3DU.GraphicsPath_roundRect">roundRect</a><br>Adds path segments to this path that form an axis-aligned rounded rectangle.</li>
 <li><a href="#H3DU.GraphicsPath_toCurvePath">toCurvePath</a><br>Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).</li>
-<li><a href="#H3DU.GraphicsPath_toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.GraphicsPath_toLineMeshBuffer">toLineMeshBuffer</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.GraphicsPath_toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately.</li>
+<li><a href="#H3DU.GraphicsPath_toLineMeshBuffer">toLineMeshBuffer</a><br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</li>
 <li><a href="#H3DU.GraphicsPath_toLinePath">toLinePath</a><br>Creates a path in which curves and arcs are decomposed
 to line segments.</li>
 <li><a href="#H3DU.GraphicsPath_toMeshBuffer">toMeshBuffer</a><br>TODO: Not documented yet.</li>
@@ -255,7 +255,7 @@ from (x0, y0) and (x1, y1) is 0 or extremely close to 0. (Type: GraphicsPath)</p
 
 <h4>Return Value</h4>
 
-<p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: GraphicsPath)</p>
+<p>This object. If &quot;w&quot; or &quot;h&quot; is less than 0, no path segments will be appended. (Type: GraphicsPath)</p>
 
 <p><a name='H3DU.GraphicsPath_bezierCurveTo'></a></p>
 
@@ -827,7 +827,7 @@ object with its path segments reversed. (Type: GraphicsPath)</p>
 
 <h4>Return Value</h4>
 
-<p>This object. If &quot;w&quot; or &quot;h&quot; is 0, no path segments will be appended. (Type: GraphicsPath)</p>
+<p>This object. If &quot;w&quot; or &quot;h&quot; is less than 0, no path segments will be appended. (Type: GraphicsPath)</p>
 
 <p><a name='H3DU.GraphicsPath_toCurvePath'></a></p>
 
@@ -843,38 +843,38 @@ segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)</p>
 
 <p><a name='H3DU.GraphicsPath_toExtrudedMeshBuffer'></a></p>
 
-<h3>H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, flatness)</h3>
+<h3>H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness])</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>zStart</code> (Type: *)</li>
-<li><code>zEnd</code> (Type: *)</li>
-<li><code>flatness</code> (Type: *)</li>
+<li><code>zStart</code> (Type: z)<br>Starting Z coordinate of the mesh buffer&#39;s &quot;walls&quot;.</li>
+<li><code>zEnd</code> (Type: z)<br>Ending Z coordinate of the mesh buffer&#39;s &quot;walls&quot;.</li>
+<li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>The resulting mesh buffer. (Type: MeshBuffer)</p>
 
 <p><a name='H3DU.GraphicsPath_toLineMeshBuffer'></a></p>
 
-<h3>H3DU.GraphicsPath#toLineMeshBuffer(z, flatness)</h3>
+<h3>H3DU.GraphicsPath#toLineMeshBuffer([z], [flatness])</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>z</code> (Type: *)</li>
-<li><code>flatness</code> (Type: *)</li>
+<li><code>z</code> (Type: *) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.</li>
+<li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>The resulting mesh buffer. (Type: MeshBuffer)</p>
 
 <p><a name='H3DU.GraphicsPath_toLinePath'></a></p>
 
@@ -909,7 +909,7 @@ segments and close commands. (Type: GraphicsPath)</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: GraphicsPath)</p>
+<p>The resulting mesh buffer. (Type: MeshBuffer)</p>
 
 <p><a name='H3DU.GraphicsPath_toString'></a></p>
 

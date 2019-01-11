@@ -32,10 +32,10 @@ canvas { width:100%; height:100%; overflow: hidden; }
 */
 
 var allsettings = {};
-function TorusKnot(p, q, outerRadius, innerRadius) {
+function TorusKnot(period, revolutions, outerRadius, innerRadius) {
   "use strict";
-  this.period = p;
-  this.revolutions = q;
+  this.period = period;
+  this.revolutions = revolutions;
   this.outerRadius = typeof outerRadius === "undefined" || outerRadius === null ? 1 : outerRadius;
   this.innerRadius = typeof innerRadius === "undefined" || innerRadius === null ? 0.25 : innerRadius;
   this.evaluate = function(u) {
@@ -49,7 +49,7 @@ function TorusKnot(p, q, outerRadius, innerRadius) {
     ];
   };
   this.endPoints = function() {
-    return [0, H3DU.MathUtil.PiTimes2];
+    return [0, H3DU.MathUtil.PiTimes2*];
   };
 }
 

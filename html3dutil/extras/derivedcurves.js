@@ -1,4 +1,4 @@
-/* global Surface */
+/* global H3DU, Surface */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -167,6 +167,23 @@ export function ruledSurface(directrix, director) {
     "endPoints":function() {
       var ep = directrix.endPoints();
       return [ep[0], ep[1], 0, 1];
+    }
+  });
+}
+
+export function spiralCurve(radius, phase) {
+  return new H3DU.Curve({
+    /** @ignore */
+    "evaluate":function(u) {
+      var uphase = u + phase;
+      var cosu = Math.cos(uphase);
+      var sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
+      var r = radius + u;
+      return [cosu * r, sinu * r];
+    },
+    /** @ignore */
+    "endPoints":function() {
+      return [0, 6 * Math.PI];
     }
   });
 }

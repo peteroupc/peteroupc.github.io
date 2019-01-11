@@ -9,8 +9,8 @@
 
 export var horGradientShader = {
   "uniform":{
-    "color1":[0, 0, 0,1],
-    "color2":[1, 1, 1,1]
+    "color1":[0, 0, 0, 1],
+    "color2":[1, 1, 1, 1]
   },
   "vertexShader":[
     "varying vec2 posVar;",
@@ -20,7 +20,7 @@ export var horGradientShader = {
     "}"].join("\n"),
   "fragmentShader":[
     "varying vec2 posVar;",
-    "uniform vec4 color1;"
+    "uniform vec4 color1;",
     "uniform vec4 color2;",
     "void main() {",
     " float c=(posVar.x+1.0)*0.5;",

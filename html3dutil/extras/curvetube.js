@@ -223,11 +223,7 @@ H3DU._TBNFrames._distSq = function(a, b) {
  * A [surface evaluator object]{@link H3DU.Surface} for a tube extruded from a parametric curve.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
- * To use this class, you must include the script "extras/curvetube.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/curvetube.js">&lt;/script></pre>
+ * library.
  * @constructor
  * @memberof H3DU
  * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude

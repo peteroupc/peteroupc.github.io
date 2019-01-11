@@ -9,8 +9,8 @@
 
 export var radialGradientShader = {
   "uniform":{
-    "colorCenter":[0, 0, 0,1],
-    "colorEdges":[1, 1, 1,1]
+    "colorCenter":[0, 0, 0, 1],
+    "colorEdges":[1, 1, 1, 1]
   },
   "vertexShader":[
     "varying vec2 posVar;",
@@ -20,12 +20,12 @@ export var radialGradientShader = {
     "}"].join("\n"),
   "fragmentShader":[
     "varying vec2 posVar;",
-    "uniform vec4 colorCenter;"
+    "uniform vec4 colorCenter;",
     "uniform vec4 colorEdges;",
     "void main() {",
     " float c=length(posVar);",
- "c=(c>1.0) ? 1.0 : c;",
- "vec3 color=mix(colorCenter.rgb,colorEdges.rgb,c);",
+    "c=(c>1.0) ? 1.0 : c;",
+    "vec3 color=mix(colorCenter.rgb,colorEdges.rgb,c);",
     " gl_FragColor=vec4(color,1.0);",
     "}"].join("\n")
 };

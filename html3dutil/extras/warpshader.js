@@ -28,5 +28,5 @@ export var warpShader = {
     " gl_FragColor=c;",
     "}"
   ].join("\n"),
-  "uniform":{"sampler":@param {boolean|@param {boolean|@param {boolean|null}
+  "uniform":{"sampler":null}
 };
