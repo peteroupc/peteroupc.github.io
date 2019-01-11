@@ -36,6 +36,8 @@ of vertex indices to null.</p>
 and vertex normals.</li>
 <li><a href="#H3DU.MeshBuffer.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br>Creates a new mesh buffer with the given array of vertex positions,
 vertex normals, and texture coordinates.</li>
+<li><a href="#H3DU.MeshBuffer.fromPositionsUV">fromPositionsUV</a><br>Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.</li>
 <li><a href="#H3DU.MeshBuffer_getAttribute">getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</li>
@@ -140,6 +142,24 @@ vertex normals, and texture coordinates.</p>
 
 <ul>
 <li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex data. This array&#39;s length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V texture coordinates, in that order, of the vertex.</ol></li>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: MeshBuffer)</p>
+
+<p><a name='H3DU.MeshBuffer.fromPositionsUV'></a></p>
+
+<h3>(static) H3DU.MeshBuffer.fromPositionsUV(vertices, [indices])</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex data. This array&#39;s length must be divisible by 5; every 5 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>U and V texture coordinates, in that order, of the vertex.</ol></li>
 <li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
 </ul>
 
@@ -593,7 +613,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>

@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 
-import {MathUtil, MeshBuffer, Meshes} from "../h3du_module.js";
+import {MathUtil, MeshBuffer} from "../h3du_module.js";
 
 // Adapted by Peter O. from a public-domain
 // C++ implementation found at https://github.com/akuukka/quickhull

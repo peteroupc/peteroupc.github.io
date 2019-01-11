@@ -25,7 +25,6 @@ its work.</li>
 resolves or is rejected after the given list of promises finishes
 its work.</li>
 <li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
-<li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.</li>
 <li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.</li>
 <li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
@@ -121,34 +120,6 @@ value in milliseconds, such as the parameter of a
 
 <pre>var angle = 360 * export var getTimePosition(timer, time, 5000);
 </pre>
-
-<p><a name='H3DU.loadFileFromUrl'></a></p>
-
-<h3>(static) H3DU.loadFileFromUrl(url, [responseType])</h3>
-
-<p>Loads a file from a URL asynchronously, using XMLHttpRequest.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: string)<br>URL of the file to load.</li>
-<li><code>responseType</code> (Type: string) (optional)<br>Expected data type of the file. Can be &quot;json&quot;, &quot;xml&quot;, &quot;text&quot;, or &quot;arraybuffer&quot;. If null, undefined, or omitted, the default is &quot;text&quot;.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that resolves when the data
-file is loaded successfully (the result will be an object with
-two properties: &quot;url&quot;, the URL of the file, and &quot;data&quot;, the
-file&#39;s text or data), as given below, and is rejected when an error occurs (the
-result may be an object with
-one property: &quot;url&quot;, the URL of the file). If the promise resolves,
-the parameter&#39;s &quot;data&quot; property will be:<ul>
-<li>For response type &quot;xml&quot;, an XML document object.
-<li>For response type &quot;arraybuffer&quot;, an ArrayBuffer object.
-<li>For response type &quot;json&quot;, the JavaScript object decoded
-from JSON.
-<li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
 
 <p><a name='H3DU.newFrames'></a></p>
 
@@ -265,7 +236,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>

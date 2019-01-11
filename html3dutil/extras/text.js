@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global DataView, H3DU, Promise, console */
+/* global DataView, H3DU, MeshBuffer, Promise, console */
 
 /**
  * Represents a bitmap font, which supports drawing two-dimensional
@@ -305,6 +305,24 @@ H3DU.TextFont.prototype.textShape = function(str, params) {
   }
   return group;
 };
+
+function Mesh() {
+  this.vertices = [];
+  this.indices = [];
+  this.addQuad = function(sx, sy, sx2, sy2, vx, vy, vx2, vy2) {
+    var ind = this.vertices.length / 5;
+    this.vertices.push(
+      sx, sy, 0, vx, vy,
+      sx, sy2, 0, vx, vy2,
+      sx2, sy, 0, vx2, vy,
+      sx2, sy2, 0, vx2, vy2);
+    this.indices.push(ind, ind + 1, ind + 2, ind + 2, ind + 1, ind + 3);
+  };
+  this.toMeshBuffer = function() {
+    return MeshBuffer.fromPositionsUV(this.vertices, this.indices);
+  };
+}
+
 /** @ignore */
 H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, xPos, yPos, params, extra, meshesForPage) {
   var lastChar = -1;
@@ -337,18 +355,10 @@ H3DU.TextFont.prototype._makeTextMeshesInner = function(str, startPos, endPos, x
       if(ch.width > 0 && ch.height > 0) {
         var chMesh = meshesForPage[ch.page];
         if(!chMesh) {
-          chMesh = new H3DU.Mesh();
+          chMesh = new Mesh();
           meshesForPage[ch.page] = chMesh;
         }
-        chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-          .texCoord2(sx, 1 - sy)
-          .vertex2(vx, vy)
-          .texCoord2(sx, 1 - sy2)
-          .vertex2(vx, vy2)
-          .texCoord2(sx2, 1 - sy)
-          .vertex2(vx2, vy)
-          .texCoord2(sx2, 1 - sy2)
-          .vertex2(vx2, vy2);
+        chMesh.addQuad(sx, 1 - sy, sx2, 1 - sy2, vx, vy, vx2, vy2);
       }
       if(lastChar !== -1) {
         if(this.kern[lastChar] && this.kern[lastChar][c]) {
@@ -832,6 +842,7 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
  * Loads a bitmap font definition from a file.
  * Note that this method only loads the font data and not the bitmaps
  * used to represent the font.
+ * @param {ArrayBuffer} data The data containing a bitmap font definition.
  * @param {string} fontFileName The URL of the font data file
  * to load. The following file extensions are read as the following formats:<ul>
  * <li>".xml": XML</li>
@@ -839,51 +850,47 @@ H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
  * <li>".bin": Binary</li>
  * <li>".fnt": Text or binary</li>
  * <li>All others: Text</li></ul>
- * @returns {Promise<H3DU.TextFont>} A promise that is resolved
- * when the font data is loaded successfully (the result will be
- * an H3DU.TextFont object), and is rejected when an error occurs.
+ * @returns {TextFont|null} Text font data, or null if an error occurs.
  */
-H3DU.TextFont.load = function(fontFileName) {
+H3DU.TextFont.loadData = function(data, fontFileName) {
+  var dd = {
+    "data":data,
+    "url":fontFileName
+  };
   if(/\.xml$/i.exec(fontFileName)) {
-    return H3DU.loadFileFromUrl(fontFileName, "xml").then(
-      function(data) {
-        var ret = H3DU.TextFont._loadXmlFontInner(data);
-        return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
-      });
+    // TODO: Somehow convert to XML document
+    return H3DU.TextFont._loadXmlFontInner(dd);
   } else if(/\.bin$/i.exec(fontFileName)) {
-    return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
-      function(data) {
-        var ret = H3DU.TextFont._loadBinaryFontInner(data);
-        return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
-      });
+    return H3DU.TextFont._loadBinaryFontInner(dd);
   } else if(/\.fnt$/i.exec(fontFileName)) {
-    return H3DU.loadFileFromUrl(fontFileName, "arraybuffer").then(
-      function(data) {
-        var view = new DataView(data.data);
-        var ret = null;
-        if(view.getUint8(0) === 66 && view.getUint8(1) === 77 && view.getUint8(2) === 70) {
-          ret = H3DU.TextFont._loadBinaryFontInner(data);
-        } else {
-          view = new DataView(data.data);
-          ret = H3DU.TextFont._loadTextFontInner({
-            "url":data.url,
-            "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
-          });
-        }
-        return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
+    // NOTE: Must be ArrayBuffer
+    var view = new DataView(dd.data);
+    var ret = null;
+    if(view.getUint8(0) === 66 && view.getUint8(1) === 77 && view.getUint8(2) === 70) {
+      ret = H3DU.TextFont._loadBinaryFontInner(dd);
+    } else {
+      view = new DataView(dd.data);
+      ret = H3DU.TextFont._loadTextFontInner({
+        "url":data.url,
+        "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
       });
-  } else if(/\.json$/i.exec(fontFileName)) {
-    return H3DU.loadFileFromUrl(fontFileName, "json").then(
-      function(data) {
-        var ret = H3DU.TextFont._loadJsonFontInner(data);
-        return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
-      });
+    }
+    return ret;
   } else {
-    return H3DU.loadFileFromUrl(fontFileName).then(
-      function(data) {
-        var ret = H3DU.TextFont._loadTextFontInner(data);
-        return ret ? Promise.resolve(ret) : Promise.reject({"url":data.url});
+    // NOTE: Must be ArrayBuffer
+    view = new DataView(dd.data);
+    var text = H3DU.TextFont._decodeUtf8(view, 0, view.byteLength);
+    if(/\.json$/i.exec(fontFileName)) {
+      return H3DU.TextFont._loadJsonFontInner({
+        "data":JSON.parse(text),
+        "url":dd.url
       });
+    } else {
+      return H3DU.TextFont._loadTextFontInner({
+        "data":text,
+        "url":dd.url
+      });
+    }
   }
 };
 
@@ -1041,15 +1048,7 @@ H3DU.TextureAtlas.prototype._makeSprite = function(name, index, x, y, meshesForP
       chMesh = new H3DU.Mesh();
       meshesForPage[sprite.info.index] = chMesh;
     }
-    chMesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-      .texCoord2(sx, 1 - sy)
-      .vertex2(vx, vy)
-      .texCoord2(sx, 1 - sy2)
-      .vertex2(vx, vy2)
-      .texCoord2(sx2, 1 - sy)
-      .vertex2(vx2, vy)
-      .texCoord2(sx2, 1 - sy2)
-      .vertex2(vx2, vy2);
+    chMesh.addQuad(sx, 1 - sy, sx2, 1 - sy2, vx, vy, vx2, vy2);
   }
 };
 /** @ignore */
@@ -1293,25 +1292,25 @@ H3DU.TextureAtlas.loadWithTextures = function(atlasFileName, textureLoader) {
  * Loads a texture atlas definition from a file.
  * Note that this method only loads the texture atlas data and not the bitmaps
  * used by the texture atlas.
+ * @param {ArrayBuffer} data Data containing a texture atlas definition.
  * @param {string} atlasFileName The URL of the texture atlas to load.
- * @returns {Promise<H3DU.TextureAtlas>} A promise that is resolved
- * when the texture atlas data is loaded successfully (the result will be
- * an H3DU.TextureAtlas object), and is rejected when an error occurs.
+ * @returns {H3DU.TextureAtlas|null} A texture atlas if the texture atlas data is loaded successfully, and null if an error occurs.
  */
-H3DU.TextureAtlas.load = function(atlasFileName) {
-  return H3DU.loadFileFromUrl(atlasFileName, "arraybuffer").then(
-    function(data) {
-      var view = new DataView(data.data);
-      var ret = H3DU.TextureAtlas._loadText({
-        "url":data.url,
-        "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
-      });
-      if(!ret)return Promise.reject({"url":data.url});
-      for(var i = 0; i < ret.textures.length; i++) {
-        var p = ret.textures[i];
-        ret.textures[i] = H3DU.TextFont._resolvePath(data.url, p);
-      }
-      ret.fileUrl = data.url;
-      return Promise.resolve(ret);
-    });
+H3DU.TextureAtlas.load = function(data, atlasFileName) {
+  var dd = {
+    "data":data,
+    "url":atlasFileName
+  };
+  var view = new DataView(dd.data);
+  var ret = H3DU.TextureAtlas._loadText({
+    "url":data.url,
+    "data":H3DU.TextFont._decodeUtf8(view, 0, view.byteLength)
+  });
+  if(!ret)return null;
+  for(var i = 0; i < ret.textures.length; i++) {
+    var p = ret.textures[i];
+    ret.textures[i] = H3DU.TextFont._resolvePath(dd.url, p);
+  }
+  ret.fileUrl = dd.url;
+  return ret;
 };

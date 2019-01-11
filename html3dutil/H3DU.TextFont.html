@@ -41,7 +41,7 @@ other, and the mention of this link is not an endorsement or sponsorship
 of any particular tool.)</p>
 
 <p>NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextFont.html#H3DU.TextFont.load">H3DU.TextFont.load</a> method to get an H3DU.TextFont object. This
+Use the H3DU.TextFont.load method to get an H3DU.TextFont object. This
 constructor&#39;s parameters are undocumented and are subject to change.</p>
 
 <p>This class is considered a supplementary class to the
@@ -58,7 +58,7 @@ the HTML 3D Library. Example:</p>
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#H3DU.TextFont.load">load</a><br>Loads a bitmap font definition from a file.</li>
+<li><a href="#H3DU.TextFont.loadData">loadData</a><br>Loads a bitmap font definition from a file.</li>
 <li><a href="#H3DU.TextFont_loadTextures">loadTextures</a><br>Loads the texture files used by this font object.</li>
 <li><a href="#H3DU.TextFont.loadWithTextures">loadWithTextures</a><br>Loads a bitmap font definition from a file along with the textures
 used by that font.</li>
@@ -70,9 +70,9 @@ drawn using this font.</li>
 draw text in the given position, size, and color.</li>
 </ul>
 
-<p><a name='H3DU.TextFont.load'></a></p>
+<p><a name='H3DU.TextFont.loadData'></a></p>
 
-<h3>(static) H3DU.TextFont.load(fontFileName)</h3>
+<h3>(static) H3DU.TextFont.loadData(data, fontFileName)</h3>
 
 <p>Loads a bitmap font definition from a file.
 Note that this method only loads the font data and not the bitmaps
@@ -81,14 +81,13 @@ used to represent the font.</p>
 <h4>Parameters</h4>
 
 <ul>
+<li><code>data</code> (Type: ArrayBuffer)<br>The data containing a bitmap font definition.</li>
 <li><code>fontFileName</code> (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>A promise that is resolved
-when the font data is loaded successfully (the result will be
-an H3DU.TextFont object), and is rejected when an error occurs. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.TextFont.html">H3DU.TextFont</a>&gt;)</p>
+<p>Text font data, or null if an error occurs. (Type: TextFont | null)</p>
 
 <p><a name='H3DU.TextFont_loadTextures'></a></p>
 
@@ -232,7 +231,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
 <li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
 <li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.ObjData.html">H3DU.ObjData</a></li>
 <li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
 <li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
 <li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
