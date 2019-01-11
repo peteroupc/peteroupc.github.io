@@ -7,7 +7,7 @@
  http://peteroupc.github.io/
 */
 
-import {MathUtil, MeshBuffer, Meshes} from "../h3du_module.js";
+import {MathUtil, Meshes} from "../h3du_module.js";
 
 // Generate a composite mesh representing an arrow
 export var createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {

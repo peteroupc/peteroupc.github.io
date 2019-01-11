@@ -26,7 +26,6 @@ resolves or is rejected after the given list of promises finishes
 its work.</li>
 <li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
 <li><a href="#H3DU.loadFileFromUrl">loadFileFromUrl</a><br>Loads a file from a URL asynchronously, using XMLHttpRequest.</li>
-<li><a href="#H3DU.loadStlFromUrl">loadStlFromUrl</a><br>Loads a .STL file asynchronously.</li>
 <li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
 the last known time, where a frame&#39;s length is 1/60 of a second.</li>
 <li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
@@ -150,35 +149,6 @@ the parameter&#39;s &quot;data&quot; property will be:<ul>
 <li>For response type &quot;json&quot;, the JavaScript object decoded
 from JSON.
 <li>For any other type, a string of the file&#39;s text.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.loadStlFromUrl'></a></p>
-
-<h3>(static) H3DU.loadStlFromUrl(url)</h3>
-
-<p>Loads a .STL file asynchronously.</p>
-
-<p>This method is considered a supplementary method to the
-Public Domain HTML 3D Library and is not considered part of that
-library.</p>
-
-<p>To use this method, you must include the script &quot;extras/stl.js&quot;; the
-class is not included in the &quot;h3du_min.js&quot; file which makes up
-the HTML 3D Library. Example:</p>
-
-<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/stl.js&quot;&gt;&lt;/script&gt;
-</pre>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>url</code> (Type: string)<br>The URL to load.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that resolves when the
-.STL file is loaded successfully (the result will be an <a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a> object),
-and is rejected when an error occurs when loading the .STL file. (Type: <a href="Promise.html">Promise</a>.&lt;<a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>&gt;)</p>
 
 <p><a name='H3DU.newFrames'></a></p>
 

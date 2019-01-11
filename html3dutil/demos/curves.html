@@ -32,45 +32,6 @@ canvas { width:100%; height:100%; overflow: hidden; }
 */
 
 var allsettings = {};
-function TorusKnot(period, revolutions, outerRadius, innerRadius) {
-  "use strict";
-  this.period = period;
-  this.revolutions = revolutions;
-  this.outerRadius = typeof outerRadius === "undefined" || outerRadius === null ? 1 : outerRadius;
-  this.innerRadius = typeof innerRadius === "undefined" || innerRadius === null ? 0.25 : innerRadius;
-  this.evaluate = function(u) {
-    var pu = this.period * u;
-    var qu = this.revolutions * u;
-    var tmp = this.innerRadius * Math.cos(pu) + this.outerRadius;
-    return [
-      tmp * Math.cos(qu),
-      tmp * Math.sin(qu),
-      this.innerRadius * Math.sin(pu)
-    ];
-  };
-  this.endPoints = function() {
-    return [0, H3DU.MathUtil.PiTimes2*];
-  };
-}
-
-TorusKnot.getFlatCurve = function(period, outerRadius, innerRadius) {
-  "use strict";
- // NOTE: This function demonstrates how curve evaluators
- // can be chained
-  var knot = new TorusKnot(period, 1, outerRadius, innerRadius);
-  return {
-    "evaluate":function(u) {
-      var ret = knot.evaluate(u);
-   // set Z to 0; Z only regulates the winding of the torus knot,
-   // not its shape
-      ret[2] = 0;
-      return ret;
-    },
-    "endPoints":function() {
-      return [0, H3DU.MathUtil.PiTimes2];
-    }
-  };
-};
 function makeThinCurveMesh(curve) {
   "use strict";
   var surface = new H3DU.CurveTube(curve, 0.025);

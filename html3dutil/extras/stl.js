@@ -6,57 +6,50 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, Promise */
-(function(H3DU) {
-  if(typeof H3DU === "undefined" || H3DU === null) {
-    H3DU = {};
+
+import {MeshBuffer} from "../h3du_module.js";
+
+/**
+ * Primitive mode for rendering a triangle fan. The first 3
+ * vertices make up the first triangle, and each additional
+ * triangle is made up of the first vertex of the first triangle,
+ * the previous vertex, and 1 new vertex.
+ * @constructor
+ * @ignore
+ */
+var TriangleFan = function(indices) {
+  this.indices = indices;
+  this.start = -1;
+  this.last = -1;
+  this.reset=function() {
+   this.start=-1;
+   this.last=-1;
   }
-  H3DU._StlData = {};
-  /**
-   * Loads a .STL file asynchronously.
-   * <p>This method is considered a supplementary method to the
-   * Public Domain HTML 3D Library and is not considered part of that
-   * library. <p>
-   * To use this method, you must include the script "extras/stl.js"; the
-   * class is not included in the "h3du_min.js" file which makes up
-   * the HTML 3D Library. Example:<pre>
-   * &lt;script type="text/javascript" src="extras/stl.js">&lt;/script></pre>
-   * @memberof H3DU
-   * @param {string} url The URL to load.
-   * @returns {Promise<H3DU.MeshBuffer>} A promise that resolves when the
-   * .STL file is loaded successfully (the result will be an {@link H3DU.MeshBuffer} object),
-   * and is rejected when an error occurs when loading the .STL file.
-   */
-  H3DU.loadStlFromUrl = function(url) {
-    return H3DU.loadFileFromUrl(url).then(
-      function(e) {
-        var obj;
-        obj = H3DU._StlData._loadStl(e.data);
-        if(obj.error)return Promise.reject({
-          "url":e.url,
-          "error":obj.error
-        });
-        obj = obj.success;
-        obj.url = e.url;
-        // otherwise just return the object
-        return Promise.resolve(obj);
-      },
-      function(e) {
-        return Promise.reject(e);
-      });
+  this.addIndex = function(index) {
+    if(this.start < 0) {
+      this.start = index;
+    } else if(this.last < 0) {
+      this.last = index;
+    } else {
+      this.indices.push(this.start);
+      this.indices.push(this.last);
+      this.indices.push(index);
+      this.last = index;
+    }
   };
+};
   /** @ignore */
-  H3DU._StlData.INITIAL = 0;
+const INITIAL = 0;
   /** @ignore */
-  H3DU._StlData.IN_SOLID = 1;
+const IN_SOLID = 1;
   /** @ignore */
-  H3DU._StlData.IN_FACET = 2;
+const IN_FACET = 2;
   /** @ignore */
-  H3DU._StlData.IN_OUTER_LOOP = 3;
+const IN_OUTER_LOOP = 3;
   /** @ignore */
-  H3DU._StlData.AFTER_SOLID = 3;
+const AFTER_SOLID = 3;
   /** @ignore */
-  H3DU._StlData._loadStl = function(str) {
+export var fromStlString = function(str) {
     var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
     var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
    "\\s+" + number + "\\s*");
@@ -70,52 +63,60 @@
     var lines = str.split(/\r?\n/);
     var mesh = new H3DU.Mesh();
 
-    var state = H3DU._StlData.INITIAL;
-
+    var state = INITIAL;
+var normal=[0,0,0]
+var vertices=[]
+var indices=[]
+var tfan=new TriangleFan(indices)
     for(var i = 0; i < lines.length; i++) {
       var line = lines[i];
       // skip empty lines
       if(line.length === 0 || (/^\s*$/).test(line))continue;
       var e = solid.exec(line);
-      if(e && (state === H3DU._StlData.INITIAL || state === H3DU._StlData.AFTER_SOLID)) {
+      if(e && (state === INITIAL || state === AFTER_SOLID)) {
         // 'e[1]' holds the name of the solid
-        state = H3DU._StlData.IN_SOLID;
+        state = IN_SOLID;
         continue;
       }
       e = facet.exec(line);
-      if(e && state === H3DU._StlData.IN_SOLID) {
-        mesh.mode(H3DU.Mesh.TRIANGLE_FAN);
-        mesh.normal3(parseFloat(e[1]), parseFloat(e[2]), parseFloat(e[3]));
-        state = H3DU._StlData.IN_FACET;
+      if(e && state === IN_SOLID) {
+        tfan.reset(); // Reset triangle fan state
+        normal[0]=parseFloat(e[1]);
+        normal[1]=parseFloat(e[2]);
+        normal[2]=parseFloat(e[3]);
+        state = IN_FACET;
         continue;
       }
       e = outerloop.exec(line);
-      if(e && state === H3DU._StlData.IN_FACET) {
-        state = H3DU._StlData.IN_OUTER_LOOP;
+      if(e && state === IN_FACET) {
+        state = IN_OUTER_LOOP;
         continue;
       }
       e = vertex.exec(line);
-      if(e && state === H3DU._StlData.IN_OUTER_LOOP) {
-        mesh.vertex3(parseFloat(e[1]), parseFloat(e[2]), parseFloat(e[3]));
+      if(e && state === IN_OUTER_LOOP) {
+        var index=vertices.length/6
+        // Add position X,Y,Z, then normal X,Y,Z
+        vertices.push(parseFloat(e[1]), parseFloat(e[2]), parseFloat(e[3]),
+          normal[0],normal[1],normal[2]);
+        tfan.addIndex(index)
         continue;
       }
       e = endloop.exec(line);
-      if(e && state === H3DU._StlData.IN_OUTER_LOOP) {
-        state = H3DU._StlData.IN_FACET;
+      if(e && state === IN_OUTER_LOOP) {
+        state = IN_FACET;
         continue;
       }
       e = endfacet.exec(line);
-      if(e && state === H3DU._StlData.IN_FACET) {
-        state = H3DU._StlData.IN_SOLID;
+      if(e && state === IN_FACET) {
+        state = IN_SOLID;
         continue;
       }
       e = endsolid.exec(line);
-      if(e && state === H3DU._StlData.IN_SOLID) {
-        state = H3DU._StlData.AFTER_SOLID;
+      if(e && state === IN_SOLID) {
+        state = AFTER_SOLID;
         continue;
       }
-      return {"error": new Error("unsupported line: " + line)};
+      return {console.error("unsupported line: " + line)};
     }
-    return {"success": mesh.toMeshBuffer()};
-  };
-}(H3DU));
+    return MeshBuffer.fromPositionsNormals(vertices,indices)
+};

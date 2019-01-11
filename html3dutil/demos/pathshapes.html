@@ -64,7 +64,7 @@ path = path.merge(path2);
 function pathClosedFigure(path, zBottom, zTop, flatness) {
   "use strict";
   var mesh = new H3DU.MeshBuffer();
-  mesh.merge(extrudePath(path, zBottom, zTop, flatness));
+  mesh.merge(path.toExtrudedMeshBuffer(zBottom, zTop, flatness));
   mesh.merge(path.toMeshBuffer(zTop, flatness));
   mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
   return mesh;
