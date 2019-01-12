@@ -704,3 +704,123 @@ export var createConvexHull = function(points, flat, inside) {
       .setAttribute("POSITION", mvi[0], 3)
       .setIndices(mvi[1]).recalcNormals(flat, inside);
 };
+function getIntersectingPoint(p1, p2, p3) {
+  var n1 = p1.slice(0, 3);
+  var n2 = p2.slice(0, 3);
+  var n3 = p3.slice(0, 3);
+  var d = MathUtil.vec3dot(n1, MathUtil.vec3cross(n2, n3));
+  if(Math.abs(d) >= 1e-9) {
+    var n12 = MathUtil.vec3cross(n1, n2);
+    var n23 = MathUtil.vec3cross(n2, n3);
+    var n31 = MathUtil.vec3cross(n3, n1);
+    var p = MathUtil.vec3scale(n23, -p1[3]);
+    MathUtil.vec3addInPlace(p, MathUtil.vec3scale(n31, -p2[3]));
+    MathUtil.vec3addInPlace(p, MathUtil.vec3scale(n12, -p3[3]));
+    MathUtil.vec3scaleInPlace(p, 1.0 / d);
+    return p;
+  }
+  return null;
+}
+
+var getSignedDistanceToPlane = function(v, p) {
+  // NOTE: Fast, not robust
+  return p[3] + MathUtil.vec3dot([p[0], p[1], p[2]], v);
+};
+
+function getIntersectingPoints(planes) {
+  var ret = [];
+
+  if(planes.length >= 3) {
+    for(var i = 0; i < planes.length - 2; i++) {
+      for(var j = i + 1; j < planes.length - 1; j++) {
+        for(var k = j + 1; k < planes.length; k++) {
+          var p = getIntersectingPoint(planes[i], planes[j], planes[k]);
+          if(typeof p !== "undefined" && p !== null) {
+            ret.push(p);
+          }
+        }
+      }
+    }
+  }
+  if(ret.length > 0) {
+    for(i = 0; i < ret.length; i++) {
+      var ri = ret[i];
+      var culled = false;
+      // Check whether the point is outside
+      // any of the halfspaces; if so, cull it
+      for(j = 0; !culled && j < planes.length; j++) {
+        var d = getSignedDistanceToPlane(ri, planes[j]);
+        if(d > 1e-6) {
+          ret[i] = null;
+          culled = true;
+        }
+      }
+      // Check for duplicates (this is done second
+      // since it's much more likely in practice that the point
+      // will be culled by a halfspace than that there will
+      // be duplicates)
+      for(j = i + 1; !culled && j < ret.length; j++) {
+        var rj = ret[j];
+        if(rj !== null && rj[0] === ri[0] && rj[1] === ri[1] && rj[2] === ri[2]) {
+          ret[i] = null;
+          culled = true;
+        }
+      }
+    }
+    // Regenerate point array
+    var newret = [];
+    for(i = 0; i < ret.length; i++) {
+      if(typeof ret[i] !== "undefined" && ret[i] !== null) {
+        newret.push(ret[i]);
+      }
+    }
+    ret = newret;
+  }
+  return ret;
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} avgsize
+ * @param {*} maxfaces
+ * @returns {*} Return value.
+ */
+export var randomConvexPolyhedron = function(avgsize, maxfaces) {
+  var planes = [];
+  for(var i = 0; i < maxfaces; i++) {
+    var n = MathUtil.vec3normalize([Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1]);
+    var ns = MathUtil.vec3scale(n, avgsize);
+    planes.push(MathUtil.planeFromNormalAndPoint(n, ns));
+  }
+  var ints = getIntersectingPoints(planes);
+  return createConvexHull(ints, true);
+};
+
+function getPlaneEquations(planepoints) {
+  var ret = [];
+  for(var i = 0; i < planepoints.length; i++) {
+    var pp = planepoints[i];
+    var p31 = MathUtil.vec3sub(pp[2], pp[0]);
+    var p21 = MathUtil.vec3sub(pp[1], pp[0]);
+    var plane = MathUtil.vec3normalize(
+     MathUtil.vec3cross(p31, p21));
+    plane[3] = -MathUtil.vec3dot(pp[0], plane);
+    ret.push(plane);
+  }
+  return ret;
+}
+
+/**
+ * Generates a convex hull of the half-space representation
+ * of several planes. Each plane is defined by the triangle it lies on.
+ * @param {Array<Array<number>>} planepoints An array of
+ * planes. Each plane is defined by three points that form a triangle
+ * that lies on the plane. The triangle's normal vector will point outward,
+ * meaning all points on the side pointed to by the normal vector
+ * will be "outside" the plane, and other points will be "inside" the plane.
+ * @returns {MeshBuffer} The generated convex hull.
+ */
+export var planePointsToConvexHull = function(planepoints) {
+  var planes = getPlaneEquations(planepoints);
+  var ints = getIntersectingPoints(planes);
+  return createConvexHull(ints);
+};

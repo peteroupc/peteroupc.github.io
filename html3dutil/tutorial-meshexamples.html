@@ -75,13 +75,21 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 
 <h2>Miscellaneous</h2>
 
-<pre>function setBoxSizeAndBounds(shape,box){
- shape.setPosition(H3DU.MathUtil.boxCenter(box))
- shape.setScale(H3DU.MathUtil.boxDimensions(box))
- return shape
+<p>function pathClosedFigure(path, zBottom, zTop, flatness) {
+  &quot;use strict&quot;;
+  var mesh = new H3DU.MeshBuffer();
+  mesh.merge(path.toExtrudedMeshBuffer(zBottom, zTop, flatness));
+  mesh.merge(path.toMeshBuffer(zTop, flatness));
+  mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
+  return mesh;
 }
+    function setBoxSizeAndBounds(shape,box){
+     shape.setPosition(H3DU.MathUtil.boxCenter(box))
+     shape.setScale(H3DU.MathUtil.boxDimensions(box))
+     return shape
+    }</p>
 
-function wireBox(box, color){
+<pre>function wireBox(box, color){
   if(!color)color=&quot;gray&quot;;
  var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
  var shape=new H3DU.Shape(boxMesh).setMaterial(
