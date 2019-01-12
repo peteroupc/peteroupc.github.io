@@ -145,7 +145,7 @@ initial time or last known time wasn&#39;t set, returns 0. (Type: number)</p>
 
 <p><a name='H3DU.toGLColor'></a></p>
 
-<h3>(static) H3DU.toGLColor(r, g, b, [a])</h3>
+<h3>(static) H3DU.toGLColor(r, [g], [b], [a])</h3>
 
 <p>Creates a 4-element array representing a color. Each element
 can range from 0 to 1 and specifies the red, green, blue or alpha
@@ -191,8 +191,8 @@ and so on, including the newly added <code>rebeccapurple</code>.
 
 <ul>
 <li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
-<li><code>g</code> (Type: number)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>g</code> (Type: number) (optional)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
+<li><code>b</code> (Type: number) (optional)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
 <li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</li>
 </ul>
 
