@@ -12,17 +12,17 @@ import {MathUtil, Meshes} from "../h3du_module.js";
 // Generate a composite mesh representing an arrow
 export var createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
   var slices = 32;
- // generate the four parts of the arrow
+  // generate the four parts of the arrow
   var shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
-   shaftLength, slices);
+    shaftLength, slices);
   var pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
   var base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
   var pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
- // move the pointer base to the top of the shaft
+  // move the pointer base to the top of the shaft
   pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
- // move the pointer to the top of the shaft
+  // move the pointer to the top of the shaft
   pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
- // merge the four parts of the arrow
+  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };
 /**
@@ -37,9 +37,9 @@ export var createArrow = function(shaftLength, pointerLength, shaftRadius, point
  */
 export var createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
   var slices = 32;
- // generate the four parts of the arrow
+  // generate the four parts of the arrow
   var shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
-   shaftLength, slices);
+    shaftLength, slices);
   var pointer = Meshes.createCylinder(pointerRadius, 0, pointerLength, slices);
   var base = Meshes.createDisk(0, shaftRadius, slices, 1, true);
   var pointerBase = Meshes.createDisk(shaftRadius, pointerRadius, slices, 1, true);
@@ -47,10 +47,10 @@ export var createMultiColoredArrow = function(shaftLength, pointerLength, shaftR
   pointer.setColor(pointerColor);
   base.setColor(shaftColor);
   pointerBase.setColor(pointerColor);
- // move the pointer base to the top of the shaft
+  // move the pointer base to the top of the shaft
   pointerBase.transform(MathUtil.mat4translated(0, 0, shaftLength));
- // move the pointer to the top of the shaft
+  // move the pointer to the top of the shaft
   pointer.transform(MathUtil.mat4translated(0, 0, shaftLength));
- // merge the four parts of the arrow
+  // merge the four parts of the arrow
   return shaft.merge(base).merge(pointer).merge(pointerBase);
 };

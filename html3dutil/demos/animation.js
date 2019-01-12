@@ -190,13 +190,13 @@ H3DU.MathUtil.planeIntersection = function(p1, p2, p3) {
 H3DU.MathUtil.frustumNearPlane = function(frustum) {
   "use strict";
   var topLeft = H3DU.MathUtil.planeIntersection(
-  frustum[4], frustum[0], frustum[2]);
+    frustum[4], frustum[0], frustum[2]);
   var bottomLeft = H3DU.MathUtil.planeIntersection(
-  frustum[4], frustum[0], frustum[3]);
+    frustum[4], frustum[0], frustum[3]);
   var topRight = H3DU.MathUtil.planeIntersection(
-  frustum[4], frustum[1], frustum[2]);
+    frustum[4], frustum[1], frustum[2]);
   var bottomRight = H3DU.MathUtil.planeIntersection(
-  frustum[4], frustum[1], frustum[3]);
+    frustum[4], frustum[1], frustum[3]);
   return [topLeft, bottomLeft, topRight, bottomRight];
 };
 /**
@@ -215,13 +215,13 @@ H3DU.MathUtil.frustumNearPlane = function(frustum) {
 H3DU.MathUtil.frustumFarPlane = function(frustum) {
   "use strict";
   var topLeft = H3DU.MathUtil.planeIntersection(
-  frustum[5], frustum[0], frustum[2]);
+    frustum[5], frustum[0], frustum[2]);
   var bottomLeft = H3DU.MathUtil.planeIntersection(
-  frustum[5], frustum[0], frustum[3]);
+    frustum[5], frustum[0], frustum[3]);
   var topRight = H3DU.MathUtil.planeIntersection(
-  frustum[5], frustum[1], frustum[2]);
+    frustum[5], frustum[1], frustum[2]);
   var bottomRight = H3DU.MathUtil.planeIntersection(
-  frustum[5], frustum[1], frustum[3]);
+    frustum[5], frustum[1], frustum[3]);
   return [topLeft, bottomLeft, topRight, bottomRight];
 };
 

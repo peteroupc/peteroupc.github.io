@@ -41,9 +41,9 @@ function QuadStrips() {
     this.primitiveIndex++;
     if(this.primitiveIndex >= 4) {
       this.indices.push(this.primitiveData[0],
-    this.primitiveData[1], this.primitiveData[2]);
+        this.primitiveData[1], this.primitiveData[2]);
       this.indices.push(this.primitiveData[2],
-    this.primitiveData[1], this.primitiveData[3]);
+        this.primitiveData[1], this.primitiveData[3]);
       this.primitiveData[0] = this.primitiveData[2];
       this.primitiveData[1] = this.primitiveData[3];
       this.primitiveIndex -= 2;
@@ -51,7 +51,7 @@ function QuadStrips() {
   };
   this.toMeshBuffer = function() {
     return MeshBuffer.fromPositionsNormals(
-   this.vertices, this.indices);
+      this.vertices, this.indices);
   };
 }
 /**
@@ -75,7 +75,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
   da = 2.0 * Math.PI / teeth / 4.0;
   var mesh = new QuadStrips();
   mesh.normal3( 0.0, 0.0, 1.0 );
-/* draw front face */
+  /* draw front face */
   mesh.newStrip();
   var angleStep = MathUtil.PiTimes2 / teeth;
   var cosStep = Math.cos(angleStep);
@@ -95,7 +95,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
 
   }
 
-/* draw front sides of teeth */
+  /* draw front sides of teeth */
   da = 2.0 * Math.PI / teeth / 4.0;
   angleStep = MathUtil.PiTimes2 / teeth;
   cosStep = Math.cos(angleStep);
@@ -116,7 +116,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
   }
 
   mesh.normal3( 0.0, 0.0, -1.0 );
-/* draw back face */
+  /* draw back face */
   mesh.newStrip();
   for (i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
@@ -128,7 +128,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, -thickness * 0.5 );
   }
 
-/* draw back sides of teeth */
+  /* draw back sides of teeth */
   da = 2.0 * Math.PI / teeth / 4.0;
   for (i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
@@ -140,7 +140,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
       r1 * cosAngle, r1 * sinAngle, -thickness * 0.5] );
   }
 
-/* draw outward faces of teeth */
+  /* draw outward faces of teeth */
   mesh.newStrip();
   for (i = 0; i < teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;
@@ -169,7 +169,7 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
   mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), thickness * 0.5 );
   mesh.vertex3( r1 * Math.cos(0), r1 * Math.sin(0), -thickness * 0.5 );
 
-/* draw inside radius cylinder */
+  /* draw inside radius cylinder */
   mesh.newStrip();
   for (i = 0; i <= teeth; i++) {
     angle = i * 2.0 * Math.PI / teeth;

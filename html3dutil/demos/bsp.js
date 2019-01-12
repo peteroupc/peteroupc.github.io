@@ -38,16 +38,16 @@ BspTree._MiniBuilder = function() {
       var v = poly.vertices[i];
       // Push vertex positions, then vertex normals
       this.vertices.push(v[0], v[1], v[2],
-            poly.plane[0], poly.plane[1], poly.plane[2]);
+        poly.plane[0], poly.plane[1], poly.plane[2]);
     }
     for(i = 0; i < poly.vertices.length - 2; i++) {
       this.indices.push(index,
-         index + i + 1, index + i + 2);
+        index + i + 1, index + i + 2);
     }
   };
   this.toMeshBuffer = function() {
     return MeshBuffer.fromPositionsNormals(
-       this.vertices, this.indices);
+      this.vertices, this.indices);
   };
 };
 

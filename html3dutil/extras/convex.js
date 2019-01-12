@@ -26,7 +26,7 @@ function QuickHull() {
   this.disabledFacePointVectors = [];
   this.indexVectorPool = [];
 }
-  /** @ignore */
+/** @ignore */
 QuickHull._HalfEdge = function(a, b, c, d) {
   this.endVertex = a;
   this.opp = b;
@@ -39,12 +39,12 @@ QuickHull._HalfEdge = function(a, b, c, d) {
     return this.endVertex === Number.POSITIVE_INFINITY;
   };
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._FaceData = function(fi, he) {
   this.faceIndex = fi;
   this.enteredFromHalfEdge = he; // If the face turns out not to be visible, this half edge will be marked as horizon edge
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._MeshFace = function(he) {
   this.he = he;
   this.P = [0, 0, 0, 0];
@@ -61,7 +61,7 @@ QuickHull._MeshFace = function(he) {
     return this.he === Number.POSITIVE_INFINITY;
   };
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._HalfEdgeMesh = function(builderObject, vertexData ) {
   this.vertices = [];
   this.faces = [];
@@ -114,7 +114,7 @@ QuickHull._HalfEdgeMesh = function(builderObject, vertexData ) {
     he.endVertex = vertexMapping[he.endVertex];
   }
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._MeshBuilder = function(a, b, c, d) {
   if(typeof a === "undefined" || a === null) {
     this.halfEdges = [];
@@ -236,7 +236,7 @@ QuickHull._MeshBuilder = function(a, b, c, d) {
     return [meshVertices, meshIndices];
   };
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.addPointToFace = function(f, pointIndex) {
   var D = QuickHull._getSignedDistanceToPlane(this.vertexData[ pointIndex ], f.P);
   var n = f.P.slice(0, 3);
@@ -251,7 +251,7 @@ QuickHull.prototype.addPointToFace = function(f, pointIndex) {
   }
   return false;
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.buildMesh = function(pointCloud, epsilon) {
   if (pointCloud.length === 0) {
     this.mesh = new QuickHull._MeshBuilder();
@@ -259,11 +259,11 @@ QuickHull.prototype.buildMesh = function(pointCloud, epsilon) {
   }
   this.vertexData = pointCloud;
 
-    // Very first: find extreme values and use them to compute the scale of the point cloud.
+  // Very first: find extreme values and use them to compute the scale of the point cloud.
   this.extremeValues = this.getExtremeValues();
   this.scale = this.getScale(this.extremeValues);
 
-    // Epsilon we use depends on the scale
+  // Epsilon we use depends on the scale
   this.epsilon = epsilon * this.scale;
   this.epsilonSquared = this.epsilon * this.epsilon;
   this.planar = false; // The planar case happens when all the points appear to lie on a two dimensional subspace of R^3.
@@ -280,20 +280,20 @@ QuickHull.prototype.buildMesh = function(pointCloud, epsilon) {
     this.planarPointCloudTemp.splice(0, this.planarPointCloudTemp.length);
   }
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.createConvexHalfEdgeMesh = function() {
-    // Temporary variables used during iteration
+  // Temporary variables used during iteration
   var visibleFaces = [];
   var horizonEdges = [];
 
   var possiblyVisibleFaces = [];
-    // Compute base tetrahedron
+  // Compute base tetrahedron
   this.mesh = this.getInitialTetrahedron();
   if(!(this.mesh.faces.length === 4)) {
     throw new Error();
   }
 
-    // Init face stack with those faces that have points assigned to them
+  // Init face stack with those faces that have points assigned to them
   var faceList = [];
   for (var i = 0; i < 4; i++) {
     var f = this.mesh.faces[i];
@@ -303,7 +303,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
     }
   }
 
-    // Process faces until the face list is empty.
+  // Process faces until the face list is empty.
   var iter = 0;
   while (faceList.length > 0) {
     iter++;
@@ -315,12 +315,12 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
       continue;
     }
 
-      // Pick the most distant point to this triangle plane as the point to which we extrude
+    // Pick the most distant point to this triangle plane as the point to which we extrude
     var activePoint = this.vertexData[tf.mostDistantPoint];
     var activePointIndex = tf.mostDistantPoint;
-      // Find out the faces that have our active point on their positive side (these are
-      // the "visible faces"). The face on top of the stack of course is one of them. At the same time,
-      // we create a list of horizon edges.
+    // Find out the faces that have our active point on their positive side (these are
+    // the "visible faces"). The face on top of the stack of course is one of them. At the same time,
+    // we create a list of horizon edges.
     horizonEdges.splice(0, horizonEdges.length);
     possiblyVisibleFaces.splice(0, possiblyVisibleFaces.length);
     visibleFaces.splice(0, visibleFaces.length);
@@ -348,7 +348,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
             var heIndex = heindices[heIndexIndex];
             if (this.mesh.halfEdges[heIndex].opp !== faceData.enteredFromHalfEdge) {
               possiblyVisibleFaces.push(new QuickHull._FaceData(this.mesh.halfEdges[
-                  this.mesh.halfEdges[heIndex].opp].face, heIndex));
+                this.mesh.halfEdges[heIndex].opp].face, heIndex));
             }
           }
           continue;
@@ -358,19 +358,19 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
         }
       }
 
-        // The face is not visible. Therefore, the halfedge we came from is part of the horizon edge.
+      // The face is not visible. Therefore, the halfedge we came from is part of the horizon edge.
       pvf.isVisibleFaceOnCurrentIteration = 0;
       horizonEdges.push(faceData.enteredFromHalfEdge);
-        // Store which half edge is the horizon edge. The other half edges of the face will not be part of the final mesh so their data slots can by recycled.
+      // Store which half edge is the horizon edge. The other half edges of the face will not be part of the final mesh so their data slots can by recycled.
       var halfEdges = this.mesh.getHalfEdgeIndicesOfFace(
-          this.mesh.faces[this.mesh.halfEdges[faceData.enteredFromHalfEdge].face]);
+        this.mesh.faces[this.mesh.halfEdges[faceData.enteredFromHalfEdge].face]);
       var ind = halfEdges[0] === faceData.enteredFromHalfEdge ? 0 :
-          halfEdges[1] === faceData.enteredFromHalfEdge ? 1 : 2;
+        halfEdges[1] === faceData.enteredFromHalfEdge ? 1 : 2;
       this.mesh.faces[this.mesh.halfEdges[faceData.enteredFromHalfEdge].face]
-          .horizonEdgesOnCurrentIteration |= 1 << ind;
+        .horizonEdgesOnCurrentIteration |= 1 << ind;
     }
     var horizonEdgeCount = horizonEdges.length;
-      // Order horizon edges so that they form a loop. This may fail due to numerical instability in which case we give up trying to solve horizon edge for this point and accept a minor degeneration in the convex hull.
+    // Order horizon edges so that they form a loop. This may fail due to numerical instability in which case we give up trying to solve horizon edge for this point and accept a minor degeneration in the convex hull.
     if (!this.reorderHorizonEdges(horizonEdges)) {
       console.log("Failed to solve horizon edge.");
       for(var acIndex = 0; acIndex < tf.pointsOnPositiveSide.length; acIndex++) {
@@ -382,9 +382,9 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
       }
       continue;
     }
-      // Except for the horizon edges, all half edges of the visible faces can be marked as disabled. Their data slots will be reused.
-      // The faces will be disabled as well, but we need to remember the points that were on the positive side of them - therefore
-      // we save pointers to them.
+    // Except for the horizon edges, all half edges of the visible faces can be marked as disabled. Their data slots will be reused.
+    // The faces will be disabled as well, but we need to remember the points that were on the positive side of them - therefore
+    // we save pointers to them.
     this.newFaceIndices.splice(0, this.newFaceIndices.length);
     this.newHalfEdgeIndices.splice(0, this.newHalfEdgeIndices.length);
     this.disabledFacePointVectors.splice(0, this.disabledFacePointVectors.length);
@@ -396,17 +396,17 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
       for (var j = 0; j < 3; j++) {
         if ((disabledFace.horizonEdgesOnCurrentIteration & 1 << j) === 0) {
           if (disableCounter < horizonEdgeCount * 2) {
-              // Use on this iteration
+            // Use on this iteration
             this.newHalfEdgeIndices.push(halfEdges[j]);
             disableCounter++;
           } else {
-              // Mark for reuse on later iteration step
+            // Mark for reuse on later iteration step
             this.mesh.disableHalfEdge(halfEdges[j]);
           }
         }
       }
-        // Disable the face, but retain pointer to the points that were on the positive side of it. We need to assign those points
-        // to the new faces we create shortly.
+      // Disable the face, but retain pointer to the points that were on the positive side of it. We need to assign those points
+      // to the new faces we create shortly.
       var t = this.mesh.disableFace(faceIndex);
       if (t.length > 0) {
         this.disabledFacePointVectors.push(t);
@@ -418,7 +418,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
         this.newHalfEdgeIndices.push(this.mesh.addHalfEdge());
       }
     }
-      // Create new faces using the edgeloop
+    // Create new faces using the edgeloop
     for (i = 0; i < horizonEdgeCount; i++) {
       var AB = horizonEdges[i];
       var horizonEdgeVertexIndices = this.mesh.getVertexIndicesOfHalfEdge(this.mesh.halfEdges[AB]);
@@ -452,7 +452,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
       this.mesh.halfEdges[CA].opp = this.newHalfEdgeIndices[i > 0 ? i * 2 - 1 : 2 * horizonEdgeCount - 1];
       this.mesh.halfEdges[BC].opp = this.newHalfEdgeIndices[(i + 1) * 2 % (horizonEdgeCount * 2)];
     }
-      // Assign points that were on the positive side of the disabled faces to the new faces.
+    // Assign points that were on the positive side of the disabled faces to the new faces.
     for(var disabledPointsIndex = 0; disabledPointsIndex < this.disabledFacePointVectors.length; disabledPointsIndex++) {
       var disabledPoints = this.disabledFacePointVectors[disabledPointsIndex];
       for(var pointIndex = 0; pointIndex < disabledPoints.length; pointIndex++) {
@@ -467,7 +467,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
         }
       }
     }
-      // Increase face stack size if needed
+    // Increase face stack size if needed
     for(var newFaceIndexIndex = 0; newFaceIndexIndex < this.newFaceIndices.length; newFaceIndexIndex++) {
       newFaceIndex = this.newFaceIndices[newFaceIndexIndex];
       newFace = this.mesh.faces[newFaceIndex];
@@ -480,7 +480,7 @@ QuickHull.prototype.createConvexHalfEdgeMesh = function() {
     }
   }
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.getExtremeValues = function() {
   var outIndices = [0, 0, 0, 0, 0, 0];
   var extremeVals = [this.vertexData[0][0],
@@ -504,7 +504,7 @@ QuickHull.prototype.getExtremeValues = function() {
   }
   return outIndices;
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.reorderHorizonEdges = function(horizonEdges) {
   var horizonEdgeCount = horizonEdges.length;
   for (var i = 0; i < horizonEdgeCount - 1; i++) {
@@ -528,7 +528,7 @@ QuickHull.prototype.reorderHorizonEdges = function(horizonEdges) {
   }
   return true;
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.getScale = function(extremeValues) {
   var s = 0;
   var a;
@@ -540,24 +540,24 @@ QuickHull.prototype.getScale = function(extremeValues) {
   }
   return s;
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._getTriangleNormal = function(a, b, c) {
   return MathUtil.vec3cross(MathUtil.vec3sub(a, c), MathUtil.vec3sub(b, c));
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._getSignedDistanceToPlane = function(v, p) {
-    // NOTE: Fast, not robust
+  // NOTE: Fast, not robust
   return p[3] + MathUtil.vec3dot([p[0], p[1], p[2]], v);
 };
-  /** @ignore */
+/** @ignore */
 QuickHull._isPointOnNonnegativeSide = function(n, p, q) {
   return QuickHull._getSignedDistanceToPlane(q,
-      MathUtil.planeFromNormalAndPoint(n, p)) >= 0;
+    MathUtil.planeFromNormalAndPoint(n, p)) >= 0;
 };
-  /** @ignore */
+/** @ignore */
 QuickHull.prototype.getInitialTetrahedron = function() {
   var vertexCount = this.vertexData.length;
-    // If we have at most 4 points, just return a degenerate tetrahedron
+  // If we have at most 4 points, just return a degenerate tetrahedron
   if (vertexCount <= 4) {
     var v = [0, Math.min(1, vertexCount - 1), Math.min(2, vertexCount - 1), Math.min(3, vertexCount - 1)];
     var N = QuickHull._getTriangleNormal(this.vertexData[v[0]], this.vertexData[v[1]], this.vertexData[v[2]]);
@@ -567,7 +567,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     return new QuickHull._MeshBuilder(v[0], v[1], v[2], v[3]);
   }
 
-    // Find two most distant extreme points
+  // Find two most distant extreme points
   var maxD = this.epsilonSquared;
   var selectedPoints = [0, 0];
   for (var i = 0; i < 6; i++) {
@@ -583,11 +583,11 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     }
   }
   if (maxD === this.epsilonSquared) {
-      // A degenerate case: the point cloud seems to consists of a single point
+    // A degenerate case: the point cloud seems to consists of a single point
     return new QuickHull._MeshBuilder(0, Math.min(1, vertexCount), Math.min(2, vertexCount), Math.min(3, vertexCount));
   }
   if(selectedPoints[0] === selectedPoints[1])throw new Error();
-    // Find the most distant point to the line between the two chosen extreme points.
+  // Find the most distant point to the line between the two chosen extreme points.
   var rayOrigin = this.vertexData[selectedPoints[0]];
   var rayDir = MathUtil.vec3sub(this.vertexData[selectedPoints[1]], this.vertexData[selectedPoints[0]]);
   maxD = this.epsilonSquared;
@@ -603,9 +603,9 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     }
   }
   if (maxD === this.epsilonSquared) {
-      // It appears that the point cloud belongs to a 1 dimensional subspace of R^3: convex hull
-      // has no volume => return a thin triangle
-      // Pick any point other than selectedPoints[0] and selectedPoints[1] as the third point of the triangle
+    // It appears that the point cloud belongs to a 1 dimensional subspace of R^3: convex hull
+    // has no volume => return a thin triangle
+    // Pick any point other than selectedPoints[0] and selectedPoints[1] as the third point of the triangle
     var thirdPoint = selectedPoints[0];
     for(var veIndex = 0; veIndex < this.vertexData.length; veIndex++) {
       var ve = this.vertexData[veIndex];
@@ -625,7 +625,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     return new QuickHull._MeshBuilder(selectedPoints[0], selectedPoints[1], thirdPoint, fourthPoint);
   }
 
-    // These three points form the base triangle for our tetrahedron.
+  // These three points form the base triangle for our tetrahedron.
   if(!(selectedPoints[0] !== maxI && selectedPoints[1] !== maxI)) {
     throw new Error();
   }
@@ -633,7 +633,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
   var baseTriangleVertices = [
     this.vertexData[baseTriangle[0]], this.vertexData[baseTriangle[1]], this.vertexData[baseTriangle[2]]];
 
-    // Next step is to find the 4th vertex of the tetrahedron. We naturally choose the point farthest away from the triangle plane.
+  // Next step is to find the 4th vertex of the tetrahedron. We naturally choose the point farthest away from the triangle plane.
   maxD = this.epsilon;
   maxI = 0;
   N = QuickHull._getTriangleNormal(baseTriangleVertices[0], baseTriangleVertices[1], baseTriangleVertices[2]);
@@ -646,7 +646,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     }
   }
   if (maxD === this.epsilon) {
-      // All the points seem to lie on a 2D subspace of R^3. How to handle this? Well, let's add one extra point to the point cloud so that the convex hull will have volume.
+    // All the points seem to lie on a 2D subspace of R^3. How to handle this? Well, let's add one extra point to the point cloud so that the convex hull will have volume.
     this.planar = true;
     N = QuickHull._getTriangleNormal(baseTriangleVertices[1], baseTriangleVertices[2], baseTriangleVertices[0]);
     this.planarPointCloudTemp = this.vertexData.slice(0, this.vertexData.length);
@@ -655,11 +655,11 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     maxI = this.planarPointCloudTemp.length - 1;
     this.vertexData = this.planarPointCloudTemp;
   }
-    // Enforce CCW orientation (if user prefers clockwise orientation, swap two vertices in each triangle when final mesh is created)
+  // Enforce CCW orientation (if user prefers clockwise orientation, swap two vertices in each triangle when final mesh is created)
   if (QuickHull._isPointOnNonnegativeSide(N, baseTriangleVertices[0], this.vertexData[maxI])) {
     tmp = baseTriangle[1]; baseTriangle[1] = baseTriangle[0]; baseTriangle[0] = tmp;
   }
-    // Create a tetrahedron half edge mesh and compute planes defined by each triangle
+  // Create a tetrahedron half edge mesh and compute planes defined by each triangle
   var mesh = new QuickHull._MeshBuilder(baseTriangle[0], baseTriangle[1], baseTriangle[2], maxI);
   for(var fIndex = 0; fIndex < mesh.faces.length; fIndex++) {
     var f = mesh.faces[fIndex];
@@ -671,7 +671,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
     f.P = MathUtil.planeFromNormalAndPoint(N, va);
   }
 
-    // Finally we assign a face for each vertex outside the tetrahedron (vertices inside the tetrahedron have no role anymore)
+  // Finally we assign a face for each vertex outside the tetrahedron (vertices inside the tetrahedron have no role anymore)
   for (i = 0; i < vCount; i++) {
     for(var faceIndex = 0; faceIndex < mesh.faces.length; faceIndex++) {
       var face = mesh.faces[faceIndex];
@@ -683,7 +683,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
   return mesh;
 };
 
-  /**
+/**
    * Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
    * that contains all the points given.
    * @param {Array<number>} points An array of 3-element vectors each identifying
@@ -701,8 +701,8 @@ export var createConvexHull = function(points, flat, inside) {
   bm.buildMesh(points, 1e-8);
   var mvi = bm.mesh.toMeshVerticesIndices(points);
   return new MeshBuffer()
-      .setAttribute("POSITION", mvi[0], 3)
-      .setIndices(mvi[1]).recalcNormals(flat, inside);
+    .setAttribute("POSITION", mvi[0], 3)
+    .setIndices(mvi[1]).recalcNormals(flat, inside);
 };
 function getIntersectingPoint(p1, p2, p3) {
   var n1 = p1.slice(0, 3);
@@ -802,7 +802,7 @@ function getPlaneEquations(planepoints) {
     var p31 = MathUtil.vec3sub(pp[2], pp[0]);
     var p21 = MathUtil.vec3sub(pp[1], pp[0]);
     var plane = MathUtil.vec3normalize(
-     MathUtil.vec3cross(p31, p21));
+      MathUtil.vec3cross(p31, p21));
     plane[3] = -MathUtil.vec3dot(pp[0], plane);
     ret.push(plane);
   }

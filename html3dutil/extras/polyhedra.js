@@ -12,7 +12,6 @@ import {MeshBuffer} from "../h3du_module.js";
  * Contains helper methods for generating the five platonic solids
  * and other polyhedra.<p>
  * @constructor
- * @memberof H3DU
  */
 export var Polyhedra = function() {
   // NOTE: empty because no instance properties

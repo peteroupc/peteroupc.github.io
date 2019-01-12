@@ -19,8 +19,8 @@ export function horizontalGradient(color1, color2) {
   var size = 32;
   for(var i = 0; i < size; i++) {
     arr.push(
-    MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(color1, color2, i / (size - 1)), 255)
-  );
+      MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(color1, color2, i / (size - 1)), 255)
+    );
   }
   var gradient = [];
   i = 0;
@@ -44,8 +44,8 @@ export function radialGradient(colorCenter, colorEdges) {
   var size = 32;
   for(var i = 0; i < 32; i++) {
     arr.push(
-    MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(colorCenter, colorEdges, i / 31), 255)
-  );
+      MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(colorCenter, colorEdges, i / 31), 255)
+    );
   }
   i = 0;
   var radius = (size - 1) * 0.5;

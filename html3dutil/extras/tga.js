@@ -10,7 +10,7 @@
 
 export var loadTga = function(data) {
   var view = new DataView(data);
-      // NOTE: id is byte 0; cmaptype is byte 1
+  // NOTE: id is byte 0; cmaptype is byte 1
   var imgtype = view.getUint8(2);
   if(imgtype !== 2 && imgtype !== 3) {
     throw new Error("unsupported image type");

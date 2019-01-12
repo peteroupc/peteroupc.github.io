@@ -1,4 +1,4 @@
-/* global H3DU, poly, s, ss */
+/* global H3DU, poly */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -16,7 +16,7 @@ function normalDist(lastNorm) {
     ret = lastNorm[0];
     lastNorm[0] = Number.NaN;
   } else {
-    var x, y, s, t;
+    var x, y, s, t, ss;
     do {
       x = Math.random();
     } while(x === 0);
@@ -24,7 +24,7 @@ function normalDist(lastNorm) {
     s = Math.sqrt(-2 * Math.log(x));
     t = Math.PI * 2 * y;
     var cc = Math.cos(t);
- // ss = t >= 0 && t < 6.283185307179586 ? t <= 3.141592653589793 ? Math.sqrt(1.0 - cc * cc) : -Math.sqrt(1.0 - cc * cc) : Math.sin(t);
+    ss = t >= 0 && t < 6.283185307179586 ? t <= 3.141592653589793 ? Math.sqrt(1.0 - cc * cc) : -Math.sqrt(1.0 - cc * cc) : Math.sin(t);
     lastNorm[0] = s * ss;
     ret = s * cc;
   }
@@ -66,13 +66,13 @@ GraphicsPath.prototype.randomPolygon = function(cx, cy, avgRadius, sides, irregu
       if(r < 0)r = avg2 / 100.0;
       if(r > avg2)r = avg2;
       var c = Math.cos(theta);
- // s = theta >= 0 && theta < 6.283185307179586 ? theta <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(theta);
+      var s = theta >= 0 && theta < 6.283185307179586 ? theta <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(theta);
       points.push([c * r + cx, s * r + cy]);
       theta += deltas[i] / k;
     }
     failed = false;
     if(points.length > 2) {
-  // Check for self-intersections
+      // Check for self-intersections
       var selfint = false;
       for(var j = 0; !selfint && j < points.length; j++) {
         var a1 = points[j];

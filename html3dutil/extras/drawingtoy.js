@@ -45,21 +45,21 @@ DrawingToy.prototype.setColor = function(color) {
 /** @ignore
  * @private */
 DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
-      phase, maxloops) {
+  phase, maxloops) {
   if(typeof phase === "undefined" || phase === null)phase = 0;
   var radius = ringTeeth / 5;
   var rollerRadius = radius * wheelTeeth / ringTeeth;
   var firstHole = (rollerRadius - 2.3) / rollerRadius;
   var holeDist = 0.392 / rollerRadius;
   var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
-    // console.log([firstHole,holeDist,relDistFromWheelCenter])
+  // console.log([firstHole,holeDist,relDistFromWheelCenter])
   phase = phase * 360 / ringTeeth;
   phase -= 90;
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * rollerRadius;
-    // console.log([rollerRadius,distFromCenter])
+  // console.log([rollerRadius,distFromCenter])
   var curve = new Epitrochoid(
-      radius, rollerRadius, distFromCenter, phase);
+    radius, rollerRadius, distFromCenter, phase);
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
   var wt = wheelTeeth / factor;
@@ -73,7 +73,7 @@ DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
 /** @ignore
  * @private */
 DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
-      phase, offset, maxloops) {
+  phase, offset, maxloops) {
   if(typeof phase === "undefined" || phase === null)phase = 0;
   var radius = ringTeeth / 5;
   var innerRadius = radius * wheelTeeth / ringTeeth;
@@ -82,13 +82,13 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
   var toothDist = radius * MathUtil.PiTimes2 / ringTeeth;
   toothDist *= 0.8; // magic number here
-    // console.log(toothDist)
-    // console.log([firstHole,holeDist,relDistFromWheelCenter])
+  // console.log(toothDist)
+  // console.log([firstHole,holeDist,relDistFromWheelCenter])
   phase = phase * 360 / ringTeeth;
   phase -= 90;
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * innerRadius;
-    // console.log([innerRadius,distFromCenter])
+  // console.log([innerRadius,distFromCenter])
   var curve = new Hypotrochoid(radius, innerRadius, distFromCenter, phase);
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
@@ -120,8 +120,8 @@ DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset)
   this.ce.constantAttribute(this.color, "COLOR");
   var curve = this._drawingToyHypo(ringTeeth, wheelTeeth, hole, phase, offset);
   this.ce.position(curve).evalCurve(
-      MeshBuffer.LINES,
-      Math.max(400, Math.floor(curve.getLength() / 4)));
+    MeshBuffer.LINES,
+    Math.max(400, Math.floor(curve.getLength() / 4)));
   return this;
 };
 /**
@@ -136,8 +136,8 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
   this.ce.constantAttribute(this.color, "COLOR");
   var curve = this._drawingToyEpi(ringTeeth, wheelTeeth, hole, phase);
   this.ce.position(curve).evalCurve(
-      MeshBuffer.LINES,
-      Math.max(400, Math.floor(curve.getLength() / 4)));
+    MeshBuffer.LINES,
+    Math.max(400, Math.floor(curve.getLength() / 4)));
   return this;
 };
 /**
@@ -153,7 +153,7 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.continuousHypo = function(
-     ringTeeth, wheelTeeth, hole, phase, offset, holeStep, offsetStep, count) {
+  ringTeeth, wheelTeeth, hole, phase, offset, holeStep, offsetStep, count) {
   var h = hole;
   var o = offset;
   for(var i = 0; i < count; i++, h += holeStep, o += offsetStep) {

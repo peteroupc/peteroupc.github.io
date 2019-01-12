@@ -857,12 +857,12 @@ H3DU.TextFont.loadData = function(data, fontFileName) {
     "data":data,
     "url":fontFileName
   };
-  if(/\.xml$/i.exec(fontFileName)) {
+  if((/\.xml$/i).exec(fontFileName)) {
     // TODO: Somehow convert to XML document
     return H3DU.TextFont._loadXmlFontInner(dd);
-  } else if(/\.bin$/i.exec(fontFileName)) {
+  } else if((/\.bin$/i).exec(fontFileName)) {
     return H3DU.TextFont._loadBinaryFontInner(dd);
-  } else if(/\.fnt$/i.exec(fontFileName)) {
+  } else if((/\.fnt$/i).exec(fontFileName)) {
     // NOTE: Must be ArrayBuffer
     var view = new DataView(dd.data);
     var ret = null;
@@ -880,7 +880,7 @@ H3DU.TextFont.loadData = function(data, fontFileName) {
     // NOTE: Must be ArrayBuffer
     view = new DataView(dd.data);
     var text = H3DU.TextFont._decodeUtf8(view, 0, view.byteLength);
-    if(/\.json$/i.exec(fontFileName)) {
+    if((/\.json$/i).exec(fontFileName)) {
       return H3DU.TextFont._loadJsonFontInner({
         "data":JSON.parse(text),
         "url":dd.url

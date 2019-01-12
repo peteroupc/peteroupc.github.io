@@ -18,19 +18,19 @@ import {MathUtil} from "../h3du_module.js";
  * @returns {*} Return value.
  */
 export var TorusKnot = function(revolutions, r, q, s1, m1) {
- // Formula from "Decorative Knot Patterns"
- // by L. D. Taylor, 2011.
- // NOTE: Integer greater than 0. Labeled 'p' by Taylor
+  // Formula from "Decorative Knot Patterns"
+  // by L. D. Taylor, 2011.
+  // NOTE: Integer greater than 0. Labeled 'p' by Taylor
   this.revolutions = revolutions;
- // NOTE: All integers.  Lowest 'q' is the number of equal "parts"
- // of the torus knot
+  // NOTE: All integers.  Lowest 'q' is the number of equal "parts"
+  // of the torus knot
   this.q = q;
   this.r = r;
   this.s1 = s1;
   if(typeof this.s1 === "undefined" || this.s1 === null) {
     this.s1 = this.r[0];
   }
- // NOTE: Integer.
+  // NOTE: Integer.
   this.m1 = m1;
   if(typeof this.m1 === "undefined" || this.m1 === null) {
     this.m1 = this.q[0];
@@ -61,7 +61,7 @@ export var TorusKnot = function(revolutions, r, q, s1, m1) {
  * @returns {*} Return value.
  */
 TorusKnot.simple = function(p, q, r1) {
- // p. 1 of Taylor
+  // p. 1 of Taylor
   if(typeof r1 === "undefined" || r1 === null)r1 = 0.2;
   return new TorusKnot(p, [r1], [q], r1, q);
 };
@@ -74,7 +74,7 @@ TorusKnot.simple = function(p, q, r1) {
  * @returns {*} Return value.
  */
 TorusKnot.interlaced = function(p, q, r1, s1) {
- // Suggested by p. 2 of Taylor
+  // Suggested by p. 2 of Taylor
   if(typeof r1 === "undefined" || r1 === null)r1 = 0.2;
   if(typeof s1 === "undefined" || s1 === null)s1 = 0.2;
   return new TorusKnot(p, [r1], [q], r1, (p - 1) * q);

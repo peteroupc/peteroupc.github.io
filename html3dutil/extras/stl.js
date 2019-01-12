@@ -40,15 +40,15 @@ var TriangleFan = function(indices) {
 };
   /** @ignore */
 const INITIAL = 0;
-  /** @ignore */
+/** @ignore */
 const IN_SOLID = 1;
-  /** @ignore */
+/** @ignore */
 const IN_FACET = 2;
-  /** @ignore */
+/** @ignore */
 const IN_OUTER_LOOP = 3;
-  /** @ignore */
+/** @ignore */
 const AFTER_SOLID = 3;
-  /** @ignore */
+/** @ignore */
 export var fromStlString = function(str) {
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
@@ -68,11 +68,11 @@ export var fromStlString = function(str) {
   var tfan = new TriangleFan(indices);
   for(var i = 0; i < lines.length; i++) {
     var line = lines[i];
-      // skip empty lines
+    // skip empty lines
     if(line.length === 0 || (/^\s*$/).test(line))continue;
     var e = solid.exec(line);
     if(e && (state === INITIAL || state === AFTER_SOLID)) {
-        // 'e[1]' holds the name of the solid
+      // 'e[1]' holds the name of the solid
       state = IN_SOLID;
       continue;
     }
@@ -93,9 +93,9 @@ export var fromStlString = function(str) {
     e = vertex.exec(line);
     if(e && state === IN_OUTER_LOOP) {
       var index = vertices.length / 6;
-        // Add position X,Y,Z, then normal X,Y,Z
+      // Add position X,Y,Z, then normal X,Y,Z
       vertices.push(parseFloat(e[1]), parseFloat(e[2]), parseFloat(e[3]),
-          normal[0], normal[1], normal[2]);
+        normal[0], normal[1], normal[2]);
       tfan.addIndex(index);
       continue;
     }

@@ -15,11 +15,11 @@ export function StarField(range) {
       y = 0,
       z = 0;
     var centerZone = range / 20;
-     // avoid stars too close to the center
+    // avoid stars too close to the center
     while(Math.abs(x) < centerZone) {
       x = Math.random() * range - range / 2;
     }
-     // avoid stars too close to the center
+    // avoid stars too close to the center
     while(Math.abs(y) < centerZone) {
       y = Math.random() * range - range / 2;
     }
@@ -35,10 +35,10 @@ export function StarField(range) {
         // once the star is too close, move it elsewhere
         setStarPos(this.group.getShape(i), this.range);
         this.group.getShape(i).getTransform().movePosition(0, 0,
-            -this.range);
+          -this.range);
       } else {
         this.group.getShape(i).getTransform().movePosition(0, 0,
-              this.range / 250 * frames);
+          this.range / 250 * frames);
       }
     }
   };
@@ -47,7 +47,7 @@ export function StarField(range) {
   };
   // use a crude white sphere to represent a star
   var star = new H3DU.Shape(
-     H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
+    H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
   for(var i = 0; i < 200; i++) {
     this.group.addShape(this._setStarPos(star.copy(), range));
   }

@@ -19,11 +19,11 @@ import {MeshBuffer} from "../h3du-module.js";
  * @returns {*} Return value.
  */
 export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
-    // xStart, yStart - X and Y coordinates of the start of the floor
-    // width, height - Width and height of the floor
-    // tileSize - Size of each floor tile
-    // z - Z coordinate where the floor will be placed (optional,
-    // default 0)
+  // xStart, yStart - X and Y coordinates of the start of the floor
+  // width, height - Width and height of the floor
+  // tileSize - Size of each floor tile
+  // z - Z coordinate where the floor will be placed (optional,
+  // default 0)
   if(typeof z === "undefined" || z === null)z = 0.0;
   var vertices = [];
   var indices = [];
@@ -41,10 +41,10 @@ export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
       var endX = x === tilesX - 1 ? lastX : 1.0;
       var endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
       vertices.push(
-   xStart + x * tileSize, yStart + y * tileSize, z, 0, 0, 1, 0, 1,
-   xStart + x * tileSize, endPosY, z, 0, 0, 1, 0, endY,
-   endPosX, yStart + y * tileSize, z, 0, 0, 1, endX, 1,
-   endPosX, endPosY, z, 0, 0, 1, endX, endY);
+        xStart + x * tileSize, yStart + y * tileSize, z, 0, 0, 1, 0, 1,
+        xStart + x * tileSize, endPosY, z, 0, 0, 1, 0, endY,
+        endPosX, yStart + y * tileSize, z, 0, 0, 1, endX, 1,
+        endPosX, endPosY, z, 0, 0, 1, endX, endY);
       indices.push(index, index + 1, index + 2, index + 2, index + 1, index + 3);
       index += 4;
     }
