@@ -141,14 +141,6 @@ function link1a() {
     subScene.addShape(blinds);
   }
 }
-function link2a() {
-  "use strict";
-  if(scene) {
-    subScene.orthoAspect(-20, 20, -10, 10, -20, 20);
-    subScene.removeShape(blinds);
-    subScene.addShape(platonic);
-  }
-}
 
 /* exported link4 */
 function link4() {
@@ -166,56 +158,6 @@ function link8() {
   if(scene) {
     currentFilter = makeKernelMatrix(scene);
     setKernelMatrix(currentFilter, [0, 1, 0, 1, -4, 1, 0, 1, 0]);
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-
-/* exported link9 */
-function link9() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeColorMatrix();
-    currentFilter.setUniforms({
-      "colorMatrix":[
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0.3, 0, 0, 1
-      ]
-    });
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-
-/* exported link9a */
-function link9a() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeColorMatrix();
-    currentFilter.setUniforms({
-      "colorMatrix":[
-        1, 0, 0, 0,
-        0, 1, 0, 0,
-        0, 0, 1, 0,
-        0, 0, 0.3, 1
-      ]
-    });
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-
-/* exported link10 */
-function link10() {
-  "use strict";
-  if(scene) {
-    currentFilter = makeWarp(scene);
-    renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
-  }
-}
-function linknone() {
-  "use strict";
-  if(scene) {
-    currentFilter = null;
     renders[1] = new H3DU.RenderPass(H3DU.Batch3D.forFilter(scene, fbo, currentFilter));
   }
 }

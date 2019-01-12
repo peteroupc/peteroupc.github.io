@@ -134,6 +134,7 @@ BspTree.prototype.flip = function() {
  * Describes a convex polygon.
  * @param {<Array<Array<number>>} verts An array of three 3-element vectors
  * describing a triangle.
+ * @constructor
  */
 function Polygon(verts) {
   "use strict";

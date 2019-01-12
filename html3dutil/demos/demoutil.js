@@ -6,7 +6,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU, alert */
+/* global H3DU, alert, updateShape */
 /* exported formulaEditorHelp */
 function formulaEditorHelp() {
   "use strict";
@@ -124,6 +124,7 @@ function setRanges(ranges) {
   }
 }
 
+/* exported saveString */
 function saveString(string, type, filename) {
   "use strict";
   var extension = ".txt";
@@ -140,36 +141,6 @@ function saveString(string, type, filename) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-}
-
-function updateShape(func, allsettings, shapeGroup) {
-  "use strict";
-  var settings = document.getElementById("settings-link");
-  if(!settings) {
-    settings = document.getElementById("settings");
-    if(settings) {
-      var div = document.createElement("div");
-      var a = document.createElement("a");
-      a.href = "javascript:void(null)";
-      a.id = "settings-link";
-      a.innerHTML = "Save this model (JSON)";
-      a.addEventListener("click", function() {
-        var json = H3DU.MeshJSON.toJSON(func(allsettings));
-        saveString(json, "application/json", "model.json");
-      });
-      div.appendChild(a);
-      settings.appendChild(div);
-    }
-  }
-  if(shapeGroup.shapeCount() > 0) {
-    shapeGroup.removeShape(shapeGroup.getShape(0));
-  }
-  shapeGroup.addShape(new H3DU.Shape(func(allsettings)).setMaterial(
-    new H3DU.PbrMaterial({
-      "diffuse":"black",
-      "specular":"white",
-      "shininess":32
-    })));
 }
 
 /* exported pushSettings */

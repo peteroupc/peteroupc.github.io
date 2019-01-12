@@ -489,6 +489,16 @@ function makeRay(startPt, focusPt) {
  * Z coordinates of the picked point in object (model) space.
  * <li><code>world</code> - 3-element array giving the X, Y, and
  * Z coordinates of the picked point in world space.</ul>
+ * @example <caption>The following example shows how a hypothetical scene graph could implement picking objects based on the position of the mouse cursor.</caption>
+ * var mousePos = scene.getMousePosInPixels();
+ * var viewport = [0, 0, scene.getWidth(), scene.getHeight()];
+ * var projview = scene.getProjectionViewMatrix();
+ * var o = raypick(mousePos.cx, mousePos.cy, projview, viewport, objects);
+ * if(o.index >= 0) {
+ * pickedShape = objects[o.index];
+ * } else {
+ * pickedShape = null;
+ * }
  */
 function raypick(x, y, projView, viewport, objects) {
   "use strict";

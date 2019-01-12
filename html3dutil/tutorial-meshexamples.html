@@ -15,9 +15,7 @@
 <ul>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#3D_Line"><strong>3D Line</strong></a></li>
-<li><a href="#Floor"><strong>Floor</strong></a></li>
 <li><a href="#Striped_Disk"><strong>Striped Disk</strong></a></li>
-<li><a href="#Washer"><strong>Washer</strong></a></li>
 <li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
 </ul>
 
@@ -41,46 +39,6 @@ function create3DLine(point1,point2,thickness){
   matrix[13]=midPoint[1]
   matrix[14]=midPoint[2]
   return line.transform(matrix);
-}
-</pre>
-
-<p><a id=Floor></a></p>
-
-<h2>Floor</h2>
-
-<p>This method creates a flat tiled floor.</p>
-
-<p><img src="floor.png" alt="**Image of a floor**"></p>
-
-<pre>// xStart, yStart - X and Y coordinates of the start of the floor
-// width, height - Width and height of the floor
-// tileSize - Size of each floor tile
-// z - Z coordinate where the floor will be placed (optional,
-// default 0)
-function makeFloor(xStart,yStart,width,height,tileSize,z){
- if(z==null)z=0.0
- var mesh=new H3DU.Mesh()
- var tilesX=Math.ceil(width/tileSize)
- var tilesY=Math.ceil(height/tileSize)
- var lastY=(height-(tilesY*tileSize))/tileSize
- var lastX=(width-(tilesX*tileSize))/tileSize
- if(lastY&lt;=0)lastY=1.0
- if(lastX&lt;=0)lastX=1.0
- mesh.normal3(0,0,1)
- for(var y=0;y&lt;tilesY;y++){
-  var endY=(y==tilesY-1) ? 1.0-lastY : 0.0
-  var endPosY=(y==tilesY-1) ? yStart+height : yStart+(y+1)*tileSize
-  for(var x=0;x&lt;tilesX;x++){
-   var endX=(x==tilesX-1) ? lastX : 1.0
-   var endPosX=(x==tilesX-1) ? xStart+width : xStart+(x+1)*tileSize
-   mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-     .texCoord2(0,1).vertex3(xStart+x*tileSize,yStart+y*tileSize,z)
-     .texCoord2(0,endY).vertex3(xStart+x*tileSize,endPosY,z)
-     .texCoord2(endX,1).vertex3(endPosX,yStart+y*tileSize,z)
-     .texCoord2(endX,endY).vertex3(endPosX,endPosY,z)
-  }
- }
- return new H3DU.MeshBuffer(mesh)
 }
 </pre>
 
@@ -113,46 +71,11 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
 }
 </pre>
 
-<p><a id=Washer></a></p>
-
-<h2>Washer</h2>
-
-<p>This method creates a washer-shaped 3D model.</p>
-
-<p><img src="mesh3.png" alt="**Image of a washer**"></p>
-
-<pre>function createWasher(inner,outer,height,slices){
-  var innerCylinder=H3DU.Meshes.createCylinder(inner,inner,height,slices,1,false,true);
-  var outerCylinder=H3DU.Meshes.createCylinder(outer,outer,height,slices,1,false,false);
-  var base=H3DU.Meshes.createDisk(inner,outer,slices,2,true).reverseWinding();
-  var top=H3DU.Meshes.createDisk(inner,outer,slices,2,false);
-  // move the top disk to the top of the cylinder
-  top.transform(H3DU.MathUtil.mat4translated(0,0,height));
-  // merge the base and the top
-  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
-}
-</pre>
-
 <p><a id=Miscellaneous></a></p>
 
 <h2>Miscellaneous</h2>
 
-<pre>// Demonstrates making a mesh plane from triangles
-function createPathDisk(path, z, flatness){
- if(z==null)z=0
- var tris=path.getTriangles(flatness);
- var mesh=new H3DU.Mesh().mode(H3DU.Mesh.TRIANGLES)
-   .normal3(0,0,1);
- for(var i=0;i&lt;tris.length;i++){
-  var tri=tris[i]
-  mesh.vertex3(tri[0],tri[1],z)
-   .vertex3(tri[2],tri[3],z)
-   .vertex3(tri[4],tri[5],z)
- }
- return new H3DU.MeshBuffer(mesh)
-}
-
-function setBoxSizeAndBounds(shape,box){
+<pre>function setBoxSizeAndBounds(shape,box){
  shape.setPosition(H3DU.MathUtil.boxCenter(box))
  shape.setScale(H3DU.MathUtil.boxDimensions(box))
  return shape

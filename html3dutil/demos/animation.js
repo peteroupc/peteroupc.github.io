@@ -7,18 +7,6 @@
  http://peteroupc.github.io/
 */
 /* global H3DU */
-/* exported createWasher */
-function createWasher(inner, outer, height, slices) {
-  "use strict";
-  var innerCylinder = H3DU.Meshes.createCylinder(inner, inner, height, slices, 1, false, true);
-  var outerCylinder = H3DU.Meshes.createCylinder(outer, outer, height, slices, 1, false, false);
-  var base = H3DU.Meshes.createDisk(inner, outer, slices, 2, true).reverseWinding();
-  var top = H3DU.Meshes.createDisk(inner, outer, slices, 2, false);
-  // move the top disk to the top of the cylinder
-  top.transform(H3DU.MathUtil.mat4translated(0, 0, height));
-  // merge the base and the top
-  return innerCylinder.merge(outerCylinder).merge(base).merge(top);
-}
 
 function Animator(shape) {
   "use strict";
@@ -150,37 +138,138 @@ Animator.prototype.update = function(time) {
   if(visChanged)Animator._compact(this.visibleAnim);
 };
 
-/* exported makeFloor */
-function makeFloor(xStart, yStart, width, height, tileSize, z) {
+/**
+ * Finds the intersection point of three planes.
+ * @private
+ * @param {Array<number>} p1 A four-element array
+ * defining the first plane. The first three elements of the array
+ * are the X, Y, and Z components of the plane's normal vector, and
+ * the fourth element is the shortest distance from the plane
+ * to the origin, or if negative, from the origin to the plane,
+ * divided by the normal's length.
+ * @param {Array<number>} p2 A four-element array
+ * defining the second plane.
+ * @param {Array<number>} p3 A four-element array
+ * defining the third plane.
+ * @returns {Array<number>} The intersection point, or
+ * null if all three planes meet at a line or any two planes
+ * are parallel.
+ */
+H3DU.MathUtil.planeIntersection = function(p1, p2, p3) {
   "use strict";
-  if(typeof z === "undefined" || z === null)z = 0.0;
-  var mesh = new H3DU.Mesh();
-  var tilesX = Math.ceil(width / tileSize);
-  var tilesY = Math.ceil(height / tileSize);
-  var lastY = (height - tilesY * tileSize) / tileSize;
-  var lastX = (width - tilesX * tileSize) / tileSize;
-  if(lastY <= 0)lastY = 1.0;
-  if(lastX <= 0)lastX = 1.0;
-  mesh.normal3(0, 0, 1);
-  for(var y = 0; y < tilesY; y++) {
-    var endY = y === tilesY - 1 ? 1.0 - lastY : 0.0;
-    var endPosY = y === tilesY - 1 ? yStart + height : yStart + (y + 1) * tileSize;
-    for(var x = 0; x < tilesX; x++) {
-      var endX = x === tilesX - 1 ? lastX : 1.0;
-      var endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
-      mesh.mode(H3DU.Mesh.TRIANGLE_STRIP)
-        .texCoord2(0, 1).vertex3(xStart + x * tileSize, yStart + y * tileSize, z)
-        .texCoord2(0, endY).vertex3(xStart + x * tileSize, endPosY, z)
-        .texCoord2(endX, 1).vertex3(endPosX, yStart + y * tileSize, z)
-        .texCoord2(endX, endY).vertex3(endPosX, endPosY, z);
-    }
+  var c23 = H3DU.MathUtil.vec3cross(p2, p3);
+  var d = H3DU.MathUtil.vec3dot(p1, c23);
+  if(d === 0) {
+  // no intersection point
+    return null;
   }
-  return mesh.toMeshBuffer();
+  var c12 = H3DU.MathUtil.vec3cross(p1, p2);
+  var c31 = H3DU.MathUtil.vec3cross(p3, p1);
+  H3DU.MathUtil.vec3scaleInPlace(c23, -p1[3]);
+  H3DU.MathUtil.vec3scaleInPlace(c31, -p2[3]);
+  H3DU.MathUtil.vec3scaleInPlace(c12, -p3[3]);
+  c23[0] += c31[0]; c23[1] += c31[1]; c23[2] += c31[2];
+  c23[0] += c12[0]; c23[1] += c12[1]; c23[2] += c12[2];
+  H3DU.MathUtil.vec3scaleInPlace(c23, 1.0 / d);
+  return c23;
+};
+
+/**
+ * Finds the coordinates of the corners
+ * of a view frustum's near clipping plane.
+ * @private
+ * @param {Array<Array<number>>} An array of six
+ * 4-element arrays representing the six clipping planes of the
+ * view frustum. In order, they are the left, right, top,
+ * bottom, near, and far clipping planes.
+ * @returns {Array<number>} A 4-element array
+ * containing the 3-element points for the top-left,
+ * bottom-left, top-right, and bottom-right corners,
+ * respectively, of the near clipping plane.
+ */
+H3DU.MathUtil.frustumNearPlane = function(frustum) {
+  "use strict";
+  var topLeft = H3DU.MathUtil.planeIntersection(
+  frustum[4], frustum[0], frustum[2]);
+  var bottomLeft = H3DU.MathUtil.planeIntersection(
+  frustum[4], frustum[0], frustum[3]);
+  var topRight = H3DU.MathUtil.planeIntersection(
+  frustum[4], frustum[1], frustum[2]);
+  var bottomRight = H3DU.MathUtil.planeIntersection(
+  frustum[4], frustum[1], frustum[3]);
+  return [topLeft, bottomLeft, topRight, bottomRight];
+};
+/**
+ * Finds the coordinates of the corners
+ * of a view frustum's far clipping plane.
+ * @private
+ * @param {Array<Array<number>>} An array of six
+ * 4-element arrays representing the six clipping planes of the
+ * view frustum. In order, they are the left, right, top,
+ * bottom, near, and far clipping planes.
+ * @returns {Array<number>} A 4-element array
+ * containing the 3-element points for the top-left,
+ * bottom-left, top-right, and bottom-right corners,
+ * respectively, of the near clipping plane.
+ */
+H3DU.MathUtil.frustumFarPlane = function(frustum) {
+  "use strict";
+  var topLeft = H3DU.MathUtil.planeIntersection(
+  frustum[5], frustum[0], frustum[2]);
+  var bottomLeft = H3DU.MathUtil.planeIntersection(
+  frustum[5], frustum[0], frustum[3]);
+  var topRight = H3DU.MathUtil.planeIntersection(
+  frustum[5], frustum[1], frustum[2]);
+  var bottomRight = H3DU.MathUtil.planeIntersection(
+  frustum[5], frustum[1], frustum[3]);
+  return [topLeft, bottomLeft, topRight, bottomRight];
+};
+
+/* exported perspectiveFrustum */
+function perspectiveFrustum(fov, aspect, near, far, cameraPos, lookingAt) {
+  "use strict";
+  var proj = H3DU.MathUtil.mat4perspective(fov, aspect, near, far);
+  var view = H3DU.MathUtil.mat4lookat(cameraPos, lookingAt);
+  var projview = H3DU.MathUtil.mat4multiply(proj, view);
+  var frustum = H3DU.MathUtil.mat4toFrustumPlanes(projview);
+  return frustum;
 }
 
-/* exported rotateVec */
-function rotateVec(vec, angle) {
+function meshAddLine(mesh, point1, point2, thickness) {
   "use strict";
-  return H3DU.MathUtil.mat4projectVec3(
-    H3DU.MathUtil.mat4rotated(angle, 0, 0, 1), vec);
+  var vector = H3DU.MathUtil.vec3sub(point1, point2);
+  var dist = H3DU.MathUtil.vec3length(vector);
+  var normVector = H3DU.MathUtil.vec3norm(vector);
+  var midPoint = H3DU.MathUtil.vec3lerp(point1, point2, 0.5);
+  var line = H3DU.Meshes.createCapsule(thickness / 2, dist, 6, 4);
+  var matrix = H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0, 0, 1], normVector));
+  matrix[12] = midPoint[0];
+  matrix[13] = midPoint[1];
+  matrix[14] = midPoint[2];
+  line = line.transform(matrix);
+  return mesh.merge(line);
+}
+function meshAddLineStrip(mesh, strip, thickness) {
+  "use strict";
+  for(var i = 0; i < strip.length - 1; i++) {
+    mesh = meshAddLine(mesh, strip[i], strip[i + 1], thickness);
+  }
+  return mesh;
+}
+/* exported frustumMesh */
+function frustumMesh(frustum) {
+  "use strict";
+  var mesh = new H3DU.MeshBuffer();
+  var nearRect = H3DU.MathUtil.frustumNearPlane(frustum);
+  var farRect = H3DU.MathUtil.frustumFarPlane(frustum);
+  var thickness = 0.01;
+  meshAddLine(mesh, nearRect[0], farRect[0], thickness);
+  meshAddLine(mesh, nearRect[1], farRect[1], thickness);
+  meshAddLine(mesh, nearRect[2], farRect[2], thickness);
+  meshAddLine(mesh, nearRect[3], farRect[3], thickness);
+  meshAddLineStrip(mesh, [nearRect[0], nearRect[1],
+    nearRect[3], nearRect[2], nearRect[0]], thickness);
+  meshAddLineStrip(mesh, [farRect[0], farRect[1],
+    farRect[3], farRect[2], farRect[0]], thickness);
+  return mesh;
 }

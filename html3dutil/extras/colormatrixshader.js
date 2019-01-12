@@ -50,6 +50,20 @@ export var getColorMatrix = function(kind) {
       1 / 3, 1 / 3, 1 / 3, 0,
       0, 0, 0, 1
     ];
+  } else if(kind === "boosted-red") {
+    return [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0.3, 0, 0, 1
+    ];
+  } else if(kind === "boosted-blue") {
+    return [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0.3, 1
+    ];
   } else if(kind === "sepia") {
     return [0.207, 0.212, 0.16, 0,
       0.696, 0.712, 0.538, 0,
