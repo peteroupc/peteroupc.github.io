@@ -34,6 +34,7 @@ export var KleinBottle = function() {
  * @param {*} a
  * @param {*} b
  * @returns {*} Return value.
+ * @function
  */
 export var MoebiusLikeStrip = function(maj, a, b) {
   this.maj = typeof maj === "undefined" || maj === null ? 1.25 : maj;
@@ -63,6 +64,7 @@ export var MoebiusLikeStrip = function(maj, a, b) {
  * @param {*} radius
  * @param {*} width
  * @returns {*} Return value.
+ * @function
  */
 export var MoebiusStrip = function(radius, width) {
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;

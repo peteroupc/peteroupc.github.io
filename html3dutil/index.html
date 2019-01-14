@@ -8,6 +8,12 @@
 <li><a href="DrawingToy.html">DrawingToy</a><br>TODO: Not documented yet.</li>
 <li><a href="Epitrochoid.html">Epitrochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the outside
 of another circle, whose position is fixed, with a center of (0,0).</li>
+<li><a href="FourierKnot.html">FourierKnot</a><br>A curve evaluator object that calculates a knot in the form of the Fourier series</li>
+</ul>
+
+<p><b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).</p>
+
+<ul>
 <li><a href="H3DU.html">H3DU</a><br>This is a library with classes and methods that were formerly in the Public Domain HTML 3D Library.</li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a><br>A curve evaluator object for a B-spline (basis spline) curve.</li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a><br>A surface evaluator object for a B-spline (basis spline) surface,
@@ -47,9 +53,12 @@ from one coordinate system to another.</li>
 of another circle, whose position is fixed, with a center of (0,0).</li>
 <li><a href="MatrixStack.html">MatrixStack</a><br>This class implements a stack
 of 4x4 transformation matrices.</li>
+<li><a href="MoebiusLikeStrip.html">MoebiusLikeStrip</a><br>TODO: Not documented yet.</li>
+<li><a href="MoebiusStrip.html">MoebiusStrip</a><br>TODO: Not documented yet.</li>
 <li><a href="Polyhedra.html">Polyhedra</a><br>Contains helper methods for generating the five platonic solids
 and other polyhedra.</li>
 <li><a href="Promise.html">Promise</a><br>A promise holds a value to be resolved in the future.</li>
+<li><a href="Roulette.html">Roulette</a><br>TODO: Not documented yet.</li>
 <li><a href="Semantic.html">Semantic</a><br>Contains constants for assigning semantics
 to uniforms and vertex attributes.</li>
 <li><a href="StarField.html">StarField</a><br>TODO: Not documented yet.</li>
@@ -57,7 +66,15 @@ to uniforms and vertex attributes.</li>
 <li><a href="Supertoroid.html">Supertoroid</a><br>TODO: Not documented yet.</li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a><br>A surface evaluator object for a surface of revolution,
 which results by revolving a two-dimensional curve around an axis.</li>
+<li><a href="TorusKnot.html">TorusKnot</a><br>TODO: Not documented yet.</li>
 <li><a href="Trochoid.html">Trochoid</a><br>A curve evaluator object for a curve drawn by a circle that rolls along the X axis.</li>
+<li><a href="contourLines.html">contourLines</a><br>Generates contour lines for two-dimensional data.</li>
+<li><a href="createConvexHull.html">createConvexHull</a><br>Generates the convex hull of a set of 3-dimensional points, that is, the smallest convex set
+that contains all the points given.</li>
+<li><a href="createFloor.html">createFloor</a><br>TODO: Not documented yet.</li>
+<li><a href="createGear.html">createGear</a><br>Builds a mesh buffer representing a gear centered at the origin.</li>
+<li><a href="createMultiColoredArrow.html">createMultiColoredArrow</a><br>TODO: Not documented yet.</li>
+<li><a href="createWasher.html">createWasher</a><br>TODO: Not documented yet.</li>
 <li><a href="curveCatacaustic.html">curveCatacaustic</a><br>TODO: Not documented yet.</li>
 <li><a href="curveEvolute.html">curveEvolute</a><br>TODO: Not documented yet.</li>
 <li><a href="curveInverse.html">curveInverse</a><br>TODO: Not documented yet.</li>
@@ -65,7 +82,16 @@ which results by revolving a two-dimensional curve around an axis.</li>
 <li><a href="curveOrthotomic.html">curveOrthotomic</a><br>TODO: Not documented yet.</li>
 <li><a href="curvePedalCurve.html">curvePedalCurve</a><br>TODO: Not documented yet.</li>
 <li><a href="curveRadialCurve.html">curveRadialCurve</a><br>TODO: Not documented yet.</li>
+<li><a href="getColorMatrix.html">getColorMatrix</a><br>Gets a specific kind of color matrix for the color
+matrix shader.</li>
+<li><a href="getKernelMatrix.html">getKernelMatrix</a><br>TODO: Not documented yet.</li>
+<li><a href="normalizeKernelInPlace.html">normalizeKernelInPlace</a><br>TODO: Not documented yet.</li>
+<li><a href="planePointsToConvexHull.html">planePointsToConvexHull</a><br>Generates a convex hull of the half-space representation
+of several planes.</li>
 <li><a href="polarCurve.html">polarCurve</a><br>TODO: Not documented yet.</li>
+<li><a href="randomConvexPolyhedron.html">randomConvexPolyhedron</a><br>TODO: Not documented yet.</li>
+<li><a href="raypick.html">raypick</a><br>Finds the three-dimensional shape object and world-space coordinates
+corresponding to the given two-dimensional (X and Y) coordinates.</li>
 <li><a href="ruledSurface.html">ruledSurface</a><br>TODO: Not documented yet.</li>
 <li><a href="spiralCurve.html">spiralCurve</a><br>TODO: Not documented yet.</li>
 </ul>
@@ -150,6 +176,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <ul>
 <li><a href="DrawingToy.html">DrawingToy</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
+<li><a href="FourierKnot.html">FourierKnot</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -173,14 +200,24 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
+<li><a href="MoebiusLikeStrip.html">MoebiusLikeStrip</a></li>
+<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
 <li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Roulette.html">Roulette</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
 <li><a href="StarField.html">StarField</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
 <li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
+<li><a href="TorusKnot.html">TorusKnot</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
+<li><a href="contourLines.html">contourLines</a></li>
+<li><a href="createConvexHull.html">createConvexHull</a></li>
+<li><a href="createFloor.html">createFloor</a></li>
+<li><a href="createGear.html">createGear</a></li>
+<li><a href="createMultiColoredArrow.html">createMultiColoredArrow</a></li>
+<li><a href="createWasher.html">createWasher</a></li>
 <li><a href="curveCatacaustic.html">curveCatacaustic</a></li>
 <li><a href="curveEvolute.html">curveEvolute</a></li>
 <li><a href="curveInverse.html">curveInverse</a></li>
@@ -188,7 +225,13 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="curveOrthotomic.html">curveOrthotomic</a></li>
 <li><a href="curvePedalCurve.html">curvePedalCurve</a></li>
 <li><a href="curveRadialCurve.html">curveRadialCurve</a></li>
+<li><a href="getColorMatrix.html">getColorMatrix</a></li>
+<li><a href="getKernelMatrix.html">getKernelMatrix</a></li>
+<li><a href="normalizeKernelInPlace.html">normalizeKernelInPlace</a></li>
+<li><a href="planePointsToConvexHull.html">planePointsToConvexHull</a></li>
 <li><a href="polarCurve.html">polarCurve</a></li>
+<li><a href="randomConvexPolyhedron.html">randomConvexPolyhedron</a></li>
+<li><a href="raypick.html">raypick</a></li>
 <li><a href="ruledSurface.html">ruledSurface</a></li>
 <li><a href="spiralCurve.html">spiralCurve</a></li>
 </ul>

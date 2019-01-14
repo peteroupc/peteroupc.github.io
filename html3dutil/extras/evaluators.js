@@ -506,6 +506,7 @@ function cdiv(a, b) {
  * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
  * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
  * @param {number} [revolutions]
+ * @function
  */
 export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
   this.revolutions = revolutions === null ? 20 : revolutions;

@@ -15,6 +15,7 @@ import {MathUtil, Meshes} from "../h3du-module.js";
  * @param {*} height
  * @param {*} slices
  * @returns {*} Return value.
+ * @function
  */
 export var createWasher = function(inner, outer, height, slices) {
   var innerCylinder = Meshes.createCylinder(inner, inner, height, slices, 1, false, true);

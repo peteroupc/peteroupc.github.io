@@ -189,6 +189,7 @@ function drawCurve(contours) {
  * var mesh=contourLines((u,v)=>(Math.sin((u+v)/6)),
  * [0, 1, 2, 3],
  * 0,10,0,10,10,10);
+ * @function
  */
 export var contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
   var contours = conrec(func, levels, u1, u2, v1, v2, usize, vsize);

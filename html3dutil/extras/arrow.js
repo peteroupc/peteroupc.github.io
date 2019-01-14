@@ -34,6 +34,7 @@ export var createArrow = function(shaftLength, pointerLength, shaftRadius, point
  * @param {Array<number>|number|string} shaftColor A [color vector or string]{@link toGLColor} specifying the color of the shaft.
  * @param {Array<number>|number|string} pointerColor A [color vector or string]{@link toGLColor} specifying the color of the pointer.
  * @returns {MeshBuffer} A mesh buffer of the resulting shape.
+ * @function
  */
 export var createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
   var slices = 32;

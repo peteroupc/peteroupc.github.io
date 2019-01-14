@@ -695,6 +695,7 @@ QuickHull.prototype.getInitialTetrahedron = function() {
  * method will point inward; otherwise, outward. Should normally be false
  * unless the figure will be viewed from the inside.
  * @returns {MeshBuffer} The generated convex hull.
+ * @function
  */
 export var createConvexHull = function(points, flat, inside) {
   var bm = new QuickHull();
@@ -783,6 +784,7 @@ function getIntersectingPoints(planes) {
  * @param {*} avgsize
  * @param {*} maxfaces
  * @returns {*} Return value.
+ * @function
  */
 export var randomConvexPolyhedron = function(avgsize, maxfaces) {
   var planes = [];
@@ -818,6 +820,7 @@ function getPlaneEquations(planepoints) {
  * meaning all points on the side pointed to by the normal vector
  * will be "outside" the plane, and other points will be "inside" the plane.
  * @returns {MeshBuffer} The generated convex hull.
+ * @function
  */
 export var planePointsToConvexHull = function(planepoints) {
   var planes = getPlaneEquations(planepoints);

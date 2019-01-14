@@ -16,6 +16,7 @@ import {MathUtil} from "../h3du_module.js";
  * @param {*} s1
  * @param {*} m1
  * @returns {*} Return value.
+ * @function
  */
 export var TorusKnot = function(revolutions, r, q, s1, m1) {
   // Formula from "Decorative Knot Patterns"

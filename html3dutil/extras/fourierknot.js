@@ -12,6 +12,7 @@
  * <b>F</b>(u) = &Sigma;<sub>i=1, n</sub> <b>a</b> cos(<i>iu</i>) + <b>b</b> sin(<i>iu</i>).<p>
  * @param {Array<Array<number>>} a The cosine coefficients.
  * @param {Array<Array<number>>} b The sine coefficients.
+ * @function
  */
 export var FourierKnot = function(a, b) {
   this.a = a; // Cosine coefficients

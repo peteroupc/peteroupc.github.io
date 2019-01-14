@@ -484,6 +484,7 @@ function makeRay(startPt, focusPt) {
  * } else {
  * pickedShape = null;
  * }
+ * @function
  */
 export var raypick = function(x, y, projView, viewport, objects) {
   var near = MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);

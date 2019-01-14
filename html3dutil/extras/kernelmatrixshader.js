@@ -52,6 +52,7 @@ export var kernelMatrixShader = {
  * TODO: Not documented yet.
  * @param {*} kind
  * @returns {*} Return value.
+ * @function
  */
 export var getKernelMatrix = function(kind) {
   if(kind === "blue") {
@@ -64,6 +65,7 @@ export var getKernelMatrix = function(kind) {
  * TODO: Not documented yet.
  * @param {*} matrix
  * @returns {*} Return value.
+ * @function
  */
 export var normalizeKernelInPlace = function(matrix) {
   var weight = matrix[0] + matrix[1] + matrix[2] +

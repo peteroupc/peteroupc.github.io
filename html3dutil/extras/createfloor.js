@@ -17,6 +17,7 @@ import {MeshBuffer} from "../h3du-module.js";
  * @param {*} tileSize
  * @param {*} z
  * @returns {*} Return value.
+ * @function
  */
 export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
   // xStart, yStart - X and Y coordinates of the start of the floor

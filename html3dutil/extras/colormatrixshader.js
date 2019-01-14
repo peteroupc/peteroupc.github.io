@@ -58,6 +58,7 @@ export var colorMatrixShader = {
  * <li>"invert" - Filter that inverts the colors of the input so the effect looks like a film negative.
  * </ul>
  * @returns {Array<number>} 4x4 color matrix.
+ * @function
  */
 export var getColorMatrix = function(kind) {
   if(kind === "grayscale") {
