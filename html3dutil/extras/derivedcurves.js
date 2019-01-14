@@ -76,7 +76,7 @@ export function curveEvolute(evaluator) {
     }
   };
 }
-/* exported curveRadialCurve */
+
 export function curveRadialCurve(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
@@ -113,11 +113,9 @@ export function curveOrthotomic(evaluator, ox, oy) {
     }
   };
 }
-/* exported curveCatacaustic */
 export function curveCatacaustic(evaluator, ox, oy) {
   return curveEvolute(curveOrthotomic(evaluator, ox, oy));
 }
-/* exported curvePedalCurve */
 export function curvePedalCurve(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
@@ -156,7 +154,6 @@ export function curveInverse(evaluator, ox, oy, radius) {
   };
 }
 
-/* exported ruledSurface */
 export function ruledSurface(directrix, director) {
   return new Surface({
     "evaluate":function(u, v) {
@@ -171,17 +168,36 @@ export function ruledSurface(directrix, director) {
   });
 }
 
-export function spiralCurve(radius, phase) {
+export function polarCurve(func, phase) {
+  var pfunc = func;
+  var pphase = phase;
   return new H3DU.Curve({
-    /** @ignore */
     "evaluate":function(u) {
-      var uphase = u + phase;
+      var uphase = u + pphase;
+      if(uphase > 6.283185307179586) {
+        uphase %= 6.283185307179586;
+      }
+      var cosu = Math.cos(uphase);
+      var sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
+      var r = pfunc(uphase);
+      return [cosu * r, sinu * r];
+    },
+    "endPoints":function() {
+      return [0, 6.283185307179586];
+    }
+  });
+}
+
+export function spiralCurve(radius, phase) {
+  var pphase = phase;
+  return new H3DU.Curve({
+    "evaluate":function(u) {
+      var uphase = u + pphase;
       var cosu = Math.cos(uphase);
       var sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
       var r = radius + u;
       return [cosu * r, sinu * r];
     },
-    /** @ignore */
     "endPoints":function() {
       return [0, 6 * Math.PI];
     }

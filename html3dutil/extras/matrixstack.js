@@ -6,7 +6,6 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
 
 /**
  * This class implements a stack
@@ -90,17 +89,6 @@ MatrixStack.prototype.multMatrix = function(mat) {
   }
   this.stack[this.stack.length - 1] = dst;
   return this;
-};
-/**
- * Modifies the matrix at the top of this stack by multiplying it by the transpose of
- * another matrix.
- * @deprecated Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.
- * @param {Array<number>} mat A matrix whose transpose the current
- * matrix will be multiplied by.
- * @returns {MatrixStack} This object.
- */
-MatrixStack.prototype.multTransposeMatrix = function(mat) {
-  return this.multMatrix(H3DU.MathUtil.mat4transpose(mat));
 };
 /**
  * Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.
@@ -506,12 +494,3 @@ MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
    mat[15])];
   return this;
 };
-
-/* exported MatrixStack */
-/**
- * Alias for the {@link MatrixStack} class.
- * @constructor
- * @alias MatrixStack
- * @deprecated Use {@link MatrixStack} instead.
- */
-MatrixStack = MatrixStack;

@@ -15,7 +15,6 @@ import {Curve, MathUtil, Surface} from "../h3du_module.js";
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
  * @constructor
- * @memberof H3DU
  * @param {Object} curve A [curve evaluator object]{@link Curve} that describes a 2-dimensional curve to rotate about the axis of rotation, as
  * specified in the "axis" parameter. The curve's X coordinates
  * correspond to elevation, and its Y coordinates correspond to radius.<p>
@@ -327,16 +326,12 @@ Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * The following curves can be generated with this class (in the following
  * descriptions, R means <code>radius</code>
  * and D = <code>distFromCenter</code>).<ul>
- * <li>Cycloid: D = R (trochoid touching the fixed circle).</li>
- * <li>Curtate cycloid: D < R (trochoid not touching the fixed circle).</li>
- * <li>Prolate cycloid: D > R (trochoid crossing the fixed circle).</li></ul>
+ * <li>Cycloid: D = R (trochoid touching the X axis).</li>
+ * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
+ * <li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
- * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
  * @augments Curve
  * @param {number} radius Radius of the rolling circle.
@@ -489,4 +484,41 @@ Epitrochoid.prototype.scaleTo = function(radius) {
     this.outer * ratio,
     this.roller * ratio,
     this.distFromRoller * ratio);
+};
+
+function cmul(a, b) {
+  return [a[0] * b[0] - a[1] * b[1], a[1] * b[0] + a[0] * b[1]];
+}
+function cdiv(a, b) {
+  return cmul(
+    [a[0] * b[0] + a[1] * b[1], a[1] * b[0] - a[0] * b[1]],
+    [1.0 / (b[0] * b[0] + b[1] * b[1]), 0]);
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} rollingCurve
+ * @param {*} fixedCurve
+ * @param {*} polePoint
+ * @param {*} revolutions
+ * @returns {*}
+ */
+export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
+  this.revolutions = revolutions === null ? 20 : revolutions;
+  this.rolling = new Curve(rollingCurve).toArcLengthParam();
+  this.fixedcurve = new Curve(fixedCurve).toArcLengthParam();
+  this.rollingCurveLength = rollingCurve.getLength();
+  this.fixedCurveLength = fixedCurve.getLength();
+  this.polePoint = [polePoint[0], polePoint[1]];
+  this.endPoints = () => [0, this.fixedCurveLength * this.revolutions];
+
+  this.evaluate = function(u) {
+    var f = this.fixedcurve.evaluate(u % this.fixedCurveLength);
+    var df = this.fixedcurve.tangent(u % this.fixedCurveLength);
+    var r = this.rolling.evaluate(u % this.rollingCurveLength);
+    var dr = this.rolling.tangent(u % this.rollingCurveLength);
+    var pdiff = MathUtil.vec2sub(polePoint, r);
+    var tmp = cmul(pdiff, cdiv(df, dr));
+    var ret = MathUtil.vec2add(f, tmp);
+    return [ret[0], ret[1], 0];
+  };
 };

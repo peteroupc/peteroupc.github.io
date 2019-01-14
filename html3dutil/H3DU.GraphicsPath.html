@@ -758,7 +758,7 @@ the curve&#39;s first control point.</p>
 
 <p><a name='H3DU.GraphicsPath_regularPolygon'></a></p>
 
-<h3>H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, phaseInDegrees)</h3>
+<h3>H3DU.GraphicsPath#regularPolygon(cx, cy, sides, radius, [phaseInDegrees])</h3>
 
 <p>Adds path segments to this path that form a regular polygon.</p>
 
@@ -769,7 +769,7 @@ the curve&#39;s first control point.</p>
 <li><code>cy</code> (Type: number)<br>Y coordinate of the center of the polygon.</li>
 <li><code>sides</code> (Type: number)<br>Number of sides the polygon has. Nothing will be added to the path if this value is 2 or less.</li>
 <li><code>radius</code> (Type: number)<br>Radius from the center to each vertex of the polygon.</li>
-<li><code>phaseInDegrees</code> (Type: number)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis.</li>
+<li><code>phaseInDegrees</code> (Type: number) (optional)<br>Starting angle of the first vertex of the polygon, in degrees. 0 means the positive X axis, 90 means the positive Y axis, 180 means the negative X axis, and 270 means the negative Y axis. If null, undefined, or omitted, the default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -868,7 +868,7 @@ segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>z</code> (Type: *) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z coordinate for each line segment. If null, undefined, or omitted, the default is 0.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
 </ul>
 
@@ -1008,6 +1008,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="DrawingToy.html">DrawingToy</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -1030,7 +1031,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="H3DU.exports.SurfaceOfRevolution.html">H3DU.exports.SurfaceOfRevolution</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Polyhedra.html">Polyhedra</a></li>
@@ -1038,6 +1038,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>

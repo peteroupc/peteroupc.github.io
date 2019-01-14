@@ -10,9 +10,15 @@
 
 <h3>MatrixStack()</h3>
 
-<p><b>Deprecated: Use <a href="MatrixStack.html">MatrixStack</a> instead.</b></p>
+<p>This class implements a stack
+of 4x4 transformation matrices.</p>
 
-<p>Alias for the <a href="MatrixStack.html">MatrixStack</a> class.</p>
+<p>When the constructor is called, it will create a stack whose
+only element is the identity matrix.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
 
 <h3>Methods</h3>
 
@@ -27,7 +33,6 @@ transpose of the given matrix.</li>
 <li><a href="#MatrixStack_lookAt">lookAt</a><br>Modifies the matrix at the top of this stack by multiplying it by
 a matrix representing a camera view.</li>
 <li><a href="#MatrixStack_multMatrix">multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.</li>
-<li><a href="#MatrixStack_multTransposeMatrix">multTransposeMatrix</a><br><b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b></li>
 <li><a href="#MatrixStack_ortho">ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
 an orthographic projection.</li>
 <li><a href="#MatrixStack_ortho2d">ortho2d</a><br>Modifies the matrix at the top of this stack by multiplying it by
@@ -164,25 +169,6 @@ the effect of scaling then translation.</p>
 
 <ul>
 <li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A matrix to multiply the current one by.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: <a href="MatrixStack.html">MatrixStack</a>)</p>
-
-<p><a name='MatrixStack_multTransposeMatrix'></a></p>
-
-<h3>MatrixStack#multTransposeMatrix(mat)</h3>
-
-<p><b>Deprecated: Use <code>multMatrix(H3DU.MathUtil.mat4transpose(mat))</code> instead.</b></p>
-
-<p>Modifies the matrix at the top of this stack by multiplying it by the transpose of
-another matrix.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A matrix whose transpose the current matrix will be multiplied by.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -378,6 +364,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="DrawingToy.html">DrawingToy</a></li>
 <li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
@@ -400,7 +387,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="H3DU.exports.SurfaceOfRevolution.html">H3DU.exports.SurfaceOfRevolution</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="Polyhedra.html">Polyhedra</a></li>
@@ -408,6 +394,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Superellipsoid.html">Superellipsoid</a></li>
 <li><a href="Supertoroid.html">Supertoroid</a></li>
+<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
 <li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
