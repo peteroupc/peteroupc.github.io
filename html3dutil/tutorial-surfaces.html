@@ -97,10 +97,7 @@ function &quot;warps&quot; this grid into a three-dimensional surface.</p>
 <a href="http://peteroupc.github.io/html3dutil/H3DU.SurfaceBuilder.html"><strong><code>SurfaceBuilder</code></strong></a>. It helps
 generate vertex coordinates and other attributes using a parametric surface
 function. The following helper function, <code>makeMesh</code>, generates a parametric surface mesh.
-A function similar to the <code>makeMesh</code>
-function presented here is included in the demos that come with the HTML 3D Library.</p>
-
-<p>The comments explain how <code>makeMesh</code> works in detail.</p>
+The comments explain how <code>makeMesh</code> works in detail.</p>
 
 <pre>function makeMesh(func,resolutionU, resolutionV){
    &quot;use strict&quot;;
@@ -193,11 +190,9 @@ var shape = new H3DU.Shape(makeMesh(evaluator));
 scene.addShape(shape);
 </pre>
 
-<p>The generated 3D mesh from a parametric surface is just like any
-other mesh, and the same functions and methods you use for other meshes
-can be used on this mesh as well. For more information, see the
-<a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong>overview page</strong></a>
-and the API references for the <a href="http://peteroupc.github.io/html3dutil/H3DU.Mesh.html"><strong><code>H3DU.Mesh</code></strong></a> and
+<p>The generated 3D mesh buffer from a parametric surface is just like any
+other mesh buffer, and the same functions and methods you use for other mesh buffers
+can be used on this mesh buffer as well. For more information, see the API references for the <a href="http://peteroupc.github.io/html3dutil/H3DU.Mesh.html"><strong><code>H3DU.MeshBuffer</code></strong></a> and
 <a href="http://peteroupc.github.io/html3dutil/H3DU.Shape.html"><strong><code>Shape</code></strong></a> classes.</p>
 
 <p><a id=Chaining_Surface_Functions></a></p>
@@ -328,8 +323,8 @@ behavior of a curve. B-Spline curves are created using the
 control point are the curve&#39;s end points. B&eacute;zier curves are a subset of B-spline
 curves and are created using the <a href="H3DU.BSplineCurve.html#H3DU.BSplineCurve.fromBezierCurve">H3DU.BSplineCurve.fromBezierCurve</a>
 method.</li>
-<li><strong>Piecewise curves</strong> These are curves made up of one or more other curves.
-Piecewisec curves are created using the <a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a> class.</li>
+<li><strong>Piecewise curves.</strong> These are curves made up of one or more other curves.
+Piecewise curves are created using the <a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a> class.</li>
 </ul>
 
 <p>Special curves include the following. All of these classes are supplemental

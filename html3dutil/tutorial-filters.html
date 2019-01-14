@@ -30,12 +30,8 @@ It also describes several examples of graphics filters.</p>
 <li><a href="#Examples"><strong>Examples</strong></a>
 
 <ul>
-<li><a href="#Grayscale"><strong>Grayscale</strong></a></li>
-<li><a href="#Invert"><strong>Invert</strong></a></li>
-<li><a href="#Red_Tint"><strong>Red Tint</strong></a></li>
 <li><a href="#Mirror_Filter"><strong>Mirror Filter</strong></a></li>
 <li><a href="#Matrix_Filter"><strong>Matrix Filter</strong></a></li>
-<li><a href="#Color_Matrix_Filter"><strong>Color Matrix Filter</strong></a></li>
 <li><a href="#Pixelate_Filter"><strong>Pixelate Filter</strong></a></li>
 <li><a href="#Wave_Filter"><strong>Wave Filter</strong></a></li>
 <li><a href="#Waterpaint_Filter"><strong>Waterpaint Filter</strong></a></li>
@@ -112,8 +108,7 @@ with that shade of gray. Thus, the filter will convert the screen to grayscale t
 can be used in the <code>textureEffect</code> function.</p>
 
 <p>A detailed treatment of GLSL is outside the scope of this page. More information about GLSL can
-be found by searching the Web; note that there are many versions of GLSL and the one used
-in most HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
+be found by searching the Web; note that there are many versions of GLSL and the one used most often in HTML applications is relatively basic nowadays. Also see below for more examples of graphics filters.</p>
 
 <p><a id=Using_Graphics_Filters></a></p>
 
@@ -210,56 +205,6 @@ of graphics filters implemented as shaders.</p>
 
 <p>Here are more details on some of the filters it includes.</p>
 
-<p><a id=Grayscale></a></p>
-
-<h3>Grayscale</h3>
-
-<p><img src="filters1.png" alt="**Grayscale filtered image using former implementation**"></p>
-
-<p>The grayscale filter converts the screen to black and white. This is currently
-implemented using the color matrix filter, described later, rather than the code already given above.</p>
-
-<p><a id=Invert></a></p>
-
-<h3>Invert</h3>
-
-<p><img src="filters2.png" alt="**Invert filtered image using former implementation**"></p>
-
-<p>The invert filter is built-in to the HTML 3D Library. It inverts the colors of the screen so the effect looks
-like a film negative.</p>
-
-<p>This filter is implemented in the method <code>H3DU.ShaderInfo.getInvertEffect()</code>, shown below, but in the
-demo this is currently implemented using the color matrix filter instead.</p>
-
-<pre>H3DU.ShaderInfo.getInvertEffect=function(){
-return H3DU.ShaderInfo.makeEffect(context,
-[
-&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
-&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
-&quot; vec4 ret; ret.xyz=vec3(1.0,1.0,1.0)-color.xyz; ret.w=color.w; return ret;&quot;,
-&quot;}&quot;].join(&quot;\n&quot;));
-}
-</pre>
-
-<p><a id=Red_Tint></a></p>
-
-<h3>Red Tint</h3>
-
-<p><img src="filters9.png" alt="**Red Tint filtered image using former implementation**"></p>
-
-<p>The red tint filter adds a hint of red to the image.  This is currently implemented using the
-color matrix filter, described later.  The former implementation of the filter
-appears below.</p>
-
-<pre>function makeRedTint(){
-return H3DU.ShaderInfo.makeEffect(context,[
-&quot;vec4 textureEffect(sampler2D sampler, vec2 uvCoord, vec2 textureSize){&quot;,
-&quot; vec4 color=texture2D(sampler,uvCoord);&quot;,
-&quot; return vec4(color.r+0.3,color.g,color.b,color.a);&quot;,
-&quot;}&quot;].join(&quot;\n&quot;));
-}
-</pre>
-
 <p><a id=Mirror_Filter></a></p>
 
 <h3>Mirror Filter</h3>
@@ -307,27 +252,6 @@ colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
 <p>This filter is implemented in the function <code>makeKernelMatrix</code> in the demo. It is used for
 the &quot;blur&quot; and &quot;edge detect&quot; effects. The filter shows how it&#39;s possible for filters to read neighboring
 pixels, not just the current pixel, when implementing their effect.</p>
-
-<p><a id=Color_Matrix_Filter></a></p>
-
-<h3>Color Matrix Filter</h3>
-
-<p>This filter enables another family of image processing filters, which modify colors
-based on a transformation matrix.  This is a 4x4 matrix that is multiplied by the red/green/blue
-color to get a new color.</p>
-
-<p>This example of a color matrix implements a <em>grayscale</em> filter, which converts the image to
-black and white and shades of gray.</p>
-
-<pre>[
-  1/3,1/3,1/3,0,
-  1/3,1/3,1/3,0,
-  1/3,1/3,1/3,0,
-   0,0,0,1
-]
-</pre>
-
-<p>This filter is implemented in the function <code>makeColorMatrix</code> in the demo.</p>
 
 <p><a id=Pixelate_Filter></a></p>
 

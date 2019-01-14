@@ -11,7 +11,7 @@ import {H3DU} from "../h3du_min";
 /**
  * TODO: Not documented yet.
  * @param {*} range
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function StarField(range) {
   this._setStarPos = function(star, range) {

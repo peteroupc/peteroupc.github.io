@@ -704,28 +704,6 @@ H3DU.Camera.prototype.setPosition = function(cx, cy, cz) {
 };
 
 /**
- * Sets the position of the camera.
- * @param {number} cx The camera's new X coordinate.
- * @param {number} cy The camera's new Y coordinate.
- * @param {number} cz The camera's new Z coordinate.
- * @returns {H3DU.Camera} This object.
- * @method
- * @deprecated Renamed to "setPosition".
- */
-H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
-
-/**
- * Sets the position of the camera.
- * @param {number} cx The camera's new X coordinate.
- * @param {number} cy The camera's new Y coordinate.
- * @param {number} cz The camera's new Z coordinate.
- * @returns {H3DU.Camera} This object.
- * @method
- * @deprecated Renamed to "setPosition".
- */
-H3DU.Camera.prototype.movePosition = H3DU.Camera.prototype.setPosition;
-
-/**
  * Gets the position of the camera.
  * @returns {Array<number>} An array of three numbers giving
  * the X, Y, and Z coordinates of the camera's position, respectively.
@@ -760,24 +738,7 @@ H3DU.Camera.prototype.moveForward = function(dist) {
   }
   return this;
 };
-/**
- * Moves the camera horizontally relative to the camera's up vector.
- * @deprecated Use "moveHorizontal" instead.
- * @param {number} dist Distance to move the camera.
- * @returns {H3DU.Camera} This object.
- */
-H3DU.Camera.prototype.moveCenterHorizontal = function(dist) {
-  return this.moveHorizontal(dist);
-};
-/**
- * Moves the camera toward or away from the camera's up vector.
- * @deprecated Use "moveVertical" instead.
- * @param {number} dist Distance to move the camera.
- * @returns {H3DU.Camera} This object.
- */
-H3DU.Camera.prototype.moveCenterVertical = function(dist) {
-  return this.moveVertical(dist);
-};
+
 /**
  * Moves the camera horizontally relative to the camera's up vector.
  * @param {number} dist Distance to move the camera.
@@ -870,12 +831,3 @@ H3DU.Camera.prototype._updateNew = function(input) {
   }
   return this;
 };
-// /////////////////////////////////////////////////////////////
-
-/* exported Camera */
-/**
- * Alias for the {@link H3DU.Camera} class.
- * @constructor
- * @alias Camera
- * @deprecated Use {@link H3DU.Camera} instead.
- */

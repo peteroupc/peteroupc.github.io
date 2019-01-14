@@ -43,7 +43,7 @@ function _vecScale(v1, s) {
 /**
  * TODO: Not documented yet.
  * @param {*} evaluator
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveInvolute(evaluator) {
   var neweval = evaluator;
@@ -63,7 +63,7 @@ export function curveInvolute(evaluator) {
 /**
  * TODO: Not documented yet.
  * @param {*} evaluator
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveEvolute(evaluator) {
   var neweval = evaluator;
@@ -90,7 +90,7 @@ export function curveEvolute(evaluator) {
  * @param {*} evaluator
  * @param {*} ox
  * @param {*} oy
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveRadialCurve(evaluator, ox, oy) {
   var neweval = evaluator;
@@ -116,7 +116,7 @@ export function curveRadialCurve(evaluator, ox, oy) {
  * @param {*} evaluator
  * @param {*} ox
  * @param {*} oy
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveOrthotomic(evaluator, ox, oy) {
   var neweval = evaluator;
@@ -140,7 +140,7 @@ export function curveOrthotomic(evaluator, ox, oy) {
  * @param {*} evaluator
  * @param {*} ox
  * @param {*} oy
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveCatacaustic(evaluator, ox, oy) {
   return curveEvolute(curveOrthotomic(evaluator, ox, oy));
@@ -150,7 +150,7 @@ export function curveCatacaustic(evaluator, ox, oy) {
  * @param {*} evaluator
  * @param {*} ox
  * @param {*} oy
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curvePedalCurve(evaluator, ox, oy) {
   var neweval = evaluator;
@@ -178,7 +178,7 @@ export function curvePedalCurve(evaluator, ox, oy) {
  * @param {*} ox
  * @param {*} oy
  * @param {*} radius
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function curveInverse(evaluator, ox, oy, radius) {
   var neweval = evaluator;
@@ -200,7 +200,7 @@ export function curveInverse(evaluator, ox, oy, radius) {
  * TODO: Not documented yet.
  * @param {*} directrix
  * @param {*} director
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function ruledSurface(directrix, director) {
   return new Surface({
@@ -219,7 +219,7 @@ export function ruledSurface(directrix, director) {
  * TODO: Not documented yet.
  * @param {*} func
  * @param {*} phase
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function polarCurve(func, phase) {
   var pfunc = func;
@@ -244,7 +244,7 @@ export function polarCurve(func, phase) {
  * TODO: Not documented yet.
  * @param {*} radius
  * @param {*} phase
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function spiralCurve(radius, phase) {
   var pphase = phase;

@@ -7,6 +7,11 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix. This is a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. It takes three uniforms: "sampler", which
+ * is the input texture, "t", a value from 0 to 1 indicating how strongly to
+ * apply the color matrix, and "matrix", which is the 4x4 matrix just described.
+ */
 export var colorMatrixShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
@@ -38,9 +43,21 @@ export var colorMatrixShader = {
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} kind
- * @returns {*} Return value.
+ * Gets a specific kind of color matrix for the color
+ * matrix shader.
+ * @param {string} kind One of the following:<ul>
+ * <li>"grayscale" - Filter that averages the red, green,
+ * and blue components to result in black, white, or a
+ * shade of gray.
+ * <li>"boosted-red" - Filter that boosts the red component
+ * of the input.
+ * <li>"boosted-blue" - Filter that boosts the blue component
+ * of the input.
+ * <li>"sepia" or "sepia2" - One of two filters that adjust the colors of the
+ * image to achieve a sepia coloring.
+ * <li>"invert" - Filter that inverts the colors of the input so the effect looks like a film negative.
+ * </ul>
+ * @returns {Array<number>} 4x4 color matrix.
  */
 export var getColorMatrix = function(kind) {
   if(kind === "grayscale") {
