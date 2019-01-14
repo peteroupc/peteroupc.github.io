@@ -40,7 +40,11 @@ function _vecScale(v1, s) {
   }
   return ret;
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @returns {*}
+ */
 export function curveInvolute(evaluator) {
   var neweval = evaluator;
   return {
@@ -56,6 +60,11 @@ export function curveInvolute(evaluator) {
     }
   };
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @returns {*}
+ */
 export function curveEvolute(evaluator) {
   var neweval = evaluator;
   return {
@@ -76,7 +85,13 @@ export function curveEvolute(evaluator) {
     }
   };
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @param {*} ox
+ * @param {*} oy
+ * @returns {*}
+ */
 export function curveRadialCurve(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
@@ -96,6 +111,13 @@ export function curveRadialCurve(evaluator, ox, oy) {
     }
   };
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @param {*} ox
+ * @param {*} oy
+ * @returns {*}
+ */
 export function curveOrthotomic(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
@@ -113,9 +135,23 @@ export function curveOrthotomic(evaluator, ox, oy) {
     }
   };
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @param {*} ox
+ * @param {*} oy
+ * @returns {*}
+ */
 export function curveCatacaustic(evaluator, ox, oy) {
   return curveEvolute(curveOrthotomic(evaluator, ox, oy));
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @param {*} ox
+ * @param {*} oy
+ * @returns {*}
+ */
 export function curvePedalCurve(evaluator, ox, oy) {
   var neweval = evaluator;
   return {
@@ -136,7 +172,14 @@ export function curvePedalCurve(evaluator, ox, oy) {
     }
   };
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} evaluator
+ * @param {*} ox
+ * @param {*} oy
+ * @param {*} radius
+ * @returns {*}
+ */
 export function curveInverse(evaluator, ox, oy, radius) {
   var neweval = evaluator;
   return {
@@ -153,7 +196,12 @@ export function curveInverse(evaluator, ox, oy, radius) {
     }
   };
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} directrix
+ * @param {*} director
+ * @returns {*}
+ */
 export function ruledSurface(directrix, director) {
   return new Surface({
     "evaluate":function(u, v) {
@@ -167,7 +215,12 @@ export function ruledSurface(directrix, director) {
     }
   });
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} func
+ * @param {*} phase
+ * @returns {*}
+ */
 export function polarCurve(func, phase) {
   var pfunc = func;
   var pphase = phase;
@@ -187,7 +240,12 @@ export function polarCurve(func, phase) {
     }
   });
 }
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} radius
+ * @param {*} phase
+ * @returns {*}
+ */
 export function spiralCurve(radius, phase) {
   var pphase = phase;
   return new H3DU.Curve({

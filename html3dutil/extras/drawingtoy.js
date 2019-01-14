@@ -109,12 +109,12 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   });
 };
 /**
- * TODO: Not documented yet.
- * @param {number} ringTeeth
- * @param {number} wheelTeeth
- * @param {number} hole
- * @param {number} phase
- * @param {number} offset
+ * Adds line segments that approximate a curve drawn by rolling a wheel inside a fixed ring (a <i>hypotrochoid</i>).
+ * @param {number} ringTeeth Number of teeth in the fixed ring.
+ * @param {number} wheelTeeth Number of teeth in the rolling wheel.
+ * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
+ * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
+ * @param {number} [offset] X coordinate of the center of the fixed ring. If null, undefined, or omitted, the default value is 0.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset) {
@@ -126,11 +126,11 @@ DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset)
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {number} ringTeeth
- * @param {number} wheelTeeth
- * @param {number} hole
- * @param {number} phase
+ * Adds line segments that approximate a curve drawn by rolling a wheel outside a fixed ring (an <i>epitrochoid</i>).
+ * @param {number} ringTeeth Number of teeth in the fixed ring.
+ * @param {number} wheelTeeth Number of teeth in the rolling wheel.
+ * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
+ * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
@@ -142,15 +142,15 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
   return this;
 };
 /**
- * TODO: Not documented yet.
- * @param {number} ringTeeth
- * @param {number} wheelTeeth
- * @param {number} hole
- * @param {number} phase
- * @param {number} offset
- * @param {number} holeStep
- * @param {number} offsetStep
- * @param {number} count
+ * Adds line segments that approximate one or more curves drawn by rolling a wheel inside a fixed ring (<i>hypotrochoids</i>), where each additional curve may be drawn from a different hole position, a different ring position, or both.
+ * @param {number} ringTeeth Number of teeth in the fixed ring.
+ * @param {number} wheelTeeth Number of teeth in the rolling wheel.
+ * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
+ * @param {number} phase Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
+ * @param {number} offset X coordinate of the center of the fixed ring.
+ * @param {number} holeStep TODO: Not documented yet.
+ * @param {number} offsetStep TODO: Not documented yet.
+ * @param {number} count TODO: Not documented yet.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.continuousHypo = function(

@@ -324,7 +324,7 @@ Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the X axis.
  * <p>
  * The following curves can be generated with this class (in the following
- * descriptions, R means <code>radius</code>
+ * descriptions, R = <code>radius</code>
  * and D = <code>distFromCenter</code>).<ul>
  * <li>Cycloid: D = R (trochoid touching the X axis).</li>
  * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
@@ -486,9 +486,11 @@ Epitrochoid.prototype.scaleTo = function(radius) {
     this.distFromRoller * ratio);
 };
 
+// Complex multiplication
 function cmul(a, b) {
   return [a[0] * b[0] - a[1] * b[1], a[1] * b[0] + a[0] * b[1]];
 }
+// Complex division
 function cdiv(a, b) {
   return cmul(
     [a[0] * b[0] + a[1] * b[1], a[1] * b[0] - a[0] * b[1]],
@@ -496,11 +498,14 @@ function cdiv(a, b) {
 }
 /**
  * TODO: Not documented yet.
- * @param {*} rollingCurve
- * @param {*} fixedCurve
- * @param {*} polePoint
- * @param {*} revolutions
- * @returns {*}
+ * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
+ * This curve is assumed to be a smooth closed curve such as a circle.
+ * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
+ * curve is assumed to be repeating (periodic) and smooth at every point;
+ * this includes periodic waves and circles.
+ * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
+ * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
+ * @param {number} [revolutions]
  */
 export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
   this.revolutions = revolutions === null ? 20 : revolutions;
@@ -512,6 +517,10 @@ export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions)
   this.endPoints = () => [0, this.fixedCurveLength * this.revolutions];
 
   this.evaluate = function(u) {
+    // See Wikipedia article "Roulette (curve)".
+    // Modulo is here because fixed and rolling curves are
+    // assumed to be periodic. TODO: Support cases where
+    // endPoints[0] isn't 0
     var f = this.fixedcurve.evaluate(u % this.fixedCurveLength);
     var df = this.fixedcurve.tangent(u % this.fixedCurveLength);
     var r = this.rolling.evaluate(u % this.rollingCurveLength);

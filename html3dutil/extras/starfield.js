@@ -8,7 +8,11 @@
  http://peteroupc.github.io/
 */
 import {H3DU} from "../h3du_min";
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} range
+ * @returns {*}
+ */
 export function StarField(range) {
   this._setStarPos = function(star, range) {
     var x = 0,
