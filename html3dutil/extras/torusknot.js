@@ -9,22 +9,22 @@
 
 import {MathUtil} from "../h3du_module.js";
 /**
- * TODO: Not documented yet.
- * @param {*} revolutions
- * @param {*} r
- * @param {*} q
- * @param {*} s1
- * @param {*} m1
- * @returns {*} Return value.
- * @function
+ * Generates torus knots and torus-knot-like curves.
+ * Uses the formula given in "Decorative Knot Patterns"
+ * by L. D. Taylor, 2011.
+ * @param {number} revolutions Integer greater than 0. Labeled 'p' by Taylor.
+ * @param {Array<number>} r Array of integers and/or non-integers.
+ * @param {Array<number>} q Array of integers. Lowest 'q' is the number of equal "parts"
+ * of the torus knot.
+ * @param {number} s1 Integer or non-integer parameter.
+ * @param {number} m1 Integer parameter.
+ * @constructor
  */
 export var TorusKnot = function(revolutions, r, q, s1, m1) {
-  // Formula from "Decorative Knot Patterns"
-  // by L. D. Taylor, 2011.
-  // NOTE: Integer greater than 0. Labeled 'p' by Taylor
+  // Formula from
+  // NOTE:
   this.revolutions = revolutions;
-  // NOTE: All integers.  Lowest 'q' is the number of equal "parts"
-  // of the torus knot
+  // NOTE: All integers.
   this.q = q;
   this.r = r;
   this.s1 = s1;
@@ -57,7 +57,7 @@ export var TorusKnot = function(revolutions, r, q, s1, m1) {
 /**
  * TODO: Not documented yet.
  * @param {*} p
- * @param {*} q
+ * @param {*} qs
  * @param {*} r1
  * @returns {*} Return value.
  */

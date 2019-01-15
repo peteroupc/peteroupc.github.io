@@ -51,8 +51,8 @@ const AFTER_SOLID = 3;
 /**
  * TODO: Not documented yet.
  * @param {*} str
- * @returns {*}
-@function
+ * @returns {*} Return value.
+ * @function
  */
 export var fromStlString = function(str) {
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
