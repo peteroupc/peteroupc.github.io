@@ -140,28 +140,28 @@ V each range from 0 through 1.)</p>
     // the Z coordinate.
     return [u, v, 0];
   }
-}
+};
 </pre>
 
 <p>That evaluator simply generates a square at the top-right quadrant:</p>
 
 <p><img src="surfaces2.png" alt="**The parametric surface.**"></p>
 
-<p>And the following evaluator generates a circle:</p>
+<p>And the following evaluator generates a circular disc:</p>
 
 <pre>var evaluator = {
   &quot;evaluate&quot;:function(u, v){
-     // Return circle coordinates.
+     // Return disc coordinates.
      return [u*Math.cos(v),u*Math.sin(v),0];
   },
   // Declare the usual range of the coordinates
   &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
-}
+};
 </pre>
 
 <p><img src="surfaces3.png" alt="**The parametric surface.**"></p>
 
-<p>Now here&#39;s the interesting part: This evaluator returns not a circle,
+<p>Now here&#39;s the interesting part: This evaluator returns not a disc,
 but a <em>cone</em>, whose length runs along the negative Z axis:</p>
 
 <pre>var evaluator = {
@@ -172,21 +172,16 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
   },
   // Declare the usual range of the coordinates
   &quot;endPoints&quot;:function(){ return [0,1,0,Math.PI*2]; }
-}
+};
 </pre>
 
 <p>The following shape was rotated to show the Z axis; the rotation isn&#39;t perfect.</p>
 
 <p><img src="surfaces4.png" alt="**The parametric surface.**"></p>
 
-<p>Note that all three examples above use a value named <code>evaluator</code>. To generate
-a mesh with an evaluator and add it to the 3D scene, you then need to do:</p>
+<p>Note that all three examples above use a value named <code>evaluator</code>. A mesh buffer can be generated using something like the following:</p>
 
-<pre>// Assumes that a Scene3D object named _scene_ was previously defined.
-// Create a 3D shape using the makeMesh method given earlier on this page
-var shape = new H3DU.Shape(makeMesh(evaluator));
-// Add the shape to the 3D scene
-scene.addShape(shape);
+<pre>var meshBuffer = SurfaceBuilder().surfaceToBuffer(evaluator);
 </pre>
 
 <p>The generated 3D mesh buffer from a parametric surface is just like any
@@ -198,9 +193,7 @@ can be used on this mesh buffer as well. For more information, see the API refer
 
 <h2>Chaining Surface Functions</h2>
 
-<p>The technique of using surface evaluator objects is very flexible. In fact, you can chain evaluators,
-using the output of one evaluator as the input of another evaluator. This can be used
-to transform the surface&#39;s points to new positions.</p>
+<p>The technique of using surface evaluator objects is very flexible. In fact, you can chain evaluators, using the output of one evaluator as the input of another evaluator. This can be used to transform the surface&#39;s points to new positions.</p>
 
 <p>As an example, we&#39;ll define a new evaluator that shifts the position
 of a parametric surface. It takes an existing surface evaluator and the X, Y, and

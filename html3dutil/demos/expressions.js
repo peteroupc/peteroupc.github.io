@@ -1097,7 +1097,7 @@ Constant.prototype.divide = function(x) {
 /* exported getExpression */
 var getExpression = function(expr) {
   "use strict";
-  var c, d, e,
+  var c,
     test = null,
     tokens = null,
     token = null,
@@ -1123,7 +1123,7 @@ var getExpression = function(expr) {
     lastexpr = expressions[expressions.length - 1];
     if (token[0] === "lparen") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (typeof prevexpr !== "undefined" && prevexpr !== null)) ? (d = (e = prevexpr instanceof Constant) !== false && (typeof e !== "undefined" && e !== null) ? e : prevexpr instanceof Variable) !== false && (typeof d !== "undefined" && d !== null) ? d : prevexpr instanceof Expression : c) {
+      if(prevexpr !== null && (prevexpr instanceof Constant || prevexpr instanceof Variable || prevexpr instanceof Expression)) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       expressions.push(new Expression());
@@ -1142,8 +1142,7 @@ var getExpression = function(expr) {
     } else if (token[0] === "constant") {
       if (token[1] < 0) {
         prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-        if ((c = prevexpr !== false && (typeof prevexpr !== "undefined" && prevexpr !== null)) ?
-          !((d = prevexpr instanceof Operator, d !== false && (typeof d !== "undefined" && d !== null) ? prevexpr.name === "pow" : d)) : c) {
+        if(prevexpr !== null && prevexpr.name !== "pow") {
           lastexpr.nodes.push(new Operator("plus"));
         }
         lastexpr.nodes.push(new Constant(token[1]));
@@ -1152,13 +1151,13 @@ var getExpression = function(expr) {
       }
     } else if (token[0] === "variable") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (typeof prevexpr !== "undefined" && prevexpr !== null)) ? (d = (e = prevexpr instanceof Constant) !== false && (typeof e !== "undefined" && e !== null) ? e : prevexpr instanceof Variable) !== false && (typeof d !== "undefined" && d !== null) ? d : prevexpr instanceof Expression : c) {
+      if(prevexpr !== null && (prevexpr instanceof Constant || prevexpr instanceof Variable || prevexpr instanceof Expression)) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       lastexpr.nodes.push(new Variable(token[1]));
     } else if (token[0] === "knownconstant") {
       prevexpr = lastexpr.nodes.length === 0 ? null : lastexpr.nodes[lastexpr.nodes.length - 1];
-      if ((c = prevexpr !== false && (typeof prevexpr !== "undefined" && prevexpr !== null)) ? (d = (e = prevexpr instanceof Constant) !== false && (typeof e !== "undefined" && e !== null) ? e : prevexpr instanceof Variable) !== false && (typeof d !== "undefined" && d !== null) ? d : prevexpr instanceof Expression : c) {
+      if(prevexpr !== null && (prevexpr instanceof Constant || prevexpr instanceof Variable || prevexpr instanceof Expression)) {
         lastexpr.nodes.push(new Operator("mul"));
       }
       lastexpr.nodes.push(new Constant(null, token[1]));

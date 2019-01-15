@@ -8,7 +8,7 @@
 */
 
 /**
- * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix. This is a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. It takes three uniforms: "sampler", which
+ * GLSL shader data for a family of image processing filters, which modify colors based on a transformation matrix, a 4x4 matrix that is multiplied by the red/green/blue color to get a new color. The shader program takes three uniforms: "sampler", which
  * is the input texture, "t", a value from 0 to 1 indicating how strongly to
  * apply the color matrix, and "matrix", which is the 4x4 matrix just described.
  */
