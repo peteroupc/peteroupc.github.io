@@ -8,6 +8,12 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ * @param {*} data
+ * @returns {*}
+@function
+ */
 export var loadTga = function(data) {
   var view = new DataView(data);
   // NOTE: id is byte 0; cmaptype is byte 1

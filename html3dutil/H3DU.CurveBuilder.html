@@ -40,7 +40,7 @@ generated so far.</li>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>curve</code> (Type: Object)<br>A curve evaluator object that describes the parametric curve used to generate attribute values.</li>
+<li><code>curve</code> (Type: Object)<br>A curve evaluator object that describes the parametric curve used to generate attribute values. U coordinates for the given curve correspond to U coordinates for the curve used to generate vertex positions.</li>
 <li><code>semantic</code> (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.html#Semantic.POSITION">Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
 <li><code>semanticIndex</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. If null or undefined, this value is 0.</li>
 <li><code>size</code> (Type: number) (optional)<br>The number of elements in each position value. For example, if the attribute is 3-dimensional, this parameter is 3. If null, undefined, or omitted, the default is 3. Throws an error if this value is 0 or less.</li>
@@ -203,6 +203,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="KleinBottle.html">KleinBottle</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="MoebiusLikeStrip.html">MoebiusLikeStrip</a></li>
 <li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
@@ -229,11 +230,15 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="curveOrthotomic.html">curveOrthotomic</a></li>
 <li><a href="curvePedalCurve.html">curvePedalCurve</a></li>
 <li><a href="curveRadialCurve.html">curveRadialCurve</a></li>
+<li><a href="fragmentShaderLib.html">fragmentShaderLib</a></li>
 <li><a href="getColorMatrix.html">getColorMatrix</a></li>
 <li><a href="getKernelMatrix.html">getKernelMatrix</a></li>
+<li><a href="horizontalGradient.html">horizontalGradient</a></li>
+<li><a href="loadTga.html">loadTga</a></li>
 <li><a href="normalizeKernelInPlace.html">normalizeKernelInPlace</a></li>
 <li><a href="planePointsToConvexHull.html">planePointsToConvexHull</a></li>
 <li><a href="polarCurve.html">polarCurve</a></li>
+<li><a href="radialGradient.html">radialGradient</a></li>
 <li><a href="randomConvexPolyhedron.html">randomConvexPolyhedron</a></li>
 <li><a href="raypick.html">raypick</a></li>
 <li><a href="ruledSurface.html">ruledSurface</a></li>

@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ */
 export var checkerboardShader = {
   "uniform":{
     "blackColor":[0, 0, 0],

@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 import {fragmentShaderLib} from "./fragmentshaderlib";
+/**
+ * TODO: Not documented yet.
+ */
 export var woodShader = {
   "uniform":{
     "darkColor":[0, 0, 0],

@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ */
 export var sunburstBackShader = {
   "uniform":{
     "blackColor":[0, 0, 0],

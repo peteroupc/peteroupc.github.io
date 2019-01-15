@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ */
 export var vignetteShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",

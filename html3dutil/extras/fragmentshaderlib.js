@@ -6,6 +6,12 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+/**
+ * TODO: Not documented yet.
+ * @returns {*}
+@function
+ */
 export var fragmentShaderLib = function() {
   return ["",
     "// NOTE: The online Book of Shaders, chapter 10, has",

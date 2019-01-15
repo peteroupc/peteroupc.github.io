@@ -179,9 +179,9 @@ but a <em>cone</em>, whose length runs along the negative Z axis:</p>
 
 <p><img src="surfaces4.png" alt="**The parametric surface.**"></p>
 
-<p>Note that all three examples above use a value named <code>evaluator</code>. A mesh buffer can be generated using something like the following:</p>
+<p>Note that all three examples above use a value named <code>evaluator</code>. A mesh buffer for the surface evaluator can be generated using something like the following:</p>
 
-<pre>var meshBuffer = SurfaceBuilder().surfaceToBuffer(evaluator);
+<pre>var meshBuffer = SurfaceBuilder.surfaceToBuffer(evaluator);
 </pre>
 
 <p>The generated 3D mesh buffer from a parametric surface is just like any
@@ -226,11 +226,11 @@ or the makeMesh method above.</p>
 }
 </pre>
 
-<p>And here&#39;s an example of its use. We&#39;ll take the circle surface given above,
+<p>And here&#39;s an example of its use. We&#39;ll take the disc surface given above,
 and create a SurfaceShifter object that shifts the circle by 3 units horizontally
 and vertically (by default, the circle will be centered at the origin (0, 0, 0)).</p>
 
-<pre>// This is the circle surface from before
+<pre>// This is the disc surface from before
 var evaluator = {
   &quot;evaluate&quot;:function(u, v){
      // Extend the range of v
@@ -265,32 +265,25 @@ And each (U) point corresponds to an (X, Y, Z) point that lies on the curve.</p>
 curve can be a seen as a &quot;warped&quot; version of a line.</p>
 
 <p>One simple example of a parametric curve is a circle. In fact, the same source
-code for the circle surface given above can also serve as the parametric curve
-function, since it only uses the variable <em>u</em>, not <em>v</em>.</p>
+code for the disc surface given above can also serve as the parametric curve
+function for the circle, since it only uses the variable <em>u</em>, not <em>v</em>.</p>
 
 <p>Note that any surface evaluator that only uses <em>u</em> can easily serve as a
-parametric curve evaluator, as can any surface in which the <em>v</em> parameter is
+parametric curve evaluator, and so can any surface in which the <em>v</em> parameter is
 kept to the same value, such as 0, 1, or any other constant number.</p>
 
 <p><a id=Generating_Parametric_Curves></a></p>
 
 <h3>Generating Parametric Curves</h3>
 
-<p>The HTML 3D Library&#39;s <code>H3DU.CurveBuilder</code> class generates vertices for
+<p>The HTML 3D Library&#39;s <code>CurveBuilder</code> class generates vertices for
 a parametric curve.</p>
 
 <p>Use code like the following to generate a mesh describing a parametric
 curve. It assumes that <code>evaluator</code> is a parametric curve object, just like
 the circle example above.</p>
 
-<pre>  // Create a curve evaluator
-  var ev=new H3DU.CurveBuilder()
-  .position(evaluator)
-   // Evaluate the curve, using 99 lines (100 points). Alternatively,
-   // H3DU.Mesh.POINTS can be used.
-  .evalCurve(H3DU.Mesh.LINES,100);
-  // Create a mesh describing the curve
-  var mesh=ev.toMeshBuffer()
+<pre>var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 </pre>
 
 <p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
@@ -431,6 +424,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
+<li><a href="KleinBottle.html">KleinBottle</a></li>
 <li><a href="MatrixStack.html">MatrixStack</a></li>
 <li><a href="MoebiusLikeStrip.html">MoebiusLikeStrip</a></li>
 <li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
@@ -457,11 +451,15 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="curveOrthotomic.html">curveOrthotomic</a></li>
 <li><a href="curvePedalCurve.html">curvePedalCurve</a></li>
 <li><a href="curveRadialCurve.html">curveRadialCurve</a></li>
+<li><a href="fragmentShaderLib.html">fragmentShaderLib</a></li>
 <li><a href="getColorMatrix.html">getColorMatrix</a></li>
 <li><a href="getKernelMatrix.html">getKernelMatrix</a></li>
+<li><a href="horizontalGradient.html">horizontalGradient</a></li>
+<li><a href="loadTga.html">loadTga</a></li>
 <li><a href="normalizeKernelInPlace.html">normalizeKernelInPlace</a></li>
 <li><a href="planePointsToConvexHull.html">planePointsToConvexHull</a></li>
 <li><a href="polarCurve.html">polarCurve</a></li>
+<li><a href="radialGradient.html">radialGradient</a></li>
 <li><a href="randomConvexPolyhedron.html">randomConvexPolyhedron</a></li>
 <li><a href="raypick.html">raypick</a></li>
 <li><a href="ruledSurface.html">ruledSurface</a></li>

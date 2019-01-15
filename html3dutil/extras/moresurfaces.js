@@ -7,6 +7,12 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+/**
+ * TODO: Not documented yet.
+ * @returns {*}
+@function
+ */
 export var KleinBottle = function() {
   this.endPoints = function() {
     return [0, 6.283185307179586, 0, 6.283185307179586];

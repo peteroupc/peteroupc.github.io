@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ */
 export var skySphereShader = {
   "vertexShader":["varying vec4 positionVar;",
     "void main() {",
@@ -28,6 +31,9 @@ export var skySphereShader = {
   ].join("\n"),
   "uniform":{"texture":null}
 };
+/**
+ * TODO: Not documented yet.
+ */
 export var skySphereCubeMapShader = {
   "vertexShader":["varying vec4 positionVar;",
     "void main() {",

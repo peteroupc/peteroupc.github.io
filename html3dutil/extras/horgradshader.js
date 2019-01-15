@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 
+/**
+ * TODO: Not documented yet.
+ */
 export var horGradientShader = {
   "uniform":{
     "color1":[0, 0, 0, 1],

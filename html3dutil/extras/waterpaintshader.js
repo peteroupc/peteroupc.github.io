@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 // Adapted from Themaister's Waterpaint shader
+/**
+ * TODO: Not documented yet.
+ */
 export var waterpaintShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",

@@ -780,10 +780,10 @@ function getIntersectingPoints(planes) {
   return ret;
 }
 /**
- * TODO: Not documented yet.
- * @param {*} avgsize
- * @param {*} maxfaces
- * @returns {*} Return value.
+ * Generates a mesh buffer of a convex polyhedron at random.
+ * @param {number} avgsize Average size of the polyhedron generated.
+ * @param {number} maxfaces Maximum number of faces for the convex polyhedron.
+ * @returns {MeshBuffer} The resulting polyhedron.
  * @function
  */
 export var randomConvexPolyhedron = function(avgsize, maxfaces) {

@@ -26,8 +26,7 @@ function gcd(u, v) {
   return u;
 }
 /**
- * TODO: Not documented yet.
- * @returns {*} Return value.
+ * Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels. Curves generated currently assume that the radius of each ring and wheel is equal to its tooth count divided by 5.
  * @constructor
  */
 export var DrawingToy = function() {
@@ -35,8 +34,9 @@ export var DrawingToy = function() {
   this.ce = new CurveBuilder();
 };
 /**
- * TODO: Not documented yet.
- * @param {*} color
+ * Sets the color to apply when drawing future curves with this object.
+ * @param {Array<number>|number|string} color A [color vector or string]{@link toGLColor}
+ * identifying the color to apply.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.setColor = function(color) {

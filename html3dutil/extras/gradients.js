@@ -9,10 +9,15 @@
 */
 
 import {MathUtil, toGLColor} from "../h3du_module";
-
+/**
+ * TODO: Not documented yet.
+ * @param {*} color1
+ * @param {*} color2
+ * @returns {*}
+ */
+export function horizontalGradient(color1, color2) {
 // Generates a linear gradient in the horizontal direction.
 // This function demonstrates generating a custom texture.
-export function horizontalGradient(color1, color2) {
   color1 = toGLColor(color1);
   color2 = toGLColor(color2);
   var arr = [];
@@ -34,9 +39,14 @@ export function horizontalGradient(color1, color2) {
   }
   return new Uint8Array(gradient);
 }
-
-// Generates a radial gradient
+/**
+ * TODO: Not documented yet.
+ * @param {*} colorCenter
+ * @param {*} colorEdges
+ * @returns {*}
+ */
 export function radialGradient(colorCenter, colorEdges) {
+// Generates a radial gradient
   colorCenter = toGLColor(colorCenter);
   colorEdges = toGLColor(colorEdges);
   var gradient = [];

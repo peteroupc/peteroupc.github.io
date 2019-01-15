@@ -7,6 +7,9 @@
  http://peteroupc.github.io/
 */
 import {fragmentShaderLib} from "./fragmentshaderlib";
+/**
+ * TODO: Not documented yet.
+ */
 export var marbleShader = {
   "uniform":{"u_time":0},
   "vertexShader":[
