@@ -778,7 +778,7 @@ Camera.prototype._updateNew = function(input) {
   if(deltaTicks !== 0) {
     // mousewheel up (negative) means move forward,
     // mousewheel down (positive) means move back
-    console.log(deltaTicks);
+    // console.log(deltaTicks);
     this.setDistance(this.getDistance() - 0.6 * deltaTicks);
   }
   return this;
