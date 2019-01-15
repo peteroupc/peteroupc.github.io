@@ -9,9 +9,8 @@
 */
 
 /**
- * TODO: Not documented yet.
- * @returns {*}
-@function
+ * Surface evaluator object for the Klein surface, also known as the "Klein bottle".
+ * @constructor
  */
 export var KleinBottle = function() {
   this.endPoints = function() {
@@ -66,11 +65,10 @@ export var MoebiusLikeStrip = function(maj, a, b) {
   };
 };
 /**
- * TODO: Not documented yet.
- * @param {*} radius
- * @param {*} width
- * @returns {*} Return value.
- * @function
+ * Surface evaluator object for a M&ouml;bius strip.
+ * @param {number} radius
+ * @param {number} width Width of the strip.
+ * @constructor
  */
 export var MoebiusStrip = function(radius, width) {
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;

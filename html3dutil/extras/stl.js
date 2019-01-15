@@ -48,7 +48,12 @@ const IN_FACET = 2;
 const IN_OUTER_LOOP = 3;
 /** @ignore */
 const AFTER_SOLID = 3;
-/** @ignore */
+/**
+ * TODO: Not documented yet.
+ * @param {*} str
+ * @returns {*}
+@function
+ */
 export var fromStlString = function(str) {
   var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +

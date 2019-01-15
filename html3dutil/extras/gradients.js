@@ -13,7 +13,7 @@ import {MathUtil, toGLColor} from "../h3du_module";
  * TODO: Not documented yet.
  * @param {*} color1
  * @param {*} color2
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function horizontalGradient(color1, color2) {
 // Generates a linear gradient in the horizontal direction.
@@ -43,7 +43,7 @@ export function horizontalGradient(color1, color2) {
  * TODO: Not documented yet.
  * @param {*} colorCenter
  * @param {*} colorEdges
- * @returns {*}
+ * @returns {*} Return value.
  */
 export function radialGradient(colorCenter, colorEdges) {
 // Generates a radial gradient

@@ -9,8 +9,8 @@
 
 /**
  * TODO: Not documented yet.
- * @returns {*}
-@function
+ * @returns {*} Return value.
+ * @function
  */
 export var fragmentShaderLib = function() {
   return ["",

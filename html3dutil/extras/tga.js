@@ -11,8 +11,8 @@
 /**
  * TODO: Not documented yet.
  * @param {*} data
- * @returns {*}
-@function
+ * @returns {*} Return value.
+ * @function
  */
 export var loadTga = function(data) {
   var view = new DataView(data);
