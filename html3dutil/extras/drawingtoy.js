@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/drawingtoy.js";</pre>
  * @module extras/drawingtoy */
-/** The <code>extras/drawingtoy.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/drawingtoy.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/drawingtoy.js";
- * @module extras/drawingtoy */
 
 /*
  Any copyright to this file is released to the Public Domain.

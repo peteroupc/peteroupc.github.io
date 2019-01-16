@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/waterpaintshader.js";</pre>
  * @module extras/waterpaintshader */
-/** The <code>extras/waterpaintshader.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/waterpaintshader.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/waterpaintshader.js";
- * @module extras/waterpaintshader */
 
 /*
  Any copyright to this file is released to the Public Domain.

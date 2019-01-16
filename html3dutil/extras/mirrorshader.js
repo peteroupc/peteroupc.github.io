@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/mirrorshader.js";</pre>
  * @module extras/mirrorshader */
-/** The <code>extras/mirrorshader.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/mirrorshader.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/mirrorshader.js";
- * @module extras/mirrorshader */
 
 /*
  Any copyright to this file is released to the Public Domain.

@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/createfloor.js";</pre>
  * @module extras/createfloor */
-/** The <code>extras/createfloor.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/createfloor.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/createfloor.js";
- * @module extras/createfloor */
 
 /*
  Any copyright to this file is released to the Public Domain.

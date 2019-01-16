@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/gradients.js";</pre>
  * @module extras/gradients */
-/** The <code>extras/gradients.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/gradients.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/gradients.js";
- * @module extras/gradients */
 
 /* global Uint8Array */
 /*

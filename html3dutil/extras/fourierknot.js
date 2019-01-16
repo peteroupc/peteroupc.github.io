@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/fourierknot.js";</pre>
  * @module extras/fourierknot */
-/** The <code>extras/fourierknot.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/fourierknot.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/fourierknot.js";
- * @module extras/fourierknot */
 
 /*
  Any copyright to this file is released to the Public Domain.

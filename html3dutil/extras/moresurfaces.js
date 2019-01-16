@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/moresurfaces.js";</pre>
  * @module extras/moresurfaces */
-/** The <code>extras/moresurfaces.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/moresurfaces.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/moresurfaces.js";
- * @module extras/moresurfaces */
 
 /* global H3DU */
 /*

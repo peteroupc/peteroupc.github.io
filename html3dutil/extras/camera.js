@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/camera.js";</pre>
  * @module extras/camera */
-/** The <code>extras/camera.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/camera.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/camera.js";
- * @module extras/camera */
 
 /*
  Any copyright to this file is released to the Public Domain.

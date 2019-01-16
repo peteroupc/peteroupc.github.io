@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/derivedcurves.js";</pre>
  * @module extras/derivedcurves */
-/** The <code>extras/derivedcurves.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/derivedcurves.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/derivedcurves.js";
- * @module extras/derivedcurves */
 
 /* global H3DU, Surface */
 /*

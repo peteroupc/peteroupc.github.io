@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/vignetteshader.js";</pre>
  * @module extras/vignetteshader */
-/** The <code>extras/vignetteshader.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/vignetteshader.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/vignetteshader.js";
- * @module extras/vignetteshader */
 
 /*
  Any copyright to this file is released to the Public Domain.

@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/curvetube.js";</pre>
  * @module extras/curvetube */
-/** The <code>extras/curvetube.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/curvetube.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/curvetube.js";
- * @module extras/curvetube */
 
 /*
  Any copyright to this file is released to the Public Domain.
@@ -21,10 +14,13 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global H3DU */
-/** @ignore */
-H3DU._TBNFrames = function(func) {
-  this.func = typeof H3DU.Curve !== "undefined" && H3DU.Curve !== null ? new H3DU.Curve(func) : func;
+/* global MathUtil, Surface */
+import {Curve, MathInfo} from "../h3du_module";
+
+/** @ignore
+ * @constructor */
+var _TBNFrames = function(func) {
+  this.func = typeof Curve !== "undefined" && Curve !== null ? new Curve(func) : func;
   this.normals = [];
   this.binormals = [];
   this.tangents = [];
@@ -34,10 +30,10 @@ H3DU._TBNFrames = function(func) {
   var res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
   var totalLength = 0;
   var runningLengths = [0];
-  this.endPoints = H3DU._TBNFrames.getEndPoints(func);
+  this.endPoints = _TBNFrames.getEndPoints(func);
   var firstSample = this.func.evaluate(this.endPoints[0]);
   var lastSample = this.func.evaluate(this.endPoints[1]);
-  if(H3DU._TBNFrames._distSq(firstSample, lastSample) < H3DU._TBNFrames._EPSILON) {
+  if(_TBNFrames._distSq(firstSample, lastSample) < _TBNFrames._EPSILON) {
     isClosed = true;
   }
   this.isClosed = isClosed;
@@ -47,36 +43,36 @@ H3DU._TBNFrames = function(func) {
     if(i === 0)e0 = firstSample;
     else if(i === res)e0 = lastSample;
     else e0 = this.func.evaluate(t);
-    this.tangents[i] = H3DU._TBNFrames._getTangent(this.func, t, e0);
+    this.tangents[i] = _TBNFrames._getTangent(this.func, t, e0);
     if(this.isClosed && i > 0) {
-      var len = H3DU.MathUtil.vec3length(
-        H3DU.MathUtil.vec3sub(this.tangents[i], this.tangents[i - 1]));
+      var len = MathUtil.vec3length(
+        MathUtil.vec3sub(this.tangents[i], this.tangents[i - 1]));
       totalLength += len;
       runningLengths[i] = totalLength;
     }
   }
   for(i = 0; i <= res; i++) {
     if(i === 0) {
-      this.normals[i] = H3DU._TBNFrames.normalFromTangent(this.tangents[0]);
+      this.normals[i] = _TBNFrames.normalFromTangent(this.tangents[0]);
     } else {
-      var b = H3DU.MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i]);
-      if(H3DU.MathUtil.vec3length(b) < H3DU._TBNFrames._EPSILON) {
+      var b = MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i]);
+      if(MathUtil.vec3length(b) < _TBNFrames._EPSILON) {
         this.normals[i] = this.normals[i - 1];
       } else {
-        H3DU.MathUtil.vec3normalizeInPlace(b);
-        var cosAngle = H3DU.MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
-        var sinAngle = Math.abs(H3DU.MathUtil.vec3length(
-          H3DU.MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i])));
-        this.normals[i] = H3DU._TBNFrames._rotateVector(
+        MathUtil.vec3normalizeInPlace(b);
+        var cosAngle = MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
+        var sinAngle = Math.abs(MathUtil.vec3length(
+          MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i])));
+        this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i - 1], b, sinAngle, cosAngle);
       }
     }
   }
   if(isClosed && totalLength > 0) {
   // Adjust angles of normals to prevent seams
-    var quat = H3DU.MathUtil.quatFromVectors(this.normals[res], this.normals[0]);
-    var angle = H3DU.MathUtil.quatToAxisAngle(quat)[3];
-    angle *= H3DU.MathUtil.ToRadians;
+    var quat = MathUtil.quatFromVectors(this.normals[res], this.normals[0]);
+    var angle = MathUtil.quatToAxisAngle(quat)[3];
+    angle *= MathUtil.ToRadians;
     // Set basis vectors at ends to the same value
     this.normals[res] = this.normals[0];
     this.tangents[res] = this.tangents[0];
@@ -85,17 +81,17 @@ H3DU._TBNFrames = function(func) {
         var subAngle = angle * runningLengths[i] / totalLength;
         cosAngle = Math.cos(subAngle);
         sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
-        this.normals[i] = H3DU._TBNFrames._rotateVector(
+        this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
     }
   }
   for(i = 0; i <= res; i++) {
-    this.binormals[i] = H3DU.MathUtil.vec3cross(this.tangents[i], this.normals[i]);
+    this.binormals[i] = MathUtil.vec3cross(this.tangents[i], this.normals[i]);
   }
 };
 /** @ignore */
-H3DU._TBNFrames.getEndPoints = function(func) {
+_TBNFrames.getEndPoints = function(func) {
   if(typeof func.endPoints !== "undefined" && func.endPoints !== null) {
     return func.endPoints();
   } else {
@@ -103,32 +99,32 @@ H3DU._TBNFrames.getEndPoints = function(func) {
   }
 };
 /** @ignore */
-H3DU._TBNFrames._getTangent = function(func, t, sampleAtPoint) {
+_TBNFrames._getTangent = function(func, t, sampleAtPoint) {
   var tangent;
   if(typeof func.velocity !== "undefined" && func.velocity !== null) {
     tangent = func.velocity(t);
     if(tangent[0] !== 0 || tangent[1] !== 0 || tangent[2] !== 0) {
-      return H3DU.MathUtil.vec3normalizeInPlace(tangent);
+      return MathUtil.vec3normalizeInPlace(tangent);
     }
   }
   var direction = t === 1 ? -1 : 1;
-  var sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
-  tangent = H3DU.MathUtil.vec3normalizeInPlace(
-    H3DU.MathUtil.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
+  var sampleAtNearbyPoint = func.evaluate(t + direction * _TBNFrames._EPSILON);
+  tangent = MathUtil.vec3normalizeInPlace(
+    MathUtil.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
   if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
     direction = -direction;
-    sampleAtNearbyPoint = func.evaluate(t + direction * H3DU._TBNFrames._EPSILON);
-    tangent = H3DU.MathUtil.vec3sub(sampleAtNearbyPoint, sampleAtPoint);
+    sampleAtNearbyPoint = func.evaluate(t + direction * _TBNFrames._EPSILON);
+    tangent = MathUtil.vec3sub(sampleAtNearbyPoint, sampleAtPoint);
   }
   if(direction < 0) {
     // Since we evaluated backward in this case, the tangent
     // will be backward; negate it here
-    H3DU.MathUtil.vec3scaleInPlace(tangent, -1);
+    MathUtil.vec3scaleInPlace(tangent, -1);
   }
-  return H3DU.MathUtil.vec3normalizeInPlace(tangent);
+  return MathUtil.vec3normalizeInPlace(tangent);
 };
 /** @ignore */
-H3DU._TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
+_TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
   var vx = vec[0];
   var vy = vec[1];
   var vz = vec[2];
@@ -143,13 +139,13 @@ H3DU._TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
 };
 
 /** @ignore */
-H3DU._TBNFrames.normalFromTangent = function(tangent) {
-  return H3DU.MathUtil.vec3normalizeInPlace(H3DU.MathUtil.vec3perp(tangent));
+_TBNFrames.normalFromTangent = function(tangent) {
+  return MathUtil.vec3normalizeInPlace(MathUtil.vec3perp(tangent));
 };
 /** @ignore */
-H3DU._TBNFrames._EPSILON = 0.000001;
+_TBNFrames._EPSILON = 0.000001;
 /** @ignore */
-H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
+_TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
   var uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
   var sample;
   var b, n, t;
@@ -158,7 +154,7 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
   var i, e0, normal, tangent, binormal;
   if(uNorm >= 0 && uNorm <= 1) {
     var index = uNorm * (this.binormals.length - 1);
-    if(Math.abs(index - Math.round(index)) < H3DU._TBNFrames._EPSILON) {
+    if(Math.abs(index - Math.round(index)) < _TBNFrames._EPSILON) {
       index = Math.round(index);
       b = this.binormals[index];
       n = this.normals[index];
@@ -173,11 +169,11 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
       sample = this.func.evaluate(u);
       index = Math.floor(index);
       e0 = sample;
-      tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
-      normal = H3DU.MathUtil.vec3normalizeInPlace(
-        H3DU.MathUtil.vec3cross(this.binormals[index], tangent));
-      binormal = H3DU.MathUtil.vec3normalizeInPlace(
-        H3DU.MathUtil.vec3cross(tangent, normal));
+      tangent = _TBNFrames._getTangent(this.func, u, e0);
+      normal = MathUtil.vec3normalizeInPlace(
+        MathUtil.vec3cross(this.binormals[index], tangent));
+      binormal = MathUtil.vec3normalizeInPlace(
+        MathUtil.vec3cross(tangent, normal));
       b = binormal;
       n = normal;
       t = tangent;
@@ -197,11 +193,11 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
     }
     sample = this.func.evaluate(u);
     e0 = sample;
-    tangent = H3DU._TBNFrames._getTangent(this.func, u, e0);
+    tangent = _TBNFrames._getTangent(this.func, u, e0);
 
-    normal = H3DU._TBNFrames.normalFromTangent(tangent);
-    binormal = H3DU.MathUtil.vec3normalizeInPlace(
-      H3DU.MathUtil.vec3cross(tangent, normal));
+    normal = _TBNFrames.normalFromTangent(tangent);
+    binormal = MathUtil.vec3normalizeInPlace(
+      MathUtil.vec3cross(tangent, normal));
     b = binormal;
     n = normal;
     t = tangent;
@@ -227,7 +223,7 @@ H3DU._TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
   return val;
 };
 /** @ignore */
-H3DU._TBNFrames._distSq = function(a, b) {
+_TBNFrames._distSq = function(a, b) {
   var dx = b[0] - a[0];
   var dy = b[1] - a[1];
   var dz = b[2] - a[2];
@@ -235,31 +231,30 @@ H3DU._TBNFrames._distSq = function(a, b) {
 };
 
 /**
- * A [surface evaluator object]{@link H3DU.Surface} for a tube extruded from a parametric curve.
+ * A [surface evaluator object]{@link Surface} for a tube extruded from a parametric curve.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library.
- * @constructor
- * @memberof H3DU
- * @param {Object} func A [curve evaluator object]{@link H3DU.Curve} that describes the 3-dimensional curve to extrude
+ * @param {Object} func A [curve evaluator object]{@link Curve} that describes the 3-dimensional curve to extrude
  * a tube from. For best results, the curve should be continuous and smooth.
  * @param {number} [thickness] Radius of the
  * extruded tube. If this parameter is null, undefined, or omitted, the default is 0.125.
- * @param {Object} [sweptCurve] A [curve evaluator object]{@link H3DU.Curve} that
+ * @param {Object} [sweptCurve] A [curve evaluator object]{@link Curve} that
  * describes a two-dimensional curve to serve as
  * the cross section of the extruded shape. The curve need not be closed. If this parameter is null, undefined, or omitted, uses a
  * circular cross section in which the V coordinate ranges from 0 through
  * 1. The cross section will generally have a radius of 1 unit; bigger or smaller cross sections
  * will affect the meaning of the "thickness" parameter.
+ * @constructor
  */
-H3DU.CurveTube = function(func, thickness, sweptCurve) {
+export var CurveTube = function(func, thickness, sweptCurve) {
   this.thickness = typeof thickness === "undefined" || thickness === null ? 0.125 : thickness;
   this.sweptCurve = sweptCurve;
   this.func = func;
-  this.tangentFinder = new H3DU._TBNFrames(func);
+  this.tangentFinder = new _TBNFrames(func);
 };
-H3DU.CurveTube.prototype = Object.create(H3DU.Surface.prototype);
-H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
+CurveTube.prototype = Object.create(Surface.prototype);
+CurveTube.prototype.constructor = CurveTube;
 /**
  * Returns the starting and ending U and V coordinates of this surface.
  * @returns A four-element array. The first and second
@@ -271,13 +266,13 @@ H3DU.CurveTube.prototype.constructor = H3DU.CurveTube;
  * section curve is defined, those V coordinates will be that curve's end points (or <code>[0, 1]</code>
  * if it doesn't implement an <code>endPoints</code> method).
  */
-H3DU.CurveTube.prototype.endPoints = function() {
-  var ep = H3DU._TBNFrames.getEndPoints(this.func);
+CurveTube.prototype.endPoints = function() {
+  var ep = _TBNFrames.getEndPoints(this.func);
   if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {
-    var sp = H3DU._TBNFrames.getEndPoints(this.sweptCurve);
+    var sp = _TBNFrames.getEndPoints(this.sweptCurve);
     return [ep[0], ep[1], sp[0], sp[1]];
   } else {
-    return [ep[0], ep[1], 0, H3DU.MathUtil.PiTimes2];
+    return [ep[0], ep[1], 0, MathUtil.PiTimes2];
   }
 };
 /**
@@ -287,7 +282,7 @@ H3DU.CurveTube.prototype.endPoints = function() {
  * tube.
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  */
-H3DU.CurveTube.prototype.evaluate = function(u, v) {
+CurveTube.prototype.evaluate = function(u, v) {
   var basisVectors = this.tangentFinder.getSampleAndBasisVectors(u);
   var sampleX = basisVectors[9];
   var sampleY = basisVectors[10];

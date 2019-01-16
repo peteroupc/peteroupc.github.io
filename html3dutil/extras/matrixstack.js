@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/matrixstack.js";</pre>
  * @module extras/matrixstack */
-/** The <code>extras/matrixstack.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/matrixstack.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/matrixstack.js";
- * @module extras/matrixstack */
 
 /*
  Any copyright to this file is released to the Public Domain.
@@ -27,9 +20,6 @@
  * of 4x4 transformation matrices.<p>
  * When the constructor is called, it will create a stack whose
  * only element is the identity matrix.
- * <p>This class is considered a supplementary class to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
  * @constructor
  */
 export var MatrixStack = function() {

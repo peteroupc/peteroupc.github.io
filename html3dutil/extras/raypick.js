@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/raypick.js";</pre>
  * @module extras/raypick */
-/** The <code>extras/raypick.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/raypick.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/raypick.js";
- * @module extras/raypick */
 
 /*
  Any copyright to this file is released to the Public Domain.

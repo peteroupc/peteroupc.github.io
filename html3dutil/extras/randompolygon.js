@@ -5,15 +5,7 @@
  * // -- or --
  * import * as CustomModuleName from "extras/randompolygon.js";</pre>
  * @module extras/randompolygon */
-/** The <code>extras/randompolygon.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/randompolygon.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/randompolygon.js";
- * @module extras/randompolygon */
 
-/* global H3DU, poly */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -56,8 +48,19 @@ function segsIntersect(a1, a2, b1, b2) {
   }
   return false;
 }
+/**
+ * TODO: Not documented yet.
+ * @param {*} cx TODO: Not documented yet.
+ * @param {*} cy TODO: Not documented yet.
+ * @param {*} avgRadius TODO: Not documented yet.
+ * @param {*} sides TODO: Not documented yet.
+ * @param {*} irregular TODO: Not documented yet.
+ * @param {*} spiky TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+@function
+ */
+export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
 // Inspired by http://stackoverflow.com/questions/8997099
-GraphicsPath.prototype.randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
   var irregularValue = typeof irregular === "undefined" || irregular === null ? 0 : irregular;
   var spikyValue = typeof spiky === "undefined" || spiky === null ? 0 : spiky;
   var step = MathUtil.PiTimes2 / sides;
@@ -72,7 +75,7 @@ GraphicsPath.prototype.randomPolygon = function(cx, cy, avgRadius, sides, irregu
     for(var i = 0; i < sides; i++) {
       var d = step - irregularValue + Math.random() *
        (step + irregularValue - (step - irregularValue));
-      k += d / H3DU.MathUtil.PiTimes2;
+      k += d / MathUtil.PiTimes2;
       deltas.push(d);
     }
     if(k === 0)k = 0.01;
@@ -101,6 +104,7 @@ GraphicsPath.prototype.randomPolygon = function(cx, cy, avgRadius, sides, irregu
       failed |= selfint;
     }
   } while(failed);
+  var poly = new GraphicsPath();
   for(i = 0; i < poly.length; i++) {
     if(i === 0)this.moveTo(poly[i][0], poly[i][1]);
     else this.lineTo(poly[i][0], poly[i][1]);

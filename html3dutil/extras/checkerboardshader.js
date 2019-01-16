@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/checkerboardshader.js";</pre>
  * @module extras/checkerboardshader */
-/** The <code>extras/checkerboardshader.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/checkerboardshader.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/checkerboardshader.js";
- * @module extras/checkerboardshader */
 
 /*
  Any copyright to this file is released to the Public Domain.

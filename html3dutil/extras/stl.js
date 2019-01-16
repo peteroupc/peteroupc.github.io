@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/stl.js";</pre>
  * @module extras/stl */
-/** The <code>extras/stl.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/stl.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/stl.js";
- * @module extras/stl */
 
 /*
  Any copyright to this file is released to the Public Domain.

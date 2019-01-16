@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/evaluators.js";</pre>
  * @module extras/evaluators */
-/** The <code>extras/evaluators.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/evaluators.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/evaluators.js";
- * @module extras/evaluators */
 
 /*
  Any copyright to this file is released to the Public Domain.
@@ -210,13 +203,6 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
  * <li>Deltoid: O = R*3; D = R.</li>
  * <li>Astroid: O = R*4; D = R.</li>
  * <li>N-pointed hypocycloid: O = R * N; D = R.</li></ul>
- * <p>This class is considered a supplementary class to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
- * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
  * @augments Curve
  * @param {number} outerRadius Radius of the circle whose position
@@ -344,9 +330,6 @@ Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
  * <li>Cycloid: D = R (trochoid touching the X axis).</li>
  * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
  * <li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
- * <p>This class is considered a supplementary class to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
  * @constructor
  * @augments Curve
  * @param {number} radius Radius of the rolling circle.
@@ -414,13 +397,6 @@ Trochoid.prototype.velocity = function(u) {
  * <li>Ranunculoid: R = O/5; D = O/5.</li>
  * <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
  * <li>Circle: O = 0; the radius will be R - D.</li></ul>
- * <p>This class is considered a supplementary class to the
- * Public Domain HTML 3D Library and is not considered part of that
- * library. <p>
- * To use this class, you must include the script "extras/evaluators.js"; the
- * class is not included in the "h3du_min.js" file which makes up
- * the HTML 3D Library. Example:<pre>
- * &lt;script type="text/javascript" src="extras/evaluators.js">&lt;/script></pre>
  * @constructor
  * @augments Curve
  * @param {number} outerRadius Radius of the circle whose position

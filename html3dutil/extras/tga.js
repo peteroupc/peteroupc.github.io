@@ -5,13 +5,6 @@
  * // -- or --
  * import * as CustomModuleName from "extras/tga.js";</pre>
  * @module extras/tga */
-/** The <code>extras/tga.js</code> module.
- * To import all symbols in this module, either of the following can be used:
- * <pre>
- * import * from "extras/tga.js";
- * // -- or --;
- * import * as CustomModuleName from "extras/tga.js";
- * @module extras/tga */
 
 /* global DataView, Uint8Array, buf */
 /*
