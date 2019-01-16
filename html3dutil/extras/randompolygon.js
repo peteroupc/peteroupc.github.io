@@ -57,7 +57,7 @@ function segsIntersect(a1, a2, b1, b2) {
  * @param {*} irregular TODO: Not documented yet.
  * @param {*} spiky TODO: Not documented yet.
  * @returns {*} TODO: Not documented yet.
-@function
+ * @function
  */
 export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
 // Inspired by http://stackoverflow.com/questions/8997099
