@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.TextFont'></a></p>
 
-<h3>H3DU.TextFont()</h3>
+<h3>new H3DU.TextFont()</h3>
 
 <p>Represents a bitmap font, which supports drawing two-dimensional
 text. This class supports
@@ -55,149 +55,6 @@ the HTML 3D Library. Example:</p>
 <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/text.js&quot;&gt;&lt;/script&gt;
 </pre>
 
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#H3DU.TextFont.loadData">loadData</a><br>Loads a bitmap font definition from a file.</li>
-<li><a href="#H3DU.TextFont_loadTextures">loadTextures</a><br>Loads the texture files used by this font object.</li>
-<li><a href="#H3DU.TextFont.loadWithTextures">loadWithTextures</a><br>Loads a bitmap font definition from a file along with the textures
-used by that font.</li>
-<li><a href="#H3DU.TextFont_makeTextMeshes">makeTextMeshes</a><br>Creates an array of meshes containing the primitives
-needed to draw text with this font.</li>
-<li><a href="#H3DU.TextFont_measure">measure</a><br>Calculates the width and height of a text string when
-drawn using this font.</li>
-<li><a href="#H3DU.TextFont_textShape">textShape</a><br>Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.</li>
-</ul>
-
-<p><a name='H3DU.TextFont.loadData'></a></p>
-
-<h3>(static) H3DU.TextFont.loadData(data, fontFileName)</h3>
-
-<p>Loads a bitmap font definition from a file.
-Note that this method only loads the font data and not the bitmaps
-used to represent the font.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>data</code> (Type: ArrayBuffer)<br>The data containing a bitmap font definition.</li>
-<li><code>fontFileName</code> (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Text font data, or null if an error occurs. (Type: TextFont | null)</p>
-
-<p><a name='H3DU.TextFont_loadTextures'></a></p>
-
-<h3>H3DU.TextFont#loadTextures(textureLoader)</h3>
-
-<p>Loads the texture files used by this font object.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise as described in
-<a href="H3DU.html#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
-resolves, each item in the resulting array will be a loaded
-H3DU.Texture object. (Type: <a href="Promise.html">Promise</a>.&lt;H3DU.Texture&gt;)</p>
-
-<p><a name='H3DU.TextFont.loadWithTextures'></a></p>
-
-<h3>(static) H3DU.TextFont.loadWithTextures(fontFileName, textureLoader)</h3>
-
-<p>Loads a bitmap font definition from a file along with the textures
-used by that font.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>fontFileName</code> (Type: string)<br>The URL of the font data file to load. The following file extensions are read as the following formats:<ul> <li>&quot;.xml&quot;: XML</li> <li>&quot;.json&quot;: JSON</li> <li>&quot;.bin&quot;: Binary</li> <li>&quot;.fnt&quot;: Text or binary</li> <li>All others: Text</li></ul></li>
-<li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that is resolved
-when the font data and textures are loaded successfully,
-and is rejected when an error occurs.
-If the promise is resolved, the result will be an object with the
-following keys:<ul>
-<li><code>url</code> - The URL of the font data file.
-<li><code>font</code> - The font data in the form of an <a href="H3DU.TextFont.html">H3DU.TextFont</a> object.
-<li><code>textures</code> - An array of H3DU.Texture objects used by the font,
-in the order in which they are declared in the font data file.
-</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.TextFont_makeTextMeshes'></a></p>
-
-<h3>H3DU.TextFont#makeTextMeshes(str, params)</h3>
-
-<p>Creates an array of meshes containing the primitives
-needed to draw text with this font.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: string)<br>The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
-<li><code>params</code> (Type: Object)<br>An object whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>x</code> - X coordinate of the top left corner of the text. If null, undefined, or omitted, uses 0. For the text to show upright, the coordinate system should have the X axis pointing right and the Y axis pointing down (for example, an orthographic projection where the left and top coordinates are less than the right and bottom coordinates, respectively). <li><code>y</code> - Y coordinate of the top left corner of the text. If null, undefined, or omitted, uses 0. <li><code>lineHeight</code> - Height of each line of the text in units. If null, undefined, or omitted, uses the line height given in the font. <li><code>width</code> - Maximum width of each line. Lines that exceed this width will be wrapped. <li><code>align</code> - Horizontal text alignment. Can be &quot;left&quot;, &quot;center&quot;, or &quot;right&quot; (all strings). </ul></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>An array of meshes representing the text.
-There is one mesh for each texture page of the font. If none of the
-text uses a given page, the corresponding mesh will be null. (Type: Array.&lt;<a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a>&gt;)</p>
-
-<p><a name='H3DU.TextFont_measure'></a></p>
-
-<h3>H3DU.TextFont#measure(str, params)</h3>
-
-<p>Calculates the width and height of a text string when
-drawn using this font.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: string)<br>The text string to measure. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
-<li><code>params</code> (Type: Object)<br>An object described in <a href="H3DU.TextFont.html#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>An array of two numbers;
-the first is the width of the string, and the second is the
-height of the string (taking into account line feed characters,
-U+000A, that break lines). (Type: Array.&lt;number&gt;)</p>
-
-<p><a name='H3DU.TextFont_textShape'></a></p>
-
-<h3>H3DU.TextFont#textShape(str, params)</h3>
-
-<p>Creates a group of shapes containing the primitives needed to
-draw text in the given position, size, and color.
-For the text to show upright, the coordinate system should have the
-X axis pointing right and the Y axis pointing down (for example, an
-orthographic projection where the left and top coordinates are less
-than the right and bottom coordinates, respectively).</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>str</code> (Type: string)<br>The text to draw. Line breaks (&quot;\n&quot;, &quot;\r&quot;, &quot;\r\n&quot;) are recognized by this method.</li>
-<li><code>params</code> (Type: Object)<br>An object described in <a href="H3DU.TextFont.html#H3DU.TextFont_makeTextMeshes">H3DU.TextFont#makeTextMeshes</a>. Can also contain the following keys:<ul> <li><code>color</code> - A color vector or string giving the color to draw the text with. If this value is given, the bitmap font is assumed to be a signed distance field font. <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field font. <li><code>texture</code> - An array of textures (H3DU.Texture) to use with this font, or a single H3DU.Texture if only one texture page is used. If null, undefined, or omitted, uses the default filenames for texture pages defined in this font. </ul></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
-
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
@@ -217,8 +74,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="DrawingToy.html">DrawingToy</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -239,19 +94,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="KleinBottle.html">KleinBottle</a></li>
-<li><a href="MatrixStack.html">MatrixStack</a></li>
-<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
-<li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Superellipsoid.html">Superellipsoid</a></li>
-<li><a href="Supertoroid.html">Supertoroid</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="TorusKnot.html">TorusKnot</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

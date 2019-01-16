@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.TextureAtlas'></a></p>
 
-<h3>H3DU.TextureAtlas()</h3>
+<h3>new H3DU.TextureAtlas()</h3>
 
 <p>A texture atlas specifies the location and size of images within a single
 texture. It is useful when multiple different images should be drawn at
@@ -20,7 +20,7 @@ texture atlas can specify where those portions are found.</p>
 <p>This implementation supports the &quot;.atlas&quot; format.</p>
 
 <p>NOTE: The constructor should not be called directly by applications.
-Use the <a href="H3DU.TextureAtlas.html#H3DU.TextureAtlas.load">H3DU.TextureAtlas.load</a> method to get an H3DU.TextureAtlas object.</p>
+Use the H3DU.TextureAtlas.load method to get an H3DU.TextureAtlas object.</p>
 
 <p>This class is considered a supplementary class to the
 Public Domain HTML 3D Library and is not considered part of that
@@ -32,103 +32,6 @@ the HTML 3D Library. Example:</p>
 
 <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/text.js&quot;&gt;&lt;/script&gt;
 </pre>
-
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#H3DU.TextureAtlas.load">load</a><br>Loads a texture atlas definition from a file.</li>
-<li><a href="#H3DU.TextureAtlas_loadTextures">loadTextures</a><br>Loads the texture files used by this texture atlas.</li>
-<li><a href="#H3DU.TextureAtlas.loadWithTextures">loadWithTextures</a><br>Loads a texture atlas definition from a file along with the textures
-it uses.</li>
-<li><a href="#H3DU.TextureAtlas_makeSprites">makeSprites</a><br>Makes a shape group used to display one or more sprites.</li>
-</ul>
-
-<p><a name='H3DU.TextureAtlas.load'></a></p>
-
-<h3>(static) H3DU.TextureAtlas.load(data, atlasFileName)</h3>
-
-<p>Loads a texture atlas definition from a file.
-Note that this method only loads the texture atlas data and not the bitmaps
-used by the texture atlas.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>data</code> (Type: ArrayBuffer)<br>Data containing a texture atlas definition.</li>
-<li><code>atlasFileName</code> (Type: string)<br>The URL of the texture atlas to load.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A texture atlas if the texture atlas data is loaded successfully, and null if an error occurs. (Type: <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a> | null)</p>
-
-<p><a name='H3DU.TextureAtlas_loadTextures'></a></p>
-
-<h3>H3DU.TextureAtlas#loadTextures(textureLoader)</h3>
-
-<p>Loads the texture files used by this texture atlas.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise as described in
-<a href="H3DU.html#H3DU.getPromiseResultsAll">H3DU.getPromiseResultsAll</a>. If the promise
-resolves, each item in the resulting array will be a loaded
-H3DU.Texture object. (Type: <a href="Promise.html">Promise</a>.&lt;Array.&lt;H3DU.Texture&gt;&gt;)</p>
-
-<p><a name='H3DU.TextureAtlas.loadWithTextures'></a></p>
-
-<h3>(static) H3DU.TextureAtlas.loadWithTextures(atlasFileName, textureLoader)</h3>
-
-<p>Loads a texture atlas definition from a file along with the textures
-it uses.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>atlasFileName</code> (Type: string)<br>The URL of the texture atlas to load.</li>
-<li><code>textureLoader</code> (Type: H3DU.TextureLoader)<br>Texture loader object to use when loading the textures.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that is resolved
-when the texture atlas data and textures are loaded successfully,
-and is rejected when an error occurs.
-If the promise is resolved, the result will be an object with the
-following keys:<ul>
-<li><code>url</code> - The URL of the texture atlas data file.
-<li><code>atlas</code> - The texture atlas data in the form of an <a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a> object.
-<li><code>textures</code> - An array of H3DU.Texture objects used by the font,
-in the order in which they are declared in the font data file.
-</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.TextureAtlas_makeSprites'></a></p>
-
-<h3>H3DU.TextureAtlas#makeSprites(sprites)</h3>
-
-<p>Makes a shape group used to display one or more sprites.
-For the sprites to show upright, the coordinate system should have the
-X axis pointing right and the Y axis pointing down (for example, an
-orthographic projection where the left and top coordinates are less
-than the right and bottom coordinates, respectively). The size of each
-sprite will be in pixels; therefore, for best results, the coordinate system
-should be scaled so that one unit equals one pixel.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>sprites</code> (Type: Array.&lt;Object&gt;)<br>An array of objects whose keys have the possibilities given below, and whose values are those allowed for each key.<ul> <li><code>name</code> - Name of the sprite, as listed in this texture atlas. <li><code>index</code> - If a sprite has multiple versions, use this index parameter to distinguish them. Index can&#39;t be less than 0. If a sprite doesn&#39;t have multiple versions, this value is not required. <li><code>x</code> - X coordinate of the sprite. <li><code>y</code> - Y coordinate of the sprite. </ul></li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The generated group of shapes. (Type: <a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -149,8 +52,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="DrawingToy.html">DrawingToy</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -171,19 +72,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="KleinBottle.html">KleinBottle</a></li>
-<li><a href="MatrixStack.html">MatrixStack</a></li>
-<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
-<li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Superellipsoid.html">Superellipsoid</a></li>
-<li><a href="Supertoroid.html">Supertoroid</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="TorusKnot.html">TorusKnot</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

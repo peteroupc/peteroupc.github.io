@@ -1,3 +1,18 @@
+/** The <code>extras/sunburstbackshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/sunburstbackshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/sunburstbackshader.js";</pre>
+ * @module extras/sunburstbackshader */
+/** The <code>extras/sunburstbackshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/sunburstbackshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/sunburstbackshader.js";
+ * @module extras/sunburstbackshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

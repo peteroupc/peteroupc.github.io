@@ -1,3 +1,18 @@
+/** The <code>extras/text.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/text.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/text.js";</pre>
+ * @module extras/text */
+/** The <code>extras/text.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/text.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/text.js";
+ * @module extras/text */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

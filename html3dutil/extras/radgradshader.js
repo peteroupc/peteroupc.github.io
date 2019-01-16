@@ -1,3 +1,18 @@
+/** The <code>extras/radgradshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/radgradshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/radgradshader.js";</pre>
+ * @module extras/radgradshader */
+/** The <code>extras/radgradshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/radgradshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/radgradshader.js";
+ * @module extras/radgradshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

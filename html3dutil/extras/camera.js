@@ -1,3 +1,18 @@
+/** The <code>extras/camera.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/camera.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/camera.js";</pre>
+ * @module extras/camera */
+/** The <code>extras/camera.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/camera.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/camera.js";
+ * @module extras/camera */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -511,8 +526,8 @@ Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
 };
 /** @ignore */
 Camera.prototype._updateView = function() {
-  var mat = MathUtil.mat4lookat(
-    this.position, this.center, this.up);
+  // var mat = MathUtil.mat4lookat(
+  // this.position, this.center, this.up);
   // this.scene.setViewMatrix(mat);
   return this;
 };

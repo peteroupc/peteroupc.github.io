@@ -1,3 +1,18 @@
+/** The <code>extras/colormatrixshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/colormatrixshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/colormatrixshader.js";</pre>
+ * @module extras/colormatrixshader */
+/** The <code>extras/colormatrixshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/colormatrixshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/colormatrixshader.js";
+ * @module extras/colormatrixshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

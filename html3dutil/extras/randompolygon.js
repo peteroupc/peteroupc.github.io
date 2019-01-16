@@ -1,3 +1,18 @@
+/** The <code>extras/randompolygon.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/randompolygon.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/randompolygon.js";</pre>
+ * @module extras/randompolygon */
+/** The <code>extras/randompolygon.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/randompolygon.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/randompolygon.js";
+ * @module extras/randompolygon */
+
 /* global H3DU, poly */
 /*
  Any copyright to this file is released to the Public Domain.

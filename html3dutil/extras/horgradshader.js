@@ -1,3 +1,18 @@
+/** The <code>extras/horgradshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/horgradshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/horgradshader.js";</pre>
+ * @module extras/horgradshader */
+/** The <code>extras/horgradshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/horgradshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/horgradshader.js";
+ * @module extras/horgradshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

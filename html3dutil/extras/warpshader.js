@@ -1,3 +1,18 @@
+/** The <code>extras/warpshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/warpshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/warpshader.js";</pre>
+ * @module extras/warpshader */
+/** The <code>extras/warpshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/warpshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/warpshader.js";
+ * @module extras/warpshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

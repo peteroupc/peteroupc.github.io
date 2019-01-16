@@ -1,3 +1,18 @@
+/** The <code>extras/contourlines.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/contourlines.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/contourlines.js";</pre>
+ * @module extras/contourlines */
+/** The <code>extras/contourlines.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/contourlines.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/contourlines.js";
+ * @module extras/contourlines */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

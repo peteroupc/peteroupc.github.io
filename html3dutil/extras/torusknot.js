@@ -1,3 +1,18 @@
+/** The <code>extras/torusknot.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/torusknot.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/torusknot.js";</pre>
+ * @module extras/torusknot */
+/** The <code>extras/torusknot.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/torusknot.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/torusknot.js";
+ * @module extras/torusknot */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -9,7 +24,7 @@
 
 import {MathUtil} from "../h3du_module.js";
 /**
- * Generates torus knots and torus-knot-like curves.
+ * A curve evaluator object for a torus knot or torus-knot-like curve.
  * Uses the formula given in "Decorative Knot Patterns"
  * by L. D. Taylor, 2011.
  * @param {number} revolutions Integer greater than 0. Labeled 'p' by Taylor.
@@ -21,10 +36,7 @@ import {MathUtil} from "../h3du_module.js";
  * @constructor
  */
 export var TorusKnot = function(revolutions, r, q, s1, m1) {
-  // Formula from
-  // NOTE:
   this.revolutions = revolutions;
-  // NOTE: All integers.
   this.q = q;
   this.r = r;
   this.s1 = s1;
@@ -55,11 +67,11 @@ export var TorusKnot = function(revolutions, r, q, s1, m1) {
   };
 };
 /**
- * TODO: Not documented yet.
- * @param {*} p
- * @param {*} qs
+ * Generates a torus knot with simple parameters.
+ * @param {number} p Integer greater than 0 giving the number of revolutions.
+ * @param {number} q Integer greater than 0 giving the number of loop crossings.
  * @param {*} r1
- * @returns {*} Return value.
+ * @returns {TorusKnot} The resulting torus knot evaluator.
  */
 TorusKnot.simple = function(p, q, r1) {
   // p. 1 of Taylor
@@ -68,11 +80,11 @@ TorusKnot.simple = function(p, q, r1) {
 };
 /**
  * TODO: Not documented yet.
- * @param {*} p
- * @param {*} q
+ * @param {number} p Integer greater than 0 giving the number of revolutions.
+ * @param {number} q Integer greater than 0 giving the number of loop crossings.
  * @param {*} r1
  * @param {*} s1
- * @returns {*} Return value.
+ * @returns {TorusKnot} The resulting torus knot evaluator.
  */
 TorusKnot.interlaced = function(p, q, r1, s1) {
   // Suggested by p. 2 of Taylor

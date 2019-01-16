@@ -1,3 +1,18 @@
+/** The <code>extras/starfield.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/starfield.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/starfield.js";</pre>
+ * @module extras/starfield */
+/** The <code>extras/starfield.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/starfield.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/starfield.js";
+ * @module extras/starfield */
+
 /* global setStarPos, timer */
 /*
  Any copyright to this file is released to the Public Domain.

@@ -1,3 +1,18 @@
+/** The <code>extras/convex.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/convex.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/convex.js";</pre>
+ * @module extras/convex */
+/** The <code>extras/convex.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/convex.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/convex.js";
+ * @module extras/convex */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

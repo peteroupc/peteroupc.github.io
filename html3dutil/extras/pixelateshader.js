@@ -1,3 +1,18 @@
+/** The <code>extras/pixelateshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/pixelateshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/pixelateshader.js";</pre>
+ * @module extras/pixelateshader */
+/** The <code>extras/pixelateshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/pixelateshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/pixelateshader.js";
+ * @module extras/pixelateshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

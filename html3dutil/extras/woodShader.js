@@ -1,3 +1,18 @@
+/** The <code>extras/woodShader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/woodShader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/woodShader.js";</pre>
+ * @module extras/woodShader */
+/** The <code>extras/woodShader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/woodShader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/woodShader.js";
+ * @module extras/woodShader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

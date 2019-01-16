@@ -1,3 +1,18 @@
+/** The <code>extras/polyhedra.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/polyhedra.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/polyhedra.js";</pre>
+ * @module extras/polyhedra */
+/** The <code>extras/polyhedra.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/polyhedra.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/polyhedra.js";
+ * @module extras/polyhedra */
+
 /* global MathUtil */
 /*
  Any copyright to this file is released to the Public Domain.

@@ -1,3 +1,18 @@
+/** The <code>extras/stripesbackshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/stripesbackshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/stripesbackshader.js";</pre>
+ * @module extras/stripesbackshader */
+/** The <code>extras/stripesbackshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/stripesbackshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/stripesbackshader.js";
+ * @module extras/stripesbackshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

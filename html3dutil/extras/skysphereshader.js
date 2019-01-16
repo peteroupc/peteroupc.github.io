@@ -1,3 +1,18 @@
+/** The <code>extras/skysphereshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/skysphereshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/skysphereshader.js";</pre>
+ * @module extras/skysphereshader */
+/** The <code>extras/skysphereshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/skysphereshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/skysphereshader.js";
+ * @module extras/skysphereshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

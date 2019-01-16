@@ -1,3 +1,18 @@
+/** The <code>extras/matrixstack.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/matrixstack.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/matrixstack.js";</pre>
+ * @module extras/matrixstack */
+/** The <code>extras/matrixstack.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/matrixstack.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/matrixstack.js";
+ * @module extras/matrixstack */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

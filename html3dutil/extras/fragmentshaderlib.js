@@ -1,3 +1,18 @@
+/** The <code>extras/fragmentshaderlib.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/fragmentshaderlib.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/fragmentshaderlib.js";</pre>
+ * @module extras/fragmentshaderlib */
+/** The <code>extras/fragmentshaderlib.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/fragmentshaderlib.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/fragmentshaderlib.js";
+ * @module extras/fragmentshaderlib */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

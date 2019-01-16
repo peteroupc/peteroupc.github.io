@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.MeshBuffer'></a></p>
 
-<h3>H3DU.MeshBuffer()</h3>
+<h3>new H3DU.MeshBuffer()</h3>
 
 <p>A geometric mesh in the form of buffer objects.
 A mesh buffer is made up of one or more vertex attribute objects,
@@ -185,7 +185,7 @@ and texture coordinates.</p>
 <p>A vertex buffer accessor, or null
 if the attribute doesn&#39;t exist. (Type: BufferAccessor)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <p>The following function gets the positions,
 normals, texture coordinates, and colors of each primitive
@@ -287,7 +287,7 @@ and the other mesh&#39;s indices copied or adapted.</p>
 
 <p>This object. (Type: MeshBuffer)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <pre>var copiedMesh = new MeshBuffer().merge(meshToCopy);
 </pre>
@@ -368,7 +368,7 @@ regardless of semantic index, are affected.</p>
 
 <p>This object. (Type: MeshBuffer)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <p>The following code generates a two-sided mesh, where
 the normals on each side face in the opposite direction.
@@ -395,7 +395,7 @@ Has an effect only if this mesh buffer consists of triangles.</p>
 
 <p>This object. (Type: MeshBuffer)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <p>The following code generates a mesh that survives face culling,
 since the same triangles occur on each side of the mesh, but
@@ -538,6 +538,20 @@ other attributes will be unaffected.</p>
 
 <p>This object. (Type: MeshBuffer)</p>
 
+<h4>Examples</h4>
+
+<p>The following example transforms positions
+and normals to move the mesh 2 units to the right.</p>
+
+<pre>mesh.transform(MathUtil.mat4translated(2, 0, 0));
+</pre>
+
+<p>The following example transforms positions
+and normals to double the mesh&#39;s size.</p>
+
+<pre>mesh.transform(MathUtil.mat4scaled(2, 2, 2));
+</pre>
+
 <p><a name='H3DU.MeshBuffer_vertexCount'></a></p>
 
 <h3>H3DU.MeshBuffer#vertexCount()</h3>
@@ -599,8 +613,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="DrawingToy.html">DrawingToy</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -621,19 +633,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="KleinBottle.html">KleinBottle</a></li>
-<li><a href="MatrixStack.html">MatrixStack</a></li>
-<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
-<li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Superellipsoid.html">Superellipsoid</a></li>
-<li><a href="Supertoroid.html">Supertoroid</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="TorusKnot.html">TorusKnot</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

@@ -1,3 +1,18 @@
+/** The <code>extras/waveshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/waveshader.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/waveshader.js";</pre>
+ * @module extras/waveshader */
+/** The <code>extras/waveshader.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/waveshader.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/waveshader.js";
+ * @module extras/waveshader */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

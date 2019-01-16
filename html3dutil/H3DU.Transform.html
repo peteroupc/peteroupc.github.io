@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.Transform'></a></p>
 
-<h3>H3DU.Transform()</h3>
+<h3>new H3DU.Transform()</h3>
 
 <p>A class offering a convenient way to set a transformation
 from one coordinate system to another.</p>
@@ -26,8 +26,6 @@ height, and depth, respectively.</li>
 <li><a href="#H3DU.Transform_isIdentity">isIdentity</a><br>Returns whether this transform is the identity transform.</li>
 <li><a href="#H3DU.Transform_movePosition">movePosition</a><br>Moves the relative position of an object from its original
 position.</li>
-<li><a href="#H3DU.Transform_multOrientation">multOrientation</a><br><strong>Deprecated: Use Transform#multRotation instead.
-This method&#39;s name is inaccurate because orientations are not rotations.</strong></li>
 <li><a href="#H3DU.Transform_multQuaternion">multQuaternion</a><br>Combines an object&#39;s current rotation with another rotation
 described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
 for describing 3D rotations).</li>
@@ -36,8 +34,6 @@ in the form of an angle and an axis of
 rotation.</li>
 <li><a href="#H3DU.Transform_reset">reset</a><br>Resets this transform to the untransformed state.</li>
 <li><a href="#H3DU.Transform_setMatrix">setMatrix</a><br>Sets this transform&#39;s transformation matrix.</li>
-<li><a href="#H3DU.Transform_setOrientation">setOrientation</a><br><strong>Deprecated: Use Transform#setRotation instead.
-This method&#39;s name is inaccurate because orientations are not rotations.</strong></li>
 <li><a href="#H3DU.Transform_setPosition">setPosition</a><br>Sets the relative position of an object from its original
 position.</li>
 <li><a href="#H3DU.Transform_setQuaternion">setQuaternion</a><br>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
@@ -140,33 +136,6 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 
 <p>This object. (Type: Transform)</p>
 
-<p><a name='H3DU.Transform_multOrientation'></a></p>
-
-<h3>H3DU.Transform#multOrientation(angle, v, vy, vz)</h3>
-
-<p><strong>Deprecated: Use Transform#multRotation instead.
-This method&#39;s name is inaccurate because orientations are not rotations.</strong></p>
-
-<p>Combines an object&#39;s current rotation with another rotation
-in the form of an angle and an axis of
-rotation. The combined rotation will have the
-same effect as the new rotation followed by the existing rotation.
-Has no effect if a matrix was defined with Transform#setMatrix
-and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See Transform#setRotation.</li>
-<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: Transform)</p>
-
 <p><a name='H3DU.Transform_multQuaternion'></a></p>
 
 <h3>H3DU.Transform#multQuaternion(quat)</h3>
@@ -188,7 +157,7 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 
 <p>This object. (Type: Transform)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <pre>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
 transform.multQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
@@ -251,30 +220,6 @@ accordingly to the matrix given.</p>
 
 <p>This object. (Type: Transform)</p>
 
-<p><a name='H3DU.Transform_setOrientation'></a></p>
-
-<h3>H3DU.Transform#setOrientation(angle, v, vy, vz)</h3>
-
-<p><strong>Deprecated: Use Transform#setRotation instead.
-This method&#39;s name is inaccurate because orientations are not rotations.</strong></p>
-
-<p>Sets this transform&#39;s rotation in the form of an angle and an axis of
-rotation. Has no effect if a matrix was defined with Transform#setMatrix
-and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
-<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
-<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
-<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>This object. (Type: Transform)</p>
-
 <p><a name='H3DU.Transform_setPosition'></a></p>
 
 <h3>H3DU.Transform#setPosition(x, y, z)</h3>
@@ -313,7 +258,7 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 
 <p>This object. (Type: Transform)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <pre>// Set an object&#39;s rotation to 30 degrees about the X axis
 transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
@@ -384,8 +329,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="DrawingToy.html">DrawingToy</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -406,19 +349,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="KleinBottle.html">KleinBottle</a></li>
-<li><a href="MatrixStack.html">MatrixStack</a></li>
-<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
-<li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Superellipsoid.html">Superellipsoid</a></li>
-<li><a href="Supertoroid.html">Supertoroid</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="TorusKnot.html">TorusKnot</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

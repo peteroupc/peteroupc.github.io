@@ -1,3 +1,18 @@
+/** The <code>extras/createwasher.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/createwasher.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/createwasher.js";</pre>
+ * @module extras/createwasher */
+/** The <code>extras/createwasher.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/createwasher.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/createwasher.js";
+ * @module extras/createwasher */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/

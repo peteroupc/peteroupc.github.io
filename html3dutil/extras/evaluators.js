@@ -1,3 +1,18 @@
+/** The <code>extras/evaluators.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/evaluators.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/evaluators.js";</pre>
+ * @module extras/evaluators */
+/** The <code>extras/evaluators.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/evaluators.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/evaluators.js";
+ * @module extras/evaluators */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -505,15 +520,21 @@ function cdiv(a, b) {
  * this includes periodic waves and circles.
  * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
  * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
- * @param {number} [revolutions]
- * @function
+ * @param {number} [revolutions] TODO: Not documented yet.
+ * @constructor
  */
 export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
+  /** @ignore */
   this.revolutions = revolutions === null ? 20 : revolutions;
+  /** @ignore */
   this.rolling = new Curve(rollingCurve).toArcLengthParam();
+  /** @ignore */
   this.fixedcurve = new Curve(fixedCurve).toArcLengthParam();
+  /** @ignore */
   this.rollingCurveLength = rollingCurve.getLength();
+  /** @ignore */
   this.fixedCurveLength = fixedCurve.getLength();
+  /** @ignore */
   this.polePoint = [polePoint[0], polePoint[1]];
   this.endPoints = () => [0, this.fixedCurveLength * this.revolutions];
 

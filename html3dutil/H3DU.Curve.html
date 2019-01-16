@@ -8,7 +8,7 @@
 
 <p><a name='H3DU.Curve'></a></p>
 
-<h3>H3DU.Curve(curve, [curveParam])</h3>
+<h3>new H3DU.Curve(curve, [curveParam])</h3>
 
 <p>A curve evaluator object for a parametric curve.</p>
 
@@ -33,7 +33,7 @@ the <code>evaluate</code> method and, optionally, the other methods mentioned in
 <li><code>curveParam</code> (Type: Object) (optional)<br>An object for reparameterizing a curve object. It implements a method named <code>endPoints</code>, which has the same meaning as Curve#endPoints and whose return value takes precedence over the given curve&#39;s <code>endPoints</code> method. It also implements a method named <code>getCoordinate(u)</code>, which converts a U coordinate in the old parameterization to a U coordinate in the new parameterization.</li>
 </ul>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <p>The following is a simple example of a parametric curve.</p>
 
@@ -119,7 +119,7 @@ of U coordinates.</li>
 <li><a href="#H3DU.Curve_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.Curve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
 <li><a href="#H3DU.Curve_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
-<li><a href="#H3DU.Curve_toArcLengthParam">toArcLengthParam</a><br>Creates a curve evaluator object for a curve that follows the same
+<li><a href="#H3DU.Curve_toArcLengthParam">toArcLengthParam</a><br>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>.</li>
 <li><a href="#H3DU.Curve_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
@@ -304,7 +304,7 @@ and fourth coordinate of each position, respectively.</p>
 element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
 will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
 
-<h4>Example</h4>
+<h4>Examples</h4>
 
 <p>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</p>
 
@@ -380,7 +380,7 @@ elements as the number of dimensions of the underlying curve. (Type: Array.&lt;n
 
 <h3>H3DU.Curve#toArcLengthParam()</h3>
 
-<p>Creates a curve evaluator object for a curve that follows the same
+<p>Gets a curve evaluator object for a curve that follows the same
 path as this one but has its U coordinates remapped to
 an <i>arc length parameterization</i>. Arc length
 parameterization allows for moving along a curve&#39;s path at a uniform
@@ -442,8 +442,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
-<li><a href="DrawingToy.html">DrawingToy</a></li>
-<li><a href="Epitrochoid.html">Epitrochoid</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
 <li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
 <li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
@@ -464,19 +462,8 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
-<li><a href="Hypotrochoid.html">Hypotrochoid</a></li>
-<li><a href="InputTracker.html">InputTracker</a></li>
-<li><a href="KleinBottle.html">KleinBottle</a></li>
-<li><a href="MatrixStack.html">MatrixStack</a></li>
-<li><a href="MoebiusStrip.html">MoebiusStrip</a></li>
-<li><a href="Polyhedra.html">Polyhedra</a></li>
 <li><a href="Promise.html">Promise</a></li>
 <li><a href="Semantic.html">Semantic</a></li>
-<li><a href="Superellipsoid.html">Superellipsoid</a></li>
-<li><a href="Supertoroid.html">Supertoroid</a></li>
-<li><a href="SurfaceOfRevolution.html">SurfaceOfRevolution</a></li>
-<li><a href="TorusKnot.html">TorusKnot</a></li>
-<li><a href="Trochoid.html">Trochoid</a></li>
 </ul>
 </nav><script>
 document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+

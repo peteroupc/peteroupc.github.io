@@ -1,3 +1,18 @@
+/** The <code>extras/marbleshader2.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/marbleshader2.js";
+ * // -- or --
+ * import * as CustomModuleName from "extras/marbleshader2.js";</pre>
+ * @module extras/marbleshader2 */
+/** The <code>extras/marbleshader2.js</code> module.
+ * To import all symbols in this module, either of the following can be used:
+ * <pre>
+ * import * from "extras/marbleshader2.js";
+ * // -- or --;
+ * import * as CustomModuleName from "extras/marbleshader2.js";
+ * @module extras/marbleshader2 */
+
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
