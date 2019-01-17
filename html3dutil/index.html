@@ -77,14 +77,14 @@ as follows:</p>
 
 <p><pre class="prettyprint source lang-html"><code>  &lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;</pre><h2>Source Code and Building</h2><p>Source code is available in the <a href="https://github.com/peteroupc/html3dutil">project page</a>.</p></p>
 
-<p>To build, you will need a Java runtime environment, Ruby, and a JavaScript environment
+<p>To build, you will need a Java runtime environment and a JavaScript environment
 that supports <code>npm</code>.</p>
 
 <ul>
 <li>Put <code>compiler.jar</code> (the JAR file for the Closure Compiler) in the <code>build</code> directory.</li>
 <li>Install <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> and <code>rollup</code> via <code>npm</code>.</li>
-<li>Run <code>npm run build</code>. This will generate the documentation and compile
-the library's source code into a single file called <code>h3du_min.js</code>.</li>
+<li>Run <code>npm run-script build</code>. This will generate the documentation and compile
+the library's source code into files called <code>h3du_min.js</code> and <code>h3du_module.js</code>.</li>
 </ul>
 
 <p><h2>Overview and Demos</h2><p>For detailed instructions on using this library and a summary of the library&#39;s features, visit:</p></p>

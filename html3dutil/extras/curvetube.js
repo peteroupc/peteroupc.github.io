@@ -14,8 +14,8 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-/* global MathUtil, Surface */
-import {Curve, MathInfo} from "../h3du_module";
+
+import {Curve, MathUtil, Surface} from "../h3du_module";
 
 /** @ignore
  * @constructor */
