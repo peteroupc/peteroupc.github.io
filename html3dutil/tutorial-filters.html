@@ -26,12 +26,10 @@ It also describes several examples of graphics filters.</p>
 <li><a href="#Graphics_Filters"><strong>Graphics Filters</strong></a></li>
 <li><a href="#Writing_Graphics_Filters"><strong>Writing Graphics Filters</strong></a></li>
 <li><a href="#Using_Graphics_Filters"><strong>Using Graphics Filters</strong></a></li>
-<li><a href="#Sample_Code"><strong>Sample Code</strong></a></li>
-<li><a href="#Examples"><strong>Examples</strong></a>
+<li><a href="#Sample_Code"><strong>Sample Code</strong></a>
 
 <ul>
 <li><a href="#Mirror_Filter"><strong>Mirror Filter</strong></a></li>
-<li><a href="#Matrix_Filter"><strong>Matrix Filter</strong></a></li>
 <li><a href="#Pixelate_Filter"><strong>Pixelate Filter</strong></a></li>
 <li><a href="#Wave_Filter"><strong>Wave Filter</strong></a></li>
 <li><a href="#Waterpaint_Filter"><strong>Waterpaint Filter</strong></a></li>
@@ -153,20 +151,27 @@ scene.render(renders);
 <p>When the <code>render()</code> method is called each frame using the rendering
 passes mentioned above, the following happens.</p>
 
-<pre>* The 3D library renders the first pass.
-    * The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
-        uses the usual shaders for drawing the 3D scene.
-    * The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
-      &quot;snapshot&quot; of the frame that can now be modified by graphics filters.
- * Then, the library renders the second pass.
-    * The 3D library switches drawing back to the GL Canvas, then switches the shader
-       to the graphics filter&#39;s shaders.
-    * A rectangle taking up the entire GL Canvas is drawn. This is to allow each pixel of the texture to
-       be passed to the graphics filter, and the filter&#39;s `textureEffect` method to be called for each pixel.
-      Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
-      The graphics filter can either use the current pixel&#39;s color or change it for each pixel.
-      As a result, a &quot;filtered&quot; version of the current frame will be drawn.
-</pre>
+<ul>
+<li>The 3D library renders the first pass.
+
+<ul>
+<li>The 3D library switches drawing to use the frame buffer rather than the GL Canvas, then
+    uses the usual shaders for drawing the 3D scene.</li>
+<li>The current frame is rendered onto the frame buffer. The frame buffer&#39;s texture will now contain a
+  &quot;snapshot&quot; of the frame that can now be modified by graphics filters.</li>
+</ul></li>
+<li>Then, the library renders the second pass.
+
+<ul>
+<li>The 3D library switches drawing back to the GL Canvas, then switches the shader
+   to the graphics filter&#39;s shaders.</li>
+<li>A rectangle taking up the entire GL Canvas is drawn. This is to allow each pixel of the texture to
+   be passed to the graphics filter, and the filter&#39;s <code>textureEffect</code> method to be called for each pixel.
+  Any custom parameters, or &quot;uniforms&quot;, given to the graphics filter will be set before drawing.
+  The graphics filter can either use the current pixel&#39;s color or change it for each pixel.
+  As a result, a &quot;filtered&quot; version of the current frame will be drawn.</li>
+</ul></li>
+</ul>
 
 <p><a id=Sample_Code></a></p>
 
@@ -192,19 +197,6 @@ var renders=[
 scene.render(renders);
 </pre>
 
-<p><a id=Examples></a></p>
-
-<h2>Examples</h2>
-
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/squares.html"><strong>squares.html</strong></a> - Demonstrates graphics filters.</li>
-</ul>
-
-<p>The demo <a href="https://peteroupc.github.io/html3dutil/demos/squares.html"><strong>squares.html</strong></a> includes a number
-of graphics filters implemented as shaders.</p>
-
-<p>Here are more details on some of the filters it includes.</p>
-
 <p><a id=Mirror_Filter></a></p>
 
 <h3>Mirror Filter</h3>
@@ -225,33 +217,6 @@ return H3DU.ShaderInfo.makeEffect(context,[
 </pre>
 
 <p>With a simple change, this filter can be modified to do a vertical flip (<code>1.0-uvCoord.y</code>) or even both flips.</p>
-
-<p><a id=Matrix_Filter></a></p>
-
-<h3>Matrix Filter</h3>
-
-<p><img src="filters4.png" alt="**Blur filtered image**">
-<img src="filters8.png" alt="**Edge detect filtered image**"></p>
-
-<p>This filter enables a family of image processing filters, such as blurring, sharpening,
-edge detection, and embossing, that process each pixel and its neighbors. This filter takes
-a 3x3 matrix called a <em>convolution kernel</em>, which gives the contribution of each pixel&#39;s color to the final color. All the numbers in the matrix usually add up to 1.</p>
-
-<p>Note that the <code>uniform</code> given below is a <code>mat3</code>, meaning a 3x3 matrix.</p>
-
-<p>An example of a convolution kernel:</p>
-
-<pre>[ 0, 1/8, 0,
-  1/8, 1/2, 1/8,
-  0, 1/8, 0 ]
-</pre>
-
-<p>This filter means that the destination pixel will have 1/2 of the original pixel&#39;s color, and 1/8 of the
-colors of its 4 adjacent pixels. Note that this example adds up to 1.</p>
-
-<p>This filter is implemented in the function <code>makeKernelMatrix</code> in the demo. It is used for
-the &quot;blur&quot; and &quot;edge detect&quot; effects. The filter shows how it&#39;s possible for filters to read neighboring
-pixels, not just the current pixel, when implementing their effect.</p>
 
 <p><a id=Pixelate_Filter></a></p>
 

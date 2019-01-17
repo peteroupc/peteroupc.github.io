@@ -12,11 +12,11 @@
 
 <p>This page describes conventions for specifying projection and
 view transforms in 3D graphics, especially when using my
-<a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>,
-and explains how the GL pipeline transforms vertices to help
+<a href="http://peteroupc.github.io/html3dutil"><strong>Geometry Utilities Library</strong></a>,
+and explains how a commonly used graphics pipeline transforms vertices to help
 it draw triangles, lines, and other graphics primitives.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library&#39;s Releases page</strong></a>.</strong></p>
+<p><strong>Source code for the latest version of the library is available at the <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library&#39;s project page</strong></a>.</strong></p>
 
 <p><a id=Contents></a></p>
 
@@ -34,7 +34,6 @@ it draw triangles, lines, and other graphics primitives.</p>
 <ul>
 <li><a href="#Perspective_Projection"><strong>Perspective Projection</strong></a></li>
 <li><a href="#Orthographic_Projection"><strong>Orthographic Projection</strong></a></li>
-<li><a href="#Other_Projections"><strong>Other Projections</strong></a></li>
 </ul></li>
 <li><a href="#View_Transform"><strong>View Transform</strong></a></li>
 <li><a href="#Vertex_Coordinates_in_the_Graphics_System"><strong>Vertex Coordinates in the Graphics System</strong></a></li>
@@ -68,7 +67,7 @@ and their transformed <em>window coordinates</em> when rendering things on the s
 <p>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</p>
 
 <p>Two commonly used projections in 3D graphics are the perspective projection and
-orthographic projection, described below.</p>
+orthographic projection, described below. (Other kinds of projections, such as oblique projections and isometric projections, are not treated here.)</p>
 
 <p><a id=Perspective_Projection></a></p>
 
@@ -90,31 +89,25 @@ and others would be.</p>
 <p>The view volume is bounded on all six sides by six <em>clipping planes</em>:</p>
 
 <ul>
-<li>The near and far clipping planes are placed a certain distance from the camera. For example, if
-the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume
-will hold only objects between 3 and 5 units from the camera. (Strictly speaking, a near clipping
-plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
+<li>The near and far clipping planes are placed a certain distance from the camera. For example, if the near clipping plane is 3 units away and the far clipping plane is 5 units away, the view volume will hold only objects between 3 and 5 units from the camera. (Strictly speaking, a near clipping plane is not necessary, but practically speaking it is, in order to make the math work out correctly.)</li>
 <li>The left, right, top, and bottom clipping planes form the other four sides of the volume.</li>
 </ul>
 
 <p>Note further that:</p>
 
 <ul>
-<li>The angle separating the top and bottom clipping planes is the projection&#39;s <em>field of view</em>. This angle is
-similar to the aperture of a camera. The greater the vertical field of view, the greater
-the vertical visibility range.</li>
-<li>In a perspective projection, the view volume will resemble a &quot;pyramid&quot; with the top chopped off (a <em>frustum</em>). The
-near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.</li>
+<li>The angle separating the top and bottom clipping planes is the projection&#39;s <em>field of view</em>. This angle is similar to the aperture of a camera. The greater the vertical field of view, the greater the vertical visibility range.</li>
+<li>In a perspective projection, the view volume will resemble a &quot;pyramid&quot; with the top chopped off (a <em>frustum</em>). The near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.</li>
 </ul>
 
 <p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>.
-However, this is not the whole story, since in general,  lines that are parallel in world space
+However, this is not the whole story, since in general, lines that are parallel in world space
 will not appear parallel in a perspective projection, so additional math is needed to
 achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a>.</p>
 
 <p>The following methods define a perspective projection.</p>
 
-<p><strong><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></strong></p>
+<p><strong><a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective"><code>MathUtil.mat4perspective(fov, aspect, near, far)</code></a></strong></p>
 
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
 projection given a field of view and an aspect ratio,
@@ -122,14 +115,14 @@ and sets the scene&#39;s projection matrix accordingly.</p>
 
 <ul>
 <li><code>fov</code> - Vertical field of view, in degrees.</li>
-<li><code>aspect</code> - Aspect ratio of the scene. You should usually use <code>scene3d.getClientAspect()</code>.</li>
+<li><code>aspect</code> - Aspect ratio of the scene.</li>
 <li><code>near</code>, <code>far</code> - Distance from the camera to the near and far clipping planes.</li>
 </ul>
 
-<p><strong>[</strong><code>MathUtil.mat4frustum(left, right, bottom, top, near, far)</code><strong>](<a href="http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum">http://peteroupc.github.io/html3dutil/MathUtil.html#.mat4frustum</a>)</strong></p>
+<p><strong>[</strong><code>MathUtil.mat4frustum(left, right, bottom, top, near, far)</code><strong>](<a href="http://peteroupc.github.io/html3dutil/H3DU.MathUtil.html#.mat4frustum">http://peteroupc.github.io/html3dutil/H3DU.MathUtil.html#.mat4frustum</a>)</strong></p>
 
 <p>This method returns a 4x4 matrix that adjusts the coordinate system for a perspective
-projection matrix based on the location of the six clipping planes that
+projection based on the location of the six clipping planes that
 bound the view volume. Their positions are chosen so that the result is a perspective projection.</p>
 
 <ul>
@@ -181,13 +174,6 @@ or squished in case the view volume&#39;s aspect ratio and the scene&#39;s aspec
 <li><code>aspect</code> - Aspect ratio of the viewport.</li>
 </ul>
 
-<p><a id=Other_Projections></a></p>
-
-<h3>Other Projections</h3>
-
-<p>There are other kinds of possible projections, such as oblique projections
-or isometric projections.</p>
-
 <p><a id=View_Transform></a></p>
 
 <h2>View Transform</h2>
@@ -198,12 +184,12 @@ A view matrix essentially rotates the camera and moves it to a given position in
 
 <ul>
 <li>The camera is rotated to point at a certain object or location on the scene. This is represented by
-the <code>lookingAt</code> parameter in the <code>setLookAt()</code> method, below.</li>
+the <code>lookingAt</code> parameter in the <code>mat4lookat()</code> method, below.</li>
 <li>The camera is placed somewhere on the scene. This is represented by
-the <code>eye</code> parameter in the <code>setLookAt()</code> method.  It also represents the &quot;eye position&quot; in the perspective
+the <code>eye</code> parameter in the <code>mat4lookat()</code> method.  It also represents the &quot;eye position&quot; in the perspective
 projection, above.</li>
 <li>The camera rolls itself, possibly turning it sideways or upside down. This is guided by
-the <code>up</code> parameter in the <code>setLookAt()</code> method. Turning the camera upside down, for example, will swap
+the <code>up</code> parameter in the <code>mat4lookat()</code> method. Turning the camera upside down, for example, will swap
 the placement of the top and bottom clipping planes, thus inverting the view of the scene.</li>
 </ul>
 
@@ -228,7 +214,7 @@ the use of matrices related to them, such as <em>projection</em>, <em>view</em>,
 and <em>world</em> matrices, are merely conventions,
 which exist for convenience in many 3D graphics libraries.</p>
 
-<p>When the graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line or point,
+<p>When a commonly used graphics pipeline (outside of the 3D graphics library concerned) draws a triangle, line or point,
 all it really expects is the location of that primitive&#39;s vertices in <em>clip space</em>. A
 so-called <em>vertex shader</em> communicates those locations to the graphics pipeline using
 the input it&#39;s given. Although the vertex shader can use projection, view, and world
@@ -240,7 +226,7 @@ without transforming them.</p>
 <p>As the name suggests, clip space coordinates are used for clipping primitives to the
 screen. Each clip space vertex is in <em>homogeneous coordinates</em>, consisting of an
 X, Y, Z, and W coordinate, where the X, Y, and Z are premultiplied by the W. The
-perspective matrix returned by MathUtil.mat4perspective, for example,
+perspective matrix returned by <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective">H3DU.MathUtil.mat4perspective</a>, for example,
 transforms W to the negative Z coordinate in eye space, that is, it will increase with
 the distance to the coordinates from the &quot;eye&quot; or &quot;camera&quot;.</p>
 
@@ -250,7 +236,7 @@ which roughly correspond to screen pixels. The window coordinates
 will have the same range as the current <em>viewport</em>. A viewport is a rectangle
 whose size and position are generally expressed in pixels.</p>
 
-<p>For the perspective matrix returned by <code>mat4perspective</code>, dividing
+<p>For the perspective matrix returned by <a href="H3DU.MathUtil.html#H3DU.MathUtil.mat4perspective"><code>mat4perspective</code></a>, dividing
 the X, Y, and Z coordinates by the clip space W results in the effect that as W gets
 higher and higher (and farther and farther from the &quot;eye&quot; or &quot;camera&quot;),
 the X, Y, and Z coordinates are brought closer and closer to the center of the view.  This
@@ -261,7 +247,7 @@ as they are more and more distant from the &quot;camera&quot;.</p>
 
 <h2>Other Pages</h2>
 
-<p>The following pages of mine on CodeProject also discuss this library:</p>
+<p>The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:</p>
 
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
