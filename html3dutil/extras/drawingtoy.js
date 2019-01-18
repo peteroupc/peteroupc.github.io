@@ -16,7 +16,7 @@
 */
 
 import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module.js";
-import {Epitrochoid, Roulette} from "./evaluators.js";
+import {Roulette} from "./evaluators.js";
 
 function gcd(u, v) {
   u = Math.abs(u);
@@ -67,14 +67,15 @@ DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * rollerRadius;
   // console.log([rollerRadius,distFromCenter])
-  var curve = new Epitrochoid(
+  var curve = Roulette.epitrochoid(
     radius, rollerRadius, distFromCenter, phase);
+  var endPoints = curve.endPoints();
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = MathUtil.PiTimes2 * trips;
+  var extent = endPoints[1] * trips;
   curve = curve.changeEnds(0, extent);
   return curve;
 };
@@ -98,7 +99,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * innerRadius;
   // console.log([innerRadius,distFromCenter])
-  var curve = Roulette.hypo(radius, innerRadius, distFromCenter, phase);
+  var curve = Roulette.hypotrochoid(radius, innerRadius, distFromCenter, phase);
   var endPoints = curve.endPoints(); // Gets the end points for one revolution
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
@@ -106,15 +107,13 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
   var extent = endPoints[1] * trips;
-  curve = curve.changeEnds(0, extent);
-  if(typeof offset === "undefined" || offset === null)return curve;
-  if(offset === 0)return curve;
+  if(typeof offset === "undefined" || offset === null)offset = 0;
   return new Curve({
     "evaluate":(u) => {
       var e = curve.evaluate(u);
       return [e[0] + offset * toothDist, e[1], e[2]];
     },
-    "endPoints":() => curve.endPoints()
+    "endPoints":() => [0, extent]
   });
 };
 /**

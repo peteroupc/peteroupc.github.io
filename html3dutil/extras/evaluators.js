@@ -207,149 +207,12 @@ Hypotrochoid.prototype.scaleTo = function(radius) {
     this.distFromInner * ratio);
 };
  */
-
-/**
- * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the X axis.
- * <p>
- * The following curves can be generated with this class (in the following
- * descriptions, R = <code>radius</code>
- * and D = <code>distFromCenter</code>).<ul>
- * <li>Cycloid: D = R (trochoid touching the X axis).</li>
- * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
- * <li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
- * @constructor
- * @augments Curve
- * @param {number} radius Radius of the rolling circle.
- * @param {number} distFromCenter Distance from the center of the
- * rolling circle to the drawing pen.
- */
-export var Trochoid = function(radius, distFromCenter) {
-  this.inner = radius;
-  this.distFromCenter = distFromCenter;
-};
-Trochoid.prototype = Object.create(Curve.prototype);
-Trochoid.prototype.constructor = Trochoid;
-
-/**
- * Generates a point on the curve from the given U coordinate.
- * @function
- * @param {number} u U coordinate.
- * @returns {Array<number>} A 3-element array specifying a 3D point.
- * Only the X and Y coordinates will be other than 0.
- */
-Trochoid.prototype.evaluate = function(u) {
-  var cosu = Math.cos(u);
-  var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-  return [
-    this.inner * u - this.distFromCenter * sinu,
-    this.inner - this.distFromCenter * cosu,
-    0
-  ];
-};
-/**
- * Gets the endpoints of this curve.
- * For this curve evaluator object, the curve
- * starts at 0 and ends at &pi;*2.
- * @function
- * @returns {Array<number>} An array containing the two
- * endpoints of the curve. The first number is the start of the curve,
- * and the second number is the end of the curve.
- */
-Trochoid.prototype.endPoints = function() {
-  return [0, MathUtil.PiTimes2];
-};
-/**
- * Finds the velocity (derivative) of this curve at the given point.
- * @param {number} u Point on the curve to evaluate.
- * @returns {Array<number>} An array giving the velocity vector.
- */
-Trochoid.prototype.velocity = function(u) {
-  var cosu = Math.cos(u);
-  var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-  return [this.inner - this.distFromCenter * cosu,
-    this.distFromCenter * sinu, 0];
-};
-/**
- * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the outside
- * of another circle, whose position is fixed, with a center of (0,0).
- * The rolling circle will start at the positive X axis of the fixed circle.<p>
- * The following curves can be generated with this class (in the following
- * descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
- * and D = <code>distFromRollerCenter</code>).<ul>
- * <li>Epicycloid: D = R (epitrochoid touching the fixed circle).</li>
- * <li>Curtate epicycloid: D < R (epitrochoid not touching the fixed circle).</li>
- * <li>Prolate epicycloid: D > R (epitrochoid crossing the fixed circle).</li>
- * <li>Cardioid: R = O; D = O.</li>
- * <li>Nephroid: R = O/2; D = O/2.</li>
- * <li>Ranunculoid: R = O/5; D = O/5.</li>
- * <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
- * <li>Circle: O = 0; the radius will be R - D.</li></ul>
- * @constructor
- * @augments Curve
- * @param {number} outerRadius Radius of the circle whose position
- * is fixed.
- * @param {number} rollerRadius Radius of the rolling circle.
- * An epicycloid results when distFromRollerCenter=rollerRadius.
- * @param {number} distFromRollerCenter Distance from the center of the
- * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
- */
-export var Epitrochoid = function(outerRadius, rollerRadius, distFromRollerCenter, rotationDegrees) {
-  this.outer = outerRadius;
-  this.roller = rollerRadius;
-  this.distFromRoller = distFromRollerCenter;
-  var phase = rotationDegrees || 0;
-  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
-       (phase < 0 ? 360 : 0);
-  phase *= MathUtil.ToRadians;
-  var cosPhase = Math.cos(phase);
-  var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
-  this.sinPhase = sinPhase;
-  this.cosPhase = cosPhase;
-};
-Epitrochoid.prototype = Object.create(Curve.prototype);
-Epitrochoid.prototype.constructor = Epitrochoid;
-
-/**
- * Generates a point on the curve from the given U coordinate.
- * @function
- * @param {number} u U coordinate.
- * @returns {Array<number>} A 3-element array specifying a 3D point.
- * Only the X and Y coordinates will be other than 0.
- */
-Epitrochoid.prototype.evaluate = function(u) {
-  var oi = this.outer + this.roller;
-  var term = oi * u / this.roller;
-  var uangle = u;
-  var cosu = Math.cos(uangle),
-    sinu = uangle >= 0 && uangle < 6.283185307179586 ? uangle <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uangle);
-  var cost = Math.cos(term),
-    sint = term >= 0 && term < 6.283185307179586 ? term <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
-  var x = oi * cosu - this.distFromRoller * cost;
-  var y = oi * sinu - this.distFromRoller * sint;
-  return [x * this.cosPhase - y * this.sinPhase,
-    y * this.cosPhase + x * this.sinPhase, 0];
-
-};
-/**
- * Gets the endpoints of this curve.
- * For this curve evaluator object, the curve
- * starts at 0 and ends at &pi;*2.
- * @function
- * @returns {Array<number>} An array containing the two
- * endpoints of the curve. The first number is the start of the curve,
- * and the second number is the end of the curve. *
- */
-Epitrochoid.prototype.endPoints = function() {
-  return [0, MathUtil.PiTimes2];
-};
-/**
- * Creates a modified version of this curve so that it
+/*
+ * Creates a modified version of this epitrochoid so that it
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
  * @returns {Epitrochoid} Return value.
- */
 Epitrochoid.prototype.scaleTo = function(radius) {
   var oi = this.outer + this.roller;
   var mx = Math.abs(Math.max(
@@ -362,7 +225,7 @@ Epitrochoid.prototype.scaleTo = function(radius) {
     this.outer * ratio,
     this.roller * ratio,
     this.distFromRoller * ratio);
-};
+};*/
 
 // Complex multiplication
 function cmul(a, b) {
@@ -377,16 +240,21 @@ function cdiv(a, b) {
 
 /** @ignore
  * @constructor */
-function Circle(radius, rotationDegrees) {
+function Circle(radius, rotationDegrees, reversed) {
   this.radius = radius;
+  this.reversed = reversed || false;
   var phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
   this.phase = phase;
   this.evaluate = function(u) {
-    return [this.radius * Math.cos(u + this.phase),
-      this.radius * Math.sin(u + this.phase)];
+    var angle = reversed ? Math.PI * 2 - (u + this.phase) :
+      u + this.phase;
+    var c = Math.cos(angle);
+    s = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(angle);
+    return [this.radius * c,
+      this.radius * s];
   };
   this.arcLength = function(u) {
     return this.radius * u;
@@ -395,20 +263,36 @@ function Circle(radius, rotationDegrees) {
     return [0, Math.PI * 2];
   };
 }
+/** @ignore
+ * @constructor */
+function Line(length) {
+  this.length = length;
+  this.evaluate = function(u) {
+    return [u, 0];
+  };
+  this.arcLength = function(u) {
+    return u;
+  };
+  this.endPoints = function() {
+    return [0, this.length];
+  };
+}
 
 /**
- * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve, whose position is fixed, with a center of (0,0).
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve whose position is fixed.
  * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
  * This curve is assumed to be a smooth closed curve such as a circle.
  * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
- * curve is assumed to be repeating (periodic) and smooth at every point;
+ * curve is assumed to be smooth at every point;
  * this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
  * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
  * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
  * @param {number} [revolutions] Number of complete rotations of the rolling curve to perform when generating the roulette curve; this will be reflected in this instance's <code>endPoints</code> method.
+ * @augments Curve
  * @constructor
  */
 export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
+// TODO: Add method to change the number of revolutions after construction
   /** @ignore */
   this.revolutions = typeof revolutions === "undefined" || revolutions === null ? 20 : revolutions;
   /** @ignore */
@@ -435,6 +319,10 @@ export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions)
     return [ret[0], ret[1], 0];
   };
 };
+
+Roulette.prototype = Object.create(Curve.prototype);
+Roulette.prototype.constructor = Roulette;
+
 /**
  * Creates a [curve evaluator object]{@link Curve} for a <i>hypotrochoid</i>, a curve drawn by a circle that rolls along the inside
  * of another circle, whose position is fixed, with a center of (0,0).<p>
@@ -464,6 +352,59 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
   var f = new Circle(outerRadius, rotationDegrees);
   var r = new Circle(innerRadius);
   var p = new Circle(distFromInnerCenter).evaluate(0);
+  return new Roulette(r, f, p, 1);
+};
+
+/**
+ * Generates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
+ * of another circle, whose position is fixed, with a center of (0,0).
+ * The rolling circle will start at the positive X axis of the fixed circle
+ * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>
+ * The following curves can be generated with this class (in the following
+ * descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
+ * and D = <code>distFromRollerCenter</code>).<ul>
+ * <li>Epicycloid: D = R (epitrochoid touching the fixed circle).</li>
+ * <li>Curtate epicycloid: D < R (epitrochoid not touching the fixed circle).</li>
+ * <li>Prolate epicycloid: D > R (epitrochoid crossing the fixed circle).</li>
+ * <li>Cardioid: R = O; D = O.</li>
+ * <li>Nephroid: R = O/2; D = O/2.</li>
+ * <li>Ranunculoid: R = O/5; D = O/5.</li>
+ * <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
+ * <li>Circle: O = 0; the radius will be R - D.</li></ul>
+ * @constructor
+ * @augments Curve
+ * @param {number} outerRadius Radius of the circle whose position
+ * is fixed.
+ * @param {number} rollerRadius Radius of the rolling circle.
+ * An epicycloid results when distFromRollerCenter=rollerRadius.
+ * @param {number} distFromRollerCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ */
+Roulette.epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
+  var f = new Circle(outerRadius, rotationDegrees);
+  var r = new Circle(innerRadius, 0, true);
+  var p = new Circle(distFromInnerCenter, 0, true).evaluate(0);
+  return new Roulette(r, f, p, 1);
+};
+
+/**
+ * Creates a [curve evaluator object]{@link Curve} for a <i>trochoid</i>, a curve drawn by a circle that rolls along the X axis.
+ * <p>
+ * The following curves can be generated with this class (in the following
+ * descriptions, R = <code>radius</code>
+ * and D = <code>distFromCenter</code>).<ul>
+ * <li>Cycloid: D = R (trochoid touching the X axis).</li>
+ * <li>Curtate cycloid: D < R (trochoid not touching the X axis).</li>
+ * <li>Prolate cycloid: D > R (trochoid crossing the X axis).</li></ul>
+ * @param {number} radius Radius of the rolling circle.
+ * @param {number} distFromCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ */
+Roulette.trochoid = function(radius, distFromCenter) {
+  var f = new Line(Math.PI * 2 * radius);
+  var r = new Circle(radius);
+  var p = new Circle(distFromCenter).evaluate(0);
   return new Roulette(r, f, p, 1);
 };
 
