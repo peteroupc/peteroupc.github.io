@@ -1,4 +1,3 @@
-/* global s */
 /** The <code>extras/evaluators.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -213,7 +212,7 @@ function Circle(radius, rotationDegrees, reversed) {
     var angle = reversed ? Math.PI * 2 - (u + this.phase) :
       u + this.phase;
     var c = Math.cos(angle);
-    // s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
+    var s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
     return [this.radius * c,
       this.radius * s];
   };

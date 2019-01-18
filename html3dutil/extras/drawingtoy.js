@@ -121,7 +121,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
  * @param {number} ringTeeth Number of teeth in the fixed ring.
  * @param {number} wheelTeeth Number of teeth in the rolling wheel.
  * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
- * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
+ * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. This is the starting angle from the positive X axis toward the positive Y axis, in degrees. If null, undefined, or omitted, the default value is 0.
  * @param {number} [offset] X coordinate of the center of the fixed ring. If null, undefined, or omitted, the default value is 0.
  * @returns {DrawingToy} This object.
  */
@@ -138,7 +138,7 @@ DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset)
  * @param {number} ringTeeth Number of teeth in the fixed ring.
  * @param {number} wheelTeeth Number of teeth in the rolling wheel.
  * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
- * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
+ * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. This is the starting angle from the positive X axis toward the positive Y axis, in degrees. If null, undefined, or omitted, the default value is 0.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
@@ -154,11 +154,11 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
  * @param {number} ringTeeth Number of teeth in the fixed ring.
  * @param {number} wheelTeeth Number of teeth in the rolling wheel.
  * @param {number} hole Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.
- * @param {number} phase Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.
+ * @param {number} [phase] Phase, in degrees, of the angle where the ring's and wheel's teeth are engaged. This is the starting angle from the positive X axis toward the positive Y axis, in degrees. If null, undefined, or omitted, the default value is 0.
  * @param {number} offset X coordinate of the center of the fixed ring.
- * @param {number} holeStep TODO: Not documented yet.
- * @param {number} offsetStep TODO: Not documented yet.
- * @param {number} count TODO: Not documented yet.
+ * @param {number} holeStep Change in the hole number with each additional curve. Any integer, whether positive, negative, or 0.
+ * @param {number} offsetStep Change in the X coordinate with each additional curve. Any number, whether positive, negative, or 0.
+ * @param {number} count Number of curves to draw.
  * @returns {DrawingToy} This object.
  */
 DrawingToy.prototype.continuousHypo = function(
