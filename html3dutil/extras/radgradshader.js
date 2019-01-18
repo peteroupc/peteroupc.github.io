@@ -16,7 +16,11 @@
 */
 
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for a screen-space radial gradient.
+ * It takes the following uniforms: "colorCenter" is a 4-element array
+ * giving the red, green, blue, and alpha components, in that order,
+ * of the color at the center; and "colorEdges" is those same components
+ * of the color at the edges.
  */
 export var radialGradientShader = {
   "uniform":{

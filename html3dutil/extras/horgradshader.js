@@ -16,7 +16,11 @@
 */
 
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for a screen-space horizontal gradient.
+ * It takes the following uniforms: "color1" is a 4-element array
+ * giving the red, green, blue, and alpha components, in that order,
+ * of the left-hand color; and "color2" is those same components
+ * of the right-hand color.
  */
 export var horGradientShader = {
   "uniform":{

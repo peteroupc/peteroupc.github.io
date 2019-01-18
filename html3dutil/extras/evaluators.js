@@ -1,3 +1,4 @@
+/* global s */
 /** The <code>extras/evaluators.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -187,46 +188,6 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   }, 0, MathUtil.PiTimes2, axis);
 };
 
-/*
- * Creates a modified version of a hypotrochoid curve so that it
- * fits the given radius.
- * @function
- * @param {number} radius Desired radius of the curve.
- * @returns {Hypotrochoid} Return value.
-Hypotrochoid.prototype.scaleTo = function(radius) {
-  var oi = this.outer - this.inner;
-  var mx = Math.abs(Math.max(
-    -oi - this.distFromInner,
-    -oi + this.distFromInner,
-    oi - this.distFromInner,
-    oi + this.distFromInner));
-  var ratio = radius / mx;
-  return new Hypotrochoid(
-    this.outer * ratio,
-    this.inner * ratio,
-    this.distFromInner * ratio);
-};
- */
-/*
- * Creates a modified version of this epitrochoid so that it
- * fits the given radius.
- * @function
- * @param {number} radius Desired radius of the curve.
- * @returns {Epitrochoid} Return value.
-Epitrochoid.prototype.scaleTo = function(radius) {
-  var oi = this.outer + this.roller;
-  var mx = Math.abs(Math.max(
-    -oi - this.distFromRoller,
-    -oi + this.distFromRoller,
-    oi - this.distFromRoller,
-    oi + this.distFromRoller));
-  var ratio = radius / mx;
-  return new Epitrochoid(
-    this.outer * ratio,
-    this.roller * ratio,
-    this.distFromRoller * ratio);
-};*/
-
 // Complex multiplication
 function cmul(a, b) {
   return [a[0] * b[0] - a[1] * b[1], a[1] * b[0] + a[0] * b[1]];
@@ -252,7 +213,7 @@ function Circle(radius, rotationDegrees, reversed) {
     var angle = reversed ? Math.PI * 2 - (u + this.phase) :
       u + this.phase;
     var c = Math.cos(angle);
-    s = (angle>=0 && angle<6.283185307179586) ? (angle<=3.141592653589793 ? Math.sqrt(1.0-c*c) : -Math.sqrt(1.0-c*c)) : Math.sin(angle);
+    // s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
     return [this.radius * c,
       this.radius * s];
   };
@@ -360,6 +321,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
  * of another circle, whose position is fixed, with a center of (0,0).
  * The rolling circle will start at the positive X axis of the fixed circle
  * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>
+ * This is a special case of a roulette in which the fixed and rolling curves are circles, and the pole point is the starting point of a circle with the same center as the rolling circle.<p><p>
  * The following curves can be generated with this class (in the following
  * descriptions, O = <code>outerRadius</code>, R means <code>rollerRadius</code>,
  * and D = <code>distFromRollerCenter</code>).<ul>
@@ -421,6 +383,6 @@ Roulette.trochoid = function(radius, distFromCenter) {
  */
 Roulette.rose = function(n, distFromInnerCenter, rotationDegrees) {
   var denom = n + 1;
-  return Roulette.hypo(2 * n * distFromInnerCenter / denom,
+  return Roulette.hypotrochoid(2 * n * distFromInnerCenter / denom,
     distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
 };
