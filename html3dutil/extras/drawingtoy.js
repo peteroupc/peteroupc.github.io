@@ -16,7 +16,7 @@
 */
 
 import {Curve, CurveBuilder, MathUtil, MeshBuffer, toGLColor} from "../h3du_module.js";
-import {Epitrochoid, Hypotrochoid} from "./evaluators.js";
+import {Epitrochoid, Roulette} from "./evaluators.js";
 
 function gcd(u, v) {
   u = Math.abs(u);
@@ -98,13 +98,14 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   phase = 360 - phase;
   var distFromCenter = relDistFromWheelCenter * innerRadius;
   // console.log([innerRadius,distFromCenter])
-  var curve = new Hypotrochoid(radius, innerRadius, distFromCenter, phase);
+  var curve = Roulette.hypo(radius, innerRadius, distFromCenter, phase);
+  var endPoints = curve.endPoints(); // Gets the end points for one revolution
   var factor = gcd(ringTeeth, wheelTeeth);
   var rt = ringTeeth / factor;
   var wt = wheelTeeth / factor;
   var trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = MathUtil.PiTimes2 * trips;
+  var extent = endPoints[1] * trips;
   curve = curve.changeEnds(0, extent);
   if(typeof offset === "undefined" || offset === null)return curve;
   if(offset === 0)return curve;

@@ -187,87 +187,12 @@ SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   }, 0, MathUtil.PiTimes2, axis);
 };
 
-/**
- * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the inside
- * of another circle, whose position is fixed, with a center of (0,0).<p>
- * The following curves can be generated with this class (in the following
- * descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
- * and D = <code>distFromInnerCenter</code>).<ul>
- * <li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
- * <li>Curtate hypocycloid: D < R (hypotrochoid not touching the fixed circle).</li>
- * <li>Prolate hypocycloid: D > R (hypotrochoid crossing the fixed circle).</li>
- * <li>Circle: O = R*2; the circle will have radius R - D.</li>
- * <li>Ellipse: O = R*2; the ellipse (unrotated) will have width abs(R+D)*2
- * and height abs(R-D)*2.</li>
- * <li>Line segment with length O*2: O = R*2; D = R.</li>
- * <li>Deltoid: O = R*3; D = R.</li>
- * <li>Astroid: O = R*4; D = R.</li>
- * <li>N-pointed hypocycloid: O = R * N; D = R.</li></ul>
- * @constructor
- * @augments Curve
- * @param {number} outerRadius Radius of the circle whose position
- * is fixed.
- * @param {number} innerRadius Radius of the rolling circle.
- * A hypocycloid results when distFromInnerCenter=innerRadius.
- * @param {number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
- */
-export var Hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
-  this.outer = outerRadius;
-  this.inner = innerRadius;
-  this.distFromInner = distFromInnerCenter;
-  var phase = rotationDegrees || 0;
-  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
-       (phase < 0 ? 360 : 0);
-  phase *= MathUtil.ToRadians;
-  var cosPhase = Math.cos(phase);
-  var sinPhase = phase <= 3.141592653589793 ? Math.sqrt(1.0 - cosPhase * cosPhase) : -Math.sqrt(1.0 - cosPhase * cosPhase);
-  this.sinPhase = sinPhase;
-  this.cosPhase = cosPhase;
-};
-Hypotrochoid.prototype = Object.create(Curve.prototype);
-Hypotrochoid.prototype.constructor = Hypotrochoid;
-
-/**
- * Finds the coordinates of a point on the curve from the given U coordinate.
- * @function
- * @param {number} u U coordinate.
- * @returns {Array<number>} A 3-element array specifying a 3D point.
- * Only the X and Y coordinates can be other than 0.
- */
-Hypotrochoid.prototype.evaluate = function(u) {
-  var oi = this.outer - this.inner;
-  var term = oi * u / this.inner;
-  var uangle = u;
-  var cosu = Math.cos(uangle),
-    sinu = uangle >= 0 && uangle < 6.283185307179586 ? uangle <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uangle);
-  var cost = Math.cos(term),
-    sint = term >= 0 && term < 6.283185307179586 ? term <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(term);
-  var x = oi * cosu + this.distFromInner * cost;
-  var y = oi * sinu - this.distFromInner * sint;
-  return [x * this.cosPhase - y * this.sinPhase,
-    y * this.cosPhase + x * this.sinPhase, 0];
-};
-/**
- * Gets the endpoints of this curve.
- * For this curve evaluator object, the curve
- * starts at 0 and ends at &pi;*2.
- * @function
- * @returns {Array<number>} An array containing the two
- * endpoints of the curve. The first number is the start of the curve,
- * and the second number is the end of the curve.
- */
-Hypotrochoid.prototype.endPoints = function() {
-  return [0, MathUtil.PiTimes2];
-};
-/**
- * Creates a modified version of this curve so that it
+/*
+ * Creates a modified version of a hypotrochoid curve so that it
  * fits the given radius.
  * @function
  * @param {number} radius Desired radius of the curve.
  * @returns {Hypotrochoid} Return value.
- */
 Hypotrochoid.prototype.scaleTo = function(radius) {
   var oi = this.outer - this.inner;
   var mx = Math.abs(Math.max(
@@ -281,46 +206,8 @@ Hypotrochoid.prototype.scaleTo = function(radius) {
     this.inner * ratio,
     this.distFromInner * ratio);
 };
-/**
- * Finds an approximate arc length (distance) between the start of this
- * curve and the point at the given U coordinate of this curve.
- * @param {number} u U coordinate of a point on the curve.
- * @returns {Array<number>} The approximate arc length of this curve at the given U coordinate.
  */
-Hypotrochoid.prototype.arcLength = function(u) {
-  var b = this.inner - this.distFromInner;
-  if(b === 0) {
-    // Hypocycloid; drawing pen is at center of inner circle
-    var x = 8 * (this.outer - this.inner) * this.inner;
-    var s = Math.sin(this.outer * u / (4 * this.inner));
-    return x * s * s / this.outer;
-  }
-  var that = this;
-  return new Curve({
-    "evaluate":function(u) {
-      return that.evaluate(u);
-    },
-    "endPoints":function() {
-      return that.endPoints();
-    }
-  }).arcLength(u);
-};
 
-/**
- * Creates a [curve evaluator object]{@link Curve} for a rose, a special
- * form of hypotrochoid.
- * @param {number} n Parameter that determines the petal form of the rose.
- * For example, the rose is symmetrical if this number is even.
- * @param {number} distFromInnerCenter Distance from the center of the
- * rolling circle to the drawing pen.
- * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
- * @returns {Hypotrochoid} The resulting curve evaluator object.
- */
-Hypotrochoid.rose = function(n, distFromInnerCenter, rotationDegrees) {
-  var denom = n + 1;
-  return new Hypotrochoid(2 * n * distFromInnerCenter / denom,
-    distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
-};
 /**
  * A [curve evaluator object]{@link Curve} for a curve drawn by a circle that rolls along the X axis.
  * <p>
@@ -487,45 +374,112 @@ function cdiv(a, b) {
     [a[0] * b[0] + a[1] * b[1], a[1] * b[0] - a[0] * b[1]],
     [1.0 / (b[0] * b[0] + b[1] * b[1]), 0]);
 }
+
+/** @ignore
+ * @constructor */
+function Circle(radius, rotationDegrees) {
+  this.radius = radius;
+  var phase = rotationDegrees || 0;
+  phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
+       (phase < 0 ? 360 : 0);
+  phase *= MathUtil.ToRadians;
+  this.phase = phase;
+  this.evaluate = function(u) {
+    return [this.radius * Math.cos(u + this.phase),
+      this.radius * Math.sin(u + this.phase)];
+  };
+  this.arcLength = function(u) {
+    return this.radius * u;
+  };
+  this.endPoints = function() {
+    return [0, Math.PI * 2];
+  };
+}
+
 /**
- * TODO: Not documented yet.
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve, whose position is fixed, with a center of (0,0).
  * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
  * This curve is assumed to be a smooth closed curve such as a circle.
  * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
  * curve is assumed to be repeating (periodic) and smooth at every point;
- * this includes periodic waves and circles.
+ * this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
  * @param {Array<number>} polePoint X and Y coordinates of a point, from the same coordinate
  * system (reference frame) as <i>rollingCurve</i>, that will generate the roulette curve.
- * @param {number} [revolutions] TODO: Not documented yet.
+ * @param {number} [revolutions] Number of complete rotations of the rolling curve to perform when generating the roulette curve; this will be reflected in this instance's <code>endPoints</code> method.
  * @constructor
  */
 export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
   /** @ignore */
-  this.revolutions = revolutions === null ? 20 : revolutions;
+  this.revolutions = typeof revolutions === "undefined" || revolutions === null ? 20 : revolutions;
   /** @ignore */
   this.rolling = new Curve(rollingCurve).toArcLengthParam();
   /** @ignore */
   this.fixedcurve = new Curve(fixedCurve).toArcLengthParam();
   /** @ignore */
-  this.rollingCurveLength = rollingCurve.getLength();
+  this.rollingCurveLength = this.rolling.getLength();
   /** @ignore */
-  this.fixedCurveLength = fixedCurve.getLength();
+  this.fixedCurveLength = this.fixedcurve.getLength();
   /** @ignore */
   this.polePoint = [polePoint[0], polePoint[1]];
   this.endPoints = () => [0, this.fixedCurveLength * this.revolutions];
 
   this.evaluate = function(u) {
     // See Wikipedia article "Roulette (curve)".
-    // Modulo is here because fixed and rolling curves are
-    // assumed to be periodic. TODO: Support cases where
-    // endPoints[0] isn't 0
-    var f = this.fixedcurve.evaluate(u % this.fixedCurveLength);
-    var df = this.fixedcurve.tangent(u % this.fixedCurveLength);
-    var r = this.rolling.evaluate(u % this.rollingCurveLength);
-    var dr = this.rolling.tangent(u % this.rollingCurveLength);
+    var f = this.fixedcurve.evaluate(u);
+    var df = this.fixedcurve.tangent(u);
+    var r = this.rolling.evaluate(u);
+    var dr = this.rolling.tangent(u);
     var pdiff = MathUtil.vec2sub(polePoint, r);
     var tmp = cmul(pdiff, cdiv(df, dr));
     var ret = MathUtil.vec2add(f, tmp);
     return [ret[0], ret[1], 0];
   };
+};
+/**
+ * Creates a [curve evaluator object]{@link Curve} for a <i>hypotrochoid</i>, a curve drawn by a circle that rolls along the inside
+ * of another circle, whose position is fixed, with a center of (0,0).<p>
+ * This is a special case of a roulette in which the fixed and rolling curves are circles, and the pole point is the starting point of a circle with the same center as the rolling circle.<p>
+ * The following curves can be generated with this class (in the following
+ * descriptions, O = <code>outerRadius</code>, R means <code>innerRadius</code>,
+ * and D = <code>distFromInnerCenter</code>).<ul>
+ * <li>Hypocycloid: D = R (hypotrochoid touching the fixed circle).</li>
+ * <li>Curtate hypocycloid: D < R (hypotrochoid not touching the fixed circle).</li>
+ * <li>Prolate hypocycloid: D > R (hypotrochoid crossing the fixed circle).</li>
+ * <li>Circle: O = R*2; the circle will have radius R - D.</li>
+ * <li>Ellipse: O = R*2; the ellipse (unrotated) will have width abs(R+D)*2
+ * and height abs(R-D)*2.</li>
+ * <li>Line segment with length O*2: O = R*2; D = R.</li>
+ * <li>Deltoid: O = R*3; D = R.</li>
+ * <li>Astroid: O = R*4; D = R.</li>
+ * <li>N-pointed hypocycloid: O = R * N; D = R.</li></ul>
+ * @param {number} outerRadius Radius of the circle whose position
+ * is fixed.
+ * @param {number} innerRadius Radius of the rolling circle.
+ * A hypocycloid results when distFromInnerCenter=innerRadius.
+ * @param {number} distFromInnerCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ */
+Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees) {
+  var f = new Circle(outerRadius, rotationDegrees);
+  var r = new Circle(innerRadius);
+  var p = new Circle(distFromInnerCenter).evaluate(0);
+  return new Roulette(r, f, p, 1);
+};
+
+/**
+ * Creates a [curve evaluator object]{@link Curve} for a rose, a special
+ * form of hypotrochoid (roulette curve generated when one circle rolls
+ * inside another fixed circle).
+ * @param {number} n Parameter that determines the petal form of the rose.
+ * For example, the rose is symmetrical if this number is even.
+ * @param {number} distFromInnerCenter Distance from the center of the
+ * rolling circle to the drawing pen.
+ * @param {number} [rotationDegrees] Starting angle of the curve from the positive X axis toward the positive Y axis, in degrees. Default is 0.
+ * @returns {Roulette} The resulting curve evaluator object.
+ */
+Roulette.rose = function(n, distFromInnerCenter, rotationDegrees) {
+  var denom = n + 1;
+  return Roulette.hypo(2 * n * distFromInnerCenter / denom,
+    distFromInnerCenter * (n - 1) / denom, distFromInnerCenter, rotationDegrees);
 };
