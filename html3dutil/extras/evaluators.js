@@ -239,7 +239,8 @@ function Line(length) {
 }
 
 /**
- * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve whose position is fixed.
+ * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve whose position is fixed.<p>
+ * This object generates two-dimensional curves, which are returned by the <code>evaluate</code> method as three-dimensional points with the third element (Z coordinate) set to 0.
  * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
  * This curve is assumed to be a smooth closed curve such as a circle.
  * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
@@ -316,7 +317,7 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
 };
 
 /**
- * Generates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
+ * Creates a [curve evaluator object]{@link Curve} for an <i>epitrochoid</i>, a curve drawn by a circle that rolls along the outside
  * of another circle, whose position is fixed, with a center of (0,0).
  * The rolling circle will start at the positive X axis of the fixed circle
  * unless otherwise given in the parameter <code>rotationDegrees</code>.<p>
@@ -332,8 +333,6 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
  * <li>Ranunculoid: R = O/5; D = O/5.</li>
  * <li>N-cusped epicycloid: R = O/N; D = O/N.</li>
  * <li>Circle: O = 0; the radius will be R - D.</li></ul>
- * @constructor
- * @augments Curve
  * @param {number} outerRadius Radius of the circle whose position
  * is fixed.
  * @param {number} rollerRadius Radius of the rolling circle.

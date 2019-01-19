@@ -385,7 +385,10 @@ Here, `B` can usually be calculated for different lists using the Python code in
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
 
-In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves), so random number generators for such environments are often designed as [**hash functions**](#Hash_Functions), because their output is determined solely by the input rather than both the input and state (as with PRNGs).
+In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
+
+- using [**hash functions**](#Hash_Functions), whose output is determined solely by the input rather than both the input and state (as with PRNGs), and
+- sampling "noise textures" with random data in each pixel.
 
 However, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
 
