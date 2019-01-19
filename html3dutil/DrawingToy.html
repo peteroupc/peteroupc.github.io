@@ -1,0 +1,212 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>DrawingToy</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>DrawingToy</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='DrawingToy'></a></p>
+
+<h3>DrawingToy()</h3>
+
+<p>Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels. Curves generated currently assume that the radius of each ring and wheel is equal to its tooth count divided by 5.</p>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#DrawingToy_continuousHypo">continuousHypo</a><br>Adds line segments that approximate one or more curves drawn by rolling a wheel inside a fixed ring (<i>hypotrochoids</i>), where each additional curve may be drawn from a different hole position, a different ring position, or both.</li>
+<li><a href="#DrawingToy_epi">epi</a><br>Adds line segments that approximate a curve drawn by rolling a wheel outside a fixed ring (an <i>epitrochoid</i>).</li>
+<li><a href="#DrawingToy_hypo">hypo</a><br>Adds line segments that approximate a curve drawn by rolling a wheel inside a fixed ring (a <i>hypotrochoid</i>).</li>
+<li><a href="#DrawingToy_setColor">setColor</a><br>Sets the color to apply when drawing future curves with this object.</li>
+<li><a href="#DrawingToy_toMeshBuffer">toMeshBuffer</a><br>TODO: Not documented yet.</li>
+</ul>
+
+<p><a name='DrawingToy_continuousHypo'></a></p>
+
+<h3>DrawingToy#continuousHypo(ringTeeth, wheelTeeth, hole, phase, offset, holeStep, offsetStep, count)</h3>
+
+<p>Adds line segments that approximate one or more curves drawn by rolling a wheel inside a fixed ring (<i>hypotrochoids</i>), where each additional curve may be drawn from a different hole position, a different ring position, or both.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ringTeeth</code> (Type: number)<br>Number of teeth in the fixed ring.</li>
+<li><code>wheelTeeth</code> (Type: number)<br>Number of teeth in the rolling wheel.</li>
+<li><code>hole</code> (Type: number)<br>Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.</li>
+<li><code>phase</code> (Type: number)<br>Phase, in degrees, of the angle where the ring&#39;s and wheel&#39;s teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.</li>
+<li><code>offset</code> (Type: number)<br>X coordinate of the center of the fixed ring.</li>
+<li><code>holeStep</code> (Type: number)<br>TODO: Not documented yet.</li>
+<li><code>offsetStep</code> (Type: number)<br>TODO: Not documented yet.</li>
+<li><code>count</code> (Type: number)<br>TODO: Not documented yet.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="DrawingToy.html">DrawingToy</a>)</p>
+
+<p><a name='DrawingToy_epi'></a></p>
+
+<h3>DrawingToy#epi(ringTeeth, wheelTeeth, hole, [phase])</h3>
+
+<p>Adds line segments that approximate a curve drawn by rolling a wheel outside a fixed ring (an <i>epitrochoid</i>).</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ringTeeth</code> (Type: number)<br>Number of teeth in the fixed ring.</li>
+<li><code>wheelTeeth</code> (Type: number)<br>Number of teeth in the rolling wheel.</li>
+<li><code>hole</code> (Type: number)<br>Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.</li>
+<li><code>phase</code> (Type: number) (optional)<br>Phase, in degrees, of the angle where the ring&#39;s and wheel&#39;s teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="DrawingToy.html">DrawingToy</a>)</p>
+
+<p><a name='DrawingToy_hypo'></a></p>
+
+<h3>DrawingToy#hypo(ringTeeth, wheelTeeth, hole, [phase], [offset])</h3>
+
+<p>Adds line segments that approximate a curve drawn by rolling a wheel inside a fixed ring (a <i>hypotrochoid</i>).</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ringTeeth</code> (Type: number)<br>Number of teeth in the fixed ring.</li>
+<li><code>wheelTeeth</code> (Type: number)<br>Number of teeth in the rolling wheel.</li>
+<li><code>hole</code> (Type: number)<br>Integer, starting from 1, identifying the hole within the wheel in which the drawing pen is placed. The greater the number, the closer the hole is to the center of the wheel.</li>
+<li><code>phase</code> (Type: number) (optional)<br>Phase, in degrees, of the angle where the ring&#39;s and wheel&#39;s teeth are engaged. If null, undefined, or omitted, the default value is 0. TODO: Document this parameter more exactly.</li>
+<li><code>offset</code> (Type: number) (optional)<br>X coordinate of the center of the fixed ring. If null, undefined, or omitted, the default value is 0.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="DrawingToy.html">DrawingToy</a>)</p>
+
+<p><a name='DrawingToy_setColor'></a></p>
+
+<h3>DrawingToy#setColor(color)</h3>
+
+<p>Sets the color to apply when drawing future curves with this object.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>color</code> (Type: Array.&lt;number&gt; | number | string)<br>A color vector or string identifying the color to apply.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="DrawingToy.html">DrawingToy</a>)</p>
+
+<p><a name='DrawingToy_toMeshBuffer'></a></p>
+
+<h3>DrawingToy#toMeshBuffer()</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: *)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Superellipsoid.html">module:extras/superellipsoid.Superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

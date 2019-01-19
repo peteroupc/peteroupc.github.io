@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 8, 2018.
+Begun on Mar. 5, 2016; last updated on Jan. 19, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -388,7 +388,7 @@ Here, `B` can usually be calculated for different lists using the Python code in
 In general, GL Shading Language (GLSL) and other programming environments designed for execution on a graphics processing unit (GPU) are stateless (they take data in and give data out without storing any state themselves).  Approaches that have been used for random number generation in GPU environments include&mdash;
 
 - using [**hash functions**](#Hash_Functions), whose output is determined solely by the input rather than both the input and state (as with PRNGs), and
-- sampling "noise textures" with random data in each pixel.
+- sampling "noise textures" with random data in each pixel (Peters 2016)<sup>[**(27)**](#Note27)</sup>.
 
 However, some of the hash functions which have been written in GLSL give undesirable results in computers whose GPUs support only 16-bit binary floating point numbers and no other kinds of numbers, which makes such GPUs an important consideration when choosing a hash function.
 
@@ -535,6 +535,8 @@ I acknowledge&mdash;
 <small><sup id=Note25>(25)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  "Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG", 2014.<br>Ristenpart, T., Yilek, S. "When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography", 2010.</small>
 
 <small><sup id=Note26>(26)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise "better" RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its `Math.random()` implementation to use a variant of `xorshift128+`, which is backward compatible because nothing in JavaScript allows  `Math.random()` to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input ("entropy") to the RNG in order to increase its randomness rather than to ensure repeatability.</small>
+
+<small><sup id=Note27>(27)</sup> C. Peters, "[**Free blue noise textures**](http://momentsingraphics.de/?p=127)", _Moments in Graphics_, Dec. 22, 2016.</small>
 
 <a id=Appendix></a>
 ## Appendix

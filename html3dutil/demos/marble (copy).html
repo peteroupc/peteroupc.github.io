@@ -1,0 +1,52 @@
+<head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
+<meta charset=utf-8>
+<style>
+body { margin: 0px; }
+canvas { width:100%; height:100%; overflow: hidden; }
+</style>
+<script type="text/javascript" src="../h3du_min.js"></script>
+<script type="text/javascript" src="shaderlib.js"></script>
+</head>
+<body>
+<canvas id=canvas></canvas>
+<script id="vertex" type="x-shader/x-shader">
+precision mediump float;
+attribute vec3 position;
+varying vec2 posVar;
+void main(){
+ posVar=position.xy;
+ gl_Position=vec4(position,1.0);
+}
+</script>
+<script id="fragment" type="x-shader/x-shader">
+varying vec2 posVar;
+void main(){
+float n;
+ n=fbm(posVar*5.0);
+ n=(n+1.0)*0.5;
+ gl_FragColor=vec4(n,n,n,1.0);
+}
+</script>
+
+<script id="demo">
+/* global H3DU, fragmentShaderLib */
+var vertexShader = document.getElementById("vertex").textContent;
+var fragmentShader = "precision mediump float;\n" +
+  fragmentShaderLib() + "\n" +
+  document.getElementById("fragment").textContent;
+var shader = new H3DU.ShaderInfo(vertexShader, fragmentShader);
+var scene = new H3DU.Scene3D(document.getElementById("canvas"));
+var fbo=renderTexture(scene,shader,256,256);
+var batch=new H3DU.Batch3D()
+
+var render=[
+
+]
+var batch = quadBatch(shader)
+H3DU.renderLoop(function(time) {
+  "use strict";
+  shader.setUniforms({"u_time":time / 1000.0});
+  scene.render(batch);
+});
+</script>
+</body>

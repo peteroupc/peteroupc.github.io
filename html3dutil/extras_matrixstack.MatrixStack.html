@@ -1,0 +1,443 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>module:extras/matrixstack.MatrixStack</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>module:extras/matrixstack.MatrixStack</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='extras_matrixstack.MatrixStack'></a></p>
+
+<h3>new module:extras/matrixstack.MatrixStack()</h3>
+
+<p>This class implements a stack
+of 4x4 transformation matrices.</p>
+
+<p>When the constructor is called, it will create a stack whose
+only element is the identity matrix.</p>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#extras_matrixstack_MatrixStack_frustum">frustum</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a frustum matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_get">get</a><br>Gets a copy of the matrix at the top of this stack.</li>
+<li><a href="#extras_matrixstack_MatrixStack_loadIdentity">loadIdentity</a><br>Modifies the matrix at the top of this stack by replacing it with the identity matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_loadMatrix">loadMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the given matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_loadTransposeMatrix">loadTransposeMatrix</a><br>Modifies the matrix at the top of this stack by replacing it with the
+transpose of the given matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_lookAt">lookAt</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix representing a camera view.</li>
+<li><a href="#extras_matrixstack_MatrixStack_multMatrix">multMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by another matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_ortho">ortho</a><br>Modifies the matrix at the top of this stack by multiplying it by
+an orthographic projection.</li>
+<li><a href="#extras_matrixstack_MatrixStack_ortho2d">ortho2d</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a 2D orthographic projection.</li>
+<li><a href="#extras_matrixstack_MatrixStack_perspective">perspective</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that defines a perspective projection.</li>
+<li><a href="#extras_matrixstack_MatrixStack_pickMatrix">pickMatrix</a><br>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that transforms the view to a portion of the viewport.</li>
+<li><a href="#extras_matrixstack_MatrixStack_popMatrix">popMatrix</a><br>Removes the matrix at the top of this stack, making
+the matrix beneath it the new top matrix.</li>
+<li><a href="#extras_matrixstack_MatrixStack_pushMatrix">pushMatrix</a><br>Makes a copy of the matrix at the top of this stack
+and puts the copy on top of the stack.</li>
+<li><a href="#extras_matrixstack_MatrixStack_rotate">rotate</a><br>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.</li>
+<li><a href="#extras_matrixstack_MatrixStack_scale">scale</a><br>Modifies the matrix at the top of this stack by multiplying it by a
+scaling transformation.</li>
+<li><a href="#extras_matrixstack_MatrixStack_translate">translate</a><br>Modifies the matrix at the top of this stack by multiplying it by a
+translation transformation.</li>
+</ul>
+
+<p><a name='extras_matrixstack_MatrixStack_frustum'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#frustum(l, r, b, t, n, f)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a frustum matrix.
+This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: number)<br>X coordinate of the point where the left clipping plane meets the near clipping plane.</li>
+<li><code>r</code> (Type: number)<br>X coordinate of the point where the right clipping plane meets the near clipping plane.</li>
+<li><code>b</code> (Type: number)<br>Y coordinate of the point where the bottom clipping plane meets the near clipping plane.</li>
+<li><code>t</code> (Type: number)<br>Y coordinate of the point where the top clipping plane meets the near clipping plane.</li>
+<li><code>n</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. This should be slightly greater than 0.</li>
+<li><code>f</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_get'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#get()</h3>
+
+<p>Gets a copy of the matrix at the top of this stack.</p>
+
+<h4>Return Value</h4>
+
+<p>. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_loadIdentity'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#loadIdentity()</h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the identity matrix.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_loadMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#loadMatrix(mat)</h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the given matrix.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A matrix to replace the top of the stack with.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_loadTransposeMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#loadTransposeMatrix(mat)</h3>
+
+<p>Modifies the matrix at the top of this stack by replacing it with the
+transpose of the given matrix.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A matrix whose transpose will replace the top of the stack.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_lookAt'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#lookAt(ex, ey, ez, cx, cy, cz, ux, uy, uz)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix representing a camera view.
+This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ex</code> (Type: number)<br>X coordinate of the camera position in world space.</li>
+<li><code>ey</code> (Type: number)<br>Y coordinate of the camera position.</li>
+<li><code>ez</code> (Type: number)<br>Z coordinate of the camera position.</li>
+<li><code>cx</code> (Type: number)<br>X coordinate of the position in world space that the camera is looking at.</li>
+<li><code>cy</code> (Type: number)<br>Y coordinate of the position looked at.</li>
+<li><code>cz</code> (Type: number)<br>Z coordinate of the position looked at.</li>
+<li><code>ux</code> (Type: number)<br>X coordinate of the up direction vector. This vector must not point in the same or opposite direction as the camera&#39;s view direction.</li>
+<li><code>uy</code> (Type: number)<br>Y coordinate of the up vector.</li>
+<li><code>uz</code> (Type: number)<br>Z coordinate of the up vector.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_multMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#multMatrix(mat)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by another matrix.
+The matrices are multiplied such that the transformations
+they describe happen in reverse order. For example, if the matrix
+at the top of the stack describes a translation and the matrix
+passed to this method describes a scaling, the multiplied matrix will describe
+the effect of scaling then translation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A matrix to multiply the current one by.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_ortho'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#ortho(l, r, b, t, n, f)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+an orthographic projection.
+In this projection, the left clipping plane is parallel to the right clipping
+plane and the top to the bottom.</p>
+
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: number)<br>Leftmost coordinate of the 3D view.</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the 3D view. (Note that r can be greater than l or vice versa.)</li>
+<li><code>b</code> (Type: number)<br>Bottommost coordinate of the 3D view.</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the 3D view. (Note that t can be greater than b or vice versa.)</li>
+<li><code>n</code> (Type: number)<br>Distance from the camera to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
+<li><code>f</code> (Type: number)<br>Distance from the camera to the far clipping plane. A positive value means the plane is in front of the viewer.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_ortho2d'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#ortho2d(l, r, b, t)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a 2D orthographic projection.
+This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>l</code> (Type: number)<br>Leftmost coordinate of the 2D view.</li>
+<li><code>r</code> (Type: number)<br>Rightmost coordinate of the 2D view. (Note that r can be greater than l or vice versa.)</li>
+<li><code>b</code> (Type: number)<br>Bottommost coordinate of the 2D view.</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the 2D view. (Note that t can be greater than b or vice versa.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_perspective'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#perspective(fov, aspect, n, f)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that defines a perspective projection.</p>
+
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fov</code> (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zoom can be implemented by multiplying field of view by an additional factor.)</li>
+<li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
+<li><code>n</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. This should be slightly greater than 0.</li>
+<li><code>f</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_pickMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#pickMatrix(wx, wy, ww, wh, vp)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by
+a matrix that transforms the view to a portion of the viewport.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>wx</code> (Type: number)<br>X coordinate of the center of the desired viewport portion.</li>
+<li><code>wy</code> (Type: number)<br>Y coordinate of the center of the desired viewport portion.</li>
+<li><code>ww</code> (Type: number)<br>Width of the desired viewport portion.</li>
+<li><code>wh</code> (Type: number)<br>Height of the desired viewport portion.</li>
+<li><code>vp</code> (Type: Array.&lt;number&gt;)<br>A 4-element array giving the X and Y coordinates of the lower left corner followed by the width and height of a rectangle indicating the current viewport.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_popMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#popMatrix()</h3>
+
+<p>Removes the matrix at the top of this stack, making
+the matrix beneath it the new top matrix. Has no
+effect if the stack has only one matrix.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_pushMatrix'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#pushMatrix()</h3>
+
+<p>Makes a copy of the matrix at the top of this stack
+and puts the copy on top of the stack.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_rotate'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#rotate(angle, x, y, z)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a rotation transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: number)<br>The desired angle to rotate in degrees. If the axis of rotation points toward the viewer, the angle&#39;s value is increasing in a counterclockwise direction.</li>
+<li><code>x</code> (Type: number)<br>X-component of the axis of rotation.</li>
+<li><code>y</code> (Type: number)<br>Y-component of the axis of rotation.</li>
+<li><code>z</code> (Type: number)<br>Z-component of the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_scale'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#scale(x, y, z)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a
+scaling transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: number)<br>Scale factor along the X axis.</li>
+<li><code>y</code> (Type: number)<br>Scale factor along the Y axis.</li>
+<li><code>z</code> (Type: number)<br>Scale factor along the Z axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a name='extras_matrixstack_MatrixStack_translate'></a></p>
+
+<h3>module:extras/matrixstack~MatrixStack#translate(x, y, z)</h3>
+
+<p>Modifies the matrix at the top of this stack by multiplying it by a
+translation transformation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: number)<br>Translation along the X axis.</li>
+<li><code>y</code> (Type: number)<br>Translation along the Y axis.</li>
+<li><code>z</code> (Type: number)<br>Translation along the Z axis.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: MatrixStack)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Superellipsoid.html">module:extras/superellipsoid.Superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

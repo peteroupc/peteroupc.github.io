@@ -1,0 +1,463 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>module:extras/camera.InputTracker</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>module:extras/camera.InputTracker</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='extras_camera.InputTracker'></a></p>
+
+<h3>new module:extras/camera.InputTracker(element)</h3>
+
+<p>A class for tracking key press, mouse, touch, and mouse wheel
+events.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>element</code> (Type: HTMLElement | HTMLDocument)<br>The HTML document or element to track keyboard and mouse events for. If null, undefined, or omitted, uses the calling application&#39;s HTML document.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#extras_camera_InputTracker.A">A</a><br>Key code for the A key.</li>
+<li><a href="#extras_camera_InputTracker.ADD">ADD</a><br>Key code for the plus key.</li>
+<li><a href="#extras_camera_InputTracker.ALT">ALT</a><br>Key code for the return key.</li>
+<li><a href="#extras_camera_InputTracker.CTRL">CTRL</a><br>Key code for the return key.</li>
+<li><a href="#extras_camera_InputTracker.DELETE">DELETE</a><br>Key code for the delete key.</li>
+<li><a href="#extras_camera_InputTracker.DOWN">DOWN</a><br>Key code for the down arrow key.</li>
+<li><a href="#extras_camera_InputTracker.END">END</a><br>Key code for the end key.</li>
+<li><a href="#extras_camera_InputTracker.ENTER">ENTER</a><br>Key code for the enter key.</li>
+<li><a href="#extras_camera_InputTracker.ESC">ESC</a><br>Key code for the return key.</li>
+<li><a href="#extras_camera_InputTracker.HOME">HOME</a><br>Key code for the home key.</li>
+<li><a href="#extras_camera_InputTracker.LEFT">LEFT</a><br>Key code for the left arrow key.</li>
+<li><a href="#extras_camera_InputTracker.PAGEDOWN">PAGEDOWN</a><br>Key code for the page down key.</li>
+<li><a href="#extras_camera_InputTracker.PAGEUP">PAGEUP</a><br>Key code for the page up key.</li>
+<li><a href="#extras_camera_InputTracker.RETURN">RETURN</a><br>Key code for the return key.</li>
+<li><a href="#extras_camera_InputTracker.RIGHT">RIGHT</a><br>Key code for the right arrow key.</li>
+<li><a href="#extras_camera_InputTracker.SHIFT">SHIFT</a><br>Key code for the shift key.</li>
+<li><a href="#extras_camera_InputTracker.SPACE">SPACE</a><br>Key code for the space bar.</li>
+<li><a href="#extras_camera_InputTracker.SUBTRACT">SUBTRACT</a><br>Key code for the minus key.</li>
+<li><a href="#extras_camera_InputTracker.TAB">TAB</a><br>Key code for the tab key.</li>
+<li><a href="#extras_camera_InputTracker.UP">UP</a><br>Key code for the up arrow key.</li>
+<li><a href="#extras_camera_InputTracker.ZERO">ZERO</a><br>Key code for the 0 key.</li>
+<li><a href="#extras_camera_InputTracker_deltaXY">deltaXY</a><br><strong>Deprecated: Yes</strong></li>
+<li><a href="#extras_camera_InputTracker_leftButton">leftButton</a><br>True if the left mouse button was detected as being down.</li>
+<li><a href="#extras_camera_InputTracker_middleButton">middleButton</a><br>True if the middle mouse button was detected as being down.</li>
+<li><a href="#extras_camera_InputTracker_rightButton">rightButton</a><br>True if the right mouse button was detected as being down.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#extras_camera_InputTracker_dispose">dispose</a><br>Disposes all resources used by this input tracker.</li>
+<li><a href="#extras_camera_InputTracker_getKey">getKey</a><br>Gets whether a key is pressed, as detected by this
+input tracker.</li>
+<li><a href="#extras_camera_InputTracker_mousePos">mousePos</a><br>Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the &quot;update&quot; method).</li>
+<li><a href="#extras_camera_InputTracker_mousewheel">mousewheel</a><br><strong>Deprecated: Will be removed in the future. Use the
+mousePos method to find out whether the user
+has rotated the mouse wheel.</strong></li>
+<li><a href="#extras_camera_InputTracker_update">update</a><br>Retrieves the current position of the mouse within
+the page&#39;s client area, as detected by the input
+tracker and calculates the &quot;delta mouse position&quot;,
+or the difference between
+those values and the values they had the last
+time this method was called.</li>
+</ul>
+
+<p><a name='extras_camera_InputTracker.A'></a></p>
+
+<h3>module:extras/camera~InputTracker.A (constant)</h3>
+
+<p>Key code for the A key. Add 1 through 25 to get
+the keys for the other letters of the English alphabet.</p>
+
+<p>Default Value: <code>65</code></p>
+
+<p><a name='extras_camera_InputTracker.ADD'></a></p>
+
+<h3>module:extras/camera~InputTracker.ADD (constant)</h3>
+
+<p>Key code for the plus key.</p>
+
+<p>Default Value: <code>107</code></p>
+
+<p><a name='extras_camera_InputTracker.ALT'></a></p>
+
+<h3>module:extras/camera~InputTracker.ALT (constant)</h3>
+
+<p>Key code for the return key.</p>
+
+<p>Default Value: <code>18</code></p>
+
+<p><a name='extras_camera_InputTracker.CTRL'></a></p>
+
+<h3>module:extras/camera~InputTracker.CTRL (constant)</h3>
+
+<p>Key code for the return key.</p>
+
+<p>Default Value: <code>17</code></p>
+
+<p><a name='extras_camera_InputTracker.DELETE'></a></p>
+
+<h3>module:extras/camera~InputTracker.DELETE (constant)</h3>
+
+<p>Key code for the delete key.</p>
+
+<p>Default Value: <code>46</code></p>
+
+<p><a name='extras_camera_InputTracker.DOWN'></a></p>
+
+<h3>module:extras/camera~InputTracker.DOWN (constant)</h3>
+
+<p>Key code for the down arrow key.</p>
+
+<p>Default Value: <code>40</code></p>
+
+<p><a name='extras_camera_InputTracker.END'></a></p>
+
+<h3>module:extras/camera~InputTracker.END (constant)</h3>
+
+<p>Key code for the end key.</p>
+
+<p>Default Value: <code>35</code></p>
+
+<p><a name='extras_camera_InputTracker.ENTER'></a></p>
+
+<h3>module:extras/camera~InputTracker.ENTER (constant)</h3>
+
+<p>Key code for the enter key.</p>
+
+<p>Default Value: <code>13</code></p>
+
+<p><a name='extras_camera_InputTracker.ESC'></a></p>
+
+<h3>module:extras/camera~InputTracker.ESC (constant)</h3>
+
+<p>Key code for the return key.</p>
+
+<p>Default Value: <code>27</code></p>
+
+<p><a name='extras_camera_InputTracker.HOME'></a></p>
+
+<h3>module:extras/camera~InputTracker.HOME (constant)</h3>
+
+<p>Key code for the home key.</p>
+
+<p>Default Value: <code>36</code></p>
+
+<p><a name='extras_camera_InputTracker.LEFT'></a></p>
+
+<h3>module:extras/camera~InputTracker.LEFT (constant)</h3>
+
+<p>Key code for the left arrow key.</p>
+
+<p>Default Value: <code>37</code></p>
+
+<p><a name='extras_camera_InputTracker.PAGEDOWN'></a></p>
+
+<h3>module:extras/camera~InputTracker.PAGEDOWN (constant)</h3>
+
+<p>Key code for the page down key.</p>
+
+<p>Default Value: <code>34</code></p>
+
+<p><a name='extras_camera_InputTracker.PAGEUP'></a></p>
+
+<h3>module:extras/camera~InputTracker.PAGEUP (constant)</h3>
+
+<p>Key code for the page up key.</p>
+
+<p>Default Value: <code>33</code></p>
+
+<p><a name='extras_camera_InputTracker.RETURN'></a></p>
+
+<h3>module:extras/camera~InputTracker.RETURN (constant)</h3>
+
+<p>Key code for the return key.</p>
+
+<p>Default Value: <code>10</code></p>
+
+<p><a name='extras_camera_InputTracker.RIGHT'></a></p>
+
+<h3>module:extras/camera~InputTracker.RIGHT (constant)</h3>
+
+<p>Key code for the right arrow key.</p>
+
+<p>Default Value: <code>39</code></p>
+
+<p><a name='extras_camera_InputTracker.SHIFT'></a></p>
+
+<h3>module:extras/camera~InputTracker.SHIFT (constant)</h3>
+
+<p>Key code for the shift key.</p>
+
+<p>Default Value: <code>16</code></p>
+
+<p><a name='extras_camera_InputTracker.SPACE'></a></p>
+
+<h3>module:extras/camera~InputTracker.SPACE (constant)</h3>
+
+<p>Key code for the space bar.</p>
+
+<p>Default Value: <code>32</code></p>
+
+<p><a name='extras_camera_InputTracker.SUBTRACT'></a></p>
+
+<h3>module:extras/camera~InputTracker.SUBTRACT (constant)</h3>
+
+<p>Key code for the minus key.</p>
+
+<p>Default Value: <code>109</code></p>
+
+<p><a name='extras_camera_InputTracker.TAB'></a></p>
+
+<h3>module:extras/camera~InputTracker.TAB (constant)</h3>
+
+<p>Key code for the tab key.</p>
+
+<p>Default Value: <code>9</code></p>
+
+<p><a name='extras_camera_InputTracker.UP'></a></p>
+
+<h3>module:extras/camera~InputTracker.UP (constant)</h3>
+
+<p>Key code for the up arrow key.</p>
+
+<p>Default Value: <code>38</code></p>
+
+<p><a name='extras_camera_InputTracker.ZERO'></a></p>
+
+<h3>module:extras/camera~InputTracker.ZERO (constant)</h3>
+
+<p>Key code for the 0 key. Add 1 through 9 to get
+the keys for the other basic digits 1 through 9.</p>
+
+<p>Default Value: <code>48</code></p>
+
+<p><a name='extras_camera_InputTracker_deltaXY'></a></p>
+
+<h3>module:extras/camera~InputTracker#deltaXY</h3>
+
+<p><strong>Deprecated: Yes</strong></p>
+
+<p>An alias for InputTracker#mousePos.</p>
+
+<p><a name='extras_camera_InputTracker_leftButton'></a></p>
+
+<h3>module:extras/camera~InputTracker#leftButton</h3>
+
+<p>True if the left mouse button was detected as being down.</p>
+
+<p>Type: boolean</p>
+
+<p><a name='extras_camera_InputTracker_middleButton'></a></p>
+
+<h3>module:extras/camera~InputTracker#middleButton</h3>
+
+<p>True if the middle mouse button was detected as being down.</p>
+
+<p>Type: boolean</p>
+
+<p><a name='extras_camera_InputTracker_rightButton'></a></p>
+
+<h3>module:extras/camera~InputTracker#rightButton</h3>
+
+<p>True if the right mouse button was detected as being down.</p>
+
+<p>Type: boolean</p>
+
+<p><a name='extras_camera_InputTracker_dispose'></a></p>
+
+<h3>module:extras/camera~InputTracker#dispose()</h3>
+
+<p>Disposes all resources used by this input tracker.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<p><a name='extras_camera_InputTracker_getKey'></a></p>
+
+<h3>module:extras/camera~InputTracker#getKey()</h3>
+
+<p>Gets whether a key is pressed, as detected by this
+input tracker.</p>
+
+<h4>Return Value</h4>
+
+<p>key Key code of the key to check. (Type: number)</p>
+
+<p><a name='extras_camera_InputTracker_mousePos'></a></p>
+
+<h3>module:extras/camera~InputTracker#mousePos()</h3>
+
+<p>Returns the current mouse position, delta
+mouse position, and delta mouse wheel
+position (see the &quot;update&quot; method).</p>
+
+<h4>Return Value</h4>
+
+<p>An object containing the following keys:<ul>
+<li><code>cx</code> - X coordinate of the current mouse
+position.
+<li><code>cx</code> - Y coordinate of the current mouse
+position.
+<li><code>x</code> - X component of the delta mouse position.
+<li><code>y</code> - Y component of the delta mouse position.
+<li><code>ticks</code> - The delta mouse wheel position.
+</ul>
+If this object&#39;s update method wasn&#39;t called, all these values
+will be 0. (Type: Object)</p>
+
+<p><a name='extras_camera_InputTracker_mousewheel'></a></p>
+
+<h3>module:extras/camera~InputTracker#mousewheel(func)</h3>
+
+<p><strong>Deprecated: Will be removed in the future. Use the
+mousePos method to find out whether the user
+has rotated the mouse wheel.</strong></p>
+
+<p>Sets a function to handle mouse wheel events.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>func</code> (Type: function)<br>A function.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<p><a name='extras_camera_InputTracker_update'></a></p>
+
+<h3>module:extras/camera~InputTracker#update()</h3>
+
+<p>Retrieves the current position of the mouse within
+the page&#39;s client area, as detected by the input
+tracker and calculates the &quot;delta mouse position&quot;,
+or the difference between
+those values and the values they had the last
+time this method was called. If this method wasn&#39;t
+called before for this tracker, the delta mouse position is
+(0, 0). If the current position of the mouse is unknown,
+it&#39;s (0, 0) instead.</p>
+
+<p>Also retrieves the &quot;delta mouse wheel position&quot;, or the
+offset, in &quot;ticks&quot;, from the mouse wheel position at the
+last time this method was called (or the time this tracker
+was created if it wasn&#39;t) to the current mouse wheel position.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: InputTracker)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
+<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
+<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
+<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
+<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
+<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
+<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
+<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
+<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
+<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
+<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
+<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
+<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
+<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
+<li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Superellipsoid.html">module:extras/superellipsoid.Superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>
