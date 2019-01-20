@@ -1242,6 +1242,8 @@ In this document, `COLORDIFF(color1, color2)` is a function that calculates a [*
         return sqrt(fl*fl+fc*fc+fh*fh+r*fc*fh)
     END METHOD
 
+> **Note:** An improvement to CIEDE2000 (Huang et al. 2015)<sup>[**(47)**](#Note47)</sup>, recently recommended in CIE 230:2019 for small color differences, is not yet in common use.
+
 **Commercial factors.** A _commercial factor_ (`cf`) is an additional parameter to CMC and other color difference formulas.  The `COLORDIFF` result is divided by `cf` (which is usually 1) to get the final color difference.
 
 <a id=Nearest_Colors></a>
@@ -1687,6 +1689,8 @@ where `FUNC` is an arbitrary function of one or more variables) can be done to a
 <small><sup id=Note45>(45)</sup> As [**B. MacEvoy explains**](http://www.handprint.com/HP/WCL/color18a.html#compmatch) (at "Other Factors in Material Mixtures"), things that affect the mixture of two colorants include their "refractive index, particle size, crystal form, hiding power and tinting strength" (see also his [**principles 39 to 41**](http://www.handprint.com/HP/WCL/color18a.html#ctprin39)), and "the material attributes of the support [e.g., the paper or canvas] and the paint application methods" are also relevant here.  These factors, to the extent the reflectance curves don't take them into account, are not dealt with in this method.</small>
 
 <small><sup id=Note46>(46)</sup> Walowit, E.  "Spectrophotometric color formulation based on two-constant Kubelka-Munk theory". Thesis, Rochester Institute of Technology, 1985.</small>
+
+<small><sup id=Note47>(47)</sup> Huang, M., Cui, G., et al. (2015). "Power functions improving the performance of color-difference formulas." Optical Society of America, 23(1), 597–610.</small>
 
 <a id=License></a>
 ## License

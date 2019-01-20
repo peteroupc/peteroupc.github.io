@@ -1,4 +1,4 @@
-/* global MathUtil, aSide */
+/* global MathUtil */
 /** The <code>extras/contourlines.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -220,14 +220,11 @@ AABBTree.ON = 3;
 // In this JavaScript code,
 // the first three elements of the plane array are the normal, and
 // the next three are the origin.
-function classifyPointToPlane3D(plane, point) {
+function classifyPointToPlane3D(planeNormal, planeD, point) {
   // NOTE: HE_Mesh includes fast code and robust code for this
   // function, but only the fast code is used here
   // to keep this code simple
-  const planeNormal = plane.slice(0, 3);
-  const planeOrigin = plane.slice(3, 6);
-  const planeD = MathUtil.vec3dot(planeNormal, planeOrigin);
-  const d = MathUtil.vec3dot(planeNormal, point) - planeD;
+  const d = MathUtil.vec3dot(planeNormal, point) + planeD;
   if (Math.abs(d) < EPSILON) {
     return AABBTree.ON;
   }
@@ -237,13 +234,10 @@ function classifyPointToPlane3D(plane, point) {
   return AABBTree.BACK;
 }
 
-function getIntersectionCoordCoordPlane(a, b, plane) {
+function getIntersectionCoordCoordPlane(a, b, planeNormal, planeD) {
   const ab = MathUtil.vec3sub(a, b);
-  const planeNormal = plane.slice(0, 3);
-  const planeOrigin = plane.slice(3, 6);
-  const planeD = -MathUtil.vec3dot(planeNormal, planeOrigin);
   let t = (-planeD - MathUtil.vec3dot(planeNormal, a)) /
-    MathUtil.vec3doc(planeNormal, ab);
+    MathUtil.vec3dot(planeNormal, ab);
   if(t >= -EPSILON && t <= 1.0 + EPSILON) {
     if(t < EPSILON)t = 0;
     if(t > 1.0 - EPSILON)t = 1;
@@ -256,28 +250,27 @@ function getIntersectionCoordCoordPlane(a, b, plane) {
 // NOTE: Assumes polygon is convex. Adapted
 // by Peter O. from public-domain Java code
 // in the HE_Mesh library.
-/* exported getIntersectionPolygonPlane */
-/* exported getIntersectionPolygonPlane */
-/* exported getIntersectionPolygonPlane */
-/* exported getIntersectionPolygonPlane */
-function getIntersectionPolygonPlane(poly, plane) {
-  const result = [];
-  const splitVerts = [];
+/** @private
+ * @ignore */
+function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
+  let splitVerts = null;
   let a = poly[poly.length - 1];
-  const aSize = classifyPointToPlane3D(a, plane);
+  let aSide = classifyPointToPlane3D(planeNormal, planeD, a);
   let b, bSide;
   for (let n = 0; n < poly.length; n++) {
     var inter;
     b = poly[n];
-    bSide = classifyPointToPlane3D(b, plane);
+    bSide = classifyPointToPlane3D(planeNormal, planeD, b);
     if (bSide === AABBTree.FRONT) {
       if (aSide === AABBTree.BACK) {
-        inter = getIntersectionCoordCoordPlane(b, a, plane);
+        inter = getIntersectionCoordCoordPlane(b, a, planeNormal, planeD);
+        if(!splitVerts)splitVerts = [];
         splitVerts.push(inter);
       }
     } else if (bSide === AABBTree.BACK) {
       if (aSide === AABBTree.FRONT) {
-        inter = getIntersectionCoordCoordPlane(a, b, plane);
+        inter = getIntersectionCoordCoordPlane(a, b, planeNormal, planeD);
+        if(!splitVerts)splitVerts = [];
         splitVerts.push(inter);
       }
     }
@@ -285,12 +278,48 @@ function getIntersectionPolygonPlane(poly, plane) {
       splitVerts.push(a);
     }
     a = b;
-    // aSide = bSide;
+    aSide = bSide;
   }
-  for (let i = 0; i < splitVerts.length; i += 2) {
-    if (i + 1 < splitVerts.length && splitVerts[i + 1] !== null) {
-      result.push([splitVerts[i], splitVerts[i + 1]]);
+  if(splitVerts.length > 0) {
+    for (let i = 0; i < splitVerts.length; i += 2) {
+      if (i + 1 < splitVerts.length && splitVerts[i + 1] !== null) {
+        result.push(splitVerts[i][0], splitVerts[i][1],
+          splitVerts[i][2], splitVerts[i + 1][0],
+          splitVerts[i + 1][1], splitVerts[i + 1][2]);
+      }
     }
   }
-  return result;
+}
+/**
+ * TODO: Not documented yet.
+ * @param {*} mesh TODO: Not documented yet.
+ * @param {*} planes TODO: Not documented yet.
+ * @returns {*} TODO: Not documented yet.
+ */
+export function contourLines3D(mesh, planes) {
+  if(mesh.primitiveType() !== MeshBuffer.TRIANGLES)return null;
+  const p = mesh.getAttribute("POSITION");
+  if(!p || p.countPerValue !== 3)return null;
+  const planeArray = [];
+  for(var i = 0; i < planes.length; i++) {
+    planeArray.push([[plane[0], plane[1], plane[2]], plane[3]]);
+  }
+  const positions = [];
+  let count = mesh.vertexCount();
+  if(count % 3 !== 0)count -= count % 3;
+  const v1 = [0, 0, 0];
+  const v2 = [0, 0, 0];
+  const v3 = [0, 0, 0];
+  const polygon = [v1, v2, v3];
+  for(i = 0; i < count; i += 3) {
+    p.getVec(mesh.getIndex(i), v1);
+    p.getVec(mesh.getIndex(i + 1), v2);
+    p.getVec(mesh.getIndex(i + 2), v3);
+    for(let j = 0; j < planeArray.length; i++) {
+      var plane = planeArray[i];
+      getIntersectionPolygonPlane(polygon, plane[0], plane[2], positions);
+    }
+  }
+  return MeshBuffer.fromPositions(positions)
+    .setPrimitiveType(MeshBuffer.LINES);
 }

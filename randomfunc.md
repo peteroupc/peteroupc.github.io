@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Jan. 10, 2018.
+Begun on June 4, 2017; last updated on Jan. 20, 2018.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -451,6 +451,8 @@ For other number formats (including Java's `double` and `float`), the pseudocode
          if ret < maxExclusive: return ret
        end
     END METHOD
+
+> **Example:** To generate, uniformly at random, a point inside an N-dimensional box, generate `RNDNUMEXCRANGE(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example, to generate, uniformly at random, a point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDNUMEXCRANGE(0,2), RNDNUMEXCRANGE(3,6)]`.
 
 <a id=Uniform_Random_Bits></a>
 ### Uniform Random Bits
@@ -1826,6 +1828,8 @@ The following pseudocode shows how to generate, uniformly at random, an N-dimens
       return ret
     END METHOD
 
+> **Example:** To generate, uniformly at random, a point on the surface of a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates on the surface of a circle (2-dimensional hypersphere) and a Z coordinate within the desired range (e.g., with `RNDNUMRANGE`).
+
 <a id=Random_Points_Inside_a_Ball_or_Shell></a>
 ### Random Points Inside a Ball or Shell
 
@@ -1839,6 +1843,8 @@ although the former method "may ... be slower" "in practice", according to a [**
 To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
 - generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the [**appendix**](#Appendix)), or
 - generate, uniformly at random, a point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(31)**](#Note31)</sup>.
+
+> **Example:** To generate, uniformly at random, a point inside a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates inside a disk (2-dimensional ball) and a Z coordinate within the desired range (e.g., with `RNDNUMRANGE`).
 
 <a id=Random_Latitude_and_Longitude></a>
 ### Random Latitude and Longitude
