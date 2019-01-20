@@ -18,7 +18,7 @@ import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
  * TODO: Not documented yet.
  */
-export var marbleShader = {
+export const marbleShader = {
   "uniform":{"u_time":0},
   "vertexShader":[
     "varying vec2 posVar;",

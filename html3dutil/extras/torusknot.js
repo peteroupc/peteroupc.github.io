@@ -28,7 +28,7 @@ import {MathUtil} from "../h3du_module.js";
  * @param {number} m1 Integer parameter.
  * @constructor
  */
-export var TorusKnot = function(revolutions, r, q, s1, m1) {
+export const TorusKnot = function(revolutions, r, q, s1, m1) {
   this.revolutions = revolutions;
   this.q = q;
   this.r = r;
@@ -45,7 +45,8 @@ export var TorusKnot = function(revolutions, r, q, s1, m1) {
     const ret = [0, 0, 0];
     let c = 1.0;
     let rsum = 0;
-    for(let i = 0; i < this.r.length; i++) {
+    let i;
+    for (i = 0; i < this.r.length; i++) {
       c += this.r[i] * Math.cos(this.q[i] * u);
       rsum += this.r[i];
     }

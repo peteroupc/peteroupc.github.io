@@ -22,7 +22,7 @@
  * @returns {*} Return value.
  * @function
  */
-export var loadTga = function(data) {
+export const loadTga = function(data) {
   const view = new DataView(data);
   // NOTE: id is byte 0; cmaptype is byte 1
   const imgtype = view.getUint8(2);

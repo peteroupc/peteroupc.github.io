@@ -22,7 +22,7 @@
  * only element is the identity matrix.
  * @constructor
  */
-export var MatrixStack = function() {
+export const MatrixStack = function() {
   this.stack = [
     [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   ];
@@ -83,8 +83,10 @@ MatrixStack.prototype.loadTransposeMatrix = function(mat) {
 MatrixStack.prototype.multMatrix = function(mat) {
   const curmat = this.stack[this.stack.length - 1];
   const dst = [];
-  for(let i = 0; i < 16; i += 4) {
-    for(let j = 0; j < 4; j++) {
+  let i;
+  for (i = 0; i < 16; i += 4) {
+    let j;
+    for (j = 0; j < 4; j++) {
       dst[i + j] =
         mat[i] * curmat[j] +
         mat[i + 1] * curmat[j + 4] +
@@ -317,11 +319,8 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
   const viewerPos = [ex, ey, ez];
   const lookingAt = [cx, cy, cz];
   const up = [ux, uy, uz];
-  let u;
-  let s;
-  let f;
   const t5 = [lookingAt[0] - viewerPos[0], lookingAt[1] - viewerPos[1], lookingAt[2] - viewerPos[2]];
-  f = t5;
+  const f = t5;
   const t6 = Math.sqrt(t5[0] * t5[0] + t5[1] * t5[1] + t5[2] * t5[2]);
   if (t6 !== 0.0) {
     const t7 = 1.0 / t6;
@@ -339,7 +338,8 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
     up[2] *= t9;
   }
   const t10 = [f[1] * up[2] - f[2] * up[1], f[2] * up[0] - f[0] * up[2], f[0] * up[1] - f[1] * up[0]];
-  s = t10;
+
+  const s = t10;
   const t11 = Math.sqrt(t10[0] * t10[0] + t10[1] * t10[1] + t10[2] * t10[2]);
   if (t11 !== 0.0) {
     const t12 = 1.0 / t11;
@@ -348,7 +348,8 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
     s[2] = t10[2] * t12;
   }
   const t13 = [s[1] * f[2] - s[2] * f[1], s[2] * f[0] - s[0] * f[2], s[0] * f[1] - s[1] * f[0]];
-  u = t13;
+
+  const u = t13;
   const t14 = Math.sqrt(t13[0] * t13[0] + t13[1] * t13[1] + t13[2] * t13[2]);
   if (t14 !== 0.0) {
     const t15 = 1.0 / t14;

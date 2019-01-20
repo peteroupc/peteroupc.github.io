@@ -21,7 +21,7 @@ import {MeshBuffer} from "../h3du_module.js";
  * and other polyhedra.<p>
  * @constructor
  */
-export var Polyhedra = function() {
+export const Polyhedra = function() {
   // NOTE: empty because no instance properties
 };
 /**
@@ -36,7 +36,8 @@ export var Polyhedra = function() {
 Polyhedra.normDistances = function(vertices, radius) {
   // Normalize distances from the origin
 
-  for(let i = 0; i < vertices.length; i += 3) {
+  let i;
+  for (i = 0; i < vertices.length; i += 3) {
     const vx = vertices[i];
     const vy = vertices[i + 1];
     const vz = vertices[i + 2];
@@ -66,7 +67,8 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   const indices = vi[1];
   if(typeof level === "undefined" || level === null || level <= 0) {
     // Scale the vertices to the given radius
-    for(var i = 0; i < vertices.length; i += 3) {
+    let i;
+    for (i = 0; i < vertices.length; i += 3) {
       vertices[i] *= radius;
       vertices[i + 1] *= radius;
       vertices[i + 2] *= radius;
@@ -75,9 +77,11 @@ Polyhedra.makeSphere = function(vi, radius, level) {
   }
   Polyhedra.normDistances(vertices, radius);
   // Subdivide the triangles into many smaller triangles
-  for(i = 0; i < level; i++) {
+  let i;
+  for (i = 0; i < level; i++) {
     const tris = indices.length;
-    for(let j = 0; j < tris; j += 3) {
+    let j;
+    for (j = 0; j < tris; j += 3) {
       const i1 = indices[j];
       const i2 = indices[j + 1];
       const i3 = indices[j + 2];

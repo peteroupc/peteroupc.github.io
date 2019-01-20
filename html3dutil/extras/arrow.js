@@ -18,7 +18,7 @@
 import {MathUtil, Meshes} from "../h3du_module.js";
 
 // Generate a composite mesh representing an arrow
-export var createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
+export const createArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius) {
   const slices = 32;
   // generate the four parts of the arrow
   const shaft = Meshes.createCylinder(shaftRadius, shaftRadius,
@@ -44,7 +44,7 @@ export var createArrow = function(shaftLength, pointerLength, shaftRadius, point
  * @returns {MeshBuffer} A mesh buffer of the resulting shape.
  * @function
  */
-export var createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
+export const createMultiColoredArrow = function(shaftLength, pointerLength, shaftRadius, pointerRadius, shaftColor, pointerColor) {
   const slices = 32;
   // generate the four parts of the arrow
   const shaft = Meshes.createCylinder(shaftRadius, shaftRadius,

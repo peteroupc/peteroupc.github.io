@@ -22,7 +22,7 @@
  * of the left-hand color; and "color2" is those same components
  * of the right-hand color.
  */
-export var horGradientShader = {
+export const horGradientShader = {
   "uniform":{
     "color1":[0, 0, 0, 1],
     "color2":[1, 1, 1, 1]

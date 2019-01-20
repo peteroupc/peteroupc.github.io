@@ -20,7 +20,7 @@
  * is the input texture, "t", a value from 0 to 1 indicating how strongly to
  * apply the color matrix, and "matrix", which is the 4x4 matrix just described.
  */
-export var colorMatrixShader = {
+export const colorMatrixShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",
@@ -68,7 +68,7 @@ export var colorMatrixShader = {
  * @returns {Array<number>} 4x4 color matrix.
  * @function
  */
-export var getColorMatrix = function(kind) {
+export const getColorMatrix = function(kind) {
   if(kind === "grayscale") {
     return [
       1 / 3, 1 / 3, 1 / 3, 0,

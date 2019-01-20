@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var skySphereShader = {
+export const skySphereShader = {
   "vertexShader":["varying vec4 positionVar;",
     "void main() {",
     "positionVar=worldMatrix*vec4(position,1.0);",
@@ -42,7 +42,7 @@ export var skySphereShader = {
 /**
  * TODO: Not documented yet.
  */
-export var skySphereCubeMapShader = {
+export const skySphereCubeMapShader = {
   "vertexShader":["varying vec4 positionVar;",
     "void main() {",
     "positionVar=worldMatrix*vec4(position,1.0);",

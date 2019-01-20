@@ -110,20 +110,24 @@ function conrec(func, levels, u1, u2, v1, v2, usize, vsize) {
   if(levels.length === 0)return contours;
   let minLevel = Number.POSITIVE_INFINITY;
   let maxLevel = Number.NEGATIVE_INFINITY;
-  for(var i = 0; i < levels.length; i++) {
+  let i;
+  for (i = 0; i < levels.length; i++) {
     contours.push([]);
     minLevel = Math.min(minLevel, levels[i]);
     maxLevel = Math.max(maxLevel, levels[i]);
   }
-  for(var v = 0; v <= vsize; v++) {
+  let v;
+  for (v = 0; v <= vsize; v++) {
     const vv = v === vsize ? v2 : v1 + vstep * v;
-    for(var u = 0; u <= usize; u++) {
+    let u;
+    for (u = 0; u <= usize; u++) {
       const uu = u === usize ? u2 : u1 + ustep * u;
       array.push(func(uu, vv));
     }
   }
   const usizep1 = usize + 1;
-  for(v = 0; v < vsize; v++) {
+
+  for (v = 0; v < vsize; v++) {
     const row = v * usizep1;
     const nextrow = row + usizep1;
     const vval = v1 + vstep * v;
@@ -131,7 +135,8 @@ function conrec(func, levels, u1, u2, v1, v2, usize, vsize) {
     const vc = vval + halfvstep;
     let currU = array[row];
     let currUNextRow = array[nextrow];
-    for(u = 0; u < usize; u++) {
+    let u;
+    for (u = 0; u < usize; u++) {
       const uval = u1 + ustep * u;
       const unextval = u + 1 === usize ? u2 : uval + ustep;
       const p1 = currU;
@@ -147,7 +152,8 @@ function conrec(func, levels, u1, u2, v1, v2, usize, vsize) {
       }
       const uc = uval + halfustep;
       const pc = (p1 + p2 + p3 + p4) * 0.25;
-      for(i = 0; i < levels.length; i++) {
+      let i;
+      for (i = 0; i < levels.length; i++) {
         const level = levels[i];
         if(minValue <= level && maxValue >= level) {
           contourVertex(p1, p2, pc, uval, vval, unextval, vval, uc, vc, level, contours[i]);
@@ -164,9 +170,11 @@ function conrec(func, levels, u1, u2, v1, v2, usize, vsize) {
 /** @ignore */
 function drawCurve(contours) {
   const vertices = [];
-  for(let contourIndex = 0; contourIndex < contours.length; contourIndex++) {
+  let contourIndex;
+  for (contourIndex = 0; contourIndex < contours.length; contourIndex++) {
     const contour = contours[contourIndex];
-    for(let i = 0; i < contour.length; i += 4) {
+    let i;
+    for (i = 0; i < contour.length; i += 4) {
       vertices.push(contour[i], contour[i + 1], 0);
       vertices.push(contour[i + 2], contour[i + 3], 0);
     }
@@ -200,7 +208,7 @@ function drawCurve(contours) {
  * 0,10,0,10,10,10);
  * @function
  */
-export var contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
+export const contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize) {
   const contours = conrec(func, levels, u1, u2, v1, v2, usize, vsize);
   return drawCurve(contours);
 };
@@ -256,9 +264,11 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
   let splitVerts = null;
   let a = poly[poly.length - 1];
   let aSide = classifyPointToPlane3D(planeNormal, planeD, a);
-  let b, bSide;
-  for (let n = 0; n < poly.length; n++) {
-    var inter;
+  let b;
+  let bSide;
+  let n;
+  for (n = 0; n < poly.length; n++) {
+    let inter;
     b = poly[n];
     bSide = classifyPointToPlane3D(planeNormal, planeD, b);
     if (bSide === AABBTree.FRONT) {
@@ -281,7 +291,8 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
     aSide = bSide;
   }
   if(splitVerts.length > 0) {
-    for (let i = 0; i < splitVerts.length; i += 2) {
+    let i;
+    for (i = 0; i < splitVerts.length; i += 2) {
       if (i + 1 < splitVerts.length && splitVerts[i + 1] !== null) {
         result.push(splitVerts[i][0], splitVerts[i][1],
           splitVerts[i][2], splitVerts[i + 1][0],
@@ -294,15 +305,17 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
  * TODO: Not documented yet.
  * @param {*} mesh TODO: Not documented yet.
  * @param {*} planes TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * @returns {MeshBuffer} A mesh buffer containing the generated contour lines.
  */
 export function contourLines3D(mesh, planes) {
   if(mesh.primitiveType() !== MeshBuffer.TRIANGLES)return null;
   const p = mesh.getAttribute("POSITION");
   if(!p || p.countPerValue !== 3)return null;
   const planeArray = [];
-  for(var i = 0; i < planes.length; i++) {
-    planeArray.push([[plane[0], plane[1], plane[2]], plane[3]]);
+  let i;
+  for (i = 0; i < planes.length; i++) {
+    const pl = planes[i];
+    planeArray.push([[pl[0], pl[1], pl[2]], pl[3]]);
   }
   const positions = [];
   let count = mesh.vertexCount();
@@ -311,12 +324,13 @@ export function contourLines3D(mesh, planes) {
   const v2 = [0, 0, 0];
   const v3 = [0, 0, 0];
   const polygon = [v1, v2, v3];
-  for(i = 0; i < count; i += 3) {
+  for (i = 0; i < count; i += 3) {
     p.getVec(mesh.getIndex(i), v1);
     p.getVec(mesh.getIndex(i + 1), v2);
     p.getVec(mesh.getIndex(i + 2), v3);
-    for(let j = 0; j < planeArray.length; i++) {
-      var plane = planeArray[i];
+    let j;
+    for (j = 0; j < planeArray.length; i++) {
+      const plane = planeArray[i];
       getIntersectionPolygonPlane(polygon, plane[0], plane[2], positions);
     }
   }

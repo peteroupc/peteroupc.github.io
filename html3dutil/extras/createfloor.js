@@ -30,7 +30,7 @@ import {MeshBuffer} from "../h3du-module.js";
  * @returns {MeshBuffer} The resulting mesh buffer.
  * @function
  */
-export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
+export const createFloor = function(xStart, yStart, width, height, tileSize, z) {
   if(typeof z === "undefined" || z === null)z = 0.0;
   const vertices = [];
   const indices = [];
@@ -41,10 +41,12 @@ export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
   let lastX = (width - tilesX * tileSize) / tileSize;
   if(lastY <= 0)lastY = 1.0;
   if(lastX <= 0)lastX = 1.0;
-  for(let y = 0; y < tilesY; y++) {
+  let y;
+  for (y = 0; y < tilesY; y++) {
     const endY = y === tilesY - 1 ? 1.0 - lastY : 0.0;
     const endPosY = y === tilesY - 1 ? yStart + height : yStart + (y + 1) * tileSize;
-    for(let x = 0; x < tilesX; x++) {
+    let x;
+    for (x = 0; x < tilesX; x++) {
       const endX = x === tilesX - 1 ? lastX : 1.0;
       const endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
       vertices.push(

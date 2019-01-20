@@ -18,17 +18,20 @@
 
 function _vecNormInPlaceAndScale(vec, scale) {
   let len = 0;
-  for(var i = 0; i < vec.length; i++) {
+  let i;
+  for (i = 0; i < vec.length; i++) {
     len += vec[i] * vec[i];
   }
   len = Math.sqrt(len);
   if(len !== 0) {
     const newscale = 1.0 / len * scale;
-    for(i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       vec[i] *= newscale;
     }
   } else {
-    for(i = 0; i < vec.length; i++) {
+    let i;
+    for (i = 0; i < vec.length; i++) {
       vec[i] *= scale;
     }
   }
@@ -36,14 +39,16 @@ function _vecNormInPlaceAndScale(vec, scale) {
 }
 function _vecAdd(v1, v2) {
   const ret = [];
-  for(let i = 0; i < v1.length; i++) {
+  let i;
+  for (i = 0; i < v1.length; i++) {
     ret[i] = v1[i] + v2[i];
   }
   return ret;
 }
 function _vecScale(v1, s) {
   const ret = [];
-  for(let i = 0; i < v1.length; i++) {
+  let i;
+  for (i = 0; i < v1.length; i++) {
     ret[i] = v1[i] * s;
   }
   return ret;

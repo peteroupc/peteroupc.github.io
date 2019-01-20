@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var waterpaintShader = {
+export const waterpaintShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

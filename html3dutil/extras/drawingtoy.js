@@ -37,7 +37,7 @@ function gcd(u, v) {
  * Generates curves similar to those possible using commercially available drawing toys containing gear-toothed rings and wheels. Curves generated currently assume that the radius of each ring and wheel is equal to its tooth count divided by 5.
  * @constructor
  */
-export var DrawingToy = function() {
+export const DrawingToy = function() {
   this.color = [0, 0, 0];
   this.ce = new CurveBuilder();
 };
@@ -161,7 +161,8 @@ DrawingToy.prototype.continuousHypo = function(
   ringTeeth, wheelTeeth, hole, phase, offset, holeStep, offsetStep, count) {
   let h = hole;
   let o = offset;
-  for(let i = 0; i < count; i++, h += holeStep, o += offsetStep) {
+  let i;
+  for (i = 0; i < count; i++, h += holeStep, o += offsetStep) {
     this.hypo(ringTeeth, wheelTeeth, h, phase, o);
   }
   return this;

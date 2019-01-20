@@ -20,7 +20,7 @@
  * @returns {*} Return value.
  * @function
  */
-export var fragmentShaderLib = function() {
+export const fragmentShaderLib = function() {
   return ["",
     "// NOTE: The online Book of Shaders, chapter 10, has",
     "// a very good explanation on how this function works.",

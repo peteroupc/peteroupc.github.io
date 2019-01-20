@@ -9,14 +9,14 @@
 /* exported simpsonRec */
 function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
   "use strict";
-  let bm = (mx - mn) * 0.25;
-  let f1 = typeof f1value === "undefined" || f1value === null ? func(mn) : f1value;
-  let f2 = func(mn + bm);
-  let f3 = typeof f3value === "undefined" || f3value === null ? func(mn + bm * 2) : f3value;
-  let f4 = func(mx - bm);
-  let f5 = typeof f5value === "undefined" || f5value === null ? func(mx) : f5value;
-  let simpWhole = bm * 2 / 3 * (f1 + 4 * f3 + f5) * dir;
-  let simpHalves = bm / 3 * (f1 + 4 * f2 + f3) * dir +
+  const bm = (mx - mn) * 0.25;
+  const f1 = typeof f1value === "undefined" || f1value === null ? func(mn) : f1value;
+  const f2 = func(mn + bm);
+  const f3 = typeof f3value === "undefined" || f3value === null ? func(mn + bm * 2) : f3value;
+  const f4 = func(mx - bm);
+  const f5 = typeof f5value === "undefined" || f5value === null ? func(mx) : f5value;
+  const simpWhole = bm * 2 / 3 * (f1 + 4 * f3 + f5) * dir;
+  const simpHalves = bm / 3 * (f1 + 4 * f2 + f3) * dir +
     bm / 3 * (f3 + 4 * f4 + f5) * dir;
   if(Math.abs(simpWhole - simpHalves) < 1e-6) {
     return simpHalves + (simpHalves - simpWhole) / 15;
@@ -50,16 +50,16 @@ function _numIntegrate(func, xmin, xmax) {
 * _xmin_ and _xmax_.
 */
   if(xmax === xmin)return 0;
-  let mn = Math.min(xmin, xmax);
-  let mx = Math.max(xmin, xmax);
-  let dir = xmax >= xmin ? 1 : -1;
+  const mn = Math.min(xmin, xmax);
+  const mx = Math.max(xmin, xmax);
+  const dir = xmax >= xmin ? 1 : -1;
   return simpsonRec(func, mn, mx, dir, 0, null, null, null);
 }
 
 /** @ignore */
 function normAngleRadians(angle) {
   "use strict";
-  let twopi = Math.PI * 2;
+  const twopi = Math.PI * 2;
   let normAngle = angle;
   if(normAngle >= 0) {
     normAngle = normAngle < twopi ? normAngle : normAngle % twopi;
@@ -73,13 +73,13 @@ function normAngleRadians(angle) {
 /** @ignore */
 function _ellipseSemiLength(xRadius, yRadius) {
   "use strict";
-  let a = Math.min(xRadius, yRadius);
-  let b = Math.max(xRadius, yRadius);
+  const a = Math.min(xRadius, yRadius);
+  const b = Math.max(xRadius, yRadius);
   // use James Ivory's 1798 algorithm to calculate
   // the half-length of an ellipse
-  let c = a / b;
-  let e = (1 - c) / (1 + c);
-  let esq = e * e;
+  const c = a / b;
+  const e = (1 - c) / (1 + c);
+  const esq = e * e;
   let eseries = esq;
   let series = 1 + 0.25 * eseries;
   eseries *= esq;
@@ -99,21 +99,22 @@ function _ellipseSemiLength(xRadius, yRadius) {
 function _ellipticE(phi, m) {
   "use strict";
   if(phi === 0)return 0;
+  let ellipticIntegrand;
   if(phi <= Math.PI * 0.25) {
-    var ellipticIntegrand = function(x) {
-      let xsq = x * x;
+    ellipticIntegrand = function(x) {
+      const xsq = x * x;
       return Math.sqrt((1 - xsq * m) / (1 - xsq));
     };
     return _numIntegrate(ellipticIntegrand, 0, Math.sin(phi));
   } else if(phi <= Math.PI * 0.5) {
     ellipticIntegrand = function(x) {
-      let s = Math.sin(x);
+      const s = Math.sin(x);
       return Math.sqrt(1 - m * s * s);
     };
     return _numIntegrate(ellipticIntegrand, 0, phi);
   } else {
-    let halfpi = Math.PI * 0.5;
-    let u = Math.floor(phi / halfpi);
+    const halfpi = Math.PI * 0.5;
+    const u = Math.floor(phi / halfpi);
     phi -= u * halfpi;
     return _ellipticE(halfpi, m) * u +
       _ellipticE(phi, m);
@@ -138,19 +139,20 @@ function ellipticArcLength(xRadius, yRadius, startAngle, endAngle) {
     // Length of a half ellipse
     return _ellipseSemiLength(xRadius, yRadius);
   }
-  let mn = Math.min(xRadius, yRadius);
-  let mx = Math.max(xRadius, yRadius);
-  let eccSq = 1 - mn * mn / (mx * mx);
-  let sa = normAngleRadians(startAngle);
-  let ea = normAngleRadians(endAngle);
-  let saLength = mx * _ellipticE(sa, eccSq);
-  let eaLength = mx * _ellipticE(ea, eccSq);
+  const mn = Math.min(xRadius, yRadius);
+  const mx = Math.max(xRadius, yRadius);
+  const eccSq = 1 - mn * mn / (mx * mx);
+  const sa = normAngleRadians(startAngle);
+  const ea = normAngleRadians(endAngle);
+  const saLength = mx * _ellipticE(sa, eccSq);
+  const eaLength = mx * _ellipticE(ea, eccSq);
+  let fullEllipseLength;
   if(startAngle < endAngle && sa < ea ||
          startAngle > endAngle && sa > ea) {
     return Math.abs(eaLength - saLength);
   } else if(startAngle < endAngle) {
     // startAngle -- seam -- endAngle
-    var fullEllipseLength = _ellipseSemiLength(xRadius, yRadius) * 2;
+    fullEllipseLength = _ellipseSemiLength(xRadius, yRadius) * 2;
     return fullEllipseLength - saLength + eaLength;
   } else {
   // endAngle -- seam -- startAngle

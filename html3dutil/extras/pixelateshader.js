@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var pixelateShader = {
+export const pixelateShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

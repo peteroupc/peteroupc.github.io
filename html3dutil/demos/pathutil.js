@@ -11,9 +11,9 @@
 /* exported makeTubeFromPath */
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
-  let curves = path.getCurves();
-  let resolution = Math.ceil(curves.getLength() / flatness / 10);
-  let curveSection = pathSection ? pathSection.getCurves() : null;
+  const curves = path.getCurves();
+  const resolution = Math.ceil(curves.getLength() / flatness / 10);
+  const curveSection = pathSection ? pathSection.getCurves() : null;
   return new H3DU.SurfaceBuilder()
     .positionNormal(new H3DU.CurveTube(curves, thickness, curveSection))
     .evalSurface( H3DU.Mesh.TRIANGLES, resolution,
@@ -23,24 +23,25 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
 /* exported starPolygon */
 function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
   "use strict";
-  let coords = [];
-  let connected = [];
-  let retval = [];
+  const coords = [];
+  const connected = [];
+  const retval = [];
   if(points < 2)return retval;
   if(jump < 1)throw new Error();
-  for(var i = 0; i < points; i++) {
+  let i;
+  for (i = 0; i < points; i++) {
     connected[i] = false;
   }
-  let phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.MathUtil.ToRadians;
-  let angleStep = H3DU.MathUtil.PiTimes2 / points;
-  let cosStep = Math.cos(angleStep);
-  let sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  const phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.MathUtil.ToRadians;
+  const angleStep = H3DU.MathUtil.PiTimes2 / points;
+  const cosStep = Math.cos(angleStep);
+  const sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
   let c = Math.cos(phase);
   let s = phase >= 0 && phase < 6.283185307179586 ? phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(phase);
   for(i = 0; i < points; i++) {
     coords.push([x + c * radius, y + s * radius]);
-    let ts = cosStep * s + sinStep * c;
-    let tc = cosStep * c - sinStep * s;
+    const ts = cosStep * s + sinStep * c;
+    const tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }

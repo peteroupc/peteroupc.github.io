@@ -62,7 +62,7 @@ const AFTER_SOLID = 3;
  * @returns {*} Return value.
  * @function
  */
-export var fromStlString = function(str) {
+export const fromStlString = function(str) {
   const number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
   const facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
    "\\s+" + number + "\\s*");
@@ -79,7 +79,8 @@ export var fromStlString = function(str) {
   const vertices = [];
   const indices = [];
   const tfan = new TriangleFan(indices);
-  for(let i = 0; i < lines.length; i++) {
+  let i;
+  for (i = 0; i < lines.length; i++) {
     const line = lines[i];
     // skip empty lines
     if(line.length === 0 || (/^\s*$/).test(line))continue;

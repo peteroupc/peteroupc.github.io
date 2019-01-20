@@ -1,3 +1,4 @@
+/* global cosAngle, sinAngle */
 /** The <code>extras/curvetube.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -19,7 +20,7 @@ import {Curve, MathUtil, Surface} from "../h3du_module";
 
 /** @ignore
  * @constructor */
-var _TBNFrames = function(func) {
+const _TBNFrames = function(func) {
   this.func = typeof Curve !== "undefined" && Curve !== null ? new Curve(func) : func;
   this.normals = [];
   this.binormals = [];
@@ -37,9 +38,10 @@ var _TBNFrames = function(func) {
     isClosed = true;
   }
   this.isClosed = isClosed;
-  for(var i = 0; i <= res; i++) {
+  let i;
+  for (i = 0; i <= res; i++) {
     const t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
-    var e0;
+    let e0;
     if(i === 0)e0 = firstSample;
     else if(i === res)e0 = lastSample;
     else e0 = this.func.evaluate(t);
@@ -51,7 +53,8 @@ var _TBNFrames = function(func) {
       runningLengths[i] = totalLength;
     }
   }
-  for(i = 0; i <= res; i++) {
+
+  for (i = 0; i <= res; i++) {
     if(i === 0) {
       this.normals[i] = _TBNFrames.normalFromTangent(this.tangents[0]);
     } else {
@@ -60,8 +63,8 @@ var _TBNFrames = function(func) {
         this.normals[i] = this.normals[i - 1];
       } else {
         MathUtil.vec3normalizeInPlace(b);
-        var cosAngle = MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
-        var sinAngle = Math.abs(MathUtil.vec3length(
+        const cosAngle = MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
+        const sinAngle = Math.abs(MathUtil.vec3length(
           MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i])));
         this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i - 1], b, sinAngle, cosAngle);
@@ -77,16 +80,17 @@ var _TBNFrames = function(func) {
     this.normals[res] = this.normals[0];
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
-      for(i = 1; i <= res - 1; i++) {
-        const subAngle = angle * runningLengths[i] / totalLength;
-        cosAngle = Math.cos(subAngle);
-        sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
+      for(1; i <= res - 1; i++) {
+        // const subAngle = angle * runningLengths[i] / totalLength;
+        // cosAngle = Math.cos(subAngle);
+        // sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
         this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }
     }
   }
-  for(i = 0; i <= res; i++) {
+
+  for (i = 0; i <= res; i++) {
     this.binormals[i] = MathUtil.vec3cross(this.tangents[i], this.normals[i]);
   }
 };
@@ -148,10 +152,16 @@ _TBNFrames._EPSILON = 0.000001;
 _TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
   const uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
   let sample;
-  let b, n, t;
+  let b;
+  let n;
+  let t;
   const val = [];
   let cache = false;
-  let i, e0, normal, tangent, binormal;
+  let i;
+  let e0;
+  let normal;
+  let tangent;
+  let binormal;
   if(uNorm >= 0 && uNorm <= 1) {
     let index = uNorm * (this.binormals.length - 1);
     if(Math.abs(index - Math.round(index)) < _TBNFrames._EPSILON) {
@@ -247,7 +257,7 @@ _TBNFrames._distSq = function(a, b) {
  * will affect the meaning of the "thickness" parameter.
  * @constructor
  */
-export var CurveTube = function(func, thickness, sweptCurve) {
+export const CurveTube = function(func, thickness, sweptCurve) {
   this.thickness = typeof thickness === "undefined" || thickness === null ? 0.125 : thickness;
   this.sweptCurve = sweptCurve;
   this.func = func;
@@ -287,7 +297,11 @@ CurveTube.prototype.evaluate = function(u, v) {
   const sampleX = basisVectors[9];
   const sampleY = basisVectors[10];
   const sampleZ = basisVectors[11];
-  let t1, t2, sx, sy, sz;
+  let t1;
+  let t2;
+  let sx;
+  let sy;
+  let sz;
   if(this.sweptCurve) {
     const vpos = this.sweptCurve.evaluate(v);
     t1 = vpos[0];

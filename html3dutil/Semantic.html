@@ -16,49 +16,15 @@ to uniforms and vertex attributes.</p>
 <h3>Members</h3>
 
 <ul>
-<li><a href="#Semantic.BITANGENT">BITANGENT</a><br>Attribute semantic for a bitangent vector.</li>
-<li><a href="#Semantic.COLOR">COLOR</a><br>Attribute semantic for a color.</li>
-<li><a href="#Semantic.CUSTOM">CUSTOM</a><br>Attribute semantic for custom attributes.</li>
-<li><a href="#Semantic.JOINT">JOINT</a><br>Attribute semantic for a skinning joint.</li>
 <li><a href="#Semantic.JOINTMATRIX">JOINTMATRIX</a><br>Uniform semantic for a joint matrix.</li>
 <li><a href="#Semantic.MODEL">MODEL</a><br>Uniform semantic for a model matrix.</li>
 <li><a href="#Semantic.MODELVIEW">MODELVIEW</a><br>Uniform semantic for a model-view matrix.</li>
 <li><a href="#Semantic.MODELVIEWINVERSETRANSPOSE">MODELVIEWINVERSETRANSPOSE</a><br>Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.</li>
 <li><a href="#Semantic.MODELVIEWPROJECTION">MODELVIEWPROJECTION</a><br>Uniform semantic for a model-view-projection matrix.</li>
-<li><a href="#Semantic.NORMAL">NORMAL</a><br>Attribute semantic for a vertex normal.</li>
-<li><a href="#Semantic.POSITION">POSITION</a><br>Attribute semantic for a vertex position.</li>
 <li><a href="#Semantic.PROJECTION">PROJECTION</a><br>Uniform semantic for a projection matrix.</li>
-<li><a href="#Semantic.TANGENT">TANGENT</a><br>Attribute semantic for a tangent vector.</li>
-<li><a href="#Semantic.TEXCOORD">TEXCOORD</a><br>Attribute semantic for a texture coordinate.</li>
 <li><a href="#Semantic.VIEW">VIEW</a><br>Uniform semantic for a view matrix.</li>
 <li><a href="#Semantic.VIEWINVERSE">VIEWINVERSE</a><br>Uniform semantic for an inverse view matrix.</li>
-<li><a href="#Semantic.WEIGHT">WEIGHT</a><br>Attribute semantic for a skinning weight.</li>
 </ul>
-
-<p><a name='Semantic.BITANGENT'></a></p>
-
-<h3>Semantic.BITANGENT (constant)</h3>
-
-<p>Attribute semantic for a bitangent vector.</p>
-
-<p><a name='Semantic.COLOR'></a></p>
-
-<h3>Semantic.COLOR (constant)</h3>
-
-<p>Attribute semantic for a color.
-The default shader uses 3-component colors.</p>
-
-<p><a name='Semantic.CUSTOM'></a></p>
-
-<h3>Semantic.CUSTOM (constant)</h3>
-
-<p>Attribute semantic for custom attributes.</p>
-
-<p><a name='Semantic.JOINT'></a></p>
-
-<h3>Semantic.JOINT (constant)</h3>
-
-<p>Attribute semantic for a skinning joint.</p>
 
 <p><a name='Semantic.JOINTMATRIX'></a></p>
 
@@ -90,46 +56,11 @@ The default shader uses 3-component colors.</p>
 
 <p>Uniform semantic for a model-view-projection matrix.</p>
 
-<p><a name='Semantic.NORMAL'></a></p>
-
-<h3>Semantic.NORMAL (constant)</h3>
-
-<p>Attribute semantic for a vertex normal.
-The default shader uses 3-dimensional normals.</p>
-
-<p><a name='Semantic.POSITION'></a></p>
-
-<h3>Semantic.POSITION (constant)</h3>
-
-<p>Attribute semantic for a vertex position.
-The default shader uses 3-dimensional positions.</p>
-
 <p><a name='Semantic.PROJECTION'></a></p>
 
 <h3>Semantic.PROJECTION (constant)</h3>
 
 <p>Uniform semantic for a projection matrix.</p>
-
-<p><a name='Semantic.TANGENT'></a></p>
-
-<h3>Semantic.TANGENT (constant)</h3>
-
-<p>Attribute semantic for a tangent vector.</p>
-
-<p><a name='Semantic.TEXCOORD'></a></p>
-
-<h3>Semantic.TEXCOORD (constant)</h3>
-
-<p>Attribute semantic for a texture coordinate.</p>
-
-<p>Note that the default shader supports only 2-dimensional
-texture coordinates. For such texturing tasks as mapping
-a square to a trapezoid, 3-dimensional texture coordinates
-are useful to ensure the texturing is perspective-correct.
-In this case, the 3-D texture coordinates are converted
-to 2-D by dividing the X and Y components by the Z component.
-In a fragment shader, this can look like the following
-code: <code>texCoord.xy/texCoord.z</code>.</p>
 
 <p><a name='Semantic.VIEW'></a></p>
 
@@ -142,12 +73,6 @@ code: <code>texCoord.xy/texCoord.z</code>.</p>
 <h3>Semantic.VIEWINVERSE (constant)</h3>
 
 <p>Uniform semantic for an inverse view matrix.</p>
-
-<p><a name='Semantic.WEIGHT'></a></p>
-
-<h3>Semantic.WEIGHT (constant)</h3>
-
-<p>Attribute semantic for a skinning weight.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

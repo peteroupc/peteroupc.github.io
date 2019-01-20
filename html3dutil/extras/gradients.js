@@ -33,15 +33,18 @@ export function horizontalGradient(color1, color2) {
   color2 = toGLColor(color2);
   const arr = [];
   const size = 32;
-  for(var i = 0; i < size; i++) {
+  let i;
+  for (i = 0; i < size; i++) {
     arr.push(
       MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(color1, color2, i / (size - 1)), 255)
     );
   }
   const gradient = [];
-  i = 0;
-  for(let y = 0; y < size; y++) {
-    for(let x = 0; x < size; x++, i += 4) {
+  // i = 0;
+  let y;
+  for (y = 0; y < size; y++) {
+    let x;
+    for (x = 0; x < size; x++, i += 4) {
       gradient[i] = Math.round(arr[x][0]);
       gradient[i + 1] = Math.round(arr[x][1]);
       gradient[i + 2] = Math.round(arr[x][2]);
@@ -67,16 +70,19 @@ export function radialGradient(colorCenter, colorEdges) {
   const gradient = [];
   const arr = [];
   const size = 32;
-  for(var i = 0; i < 32; i++) {
+  let i;
+  for (i = 0; i < 32; i++) {
     arr.push(
       MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(colorCenter, colorEdges, i / 31), 255)
     );
   }
-  i = 0;
+  // i = 0;
   const radius = (size - 1) * 0.5;
   const recipradius = 1.0 / radius;
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++, i += 4) {
+  let y;
+  for (y = 0; y < size; y++) {
+    let x;
+    for (x = 0; x < size; x++, i += 4) {
       const yy = (y - radius) * recipradius;
       const xx = (x - radius) * recipradius;
       const a = arr[Math.min(31, Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];

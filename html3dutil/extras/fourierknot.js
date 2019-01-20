@@ -22,7 +22,7 @@
  * @param {Array<Array<number>>} b The sine coefficients.
  * @function
  */
-export var FourierKnot = function(a, b) {
+export const FourierKnot = function(a, b) {
   this.a = a; // Cosine coefficients
   this.b = b; // Sine coefficients
   this.idx = 0;
@@ -38,7 +38,8 @@ export var FourierKnot = function(a, b) {
     const sinStep = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(u);
     let c = sinStep;
     let s = cosStep;
-    for(let i = 0; i < this.a.length; i++) {
+    let i;
+    for (i = 0; i < this.a.length; i++) {
       const ai = this.a[i];
       const bi = this.b[i];
       ret[0] += c * ai[0] + s * bi[0];

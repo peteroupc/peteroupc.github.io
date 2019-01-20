@@ -29,7 +29,7 @@
  * "textureSize", the width and height of the texture in pixels;
  * "matrix", the 3x3 convolution kernel.
  */
-export var kernelMatrixShader = {
+export const kernelMatrixShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",
@@ -76,7 +76,7 @@ export var kernelMatrixShader = {
  * @returns {*} Return value.
  * @function
  */
-export var getKernelMatrix = function(kind) {
+export const getKernelMatrix = function(kind) {
   if(kind === "blur") {
     return [1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9, 1 / 9];
   } else if(kind === "edge-detect") {
@@ -89,12 +89,13 @@ export var getKernelMatrix = function(kind) {
  * @returns {*} Return value.
  * @function
  */
-export var normalizeKernelInPlace = function(matrix) {
+export const normalizeKernelInPlace = function(matrix) {
   const weight = matrix[0] + matrix[1] + matrix[2] +
    matrix[3] + matrix[4] + matrix[5] + matrix[6] +
    matrix[7] + matrix[8];
   if(weight > 0) {
-    for(let i = 0; i < 9; i++) {
+    let i;
+    for (i = 0; i < 9; i++) {
       matrix[i] /= weight;
     }
   }

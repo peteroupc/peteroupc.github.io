@@ -23,15 +23,15 @@ function normalDist(lastNorm) {
     ret = lastNorm[0];
     lastNorm[0] = Number.NaN;
   } else {
-    let x, y, s, t, ss;
+    let x;
     do {
       x = Math.random();
     } while(x === 0);
-    y = Math.random();
-    s = Math.sqrt(-2 * Math.log(x));
-    t = Math.PI * 2 * y;
+    const y = Math.random();
+    const s = Math.sqrt(-2 * Math.log(x));
+    const t = Math.PI * 2 * y;
     const cc = Math.cos(t);
-    ss = t >= 0 && t < 6.283185307179586 ? t <= 3.141592653589793 ? Math.sqrt(1.0 - cc * cc) : -Math.sqrt(1.0 - cc * cc) : Math.sin(t);
+    const ss = t >= 0 && t < 6.283185307179586 ? t <= 3.141592653589793 ? Math.sqrt(1.0 - cc * cc) : -Math.sqrt(1.0 - cc * cc) : Math.sin(t);
     lastNorm[0] = s * ss;
     ret = s * cc;
   }
@@ -59,7 +59,7 @@ function segsIntersect(a1, a2, b1, b2) {
  * @returns {*} TODO: Not documented yet.
  * @function
  */
-export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
+export const randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
 // Inspired by http://stackoverflow.com/questions/8997099
   const irregularValue = typeof irregular === "undefined" || irregular === null ? 0 : irregular;
   const spikyValue = typeof spiky === "undefined" || spiky === null ? 0 : spiky;
@@ -72,14 +72,16 @@ export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) 
     const points = [];
     let k = 0;
     const lastNorm = [Number.NaN];
-    for(var i = 0; i < sides; i++) {
+    let i;
+    for (i = 0; i < sides; i++) {
       const d = step - irregularValue + Math.random() *
        (step + irregularValue - (step - irregularValue));
       k += d / MathUtil.PiTimes2;
       deltas.push(d);
     }
     if(k === 0)k = 0.01;
-    for(i = 0; i < sides; i++) {
+
+    for (i = 0; i < sides; i++) {
       let r = normalDist(lastNorm) * spikyValue + avgRadius;
       if(r < 0)r = avg2 / 100.0;
       if(r > avg2)r = avg2;
@@ -92,7 +94,8 @@ export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) 
     if(points.length > 2) {
       // Check for self-intersections
       let selfint = false;
-      for(let j = 0; !selfint && j < points.length; j++) {
+      let j;
+      for (j = 0; !selfint && j < points.length; j++) {
         const a1 = points[j];
         const a2 = j === points.length - 1 ? points[0] : points[j + 1];
         for(k = j + 1; !selfint && k < points.length; k++) {
@@ -105,7 +108,8 @@ export var randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) 
     }
   } while(failed);
   const poly = new GraphicsPath();
-  for(i = 0; i < poly.length; i++) {
+  let i;
+  for (i = 0; i < poly.length; i++) {
     if(i === 0)this.moveTo(poly[i][0], poly[i][1]);
     else this.lineTo(poly[i][0], poly[i][1]);
   }

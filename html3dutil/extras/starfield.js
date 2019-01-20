@@ -41,7 +41,8 @@ export function StarField(range) {
   this.group = new H3DU.ShapeGroup();
   this.timer = {};
   this._move = function(frames) {
-    for(let i = 0; i < this.group.shapeCount(); i++) {
+    let i;
+    for (i = 0; i < this.group.shapeCount(); i++) {
       const pos = this.group.getShape(i).getMatrix();
       if(pos[14] > this.range / 2) {
         // once the star is too close, move it elsewhere
@@ -60,7 +61,8 @@ export function StarField(range) {
   // use a crude white sphere to represent a star
   const star = new H3DU.Shape(
     H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
-  for(let i = 0; i < 200; i++) {
+  let i;
+  for (i = 0; i < 200; i++) {
     this.group.addShape(this._setStarPos(star.copy(), range));
   }
 }

@@ -1,3 +1,4 @@
+/* global px, py, pz, qx, qy, qz, t1, t2, v, w */
 /** The <code>extras/raypick.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -36,9 +37,9 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   } else {
-    var recip = 1.0 / d[0];
-    var t1 = (box[0] - p[0]) * recip;
-    var t2 = (box[3] - p[0]) * recip;
+    const recip = 1.0 / d[0];
+    const t1 = (box[0] - p[0]) * recip;
+    const t2 = (box[3] - p[0]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {
@@ -51,9 +52,9 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   } else {
-    recip = 1.0 / d[1];
-    t1 = (box[1] - p[1]) * recip;
-    t2 = (box[4] - p[1]) * recip;
+    // recip = 1.0 / d[1];
+    // t1 = (box[1] - p[1]) * recip;
+    // t2 = (box[4] - p[1]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {
@@ -66,9 +67,9 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   } else {
-    recip = 1.0 / d[2];
-    t1 = (box[2] - p[2]) * recip;
-    t2 = (box[5] - p[2]) * recip;
+    // recip = 1.0 / d[2];
+    // t1 = (box[2] - p[2]) * recip;
+    // t2 = (box[5] - p[2]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {
@@ -134,7 +135,7 @@ function getClosestPointToTriangle3D(p, a, b, c) {
   }
   const vc = d1 * d4 - d3 * d2;
   if (vc <= 0 && d1 >= 0 && d3 <= 0) {
-    var v = d1 / (d1 - d3);
+    const v = d1 / (d1 - d3);
     return MathUtil.vec3add(a, MathUtil.vec3scale(ab, v));
   }
   const cp = MathUtil.vec3sub(p, c);
@@ -145,18 +146,18 @@ function getClosestPointToTriangle3D(p, a, b, c) {
   }
   const vb = d5 * d2 - d1 * d6;
   if (vb <= 0 && d2 >= 0 && d6 <= 0) {
-    var w = d2 / (d2 - d6);
+    const w = d2 / (d2 - d6);
     return MathUtil.vec3add(a, MathUtil.vec3scale(ac, w));
   }
   const va = d3 * d6 - d5 * d4;
   if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
-    w = (d4 - d3) / (d4 - d3 + (d5 - d6));
+    // w = (d4 - d3) / (d4 - d3 + (d5 - d6));
     const tvec = MathUtil.vec3sub(c, b);
     return MathUtil.vec3add(b, MathUtil.vec3scale(tvec, w));
   }
-  const denom = 1.0 / (va + vb + vc);
-  v = vb * denom;
-  w = vc * denom;
+  // const denom = 1.0 / (va + vb + vc);
+  // v = vb * denom;
+  // w = vc * denom;
   const abv = MathUtil.vec3scale(ab, v);
   const acw = MathUtil.vec3scale(ac, w);
   return MathUtil.vec3add(a, MathUtil.vec3add(abv, acw));
@@ -207,12 +208,14 @@ function getIntersectionRayTriangle(ray, face) {
 function facesBounds(faces) {
   const inf = Number.POSITIVE_INFINITY;
   const ret = [inf, inf, inf, -inf, -inf, -inf];
-  for(let i = 0; i < faces.length; i++) {
+  let i;
+  for (i = 0; i < faces.length; i++) {
     const face = faces[i];
     if(!face) {
       throw new Error();
     }
-    for(let j = 0; j < 3; j++) {
+    let j;
+    for (j = 0; j < 3; j++) {
       ret[0] = Math.min(ret[0], face[j][0]);
       ret[3] = Math.max(ret[3], face[j][0]);
       ret[1] = Math.min(ret[1], face[j][1]);
@@ -224,7 +227,7 @@ function facesBounds(faces) {
   return ret;
 }
 
-var AABBTree = function(meshBuffer, maxFaces) {
+const AABBTree = function(meshBuffer, maxFaces) {
   this.maxLevel = Math.ceil(Math.log(meshBuffer.primitiveCount()) *
     AABBTree.INV_LOG_3);
   this.root = null;
@@ -265,7 +268,8 @@ function classifyPointToPlane3D(plane, point) {
 function classifyPolygonToPlane3D(polygon, plane) {
   let numInFront = 0;
   let numBehind = 0;
-  for (let i = 0; i < polygon.length; i++) {
+  let i;
+  for (i = 0; i < polygon.length; i++) {
     switch (classifyPointToPlane3D(plane, polygon[i])) {
     case AABBTree.FRONT:
       numInFront++;
@@ -334,7 +338,8 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
   node.level = level;
   node.aabb = facesBounds(faces);
   if (level === this.maxLevel || faces.length <= this.maxFaces) {
-    for(var i = 0; i < faces.length; i++) {
+    let i;
+    for (i = 0; i < faces.length; i++) {
       node.faces.push(faces[i]);
     }
     node.isLeaf = true;
@@ -356,7 +361,8 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
     plane[4] = origin[1];
     plane[5] = origin[2];
     node.separator = plane;
-    for(i = 0; i < faces.length; i++) {
+    let i;
+    for (i = 0; i < faces.length; i++) {
       const face = faces[i];
       const cptp = classifyPolygonToPlane3D(
         face, node.separator);
@@ -392,28 +398,31 @@ function pickPoint(mesh, ray) {
   let p2face = null;
   const candidates = [];
   const nodes = getIntersectionRayTree(ray, new AABBTree(mesh, 10));
-  for(let nIndex = 0; nIndex < nodes.length; nIndex++) {
+  let nIndex;
+  for (nIndex = 0; nIndex < nodes.length; nIndex++) {
     const n = nodes[nIndex];
     const faces = n.faces;
-    for(let fIndex = 0; fIndex < faces.length; fIndex++) {
+    let fIndex;
+    for (fIndex = 0; fIndex < faces.length; fIndex++) {
       const f = faces[fIndex];
       candidates.push(f);
     }
   }
-  let d21,
-    d2min1 = Number.POSITIVE_INFINITY;
+  let d21;
+  let d2min1 = Number.POSITIVE_INFINITY;
   const rayOrigin = ray.slice(0, 3);
-  for(let faceIndex = 0; faceIndex < candidates.length; faceIndex++) {
+  let faceIndex;
+  for (faceIndex = 0; faceIndex < candidates.length; faceIndex++) {
     const face = candidates[faceIndex];
     const sect = getIntersectionRayTriangle(ray, face);
     if (typeof sect !== "undefined" && sect !== null) {
-      var p1 = rayOrigin;
-      var px = sect[0];
-      var py = sect[1];
-      var pz = sect[2];
-      var qx = p1[0];
-      var qy = p1[1];
-      var qz = p1[2];
+      const p1 = rayOrigin;
+      const px = sect[0];
+      const py = sect[1];
+      const pz = sect[2];
+      const qx = p1[0];
+      const qy = p1[1];
+      const qz = p1[2];
       d21 = (qx - px) * (qx - px) + (qy - py) * (qy - py) + (qz - pz) * (qz - pz);
       if (d21 < d2min1) {
         p2 = sect;
@@ -432,15 +441,16 @@ function pickPoint(mesh, ray) {
   let closest = null;
   let d2 = 0;
   let d2min = Number.MAX_VALUE;
-  for(let i = 0; i < 3; i++) {
+  let i;
+  for (i = 0; i < 3; i++) {
     trial = p2face[i];
-    p1 = p;
-    px = trial[0];
-    py = trial[1];
-    pz = trial[2];
-    qx = p1[0];
-    qy = p1[1];
-    qz = p1[2];
+    // p1 = p;
+    // px = trial[0];
+    // py = trial[1];
+    // pz = trial[2];
+    // qx = p1[0];
+    // qy = p1[1];
+    // qz = p1[2];
     d2 = (qx - px) * (qx - px) + (qy - py) * (qy - py) + (qz - pz) * (qz - pz);
     if (d2 < d2min) {
       d2min = d2;
@@ -494,13 +504,14 @@ function makeRay(startPt, focusPt) {
  * }
  * @function
  */
-export var raypick = function(x, y, projView, viewport, objects) {
+export const raypick = function(x, y, projView, viewport, objects) {
   let near = MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);
   let far = MathUtil.vec3fromWindowPoint([x, y, 1], projView, viewport);
   let ray = makeRay(near, far); // Near and far will be in world coordinates
   let bestDist = Number.POSITIVE_INFINITY;
   let ret = {"index":-1};
-  for(let i = 0; i < objects.length; i++) {
+  let i;
+  for (i = 0; i < objects.length; i++) {
     const shape = objects[i];
     // Gets the world coordinates of a box that bounds the shape
     const bounds = shape.getBounds();

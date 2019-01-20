@@ -27,7 +27,7 @@ import {MathUtil} from "../h3du_module.js";
  * If null, undefined, or omitted, uses the calling application's HTML document.
  * @constructor
  */
-export var InputTracker = function(element) {
+export const InputTracker = function(element) {
   /** True if the left mouse button was detected as being down.
    * @type {boolean}
    * @readonly */
@@ -191,7 +191,8 @@ export var InputTracker = function(element) {
  * @returns {Object} Return value.
  */
 InputTracker.prototype.dispose = function() {
-  for(let i = 0; i < this.handlers.length; i++) {
+  let i;
+  for (i = 0; i < this.handlers.length; i++) {
     const h = this.handlers[i];
     h[0].removeEventListener(h[1], h[2]);
   }
@@ -250,109 +251,88 @@ InputTracker._getPageY = function(o) {
 };
 /** Key code for the A key. Add 1 through 25 to get
  * the keys for the other letters of the English alphabet.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.A = 65;
 /** Key code for the 0 key. Add 1 through 9 to get
  * the keys for the other basic digits 1 through 9.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.ZERO = 48;
 /** Key code for the return key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.RETURN = 10;
 /** Key code for the enter key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.ENTER = 13;
 /** Key code for the tab key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.TAB = 9;
 /** Key code for the shift key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.SHIFT = 16;
 /** Key code for the return key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.CTRL = 17;
 /** Key code for the return key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.ALT = 18;
 /** Key code for the return key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.ESC = 27;
 /** Key code for the space bar.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.SPACE = 32;
 /** Key code for the page up key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.PAGEUP = 33;
 /** Key code for the page down key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.PAGEDOWN = 34;
 /** Key code for the end key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.END = 35;
 /** Key code for the home key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.HOME = 36;
 /** Key code for the left arrow key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.LEFT = 37;
 /** Key code for the up arrow key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.UP = 38;
 /** Key code for the right arrow key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.RIGHT = 39;
 /** Key code for the down arrow key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.DOWN = 40;
 /** Key code for the delete key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.DELETE = 46;
 /** Key code for the plus key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.ADD = 107;
 /** Key code for the minus key.
- * @const
- * @default
+ * @const * @default
  */
 InputTracker.SUBTRACT = 109;
 /**
@@ -468,7 +448,7 @@ InputTracker.prototype.update = function() {
  * the far clipping plane. Objects beyond this distance will be too far
  * to be seen. See {@link MathUtil.mat4perspective}.
  */
-export var Camera = function(fov, nearZ) {
+export const Camera = function(fov, nearZ) {
   if(nearZ <= 0)throw new Error("invalid nearZ");
   this.near = nearZ;
   this.center = [0, 0, 0];

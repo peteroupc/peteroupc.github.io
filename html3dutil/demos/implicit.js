@@ -7,6 +7,7 @@
  http://peteroupc.github.io/
 */
 /* global H3DU */
+// TODO: Convert this code to use MeshBuffer instead of Mesh
 // The following was adapted by Peter O. from public-domain
 // source code by Cory Gene Bloyd.
 
@@ -56,7 +57,7 @@ ImplicitSurface._a2iEdgeConnection =
 /** @ignore */
 ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
   "use strict";
-  let ff = this.sampler.sample(fX, fY, fZ);
+  const ff = this.sampler.sample(fX, fY, fZ);
   rfNormal[0] = this.sampler.sample(fX + 0.001, fY, fZ) - ff;
   rfNormal[1] = this.sampler.sample(fX, fY + 0.001, fZ) - ff;
   rfNormal[2] = this.sampler.sample(fX, fY, fZ + 0.001) - ff;
@@ -65,7 +66,7 @@ ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
 /** @ignore */
 ImplicitSurface._fGetOffset = function(a, b, desired) {
   "use strict";
-  let delta = b - a;
+  const delta = b - a;
   return delta === 0 ? 0.5 : (desired - a) / delta;
 };
 
@@ -399,7 +400,12 @@ ImplicitSurface.prototype._isOnSurface = function(fX, fY, fZ, fScaleX, fScaleY, 
 /** @ignore */
 ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fScaleY, fScaleZ, tmpobj) {
   "use strict";
-  let iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
+  let iCorner;
+  let iVertex;
+  let iVertexTest;
+  let iEdge;
+  let iTriangle;
+  let iFlagIndex;
   let fOffset;
 
   let mx = 0;
@@ -407,11 +413,13 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
   // Make a local copy of the cube's corner positions;
   // make a local copy of the cube's corner values
   for(iVertex = 0; iVertex < 8; iVertex++) {
-    var x, y, z, value;
-    x = fX + ImplicitSurface._a2fVertexOffset[iVertex][0] * fScaleX;
-    y = fY + ImplicitSurface._a2fVertexOffset[iVertex][1] * fScaleY;
-    z = fZ + ImplicitSurface._a2fVertexOffset[iVertex][2] * fScaleZ;
-    value = this.sampler.sample(x, y, z);
+    const x = fX + ImplicitSurface._a2fVertexOffset[iVertex][0] * fScaleX;
+
+    const y = fY + ImplicitSurface._a2fVertexOffset[iVertex][1] * fScaleY;
+
+    const z = fZ + ImplicitSurface._a2fVertexOffset[iVertex][2] * fScaleZ;
+
+    const value = this.sampler.sample(x, y, z);
     mx = iVertex === 0 ? value : Math.max(mx, value);
     mn = iVertex === 0 ? value : Math.min(mn, value);
     tmpobj.afCubeValue[iVertex] = value;
@@ -425,7 +433,8 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
   }
 
   // Find which edges are intersected by the surface
-  iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
+
+  const iEdgeFlags = ImplicitSurface._aiCubeEdgeFlags[iFlagIndex];
 
   // If the cube is entirely inside or outside of the surface, then there will be no intersections
   if(iEdgeFlags === 0)return;
@@ -489,14 +498,18 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
-  let xstep = (xmax - xmin) / xsize;
-  let ystep = (ymax - ymin) / ysize;
-  let zstep = (zmax - zmin) / zsize;
-  let inf = Number.POSITIVE_INFINITY;
-  let bounds = [inf, inf, inf, -inf, -inf, -inf];
+  const xstep = (xmax - xmin) / xsize;
+  const ystep = (ymax - ymin) / ysize;
+  const zstep = (zmax - zmin) / zsize;
+  const inf = Number.POSITIVE_INFINITY;
+  const bounds = [inf, inf, inf, -inf, -inf, -inf];
   let first = true;
-  let x, y, z;
-  let iX, iY, iZ;
+  let x;
+  let y;
+  let z;
+  let iX;
+  let iY;
+  let iZ;
   for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
     for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
       for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
@@ -543,12 +556,17 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
 ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
-  mesh.mode(H3DU.Mesh.POINTS);
-  let xstep = (xmax - xmin) / (xsize - 1);
-  let ystep = (ymax - ymin) / (ysize - 1);
-  let zstep = (zmax - zmin) / (zsize - 1);
-  let x, y, z;
-  let iX, iY, iZ;
+  mesh.mode(H3DU.MeshBuffer.POINTS);
+
+  const xstep = (xmax - xmin) / (xsize - 1);
+  const ystep = (ymax - ymin) / (ysize - 1);
+  const zstep = (zmax - zmin) / (zsize - 1);
+  let x;
+  let y;
+  let z;
+  let iX;
+  let iY;
+  let iZ;
   for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
     for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
       for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
@@ -579,7 +597,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   mesh.mode(H3DU.Mesh.TRIANGLES);
-  let tmpobj = {
+  const tmpobj = {
     "asCubePosition":[[], [], [], [], [], [], [], []],
     "afCubeValue":[],
     "asTetrahedronPosition":[[], [], [], []],
@@ -587,12 +605,16 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
     "asEdgeVertex":[[], [], [], [], [], [], [], [], [], [], [], []],
     "asEdgeNorm":[[], [], [], [], [], [], [], [], [], [], [], []]
   };
-  let xstep = (xmax - xmin) / xsize;
-  let ystep = (ymax - ymin) / ysize;
-  let zstep = (zmax - zmin) / zsize;
+  const xstep = (xmax - xmin) / xsize;
+  const ystep = (ymax - ymin) / ysize;
+  const zstep = (zmax - zmin) / zsize;
   if(xstep !== 0 && ystep !== 0 && zstep !== 0) {
-    let x, y, z;
-    let iX, iY, iZ;
+    let x;
+    let y;
+    let z;
+    let iX;
+    let iY;
+    let iZ;
     for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
       for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
         for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {

@@ -34,7 +34,7 @@ function cospow(x, n) {
  * @param {number} m Exponent for the sines and cosines in the V axis.
  * @constructor
  */
-export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
+export const Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.zRadius = zRadius;
@@ -61,7 +61,7 @@ export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
  * @param {number} m Exponent for the sines and cosines in the V axis.
  * @constructor
  */
-export var Supertoroid = function(xRadius, yRadius, innerRadius) {
+export const Supertoroid = function(xRadius, yRadius, innerRadius) {
   this.xRadius = xRadius;
   this.yRadius = yRadius;
   this.innerRadius = innerRadius;

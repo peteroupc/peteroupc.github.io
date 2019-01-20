@@ -18,7 +18,7 @@ import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
  * TODO: Not documented yet.
  */
-export var marbleShader2 = {
+export const marbleShader2 = {
   "uniform":{
     "darkColor":[0, 0, 0],
     "lightColor":[1, 1, 1]

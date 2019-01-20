@@ -72,20 +72,25 @@ function QuadStrips() {
  * @returns {MeshBuffer} Return value.
  * @function
  */
-export var createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
+export const createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
   let i;
-  let r0, r1, r2;
-  let angle, da;
-  let u, v, len;
-  let cosAngle, sinAngle;
-  r0 = innerRadius;
-  r1 = outerRadius - toothDepth / 2.0;
-  r2 = outerRadius + toothDepth / 2.0;
+  let angle;
+  let da;
+  let u;
+  let v;
+  let len;
+  let cosAngle;
+  let sinAngle;
+  const r0 = innerRadius;
+  const r1 = outerRadius - toothDepth / 2.0;
+  const r2 = outerRadius + toothDepth / 2.0;
   da = 2.0 * Math.PI / teeth / 4.0;
   const mesh = new QuadStrips();
   mesh.normal3( 0.0, 0.0, 1.0 );
   /* draw front face */
   mesh.newStrip();
+  let tc;
+  let ts;
   let angleStep = MathUtil.PiTimes2 / teeth;
   let cosStep = Math.cos(angleStep);
   let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
@@ -97,8 +102,8 @@ export var createGear = function(innerRadius, outerRadius, thickness, teeth, too
     mesh.vertex3( r1 * cosAngle, r1 * sinAngle, thickness * 0.5 );
     mesh.vertex3( r0 * cosAngle, r0 * sinAngle, thickness * 0.5 );
     mesh.vertex3( r1 * Math.cos(angle + 3 * da), r1 * Math.sin(angle + 3 * da), thickness * 0.5 );
-    var ts = cosStep * sinAngle + sinStep * cosAngle;
-    var tc = cosStep * cosAngle - sinStep * sinAngle;
+    ts = cosStep * sinAngle + sinStep * cosAngle;
+    tc = cosStep * cosAngle - sinStep * sinAngle;
     sinAngle = ts;
     cosAngle = tc;
 

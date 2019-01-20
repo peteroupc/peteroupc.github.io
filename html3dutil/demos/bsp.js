@@ -33,9 +33,10 @@ BspTree._MiniBuilder = function() {
   this.vertices = [];
   this.indices = [];
   this.addPoly = function(poly) {
-    let index = this.vertices.length / 3;
-    for(var i = 0; i < poly.vertices.length; i++) {
-      let v = poly.vertices[i];
+    const index = this.vertices.length / 3;
+    let i;
+    for (i = 0; i < poly.vertices.length; i++) {
+      const v = poly.vertices[i];
       // Push vertex positions, then vertex normals
       this.vertices.push(v[0], v[1], v[2],
         poly.plane[0], poly.plane[1], poly.plane[2]);
@@ -58,7 +59,7 @@ BspTree._MiniBuilder = function() {
  */
 BspTree.prototype.toMeshBuffer = function() {
   "use strict";
-  let mesh = new BspTree._MiniBuilder();
+  const mesh = new BspTree._MiniBuilder();
   this._toMeshInternal(mesh);
   return mesh.toMeshBuffer();
 };
@@ -66,8 +67,9 @@ BspTree.prototype.toMeshBuffer = function() {
 BspTree.prototype._toMeshInternal = function(mesh) {
   "use strict";
   if(typeof this.faces !== "undefined" && this.faces !== null) {
-    for(let polyIndex = 0; polyIndex < this.faces.length; polyIndex++) {
-      let poly = this.faces[polyIndex];
+    let polyIndex;
+    for (polyIndex = 0; polyIndex < this.faces.length; polyIndex++) {
+      const poly = this.faces[polyIndex];
       mesh.addPoly(poly);
     }
   }
@@ -82,8 +84,9 @@ BspTree.prototype._toMeshInternal = function(mesh) {
 BspTree.prototype._getFacesInternal = function(polygons) {
   "use strict";
   if(typeof this.faces !== "undefined" && this.faces !== null) {
-    for(let polygonIndex = 0; polygonIndex < this.faces.length; polygonIndex++) {
-      let polygon = this.faces[polygonIndex];
+    let polygonIndex;
+    for (polygonIndex = 0; polygonIndex < this.faces.length; polygonIndex++) {
+      const polygon = this.faces[polygonIndex];
       polygons.push(polygon.copy());
     }
   }
@@ -100,7 +103,7 @@ BspTree.prototype._getFacesInternal = function(polygons) {
  */
 BspTree.prototype.getPolygons = function() {
   "use strict";
-  let p = [];
+  const p = [];
   this._getFacesInternal(p);
   return p;
 };
@@ -114,12 +117,13 @@ BspTree.prototype.flip = function() {
     this.plane = BspTree._negatePlane(this.plane);
   }
   if(typeof this.faces !== "undefined" && this.faces !== null) {
-    for(let i = 0; i < this.faces.length; i++) {
+    let i;
+    for (i = 0; i < this.faces.length; i++) {
       this.faces[i].reverseWinding();
     }
   }
-  let ft = this.frontTree;
-  let bt = this.backTree;
+  const ft = this.frontTree;
+  const bt = this.backTree;
   if(typeof ft !== "undefined" && ft !== null) {
     ft.flip();
   }
@@ -146,16 +150,17 @@ function Polygon(verts) {
     this.plane = triangleToPlane(verts);
   }
   this.copy = function() {
-    let p = new Polygon();
+    const p = new Polygon();
     p.plane = this.plane.slice(0, this.plane.length);
     p.vertices = this.vertices.slice(0, this.vertices.length);
     return p;
   };
   this.reverseWinding = function() {
-    let half = this.vertices.length / 2 | 0;
+    const half = this.vertices.length / 2 | 0;
     let right = this.vertices.length - 1;
-    for (let i = 0; i < half; i++, right--) {
-      let value = this.vertices[i];
+    let i;
+    for (i = 0; i < half; i++, right--) {
+      const value = this.vertices[i];
       this.vertices[i] = this.vertices[right];
       this.vertices[right] = value;
     }
@@ -165,12 +170,13 @@ function Polygon(verts) {
 /** @ignore */
 BspTree._classifyPolygons = function(polygons, plane) {
   "use strict";
-  let frontFaces = [];
-  let backFaces = [];
-  let crossingFaces = [];
-  let onFaces = [];
-  for(let polyIndex = 0; polyIndex < polygons.length; polyIndex++) {
-    let poly = polygons[polyIndex];
+  const frontFaces = [];
+  const backFaces = [];
+  const crossingFaces = [];
+  const onFaces = [];
+  let polyIndex;
+  for (polyIndex = 0; polyIndex < polygons.length; polyIndex++) {
+    const poly = polygons[polyIndex];
     switch (classifyPolygonToPlane3D(poly.vertices, plane)) {
     case AABBTree.FRONT:
       frontFaces.push(poly);
@@ -199,20 +205,24 @@ BspTree._classifyPolygons = function(polygons, plane) {
 /** @ignore */
 BspTree._splitPolygon = function(poly, splitPlane, info) {
   "use strict";
-  let front = new Polygon();
-  let back = new Polygon();
+  const front = new Polygon();
+  const back = new Polygon();
   if(!poly.plane)throw new Error();
   front.plane = back.plane = poly.plane;
-  let p1, p2, c1, c2;
+  let p1;
+  let p2;
+  let c1;
+  let c2;
   p1 = poly.vertices[poly.vertices.length - 1];
   c1 = classifyPointToPlane3D(splitPlane, p1);
-  for (let i = 0; i < poly.vertices.length; i++) {
+  let i;
+  for (i = 0; i < poly.vertices.length; i++) {
     p2 = poly.vertices[i];
     c2 = classifyPointToPlane3D(splitPlane, p2);
-    let cls = c1 << 4 | c2;
+    const cls = c1 << 4 | c2;
     if(cls === (AABBTree.BACK << 4 | AABBTree.FRONT) ||
     cls === (AABBTree.FRONT << 4 | AABBTree.BACK)) {
-      let p = getIntersectionRayPlane(makeRay(p1, p2),
+      const p = getIntersectionRayPlane(makeRay(p1, p2),
         splitPlane);
       front.vertices.push(p);
       back.vertices.push(p);
@@ -235,19 +245,21 @@ BspTree._splitPolygon = function(poly, splitPlane, info) {
 /** @ignore */
 BspTree._addAll = function(dst, src) {
   "use strict";
-  for(let elemIndex = 0; elemIndex < src.length; elemIndex++) {
-    let elem = src[elemIndex];
+  let elemIndex;
+  for (elemIndex = 0; elemIndex < src.length; elemIndex++) {
+    const elem = src[elemIndex];
     dst.push(elem);
   }
 };
 /** @ignore */
 BspTree._handleOnAndCrossing = function(info, plane) {
   "use strict";
-  let splittingPlaneNormal = plane.slice(0, 3);
-  for(var i = 0; i < info.onFaces.length; i++) {
-    let polygon = info.onFaces[i];
-    let polyNormal = polygon.plane.slice(0, 3);
-    let dot = H3DU.MathUtil.vec3dot(splittingPlaneNormal, polyNormal);
+  const splittingPlaneNormal = plane.slice(0, 3);
+  let i;
+  for (i = 0; i < info.onFaces.length; i++) {
+    const polygon = info.onFaces[i];
+    const polyNormal = polygon.plane.slice(0, 3);
+    const dot = H3DU.MathUtil.vec3dot(splittingPlaneNormal, polyNormal);
     if (dot > 0) {
       info.frontFaces.push(polygon);
     } else {
@@ -305,10 +317,11 @@ BspTree.prototype.clip = function(node) {
 BspTree.fromMeshBuffer = function(mesh) {
   "use strict";
   if(mesh.primitiveType() === H3DU.Mesh.TRIANGLES) {
-    let polys = mesh.getPositions();
-    let polygons = [];
-    for(let polyIndex = 0; polyIndex < polys.length; polyIndex++) {
-      let poly = polys[polyIndex];
+    const polys = mesh.getPositions();
+    const polygons = [];
+    let polyIndex;
+    for (polyIndex = 0; polyIndex < polys.length; polyIndex++) {
+      const poly = polys[polyIndex];
       polygons.push(new Polygon(poly));
     }
     return new BspTree(polygons);
@@ -327,7 +340,8 @@ BspTree.prototype.copy = function() {
 /** @ignore */
 BspTree.prototype._clipflip2 = function(other) {
   "use strict";
-  for(let i = 0; i < 2; i++) {
+  let i;
+  for (i = 0; i < 2; i++) {
     this.clip(other).flip();
   }
   return this;
@@ -340,8 +354,8 @@ BspTree.prototype._clipflip2 = function(other) {
  */
 BspTree.prototype.union = function(other) {
   "use strict";
-  let otherBsp = other.copy();
-  let thisBsp = this.copy().clip(otherBsp);
+  const otherBsp = other.copy();
+  const thisBsp = this.copy().clip(otherBsp);
   return new BspTree(
     thisBsp.getPolygons().concat(
       otherBsp._clipflip2(thisBsp).getPolygons()));
@@ -354,8 +368,8 @@ BspTree.prototype.union = function(other) {
  */
 BspTree.prototype.difference = function(other) {
   "use strict";
-  let otherBsp = other.copy();
-  let thisBsp = this.copy().flip().clip(otherBsp);
+  const otherBsp = other.copy();
+  const thisBsp = this.copy().flip().clip(otherBsp);
   return new BspTree(
     thisBsp.getPolygons().concat(
       otherBsp._clipflip2(thisBsp).getPolygons())).flip();
@@ -368,8 +382,8 @@ BspTree.prototype.difference = function(other) {
  */
 BspTree.prototype.intersection = function(other) {
   "use strict";
-  let thisBsp = this.copy().flip();
-  let otherBsp = other.copy().clip(thisBsp).flip();
+  const thisBsp = this.copy().flip();
+  const otherBsp = other.copy().clip(thisBsp).flip();
   return new BspTree(
     thisBsp.clip(otherBsp).getPolygons().concat(
       otherBsp.getPolygons())).flip();
@@ -400,20 +414,22 @@ BspTree.prototype._buildNode = function(polygons) {
   }
   let info = null;
   let best = -1;
-  for(let p1Index = 0; p1Index < polygons.length; p1Index++) {
-    let p1 = polygons[p1Index];
-    let r = BspTree._classifyPolygons(polygons, p1.plane);
+  let p1Index;
+  for (p1Index = 0; p1Index < polygons.length; p1Index++) {
+    const p1 = polygons[p1Index];
+    const r = BspTree._classifyPolygons(polygons, p1.plane);
     // See <https://groups.google.com/d/msg/comp.graphics.algorithms/XRtRJvWLDLA/cEJCV9AlimcJ>,
     // by Tim Sweeney
-    let score = Math.abs(r.frontFaces.length - r.backFaces.length) * 20 +
+    const score = Math.abs(r.frontFaces.length - r.backFaces.length) * 20 +
       r.crossingFaces.length * 80;
     if (best === -1 || score < best) {
       best = score;
       info = r;
     }
   }
-  let splittingPlane = info.plane;
-  for(let i = 0; i < info.crossingFaces.length; i++) {
+  const splittingPlane = info.plane;
+  let i;
+  for (i = 0; i < info.crossingFaces.length; i++) {
     BspTree._splitPolygon(info.crossingFaces[i], splittingPlane, info);
   }
   if(info.onFaces.length > 0) {

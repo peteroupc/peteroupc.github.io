@@ -22,7 +22,7 @@
  * of the color at the center; and "colorEdges" is those same components
  * of the color at the edges.
  */
-export var radialGradientShader = {
+export const radialGradientShader = {
   "uniform":{
     "colorCenter":[0, 0, 0, 1],
     "colorEdges":[1, 1, 1, 1]

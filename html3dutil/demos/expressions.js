@@ -6,12 +6,13 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-var Extras = {
+const Extras = {
   "compact":function(arr) {
     "use strict";
     let fillOffset = 0;
 
-    for(let i = 0; i < arr.length; i++) {
+    let i;
+    for (i = 0; i < arr.length; i++) {
       if(fillOffset !== i && arr[i] !== null) {
         arr[fillOffset] = arr[i];
         fillOffset++;
@@ -23,16 +24,17 @@ var Extras = {
   },
   "includes":function(arr, value) {
     "use strict";
-    for(let i = 0; i < arr.length; i++) {
+    let i;
+    for (i = 0; i < arr.length; i++) {
       if(arr[i] === value)return true;
     }
     return false;
   }
 };
-var nextToken = function(tok) {
+const nextToken = function(tok) {
   "use strict";
-  let a,
-    x = null,
+  let a;
+  let x = null,
     e = null,
     t = null,
     token = null;
@@ -103,7 +105,7 @@ var nextToken = function(tok) {
   throw new Error("unexpected token");
 };
 
-var Operator = function(name) {
+const Operator = function(name) {
   "use strict";
   this.name = name;
 };
@@ -122,18 +124,18 @@ Operator.prototype.toString = function() {
  * @constructor
  * @alias Variable
  */
-var Variable = function(name) {
+const Variable = function(name) {
   "use strict";
   this.name = name;
   this.negative = false;
 };
-var Operation = function(operator) {
+const Operation = function(operator) {
   "use strict";
   this.operator = operator;
   this.nodes = [];
   this.negative = false;
 };
-var Constant = function(value, name) {
+const Constant = function(value, name) {
   "use strict";
   if (typeof name === "undefined" || name === null) {
     name = null;
@@ -151,7 +153,7 @@ var Constant = function(value, name) {
   }
 };
 
-var Expression = function() {
+const Expression = function() {
   "use strict";
   this.nodes = [];
 };
@@ -174,8 +176,8 @@ Expression.prototype.simplify = function() {
 Expression.simplifyNodes = function(nodes) {
   "use strict";
   let negative;
-  let d,
-    passes = null,
+  let d;
+  let passes = null,
     pass__ = null,
     pass = null,
     prevNode = null,
@@ -358,7 +360,9 @@ Operation.prototype.equals = function(x) {
 /** @ignore */
 Operation.prototype.simplify = function() {
   "use strict";
-  let b, c, d;
+  let b;
+  let c;
+  let d;
   let done = null,
     origlength = null,
     constVals = null,
@@ -398,7 +402,7 @@ Operation.prototype.simplify = function() {
           this.nodes[i] = null;
           done = false;
         } else if (node instanceof Operation && node.operator === "div" && this.operator === "mul") {
-          let tbool = node.nodes.length === 2 && !node.negative && !this.negative &&
+          const tbool = node.nodes.length === 2 && !node.negative && !this.negative &&
            node.nodes[0].constantValue() !== null && node.nodes[1].constantValue() !== null;
           if(tbool) {
             this.nodes.push(node.nodes[0]);
@@ -530,8 +534,9 @@ Operation.prototype.degen = function() {
  */
 Operation.prototype.constantValue = function() {
   "use strict";
-  let b, c,
-    val = null,
+  let b;
+  let c;
+  let val = null,
     node__ = null,
     node = null,
     cv = null;
@@ -564,10 +569,10 @@ Operation.prototype.constantValue = function() {
     return this.negative ? -val : val;
   } else {
     if(this.operator === "pow") {
-      let cv1 = this.nodes[0].constantValue();
-      let cv2 = this.nodes[1].constantValue();
+      const cv1 = this.nodes[0].constantValue();
+      const cv2 = this.nodes[1].constantValue();
       if(typeof cv1 !== "undefined" && cv1 !== null && (typeof cv2 !== "undefined" && cv2 !== null)) {
-        let ret = Math.pow(cv1, cv2);
+        const ret = Math.pow(cv1, cv2);
         return this.negative ? -ret : ret;
       }
     }
@@ -594,7 +599,7 @@ Operation.prototype.combineOp = function(operation, x) {
     x = new Constant(x);
   }
   if (operation === "pow") {
-    let cv = x.constantValue();
+    const cv = x.constantValue();
     if(cv === 0) {
       return new Constant(1);
     } else if(cv === 1) {
@@ -612,9 +617,10 @@ Operation.prototype.combineOp = function(operation, x) {
  */
 Operation.prototype.copy = function() {
   "use strict";
-  let op = new Operation(this.operator);
+  const op = new Operation(this.operator);
   op.negative = this.negative;
-  for (let node__ = 0; node__ < this.nodes.length; node__++) {
+  let node__;
+  for (node__ = 0; node__ < this.nodes.length; node__++) {
     op.nodes.push(this.nodes[node__].copy());
   }
   return op;
@@ -676,9 +682,10 @@ Operation.prototype.multiply = function(x) {
     }
   }
   if (this.operator === "mul") {
-    for(let i = 0; i < this.nodes.length; i++) {
+    let i;
+    for (i = 0; i < this.nodes.length; i++) {
       if(this.nodes[i].equals(x)) {
-        let c = this.copy();
+        const c = this.copy();
         c.nodes[i] = Operation.func("pow", c.nodes[i], new Constant(2));
         return c;
       }
@@ -704,8 +711,10 @@ Operation.prototype.divide = function(x) {
  */
 Operation.prototype.toJSString = function() {
   "use strict";
-  let b, c, d,
-    opArray = null,
+  let b;
+  let c;
+  let d;
+  let opArray = null,
     i__ = null,
     i = null,
     paren = null,
@@ -750,7 +759,7 @@ Operation.prototype.toJSString = function() {
     return (this.negative ? "-" : "") + "(((" + p1 + ")<0 ? -1 : 1)*Math.pow(Math.abs(" + p1 + "),0.5))";
   } else if (this.operator === "pow") {
     p1 = opArray[0];
-    let p2 = opArray[1];
+    const p2 = opArray[1];
     return (this.negative ? "-" : "") + "(((" + p1 + ")<0 ? -1 : 1)*Math.pow(Math.abs(" + p1 + ")," + p2 + "))";
   } else {
     let oper = this.operator;
@@ -764,8 +773,10 @@ Operation.prototype.toJSString = function() {
  */
 Operation.prototype.toString = function() {
   "use strict";
-  let b, c, d,
-    opArray = null,
+  let b;
+  let c;
+  let d;
+  let opArray = null,
     i__ = null,
     i = null,
     paren = null,
@@ -1095,10 +1106,10 @@ Constant.prototype.divide = function(x) {
 };
 
 /* exported getExpression */
-var getExpression = function(expr) {
+let getExpression = function(expr) {
   "use strict";
-  let c,
-    test = null,
+  let c;
+  let test = null,
     tokens = null,
     token = null,
     expressions = null,
@@ -1178,7 +1189,7 @@ var getExpression = function(expr) {
   return ret.degen();
 };
 /* exported getSingleVariable */
-var getSingleVariable = function(op, variable) {
+let getSingleVariable = function(op, variable) {
   "use strict";
   let i = null,
     node = null;
@@ -1199,9 +1210,9 @@ var getSingleVariable = function(op, variable) {
   return true;
 };
 
-var findPartialDerivative = function(expr, differential) {
+const findPartialDerivative = function(expr, differential) {
   "use strict";
-  let product = function(expr, start, count) {
+  const product = function(expr, start, count) {
     let ret = null,
       i = null;
     if (count === 1) {
@@ -1213,7 +1224,7 @@ var findPartialDerivative = function(expr, differential) {
     }
     return ret;
   };
-  let quotient = function(expr, start, count) {
+  const quotient = function(expr, start, count) {
     let ret = null,
       i = null;
 
@@ -1235,7 +1246,8 @@ var findPartialDerivative = function(expr, differential) {
     sq = null,
     ops = null,
     i = null;
-  let ex, cv;
+  let ex;
+  let cv;
   let ret;
   if(typeof differential === "string")differential = new Variable(differential);
   if (!(expr.constantValue() === null)) {
@@ -1312,7 +1324,7 @@ var findPartialDerivative = function(expr, differential) {
       return findPartialDerivative(Operation.func("ln", e0).add(Operation.func("ln", e1)), differential);
     } else if(ex.isOperation("pow")) {
       cv = ex.constantValue(ex.get(1));
-      let cv0 = ex.constantValue(ex.get(0));
+      const cv0 = ex.constantValue(ex.get(0));
       if(typeof cv === "undefined" || cv === null || Math.floor(cv) === cv || (typeof cv0 === "undefined" || cv0 === null || cv0 > 0)) {
         // only works for rational exponents
         return findPartialDerivative(ex.get(1).multiply(Operation.func("ln", ex.get(0))), differential);
@@ -1357,16 +1369,16 @@ var findPartialDerivative = function(expr, differential) {
 /* exported normalCalcExpr */
 function normalCalcExpr(vecExpr) {
   "use strict";
-  let varu = new Variable("u");
-  let varv = new Variable("v");
+  const varu = new Variable("u");
+  const varv = new Variable("v");
   // partial derivative with respect to u
-  let derivU = [
+  const derivU = [
     findPartialDerivative(vecExpr[0], varu),
     findPartialDerivative(vecExpr[1], varu),
     findPartialDerivative(vecExpr[2], varu)
   ];
   // partial derivative with respect to v
-  let derivV = [
+  const derivV = [
     findPartialDerivative(vecExpr[0], varv),
     findPartialDerivative(vecExpr[1], varv),
     findPartialDerivative(vecExpr[2], varv)

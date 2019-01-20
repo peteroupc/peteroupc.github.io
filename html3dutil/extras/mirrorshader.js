@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var mirrorShader = {
+export const mirrorShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

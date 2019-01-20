@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var vignetteShader = {
+export const vignetteShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

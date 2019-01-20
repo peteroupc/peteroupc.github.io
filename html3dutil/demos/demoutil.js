@@ -47,10 +47,10 @@ function formulaEditorHelp() {
 /* exported addLink */
 function addLink(name, func) {
   "use strict";
-  let s = document.createElement("span");
-  let ins = document.createElement("span");
+  const s = document.createElement("span");
+  const ins = document.createElement("span");
   ins.innerHTML = " - ";
-  let a = document.createElement("a");
+  const a = document.createElement("a");
   a.href = "javascript:void(null)";
   a.onclick = function() {
     func();
@@ -63,20 +63,20 @@ function addLink(name, func) {
 
 function addRange(label, min, max, step, defvalue, func) {
   "use strict";
-  let div = document.createElement("div");
-  let lbl = document.createElement("span");
+  const div = document.createElement("div");
+  const lbl = document.createElement("span");
   lbl.innerHTML = label;
-  let defvaluelbl = document.createElement("span");
+  const defvaluelbl = document.createElement("span");
   defvaluelbl.innerHTML = defvalue;
-  let input = document.createElement("input");
+  const input = document.createElement("input");
   input.setAttribute("type", "range");
   input.setAttribute("value", "" + defvalue);
   input.setAttribute("min", "" + min);
   input.setAttribute("max", "" + max);
   input.setAttribute("step", "" + step);
-  let oldvalue = [defvalue];
+  const oldvalue = [defvalue];
   input.addEventListener("input", function(e) {
-    let val = e.target.value * 1.0;
+    const val = e.target.value * 1.0;
     if(oldvalue[0] !== val) {
       defvaluelbl.innerHTML = val + "";
       if(func)func(val);
@@ -103,7 +103,7 @@ function Label(text, pos) {
   document.body.appendChild(this.label);
   this.pos = pos;
   this.update = function(projViewMatrix, width, height) {
-    let pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, projViewMatrix, [0, 0, width, height]);
+    const pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, projViewMatrix, [0, 0, width, height]);
     if(pos[2] < -1 || pos[2] > 1) {
       // Too close, too far, or behind the camera
       this.label.style.display = "none";
@@ -117,9 +117,10 @@ function Label(text, pos) {
 
 function setRanges(ranges) {
   "use strict";
-  let settings = document.getElementById("settings");
+  const settings = document.getElementById("settings");
   settings.innerHTML = "";
-  for(let i = 0; i < ranges.length; i++) {
+  let i;
+  for (i = 0; i < ranges.length; i++) {
     settings.appendChild(ranges[i]);
   }
 }
@@ -133,9 +134,9 @@ function saveString(string, type, filename) {
   else if(type === "application/json")extension = ".json";
   else if(type === "model/vnd.collada+xml")extension = ".dae";
   else if(type.indexOf("+xml") >= 0)extension = ".xml";
-  let a = document.createElement("a");
-  let utf8 = new TextEncoder("utf-8").encode(string);
-  let blob = new Blob([utf8], {"type": type});
+  const a = document.createElement("a");
+  const utf8 = new TextEncoder("utf-8").encode(string);
+  const blob = new Blob([utf8], {"type": type});
   a.href = window.URL.createObjectURL(blob);
   a.download = filename || "savefile" + extension;
   document.body.appendChild(a);
@@ -152,15 +153,16 @@ function pushSettings(allsettings, shapeGroup, updateMeshFunc, settings) {
       updateShape(updateMeshFunc, allsettings, shapeGroup);
     };
   }
-  let ranges = [];
-  for(let setting in settings) {
+  const ranges = [];
+  let setting;
+  for (setting in settings) {
     if(settings[setting] && settings[setting].constructor === Array) {
-      let name = setting;
-      let label = settings[setting][0];
-      let defvalue = settings[setting][1];
-      let min = settings[setting][2];
-      let max = settings[setting][3];
-      let step = settings[setting][4];
+      const name = setting;
+      const label = settings[setting][0];
+      const defvalue = settings[setting][1];
+      const min = settings[setting][2];
+      const max = settings[setting][3];
+      const step = settings[setting][4];
       if(typeof allsettings[name] === "undefined") {
         allsettings[name] = defvalue;
       }
@@ -184,7 +186,7 @@ function makeMesh(func, resolutionU, resolutionV) {
   // generate a Red/Green/Blue color based on
   // the same parameters U and V as the surface
   // function for 3D points.
-  let colorGradient = {
+  const colorGradient = {
     "evaluate":function(u, v) {
       return [1 - u, v, u];
     }
@@ -204,12 +206,12 @@ function makeMesh(func, resolutionU, resolutionV) {
 
 window.addEventListener("load", function() {
   "use strict";
-  let a = document.createElement("a");
+  const a = document.createElement("a");
   a.setAttribute("style", "margin-left:2px;margin-top:2px;margin-bottom:2px;position:absolute;left:80%;top:0;" +
    "background-color:white;text-align:center;text-decoration:none;font-weight:bold");
   a.href = "javascript:void(null)";
   a.innerHTML = "View Source";
-  let e = document.createElement("pre");
+  const e = document.createElement("pre");
   e.setAttribute("style", "border:2px solid;margin:2px 2px 2px 2px;left:10;padding:2px 2px 2px 2px;" +
   "background:rgba(255,255,255,0.8);left:10%;width:85%;height:80%;overflow:scroll;position:absolute;float:right;top:2em");
   let demoContent = document.documentElement ? document.documentElement.outerHTML :
@@ -244,21 +246,21 @@ window.addEventListener("load", function() {
 function makeAxisLines(width) {
   "use strict";
   if(typeof width === "undefined" || width === null)width = 0.01;
-  let xyz = new H3DU.ShapeGroup();
-  let length = 50;
-  let halfLength = length / 2.0;
-  let axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, length, 6, 4));
-  let zaxis = axisline.copy().setColor("blue");
+  const xyz = new H3DU.ShapeGroup();
+  const length = 50;
+  const halfLength = length / 2.0;
+  const axisline = new H3DU.Shape(H3DU.Meshes.createCapsule(width / 2.0, length, 6, 4));
+  const zaxis = axisline.copy().setColor("blue");
   zaxis.getTransform().setPosition(0, 0, -halfLength);
-  let yaxis = axisline.copy().setColor("green");
+  const yaxis = axisline.copy().setColor("green");
   yaxis.getTransform().setRotation(90, -1, 0, 0).setPosition(0, -halfLength, 0);
-  let xaxis = axisline.copy().setColor("red");
+  const xaxis = axisline.copy().setColor("red");
   xaxis.getTransform().setRotation(90, 0, -1, 0).setPosition(-halfLength, 0, 0);
-  let zaxis2 = axisline.copy().setColor("blue");
+  const zaxis2 = axisline.copy().setColor("blue");
   zaxis2.getTransform().setPosition(0, 0, halfLength * 3).setScale(3);
-  let yaxis2 = axisline.copy().setColor("green");
+  const yaxis2 = axisline.copy().setColor("green");
   yaxis2.getTransform().setRotation(90, -1, 0, 0).setPosition(0, halfLength * 3, 0).setScale(3);
-  let xaxis2 = axisline.copy().setColor("red");
+  const xaxis2 = axisline.copy().setColor("red");
   xaxis2.getTransform().setRotation(90, 0, -1, 0).setPosition(halfLength * 3, 0, 0).setScale(3);
   return xyz.addShape(xaxis).addShape(yaxis).addShape(zaxis)
     .addShape(xaxis2).addShape(yaxis2).addShape(zaxis2);

@@ -25,7 +25,7 @@ import {MathUtil, Meshes} from "../h3du-module.js";
  * @returns {*} Return value.
  * @function
  */
-export var createWasher = function(inner, outer, height, slices) {
+export const createWasher = function(inner, outer, height, slices) {
   const innerCylinder = Meshes.createCylinder(inner, inner, height, slices, 1, false, true);
   const outerCylinder = Meshes.createCylinder(outer, outer, height, slices, 1, false, false);
   const base = Meshes.createDisk(inner, outer, slices, 2, true).reverseWinding();

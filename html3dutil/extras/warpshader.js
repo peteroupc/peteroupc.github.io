@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var warpShader = {
+export const warpShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

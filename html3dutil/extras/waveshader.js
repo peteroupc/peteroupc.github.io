@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var waveShader = {
+export const waveShader = {
   "vertexShader":["varying vec2 uvCoord;",
     "void main() {",
     "uvCoord=uv;",

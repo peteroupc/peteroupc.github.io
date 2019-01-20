@@ -18,7 +18,7 @@
 /**
  * TODO: Not documented yet.
  */
-export var checkerboardShader = {
+export const checkerboardShader = {
   "uniform":{
     "blackColor":[0, 0, 0],
     "whiteColor":[1, 1, 1],

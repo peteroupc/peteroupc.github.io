@@ -39,7 +39,7 @@ import {Curve, MathUtil, Surface} from "../h3du_module.js";
  * run in the direction from the origin to the point given in this parameter. This
  * parameter need not be a [unit vector]{@tutorial glmath}.
  */
-export var SurfaceOfRevolution = function(curve, minval, maxval, axis) {
+export const SurfaceOfRevolution = function(curve, minval, maxval, axis) {
   this.curve = curve;
   this.minval = Math.min(minval, maxval);
   this.maxval = Math.max(minval, maxval);
@@ -276,7 +276,7 @@ function Line(length) {
  * @augments Curve
  * @constructor
  */
-export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
+export const Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions) {
   /** @ignore */
   this.revolutions = typeof revolutions === "undefined" || revolutions === null ? 1 : revolutions;
   /** @ignore */
