@@ -18,11 +18,11 @@
 import {MathUtil} from "../h3du_module.js";
 
 function sinpow(x, n) {
-  var r = Math.sin(x);
+  const r = Math.sin(x);
   return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
 }
 function cospow(x, n) {
-  var r = Math.cos(x);
+  const r = Math.cos(x);
   return (r > 0 ? 1 : -1) * Math.pow(Math.abs(r), n);
 }
 /**
@@ -44,7 +44,7 @@ export var Superellipsoid = function(xRadius, yRadius, zRadius, n, m) {
     return [-Math.PI / 2, Math.PI / 2, -Math.PI, Math.PI];
   };
   this.evaluate = function(u, v) {
-    var cosu = cospow(u, this.n);
+    const cosu = cospow(u, this.n);
     return [
       cospow(v, this.m) * cosu * this.xRadius,
       sinpow(v, this.m) * cosu * this.yRadius,
@@ -69,7 +69,7 @@ export var Supertoroid = function(xRadius, yRadius, innerRadius) {
     return [0, MathUtil.PiTimes2, 0, MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
-    var cosu = cospow(u, this.n);
+    const cosu = cospow(u, this.n);
     return [
       cospow(v, this.m) * (cosu * this.innerRadius + this.xRadius),
       sinpow(v, this.m) * (cosu * this.innerRadius + this.yRadius),

@@ -56,28 +56,27 @@ DrawingToy.prototype.setColor = function(color) {
 DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
   phase, maxloops) {
   if(typeof phase === "undefined" || phase === null)phase = 0;
-  var radius = ringTeeth / 5;
-  var rollerRadius = radius * wheelTeeth / ringTeeth;
-  var firstHole = (rollerRadius - 2.3) / rollerRadius;
-  var holeDist = 0.392 / rollerRadius;
-  var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
+  const radius = ringTeeth / 5;
+  const rollerRadius = radius * wheelTeeth / ringTeeth;
+  const firstHole = (rollerRadius - 2.3) / rollerRadius;
+  const holeDist = 0.392 / rollerRadius;
+  const relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
   // console.log([firstHole,holeDist,relDistFromWheelCenter])
   phase = phase * 360 / ringTeeth;
   phase -= 90;
   phase = 360 - phase;
-  var distFromCenter = relDistFromWheelCenter * rollerRadius;
+  const distFromCenter = relDistFromWheelCenter * rollerRadius;
   // console.log([rollerRadius,distFromCenter])
-  var curve = Roulette.epitrochoid(
+  const curve = Roulette.epitrochoid(
     radius, rollerRadius, distFromCenter, phase);
-  var endPoints = curve.endPoints();
-  var factor = gcd(ringTeeth, wheelTeeth);
-  var rt = ringTeeth / factor;
-  var wt = wheelTeeth / factor;
-  var trips = Math.min(rt, wt);
+  const endPoints = curve.endPoints();
+  const factor = gcd(ringTeeth, wheelTeeth);
+  const rt = ringTeeth / factor;
+  const wt = wheelTeeth / factor;
+  let trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = endPoints[1] * trips;
-  curve = curve.changeEnds(0, extent);
-  return curve;
+  const extent = endPoints[1] * trips;
+  return curve.changeEnds(0, extent);
 };
 
 /** @ignore
@@ -85,32 +84,29 @@ DrawingToy.prototype._drawingToyEpi = function(ringTeeth, wheelTeeth, hole,
 DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
   phase, offset, maxloops) {
   if(typeof phase === "undefined" || phase === null)phase = 0;
-  var radius = ringTeeth / 5;
-  var innerRadius = radius * wheelTeeth / ringTeeth;
-  var firstHole = (innerRadius - 2.3) / innerRadius;
-  var holeDist = 0.392 / innerRadius;
-  var relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
-  var toothDist = radius * MathUtil.PiTimes2 / ringTeeth;
-  toothDist *= 0.8; // magic number here
-  // console.log(toothDist)
-  // console.log([firstHole,holeDist,relDistFromWheelCenter])
+  const radius = ringTeeth / 5;
+  const innerRadius = radius * wheelTeeth / ringTeeth;
+  const firstHole = (innerRadius - 2.3) / innerRadius;
+  const holeDist = 0.392 / innerRadius;
+  const relDistFromWheelCenter = firstHole - holeDist * (hole - 1);
+  let toothDist = radius * MathUtil.PiTimes2 / ringTeeth;
+  toothDist *= 0.8; // magic number heres
   phase = phase * 360 / ringTeeth;
   phase -= 90;
   phase = 360 - phase;
-  var distFromCenter = relDistFromWheelCenter * innerRadius;
-  // console.log([innerRadius,distFromCenter])
-  var curve = Roulette.hypotrochoid(radius, innerRadius, distFromCenter, phase);
-  var endPoints = curve.endPoints(); // Gets the end points for one revolution
-  var factor = gcd(ringTeeth, wheelTeeth);
-  var rt = ringTeeth / factor;
-  var wt = wheelTeeth / factor;
-  var trips = Math.min(rt, wt);
+  const distFromCenter = relDistFromWheelCenter * innerRadius;
+  const curve = Roulette.hypotrochoid(radius, innerRadius, distFromCenter, phase);
+  const endPoints = curve.endPoints(); // Gets the end points for one revolution
+  const factor = gcd(ringTeeth, wheelTeeth);
+  const rt = ringTeeth / factor;
+  const wt = wheelTeeth / factor;
+  let trips = Math.min(rt, wt);
   if(typeof maxloops !== "undefined" && maxloops !== null)trips = Math.min(trips, maxloops);
-  var extent = endPoints[1] * trips;
+  const extent = endPoints[1] * trips;
   if(typeof offset === "undefined" || offset === null)offset = 0;
   return new Curve({
     "evaluate":(u) => {
-      var e = curve.evaluate(u);
+      const e = curve.evaluate(u);
       return [e[0] + offset * toothDist, e[1], e[2]];
     },
     "endPoints":() => [0, extent]
@@ -127,7 +123,7 @@ DrawingToy.prototype._drawingToyHypo = function(ringTeeth, wheelTeeth, hole,
  */
 DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset) {
   this.ce.constantAttribute(this.color, "COLOR");
-  var curve = this._drawingToyHypo(ringTeeth, wheelTeeth, hole, phase, offset);
+  const curve = this._drawingToyHypo(ringTeeth, wheelTeeth, hole, phase, offset);
   this.ce.position(curve).evalCurve(
     MeshBuffer.LINES,
     Math.max(400, Math.floor(curve.getLength() / 4)));
@@ -143,7 +139,7 @@ DrawingToy.prototype.hypo = function(ringTeeth, wheelTeeth, hole, phase, offset)
  */
 DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
   this.ce.constantAttribute(this.color, "COLOR");
-  var curve = this._drawingToyEpi(ringTeeth, wheelTeeth, hole, phase);
+  const curve = this._drawingToyEpi(ringTeeth, wheelTeeth, hole, phase);
   this.ce.position(curve).evalCurve(
     MeshBuffer.LINES,
     Math.max(400, Math.floor(curve.getLength() / 4)));
@@ -163,9 +159,9 @@ DrawingToy.prototype.epi = function(ringTeeth, wheelTeeth, hole, phase) {
  */
 DrawingToy.prototype.continuousHypo = function(
   ringTeeth, wheelTeeth, hole, phase, offset, holeStep, offsetStep, count) {
-  var h = hole;
-  var o = offset;
-  for(var i = 0; i < count; i++, h += holeStep, o += offsetStep) {
+  let h = hole;
+  let o = offset;
+  for(let i = 0; i < count; i++, h += holeStep, o += offsetStep) {
     this.hypo(ringTeeth, wheelTeeth, h, phase, o);
   }
   return this;

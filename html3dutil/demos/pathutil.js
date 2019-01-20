@@ -11,9 +11,9 @@
 /* exported makeTubeFromPath */
 function makeTubeFromPath(path, flatness, thickness, pathSection) {
   "use strict";
-  var curves = path.getCurves();
-  var resolution = Math.ceil(curves.getLength() / flatness / 10);
-  var curveSection = pathSection ? pathSection.getCurves() : null;
+  let curves = path.getCurves();
+  let resolution = Math.ceil(curves.getLength() / flatness / 10);
+  let curveSection = pathSection ? pathSection.getCurves() : null;
   return new H3DU.SurfaceBuilder()
     .positionNormal(new H3DU.CurveTube(curves, thickness, curveSection))
     .evalSurface( H3DU.Mesh.TRIANGLES, resolution,
@@ -23,29 +23,29 @@ function makeTubeFromPath(path, flatness, thickness, pathSection) {
 /* exported starPolygon */
 function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
   "use strict";
-  var coords = [];
-  var connected = [];
-  var retval = [];
+  let coords = [];
+  let connected = [];
+  let retval = [];
   if(points < 2)return retval;
   if(jump < 1)throw new Error();
   for(var i = 0; i < points; i++) {
     connected[i] = false;
   }
-  var phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.MathUtil.ToRadians;
-  var angleStep = H3DU.MathUtil.PiTimes2 / points;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
-  var c = Math.cos(phase);
-  var s = phase >= 0 && phase < 6.283185307179586 ? phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(phase);
+  let phase = (typeof phaseInDegrees === "undefined" || phaseInDegrees === null ? 0 : phaseInDegrees) * H3DU.MathUtil.ToRadians;
+  let angleStep = H3DU.MathUtil.PiTimes2 / points;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep);
+  let c = Math.cos(phase);
+  let s = phase >= 0 && phase < 6.283185307179586 ? phase <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(phase);
   for(i = 0; i < points; i++) {
     coords.push([x + c * radius, y + s * radius]);
-    var ts = cosStep * s + sinStep * c;
-    var tc = cosStep * c - sinStep * s;
+    let ts = cosStep * s + sinStep * c;
+    let tc = cosStep * c - sinStep * s;
     s = ts;
     c = tc;
   }
   for (;;) {
-    var firstPoint = -1;
+    let firstPoint = -1;
     for(i = 0; i < points; i++) {
       if(!connected[i]) {
         firstPoint = i;
@@ -53,8 +53,8 @@ function starPolygon(x, y, radius, points, jump, phaseInDegrees) {
       }
     }
     if(firstPoint < 0)break;
-    var pt = firstPoint;
-    var lastPoint = -1;
+    let pt = firstPoint;
+    let lastPoint = -1;
     while(!connected[pt]) {
       connected[pt] = true;
       if(lastPoint >= 0) {

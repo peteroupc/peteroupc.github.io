@@ -56,7 +56,7 @@ ImplicitSurface._a2iEdgeConnection =
 /** @ignore */
 ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
   "use strict";
-  var ff = this.sampler.sample(fX, fY, fZ);
+  let ff = this.sampler.sample(fX, fY, fZ);
   rfNormal[0] = this.sampler.sample(fX + 0.001, fY, fZ) - ff;
   rfNormal[1] = this.sampler.sample(fX, fY + 0.001, fZ) - ff;
   rfNormal[2] = this.sampler.sample(fX, fY, fZ + 0.001) - ff;
@@ -65,7 +65,7 @@ ImplicitSurface.prototype._getNormal = function(rfNormal, fX, fY, fZ) {
 /** @ignore */
 ImplicitSurface._fGetOffset = function(a, b, desired) {
   "use strict";
-  var delta = b - a;
+  let delta = b - a;
   return delta === 0 ? 0.5 : (desired - a) / delta;
 };
 
@@ -363,9 +363,9 @@ ImplicitSurface._a2iTriangleConnectionTable = [
 /** @ignore */
 ImplicitSurface.prototype._isOnSurface = function(fX, fY, fZ, fScaleX, fScaleY, fScaleZ) {
   "use strict";
-  var mx = 0;
-  var mn = 0;
-  var value = this.sampler.sample(fX, fY, fZ);
+  let mx = 0;
+  let mn = 0;
+  let value = this.sampler.sample(fX, fY, fZ);
   mx = mn = value;
   value = this.sampler.sample(fX + fScaleX, fY, fZ);
   mn = Math.min(mn, value);
@@ -399,11 +399,11 @@ ImplicitSurface.prototype._isOnSurface = function(fX, fY, fZ, fScaleX, fScaleY, 
 /** @ignore */
 ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fScaleY, fScaleZ, tmpobj) {
   "use strict";
-  var iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
-  var fOffset;
+  let iCorner, iVertex, iVertexTest, iEdge, iTriangle, iFlagIndex, iEdgeFlags;
+  let fOffset;
 
-  var mx = 0;
-  var mn = 0;
+  let mx = 0;
+  let mn = 0;
   // Make a local copy of the cube's corner positions;
   // make a local copy of the cube's corner values
   for(iVertex = 0; iVertex < 8; iVertex++) {
@@ -489,14 +489,14 @@ ImplicitSurface.prototype._vMarchCube1 = function(mesh, fX, fY, fZ, fScaleX, fSc
  */
 ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
-  var xstep = (xmax - xmin) / xsize;
-  var ystep = (ymax - ymin) / ysize;
-  var zstep = (zmax - zmin) / zsize;
-  var inf = Number.POSITIVE_INFINITY;
-  var bounds = [inf, inf, inf, -inf, -inf, -inf];
-  var first = true;
-  var x, y, z;
-  var iX, iY, iZ;
+  let xstep = (xmax - xmin) / xsize;
+  let ystep = (ymax - ymin) / ysize;
+  let zstep = (zmax - zmin) / zsize;
+  let inf = Number.POSITIVE_INFINITY;
+  let bounds = [inf, inf, inf, -inf, -inf, -inf];
+  let first = true;
+  let x, y, z;
+  let iX, iY, iZ;
   for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
     for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
       for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
@@ -544,11 +544,11 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
   "use strict";
   if(xsize < 2 || ysize < 2 || zsize < 2)throw new Error();
   mesh.mode(H3DU.Mesh.POINTS);
-  var xstep = (xmax - xmin) / (xsize - 1);
-  var ystep = (ymax - ymin) / (ysize - 1);
-  var zstep = (zmax - zmin) / (zsize - 1);
-  var x, y, z;
-  var iX, iY, iZ;
+  let xstep = (xmax - xmin) / (xsize - 1);
+  let ystep = (ymax - ymin) / (ysize - 1);
+  let zstep = (zmax - zmin) / (zsize - 1);
+  let x, y, z;
+  let iX, iY, iZ;
   for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
     for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
       for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {
@@ -579,7 +579,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
 ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin, xmax, ymin, ymax, zmin, zmax) {
   "use strict";
   mesh.mode(H3DU.Mesh.TRIANGLES);
-  var tmpobj = {
+  let tmpobj = {
     "asCubePosition":[[], [], [], [], [], [], [], []],
     "afCubeValue":[],
     "asTetrahedronPosition":[[], [], [], []],
@@ -587,12 +587,12 @@ ImplicitSurface.prototype.evalSurface = function(mesh, xsize, ysize, zsize, xmin
     "asEdgeVertex":[[], [], [], [], [], [], [], [], [], [], [], []],
     "asEdgeNorm":[[], [], [], [], [], [], [], [], [], [], [], []]
   };
-  var xstep = (xmax - xmin) / xsize;
-  var ystep = (ymax - ymin) / ysize;
-  var zstep = (zmax - zmin) / zsize;
+  let xstep = (xmax - xmin) / xsize;
+  let ystep = (ymax - ymin) / ysize;
+  let zstep = (zmax - zmin) / zsize;
   if(xstep !== 0 && ystep !== 0 && zstep !== 0) {
-    var x, y, z;
-    var iX, iY, iZ;
+    let x, y, z;
+    let iX, iY, iZ;
     for(iX = 0, x = xmin; iX < xsize; iX += 1, x += xstep) {
       for(iY = 0, y = ymin; iY < ysize; iY += 1, y += ystep) {
         for(iZ = 0, z = zmin; iZ < zsize; iZ += 1, z += zstep) {

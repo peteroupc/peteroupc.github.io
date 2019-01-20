@@ -90,11 +90,11 @@ export var getKernelMatrix = function(kind) {
  * @function
  */
 export var normalizeKernelInPlace = function(matrix) {
-  var weight = matrix[0] + matrix[1] + matrix[2] +
+  const weight = matrix[0] + matrix[1] + matrix[2] +
    matrix[3] + matrix[4] + matrix[5] + matrix[6] +
    matrix[7] + matrix[8];
   if(weight > 0) {
-    for(var i = 0; i < 9; i++) {
+    for(let i = 0; i < 9; i++) {
       matrix[i] /= weight;
     }
   }

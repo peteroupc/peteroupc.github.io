@@ -54,9 +54,9 @@ export var InputTracker = function(element) {
   this.clientY = null;
   this.element = element || window.document;
   this.mouseWheelCallback = null;
-  var that = this;
+  const that = this;
   this.handlers = [];
-  var addHandler = function(h, a, b, c) {
+  const addHandler = function(h, a, b, c) {
     h.push([a, b, c]);
     a.addEventListener(b, c);
   };
@@ -73,10 +73,10 @@ export var InputTracker = function(element) {
     addHandler(this.handlers, document, "keyup", function(e) {
       delete that.keys[e.keyCode];
     });
-    var mouseWheelFunc = function(tracker, e, click) {
-      var clientX = e.clientX - InputTracker._getPageX(e.target);
-      var clientY = e.clientY - InputTracker._getPageY(e.target);
-      var delta = 0;
+    const mouseWheelFunc = function(tracker, e, click) {
+      const clientX = e.clientX - InputTracker._getPageX(e.target);
+      const clientY = e.clientY - InputTracker._getPageY(e.target);
+      let delta = 0;
       if (e.wheelDelta) {
         delta = e.wheelDelta;
       } else if (e.detail) {
@@ -99,7 +99,7 @@ export var InputTracker = function(element) {
         e.preventDefault();
       }
     };
-    var mouseEvent = function(tracker, e) {
+    const mouseEvent = function(tracker, e) {
       if(e.button === 0) {
         tracker.leftButton = e.isDown;
       }
@@ -180,7 +180,7 @@ export var InputTracker = function(element) {
         "touch":true
       });
     });
-    var evt = "mousewheel" in element ? "mousewheel" : "DOMMouseScroll";
+    const evt = "mousewheel" in element ? "mousewheel" : "DOMMouseScroll";
     addHandler(this.handlers, element, evt, function(e, click) {
       mouseWheelFunc(that, e, click);
     });
@@ -191,8 +191,8 @@ export var InputTracker = function(element) {
  * @returns {Object} Return value.
  */
 InputTracker.prototype.dispose = function() {
-  for(var i = 0; i < this.handlers.length; i++) {
-    var h = this.handlers[i];
+  for(let i = 0; i < this.handlers.length; i++) {
+    const h = this.handlers[i];
     h[0].removeEventListener(h[1], h[2]);
   }
   this.handlers = [];
@@ -230,7 +230,7 @@ InputTracker.prototype.mousewheel = function(func) {
 
 /** @ignore */
 InputTracker._getPageX = function(o) {
-  var x = 0;
+  let x = 0;
   while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetLeft !== "undefined")
       x += o.offsetLeft;
@@ -240,7 +240,7 @@ InputTracker._getPageX = function(o) {
 };
 /** @ignore */
 InputTracker._getPageY = function(o) {
-  var x = 0;
+  let x = 0;
   while(typeof o !== "undefined" && o !== null) {
     if(typeof o.offsetTop !== "undefined")
       x += o.offsetTop;
@@ -403,8 +403,8 @@ InputTracker.prototype.deltaXY = InputTracker.prototype.mousePos;
  * @returns {InputTracker} This object.
  */
 InputTracker.prototype.update = function() {
-  var deltaX = 0;
-  var deltaY = 0;
+  let deltaX = 0;
+  let deltaY = 0;
   if(typeof this.clientX === "undefined" || this.clientX === null) {
     this.deltas.x = 0;
     this.deltas.y = 0;
@@ -483,37 +483,37 @@ export var Camera = function(fov, nearZ) {
 
 /** @ignore */
 Camera.prototype._orbit = function(deltaMouseX, deltaMouseY, angleMultiplier) {
-  var x = deltaMouseX * angleMultiplier;
-  var y = deltaMouseY * angleMultiplier;
+  let x = deltaMouseX * angleMultiplier;
+  let y = deltaMouseY * angleMultiplier;
   this.lat += y;
   if(this.lat < 0.001)this.lat = 0.001;
   if(this.lat > 179.999)this.lat = 179.999;
   this.lon += x;
   this.lon = this.lon >= 0 && this.lon < 360 ? this.lon : this.lon % 360 + (this.lon < 0 ? 360 : 0);
-  var a = (this.lat - 90) * Math.PI / 180;
-  var b = (this.lon - 180) * Math.PI / 180;
-  var ca = Math.cos(a);
-  var sa = a >= 0 && a < 6.283185307179586 ? a <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(a);
-  var cb = Math.cos(b);
-  var sb = b >= 0 && b < 6.283185307179586 ? b <= 3.141592653589793 ? Math.sqrt(1.0 - cb * cb) : -Math.sqrt(1.0 - cb * cb) : Math.sin(b);
-  var dist = this.getDistance();
+  const a = (this.lat - 90) * Math.PI / 180;
+  const b = (this.lon - 180) * Math.PI / 180;
+  const ca = Math.cos(a);
+  const sa = a >= 0 && a < 6.283185307179586 ? a <= 3.141592653589793 ? Math.sqrt(1.0 - ca * ca) : -Math.sqrt(1.0 - ca * ca) : Math.sin(a);
+  const cb = Math.cos(b);
+  const sb = b >= 0 && b < 6.283185307179586 ? b <= 3.141592653589793 ? Math.sqrt(1.0 - cb * cb) : -Math.sqrt(1.0 - cb * cb) : Math.sin(b);
+  const dist = this.getDistance();
   x = ca * cb * dist + this.center[0];
-  var z = ca * sb * dist + this.center[1];
+  const z = ca * sb * dist + this.center[1];
   y = sa * dist + this.center[2];
   this.setPosition(x, y, z);
 };
 
 /** @ignore */
 Camera.prototype._trackball = function(deltaMouseX, deltaMouseY, angleMultiplier) {
-  var x = deltaMouseX * angleMultiplier;
-  var y = deltaMouseY * angleMultiplier;
+  const x = deltaMouseX * angleMultiplier;
+  const y = deltaMouseY * angleMultiplier;
   this.moveAngleHorizontal(x);
   this.moveAngleVertical(y);
 };
 /** @ignore */
 Camera.prototype._move = function(deltaMouseX, deltaMouseY, multiplier) {
-  var x = deltaMouseX * multiplier;
-  var y = deltaMouseY * multiplier;
+  const x = deltaMouseX * multiplier;
+  const y = deltaMouseY * multiplier;
   this.moveHorizontal(x);
   this.moveVertical(y);
 };
@@ -526,7 +526,7 @@ Camera.prototype._updateView = function() {
 };
 /** @ignore */
 Camera._velocity = function(toVec, fromVec) {
-  var velocity = MathUtil.vec3normalize( MathUtil.vec3sub(toVec, fromVec));
+  const velocity = MathUtil.vec3normalize( MathUtil.vec3sub(toVec, fromVec));
   if(velocity[0] === 0 && velocity[1] === 0 && velocity[2] === 0) {
     // Both vectors are likely the same, so return a default vector
     return [0, 0, 1];
@@ -546,7 +546,7 @@ Camera.prototype.setDistance = function(dist) {
   if(dist <= 0)return this;
   // don't move closer than the near plane
   dist = Math.max(this.near, dist);
-  var velocity = Camera._velocity(this.position, this.center);
+  const velocity = Camera._velocity(this.position, this.center);
   MathUtil.vec3scaleInPlace(velocity, dist);
   this.position = MathUtil.vec3add(this.center, velocity);
   this._updateView();
@@ -563,8 +563,8 @@ Camera.prototype.getDistance = function() {
 };
 /** @ignore */
 Camera._transformRel = function(quat, point, origin) {
-  var rotPoint = MathUtil.vec3sub(point, origin);
-  var ret = MathUtil.quatTransform(quat, rotPoint);
+  const rotPoint = MathUtil.vec3sub(point, origin);
+  const ret = MathUtil.quatTransform(quat, rotPoint);
   return MathUtil.vec3addInPlace(ret, origin);
 };
 
@@ -580,9 +580,9 @@ Camera._transformRel = function(quat, point, origin) {
  */
 Camera.prototype.moveAngleVertical = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var viewVector = Camera._velocity(this.center, this.position);
-    var orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
-    var quat = MathUtil.quatFromAxisAngle(-angleDegrees, orthoVector);
+    const viewVector = Camera._velocity(this.center, this.position);
+    const orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
+    const quat = MathUtil.quatFromAxisAngle(-angleDegrees, orthoVector);
     this.position = Camera._transformRel(quat, this.position, this.center);
     this.up = MathUtil.vec3normalizeInPlace(Camera._transformRel(quat, this.up, [0, 0, 0]));
     this._updateView();
@@ -602,7 +602,7 @@ Camera.prototype.moveAngleVertical = function(angleDegrees) {
  */
 Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var quat = MathUtil.quatFromAxisAngle(-angleDegrees, this.up);
+    const quat = MathUtil.quatFromAxisAngle(-angleDegrees, this.up);
     this.position = Camera._transformRel(quat, this.position, this.center);
     this._updateView();
   }
@@ -621,7 +621,7 @@ Camera.prototype.moveAngleHorizontal = function(angleDegrees) {
  */
 Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var quat = MathUtil.quatFromAxisAngle(angleDegrees, this.up);
+    const quat = MathUtil.quatFromAxisAngle(angleDegrees, this.up);
     this.center = Camera._transformRel(quat, this.center, this.position);
     this._updateView();
   }
@@ -639,9 +639,9 @@ Camera.prototype.turnAngleHorizontal = function(angleDegrees) {
  */
 Camera.prototype.turnAngleVertical = function(angleDegrees) {
   if(angleDegrees !== 0) {
-    var viewVector = Camera._velocity(this.center, this.position);
-    var orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
-    var quat = MathUtil.quatFromAxisAngle(angleDegrees, orthoVector);
+    const viewVector = Camera._velocity(this.center, this.position);
+    const orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
+    const quat = MathUtil.quatFromAxisAngle(angleDegrees, orthoVector);
     this.center = Camera._transformRel(quat, this.center, this.position);
     this.up = MathUtil.vec3normalizeInPlace(Camera._transformRel(quat, this.up, [0, 0, 0]));
     this._updateView();
@@ -697,7 +697,7 @@ Camera.prototype.moveClose = function(dist) {
  */
 Camera.prototype.moveForward = function(dist) {
   if(dist !== 0) {
-    var velocity = Camera._velocity(this.center, this.position);
+    const velocity = Camera._velocity(this.center, this.position);
     MathUtil.vec3scaleInPlace(velocity, dist);
     MathUtil.vec3addInPlace(this.position, velocity);
     MathUtil.vec3addInPlace(this.center, velocity);
@@ -713,8 +713,8 @@ Camera.prototype.moveForward = function(dist) {
  */
 Camera.prototype.moveHorizontal = function(dist) {
   if(dist !== 0) {
-    var viewVector = Camera._velocity(this.center, this.position);
-    var orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
+    const viewVector = Camera._velocity(this.center, this.position);
+    const orthoVector = MathUtil.vec3normalize(MathUtil.vec3cross(viewVector, this.up));
     MathUtil.vec3scaleInPlace(orthoVector, dist);
     MathUtil.vec3addInPlace(this.position, orthoVector);
     MathUtil.vec3addInPlace(this.center, orthoVector);
@@ -729,7 +729,7 @@ Camera.prototype.moveHorizontal = function(dist) {
  */
 Camera.prototype.moveVertical = function(dist) {
   if(dist !== 0) {
-    var viewVector = MathUtil.vec3normalize(this.up);
+    const viewVector = MathUtil.vec3normalize(this.up);
     MathUtil.vec3scaleInPlace(viewVector, dist);
     MathUtil.vec3addInPlace(this.position, viewVector);
     MathUtil.vec3addInPlace(this.center, viewVector);
@@ -745,7 +745,7 @@ Camera.prototype.moveVertical = function(dist) {
  * Returns (0,0,0) if the reference point is the same as the camera's position.
  */
 Camera.prototype.getVectorFromCenter = function() {
-  var posSub = MathUtil.vec3sub(this.position, this.center);
+  const posSub = MathUtil.vec3sub(this.position, this.center);
   return MathUtil.vec3normalizeInPlace(posSub);
 };
 /**
@@ -766,8 +766,8 @@ Camera.prototype.update = function(input) {
 /** @ignore */
 Camera.prototype._updateNew = function(input) {
   if(!input)return this;
-  var delta = input.deltaXY();
-  var deltaTicks = delta.ticks;
+  const delta = input.deltaXY();
+  const deltaTicks = delta.ticks;
   if(input.leftButton) {
     if(this.trackballMode) {
       this._trackball(delta.x, delta.y, 0.3);

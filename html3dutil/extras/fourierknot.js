@@ -33,19 +33,19 @@ export var FourierKnot = function(a, b) {
     return [0, 6.283185307179586];
   };
   this.evaluate = function(u) {
-    var ret = [0, 0, 0];
-    var cosStep = Math.cos(u);
-    var sinStep = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(u);
-    var c = sinStep;
-    var s = cosStep;
-    for(var i = 0; i < this.a.length; i++) {
-      var ai = this.a[i];
-      var bi = this.b[i];
+    const ret = [0, 0, 0];
+    const cosStep = Math.cos(u);
+    const sinStep = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(u);
+    let c = sinStep;
+    let s = cosStep;
+    for(let i = 0; i < this.a.length; i++) {
+      const ai = this.a[i];
+      const bi = this.b[i];
       ret[0] += c * ai[0] + s * bi[0];
       ret[1] += c * ai[1] + s * bi[1];
       ret[2] += c * ai[2] + s * bi[2];
-      var ts = cosStep * c + sinStep * s;
-      var tc = cosStep * s - sinStep * c;
+      const ts = cosStep * c + sinStep * s;
+      const tc = cosStep * s - sinStep * c;
       c = ts;
       s = tc;
     }

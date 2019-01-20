@@ -63,15 +63,15 @@ SurfaceOfRevolution.prototype.endPoints = function() {
  * of the position at the given point. It will have three elements.
  */
 SurfaceOfRevolution.prototype.evaluate = function(u, v) {
-  var curvepos = this.curve.evaluate(v);
-  var cosu = Math.cos(u);
-  var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-  var cp1 = curvepos[1];
-  var cp0 = curvepos[0];
-  var x = cp1 * cosu;
-  var y = cp1 * sinu;
-  var z = cp0;
-  var ret = [x, y, z];
+  const curvepos = this.curve.evaluate(v);
+  const cosu = Math.cos(u);
+  const sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+  const cp1 = curvepos[1];
+  const cp0 = curvepos[0];
+  const x = cp1 * cosu;
+  const y = cp1 * sinu;
+  const z = cp0;
+  const ret = [x, y, z];
   if(this._axisQuat) {
     SurfaceOfRevolution._quatTransformInPlace(this._axisQuat, ret);
   }
@@ -79,10 +79,10 @@ SurfaceOfRevolution.prototype.evaluate = function(u, v) {
 };
 /** @ignore */
 SurfaceOfRevolution._quatTransformInPlace = function(q, v) {
-  var t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
-  var t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
-  var t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
-  var t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
+  const t1 = q[1] * v[2] - q[2] * v[1] + v[0] * q[3];
+  const t2 = q[2] * v[0] - q[0] * v[2] + v[1] * q[3];
+  const t3 = q[0] * v[1] - q[1] * v[0] + v[2] * q[3];
+  const t4 = q[0] * v[0] + q[1] * v[1] + q[2] * v[2];
   v[0] = t1 * q[3] - (t2 * q[2] - t3 * q[1]) + q[0] * t4;
   v[1] = t2 * q[3] - (t3 * q[0] - t1 * q[2]) + q[1] * t4;
   v[2] = t3 * q[3] - (t1 * q[1] - t2 * q[0]) + q[2] * t4;
@@ -164,21 +164,21 @@ SurfaceOfRevolution.fromFunction = function(func, minval, maxval, axis) {
 SurfaceOfRevolution.torus = function(outerRadius, innerRadius, curve, axis) {
   if(!curve)curve = {
     "evaluate":function(u) {
-      var cosu = Math.cos(u);
-      var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+      const cosu = Math.cos(u);
+      const sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
       return [cosu, sinu];
     },
     "velocity":function(u) {
-      var cosu = Math.cos(u);
-      var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+      const cosu = Math.cos(u);
+      const sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
       return [-sinu, cosu];
     }
   };
   return new SurfaceOfRevolution({
     "evaluate":function(u) {
-      var curvept = curve.evaluate(u);
-      var x = innerRadius * curvept[1];
-      var y = outerRadius + innerRadius * curvept[0];
+      const curvept = curve.evaluate(u);
+      const x = innerRadius * curvept[1];
+      const y = outerRadius + innerRadius * curvept[0];
       return [x, y, 0];
     },
     "endPoints":function() {
@@ -203,16 +203,16 @@ function cdiv(a, b) {
 function Circle(radius, rotationDegrees, reversed) {
   this.radius = radius;
   this.reversed = reversed || false;
-  var phase = rotationDegrees || 0;
+  let phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
   this.phase = phase;
   this.evaluate = function(u) {
-    var angle = reversed ? Math.PI * 2 - (u + this.phase) :
+    const angle = reversed ? Math.PI * 2 - (u + this.phase) :
       u + this.phase;
-    var c = Math.cos(angle);
-    var s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
+    const c = Math.cos(angle);
+    const s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
     return [this.radius * c,
       this.radius * s];
   };
@@ -223,33 +223,30 @@ function Circle(radius, rotationDegrees, reversed) {
     return [0, Math.PI * 2];
   };
 }
-/** @ignore
- * @constructor */
-/* exported PolarCurve */
-/* exported PolarCurve */
-/* exported PolarCurve */
-/* exported PolarCurve */
-function PolarCurve(radius, rotationDegrees, reversed) {
+/*
+
+const PolarCurve = function(radius, rotationDegrees, reversed) {
   this.radius = radius;
   this.reversed = reversed || false;
-  var phase = rotationDegrees || 0;
+  let phase = rotationDegrees || 0;
   phase = phase >= 0 && phase < 360 ? phase : phase % 360 +
        (phase < 0 ? 360 : 0);
   phase *= MathUtil.ToRadians;
   this.phase = phase;
   this.evaluate = function(u) {
-    var angle = reversed ? Math.PI * 2 - (u + this.phase) :
+    const angle = reversed ? Math.PI * 2 - (u + this.phase) :
       u + this.phase;
-    var c = Math.cos(angle);
-    var s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
-    var r = this.radius(angle);
+    const c = Math.cos(angle);
+    const s = angle >= 0 && angle < 6.283185307179586 ? angle <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(angle);
+    const r = this.radius(angle);
     return [r * c,
       r * s];
   };
   this.endPoints = function() {
     return [0, Math.PI * 2];
   };
-}
+};
+*/
 /** @ignore
  * @constructor */
 function Line(length) {
@@ -269,7 +266,7 @@ function Line(length) {
  * A [curve evaluator object]{@link Curve} for a curve drawn by a curve that rolls along another curve whose position is fixed.<p>
  * This object generates two-dimensional curves, which are returned by the <code>evaluate</code> method as three-dimensional points with the third element (Z coordinate) set to 0.
  * @param {Object} rollingCurve A [curve evaluator object]{@link Curve} that describes the curve that rolls to generate the roulette curve.
- * This curve is assumed to be a smooth closed curve such as a circle. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
+ * This curve is assumed to be a smooth, convex closed curve such as a circle. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
  * @param {Object} fixedCurve A [curve evaluator object]{@link Curve} that describes the curve on which the rolling curve will move. This
  * curve is assumed to be smooth at every point;
  * this includes periodic waves and circles. The curve evaluator object <i>should</i> support extrapolating curve positions outside its <code>endPoints()</code> range.
@@ -296,13 +293,13 @@ export var Roulette = function(rollingCurve, fixedCurve, polePoint, revolutions)
 
   this.evaluate = function(u) {
     // See Wikipedia article "Roulette (curve)".
-    var f = this.fixedcurve.evaluate(u);
-    var df = this.fixedcurve.tangent(u);
-    var r = this.rolling.evaluate(u);
-    var dr = this.rolling.tangent(u);
-    var pdiff = MathUtil.vec2sub(polePoint, r);
-    var tmp = cmul(pdiff, cdiv(df, dr));
-    var ret = MathUtil.vec2add(f, tmp);
+    const f = this.fixedcurve.evaluate(u);
+    const df = this.fixedcurve.tangent(u);
+    const r = this.rolling.evaluate(u);
+    const dr = this.rolling.tangent(u);
+    const pdiff = MathUtil.vec2sub(polePoint, r);
+    const tmp = cmul(pdiff, cdiv(df, dr));
+    const ret = MathUtil.vec2add(f, tmp);
     return [ret[0], ret[1], 0];
   };
 };
@@ -337,9 +334,9 @@ Roulette.prototype.constructor = Roulette;
  * @param {number} [revolutions] Number of times to roll the inner circle around the outer circle to generate the hypotrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.
  */
 Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees, revolutions) {
-  var f = new Circle(outerRadius, rotationDegrees);
-  var r = new Circle(innerRadius);
-  var p = new Circle(distFromInnerCenter).evaluate(0);
+  const f = new Circle(outerRadius, rotationDegrees);
+  const r = new Circle(innerRadius);
+  const p = new Circle(distFromInnerCenter).evaluate(0);
   return new Roulette(r, f, p, revolutions);
 };
 
@@ -370,9 +367,9 @@ Roulette.hypotrochoid = function(outerRadius, innerRadius, distFromInnerCenter, 
  * @param {number} [revolutions] Number of times to roll the inner circle around the outer circle to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 1.
  */
 Roulette.epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter, rotationDegrees, revolutions) {
-  var f = new Circle(outerRadius, rotationDegrees);
-  var r = new Circle(innerRadius, 0, true);
-  var p = new Circle(distFromInnerCenter, 0, true).evaluate(0);
+  const f = new Circle(outerRadius, rotationDegrees);
+  const r = new Circle(innerRadius, 0, true);
+  const p = new Circle(distFromInnerCenter, 0, true).evaluate(0);
   return new Roulette(r, f, p, revolutions);
 };
 
@@ -391,10 +388,11 @@ Roulette.epitrochoid = function(outerRadius, innerRadius, distFromInnerCenter, r
  * @param {number} [distance] Distance to roll the inner circle along the X axis to generate the epitrochoid. This can be an integer or a noninteger number. If null, undefined, or omitted, the default is 2 * &pi; * <code>radius</code>.
  */
 Roulette.trochoid = function(radius, distFromCenter, distance) {
-  var dist = typeof distance === "undefined" || distance === null ? Math.PI * 2 * radius : dist;
-  var f = new Line(dist);
-  var r = new Circle(radius);
-  var p = new Circle(distFromCenter).evaluate(0);
+  const dist = typeof distance === "undefined" || distance === null ?
+    Math.PI * 2 * radius : distance;
+  const f = new Line(dist);
+  const r = new Circle(radius);
+  const p = new Circle(distFromCenter).evaluate(0);
   return new Roulette(r, f, p, 1);
 };
 
@@ -412,9 +410,9 @@ Roulette.trochoid = function(radius, distFromCenter, distance) {
  */
 Roulette.rose = function(num, den, distFromInnerCenter, rotationDegrees) {
   if(den === 0)throw new Error();
-  var revs = num * den;
-  var n = num / den;
-  var fac = distFromInnerCenter / (n + 1);
+  const revs = num * den;
+  const n = num / den;
+  const fac = distFromInnerCenter / (n + 1);
   return Roulette.hypotrochoid(
     2 * n * fac,
     (n - 1) * fac,

@@ -59,8 +59,8 @@ MatrixStack.prototype.loadMatrix = function(mat) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.loadTransposeMatrix = function(mat) {
-  var m = mat.slice(0, 16);
-  var tmp;
+  const m = mat.slice(0, 16);
+  let tmp;
   tmp = m[1]; m[1] = m[4]; m[4] = tmp;
   tmp = m[2]; m[2] = m[8]; m[8] = tmp;
   tmp = m[3]; m[3] = m[12]; m[12] = tmp;
@@ -81,10 +81,10 @@ MatrixStack.prototype.loadTransposeMatrix = function(mat) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.multMatrix = function(mat) {
-  var curmat = this.stack[this.stack.length - 1];
-  var dst = [];
-  for(var i = 0; i < 16; i += 4) {
-    for(var j = 0; j < 4; j++) {
+  const curmat = this.stack[this.stack.length - 1];
+  const dst = [];
+  for(let i = 0; i < 16; i += 4) {
+    for(let j = 0; j < 4; j++) {
       dst[i + j] =
         mat[i] * curmat[j] +
         mat[i + 1] * curmat[j + 4] +
@@ -110,12 +110,12 @@ MatrixStack.prototype.multMatrix = function(mat) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.rotate = function(angle, x, y, z) {
-  var ang = angle * Math.PI / 180;
-  var v0 = x;
-  var v1 = y;
-  var v2 = z;
-  var cost = Math.cos(ang);
-  var sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
+  const ang = angle * Math.PI / 180;
+  let v0 = x;
+  let v1 = y;
+  let v2 = z;
+  const cost = Math.cos(ang);
+  const sint = ang >= 0 && ang < 6.283185307179586 ? ang <= 3.141592653589793 ? Math.sqrt(1.0 - cost * cost) : -Math.sqrt(1.0 - cost * cost) : Math.sin(ang);
   if( v0 === 1 && v1 === 0 && v2 === 0 ) {
     return this.multMatrix([1, 0, 0, 0, 0, cost, sint, 0, 0, -sint, cost, 0, 0, 0, 0, 1]);
   } else if( v0 === 0 && v1 === 1 && v2 === 0 ) {
@@ -125,20 +125,20 @@ MatrixStack.prototype.rotate = function(angle, x, y, z) {
   } else if(v0 === 0 && v1 === 0 && v2 === 0) {
     return this;
   } else {
-    var iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
+    const iscale = 1.0 / Math.sqrt(v0 * v0 + v1 * v1 + v2 * v2);
     v0 *= iscale;
     v1 *= iscale;
     v2 *= iscale;
-    var x2 = v0 * v0;
-    var y2 = v1 * v1;
-    var z2 = v2 * v2;
-    var xy = v0 * v1;
-    var xz = v0 * v2;
-    var yz = v1 * v2;
-    var xs = v0 * sint;
-    var ys = v1 * sint;
-    var zs = v2 * sint;
-    var mcos = 1.0 - cost;
+    const x2 = v0 * v0;
+    const y2 = v1 * v1;
+    const z2 = v2 * v2;
+    const xy = v0 * v1;
+    const xz = v0 * v2;
+    const yz = v1 * v2;
+    const xs = v0 * sint;
+    const ys = v1 * sint;
+    const zs = v2 * sint;
+    const mcos = 1.0 - cost;
     v0 = mcos * xy;
     v1 = mcos * xz;
     v2 = mcos * yz;
@@ -155,7 +155,7 @@ MatrixStack.prototype.rotate = function(angle, x, y, z) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.translate = function(x, y, z) {
-  var mat = this.stack[this.stack.length - 1];
+  const mat = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     mat[0], mat[1], mat[2], mat[3],
     mat[4], mat[5], mat[6], mat[7],
@@ -176,7 +176,7 @@ MatrixStack.prototype.translate = function(x, y, z) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.scale = function(x, y, z) {
-  var mat = this.stack[this.stack.length - 1];
+  const mat = this.stack[this.stack.length - 1];
   mat[0] *= x;
   mat[1] *= x;
   mat[2] *= x;
@@ -231,16 +231,16 @@ MatrixStack.prototype.popMatrix = function() {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
-  var m = this.stack[this.stack.length - 1];
-  var invrl = 1.0 / (r - l);
-  var invtb = 1.0 / (t - b);
-  var invfn = 1.0 / (f - n);
-  var v0 = 2 * invrl;
-  var v1 = 2 * invtb;
-  var v2 = -2 * invfn;
-  var v12 = -(f + n) * invfn;
-  var v13 = -(l + r) * invrl;
-  var v14 = -(b + t) * invtb;
+  let m = this.stack[this.stack.length - 1];
+  const invrl = 1.0 / (r - l);
+  const invtb = 1.0 / (t - b);
+  const invfn = 1.0 / (f - n);
+  const v0 = 2 * invrl;
+  const v1 = 2 * invtb;
+  const v2 = -2 * invfn;
+  const v12 = -(f + n) * invfn;
+  const v13 = -(l + r) * invrl;
+  const v14 = -(b + t) * invtb;
   m = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     m[0] * v0, m[1] * v0, m[2] * v0, m[3] * v0,
@@ -273,17 +273,17 @@ MatrixStack.prototype.ortho = function(l, r, b, t, n, f) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
-  var m = this.stack[this.stack.length - 1];
-  var invrl = 1.0 / (r - l);
-  var invtb = 1.0 / (t - b);
-  var invfn = 1.0 / (f - n);
-  var v1 = 2 * n;
-  var v11 = invrl * v1;
-  var v12 = invtb * v1;
-  var v13 = -(f + n) * invfn;
-  var v14 = invrl * (l + r);
-  var v15 = invtb * (b + t);
-  var v16 = -f * invfn * v1;
+  let m = this.stack[this.stack.length - 1];
+  const invrl = 1.0 / (r - l);
+  const invtb = 1.0 / (t - b);
+  const invfn = 1.0 / (f - n);
+  const v1 = 2 * n;
+  const v11 = invrl * v1;
+  const v12 = invtb * v1;
+  const v13 = -(f + n) * invfn;
+  const v14 = invrl * (l + r);
+  const v15 = invtb * (b + t);
+  const v16 = -f * invfn * v1;
   m = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     m[0] * v11, m[1] * v11, m[2] * v11, m[3] * v11,
@@ -314,44 +314,44 @@ MatrixStack.prototype.frustum = function(l, r, b, t, n, f) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
-  var viewerPos = [ex, ey, ez];
-  var lookingAt = [cx, cy, cz];
-  var up = [ux, uy, uz];
-  var u;
-  var s;
-  var f;
-  var t5 = [lookingAt[0] - viewerPos[0], lookingAt[1] - viewerPos[1], lookingAt[2] - viewerPos[2]];
+  const viewerPos = [ex, ey, ez];
+  const lookingAt = [cx, cy, cz];
+  const up = [ux, uy, uz];
+  let u;
+  let s;
+  let f;
+  const t5 = [lookingAt[0] - viewerPos[0], lookingAt[1] - viewerPos[1], lookingAt[2] - viewerPos[2]];
   f = t5;
-  var t6 = Math.sqrt(t5[0] * t5[0] + t5[1] * t5[1] + t5[2] * t5[2]);
+  const t6 = Math.sqrt(t5[0] * t5[0] + t5[1] * t5[1] + t5[2] * t5[2]);
   if (t6 !== 0.0) {
-    var t7 = 1.0 / t6;
+    const t7 = 1.0 / t6;
     f[0] = t5[0] * t7;
     f[1] = t5[1] * t7;
     f[2] = t5[2] * t7;
   } else {
     return this;
   }
-  var t8 = Math.sqrt(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
+  const t8 = Math.sqrt(up[0] * up[0] + up[1] * up[1] + up[2] * up[2]);
   if (t8 !== 0.0) {
-    var t9 = 1.0 / t8;
+    const t9 = 1.0 / t8;
     up[0] *= t9;
     up[1] *= t9;
     up[2] *= t9;
   }
-  var t10 = [f[1] * up[2] - f[2] * up[1], f[2] * up[0] - f[0] * up[2], f[0] * up[1] - f[1] * up[0]];
+  const t10 = [f[1] * up[2] - f[2] * up[1], f[2] * up[0] - f[0] * up[2], f[0] * up[1] - f[1] * up[0]];
   s = t10;
-  var t11 = Math.sqrt(t10[0] * t10[0] + t10[1] * t10[1] + t10[2] * t10[2]);
+  const t11 = Math.sqrt(t10[0] * t10[0] + t10[1] * t10[1] + t10[2] * t10[2]);
   if (t11 !== 0.0) {
-    var t12 = 1.0 / t11;
+    const t12 = 1.0 / t11;
     s[0] = t10[0] * t12;
     s[1] = t10[1] * t12;
     s[2] = t10[2] * t12;
   }
-  var t13 = [s[1] * f[2] - s[2] * f[1], s[2] * f[0] - s[0] * f[2], s[0] * f[1] - s[1] * f[0]];
+  const t13 = [s[1] * f[2] - s[2] * f[1], s[2] * f[0] - s[0] * f[2], s[0] * f[1] - s[1] * f[0]];
   u = t13;
-  var t14 = Math.sqrt(t13[0] * t13[0] + t13[1] * t13[1] + t13[2] * t13[2]);
+  const t14 = Math.sqrt(t13[0] * t13[0] + t13[1] * t13[1] + t13[2] * t13[2]);
   if (t14 !== 0.0) {
-    var t15 = 1.0 / t14;
+    const t15 = 1.0 / t14;
     u[0] = t13[0] * t15;
     u[1] = t13[1] * t15;
     u[2] = t13[2] * t15;
@@ -359,7 +359,7 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
   f[0] = -f[0];
   f[1] = -f[1];
   f[2] = -f[2];
-  var t16 = [];
+  const t16 = [];
   t16[0] = s[0];
   t16[1] = u[0];
   t16[2] = f[0];
@@ -391,13 +391,13 @@ MatrixStack.prototype.lookAt = function(ex, ey, ez, cx, cy, cz, ux, uy, uz) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.ortho2d = function(l, r, b, t) {
-  var invrl = 1.0 / (r - l);
-  var invtb = 1.0 / (t - b);
-  var v0 = 2.0 * invrl;
-  var v1 = 2.0 * invtb;
-  var v8 = -(b + t) * invtb;
-  var v9 = -(l + r) * invrl;
-  var m = this.stack[this.stack.length - 1];
+  const invrl = 1.0 / (r - l);
+  const invtb = 1.0 / (t - b);
+  const v0 = 2.0 * invrl;
+  const v1 = 2.0 * invtb;
+  const v8 = -(b + t) * invtb;
+  const v9 = -(l + r) * invrl;
+  const m = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     m[0] * v0, m[1] * v0, m[2] * v0, m[3] * v0,
     m[4] * v1, m[5] * v1, m[6] * v1, m[7] * v1,
@@ -428,14 +428,14 @@ MatrixStack.prototype.ortho2d = function(l, r, b, t) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
-  var ftan = 1 / Math.tan(fov * Math.PI / 360);
-  var v0 = ftan / aspect;
-  var invnf = 1.0 / (n - f);
-  var v2 = f + n;
+  const ftan = 1 / Math.tan(fov * Math.PI / 360);
+  const v0 = ftan / aspect;
+  const invnf = 1.0 / (n - f);
+  const v2 = f + n;
 
-  var v3 = 2 * f * invnf * n;
-  var v4 = invnf * v2;
-  var m = this.stack[this.stack.length - 1];
+  const v3 = 2 * f * invnf * n;
+  const v4 = invnf * v2;
+  const m = this.stack[this.stack.length - 1];
   this.stack[this.stack.length - 1] = [
     m[0] * v0, m[1] * v0, m[2] * v0, m[3] * v0,
     ftan * m[4], ftan * m[5], ftan * m[6], ftan * m[7],
@@ -457,21 +457,21 @@ MatrixStack.prototype.perspective = function(fov, aspect, n, f) {
  * @returns {MatrixStack} This object.
  */
 MatrixStack.prototype.pickMatrix = function(wx, wy, ww, wh, vp) {
-  var invww = 1.0 / ww;
-  var invwh = 1.0 / wh;
-  var t5 = -(wx - vp[0]) * 2.0 * invww;
-  var t6 = -(wy - vp[1]) * 2.0 * invwh;
-  var t7 = vp[2] * invww * 2.0;
-  var t8 = -(vp[3] * invwh) * 2.0;
-  var mat = this.stack[this.stack.length - 1];
-  var t9 = t7 * mat[0];
-  var t10 = t7 * mat[1];
-  var t11 = t7 * mat[2];
-  var t12 = t7 * mat[3];
-  var t13 = t8 * mat[4];
-  var t14 = t8 * mat[5];
-  var t15 = t8 * mat[6];
-  var t16 = t8 * mat[7];
+  const invww = 1.0 / ww;
+  const invwh = 1.0 / wh;
+  const t5 = -(wx - vp[0]) * 2.0 * invww;
+  const t6 = -(wy - vp[1]) * 2.0 * invwh;
+  const t7 = vp[2] * invww * 2.0;
+  const t8 = -(vp[3] * invwh) * 2.0;
+  const mat = this.stack[this.stack.length - 1];
+  const t9 = t7 * mat[0];
+  const t10 = t7 * mat[1];
+  const t11 = t7 * mat[2];
+  const t12 = t7 * mat[3];
+  const t13 = t8 * mat[4];
+  const t14 = t8 * mat[5];
+  const t15 = t8 * mat[6];
+  const t16 = t8 * mat[7];
   this.stack[this.stack.length - 1] = [
     0.5 * t9,
     0.5 * t10,

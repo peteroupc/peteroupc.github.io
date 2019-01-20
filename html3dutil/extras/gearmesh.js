@@ -43,7 +43,7 @@ function QuadStrips() {
     this.vertex3(quad[6], quad[7], quad[8]);
   };
   this.vertex3 = function(x, y, z) {
-    var vertexIndex = this.vertices.length / 6;
+    const vertexIndex = this.vertices.length / 6;
     this.vertices.push(x, y, z, this.nx, this.ny, this.nz);
     this.primitiveData[this.primitiveIndex] = vertexIndex;
     this.primitiveIndex++;
@@ -73,22 +73,22 @@ function QuadStrips() {
  * @function
  */
 export var createGear = function(innerRadius, outerRadius, thickness, teeth, toothDepth) {
-  var i;
-  var r0, r1, r2;
-  var angle, da;
-  var u, v, len;
-  var cosAngle, sinAngle;
+  let i;
+  let r0, r1, r2;
+  let angle, da;
+  let u, v, len;
+  let cosAngle, sinAngle;
   r0 = innerRadius;
   r1 = outerRadius - toothDepth / 2.0;
   r2 = outerRadius + toothDepth / 2.0;
   da = 2.0 * Math.PI / teeth / 4.0;
-  var mesh = new QuadStrips();
+  const mesh = new QuadStrips();
   mesh.normal3( 0.0, 0.0, 1.0 );
   /* draw front face */
   mesh.newStrip();
-  var angleStep = MathUtil.PiTimes2 / teeth;
-  var cosStep = Math.cos(angleStep);
-  var sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
+  let angleStep = MathUtil.PiTimes2 / teeth;
+  let cosStep = Math.cos(angleStep);
+  let sinStep = angleStep >= 0 && angleStep < 6.283185307179586 ? angleStep <= 3.141592653589793 ? Math.sqrt(1.0 - cosStep * cosStep) : -Math.sqrt(1.0 - cosStep * cosStep) : Math.sin(angleStep);
   sinAngle = 0.0; // sin(0.0deg)
   cosAngle = 1.0; // cos(0.0deg)
   for(i = 0; i <= teeth; i++) {

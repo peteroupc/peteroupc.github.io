@@ -23,10 +23,10 @@ import {H3DU} from "../h3du_min";
  */
 export function StarField(range) {
   this._setStarPos = function(star, range) {
-    var x = 0,
+    let x = 0,
       y = 0,
       z = 0;
-    var centerZone = range / 20;
+    const centerZone = range / 20;
     // avoid stars too close to the center
     while(Math.abs(x) < centerZone) {
       x = Math.random() * range - range / 2;
@@ -41,8 +41,8 @@ export function StarField(range) {
   this.group = new H3DU.ShapeGroup();
   this.timer = {};
   this._move = function(frames) {
-    for(var i = 0; i < this.group.shapeCount(); i++) {
-      var pos = this.group.getShape(i).getMatrix();
+    for(let i = 0; i < this.group.shapeCount(); i++) {
+      const pos = this.group.getShape(i).getMatrix();
       if(pos[14] > this.range / 2) {
         // once the star is too close, move it elsewhere
         setStarPos(this.group.getShape(i), this.range);
@@ -58,9 +58,9 @@ export function StarField(range) {
     this._move(H3DU.newFrames(timer, time));
   };
   // use a crude white sphere to represent a star
-  var star = new H3DU.Shape(
+  const star = new H3DU.Shape(
     H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
-  for(var i = 0; i < 200; i++) {
+  for(let i = 0; i < 200; i++) {
     this.group.addShape(this._setStarPos(star.copy(), range));
   }
 }

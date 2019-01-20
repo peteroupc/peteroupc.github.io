@@ -17,9 +17,9 @@ function Animator(shape) {
 /** @ignore */
 Animator._compact = function(arr) {
   "use strict";
-  var fillOffset = 0;
+  let fillOffset = 0;
 
-  for(var i = 0; i < arr.length; i++) {
+  for(let i = 0; i < arr.length; i++) {
     if(fillOffset !== i && arr[i] !== null) {
       arr[fillOffset] = arr[i];
       fillOffset++;
@@ -38,10 +38,10 @@ function Animators() {
 /** @ignore */
 Animators.prototype._ensure = function(shape) {
   "use strict";
-  for(var i = 0; i < this.list.length; i++) {
+  for(let i = 0; i < this.list.length; i++) {
     if(this.list[i].shape === shape)return this.list[i];
   }
-  var anim = new Animator(shape);
+  let anim = new Animator(shape);
   this.list.push(anim);
   return anim;
 };
@@ -78,7 +78,7 @@ Animators.prototype.thenPause = function(time) {
 /** @ignore */
 Animators.prototype.update = function(time) {
   "use strict";
-  for(var i = 0; i < this.list.length; i++) {
+  for(let i = 0; i < this.list.length; i++) {
     this.list[i].update(time);
   }
 };
@@ -106,9 +106,9 @@ Animator.prototype.setVisibleAt = function(vis, timeInMs) {
 /** @ignore */
 Animator.prototype.update = function(time) {
   "use strict";
-  var a;
-  var posChanged = false;
-  var visChanged = false;
+  let a;
+  let posChanged = false;
+  let visChanged = false;
   for(var i = 0; i < this.positionAnim.length; i++) {
     a = this.positionAnim[i];
     if(!a)continue;
@@ -120,7 +120,7 @@ Animator.prototype.update = function(time) {
       posChanged = true;
     } else {
       // in progress
-      var t = (time - a[2]) / (a[3] - a[2]);
+      let t = (time - a[2]) / (a[3] - a[2]);
       t = t * t * (3 - 2 * t); // smoothstep
       this.shape.setPosition(H3DU.MathUtil.vec3lerp(a[0], a[1], t));
     }
@@ -157,14 +157,14 @@ Animator.prototype.update = function(time) {
  */
 H3DU.MathUtil.planeIntersection = function(p1, p2, p3) {
   "use strict";
-  var c23 = H3DU.MathUtil.vec3cross(p2, p3);
-  var d = H3DU.MathUtil.vec3dot(p1, c23);
+  let c23 = H3DU.MathUtil.vec3cross(p2, p3);
+  let d = H3DU.MathUtil.vec3dot(p1, c23);
   if(d === 0) {
   // no intersection point
     return null;
   }
-  var c12 = H3DU.MathUtil.vec3cross(p1, p2);
-  var c31 = H3DU.MathUtil.vec3cross(p3, p1);
+  let c12 = H3DU.MathUtil.vec3cross(p1, p2);
+  let c31 = H3DU.MathUtil.vec3cross(p3, p1);
   H3DU.MathUtil.vec3scaleInPlace(c23, -p1[3]);
   H3DU.MathUtil.vec3scaleInPlace(c31, -p2[3]);
   H3DU.MathUtil.vec3scaleInPlace(c12, -p3[3]);
@@ -189,13 +189,13 @@ H3DU.MathUtil.planeIntersection = function(p1, p2, p3) {
  */
 H3DU.MathUtil.frustumNearPlane = function(frustum) {
   "use strict";
-  var topLeft = H3DU.MathUtil.planeIntersection(
+  let topLeft = H3DU.MathUtil.planeIntersection(
     frustum[4], frustum[0], frustum[2]);
-  var bottomLeft = H3DU.MathUtil.planeIntersection(
+  let bottomLeft = H3DU.MathUtil.planeIntersection(
     frustum[4], frustum[0], frustum[3]);
-  var topRight = H3DU.MathUtil.planeIntersection(
+  let topRight = H3DU.MathUtil.planeIntersection(
     frustum[4], frustum[1], frustum[2]);
-  var bottomRight = H3DU.MathUtil.planeIntersection(
+  let bottomRight = H3DU.MathUtil.planeIntersection(
     frustum[4], frustum[1], frustum[3]);
   return [topLeft, bottomLeft, topRight, bottomRight];
 };
@@ -214,13 +214,13 @@ H3DU.MathUtil.frustumNearPlane = function(frustum) {
  */
 H3DU.MathUtil.frustumFarPlane = function(frustum) {
   "use strict";
-  var topLeft = H3DU.MathUtil.planeIntersection(
+  let topLeft = H3DU.MathUtil.planeIntersection(
     frustum[5], frustum[0], frustum[2]);
-  var bottomLeft = H3DU.MathUtil.planeIntersection(
+  let bottomLeft = H3DU.MathUtil.planeIntersection(
     frustum[5], frustum[0], frustum[3]);
-  var topRight = H3DU.MathUtil.planeIntersection(
+  let topRight = H3DU.MathUtil.planeIntersection(
     frustum[5], frustum[1], frustum[2]);
-  var bottomRight = H3DU.MathUtil.planeIntersection(
+  let bottomRight = H3DU.MathUtil.planeIntersection(
     frustum[5], frustum[1], frustum[3]);
   return [topLeft, bottomLeft, topRight, bottomRight];
 };
@@ -228,21 +228,21 @@ H3DU.MathUtil.frustumFarPlane = function(frustum) {
 /* exported perspectiveFrustum */
 function perspectiveFrustum(fov, aspect, near, far, cameraPos, lookingAt) {
   "use strict";
-  var proj = H3DU.MathUtil.mat4perspective(fov, aspect, near, far);
-  var view = H3DU.MathUtil.mat4lookat(cameraPos, lookingAt);
-  var projview = H3DU.MathUtil.mat4multiply(proj, view);
-  var frustum = H3DU.MathUtil.mat4toFrustumPlanes(projview);
+  let proj = H3DU.MathUtil.mat4perspective(fov, aspect, near, far);
+  let view = H3DU.MathUtil.mat4lookat(cameraPos, lookingAt);
+  let projview = H3DU.MathUtil.mat4multiply(proj, view);
+  let frustum = H3DU.MathUtil.mat4toFrustumPlanes(projview);
   return frustum;
 }
 
 function meshAddLine(mesh, point1, point2, thickness) {
   "use strict";
-  var vector = H3DU.MathUtil.vec3sub(point1, point2);
-  var dist = H3DU.MathUtil.vec3length(vector);
-  var normVector = H3DU.MathUtil.vec3norm(vector);
-  var midPoint = H3DU.MathUtil.vec3lerp(point1, point2, 0.5);
-  var line = H3DU.Meshes.createCapsule(thickness / 2, dist, 6, 4);
-  var matrix = H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0, 0, 1], normVector));
+  let vector = H3DU.MathUtil.vec3sub(point1, point2);
+  let dist = H3DU.MathUtil.vec3length(vector);
+  let normVector = H3DU.MathUtil.vec3norm(vector);
+  let midPoint = H3DU.MathUtil.vec3lerp(point1, point2, 0.5);
+  let line = H3DU.Meshes.createCapsule(thickness / 2, dist, 6, 4);
+  let matrix = H3DU.MathUtil.quatToMat4(H3DU.MathUtil.quatFromVectors([0, 0, 1], normVector));
   matrix[12] = midPoint[0];
   matrix[13] = midPoint[1];
   matrix[14] = midPoint[2];
@@ -251,7 +251,7 @@ function meshAddLine(mesh, point1, point2, thickness) {
 }
 function meshAddLineStrip(mesh, strip, thickness) {
   "use strict";
-  for(var i = 0; i < strip.length - 1; i++) {
+  for(let i = 0; i < strip.length - 1; i++) {
     mesh = meshAddLine(mesh, strip[i], strip[i + 1], thickness);
   }
   return mesh;
@@ -259,10 +259,10 @@ function meshAddLineStrip(mesh, strip, thickness) {
 /* exported frustumMesh */
 function frustumMesh(frustum) {
   "use strict";
-  var mesh = new H3DU.MeshBuffer();
-  var nearRect = H3DU.MathUtil.frustumNearPlane(frustum);
-  var farRect = H3DU.MathUtil.frustumFarPlane(frustum);
-  var thickness = 0.01;
+  let mesh = new H3DU.MeshBuffer();
+  let nearRect = H3DU.MathUtil.frustumNearPlane(frustum);
+  let farRect = H3DU.MathUtil.frustumFarPlane(frustum);
+  let thickness = 0.01;
   meshAddLine(mesh, nearRect[0], farRect[0], thickness);
   meshAddLine(mesh, nearRect[1], farRect[1], thickness);
   meshAddLine(mesh, nearRect[2], farRect[2], thickness);

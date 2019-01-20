@@ -42,14 +42,14 @@ export var TorusKnot = function(revolutions, r, q, s1, m1) {
     this.m1 = this.q[0];
   }
   this.evaluate = function(u) {
-    var ret = [0, 0, 0];
-    var c = 1.0;
-    var rsum = 0;
-    for(var i = 0; i < this.r.length; i++) {
+    const ret = [0, 0, 0];
+    let c = 1.0;
+    let rsum = 0;
+    for(let i = 0; i < this.r.length; i++) {
       c += this.r[i] * Math.cos(this.q[i] * u);
       rsum += this.r[i];
     }
-    var radius = 20 / (1.0 + rsum);
+    const radius = 20 / (1.0 + rsum);
     ret[0] = Math.cos(this.revolutions * u) * c * radius;
     ret[1] = Math.sin(this.revolutions * u) * c * radius;
     ret[2] = this.s1 * Math.sin(this.m1 * u);

@@ -31,17 +31,17 @@ import {MathUtil, toGLColor} from "../h3du_module";
 export function horizontalGradient(color1, color2) {
   color1 = toGLColor(color1);
   color2 = toGLColor(color2);
-  var arr = [];
-  var size = 32;
+  const arr = [];
+  const size = 32;
   for(var i = 0; i < size; i++) {
     arr.push(
       MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(color1, color2, i / (size - 1)), 255)
     );
   }
-  var gradient = [];
+  const gradient = [];
   i = 0;
-  for(var y = 0; y < size; y++) {
-    for(var x = 0; x < size; x++, i += 4) {
+  for(let y = 0; y < size; y++) {
+    for(let x = 0; x < size; x++, i += 4) {
       gradient[i] = Math.round(arr[x][0]);
       gradient[i + 1] = Math.round(arr[x][1]);
       gradient[i + 2] = Math.round(arr[x][2]);
@@ -64,22 +64,22 @@ export function horizontalGradient(color1, color2) {
 export function radialGradient(colorCenter, colorEdges) {
   colorCenter = toGLColor(colorCenter);
   colorEdges = toGLColor(colorEdges);
-  var gradient = [];
-  var arr = [];
-  var size = 32;
+  const gradient = [];
+  const arr = [];
+  const size = 32;
   for(var i = 0; i < 32; i++) {
     arr.push(
       MathUtil.vec4scaleInPlace(MathUtil.vec4lerp(colorCenter, colorEdges, i / 31), 255)
     );
   }
   i = 0;
-  var radius = (size - 1) * 0.5;
-  var recipradius = 1.0 / radius;
-  for (var y = 0; y < size; y++) {
-    for (var x = 0; x < size; x++, i += 4) {
-      var yy = (y - radius) * recipradius;
-      var xx = (x - radius) * recipradius;
-      var a = arr[Math.min(31, Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
+  const radius = (size - 1) * 0.5;
+  const recipradius = 1.0 / radius;
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++, i += 4) {
+      const yy = (y - radius) * recipradius;
+      const xx = (x - radius) * recipradius;
+      const a = arr[Math.min(31, Math.floor(31 * Math.sqrt(xx * xx + yy * yy)))];
       gradient[i] = Math.round(a[0]);
       gradient[i + 1] = Math.round(a[1]);
       gradient[i + 2] = Math.round(a[2]);

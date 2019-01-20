@@ -23,13 +23,13 @@ import {MathUtil, MeshBuffer} from "../h3du-module.js";
 // AABBTree and much of the code was modified
 // to support only triangular faces.
 
-var EPSILON = 1e-9;
+const EPSILON = 1e-9;
 
 function getIntersectionRayBox(ray, box) {
-  var d = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
-  var p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
-  var mn = 0.0;
-  var mx = Number.POSITIVE_INFINITY;
+  const d = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]); // direction: last 3 elements of ray
+  const p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
+  let mn = 0.0;
+  let mx = Number.POSITIVE_INFINITY;
   // X intersection
   if (Math.abs(d[0]) < EPSILON) {
     if (p[0] < box[0] || p[0] > box[3]) {
@@ -102,77 +102,77 @@ function polygonToPlane(polygon) {
 }*/
 
 function triangleToPlane(face) {
-  var ac = MathUtil.vec3sub(face[0], face[2]);
-  var bc = MathUtil.vec3sub(face[1], face[2]);
+  const ac = MathUtil.vec3sub(face[0], face[2]);
+  const bc = MathUtil.vec3sub(face[1], face[2]);
   // Find a normal of the triangle
-  var planeNormal = MathUtil.vec3normalizeInPlace(MathUtil.vec3cross(ac, bc));
+  const planeNormal = MathUtil.vec3normalizeInPlace(MathUtil.vec3cross(ac, bc));
   // Find the triangle's centroid, which will lie on the plane
-  var planeOrigin = [
+  const planeOrigin = [
     (face[0][0] + face[1][0] + face[2][0]) / 3.0,
     (face[0][1] + face[1][1] + face[2][1]) / 3.0,
     (face[0][2] + face[1][2] + face[2][2]) / 3.0
   ];
-  var plane = [
+  const plane = [
     planeNormal[0], planeNormal[1], planeNormal[2],
     planeOrigin[0], planeOrigin[1], planeOrigin[2]];
   return plane;
 }
 function getClosestPointToTriangle3D(p, a, b, c) {
-  var ab = MathUtil.vec3sub(b, a);
-  var ac = MathUtil.vec3sub(c, a);
-  var ap = MathUtil.vec3sub(p, a);
-  var d1 = MathUtil.vec3dot(ab, ap);
-  var d2 = MathUtil.vec3dot(ac, ap);
+  const ab = MathUtil.vec3sub(b, a);
+  const ac = MathUtil.vec3sub(c, a);
+  const ap = MathUtil.vec3sub(p, a);
+  const d1 = MathUtil.vec3dot(ab, ap);
+  const d2 = MathUtil.vec3dot(ac, ap);
   if (d1 <= 0 && d2 <= 0) {
     return a;
   }
-  var bp = MathUtil.vec3sub(p, b);
-  var d3 = MathUtil.vec3dot(ab, bp);
-  var d4 = MathUtil.vec3dot(ac, bp);
+  const bp = MathUtil.vec3sub(p, b);
+  const d3 = MathUtil.vec3dot(ab, bp);
+  const d4 = MathUtil.vec3dot(ac, bp);
   if (d3 >= 0 && d4 <= d3) {
     return b;
   }
-  var vc = d1 * d4 - d3 * d2;
+  const vc = d1 * d4 - d3 * d2;
   if (vc <= 0 && d1 >= 0 && d3 <= 0) {
     var v = d1 / (d1 - d3);
     return MathUtil.vec3add(a, MathUtil.vec3scale(ab, v));
   }
-  var cp = MathUtil.vec3sub(p, c);
-  var d5 = MathUtil.vec3dot(ab, cp);
-  var d6 = MathUtil.vec3dot(ac, cp);
+  const cp = MathUtil.vec3sub(p, c);
+  const d5 = MathUtil.vec3dot(ab, cp);
+  const d6 = MathUtil.vec3dot(ac, cp);
   if (d6 >= 0 && d5 <= d6) {
     return c;
   }
-  var vb = d5 * d2 - d1 * d6;
+  const vb = d5 * d2 - d1 * d6;
   if (vb <= 0 && d2 >= 0 && d6 <= 0) {
     var w = d2 / (d2 - d6);
     return MathUtil.vec3add(a, MathUtil.vec3scale(ac, w));
   }
-  var va = d3 * d6 - d5 * d4;
+  const va = d3 * d6 - d5 * d4;
   if (va <= 0 && d4 - d3 >= 0 && d5 - d6 >= 0) {
     w = (d4 - d3) / (d4 - d3 + (d5 - d6));
-    var tvec = MathUtil.vec3sub(c, b);
+    const tvec = MathUtil.vec3sub(c, b);
     return MathUtil.vec3add(b, MathUtil.vec3scale(tvec, w));
   }
-  var denom = 1.0 / (va + vb + vc);
+  const denom = 1.0 / (va + vb + vc);
   v = vb * denom;
   w = vc * denom;
-  var abv = MathUtil.vec3scale(ab, v);
-  var acw = MathUtil.vec3scale(ac, w);
+  const abv = MathUtil.vec3scale(ab, v);
+  const acw = MathUtil.vec3scale(ac, w);
   return MathUtil.vec3add(a, MathUtil.vec3add(abv, acw));
 }
 
 // NOTE: Planes are as defined in the source library, HE_Mesh,
 // not as defined in Math
 function getIntersectionRayPlane(ray, plane) {
-  var r1origin = ray.slice(0, 3);
-  var r1direction = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]);
-  var ab = r1direction;
-  var p1normal = plane.slice(0, 3);
-  var p1origin = plane.slice(3, 6);
-  var p1d = MathUtil.vec3dot(p1normal, p1origin);
-  var denom = MathUtil.vec3dot(p1normal, ab);
-  var t = p1d - MathUtil.vec3dot(p1normal, r1origin);
+  const r1origin = ray.slice(0, 3);
+  const r1direction = MathUtil.vec3normalizeInPlace([ray[3], ray[4], ray[5]]);
+  const ab = r1direction;
+  const p1normal = plane.slice(0, 3);
+  const p1origin = plane.slice(3, 6);
+  const p1d = MathUtil.vec3dot(p1normal, p1origin);
+  const denom = MathUtil.vec3dot(p1normal, ab);
+  let t = p1d - MathUtil.vec3dot(p1normal, r1origin);
   if(denom === 0) {
     // Ray's direction and plane's normal are orthogonal to each
     // other. Assume no intersection.
@@ -181,7 +181,7 @@ function getIntersectionRayPlane(ray, plane) {
   t /= denom;
   if (t >= -EPSILON) {
     t = Math.max(0, t);
-    var result = [
+    const result = [
       r1origin[0] + r1direction[0] * t,
       r1origin[1] + r1direction[1] * t,
       r1origin[2] + r1direction[2] * t
@@ -191,12 +191,12 @@ function getIntersectionRayPlane(ray, plane) {
   return null;
 }
 function getIntersectionRayTriangle(ray, face) {
-  var lpi = getIntersectionRayPlane(ray, triangleToPlane(face));
+  const lpi = getIntersectionRayPlane(ray, triangleToPlane(face));
   if (typeof lpi !== "undefined" && lpi !== null) {
-    var p1 = lpi;
-    var tmp = getClosestPointToTriangle3D(p1,
+    const p1 = lpi;
+    const tmp = getClosestPointToTriangle3D(p1,
       face[0], face[1], face[2]);
-    var dist = MathUtil.vec3dist(tmp, p1);
+    const dist = MathUtil.vec3dist(tmp, p1);
     if (Math.abs(dist) < EPSILON) {
       return lpi;
     }
@@ -205,14 +205,14 @@ function getIntersectionRayTriangle(ray, face) {
 }
 
 function facesBounds(faces) {
-  var inf = Number.POSITIVE_INFINITY;
-  var ret = [inf, inf, inf, -inf, -inf, -inf];
-  for(var i = 0; i < faces.length; i++) {
-    var face = faces[i];
+  const inf = Number.POSITIVE_INFINITY;
+  const ret = [inf, inf, inf, -inf, -inf, -inf];
+  for(let i = 0; i < faces.length; i++) {
+    const face = faces[i];
     if(!face) {
       throw new Error();
     }
-    for(var j = 0; j < 3; j++) {
+    for(let j = 0; j < 3; j++) {
       ret[0] = Math.min(ret[0], face[j][0]);
       ret[3] = Math.max(ret[3], face[j][0]);
       ret[1] = Math.min(ret[1], face[j][1]);
@@ -247,10 +247,10 @@ function classifyPointToPlane3D(plane, point) {
   // NOTE: HE_Mesh includes fast code and robust code for this
   // function, but only the fast code is used here
   // to keep this code simple
-  var planeNormal = plane.slice(0, 3);
-  var planeOrigin = plane.slice(3, 6);
-  var planeD = MathUtil.vec3dot(planeNormal, planeOrigin);
-  var d = MathUtil.vec3dot(planeNormal, point) - planeD;
+  const planeNormal = plane.slice(0, 3);
+  const planeOrigin = plane.slice(3, 6);
+  const planeD = MathUtil.vec3dot(planeNormal, planeOrigin);
+  const d = MathUtil.vec3dot(planeNormal, point) - planeD;
   if (Math.abs(d) < EPSILON) {
     return AABBTree.ON;
   }
@@ -263,9 +263,9 @@ function classifyPointToPlane3D(plane, point) {
 // NOTE: Planes are as defined in the source library, HE_Mesh,
 // not as defined in Math
 function classifyPolygonToPlane3D(polygon, plane) {
-  var numInFront = 0;
-  var numBehind = 0;
-  for (var i = 0; i < polygon.length; i++) {
+  let numInFront = 0;
+  let numBehind = 0;
+  for (let i = 0; i < polygon.length; i++) {
     switch (classifyPointToPlane3D(plane, polygon[i])) {
     case AABBTree.FRONT:
       numInFront++;
@@ -289,10 +289,10 @@ function classifyPolygonToPlane3D(polygon, plane) {
 }
 
 function getIntersectionRayTree(ray, tree) {
-  var result = [];
-  var queue = [];
+  const result = [];
+  const queue = [];
   queue.push(tree.root);
-  var current;
+  let current;
   while (queue.length > 0) {
     current = queue.pop();
     if (getIntersectionRayBox(ray, current.aabb)) {
@@ -313,7 +313,7 @@ function getIntersectionRayTree(ray, tree) {
   }
   return result;
 }
-var AABBNode = function() {
+const AABBNode = function() {
   this.level = -1;
   this.faces = [];
   this.aabb = null;
@@ -326,7 +326,7 @@ var AABBNode = function() {
 /** @ignore */
 AABBTree.prototype._buildTree = function(mesh) {
   this.root = new AABBNode();
-  var faces = mesh.getPositions();
+  const faces = mesh.getPositions();
   this._buildNode(this.root, faces, 0);
 };
 /** @ignore */
@@ -339,11 +339,11 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
     }
     node.isLeaf = true;
   } else {
-    var pos = [];
-    var neg = [];
-    var mid = [];
-    var plane;
-    var levelMod3 = level % 3;
+    const pos = [];
+    const neg = [];
+    const mid = [];
+    let plane;
+    const levelMod3 = level % 3;
     if (levelMod3 === 0) {
       plane = [0, 0, 1, 0, 0, 0];
     } else if (levelMod3 === 1) {
@@ -351,14 +351,14 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
     } else {
       plane = [1, 0, 0, 0, 0, 0];
     }
-    var origin = MathUtil.boxCenter(node.aabb);
+    const origin = MathUtil.boxCenter(node.aabb);
     plane[3] = origin[0];
     plane[4] = origin[1];
     plane[5] = origin[2];
     node.separator = plane;
     for(i = 0; i < faces.length; i++) {
-      var face = faces[i];
-      var cptp = classifyPolygonToPlane3D(
+      const face = faces[i];
+      const cptp = classifyPolygonToPlane3D(
         face, node.separator);
       if (cptp === AABBTree.CROSSING) {
         mid.push(face);
@@ -388,24 +388,24 @@ AABBTree.prototype._buildNode = function(node, faces, level) {
 };
 
 function pickPoint(mesh, ray) {
-  var p2 = null;
-  var p2face = null;
-  var candidates = [];
-  var nodes = getIntersectionRayTree(ray, new AABBTree(mesh, 10));
-  for(var nIndex = 0; nIndex < nodes.length; nIndex++) {
-    var n = nodes[nIndex];
-    var faces = n.faces;
-    for(var fIndex = 0; fIndex < faces.length; fIndex++) {
-      var f = faces[fIndex];
+  let p2 = null;
+  let p2face = null;
+  const candidates = [];
+  const nodes = getIntersectionRayTree(ray, new AABBTree(mesh, 10));
+  for(let nIndex = 0; nIndex < nodes.length; nIndex++) {
+    const n = nodes[nIndex];
+    const faces = n.faces;
+    for(let fIndex = 0; fIndex < faces.length; fIndex++) {
+      const f = faces[fIndex];
       candidates.push(f);
     }
   }
-  var d21,
+  let d21,
     d2min1 = Number.POSITIVE_INFINITY;
-  var rayOrigin = ray.slice(0, 3);
-  for(var faceIndex = 0; faceIndex < candidates.length; faceIndex++) {
-    var face = candidates[faceIndex];
-    var sect = getIntersectionRayTriangle(ray, face);
+  const rayOrigin = ray.slice(0, 3);
+  for(let faceIndex = 0; faceIndex < candidates.length; faceIndex++) {
+    const face = candidates[faceIndex];
+    const sect = getIntersectionRayTriangle(ray, face);
     if (typeof sect !== "undefined" && sect !== null) {
       var p1 = rayOrigin;
       var px = sect[0];
@@ -424,15 +424,15 @@ function pickPoint(mesh, ray) {
   }
   // p2 now contains the point on the face
   // that was picked
-  var p = p2;
+  const p = p2;
   if (typeof p === "undefined" || p === null) {
     return null;
   }
-  var trial;
-  var closest = null;
-  var d2 = 0;
-  var d2min = Number.MAX_VALUE;
-  for(var i = 0; i < 3; i++) {
+  let trial;
+  let closest = null;
+  let d2 = 0;
+  let d2min = Number.MAX_VALUE;
+  for(let i = 0; i < 3; i++) {
     trial = p2face[i];
     p1 = p;
     px = trial[0];
@@ -455,7 +455,7 @@ function pickPoint(mesh, ray) {
 }
 
 function makeRay(startPt, focusPt) {
-  var dist = MathUtil.vec3sub(focusPt, startPt);
+  const dist = MathUtil.vec3sub(focusPt, startPt);
   return [startPt[0], startPt[1], startPt[2], dist[0], dist[1], dist[2]];
 }
 
@@ -495,32 +495,32 @@ function makeRay(startPt, focusPt) {
  * @function
  */
 export var raypick = function(x, y, projView, viewport, objects) {
-  var near = MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);
-  var far = MathUtil.vec3fromWindowPoint([x, y, 1], projView, viewport);
-  var ray = makeRay(near, far); // Near and far will be in world coordinates
-  var bestDist = Number.POSITIVE_INFINITY;
-  var ret = {"index":-1};
-  for(var i = 0; i < objects.length; i++) {
-    var shape = objects[i];
+  let near = MathUtil.vec3fromWindowPoint([x, y, 0], projView, viewport);
+  let far = MathUtil.vec3fromWindowPoint([x, y, 1], projView, viewport);
+  let ray = makeRay(near, far); // Near and far will be in world coordinates
+  let bestDist = Number.POSITIVE_INFINITY;
+  let ret = {"index":-1};
+  for(let i = 0; i < objects.length; i++) {
+    const shape = objects[i];
     // Gets the world coordinates of a box that bounds the shape
-    var bounds = shape.getBounds();
+    const bounds = shape.getBounds();
     if(MathUtil.boxIsEmpty(bounds)) {
       continue;
     }
     // Check intersection of the ray with the shape's bounding box,
     // which is relatively fast
     if(getIntersectionRayBox(ray, bounds)) {
-      var worldMatrix = shape.getMatrix();
-      var mvp = MathUtil.mat4multiply(projView, worldMatrix);
+      const worldMatrix = shape.getMatrix();
+      const mvp = MathUtil.mat4multiply(projView, worldMatrix);
       near = MathUtil.vec3fromWindowPoint([x, y, 0], mvp, viewport);
       far = MathUtil.vec3fromWindowPoint([x, y, 1], mvp, viewport);
       ray = makeRay(near, far); // Near and far will be in local coordinates
-      var finePick = pickPoint(shape.getMeshBuffer(), ray);
+      const finePick = pickPoint(shape.getMeshBuffer(), ray);
       if(finePick) {
         // Fine pick point will be in local coordinates; convert
         // to world coordinates to check distance from the near plane
-        var world = MathUtil.mat4projectVec3(finePick.point, worldMatrix);
-        var dist = MathUtil.vec3dist(near, world);
+        const world = MathUtil.mat4projectVec3(finePick.point, worldMatrix);
+        const dist = MathUtil.vec3dist(near, world);
         if(ret.index === -1 || dist < bestDist) {
           // Choose this point if it's the first or closest intersecting point
           // to the near plane

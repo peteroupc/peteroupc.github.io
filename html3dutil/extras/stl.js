@@ -25,7 +25,7 @@ import {MeshBuffer} from "../h3du_module.js";
  * @constructor
  * @ignore
  */
-var TriangleFan = function(indices) {
+const TriangleFan = function(indices) {
   this.indices = indices;
   this.start = -1;
   this.last = -1;
@@ -63,27 +63,27 @@ const AFTER_SOLID = 3;
  * @function
  */
 export var fromStlString = function(str) {
-  var number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
-  var facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
+  const number = "(-?(?:\\d+\\.?\\d*|\\d*\\.\\d+)(?:[Ee][\\+\\-]?\\d+)?)";
+  const facet = new RegExp("^\\s*facet\\s+normal\\s+" + number + "\\s+" + number +
    "\\s+" + number + "\\s*");
-  var vertex = new RegExp("^\\s*vertex\\s+" + number + "\\s+" + number +
+  const vertex = new RegExp("^\\s*vertex\\s+" + number + "\\s+" + number +
    "\\s+" + number + "\\s*");
-  var solid = new RegExp("^\\s*solid(?=\\s+(.*)|$)");
-  var outerloop = new RegExp("^\\s*outer\\s+loop\\s*");
-  var endfacet = new RegExp("^\\s*endfacet\\s*");
-  var endloop = new RegExp("^\\s*endloop\\s*");
-  var endsolid = new RegExp("^\\s*endsolid(?=\\s+.*|$)");
-  var lines = str.split(/\r?\n/);
-  var state = INITIAL;
-  var normal = [0, 0, 0];
-  var vertices = [];
-  var indices = [];
-  var tfan = new TriangleFan(indices);
-  for(var i = 0; i < lines.length; i++) {
-    var line = lines[i];
+  const solid = new RegExp("^\\s*solid(?=\\s+(.*)|$)");
+  const outerloop = new RegExp("^\\s*outer\\s+loop\\s*");
+  const endfacet = new RegExp("^\\s*endfacet\\s*");
+  const endloop = new RegExp("^\\s*endloop\\s*");
+  const endsolid = new RegExp("^\\s*endsolid(?=\\s+.*|$)");
+  const lines = str.split(/\r?\n/);
+  let state = INITIAL;
+  const normal = [0, 0, 0];
+  const vertices = [];
+  const indices = [];
+  const tfan = new TriangleFan(indices);
+  for(let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     // skip empty lines
     if(line.length === 0 || (/^\s*$/).test(line))continue;
-    var e = solid.exec(line);
+    let e = solid.exec(line);
     if(e && (state === INITIAL || state === AFTER_SOLID)) {
       // 'e[1]' holds the name of the solid
       state = IN_SOLID;
@@ -105,7 +105,7 @@ export var fromStlString = function(str) {
     }
     e = vertex.exec(line);
     if(e && state === IN_OUTER_LOOP) {
-      var index = vertices.length / 6;
+      const index = vertices.length / 6;
       // Add position X,Y,Z, then normal X,Y,Z
       vertices.push(parseFloat(e[1]), parseFloat(e[2]), parseFloat(e[3]),
         normal[0], normal[1], normal[2]);

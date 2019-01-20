@@ -9,9 +9,9 @@
 var Extras = {
   "compact":function(arr) {
     "use strict";
-    var fillOffset = 0;
+    let fillOffset = 0;
 
-    for(var i = 0; i < arr.length; i++) {
+    for(let i = 0; i < arr.length; i++) {
       if(fillOffset !== i && arr[i] !== null) {
         arr[fillOffset] = arr[i];
         fillOffset++;
@@ -23,7 +23,7 @@ var Extras = {
   },
   "includes":function(arr, value) {
     "use strict";
-    for(var i = 0; i < arr.length; i++) {
+    for(let i = 0; i < arr.length; i++) {
       if(arr[i] === value)return true;
     }
     return false;
@@ -31,7 +31,7 @@ var Extras = {
 };
 var nextToken = function(tok) {
   "use strict";
-  var a,
+  let a,
     x = null,
     e = null,
     t = null,
@@ -173,8 +173,8 @@ Expression.prototype.simplify = function() {
 /** @ignore */
 Expression.simplifyNodes = function(nodes) {
   "use strict";
-  var negative;
-  var d,
+  let negative;
+  let d,
     passes = null,
     pass__ = null,
     pass = null,
@@ -334,7 +334,7 @@ Operation.prototype.isOperation = function(op) {
  */
 Operation.prototype.equals = function(x) {
   "use strict";
-  var i = null;
+  let i = null;
 
   if (!(x instanceof Operation)) {
     return false;
@@ -358,21 +358,21 @@ Operation.prototype.equals = function(x) {
 /** @ignore */
 Operation.prototype.simplify = function() {
   "use strict";
-  var b, c, d;
-  var done = null,
+  let b, c, d;
+  let done = null,
     origlength = null,
     constVals = null,
     constValsIndex = null;
-  var i = null;
-  var node;
-  var n__;
-  var n = null;
-  var realnode = null;
-  var cv;
-  var haveNonconst = null;
+  let i = null;
+  let node;
+  let n__;
+  let n = null;
+  let realnode = null;
+  let cv;
+  let haveNonconst = null;
 
-  var neg;
-  var j;
+  let neg;
+  let j;
   Expression.simplifyNodes(this.nodes);
   if ((b = (c = this.operator === "plus") !== false && (typeof c !== "undefined" && c !== null) ? c : this.operator === "mul") !== false && (typeof b !== "undefined" && b !== null) ? b : this.operator === "div") {
     done = false;
@@ -398,7 +398,7 @@ Operation.prototype.simplify = function() {
           this.nodes[i] = null;
           done = false;
         } else if (node instanceof Operation && node.operator === "div" && this.operator === "mul") {
-          var tbool = node.nodes.length === 2 && !node.negative && !this.negative &&
+          let tbool = node.nodes.length === 2 && !node.negative && !this.negative &&
            node.nodes[0].constantValue() !== null && node.nodes[1].constantValue() !== null;
           if(tbool) {
             this.nodes.push(node.nodes[0]);
@@ -440,7 +440,7 @@ Operation.prototype.simplify = function() {
             done = false;
           }
           if (cv === 0 && i === 0) {
-            var found = false;
+            let found = false;
             for (j = i + 1; j < this.nodes.length; j++) {
               if(this.nodes[j].constantValue() === 0) {
                 found = true;
@@ -511,7 +511,7 @@ Operation.prototype.simplify = function() {
 /** @ignore */
 Operation.prototype.degen = function() {
   "use strict";
-  var cv = null;
+  let cv = null;
   this.simplify();
   if (this.operator === "plus" || this.operator === "mul" || this.operator === "div") {
     if (this.nodes.length === 1 && !this.negative) {
@@ -530,7 +530,7 @@ Operation.prototype.degen = function() {
  */
 Operation.prototype.constantValue = function() {
   "use strict";
-  var b, c,
+  let b, c,
     val = null,
     node__ = null,
     node = null,
@@ -564,10 +564,10 @@ Operation.prototype.constantValue = function() {
     return this.negative ? -val : val;
   } else {
     if(this.operator === "pow") {
-      var cv1 = this.nodes[0].constantValue();
-      var cv2 = this.nodes[1].constantValue();
+      let cv1 = this.nodes[0].constantValue();
+      let cv2 = this.nodes[1].constantValue();
       if(typeof cv1 !== "undefined" && cv1 !== null && (typeof cv2 !== "undefined" && cv2 !== null)) {
-        var ret = Math.pow(cv1, cv2);
+        let ret = Math.pow(cv1, cv2);
         return this.negative ? -ret : ret;
       }
     }
@@ -577,7 +577,7 @@ Operation.prototype.constantValue = function() {
 /** @ignore */
 Operation.func = function(operation) {
   "use strict";
-  var op = null,
+  let op = null,
     arg = null;
   op = new Operation(operation);
   for (arg = 1; arg < arguments.length; arg++) {
@@ -588,13 +588,13 @@ Operation.func = function(operation) {
 /** @ignore */
 Operation.prototype.combineOp = function(operation, x) {
   "use strict";
-  var op = null;
+  let op = null;
 
   if (typeof x === "number") {
     x = new Constant(x);
   }
   if (operation === "pow") {
-    var cv = x.constantValue();
+    let cv = x.constantValue();
     if(cv === 0) {
       return new Constant(1);
     } else if(cv === 1) {
@@ -612,9 +612,9 @@ Operation.prototype.combineOp = function(operation, x) {
  */
 Operation.prototype.copy = function() {
   "use strict";
-  var op = new Operation(this.operator);
+  let op = new Operation(this.operator);
   op.negative = this.negative;
-  for (var node__ = 0; node__ < this.nodes.length; node__++) {
+  for (let node__ = 0; node__ < this.nodes.length; node__++) {
     op.nodes.push(this.nodes[node__].copy());
   }
   return op;
@@ -625,7 +625,7 @@ Operation.prototype.copy = function() {
  */
 Operation.prototype.negate = function() {
   "use strict";
-  var op = null,
+  let op = null,
     node__ = null;
   op = new Operation(this.operator);
   if(op.operator === "plus") {
@@ -676,9 +676,9 @@ Operation.prototype.multiply = function(x) {
     }
   }
   if (this.operator === "mul") {
-    for(var i = 0; i < this.nodes.length; i++) {
+    for(let i = 0; i < this.nodes.length; i++) {
       if(this.nodes[i].equals(x)) {
-        var c = this.copy();
+        let c = this.copy();
         c.nodes[i] = Operation.func("pow", c.nodes[i], new Constant(2));
         return c;
       }
@@ -704,14 +704,14 @@ Operation.prototype.divide = function(x) {
  */
 Operation.prototype.toJSString = function() {
   "use strict";
-  var b, c, d,
+  let b, c, d,
     opArray = null,
     i__ = null,
     i = null,
     paren = null,
     ret = null,
     op = null;
-  var p1;
+  let p1;
   opArray = [];
   for (i__ = 0; i__ < this.nodes.length; i__++) {
     i = this.nodes[i__];
@@ -750,10 +750,10 @@ Operation.prototype.toJSString = function() {
     return (this.negative ? "-" : "") + "(((" + p1 + ")<0 ? -1 : 1)*Math.pow(Math.abs(" + p1 + "),0.5))";
   } else if (this.operator === "pow") {
     p1 = opArray[0];
-    var p2 = opArray[1];
+    let p2 = opArray[1];
     return (this.negative ? "-" : "") + "(((" + p1 + ")<0 ? -1 : 1)*Math.pow(Math.abs(" + p1 + ")," + p2 + "))";
   } else {
-    var oper = this.operator;
+    let oper = this.operator;
     if(oper === "ln")oper = "log";
     return (this.negative ? "-" : "") + ("Math." + oper + "(") + opArray.join(", ") + ")";
   }
@@ -764,7 +764,7 @@ Operation.prototype.toJSString = function() {
  */
 Operation.prototype.toString = function() {
   "use strict";
-  var b, c, d,
+  let b, c, d,
     opArray = null,
     i__ = null,
     i = null,
@@ -868,7 +868,7 @@ Variable.prototype.toString = function() {
 /** @ignore */
 Variable.prototype.combineOp = function(operation, x) {
   "use strict";
-  var op = null,
+  let op = null,
     cv = null;
 
   if (typeof x === "number") {
@@ -911,7 +911,7 @@ Variable.prototype.add = function(x) {
  */
 Variable.prototype.negate = function() {
   "use strict";
-  var v = null;
+  let v = null;
 
   v = new Variable(this.name);
   v.negative = !this.negative;
@@ -994,7 +994,7 @@ Constant.prototype.degen = function() {
  */
 Constant.prototype.toJSString = function() {
   "use strict";
-  var vi = this.value.toString();
+  let vi = this.value.toString();
   if (vi.substr(vi.length - 2, vi.length) === ".0") {
     vi = vi.substr(0, vi.length - 2);
   }
@@ -1006,7 +1006,7 @@ Constant.prototype.toJSString = function() {
  */
 Constant.prototype.toString = function() {
   "use strict";
-  var vi = null;
+  let vi = null;
   if (this.name) {
     return this.name.toString();
   }
@@ -1019,7 +1019,7 @@ Constant.prototype.toString = function() {
 /** @ignore */
 Constant.prototype.combineOp = function(operation, x) {
   "use strict";
-  var op = null;
+  let op = null;
 
   if (typeof x === "number") {
     x = new Constant(x);
@@ -1097,7 +1097,7 @@ Constant.prototype.divide = function(x) {
 /* exported getExpression */
 var getExpression = function(expr) {
   "use strict";
-  var c,
+  let c,
     test = null,
     tokens = null,
     token = null,
@@ -1180,7 +1180,7 @@ var getExpression = function(expr) {
 /* exported getSingleVariable */
 var getSingleVariable = function(op, variable) {
   "use strict";
-  var i = null,
+  let i = null,
     node = null;
 
   for (i = 0; i < op.length(); i++) {
@@ -1201,8 +1201,8 @@ var getSingleVariable = function(op, variable) {
 
 var findPartialDerivative = function(expr, differential) {
   "use strict";
-  var product = function(expr, start, count) {
-    var ret = null,
+  let product = function(expr, start, count) {
+    let ret = null,
       i = null;
     if (count === 1) {
       return expr.get(start);
@@ -1213,8 +1213,8 @@ var findPartialDerivative = function(expr, differential) {
     }
     return ret;
   };
-  var quotient = function(expr, start, count) {
-    var ret = null,
+  let quotient = function(expr, start, count) {
+    let ret = null,
       i = null;
 
     if (count === 1) {
@@ -1227,7 +1227,7 @@ var findPartialDerivative = function(expr, differential) {
     return ret;
   };
 
-  var deriv1 = null,
+  let deriv1 = null,
     deriv2 = null,
     cutoff = null,
     e0 = null,
@@ -1235,8 +1235,8 @@ var findPartialDerivative = function(expr, differential) {
     sq = null,
     ops = null,
     i = null;
-  var ex, cv;
-  var ret;
+  let ex, cv;
+  let ret;
   if(typeof differential === "string")differential = new Variable(differential);
   if (!(expr.constantValue() === null)) {
     return new Constant(0);
@@ -1312,7 +1312,7 @@ var findPartialDerivative = function(expr, differential) {
       return findPartialDerivative(Operation.func("ln", e0).add(Operation.func("ln", e1)), differential);
     } else if(ex.isOperation("pow")) {
       cv = ex.constantValue(ex.get(1));
-      var cv0 = ex.constantValue(ex.get(0));
+      let cv0 = ex.constantValue(ex.get(0));
       if(typeof cv === "undefined" || cv === null || Math.floor(cv) === cv || (typeof cv0 === "undefined" || cv0 === null || cv0 > 0)) {
         // only works for rational exponents
         return findPartialDerivative(ex.get(1).multiply(Operation.func("ln", ex.get(0))), differential);
@@ -1357,16 +1357,16 @@ var findPartialDerivative = function(expr, differential) {
 /* exported normalCalcExpr */
 function normalCalcExpr(vecExpr) {
   "use strict";
-  var varu = new Variable("u");
-  var varv = new Variable("v");
+  let varu = new Variable("u");
+  let varv = new Variable("v");
   // partial derivative with respect to u
-  var derivU = [
+  let derivU = [
     findPartialDerivative(vecExpr[0], varu),
     findPartialDerivative(vecExpr[1], varu),
     findPartialDerivative(vecExpr[2], varu)
   ];
   // partial derivative with respect to v
-  var derivV = [
+  let derivV = [
     findPartialDerivative(vecExpr[0], varv),
     findPartialDerivative(vecExpr[1], varv),
     findPartialDerivative(vecExpr[2], varv)

@@ -32,21 +32,21 @@ import {MeshBuffer} from "../h3du-module.js";
  */
 export var createFloor = function(xStart, yStart, width, height, tileSize, z) {
   if(typeof z === "undefined" || z === null)z = 0.0;
-  var vertices = [];
-  var indices = [];
-  var index = 0;
-  var tilesX = Math.ceil(width / tileSize);
-  var tilesY = Math.ceil(height / tileSize);
-  var lastY = (height - tilesY * tileSize) / tileSize;
-  var lastX = (width - tilesX * tileSize) / tileSize;
+  const vertices = [];
+  const indices = [];
+  let index = 0;
+  const tilesX = Math.ceil(width / tileSize);
+  const tilesY = Math.ceil(height / tileSize);
+  let lastY = (height - tilesY * tileSize) / tileSize;
+  let lastX = (width - tilesX * tileSize) / tileSize;
   if(lastY <= 0)lastY = 1.0;
   if(lastX <= 0)lastX = 1.0;
-  for(var y = 0; y < tilesY; y++) {
-    var endY = y === tilesY - 1 ? 1.0 - lastY : 0.0;
-    var endPosY = y === tilesY - 1 ? yStart + height : yStart + (y + 1) * tileSize;
-    for(var x = 0; x < tilesX; x++) {
-      var endX = x === tilesX - 1 ? lastX : 1.0;
-      var endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
+  for(let y = 0; y < tilesY; y++) {
+    const endY = y === tilesY - 1 ? 1.0 - lastY : 0.0;
+    const endPosY = y === tilesY - 1 ? yStart + height : yStart + (y + 1) * tileSize;
+    for(let x = 0; x < tilesX; x++) {
+      const endX = x === tilesX - 1 ? lastX : 1.0;
+      const endPosX = x === tilesX - 1 ? xStart + width : xStart + (x + 1) * tileSize;
       vertices.push(
         xStart + x * tileSize, yStart + y * tileSize, z, 0, 0, 1, 0, 1,
         xStart + x * tileSize, endPosY, z, 0, 0, 1, 0, endY,

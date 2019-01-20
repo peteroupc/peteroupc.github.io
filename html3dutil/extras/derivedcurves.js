@@ -17,13 +17,13 @@
 */
 
 function _vecNormInPlaceAndScale(vec, scale) {
-  var len = 0;
+  let len = 0;
   for(var i = 0; i < vec.length; i++) {
     len += vec[i] * vec[i];
   }
   len = Math.sqrt(len);
   if(len !== 0) {
-    var newscale = 1.0 / len * scale;
+    const newscale = 1.0 / len * scale;
     for(i = 0; i < vec.length; i++) {
       vec[i] *= newscale;
     }
@@ -35,15 +35,15 @@ function _vecNormInPlaceAndScale(vec, scale) {
   return vec;
 }
 function _vecAdd(v1, v2) {
-  var ret = [];
-  for(var i = 0; i < v1.length; i++) {
+  const ret = [];
+  for(let i = 0; i < v1.length; i++) {
     ret[i] = v1[i] + v2[i];
   }
   return ret;
 }
 function _vecScale(v1, s) {
-  var ret = [];
-  for(var i = 0; i < v1.length; i++) {
+  const ret = [];
+  for(let i = 0; i < v1.length; i++) {
     ret[i] = v1[i] * s;
   }
   return ret;
@@ -54,12 +54,12 @@ function _vecScale(v1, s) {
  * @returns {*} Return value.
  */
 export function curveInvolute(evaluator) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var arclen = neweval.arcLength(u);
-      var velocity = neweval.velocity(u);
-      var position = neweval.evaluate(u);
+      const arclen = neweval.arcLength(u);
+      const velocity = neweval.velocity(u);
+      const position = neweval.evaluate(u);
       return _vecAdd(position,
         _vecNormInPlaceAndScale(velocity, -arclen));
     },
@@ -74,14 +74,14 @@ export function curveInvolute(evaluator) {
  * @returns {*} Return value.
  */
 export function curveEvolute(evaluator) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var position = neweval.evaluate(u);
-      var velocity = neweval.velocity(u);
-      var accel = neweval.accel(u);
-      var denom = velocity[0] * accel[1] - accel[0] * velocity[1];
-      var numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
+      const position = neweval.evaluate(u);
+      const velocity = neweval.velocity(u);
+      const accel = neweval.accel(u);
+      const denom = velocity[0] * accel[1] - accel[0] * velocity[1];
+      const numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
       return [
         position[0] - numpart * velocity[1] / denom,
         position[1] + numpart * velocity[0] / denom,
@@ -101,13 +101,13 @@ export function curveEvolute(evaluator) {
  * @returns {*} Return value.
  */
 export function curveRadialCurve(evaluator, ox, oy) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var velocity = neweval.velocity(u);
-      var accel = neweval.accel(u);
-      var denom = velocity[0] * accel[1] - accel[0] * velocity[1];
-      var numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
+      const velocity = neweval.velocity(u);
+      const accel = neweval.accel(u);
+      const denom = velocity[0] * accel[1] - accel[0] * velocity[1];
+      const numpart = velocity[0] * velocity[0] + velocity[1] * velocity[1];
       return [
         ox - numpart * velocity[1] / denom,
         oy + numpart * velocity[0] / denom,
@@ -127,15 +127,15 @@ export function curveRadialCurve(evaluator, ox, oy) {
  * @returns {*} Return value.
  */
 export function curveOrthotomic(evaluator, ox, oy) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var position = neweval.evaluate(u);
-      var dx = position[0] - ox;
-      var dy = position[1] - oy;
-      var velocity = neweval.velocity(u);
-      var denom = velocity[0] * velocity[0] + velocity[1] * velocity[1];
-      var rate = 2 * (velocity[0] * dy - velocity[1] * dx) / denom;
+      const position = neweval.evaluate(u);
+      const dx = position[0] - ox;
+      const dy = position[1] - oy;
+      const velocity = neweval.velocity(u);
+      const denom = velocity[0] * velocity[0] + velocity[1] * velocity[1];
+      const rate = 2 * (velocity[0] * dy - velocity[1] * dx) / denom;
       return [ox - velocity[1] * rate, oy + velocity[0] * rate, 0];
     },
     "endPoints":function() {
@@ -161,15 +161,15 @@ export function curveCatacaustic(evaluator, ox, oy) {
  * @returns {*} Return value.
  */
 export function curvePedalCurve(evaluator, ox, oy) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var position = neweval.evaluate(u);
-      var velocity = neweval.velocity(u);
-      var velocityXSq = velocity[0] * velocity[0];
-      var velocityYSq = velocity[1] * velocity[1];
-      var tanXY = velocity[0] * velocity[1];
-      var denom = velocityXSq + velocityYSq;
+      const position = neweval.evaluate(u);
+      const velocity = neweval.velocity(u);
+      const velocityXSq = velocity[0] * velocity[0];
+      const velocityYSq = velocity[1] * velocity[1];
+      const tanXY = velocity[0] * velocity[1];
+      const denom = velocityXSq + velocityYSq;
       return [
         (ox * velocityXSq + velocityYSq * position[0] + (oy - position[1]) * tanXY) / denom,
         (oy * velocityYSq + velocityXSq * position[1] + (ox - position[0]) * tanXY) / denom,
@@ -189,14 +189,14 @@ export function curvePedalCurve(evaluator, ox, oy) {
  * @returns {*} Return value.
  */
 export function curveInverse(evaluator, ox, oy, radius) {
-  var neweval = evaluator;
+  const neweval = evaluator;
   return {
     "evaluate":function(u) {
-      var position = neweval.evaluate(u);
-      var dx = position[0] - ox;
-      var dy = position[1] - oy;
-      var rsq = radius * radius;
-      var denom = dx * dx + dy * dy;
+      const position = neweval.evaluate(u);
+      const dx = position[0] - ox;
+      const dy = position[1] - oy;
+      const rsq = radius * radius;
+      const denom = dx * dx + dy * dy;
       return [ox + dx * rsq / denom, oy + dy * rsq / denom];
     },
     "endPoints":function() {
@@ -213,12 +213,12 @@ export function curveInverse(evaluator, ox, oy, radius) {
 export function ruledSurface(directrix, director) {
   return new Surface({
     "evaluate":function(u, v) {
-      var dx = directrix.evaluate(u);
-      var dr = _vecScale(director.evaluate(u), v);
+      const dx = directrix.evaluate(u);
+      const dr = _vecScale(director.evaluate(u), v);
       return _vecAdd(dx, dr);
     },
     "endPoints":function() {
-      var ep = directrix.endPoints();
+      const ep = directrix.endPoints();
       return [ep[0], ep[1], 0, 1];
     }
   });
@@ -230,17 +230,17 @@ export function ruledSurface(directrix, director) {
  * @returns {*} Return value.
  */
 export function polarCurve(func, phase) {
-  var pfunc = func;
-  var pphase = phase;
+  const pfunc = func;
+  const pphase = phase;
   return new H3DU.Curve({
     "evaluate":function(u) {
-      var uphase = u + pphase;
+      let uphase = u + pphase;
       if(uphase > 6.283185307179586) {
         uphase %= 6.283185307179586;
       }
-      var cosu = Math.cos(uphase);
-      var sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
-      var r = pfunc(uphase);
+      const cosu = Math.cos(uphase);
+      const sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
+      const r = pfunc(uphase);
       return [cosu * r, sinu * r];
     },
     "endPoints":function() {
@@ -255,13 +255,13 @@ export function polarCurve(func, phase) {
  * @returns {*} Return value.
  */
 export function spiralCurve(radius, phase) {
-  var pphase = phase;
+  const pphase = phase;
   return new H3DU.Curve({
     "evaluate":function(u) {
-      var uphase = u + pphase;
-      var cosu = Math.cos(uphase);
-      var sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
-      var r = radius + u;
+      const uphase = u + pphase;
+      const cosu = Math.cos(uphase);
+      const sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
+      const r = radius + u;
       return [cosu * r, sinu * r];
     },
     "endPoints":function() {

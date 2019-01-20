@@ -26,26 +26,26 @@ var _TBNFrames = function(func) {
   this.tangents = [];
   this.vectorsCache = [];
   this.vectorsCacheIndex = 0;
-  var isClosed = false;
-  var res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
-  var totalLength = 0;
-  var runningLengths = [0];
+  let isClosed = false;
+  const res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
+  let totalLength = 0;
+  const runningLengths = [0];
   this.endPoints = _TBNFrames.getEndPoints(func);
-  var firstSample = this.func.evaluate(this.endPoints[0]);
-  var lastSample = this.func.evaluate(this.endPoints[1]);
+  const firstSample = this.func.evaluate(this.endPoints[0]);
+  const lastSample = this.func.evaluate(this.endPoints[1]);
   if(_TBNFrames._distSq(firstSample, lastSample) < _TBNFrames._EPSILON) {
     isClosed = true;
   }
   this.isClosed = isClosed;
   for(var i = 0; i <= res; i++) {
-    var t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
+    const t = this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * (i / res);
     var e0;
     if(i === 0)e0 = firstSample;
     else if(i === res)e0 = lastSample;
     else e0 = this.func.evaluate(t);
     this.tangents[i] = _TBNFrames._getTangent(this.func, t, e0);
     if(this.isClosed && i > 0) {
-      var len = MathUtil.vec3length(
+      const len = MathUtil.vec3length(
         MathUtil.vec3sub(this.tangents[i], this.tangents[i - 1]));
       totalLength += len;
       runningLengths[i] = totalLength;
@@ -55,7 +55,7 @@ var _TBNFrames = function(func) {
     if(i === 0) {
       this.normals[i] = _TBNFrames.normalFromTangent(this.tangents[0]);
     } else {
-      var b = MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i]);
+      const b = MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i]);
       if(MathUtil.vec3length(b) < _TBNFrames._EPSILON) {
         this.normals[i] = this.normals[i - 1];
       } else {
@@ -70,15 +70,15 @@ var _TBNFrames = function(func) {
   }
   if(isClosed && totalLength > 0) {
   // Adjust angles of normals to prevent seams
-    var quat = MathUtil.quatFromVectors(this.normals[res], this.normals[0]);
-    var angle = MathUtil.quatToAxisAngle(quat)[3];
+    const quat = MathUtil.quatFromVectors(this.normals[res], this.normals[0]);
+    let angle = MathUtil.quatToAxisAngle(quat)[3];
     angle *= MathUtil.ToRadians;
     // Set basis vectors at ends to the same value
     this.normals[res] = this.normals[0];
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
       for(i = 1; i <= res - 1; i++) {
-        var subAngle = angle * runningLengths[i] / totalLength;
+        const subAngle = angle * runningLengths[i] / totalLength;
         cosAngle = Math.cos(subAngle);
         sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
         this.normals[i] = _TBNFrames._rotateVector(
@@ -100,15 +100,15 @@ _TBNFrames.getEndPoints = function(func) {
 };
 /** @ignore */
 _TBNFrames._getTangent = function(func, t, sampleAtPoint) {
-  var tangent;
+  let tangent;
   if(typeof func.velocity !== "undefined" && func.velocity !== null) {
     tangent = func.velocity(t);
     if(tangent[0] !== 0 || tangent[1] !== 0 || tangent[2] !== 0) {
       return MathUtil.vec3normalizeInPlace(tangent);
     }
   }
-  var direction = t === 1 ? -1 : 1;
-  var sampleAtNearbyPoint = func.evaluate(t + direction * _TBNFrames._EPSILON);
+  let direction = t === 1 ? -1 : 1;
+  let sampleAtNearbyPoint = func.evaluate(t + direction * _TBNFrames._EPSILON);
   tangent = MathUtil.vec3normalizeInPlace(
     MathUtil.vec3sub(sampleAtNearbyPoint, sampleAtPoint));
   if(tangent[0] === 0 && tangent[1] === 0 && tangent[2] === 0) {
@@ -125,16 +125,16 @@ _TBNFrames._getTangent = function(func, t, sampleAtPoint) {
 };
 /** @ignore */
 _TBNFrames._rotateVector = function(vec, reference, sinAngle, cosAngle) {
-  var vx = vec[0];
-  var vy = vec[1];
-  var vz = vec[2];
-  var bx = reference[0];
-  var by = reference[1];
-  var bz = reference[2];
-  var mc = 1.0 - cosAngle;
-  var x = vx * (cosAngle + bx * bx * mc) + vy * (-sinAngle * bz + bx * by * mc) + vz * (sinAngle * by + bx * bz * mc);
-  var y = vx * (sinAngle * bz + bx * by * mc) + vy * (cosAngle + by * by * mc) + vz * (-sinAngle * bx + by * bz * mc);
-  var z = vx * (-sinAngle * by + bx * bz * mc) + vy * (sinAngle * bx + by * bz * mc) + vz * (cosAngle + bz * bz * mc);
+  const vx = vec[0];
+  const vy = vec[1];
+  const vz = vec[2];
+  const bx = reference[0];
+  const by = reference[1];
+  const bz = reference[2];
+  const mc = 1.0 - cosAngle;
+  const x = vx * (cosAngle + bx * bx * mc) + vy * (-sinAngle * bz + bx * by * mc) + vz * (sinAngle * by + bx * bz * mc);
+  const y = vx * (sinAngle * bz + bx * by * mc) + vy * (cosAngle + by * by * mc) + vz * (-sinAngle * bx + by * bz * mc);
+  const z = vx * (-sinAngle * by + bx * bz * mc) + vy * (sinAngle * bx + by * bz * mc) + vz * (cosAngle + bz * bz * mc);
   return [x, y, z];
 };
 
@@ -146,14 +146,14 @@ _TBNFrames.normalFromTangent = function(tangent) {
 _TBNFrames._EPSILON = 0.000001;
 /** @ignore */
 _TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
-  var uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
-  var sample;
-  var b, n, t;
-  var val = [];
-  var cache = false;
-  var i, e0, normal, tangent, binormal;
+  const uNorm = (u - this.endPoints[0]) * 1.0 / (this.endPoints[1] - this.endPoints[0]);
+  let sample;
+  let b, n, t;
+  const val = [];
+  let cache = false;
+  let i, e0, normal, tangent, binormal;
   if(uNorm >= 0 && uNorm <= 1) {
-    var index = uNorm * (this.binormals.length - 1);
+    let index = uNorm * (this.binormals.length - 1);
     if(Math.abs(index - Math.round(index)) < _TBNFrames._EPSILON) {
       index = Math.round(index);
       b = this.binormals[index];
@@ -186,7 +186,7 @@ _TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
       }
     }
     if(this.isClosed) {
-      var un = uNorm - Math.floor(uNorm);
+      let un = uNorm - Math.floor(uNorm);
       if(un < 0)un = 1.0 + un;
       return this.getSampleAndBasisVectors(
         this.endPoints[0] + (this.endPoints[1] - this.endPoints[0]) * un);
@@ -224,9 +224,9 @@ _TBNFrames.prototype.getSampleAndBasisVectors = function(u) {
 };
 /** @ignore */
 _TBNFrames._distSq = function(a, b) {
-  var dx = b[0] - a[0];
-  var dy = b[1] - a[1];
-  var dz = b[2] - a[2];
+  const dx = b[0] - a[0];
+  const dy = b[1] - a[1];
+  const dz = b[2] - a[2];
   return dx * dx + dy * dy + dz * dz;
 };
 
@@ -267,9 +267,9 @@ CurveTube.prototype.constructor = CurveTube;
  * if it doesn't implement an <code>endPoints</code> method).
  */
 CurveTube.prototype.endPoints = function() {
-  var ep = _TBNFrames.getEndPoints(this.func);
+  const ep = _TBNFrames.getEndPoints(this.func);
   if(typeof this.sweptCurve !== "undefined" && this.sweptCurve !== null) {
-    var sp = _TBNFrames.getEndPoints(this.sweptCurve);
+    const sp = _TBNFrames.getEndPoints(this.sweptCurve);
     return [ep[0], ep[1], sp[0], sp[1]];
   } else {
     return [ep[0], ep[1], 0, MathUtil.PiTimes2];
@@ -283,13 +283,13 @@ CurveTube.prototype.endPoints = function() {
  * @returns {Array<number>} A 3-element array specifying a 3D point.
  */
 CurveTube.prototype.evaluate = function(u, v) {
-  var basisVectors = this.tangentFinder.getSampleAndBasisVectors(u);
-  var sampleX = basisVectors[9];
-  var sampleY = basisVectors[10];
-  var sampleZ = basisVectors[11];
-  var t1, t2, sx, sy, sz;
+  const basisVectors = this.tangentFinder.getSampleAndBasisVectors(u);
+  const sampleX = basisVectors[9];
+  const sampleY = basisVectors[10];
+  const sampleZ = basisVectors[11];
+  let t1, t2, sx, sy, sz;
   if(this.sweptCurve) {
-    var vpos = this.sweptCurve.evaluate(v);
+    const vpos = this.sweptCurve.evaluate(v);
     t1 = vpos[0];
     t2 = vpos[1];
     sx = sampleX + (-basisVectors[0] * t1 + basisVectors[3] * t2) * this.thickness;

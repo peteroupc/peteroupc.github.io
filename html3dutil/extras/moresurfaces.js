@@ -25,11 +25,11 @@ export var KleinBottle = function() {
     return [0, 6.283185307179586, 0, 6.283185307179586];
   };
   this.evaluate = function(u, v) {
-    var x, y, z;
-    var cosu = Math.cos(u);
-    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-    var cosv = Math.cos(v);
-    var sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
+    let x, y, z;
+    const cosu = Math.cos(u);
+    const sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    const cosv = Math.cos(v);
+    const sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
     if(u < Math.PI) {
       x = 3 * cosu * (1 + sinu) + 2 * (1 - cosu / 2) * cosu * cosv;
       z = -8 * sinu - 2 * (1 - cosu / 2) * sinu * cosv;
@@ -57,16 +57,16 @@ export var MoebiusLikeStrip = function(maj, a, b) {
     return [0, Math.PI, 0, 6.283185307179586];
   };
   this.evaluate = function(u, v) {
-    var x, y, z;
-    var cosu = Math.cos(u);
-    var sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
-    var cosv = Math.cos(v);
-    var sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
+    let x, y, z;
+    const cosu = Math.cos(u);
+    const sinu = u >= 0 && u < 6.283185307179586 ? u <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(u);
+    const cosv = Math.cos(v);
+    const sinv = v >= 0 && v < 6.283185307179586 ? v <= 3.141592653589793 ? Math.sqrt(1.0 - cosv * cosv) : -Math.sqrt(1.0 - cosv * cosv) : Math.sin(v);
     x = this.a * cosv * cosu - this.b * sinv * sinu;
     z = this.a * cosv * sinu + this.b * sinv * cosu;
     // Find the sine and cosine of u + u
-    var cosu2 = cosu * cosu - sinu * sinu;
-    var sinu2 = sinu * cosu * 2;
+    const cosu2 = cosu * cosu - sinu * sinu;
+    const sinu2 = sinu * cosu * 2;
     y = (this.maj + x) * sinu2;
     x = (this.maj + x) * cosu2;
     return [x, z, y];
@@ -85,13 +85,13 @@ export var MoebiusStrip = function(radius, width) {
     return [-this.width, this.width, 0, H3DU.MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
-    var x, y, z;
-    var halfv = v / 2;
-    var cosv2 = Math.cos(halfv);
-    var sinv2 = halfv >= 0 && halfv < 6.283185307179586 ? halfv <= 3.141592653589793 ? Math.sqrt(1.0 - cosv2 * cosv2) : -Math.sqrt(1.0 - cosv2 * cosv2) : Math.sin(halfv);
-    var cosv = cosv2 * cosv2 - sinv2 * sinv2;
-    var sinv = 2 * sinv2 * cosv2;
-    var tmp = u * cosv2 + this.radius;
+    let x, y, z;
+    const halfv = v / 2;
+    const cosv2 = Math.cos(halfv);
+    const sinv2 = halfv >= 0 && halfv < 6.283185307179586 ? halfv <= 3.141592653589793 ? Math.sqrt(1.0 - cosv2 * cosv2) : -Math.sqrt(1.0 - cosv2 * cosv2) : Math.sin(halfv);
+    const cosv = cosv2 * cosv2 - sinv2 * sinv2;
+    const sinv = 2 * sinv2 * cosv2;
+    const tmp = u * cosv2 + this.radius;
     x = cosv * tmp;
     y = sinv * tmp;
     z = sinv2 * u;
