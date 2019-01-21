@@ -1,4 +1,3 @@
-/* global MathUtil */
 /** The <code>extras/contourlines.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -16,7 +15,7 @@
  http://peteroupc.github.io/
 */
 
-import {MeshBuffer} from "../h3du_module.js";
+import {MathUtil, MeshBuffer} from "../h3du_module.js";
 
 /** @ignore */
 function contourOne(p1, p2, u1, v1, u2, v2, level, lines) {

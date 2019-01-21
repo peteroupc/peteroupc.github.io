@@ -6,7 +6,6 @@
  * import * as CustomModuleName from "extras/polyhedra.js";</pre>
  * @module extras/polyhedra */
 
-/* global MathUtil */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -15,7 +14,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {MeshBuffer} from "../h3du_module.js";
+import {MathUtil, MeshBuffer} from "../h3du_module.js";
 /**
  * Contains helper methods for generating the five platonic solids
  * and other polyhedra.<p>

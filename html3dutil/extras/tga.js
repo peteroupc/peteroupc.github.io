@@ -6,7 +6,7 @@
  * import * as CustomModuleName from "extras/tga.js";</pre>
  * @module extras/tga */
 
-/* global DataView, Uint8Array, buf */
+/* global DataView, Uint8Array */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -46,7 +46,7 @@ export const loadTga = function(data) {
     throw new Error("unsupported pixelsize");
   }
   const size = width * height;
-  if(size > buf.data.length) {
+  if(size > data.length) {
     throw new Error("size too big");
   }
   let i;

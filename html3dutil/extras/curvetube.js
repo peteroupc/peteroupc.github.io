@@ -1,4 +1,3 @@
-/* global cosAngle, sinAngle */
 /** The <code>extras/curvetube.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -30,6 +29,9 @@ const _TBNFrames = function(func) {
   let isClosed = false;
   const res = 50; // NOTE: Many samples of TBN frames are needed for accuracy
   let totalLength = 0;
+  let cosAngle;
+  let sinAngle;
+  let subAngle;
   const runningLengths = [0];
   this.endPoints = _TBNFrames.getEndPoints(func);
   const firstSample = this.func.evaluate(this.endPoints[0]);
@@ -53,7 +55,6 @@ const _TBNFrames = function(func) {
       runningLengths[i] = totalLength;
     }
   }
-
   for (i = 0; i <= res; i++) {
     if(i === 0) {
       this.normals[i] = _TBNFrames.normalFromTangent(this.tangents[0]);
@@ -63,8 +64,8 @@ const _TBNFrames = function(func) {
         this.normals[i] = this.normals[i - 1];
       } else {
         MathUtil.vec3normalizeInPlace(b);
-        const cosAngle = MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
-        const sinAngle = Math.abs(MathUtil.vec3length(
+        cosAngle = MathUtil.vec3dot(this.tangents[i - 1], this.tangents[i]);
+        sinAngle = Math.abs(MathUtil.vec3length(
           MathUtil.vec3cross(this.tangents[i - 1], this.tangents[i])));
         this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i - 1], b, sinAngle, cosAngle);
@@ -81,9 +82,9 @@ const _TBNFrames = function(func) {
     this.tangents[res] = this.tangents[0];
     if(angle !== 0) {
       for(1; i <= res - 1; i++) {
-        // const subAngle = angle * runningLengths[i] / totalLength;
-        // cosAngle = Math.cos(subAngle);
-        // sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
+        subAngle = angle * runningLengths[i] / totalLength;
+        cosAngle = Math.cos(subAngle);
+        sinAngle = subAngle >= 0 && subAngle < 6.283185307179586 ? subAngle <= 3.141592653589793 ? Math.sqrt(1.0 - cosAngle * cosAngle) : -Math.sqrt(1.0 - cosAngle * cosAngle) : Math.sin(subAngle);
         this.normals[i] = _TBNFrames._rotateVector(
           this.normals[i], this.tangents[i], sinAngle, cosAngle);
       }

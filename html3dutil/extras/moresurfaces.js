@@ -6,7 +6,6 @@
  * import * as CustomModuleName from "extras/moresurfaces.js";</pre>
  * @module extras/moresurfaces */
 
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -15,6 +14,8 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+import {MathUtil} from "../h3du_module.js";
 
 /**
  * Surface evaluator object for the Klein surface, also known as the "Klein bottle".
@@ -83,7 +84,7 @@ export const MoebiusStrip = function(radius, width) {
   this.radius = typeof radius === "undefined" || radius === null ? 1 : radius;
   this.width = typeof width === "undefined" || width === null ? 0.5 : width;
   this.endPoints = function() {
-    return [-this.width, this.width, 0, H3DU.MathUtil.PiTimes2];
+    return [-this.width, this.width, 0, MathUtil.PiTimes2];
   };
   this.evaluate = function(u, v) {
     const halfv = v / 2;

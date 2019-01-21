@@ -1,4 +1,4 @@
-/* global px, py, pz, qx, qy, qz, t1, t2, v, w */
+/* global px, py, pz, qx, qy, qz, v, w */
 /** The <code>extras/raypick.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -31,15 +31,18 @@ function getIntersectionRayBox(ray, box) {
   const p = [ray[0], ray[1], ray[2]]; // origin: first 3 elements of ray
   let mn = 0.0;
   let mx = Number.POSITIVE_INFINITY;
+  let recip;
+  let t1;
+  let t2;
   // X intersection
   if (Math.abs(d[0]) < EPSILON) {
     if (p[0] < box[0] || p[0] > box[3]) {
       return null;
     }
   } else {
-    const recip = 1.0 / d[0];
-    const t1 = (box[0] - p[0]) * recip;
-    const t2 = (box[3] - p[0]) * recip;
+    recip = 1.0 / d[0];
+    t1 = (box[0] - p[0]) * recip;
+    t2 = (box[3] - p[0]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {
@@ -52,9 +55,9 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   } else {
-    // recip = 1.0 / d[1];
-    // t1 = (box[1] - p[1]) * recip;
-    // t2 = (box[4] - p[1]) * recip;
+    recip = 1.0 / d[1];
+    t1 = (box[1] - p[1]) * recip;
+    t2 = (box[4] - p[1]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {
@@ -67,9 +70,9 @@ function getIntersectionRayBox(ray, box) {
       return null;
     }
   } else {
-    // recip = 1.0 / d[2];
-    // t1 = (box[2] - p[2]) * recip;
-    // t2 = (box[5] - p[2]) * recip;
+    recip = 1.0 / d[2];
+    t1 = (box[2] - p[2]) * recip;
+    t2 = (box[5] - p[2]) * recip;
     mn = Math.max(mn, t1 > t2 ? t2 : t1);
     mx = Math.min(mx, t1 > t2 ? t1 : t2);
     if (mn > mx) {

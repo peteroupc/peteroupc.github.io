@@ -6,7 +6,6 @@
  * import * as CustomModuleName from "extras/derivedcurves.js";</pre>
  * @module extras/derivedcurves */
 
-/* global H3DU, Surface */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -15,6 +14,8 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
+
+import {Curve, Surface} from "../h3du_module.js";
 
 function _vecNormInPlaceAndScale(vec, scale) {
   let len = 0;
@@ -237,7 +238,7 @@ export function ruledSurface(directrix, director) {
 export function polarCurve(func, phase) {
   const pfunc = func;
   const pphase = phase;
-  return new H3DU.Curve({
+  return new Curve({
     "evaluate":function(u) {
       let uphase = u + pphase;
       if(uphase > 6.283185307179586) {
@@ -261,7 +262,7 @@ export function polarCurve(func, phase) {
  */
 export function spiralCurve(radius, phase) {
   const pphase = phase;
-  return new H3DU.Curve({
+  return new Curve({
     "evaluate":function(u) {
       const uphase = u + pphase;
       const cosu = Math.cos(uphase);
