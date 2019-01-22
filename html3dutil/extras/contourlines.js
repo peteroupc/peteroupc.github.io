@@ -212,8 +212,6 @@ export const contourLines = function(func, levels, u1, u2, v1, v2, usize, vsize)
   return drawCurve(contours);
 };
 
-// TODO: Implement mesh contouring by drawing contour lines
-// across one or several contour planes
 const EPSILON = 1e-9;
 const AABBTree = {};
 
@@ -242,7 +240,7 @@ function classifyPointToPlane3D(planeNormal, planeD, point) {
 }
 
 function getIntersectionCoordCoordPlane(a, b, planeNormal, planeD) {
-  const ab = MathUtil.vec3sub(a, b);
+  const ab = MathUtil.vec3sub(b, a);
   let t = (-planeD - MathUtil.vec3dot(planeNormal, a)) /
     MathUtil.vec3dot(planeNormal, ab);
   if(t >= -EPSILON && t <= 1.0 + EPSILON) {
@@ -284,12 +282,13 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
       }
     }
     if (aSide === AABBTree.ON) {
+      if(!splitVerts)splitVerts = [];
       splitVerts.push(a);
     }
     a = b;
     aSide = bSide;
   }
-  if(splitVerts.length > 0) {
+  if(splitVerts && splitVerts.length > 0) {
     let i;
     for (i = 0; i < splitVerts.length; i += 2) {
       if (i + 1 < splitVerts.length && splitVerts[i + 1] !== null) {
@@ -301,10 +300,19 @@ function getIntersectionPolygonPlane(poly, planeNormal, planeD, result) {
   }
 }
 /**
- * TODO: Not documented yet.
- * @param {*} mesh TODO: Not documented yet.
- * @param {*} planes TODO: Not documented yet.
+ * Generates a mesh buffer of
+ * contour lines along the surface of a 3-dimensional triangle mesh.
+ * @param {MeshBuffer} mesh A triangle mesh.  It must contain a "POSITION" buffer
+ * attribute with three elements per value. If the number of vertices in the mesh is not divisible by
+ * 3, any excess vertices at the end are ignored.
+ * @param {Array<Array<number>>} planes An array of 4-element arrays that serve as contour
+ * planes. The contour lines will be drawn at the intersection of the contour
+ * planes and the surface of the mesh. Each 4-element array describes a plane
+ * (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.
  * @returns {MeshBuffer} A mesh buffer containing the generated contour lines.
+ * Returns null if the input mesh's primitive type isn't triangles, or if
+ * the input mesh doesn't contain a "POSITION" buffer attribute with
+ * three elements per value.
  */
 export function contourLines3D(mesh, planes) {
   if(mesh.primitiveType() !== MeshBuffer.TRIANGLES)return null;
@@ -328,9 +336,9 @@ export function contourLines3D(mesh, planes) {
     p.getVec(mesh.getIndex(i + 1), v2);
     p.getVec(mesh.getIndex(i + 2), v3);
     let j;
-    for (j = 0; j < planeArray.length; i++) {
-      const plane = planeArray[i];
-      getIntersectionPolygonPlane(polygon, plane[0], plane[2], positions);
+    for (j = 0; j < planeArray.length; j++) {
+      const plane = planeArray[j];
+      getIntersectionPolygonPlane(polygon, plane[0], plane[1], positions);
     }
   }
   return MeshBuffer.fromPositions(positions)

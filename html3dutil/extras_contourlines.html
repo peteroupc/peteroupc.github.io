@@ -22,7 +22,8 @@ import * as CustomModuleName from &quot;extras/contourlines.js&quot;;
 
 <ul>
 <li><a href="#extras_contourlines.contourLines">contourLines</a><br>Generates contour lines for two-dimensional data.</li>
-<li><a href="#extras_contourlines.contourLines3D">contourLines3D</a><br>TODO: Not documented yet.</li>
+<li><a href="#extras_contourlines.contourLines3D">contourLines3D</a><br>Generates a mesh buffer of
+contour lines along the surface of a 3-dimensional triangle mesh.</li>
 </ul>
 
 <p><a name='extras_contourlines.contourLines'></a></p>
@@ -62,18 +63,22 @@ function. This method samples the function at integer grid points.</p>
 
 <h3>(static) module:extras/contourlines.contourLines3D(mesh, planes)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Generates a mesh buffer of
+contour lines along the surface of a 3-dimensional triangle mesh.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>planes</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
+<li><code>mesh</code> (Type: MeshBuffer)<br>A triangle mesh. It must contain a &quot;POSITION&quot; buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.</li>
+<li><code>planes</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of 4-element arrays that serve as contour planes. The contour lines will be drawn at the intersection of the contour planes and the surface of the mesh. Each 4-element array describes a plane (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>A mesh buffer containing the generated contour lines. (Type: MeshBuffer)</p>
+<p>A mesh buffer containing the generated contour lines.
+Returns null if the input mesh&#39;s primitive type isn&#39;t triangles, or if
+the input mesh doesn&#39;t contain a &quot;POSITION&quot; buffer attribute with
+three elements per value. (Type: MeshBuffer)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

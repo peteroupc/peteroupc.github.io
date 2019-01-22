@@ -6,7 +6,6 @@
  * import * as CustomModuleName from "extras/starfield.js";</pre>
  * @module extras/starfield */
 
-/* global H3DU */
 /*
  Any copyright to this file is released to the Public Domain.
  http://creativecommons.org/publicdomain/zero/1.0/
@@ -15,7 +14,7 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {Meshes, ShapeGroup, newFrames} from "../h3du_module.js";
+import {Meshes, Shape, ShapeGroup, newFrames} from "../h3du_module.js";
 /**
  * TODO: Not documented yet.
  * @param {*} range
@@ -59,7 +58,7 @@ export function StarField(range) {
     this._move(newFrames(this.timer, time));
   };
   // use a crude white sphere to represent a star
-  const star = new H3DU.Shape(
+  const star = new Shape(
     Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
   let i;
   for (i = 0; i < 200; i++) {
