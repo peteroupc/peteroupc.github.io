@@ -26,6 +26,7 @@ or in the reverse order around</li>
 <li><a href="#H3DU.MathUtil.GlobalRollYawPitch">GlobalRollYawPitch</a><br>Indicates that a vector&#39;s rotation occurs as a roll, then yaw, then pitch (each rotation around the original axes).</li>
 <li><a href="#H3DU.MathUtil.GlobalYawPitchRoll">GlobalYawPitchRoll</a><br>Indicates that a vector&#39;s rotation occurs as a yaw, then pitch, then roll (each rotation around the original axes).</li>
 <li><a href="#H3DU.MathUtil.GlobalYawRollPitch">GlobalYawRollPitch</a><br>Indicates that a vector&#39;s rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).</li>
+<li><a href="#H3DU.MathUtil.HalfPi">HalfPi</a><br>Closest approximation to pi divided by 2, or a 90-degree turn in radians.</li>
 <li><a href="#H3DU.MathUtil.LocalPitchRollYaw">LocalPitchRollYaw</a><br>Indicates that a vector&#39;s rotation occurs as a pitch, then roll, then yaw, where the roll and yaw
 occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
 <li><a href="#H3DU.MathUtil.LocalPitchYawRoll">LocalPitchYawRoll</a><br>Indicates that a vector&#39;s rotation occurs as a pitch, then yaw, then roll, where the yaw and roll
@@ -38,6 +39,15 @@ occur around the rotated object&#39;s new axes and not necessarily the original 
 occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
 <li><a href="#H3DU.MathUtil.LocalYawRollPitch">LocalYawRollPitch</a><br>Indicates that a vector&#39;s rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object&#39;s new axes and not necessarily the original axes.</li>
+<li><a href="#H3DU.MathUtil.Num180DividedByPi">Num180DividedByPi</a><br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.</li>
+<li><a href="#H3DU.MathUtil.PiDividedBy180">PiDividedBy180</a><br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.</li>
+<li><a href="#H3DU.MathUtil.PiTimes2">PiTimes2</a><br>Closest approximation to pi times 2, or a 360-degree turn in radians.</li>
+<li><a href="#H3DU.MathUtil.ToDegrees">ToDegrees</a><br>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian.</li>
+<li><a href="#H3DU.MathUtil.ToRadians">ToRadians</a><br>Closest approximation to pi divided by 180, or the number
+of radians in a degree.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -337,6 +347,14 @@ or in the reverse order around</p>
 
 <p>Indicates that a vector&#39;s rotation occurs as a yaw, then roll, then pitch (each rotation around the original axes).</p>
 
+<p><a name='H3DU.MathUtil.HalfPi'></a></p>
+
+<h3>H3DU.MathUtil.HalfPi (constant)</h3>
+
+<p>Closest approximation to pi divided by 2, or a 90-degree turn in radians.</p>
+
+<p>Default Value: <code>1.5707963267948966</code></p>
+
 <p><a name='H3DU.MathUtil.LocalPitchRollYaw'></a></p>
 
 <h3>H3DU.MathUtil.LocalPitchRollYaw (constant)</h3>
@@ -378,6 +396,46 @@ occur around the rotated object&#39;s new axes and not necessarily the original 
 
 <p>Indicates that a vector&#39;s rotation occurs as a yaw, then roll, then pitch, where the roll and pitch
 occur around the rotated object&#39;s new axes and not necessarily the original axes.</p>
+
+<p><a name='H3DU.MathUtil.Num180DividedByPi'></a></p>
+
+<h3>H3DU.MathUtil.Num180DividedByPi (constant)</h3>
+
+<p>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian. Multiply by this number to convert radians to degrees.</p>
+
+<p>Default Value: <code>57.29577951308232</code></p>
+
+<p><a name='H3DU.MathUtil.PiDividedBy180'></a></p>
+
+<h3>H3DU.MathUtil.PiDividedBy180 (constant)</h3>
+
+<p>Closest approximation to pi divided by 180, or the number
+of radians in a degree. Multiply by this number to convert degrees to radians.</p>
+
+<p>Default Value: <code>0.017453292519943295</code></p>
+
+<p><a name='H3DU.MathUtil.PiTimes2'></a></p>
+
+<h3>H3DU.MathUtil.PiTimes2 (constant)</h3>
+
+<p>Closest approximation to pi times 2, or a 360-degree turn in radians.</p>
+
+<p>Default Value: <code>6.283185307179586</code></p>
+
+<p><a name='H3DU.MathUtil.ToDegrees'></a></p>
+
+<h3>H3DU.MathUtil.ToDegrees (constant)</h3>
+
+<p>Closest approximation to 180 divided by pi, or the number of
+degrees in a radian. Multiply by this number to convert radians to degrees.</p>
+
+<p><a name='H3DU.MathUtil.ToRadians'></a></p>
+
+<h3>H3DU.MathUtil.ToRadians (constant)</h3>
+
+<p>Closest approximation to pi divided by 180, or the number
+of radians in a degree. Multiply by this number to convert degrees to radians.</p>
 
 <p><a name='H3DU.MathUtil.boxCenter'></a></p>
 
@@ -3809,6 +3867,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>

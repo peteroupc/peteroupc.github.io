@@ -11,20 +11,56 @@
 <h3>new Semantic()</h3>
 
 <p>Contains constants for assigning semantics
-to uniforms and vertex attributes.</p>
+to vertex attributes found in mesh buffers and
+to data that is uniform throughout a particular
+geometry draw call.</p>
 
 <h3>Members</h3>
 
 <ul>
+<li><a href="#Semantic.BITANGENT">BITANGENT</a><br>Attribute semantic for a bitangent vector.</li>
+<li><a href="#Semantic.COLOR">COLOR</a><br>Attribute semantic for a color.</li>
+<li><a href="#Semantic.CUSTOM">CUSTOM</a><br>Attribute semantic for custom attributes.</li>
+<li><a href="#Semantic.JOINT">JOINT</a><br>Attribute semantic for a skinning joint.</li>
 <li><a href="#Semantic.JOINTMATRIX">JOINTMATRIX</a><br>Uniform semantic for a joint matrix.</li>
 <li><a href="#Semantic.MODEL">MODEL</a><br>Uniform semantic for a model matrix.</li>
 <li><a href="#Semantic.MODELVIEW">MODELVIEW</a><br>Uniform semantic for a model-view matrix.</li>
 <li><a href="#Semantic.MODELVIEWINVERSETRANSPOSE">MODELVIEWINVERSETRANSPOSE</a><br>Uniform semantic for the inverse of the 3x3 transpose of the model-view matrix.</li>
 <li><a href="#Semantic.MODELVIEWPROJECTION">MODELVIEWPROJECTION</a><br>Uniform semantic for a model-view-projection matrix.</li>
+<li><a href="#Semantic.NORMAL">NORMAL</a><br>Attribute semantic for a vertex normal.</li>
+<li><a href="#Semantic.POSITION">POSITION</a><br>Attribute semantic for a vertex position.</li>
 <li><a href="#Semantic.PROJECTION">PROJECTION</a><br>Uniform semantic for a projection matrix.</li>
+<li><a href="#Semantic.TANGENT">TANGENT</a><br>Attribute semantic for a tangent vector.</li>
+<li><a href="#Semantic.TEXCOORD">TEXCOORD</a><br>Attribute semantic for a tuple of texture coordinates.</li>
 <li><a href="#Semantic.VIEW">VIEW</a><br>Uniform semantic for a view matrix.</li>
 <li><a href="#Semantic.VIEWINVERSE">VIEWINVERSE</a><br>Uniform semantic for an inverse view matrix.</li>
+<li><a href="#Semantic.WEIGHT">WEIGHT</a><br>Attribute semantic for a skinning weight.</li>
 </ul>
+
+<p><a name='Semantic.BITANGENT'></a></p>
+
+<h3>Semantic.BITANGENT (constant)</h3>
+
+<p>Attribute semantic for a bitangent vector.</p>
+
+<p><a name='Semantic.COLOR'></a></p>
+
+<h3>Semantic.COLOR (constant)</h3>
+
+<p>Attribute semantic for a color.
+In general, each color consists of three components.</p>
+
+<p><a name='Semantic.CUSTOM'></a></p>
+
+<h3>Semantic.CUSTOM (constant)</h3>
+
+<p>Attribute semantic for custom attributes.</p>
+
+<p><a name='Semantic.JOINT'></a></p>
+
+<h3>Semantic.JOINT (constant)</h3>
+
+<p>Attribute semantic for a skinning joint.</p>
 
 <p><a name='Semantic.JOINTMATRIX'></a></p>
 
@@ -56,11 +92,61 @@ to uniforms and vertex attributes.</p>
 
 <p>Uniform semantic for a model-view-projection matrix.</p>
 
+<p><a name='Semantic.NORMAL'></a></p>
+
+<h3>Semantic.NORMAL (constant)</h3>
+
+<p>Attribute semantic for a vertex normal.</p>
+
+<p>For 3D graphics libraries to calculate a mesh buffer&#39;s lighting and shading correctly, that mesh buffer must specify normals for all its vertices.</p>
+
+<p><b>What are normals?</b> A normal is a set of numbers (usually three numbers) describing a particular direction. Generally, a normal&#39;s direction is perpendicular to a surface&#39;s edges, and points up and
+away from the surface.</p>
+
+<p>Normals are important in the lighting and shading model. When light hits an object&#39;s surface, how brightly the surface will be lit depends on how directly the light points to the surface. It will be lit the most brightly if the light is directly opposite to its normal, and not at all if the light is perpendicular to the normal or in the same direction as the normal.</p>
+
+<p>In general, vertex normals are 3-dimensional
+and are defined for a mesh buffer only if it
+also contains vertex positions.</p>
+
+<p><a name='Semantic.POSITION'></a></p>
+
+<h3>Semantic.POSITION (constant)</h3>
+
+<p>Attribute semantic for a vertex position.
+In general, vertex positions are 2-dimensional or 3-dimensional.</p>
+
 <p><a name='Semantic.PROJECTION'></a></p>
 
 <h3>Semantic.PROJECTION (constant)</h3>
 
 <p>Uniform semantic for a projection matrix.</p>
+
+<p><a name='Semantic.TANGENT'></a></p>
+
+<h3>Semantic.TANGENT (constant)</h3>
+
+<p>Attribute semantic for a tangent vector.</p>
+
+<p><a name='Semantic.TEXCOORD'></a></p>
+
+<h3>Semantic.TEXCOORD (constant)</h3>
+
+<p>Attribute semantic for a tuple of texture coordinates.</p>
+
+<p>If a texture (array of bits) will be applied to a mesh buffer&#39;s geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.</p>
+
+<p>By default in most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1), and V coordinates start at the bottom of the texture (0) and increase to the top (1). (An exception is WebGL, where, by default, V coordinates start at the top and increase to the bottom.) Thus, for example, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
+
+<p>In general, texture coordinates describe 2-dimensional points.
+However, for such texturing tasks as mapping
+a square to a trapezoid, trios of 3-dimensional texture coordinates
+are useful to ensure the texturing is perspective-correct.
+In this case, the 3-D texture coordinates are converted
+to 2-D by dividing the X and Y components by the Z component.
+In a fragment shader or pixel shader, this can look like
+the following
+code: <code>texCoord.xy/texCoord.z</code>.</p>
 
 <p><a name='Semantic.VIEW'></a></p>
 
@@ -73,6 +159,12 @@ to uniforms and vertex attributes.</p>
 <h3>Semantic.VIEWINVERSE (constant)</h3>
 
 <p>Uniform semantic for an inverse view matrix.</p>
+
+<p><a name='Semantic.WEIGHT'></a></p>
+
+<h3>Semantic.WEIGHT (constant)</h3>
+
+<p>Attribute semantic for a skinning weight.</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -157,6 +249,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>

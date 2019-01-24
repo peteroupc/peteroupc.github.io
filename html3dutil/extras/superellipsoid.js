@@ -17,22 +17,7 @@
 
 import {MathUtil} from "../h3du_module.js";
 
-/**
- * @private
- * @constructor
- */
-
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
-/* exported Toroidal */
+/*
 function Toroidal(theta, phi) {
   this.theta = theta;
   this.phi = phi;
@@ -45,6 +30,7 @@ function Toroidal(theta, phi) {
     return [c * (th + ph[0]), s * (th + ph[0]), ph[1]];
   };
 }
+*/
 /**
  * @private
  * @constructor
@@ -76,7 +62,7 @@ function Spherical(theta, phi, rx, ry, rz) {
  * @param {*} rx TODO: Not documented yet.
  * @param {*} ry TODO: Not documented yet.
  * @param {*} phase TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * @constructor
  */
 export function Supershape(m, n1, n2, n3, a, b, rx, ry, phase) {
   this.m = m;
@@ -154,11 +140,17 @@ Supershape.superellipse = function(n, rx, ry) {
   return new Supershape(4, 2 / n, 2 / n, 2 / n, 1, 1, rx, ry, 0);
 };
 /**
- * TODO: Not documented yet.
- * @param {*} n TODO: Not documented yet.
- * @param {*} rx TODO: Not documented yet.
- * @param {*} ry TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * Creates a curve evaluator object for a superellipse (a special
+ * case of a 2-D supershape),
+ * but using Paul Bourke's parameterization (using the circle parametric
+ * equation but raising all sines and cosines to a power of n).
+ * @param {number} n Exponent for the sines and cosines in the superellipse equation.
+ * A value of 1 forms a circle, values approaching 0 have the circle
+ * approach a square, and values approaching infinity have the circle
+ * approach a plus sign.
+ * @param {number} rx Radius along the X axis of the figure.
+ * @param {number} ry Radius along the Y axis of the figure.
+ * @returns {Object} Curve evaluator object for a superellipse curve.
  */
 Supershape.superellipse2 = function(n, rx, ry) {
 // Using Paul Bourke's parameterization
@@ -168,13 +160,16 @@ Supershape.superellipse2 = function(n, rx, ry) {
   };
 };
 /**
- * TODO: Not documented yet.
- * @param {*} n1 TODO: Not documented yet.
- * @param {*} n2 TODO: Not documented yet.
- * @param {*} rx TODO: Not documented yet.
- * @param {*} ry TODO: Not documented yet.
- * @param {*} rz TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * Creates a surface evaluator object for a superellipsoid (a special
+ * case of a 3-D supershape),
+ * but using Paul Bourke's parameterization (using the sphere parametric
+ * equation but raising all sines and cosines to a power of n1 or n2).
+ * @param {number} n1 Exponent for the sines and cosines along the V axis.
+ * @param {number} n2 Exponent for the sines and cosines along the U axis.
+ * @param {number} rx Radius along the X axis of the figure.
+ * @param {number} ry Radius along the Y axis of the figure.
+ * @param {number} rz Radius along the Z axis of the figure.
+ * @returns {Object} Surface evaluator object for a superellipsoid.
  */
 Supershape.superellipsoid2 = function(n1, n2, rx, ry, rz) {
 // Using Paul Bourke's parameterization

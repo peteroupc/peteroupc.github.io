@@ -64,17 +64,16 @@ and their transformed <em>window coordinates</em> when rendering things on the s
 
 <h2>Projection Transform</h2>
 
-<p>A <em>projection matrix</em> transforms coordinates in eye space to <em>clip space</em>.</p>
+<p>A <em>projection transform</em> (usually in the form of a <em>projection matrix</em>) transforms coordinates in eye space to <em>clip space</em>.</p>
 
 <p>Two commonly used projections in 3D graphics are the perspective projection and
-orthographic projection, described below. (Other kinds of projections, such as oblique projections and isometric projections, are not treated here.)</p>
+orthographic projection, described below. (Other kinds of projections, such as oblique projections, isometric projections, and nonlinear projection functions, are not treated here.)</p>
 
 <p><a id=Perspective_Projection></a></p>
 
 <h3>Perspective Projection</h3>
 
-<p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects
-look bigger than more distant objects with the same size, making the
+<p>A perspective projection gives the 3D scene a sense of depth. In this projection, closer objects look bigger than more distant objects with the same size, making the
 projection similar to how our eyes see the world.</p>
 
 <p><img src="persp1.png" alt="**Two rows of spheres, and a drawing of a perspective view volume.**"></p>
@@ -100,10 +99,7 @@ and others would be.</p>
 <li>In a perspective projection, the view volume will resemble a &quot;pyramid&quot; with the top chopped off (a <em>frustum</em>). The near clipping plane will be located at the chopped-off top, and the far clipping plane will be at the base.</li>
 </ul>
 
-<p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>.
-However, this is not the whole story, since in general, lines that are parallel in world space
-will not appear parallel in a perspective projection, so additional math is needed to
-achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a>.</p>
+<p>The perspective projection converts 3D coordinates to 4-element vectors in <em>clip space</em>. However, this is not the whole story, since in general, lines that are parallel in world space will not appear parallel in a perspective projection, so additional math is needed to achieve the perspective effect. This will be <a href="#Vertex%20Coordinates%20in%20the%20Graphics%20System"><strong>explained later</strong></a>.</p>
 
 <p>The following methods define a perspective projection.</p>
 
@@ -337,6 +333,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>

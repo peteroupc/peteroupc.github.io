@@ -184,6 +184,14 @@ newControlPoints,
 // var curve=BSplineCurve.fromBezierCurve(newControlPoints);
 </pre>
 
+<h3>Members</h3>
+
+<ul>
+<li><a href="#H3DU.BSplineCurve.DIVIDE_BIT">DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate.</li>
+</ul>
+
 <h3>Methods</h3>
 
 <ul>
@@ -211,6 +219,21 @@ passed to the BSplineCurve or BSplineCurve constructor.</li>
 <li><a href="#H3DU.BSplineCurve_velocity">velocity</a><br>Finds the velocity (derivative) of
 this curve at the given point.</li>
 </ul>
+
+<p><a name='H3DU.BSplineCurve.DIVIDE_BIT'></a></p>
+
+<h3>H3DU.BSplineCurve.DIVIDE_BIT (constant)</h3>
+
+<p>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate. This is used to convert
+homogeneous coordinates to conventional coordinates.
+If this bit is set, the length of each control point must be at least 2.</p>
+
+<p>A B-spline curve that has control points whose last coordinate is other than
+1 is a <i>rational</i> B-spline curve.</p>
+
+<p>Default Value: <code>2</code></p>
 
 <p><a name='H3DU.BSplineCurve.clamped'></a></p>
 
@@ -513,6 +536,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>

@@ -27,8 +27,6 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
 
-<p>NOTE: This page will largely discuss the 2.0.0-beta3 version of the HTML 3D library, which differs considerably from the current release (version 1.5.1) of the library. (See the library&#39;s <a href="tutorial-history.html">change history</a> for more information.)</p>
-
 <p><a id=Contents></a></p>
 
 <h2>Contents</h2>
@@ -43,16 +41,6 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <li><a href="#Custom_Shapes"><strong>Custom Shapes</strong></a></li>
 <li><a href="#The_Mesh_Constructor"><strong>The Mesh Constructor</strong></a></li>
 <li><a href="#Vertex_Methods"><strong>Vertex Methods</strong></a></li>
-<li><a href="#Texture_Coordinates"><strong>Texture Coordinates</strong></a></li>
-<li><a href="#Building_the_Mesh"><strong>Building the Mesh</strong></a></li>
-<li><a href="#Transforming_the_Mesh"><strong>Transforming the Mesh</strong></a></li>
-<li><a href="#Normals"><strong>Normals</strong></a>
-
-<ul>
-<li><a href="#What_Are_Normals"><strong>What Are Normals?</strong></a></li>
-<li><a href="#Normals_on_Built_in_Shapes"><strong>Normals on Built-in Shapes</strong></a></li>
-<li><a href="#recalcNormals"><strong>recalcNormals()</strong></a></li>
-</ul></li>
 </ul></li>
 <li><a href="#Binding_Shapes"><strong>Binding Shapes</strong></a></li>
 <li><a href="#Shape_Groups"><strong>Shape Groups</strong></a></li>
@@ -70,38 +58,24 @@ as cubes, cylinders, spheres, and custom shapes.</p>
 orange partial ring on the first row; and a yellow 3D ring, a brown cylinder, a dark
 green square, and a purple cone on the second row.**"></p>
 
-<p>Demos:</p>
-
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/shapes.html"><strong>shapes.html</strong></a> - Demonstrates
-the built-in shapes.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/platonic.html"><strong>platonic.html</strong></a> - A demo featuring the five
-platonic solids. Demonstrates how vertex and index arrays are built up to create geometric meshes.</li>
-</ul>
-
-<p>Examples:</p>
-
-<p>See <a href="https://peteroupc.github.io/html3dutil/tutorial.meshexamples.html"><strong>Examples of Creating Meshes on the Fly</strong></a> for
-examples of 3D models that can be created using the Mesh class and built-in shapes.</p>
-
 <p><a id=Built_In_Shapes></a></p>
 
 <h3>Built-In Shapes</h3>
 
 <p>The <a href="H3DU.Meshes.html"><code>H3DU.Meshes</code></a> class includes several handy methods for creating built-in shapes.
-All methods described below return a <code>H3DU.Mesh</code> object that describes the triangles they
+All methods described below return a <code>H3DU.MeshBuffer</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 
 <p><strong>3D Figures:</strong></p>
 
 <ul>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createBox">H3DU.Meshes.createBox()</a> - Creates a cube or box.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">H3DU.Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createBox">Meshes.createBox()</a> - Creates a cube or box.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
 or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">H3DU.Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createTorus">H3DU.Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">H3DU.Meshes.createSphere()</a> - Creates a sphere.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">H3DU.Meshes.createCapsule()</a> - Creates a capsule shape.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
+<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
 </ul>
 
 <p><strong>2D Figures:</strong></p>
@@ -128,76 +102,8 @@ methods that specify the mesh&#39;s data vertex by vertex.</p>
 
 <h3>The Mesh Constructor</h3>
 
-<p>The <code>H3DU.Mesh</code> constructor lets you define a shape from a predefined array of vertex data.
-Here&#39;s how.</p>
-
-<ol>
-<li><p>Create an array of numbers giving the X, Y, and Z coordinate for each vertex:</p>
-
-<pre>var vertices = [x1, y1, z1, x2, y2, z2, ... ];
-</pre>
-
-<p>If you also specify <a href="#Normals"><strong>normals</strong></a>, colors, or <a href="#Texture_Coordinates"><strong>texture coordinates</strong></a> for each vertex, you must add
-them after each vertex position in this order: normals first, colors second, and texture
-coordinates last. If you don&#39;t specify normals, colors, and/or texture coordinates per
-vertex, you can omit them. The following are examples of this:</p>
-
-<pre>// An array of vertices each with a set of normals
-var vertices = [
- x1, y1, z1, nx1, ny1, nz1,
- x2, y2, z2, nx2, ny2, nz2,
- ...
-];
-// An array of vertices each with a set of colors
-// and texture coordinates
-var vertices = [
- x1, y1, z1, cr1, cg1, cb1, u1, v1,
- x2, y2, z2, cr2, cg2, cb2, u2, v2,
- ...
-];
-</pre></li>
-<li><p>Create a second array of numbers giving the indices to vertices defined in the
-previous step:</p>
-
-<pre>var indices = [0, 1, 2, 1, 2, 3, ... ];
-</pre>
-
-<p>Each index refers to the (n+1)th vertex, no matter how many array elements each vertex
-consists of (a vertex with just coordinates will use 3 array elements).</p>
-
-<p>If you are defining a set of triangles, there should be 3 indices for each triangle,
-and if you are defining a set of line segments, there should be 2 indices for each
-line segment.</p></li>
-<li><p>Call the mesh constructor with the vertex and index arrays.</p>
-
-<pre>var bits = H3DU.Mesh.NORMALS_BIT; // Assumes we used the vertex array with normals
-var mesh = new H3DU.Mesh(vertices, indices, bits);
-</pre>
-
-<p>Note that you must include a set of bits indicating what kind of data the vertex
-array contains.  (If none of the bits apply, use 0 or omit the &quot;bits&quot; parameter.) The bits are:</p>
-
-<ul>
-<li><code>H3DU.Mesh.NORMALS_BIT</code> - if you included <a href="#Normals"><strong>normals</strong></a> for each vertex (3 elements)</li>
-<li><code>H3DU.Mesh.COLORS_BIT</code> - if you included colors for each vertex (3 elements)</li>
-<li><code>H3DU.Mesh.TEXCOORDS_BIT</code> - if you included <a href="#Texture_Coordinates"><strong>texture coordinates</strong></a> for each vertex (2 elements)</li>
-<li><code>H3DU.Mesh.LINES_BIT</code> - if the mesh defines a set of lines rather than triangles</li>
-<li><p><code>H3DU.Mesh.POINTS_BIT</code> - if the mesh defines a set of points (you can&#39;t set both <code>LINES_BIT</code> and
-<code>POINTS_BIT</code>).</p>
-
-<p>The bits may be combined as in the following example:</p>
-
-<pre>var bits = H3DU.Mesh.NORMALS_BIT | H3DU.Mesh.COLORS_BIT;
-</pre>
-
-<p>Alternatively, you can call the <code>H3DU.Mesh</code> constructor with no arguments:</p>
-
-<pre>var mesh = new H3DU.Mesh();
-</pre>
-
-<p>Doing so will create a mesh with no vertices.</p></li>
-</ul></li>
-</ol>
+<p>The <code>MeshBuffer</code> class contains four methods (<code>fromPositions</code>,
+<code>fromPositionsNormals</code>, <code>fromPositionsUV</code>, and <code>fromPositionsNormalsUV</code>) that let you define a mesh buffer from a predefined array of vertex data.  See the documentation for those methods for more information.</p>
 
 <p><a id=Vertex_Methods></a></p>
 
@@ -234,7 +140,6 @@ The first 4 vertices make up the first quad, and each additional
 quad is made up of the last 2 vertices of the previous quad and
 2 new vertices.</li>
 <li><code>H3DU.Mesh.LINE_STRIP</code> - A series of points making up a connected line segment path.</li>
-<li><code>H3DU.Mesh.POINTS</code> - A series of points.</li>
 </ul></li>
 <li><p>Call the <code>normal3()</code>, <code>color3()</code>, and <code>texCoord2()</code> methods, as needed, to set the
 next vertex&#39;s parameters. You don&#39;t need to do this for each vertex if multiple
@@ -260,113 +165,6 @@ won&#39;t depend on previous vertices. For example, if you define a <code>TRIANG
 you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
 &quot;disconnected&quot; from the previous one as far as the mesh object is concerned. However,
 a single <code>Mesh</code> can contain only one kind of primitive (triangles, lines, or points) at a time.</p>
-
-<p><a id=Texture_Coordinates></a></p>
-
-<h3>Texture Coordinates</h3>
-
-<p>If the mesh has a texture associated with it, you must specify texture coordinates
-for each vertex in the mesh.  A texture coordinate is a set of two numbers,
-called U and V, that map to a specific point in the texture.  Each texture coordinate
-ranges from 0 to 1. U coordinates start at the left of the texture (0) and increase to the right
-(1), and V coordinates start at the bottom of the texture (0) and
-increase to the top (1).</p>
-
-<p>For example, texture coordinates (0, 1) indicate the top left corner of the texture,
-and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
-
-<p><a id=Building_the_Mesh></a></p>
-
-<h3>Building the Mesh</h3>
-
-<p>Call the MeshBuffer class to create a mesh buffer, whether it&#39;s created
-using the <code>H3DU.Mesh</code> constructor or by building it vertex by vertex:</p>
-
-<pre>var meshBuffer = new MeshBuffer(mesh);
-</pre>
-
-<p><a id=Transforming_the_Mesh></a></p>
-
-<h3>Transforming the Mesh</h3>
-
-<p>Once you&#39;ve created the mesh buffer, you can use the <code>transform()</code> method to transform
-all the vertices in the mesh buffer with a <a href="tutorial-glmath.html">4x4 matrix</a>. The
-<a href="https://peteroupc.github.io/html3dutil/demos/shapes.html"><strong>shapes.html</strong></a> demo uses
-this method to adjust some of the mesh bufferes to make them look better on the screen.
-Example:</p>
-
-<pre>var matrix = H3DU.MathUtil.mat4scaled(2,2,2);
-// Use the transform to double the mesh buffer&#39;s size
-meshBuffer.transform(matrix);
-</pre>
-
-<p><a id=Normals></a></p>
-
-<h3>Normals</h3>
-
-<p>For lighting and shading to work correctly, you must specify normals for all the
-vertices in the mesh buffer.</p>
-
-<p><a id=What_Are_Normals></a></p>
-
-<h4>What Are Normals?</h4>
-
-<p>A normal is a set of 3 numbers describing a particular direction. Generally,
-a normal&#39;s direction is perpendicular to a surface&#39;s edges, and points
-away from the surface.</p>
-
-<p>Normals are important in the lighting and shading model. When light
-hits an object&#39;s surface, how brightly the surface will be lit depends on how directly the
-light points to the surface. It will be lit the most brightly if the light
-is directly opposite to its normal, and not at all if the light is perpendicular to the
-normal or in the same direction as the normal.</p>
-
-<p><a id=Normals_on_Built_in_Shapes></a></p>
-
-<h4>Normals on Built-in Shapes</h4>
-
-<p>The <code>Meshes</code> class includes built-in methods that will automatically
-specify the proper normals.</p>
-
-<p><a id=recalcNormals></a></p>
-
-<h4>recalcNormals()</h4>
-
-<p>You can use the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_recalcNormals"><code>recalcNormals()</code></a> method to
-recalculate the mesh buffer&#39;s normals,
-in order to give the shape a flat or smooth appearance or to shade the shape from
-the inside or the outside. This method takes two parameters:</p>
-
-<ul>
-<li>The first parameter is <code>true</code> if the normals will be calculated such that the shape
-will have a flat appearance; otherwise, <code>false</code> (giving the shape a smooth appearance).
-This works by either giving each triangle the same normal (flat shading) or giving
-each unique vertex its own normal (smooth shading).</li>
-<li>The second parameter is <code>true</code> if the normals will be calculated such that the shape
-is shaded from the inside; otherwise, <code>false</code>.</li>
-</ul>
-
-<p>For normal calculation to properly affect shading, each triangle in
-the mesh buffer must have its vertices ordered in the same winding (counterclockwise or
-clockwise) throughout. If the
-vertices have the wrong order, use the <a href="H3DU.MeshBuffer.html#H3DU.MeshBuffer_reverseWinding"><code>reverseWinding()</code></a>
-method to change their order.</p>
-
-<blockquote>
-<p>Note: For right-handed coordinate systems, as will be the case when using,
-for example, the <code>Batch3D.perspectiveAspect()</code> method,
-if the mesh buffer describes a closed convex surface (such as a sphere or cube),
-each triangle&#39;s vertices (as they appear when the triangle&#39;s front side is seen)
-must be ordered counterclockwise for the shape to be shaded from the outside.</p>
-</blockquote>
-
-<p>Example:</p>
-
-<pre>// Use flat shading, and shape is shaded from the outside
-meshBuffer.recalcNormals(true, false);
-// Both parameters can be omitted, setting both to false
-meshBuffer.recalcNormals();
-</pre>
 
 <p><a id=Binding_Shapes></a></p>
 
@@ -457,9 +255,8 @@ at once. Here is an example of a clock made up of multiple shapes:</p>
 
 <p><img src="clock.png" alt="**Clock**"></p>
 
-<p>This clock is made up of a <strong>torus</strong> for the edge, <strong>disks</strong> for the front and back,
-<strong>capsules</strong> for the hands, and crude <strong>spheres</strong> for the center and top. These shapes
-are added to a single ShapeGroup which represents the whole clock:</p>
+<p>This clock is made up of shapes, which
+are added to a single ShapeGroup which represents the whole clock, as follows:</p>
 
 <ul>
 <li>Clock: <code>ShapeGroup</code>
@@ -476,17 +273,9 @@ are added to a single ShapeGroup which represents the whole clock:</p>
 </ul></li>
 </ul>
 
-<p>The demo for the clock is:</p>
-
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/clock.html"><strong>clock.html</strong></a> - A demo
-featuring a wall clock.</li>
-</ul>
-
 <p>To create a shape group, call <code>new H3DU.ShapeGroup()</code>. To add a <code>Shape</code> object to the group,
-call <code>new H3DU.Shape(shape)</code>. Note that you can only add shapes, not meshes,
-to a shape group, just as for a 3D batch (<code>H3DU.Batch3D</code>). A shape group, though, is perfectly allowed to contain
-other shape groups.</p>
+call <code>new H3DU.Shape(shape)</code>. Note that you can add only shapes or other shape groups, not meshes,
+to a shape group.</p>
 
 <p><a id=Other_Pages></a></p>
 
@@ -583,6 +372,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>
