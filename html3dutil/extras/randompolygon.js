@@ -49,14 +49,17 @@ function segsIntersect(a1, a2, b1, b2) {
   return false;
 }
 /**
- * TODO: Not documented yet.
- * @param {*} cx TODO: Not documented yet.
- * @param {*} cy TODO: Not documented yet.
- * @param {*} avgRadius TODO: Not documented yet.
- * @param {*} sides TODO: Not documented yet.
- * @param {*} irregular TODO: Not documented yet.
- * @param {*} spiky TODO: Not documented yet.
- * @returns {*} TODO: Not documented yet.
+ * Generates a simple polygon at random.
+ * @param {number} cx X coordinate of the polygon's approximate center.
+ * @param {number} cy Y coordinate of the polygon's approximate center.
+ * @param {number} avgRadius Average distance of the polygon's vertices from the center.
+ * @param {number} sides Number of sides in the polygon.
+ * @param {number} [irregular] Degree to which the angular distance from one vertex
+ * to the next is uneven. If 0, the vertices will be evenly spaced in terms
+ * of angular distance. Usually no more than half pi. If null, undefined, or omitted, the default is 0.
+ * @param {number} [spiky] Degree of variation among distances of the polygon's vertices
+ * from the center, in terms of a standard deviation from the average. If null, undefined, or omitted, the default is 0.
+ * @returns {GraphicsPath} The randomly generated polygon.
  * @function
  */
 export const randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
@@ -87,7 +90,13 @@ export const randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky
       if(r > avg2)r = avg2;
       const c = Math.cos(theta);
       const s = theta >= 0 && theta < 6.283185307179586 ? theta <= 3.141592653589793 ? Math.sqrt(1.0 - c * c) : -Math.sqrt(1.0 - c * c) : Math.sin(theta);
-      points.push([c * r + cx, s * r + cy]);
+      const newpoint = [c * r + cx, s * r + cy];
+      if(points.length > 0 &&
+newpoint[0] === points[points.length - 1][0] &&
+ newpoint[1] === points[points.length - 1][1]) {
+        i--; continue;
+      }
+      points.push();
       theta += deltas[i] / k;
     }
     failed = false;

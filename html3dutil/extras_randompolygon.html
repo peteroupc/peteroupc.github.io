@@ -21,29 +21,29 @@ import * as CustomModuleName from &quot;extras/randompolygon.js&quot;;
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#extras_randompolygon.randomPolygon">randomPolygon</a><br>TODO: Not documented yet.</li>
+<li><a href="#extras_randompolygon.randomPolygon">randomPolygon</a><br>Generates a simple polygon at random.</li>
 </ul>
 
 <p><a name='extras_randompolygon.randomPolygon'></a></p>
 
-<h3>(static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, irregular, spiky)</h3>
+<h3>(static) module:extras/randompolygon.randomPolygon(cx, cy, avgRadius, sides, [irregular], [spiky])</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Generates a simple polygon at random.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>cx</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>cy</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>avgRadius</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>sides</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>irregular</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
-<li><code>spiky</code> (Type: <a href="_.html">*</a>)<br>TODO: Not documented yet.</li>
+<li><code>cx</code> (Type: number)<br>X coordinate of the polygon&#39;s approximate center.</li>
+<li><code>cy</code> (Type: number)<br>Y coordinate of the polygon&#39;s approximate center.</li>
+<li><code>avgRadius</code> (Type: number)<br>Average distance of the polygon&#39;s vertices from the center.</li>
+<li><code>sides</code> (Type: number)<br>Number of sides in the polygon.</li>
+<li><code>irregular</code> (Type: number) (optional)<br>Degree to which the angular distance from one vertex to the next is uneven. If 0, the vertices will be evenly spaced in terms of angular distance. Usually no more than half pi. If null, undefined, or omitted, the default is 0.</li>
+<li><code>spiky</code> (Type: number) (optional)<br>Degree of variation among distances of the polygon&#39;s vertices from the center, in terms of a standard deviation from the average. If null, undefined, or omitted, the default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: <a href="_.html">*</a>)</p>
+<p>The randomly generated polygon. (Type: GraphicsPath)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -128,7 +128,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
 <li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
 <li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
-<li><a href="extras_superellipsoid.Superellipsoid.html">module:extras/superellipsoid.Superellipsoid</a></li>
 <li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
 <li><a href="extras_text.html">module:extras/text</a></li>
 <li><a href="extras_tga.html">module:extras/tga</a></li>
