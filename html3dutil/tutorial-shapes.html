@@ -40,7 +40,6 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <li><a href="#Built_In_Shapes"><strong>Built-In Shapes</strong></a></li>
 <li><a href="#Custom_Shapes"><strong>Custom Shapes</strong></a></li>
 <li><a href="#The_Mesh_Constructor"><strong>The Mesh Constructor</strong></a></li>
-<li><a href="#Vertex_Methods"><strong>Vertex Methods</strong></a></li>
 </ul></li>
 <li><a href="#Binding_Shapes"><strong>Binding Shapes</strong></a></li>
 <li><a href="#Shape_Groups"><strong>Shape Groups</strong></a></li>
@@ -69,34 +68,19 @@ are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 <p><strong>3D Figures:</strong></p>
 
 <ul>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createBox">Meshes.createBox()</a> - Creates a cube or box.</li>
 <li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
 or top.</li>
 <li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createTorus">Meshes.createTorus()</a> - Creates a torus (doughnut shape).</li>
 <li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
 <li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
-</ul>
-
-<p><strong>2D Figures:</strong></p>
-
-<ul>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createDisk">Meshes.createDisk()</a> - Creates a circular disk or a regular polygon, possibly
-with a hole in the middle.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createPartialDisk">Meshes.createPartialDisk()</a> - Creates a portion of a circular disk, possibly
-with a hole where the middle of the complete disk would be.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createPlane">Meshes.createPlane()</a> - Creates a rectangle.</li>
 </ul>
 
 <p><a id=Custom_Shapes></a></p>
 
 <h3>Custom Shapes</h3>
 
-<p>Also included is a <code>H3DU.Mesh</code> class for defining shapes not given among the built-in ones.
-Shapes can consist of triangles, lines, or points.</p>
-
-<p>There are two ways for specifying shapes: through the Mesh constructor, or through
-methods that specify the mesh&#39;s data vertex by vertex.</p>
+<p>The <code>H3DU.MeshBuffer</code> class can be used to define geometric figures, up to three dimensions, not given among the built-in ones.
+Such figures can consist of triangles, lines, or points.</p>
 
 <p><a id=The_Mesh_Constructor></a></p>
 
@@ -104,67 +88,6 @@ methods that specify the mesh&#39;s data vertex by vertex.</p>
 
 <p>The <code>MeshBuffer</code> class contains four methods (<code>fromPositions</code>,
 <code>fromPositionsNormals</code>, <code>fromPositionsUV</code>, and <code>fromPositionsNormalsUV</code>) that let you define a mesh buffer from a predefined array of vertex data.  See the documentation for those methods for more information.</p>
-
-<p><a id=Vertex_Methods></a></p>
-
-<h3>Vertex Methods</h3>
-
-<p>Alternatively, or in addition, to the method described above,
-you can specify the mesh&#39;s shape by calling methods that give each vertex&#39;s position and parameters:</p>
-
-<ol>
-<li><p>Call the <code>mode()</code> method and choose a primitive mode, such as <code>H3DU.Mesh.TRIANGLES</code>
-or <code>H3DU.Mesh.QUAD_STRIP</code>:</p>
-
-<pre>mesh.mode(H3DU.Mesh.TRIANGLES);
-</pre>
-
-<p>The mesh will build up the shape from the vertices you give it depending on the mesh&#39;s
-primitive mode. For example, <code>QUAD_STRIP</code> defines a strip of connecting quadrilaterals,
-and <code>TRIANGLES</code> defines a set of triangles that are not necessarily connected:</p>
-
-<ul>
-<li><code>H3DU.Mesh.TRIANGLES</code> - Set of triangles, 3 vertices each.</li>
-<li><code>H3DU.Mesh.LINES</code> - Set of line segments, 2 vertices each.</li>
-<li><code>H3DU.Mesh.QUADS</code> - Set of quadrilaterals, 4 vertices each.</li>
-<li><code>H3DU.Mesh.TRIANGLE_STRIP</code> - A triangle strip. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last 2 vertices and 1
-new vertex.</li>
-<li><code>H3DU.Mesh.TRIANGLE_FAN</code> - A triangle fan. The first 3
-vertices make up the first triangle, and each additional
-triangle is made up of the last vertex, the first vertex of
-the first trangle, and 1 new vertex.</li>
-<li><code>H3DU.Mesh.QUAD_STRIP</code> - A strip of quadrilaterals (quads).
-The first 4 vertices make up the first quad, and each additional
-quad is made up of the last 2 vertices of the previous quad and
-2 new vertices.</li>
-<li><code>H3DU.Mesh.LINE_STRIP</code> - A series of points making up a connected line segment path.</li>
-</ul></li>
-<li><p>Call the <code>normal3()</code>, <code>color3()</code>, and <code>texCoord2()</code> methods, as needed, to set the
-next vertex&#39;s parameters. You don&#39;t need to do this for each vertex if multiple
-consecutive vertices will share the same normal, color, or texture coordinates.</p>
-
-<pre>mesh.normal3(2, 3, 4); // Set the x, y, and z of the normal.
-mesh.color3(0.1,0.6,1); // Set the red, green, and blue of the color.
-mesh.color3(&quot;red&quot;); // Set a CSS color.
-mesh.color3(&quot;#123FE8&quot;); // Set an HTML color.
-mesh.texCoord3(0.5,0.5); // Set the texture coordinates.
-</pre></li>
-<li><p>Call the <code>vertex3()</code> method to add a new vertex and set its position. The vertex will
-have the last normal, color, and texture coordinates defined on the mesh, if any
-were given:</p>
-
-<pre>mesh.vertex3(x, y, z);
-</pre></li>
-</ol>
-
-<p>You can also call the <code>mode()</code> method any time to change the primitive mode, even to
-the same mode. What this does is reset the state of the primitive so that future vertices
-won&#39;t depend on previous vertices. For example, if you define a <code>TRIANGLE_FAN</code>, and
-you call <code>mesh.mode(H3DU.Mesh.TRIANGLE_FAN)</code>, the newly defined <code>TRIANGLE_FAN</code> will be
-&quot;disconnected&quot; from the previous one as far as the mesh object is concerned. However,
-a single <code>Mesh</code> can contain only one kind of primitive (triangles, lines, or points) at a time.</p>
 
 <p><a id=Binding_Shapes></a></p>
 
