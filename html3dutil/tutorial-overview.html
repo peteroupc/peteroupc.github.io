@@ -97,8 +97,8 @@ window.addEventListener(&quot;load&quot;,function(){
 <p>This is an overview of most of the JavaScript classes available in this library:</p>
 
 <ul>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.html"><strong><code>H3DU</code></strong></a> - Contains various utility methods in the Geometry Utilities Library</li>
-<li><a href="https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html"><strong><code>H3DU.MathUtil</code></strong></a> - Contains math methods useful in 3D applications, such as matrices and vectors</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.html"><strong><code>H3DU</code></strong></a> - Contains various utility methods in the Geometry Utilities Library.</li>
+<li><a href="https://peteroupc.github.io/html3dutil/H3DU.MathUtil.html"><strong><code>H3DU.MathUtil</code></strong></a> - Contains math methods useful in 3D applications, such as matrices and vectors.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.MeshBuffer.html"><strong><code>H3DU.MeshBuffer</code></strong></a> - Represents a 3D model.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.Meshes.html"><strong><code>H3DU.Meshes</code></strong></a> - Contains methods for generating common 3D models.</li>
 <li><a href="https://peteroupc.github.io/html3dutil/H3DU.Shape.html"><strong><code>H3DU.Shape</code></strong></a> - Represents an instance of a 3D shape with its own transform.</li>
@@ -161,8 +161,6 @@ See my <a href="https://peteroupc.github.io/html3dutil/tutorial-colors.html"><st
 
 <h3>Shapes</h3>
 
-<p>TODO: Rewrite.</p>
-
 <p>Once a mesh is created, it needs to be added to the 3D scene in order to be rendered.
 Use the <code>H3DU.Shape</code> constructor method to convert the mesh to a shape. Then you can set the shape&#39;s properties such as color, size, and position. Then, call <code>addShape()</code> to add the shape to the 3D object batch.</p>
 
@@ -188,7 +186,7 @@ batch.addShape(shape);
 <li><dfn><code>shape.getTransform().setRotation(angle, x, y, z)</code></dfn>
 <br>Sets the shape&#39;s rotation given an angle in degrees, and an axis of rotation (the x, y, and z parameters). Example: (40, 1, 0, 0) means a 40-degree rotation around the X axis (x is 1 in the axis of rotation).</li>
 <li><dfn><code>shape.copy()</code></dfn>
-<br>Creates a copy of this shape. Can be more efficient than calling <code>new H3DU.Shape</code> if the same geometric mesh will be used more than once in the same 3D scene, with different transformations.</li>
+<br>Creates a copy of this shape.</li>
 </ul>
 
 <p><a id=The_Render_Loop></a></p>

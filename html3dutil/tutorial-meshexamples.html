@@ -15,7 +15,6 @@
 <ul>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
 <li><a href="#3D_Line"><strong>3D Line</strong></a></li>
-<li><a href="#Striped_Disk"><strong>Striped Disk</strong></a></li>
 <li><a href="#Miscellaneous"><strong>Miscellaneous</strong></a></li>
 </ul>
 
@@ -42,35 +41,6 @@ function create3DLine(point1,point2,thickness){
 }
 </pre>
 
-<p><a id=Striped_Disk></a></p>
-
-<h2>Striped Disk</h2>
-
-<p>This method creates a ring or disk striped in two colors.</p>
-
-<p><img src="mesh2.png" alt="**Image of a disk striped in red and almost-white**"></p>
-
-<pre>// inner, outer - inner and outer radius of the disk
-// color1, color2 - colors of each stripe; for example:
-//   &quot;red&quot;, &quot;#223344&quot;, &quot;rgb(255,0,0)&quot;, [0,1,0]
-// sections - number of stripes
-// sectionCount - number of sections per stripe
-function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
- if(sectionCount==null)sectionCount=4
- var firstColor=true
- var ret=new H3DU.MeshBuffer()
- var sweep=360.0/sections;
- for(var i=0;i&lt;sections;i++){
-  var angle=360.0*(i*1.0/sections);
-  var mesh=H3DU.Meshes.createPartialDisk(inner,outer,sectionCount,1,angle,sweep)
-     .setColor3(firstColor ? color1 : color2)
-  firstColor=!firstColor
-  ret.merge(mesh);
- }
- return ret;
-}
-</pre>
-
 <p><a id=Miscellaneous></a></p>
 
 <h2>Miscellaneous</h2>
@@ -82,19 +52,15 @@ function stripedDisk(inner,outer,color1,color2,sections,sectionCount){
   mesh.merge(path.toMeshBuffer(zTop, flatness));
   mesh.merge(path.toMeshBuffer(zBottom, flatness).reverseWinding().reverseNormals());
   return mesh;
-}
-    function setBoxSizeAndBounds(shape,box){
-     shape.setPosition(H3DU.MathUtil.boxCenter(box))
-     shape.setScale(H3DU.MathUtil.boxDimensions(box))
-     return shape
-    }</p>
+}</p>
 
 <pre>function wireBox(box, color){
-  if(!color)color=&quot;gray&quot;;
- var boxMesh=H3DU.Meshes.createBox(1,1,1).toWireFrame()
- var shape=new H3DU.Shape(boxMesh).setMaterial(
-    H3DU.Material.fromBasic(color))
- return setBoxSizeAndBounds(shape,box)
+ var boxMesh=H3DU.Meshes.createBox(1,1,1)
+   .setColor(color).wireFrame()
+ var shape=new H3DU.Shape(boxMesh)
+ shape.setPosition(H3DU.MathUtil.boxCenter(box))
+ shape.setScale(H3DU.MathUtil.boxDimensions(box))
+ return shape
 }
 </pre>
 
