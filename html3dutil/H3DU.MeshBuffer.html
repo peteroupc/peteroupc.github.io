@@ -77,16 +77,16 @@ bounding box that holds all vertices in the mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getIndices">getIndices</a><br>Gets the array of vertex indices used by this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.</li>
-<li><a href="#H3DU.MeshBuffer.lineLoopIndices">lineLoopIndices</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.MeshBuffer.lineStripIndices">lineStripIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer.lineLoopIndices">lineLoopIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
+<li><a href="#H3DU.MeshBuffer.lineStripIndices">lineStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
 <li><a href="#H3DU.MeshBuffer_merge">merge</a><br>Merges the vertices from another mesh into this one.</li>
 <li><a href="#H3DU.MeshBuffer_normalizeNormals">normalizeNormals</a><br>Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.html">unit vectors</a>
 (&quot;normalized&quot; vectors with a length of 1).</li>
 <li><a href="#H3DU.MeshBuffer_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
 and points) composed by all shapes in this mesh.</li>
 <li><a href="#H3DU.MeshBuffer_primitiveType">primitiveType</a><br>Gets the type of primitive stored in this mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer.quadStripIndices">quadStripIndices</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.MeshBuffer.quadsIndices">quadsIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer.quadStripIndices">quadStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
+<li><a href="#H3DU.MeshBuffer.quadsIndices">quadsIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
 <li><a href="#H3DU.MeshBuffer_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors (directions that generally point up and away from the mesh buffer&#39;s surface) for triangles
 in this mesh buffer, in order to give the shape described by this buffer a flat or smooth appearance or to shade the shape from the inside or the outside upon rendering.</li>
 <li><a href="#H3DU.MeshBuffer_reverseNormals">reverseNormals</a><br>Modifies this mesh buffer by reversing the sign of normals it defines.</li>
@@ -106,8 +106,8 @@ to the given color.</li>
 <li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>.</li>
-<li><a href="#H3DU.MeshBuffer.triangleFanIndices">triangleFanIndices</a><br>TODO: Not documented yet.</li>
-<li><a href="#H3DU.MeshBuffer.triangleStripIndices">triangleStripIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#H3DU.MeshBuffer.triangleFanIndices">triangleFanIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
+<li><a href="#H3DU.MeshBuffer.triangleStripIndices">triangleStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
 <li><a href="#H3DU.MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
 is, the number of vertex indices in its index buffer (some of which
 may be duplicates), or if there is no index buffer, the lowest maximum
@@ -419,33 +419,51 @@ vertices; if lines, two; and if points, one. Each vertex is an array containing 
 
 <h3>(static) H3DU.MeshBuffer.lineLoopIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the line loop.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if &#39;vertexCount&#39; is less than 2. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.lineLoopIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer.lineStripIndices'></a></p>
 
 <h3>(static) H3DU.MeshBuffer.lineStripIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the line loop.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if &#39;vertexCount&#39; is less than 2. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.lineStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer_merge'></a></p>
 
@@ -510,33 +528,53 @@ MeshBuffer.LINES, or MeshBuffer.POINTS. (Type: number)</p>
 
 <h3>(static) H3DU.MeshBuffer.quadStripIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals. For a quadrilateral strip, the first 4 vertices make up the first quadrilateral, and each additional
+quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
+2 new vertices.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the quadrilateral strip.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 4. If &#39;vertexCount&#39; is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.quadStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer.quadsIndices'></a></p>
 
 <h3>(static) H3DU.MeshBuffer.quadsIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the quadrilaterals.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 4. If &#39;vertexCount&#39; is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.quadsIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer_recalcNormals'></a></p>
 
@@ -779,33 +817,57 @@ and normals to double the mesh&#39;s size.</p>
 
 <h3>(static) H3DU.MeshBuffer.triangleFanIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon. For triangle fans and convex polygons, the first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last vertex, the first vertex of
+the first trangle, and 1 new vertex.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the triangle fan or convex polygon.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 3. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.triangleFanIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer.triangleStripIndices'></a></p>
 
 <h3>(static) H3DU.MeshBuffer.triangleStripIndices(vertexCount)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of vertex indices corresponding to triangles that make up a triangle strip. For a triangle strip, the first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last 2 vertices and 1
+new vertex.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>vertexCount</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the triangle strip.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 3. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.triangleStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
 
 <p><a name='H3DU.MeshBuffer_vertexCount'></a></p>
 

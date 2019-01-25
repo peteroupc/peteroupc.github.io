@@ -20,9 +20,6 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 <p>This page will discuss:</p>
 
 <ul>
-<li>Using the Meshes methods to make built-in shapes</li>
-<li>Making your own shapes with the <code>H3DU.Mesh</code> constructor</li>
-<li>Building up your own shapes using the vertex methods of <code>H3DU.Mesh</code></li>
 <li>Binding mesh buffers to shapes</li>
 <li>Shape groups, or combinations of several shapes</li>
 </ul>
@@ -65,21 +62,11 @@ green square, and a purple cone on the second row.**"></p>
 All methods described below return a <code>H3DU.MeshBuffer</code> object that describes the triangles they
 are composed of.  See &quot;Custom Shapes&quot; below for more on meshes.</p>
 
-<p><strong>3D Figures:</strong></p>
-
-<ul>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCylinder">Meshes.createCylinder()</a> - Creates a cylinder or cone, not including the base
-or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createClosedCylinder">Meshes.createClosedCylinder()</a> - Creates a cylinder or cone, including the base or top.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createSphere">Meshes.createSphere()</a> - Creates a sphere.</li>
-<li><a href="H3DU.Meshes.html#H3DU.Meshes.createCapsule">Meshes.createCapsule()</a> - Creates a capsule shape.</li>
-</ul>
-
 <p><a id=Custom_Shapes></a></p>
 
 <h3>Custom Shapes</h3>
 
-<p>The <code>H3DU.MeshBuffer</code> class can be used to define geometric figures, up to three dimensions, not given among the built-in ones.
+<p>The <code>H3DU.MeshBuffer</code> class can be used to store geometric figures not given among the built-in ones.
 Such figures can consist of triangles, lines, or points.</p>
 
 <p><a id=The_Mesh_Constructor></a></p>
