@@ -127,7 +127,7 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>Number to add to the X coordinate, If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>Number to add to the X coordinate, If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
 <li><code>y</code> (Type: number)<br>Number to add to the Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 <li><code>z</code> (Type: number)<br>Number to add to the Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
@@ -222,7 +222,7 @@ accordingly to the matrix given.</p>
 
 <p><a name='H3DU.Transform_setPosition'></a></p>
 
-<h3>H3DU.Transform#setPosition(x, y, z)</h3>
+<h3>H3DU.Transform#setPosition(x, [y], [z])</h3>
 
 <p>Sets the relative position of an object from its original
 position. Has no effect if a matrix was defined with Transform#setMatrix
@@ -231,14 +231,23 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
-<li><code>z</code> (Type: number)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: Transform)</p>
+
+<h4>Examples</h4>
+
+<pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
+// and 5 units along Z axis
+transform.setPosition(2,4,5);
+// same, but passing an array
+transform.setPosition([2,4,5]);
+</pre>
 
 <p><a name='H3DU.Transform_setQuaternion'></a></p>
 
@@ -267,6 +276,11 @@ transform.setQuaternion(MathUtil.quatIdentity());
 // Set an object&#39;s rotation to 30 degree pitch multiplied
 // by 40 degree roll
 transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
+// Set an object&#39;s rotation to 40 units about X axis, 20 units about Y axis,
+// and 50 units about Z axis
+transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+// Set an object&#39;s rotation to 20 units about Y axis
+transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
 </pre>
 
 <p><a name='H3DU.Transform_setRotation'></a></p>
@@ -292,7 +306,7 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 
 <p><a name='H3DU.Transform_setScale'></a></p>
 
-<h3>H3DU.Transform#setScale(x, y, z)</h3>
+<h3>H3DU.Transform#setScale(x, [y], [z])</h3>
 
 <p>Sets the scale of an object relative to its original
 size. Has no effect if a matrix was defined with Transform#setMatrix
@@ -301,14 +315,22 @@ and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>Scaling factor for this transform&#39;s width. If &quot;y&quot; and &quot;z&quot; are null or omitted, this is instead a 3-element array giving the scaling factors for width, height, and depth, respectively, or a single number giving the scaling factor for all three dimensions.</li>
-<li><code>y</code> (Type: number)<br>Scaling factor for this transform&#39;s height.</li>
-<li><code>z</code> (Type: number)<br>Scaling factor for this transform&#39;s depth.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X axis scaling factor for this transform. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y axis scaling factor for this transform.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z axis scaling factor for this transform.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: Transform)</p>
+
+<h4>Examples</h4>
+
+<pre>// scale coordinates by 2x in all axes
+transform.setScale(2,2,2);
+// same, but passing an array
+transform.setScale([2,2,2]);
+</pre>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

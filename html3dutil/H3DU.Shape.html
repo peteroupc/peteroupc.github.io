@@ -11,13 +11,8 @@
 <h3>new H3DU.Shape(mesh)</h3>
 
 <p>An object that associates a geometric mesh (the shape of the object) with
-material data (which defines what is seen on the object&#39;s surface)
-and a transformation matrix (which defines the object&#39;s position and size).
+a transformation matrix (which defines the object&#39;s position and size).
 See the &quot;<a href="tutorial-shapes.html">Creating Shapes</a>&quot; tutorial.</p>
-
-<p>NOTE: The default shader program assumes that all colors and the diffuse texture
-specified in this object are in
-companded sRGB.</p>
 
 <h4>Parameters</h4>
 
@@ -53,10 +48,7 @@ all shapes in this scene.</li>
 <h3>H3DU.Shape#copy()</h3>
 
 <p>Makes a copy of this object. The copied object
-will have its own version of the transform and
-material data, but any texture
-image data and mesh buffers will not be duplicated,
-but rather just references to them will be used.
+will have its own version of the transform.
 The copied shape won&#39;t have a parent.</p>
 
 <h4>Return Value</h4>
@@ -137,7 +129,7 @@ and points) composed by all shapes in this scene.</p>
 
 <p><a name='H3DU.Shape_setPosition'></a></p>
 
-<h3>H3DU.Shape#setPosition(x, y, z)</h3>
+<h3>H3DU.Shape#setPosition(x, [y], [z])</h3>
 
 <p>Sets the relative position of this shape from its original
 position. See Transform#setPosition</p>
@@ -145,14 +137,23 @@ position. See Transform#setPosition</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X coordinate or a 3-element position array, as specified in Transform#setScale.</li>
-<li><code>y</code> (Type: number)<br>Y coordinate.</li>
-<li><code>z</code> (Type: number)<br>Z coordinate.</li>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: Shape)</p>
+
+<h4>Examples</h4>
+
+<pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
+// and 5 units along Z axis
+shape.setPosition(2,4,5);
+// same, but passing an array
+shape.setPosition([2,4,5]);
+</pre>
 
 <p><a name='H3DU.Shape_setQuaternion'></a></p>
 
@@ -171,9 +172,18 @@ See Transform#setQuaternion.</p>
 
 <p>This object. (Type: Shape)</p>
 
+<h4>Examples</h4>
+
+<pre>// rotate the shape 40 units about X axis, 20 units about Y axis,
+// and 50 units about Z axis
+shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+// rotate the shape 20 units about Y axis
+shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
+</pre>
+
 <p><a name='H3DU.Shape_setScale'></a></p>
 
-<h3>H3DU.Shape#setScale(x, y, z)</h3>
+<h3>H3DU.Shape#setScale(x, [y], [z])</h3>
 
 <p>Sets the scale of this shape relative to its original
 size. See Transform#setScale</p>
@@ -181,14 +191,22 @@ size. See Transform#setScale</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>Scaling factor for this object&#39;s width, or a 3-element scaling array, as specified in Transform#setScale.</li>
-<li><code>y</code> (Type: number)<br>Scaling factor for this object&#39;s height.</li>
-<li><code>z</code> (Type: number)<br>Scaling factor for this object&#39;s depth.</li>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X axis scaling factor for this shape object. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for the X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y axis scaling factor for this shape object.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z axis scaling factor for this shape object.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>This object. (Type: Shape)</p>
+
+<h4>Examples</h4>
+
+<pre>// scale the shape by 2x in all axes
+shape.setScale(2,2,2);
+// same, but passing an array
+shape.setScale([2,2,2]);
+</pre>
 
 <p><a name='H3DU.Shape_setTransform'></a></p>
 

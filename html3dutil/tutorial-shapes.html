@@ -14,9 +14,6 @@
 supports 3D shapes and how to use the library to create shapes, both built-in and custom
 shapes.</p>
 
-<p><strong>Download the latest version of the HTML 3D Library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>library&#39;s Releases page</strong></a>.</strong> As of version 1.2.1, it includes
-the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page.</p>
-
 <p>This page will discuss:</p>
 
 <ul>
@@ -40,7 +37,6 @@ the <em>shapes.html</em> and <em>platonic.html</em> demos mentioned in this page
 </ul></li>
 <li><a href="#Binding_Shapes"><strong>Binding Shapes</strong></a></li>
 <li><a href="#Shape_Groups"><strong>Shape Groups</strong></a></li>
-<li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
 <p><a id=Creating_Shapes></a></p>
@@ -91,51 +87,6 @@ To attach a mesh to a 3D scene:</p>
 <li><p>Create a <code>Shape</code> object by passing the mesh buffer to the <code>H3DU.Shape</code> constructor:</p>
 
 <pre>var shape = new H3DU.Shape(meshBuffer);
-</pre></li>
-<li><p>You may also set the <code>Shape</code>&#39;s color, appearance, and position, using the examples below:</p>
-
-<p>Examples for setting appearance:</p>
-
-<pre>shape.setColor(&quot;red&quot;); // set the color to a CSS color
-shape.setColor(&quot;#338845&quot;); // set the color to an HTML color
-shape.setColor(0.2,0.5,1); // set the color to its RGB values, each from 0 to 1
-// set material parameters (NOTE: if the mesh defines its own colors they
-// will override diffuse reflection given below)
-shape.setMaterial(new H3DU.Material({
-</pre>
-
-<p>&quot;ambient&quot;:&quot;blue&quot;,
- &quot;diffuse&quot;:&quot;blue&quot;,
- &quot;specular&quot;:&quot;white&quot;,
- &quot;shininess&quot;:30}));
-    // set material parameters: ambient, diffuse,
-    // specular, shininess, emission
-    shape.setMaterial(new H3DU.Material({
- &quot;ambient&quot;:&quot;lime&quot;,
- &quot;diffuse&quot;:&quot;lime&quot;,
- &quot;specular&quot;:&quot;white&quot;,
- &quot;emission&quot;:[0.2,0.2,0.2],
- &quot;shininess&quot;:30}));
-    // set a texture; this requires the mesh to have texture
-    // coordinates assigned to each vertex
-    shape.setTexture(&quot;texture.png&quot;);</p>
-
-<p>Examples for setting position and transformation:</p>
-
-<pre>// move the shape 2 units along X axis, 4 units along Y axis,
-// and 5 units along Z axis
-shape.setPosition(2,4,5);
-// same, but passing an array
-shape.setPosition([2,4,5]);
-// rotate the shape 40 units about X axis, 20 units about Y axis,
-// and 50 units about Z axis
-shape.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
-// rotate the shape 20 units about Y axis
-shape.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
-// scale the shape by 2x in all axes
-shape.setScale(2,2,2);
-// same, but passing an array
-shape.setScale([2,2,2]);
 </pre>
 
 <p>Note that <code>setPosition</code>, <code>setQuaternion</code>, and <code>setScale</code> don&#39;t change
@@ -186,18 +137,6 @@ are added to a single ShapeGroup which represents the whole clock, as follows:</
 <p>To create a shape group, call <code>new H3DU.ShapeGroup()</code>. To add a <code>Shape</code> object to the group,
 call <code>new H3DU.Shape(shape)</code>. Note that you can add only shapes or other shape groups, not meshes,
 to a shape group.</p>
-
-<p><a id=Other_Pages></a></p>
-
-<h2>Other Pages</h2>
-
-<p>The following pages of mine on CodeProject also discuss this library:</p>
-
-<ul>
-<li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
-<li><a href="http://www.codeproject.com/Tips/990798/Drawing-Parametric-Surfaces-Using-the-Public-Domai"><strong><em>Drawing parametric surfaces using the Public Domain HTML 3D Library</em></strong></a></li>
-<li><a href="http://www.codeproject.com/Tips/989978/The-Camera-and-the-Projection-and-View-Transforms"><strong><em>The &quot;Camera&quot; and the Projection and View Transforms</em></strong></a></li>
-</ul>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

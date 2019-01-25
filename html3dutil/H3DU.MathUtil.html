@@ -56,9 +56,9 @@ of radians in a degree.</li>
 <li><a href="#H3DU.MathUtil.boxCenter">boxCenter</a><br>Finds the center of a 3D bounding box.</li>
 <li><a href="#H3DU.MathUtil.boxDimensions">boxDimensions</a><br>Finds the dimensions of a 3D bounding box.</li>
 <li><a href="#H3DU.MathUtil.boxIsEmpty">boxIsEmpty</a><br>Determines whether a 3D bounding box is empty.</li>
-<li><a href="#H3DU.MathUtil.colorToLinear">colorToLinear</a><br>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+<li><a href="#H3DU.MathUtil.colorToLinear">colorToLinear</a><br>Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.</li>
-<li><a href="#H3DU.MathUtil.colorTosRGB">colorTosRGB</a><br>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+<li><a href="#H3DU.MathUtil.colorTosRGB">colorTosRGB</a><br>Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
 a new vector with the result.</li>
 <li><a href="#H3DU.MathUtil.frustumHasBox">frustumHasBox</a><br>Determines whether an axis-aligned bounding box
 is at least partially inside a view frustum.</li>
@@ -500,7 +500,7 @@ corresponding maximum coordinate; otherwise, <code>false</code>. (Type: boolean)
 
 <h3>(static) H3DU.MathUtil.colorToLinear(srgb)</h3>
 
-<p>Converts a color from companded sRGB to linear sRGB using the sRGB transfer function, and returns
+<p>Converts a color from encoded sRGB to linear sRGB using the sRGB transfer function, and returns
 a new vector with the result.</p>
 
 <p>Linear RGB is linear because of its linear relationship of light emitted
@@ -523,7 +523,7 @@ in the &quot;srgb&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
 <h3>(static) H3DU.MathUtil.colorTosRGB(lin)</h3>
 
-<p>Converts a color from linear sRGB to companded sRGB using the sRGB transfer function, and returns
+<p>Converts a color from linear sRGB to encoded sRGB using the sRGB transfer function, and returns
 a new vector with the result.</p>
 
 <p>Linear RGB is linear because of its linear relationship of light emitted
@@ -539,7 +539,7 @@ by a surface of the given color.</p>
 
 <p>lin A four-element vector giving
 the red, green, blue, and alpha components, in that order, of the given color
-in companded sRGB. The alpha component will be as specified
+in encoded sRGB. The alpha component will be as specified
 in the &quot;lin&quot; parameter. (Type: Array.&lt;number&gt;)</p>
 
 <p><a name='H3DU.MathUtil.frustumHasBox'></a></p>
