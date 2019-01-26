@@ -26,6 +26,10 @@ of vertex indices to null.</p>
 <p>The <a href="H3DU.Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes; those methods return a <code>H3DU.MeshBuffer</code> object that describes the triangles they
 are composed of.</p>
 
+<p><b>Instancing</b></p>
+
+<p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive mode <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.</p>
+
 <h4>Examples</h4>
 
 <p>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer&#39;s primitive type. This example requires the three.js library.</p>
