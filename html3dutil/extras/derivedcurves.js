@@ -1,4 +1,5 @@
-/** The <code>extras/derivedcurves.js</code> module.
+/**
+ * Additional curve evaluator and surface evaluator objects.<p>
  * To import all symbols in this module, either of the following can be used:
  * <pre>
  * import * from "extras/derivedcurves.js";
@@ -55,9 +56,9 @@ function _vecScale(v1, s) {
   return ret;
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
- * @returns {*} Return value.
+ * TODO: Notdocumented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
+ * @constructor
  */
 export function curveInvolute(evaluator) {
   const neweval = evaluator;
@@ -75,9 +76,10 @@ export function curveInvolute(evaluator) {
   };
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
- * @returns {*} Return value.
+ * Curve evaluator object for the curve from which an involute curve
+ * is generated.
+ * @param {Curve|Object} evaluator A curve evaluator object for the involute curve.
+ * @constructor
  */
 export function curveEvolute(evaluator) {
   const neweval = evaluator;
@@ -100,11 +102,11 @@ export function curveEvolute(evaluator) {
   };
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
  * @param {*} ox
  * @param {*} oy
- * @returns {*} Return value.
+ * @constructor
  */
 export function curveRadialCurve(evaluator, ox, oy) {
   const neweval = evaluator;
@@ -126,11 +128,11 @@ export function curveRadialCurve(evaluator, ox, oy) {
   };
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
  * @param {*} ox
  * @param {*} oy
- * @returns {*} Return value.
+ * @constructor
  */
 export function curveOrthotomic(evaluator, ox, oy) {
   const neweval = evaluator;
@@ -150,21 +152,21 @@ export function curveOrthotomic(evaluator, ox, oy) {
   };
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
  * @param {*} ox
  * @param {*} oy
- * @returns {*} Return value.
+ * @constructor
  */
 export function curveCatacaustic(evaluator, ox, oy) {
   return curveEvolute(curveOrthotomic(evaluator, ox, oy));
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
  * @param {*} ox
  * @param {*} oy
- * @returns {*} Return value.
+ * @returns {Object} The resulting curve evaluator object.
  */
 export function curvePedalCurve(evaluator, ox, oy) {
   const neweval = evaluator;
@@ -187,12 +189,12 @@ export function curvePedalCurve(evaluator, ox, oy) {
   };
 }
 /**
- * TODO: Not documented yet.
- * @param {*} evaluator
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
+ * @param {Curve|Object} evaluator A curve evaluator object for TODO: Not documented yet.
  * @param {*} ox
  * @param {*} oy
  * @param {*} radius
- * @returns {*} Return value.
+ * @returns {Object} The resulting curve evaluator object.
  */
 export function curveInverse(evaluator, ox, oy, radius) {
   const neweval = evaluator;
@@ -211,10 +213,11 @@ export function curveInverse(evaluator, ox, oy, radius) {
   };
 }
 /**
- * TODO: Not documented yet.
+ * Creates a [surface evaluator object]{@link Surface} for TODO: Not documented yet.
  * @param {*} directrix
  * @param {*} director
- * @returns {*} Return value.
+ * @constructor
+ * @returns {Object} The resulting surface evaluator object.
  */
 export function ruledSurface(directrix, director) {
   return new Surface({
@@ -230,23 +233,23 @@ export function ruledSurface(directrix, director) {
   });
 }
 /**
- * TODO: Not documented yet.
- * @param {*} func
- * @param {*} phase
- * @returns {*} Return value.
+ * Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point's radius given its angle.
+ * @param {function<number>} func Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi) or [0, 2&pi;).
+ * @param {number} phase Starting angle of the curve. If null, undefined, or omitted, the default is 0.
+ * @returns {Object} The resulting curve evaluator object.
  */
 export function polarCurve(func, phase) {
   const pfunc = func;
-  const pphase = phase;
+  const pphase = typeof phase === "undefined" || phase === null ? 0 : phase;
   return new Curve({
     "evaluate":function(u) {
       let uphase = u + pphase;
+      const r = pfunc(uphase);
       if(uphase > 6.283185307179586) {
         uphase %= 6.283185307179586;
       }
       const cosu = Math.cos(uphase);
       const sinu = uphase >= 0 && uphase < 6.283185307179586 ? uphase <= 3.141592653589793 ? Math.sqrt(1.0 - cosu * cosu) : -Math.sqrt(1.0 - cosu * cosu) : Math.sin(uphase);
-      const r = pfunc(uphase);
       return [cosu * r, sinu * r];
     },
     "endPoints":function() {
@@ -255,10 +258,10 @@ export function polarCurve(func, phase) {
   });
 }
 /**
- * TODO: Not documented yet.
+ * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
  * @param {*} radius
  * @param {*} phase
- * @returns {*} Return value.
+ * @returns {Object} The resulting curve evaluator object.
  */
 export function spiralCurve(radius, phase) {
   const pphase = phase;

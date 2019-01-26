@@ -1,4 +1,4 @@
-/** The <code>extras/randompolygon.js</code> module.
+/** Contains a method to generate a simple polygon at random.<p>
  * To import all symbols in this module, either of the following can be used:
  * <pre>
  * import * from "extras/randompolygon.js";
@@ -50,6 +50,7 @@ function segsIntersect(a1, a2, b1, b2) {
 }
 /**
  * Generates a simple polygon at random.
+ * Inspired by http://stackoverflow.com/questions/8997099 .
  * @param {number} cx X coordinate of the polygon's approximate center.
  * @param {number} cy Y coordinate of the polygon's approximate center.
  * @param {number} avgRadius Average distance of the polygon's vertices from the center.
@@ -63,7 +64,6 @@ function segsIntersect(a1, a2, b1, b2) {
  * @function
  */
 export const randomPolygon = function(cx, cy, avgRadius, sides, irregular, spiky) {
-// Inspired by http://stackoverflow.com/questions/8997099
   const irregularValue = typeof irregular === "undefined" || irregular === null ? 0 : irregular;
   const spikyValue = typeof spiky === "undefined" || spiky === null ? 0 : spiky;
   const step = MathUtil.PiTimes2 / sides;

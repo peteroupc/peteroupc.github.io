@@ -11,9 +11,9 @@
 <h2>Introduction</h2>
 
 <p>This page describes parametric curves and surfaces and how to generate them using my
-public-domain <a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Library</strong></a>.</p>
+public-domain <a href="http://peteroupc.github.io/html3dutil"><strong>Geometry Utilities Library</strong></a>.</p>
 
-<p><strong>Download the latest version of the library at the <a href="https://github.com/peteroupc/html3dutil/releases"><strong>HTML 3D Library&#39;s Releases page</strong></a>.</strong></p>
+<p><strong>Source code for the latest version of the library is available at the</strong> <a href="https://github.com/peteroupc/html3dutil"><strong>Geometry Utilities Library&#39;s project page</strong></a><strong>.</strong></p>
 
 <p><a id=Contents></a></p>
 
@@ -34,12 +34,7 @@ public-domain <a href="http://peteroupc.github.io/html3dutil"><strong>HTML 3D Li
 <ul>
 <li><a href="#Generating_Parametric_Curves"><strong>Generating Parametric Curves</strong></a></li>
 </ul></li>
-<li><a href="#Curve_and_Surface_Evaluators_in_the_HTML_3D_Library"><strong>Curve and Surface Evaluators in the HTML 3D Library</strong></a></li>
-<li><a href="#Demos"><strong>Demos</strong></a>
-
-<ul>
-<li><a href="#Creating_Your_Own_Curves_and_Surfaces"><strong>Creating Your Own Curves and Surfaces</strong></a></li>
-</ul></li>
+<li><a href="#Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library"><strong>Curve and Surface Evaluators in the Geometry Utilities Library</strong></a></li>
 <li><a href="#Other_Pages"><strong>Other Pages</strong></a></li>
 </ul>
 
@@ -75,8 +70,7 @@ the same value.</p>
 <li><strong>F</strong>(2, 4) = [ 8, -2, 4 ];</li>
 </ul>
 
-<p>So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the
-surface can be found by evaluating different UV points. By the way, the surface looks like this:</p>
+<p>So (8, -2, 4) is one point that lies on this parametric surface, and any other point on the surface can be found by evaluating different UV points. By the way, the surface looks like this:</p>
 
 <p><img src="surfaces1.png" alt="**The parametric surface.**"></p>
 
@@ -286,11 +280,11 @@ the circle example above.</p>
 <pre>var meshBuffer = CurveBuilder.curveToBuffer(evaluator);
 </pre>
 
-<p><a id=Curve_and_Surface_Evaluators_in_the_HTML_3D_Library></a></p>
+<p><a id=Curve_and_Surface_Evaluators_in_the_Geometry_Utilities_Library></a></p>
 
-<h2>Curve and Surface Evaluators in the HTML 3D Library</h2>
+<h2>Curve and Surface Evaluators in the Geometry Utilities Library</h2>
 
-<p>The HTML 3D Library distribution includes the following evaluators of
+<p>The Geometry Utilities Library distribution includes the following evaluators of
 curves and surfaces. All the classes named below include an <code>evaluate</code>
 method that returns 3D points lying on the curve or surface.</p>
 
@@ -332,46 +326,11 @@ Surfaces of revolution are created using the H3DU.SurfaceOfRevolution class,
 a supplemental extra in the HTML 3D library.</li>
 </ul>
 
-<p><a id=Demos></a></p>
-
-<h2>Demos</h2>
-
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/surfaces.html"><strong>surfaces.html</strong></a> - Demonstrates parametric surfaces.</li>
-</ul>
-
-<p>This demo contains several examples of parametric surfaces. The source code defines several classes that create evaluators of parametric surfaces:</p>
-
-<ul>
-<li><code>new Superellipsoid(xRadius, yRadius, zRadius, n, m)</code><br>
-Creates a &quot;<a href="http://en.wikipedia.org/wiki/Superellipsoid"><strong>superellipsoid</strong></a>&quot; shape, with a radius <code>xRadius</code> along the X axis,
-<code>yRadius</code> along the Y axis, and <code>zRadius</code> along the Z axis. The parameters <code>m</code> and <code>n</code> may be omitted; the default for each is 1, which creates a normal ellipsoid.</li>
-<li><code>new Supertoroid(xRadius, yRadius, zRadius, innerRadius, n, m)</code><br>
-Creates a &quot;<a href="http://en.wikipedia.org/wiki/Supertoroid"><strong>supertoroid</strong></a>&quot; shape (with a hole in the middle), with a radius <code>xRadius</code> along the X axis, <code>yRadius</code> along the Y axis, and <code>zRadius</code> along the Z axis. The inner radius will be <code>innerRadius</code>. The parameters <code>m</code> and <code>n</code> may be omitted; the default for each is 1, which creates a normal torus or toroid.</li>
-<li><code>new KleinBottle()</code><br>Creates a Klein bottle.</li>
-<li><code>new MoebiusStrip()</code><br>Creates a M&ouml;bius strip.</li>
-</ul>
-
-<p><a id=Creating_Your_Own_Curves_and_Surfaces></a></p>
-
-<h3>Creating Your Own Curves and Surfaces</h3>
-
-<p>Two other demos include a formula editor allowing you to experiment with
-parametric curves and surfaces, and to export them to source code appropriate
-for use in the Public Domain HTML 3D Library.</p>
-
-<ul>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/curvesexpr.html"><strong>curvesexpr.html</strong></a> - Demonstrates parametric
-curves, with a custom formula editor.</li>
-<li><a href="https://peteroupc.github.io/html3dutil/demos/surfacesexpr.html"><strong>surfacesexpr.html</strong></a> - Demonstrates parametric
-surfaces, with a custom formula editor.</li>
-</ul>
-
 <p><a id=Other_Pages></a></p>
 
 <h2>Other Pages</h2>
 
-<p>The following pages of mine on CodeProject also discuss this library:</p>
+<p>The following pages of mine on CodeProject also discuss the Geometry Utilities Library, formerly the Public-Domain HTML 3D Library:</p>
 
 <ul>
 <li><a href="http://www.codeproject.com/Tips/896839/Public-Domain-HTML-ThreeD-Library"><strong><em>Public-Domain HTML 3D Library</em></strong></a></li>
@@ -419,7 +378,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
 <li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="extras_arrow.html">module:extras/arrow</a></li>
 <li><a href="extras_camera.html">module:extras/camera</a></li>
 <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
@@ -432,6 +390,12 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
 <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
 <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_derivedcurves.curveCatacaustic.html">module:extras/derivedcurves.curveCatacaustic</a></li>
+<li><a href="extras_derivedcurves.curveEvolute.html">module:extras/derivedcurves.curveEvolute</a></li>
+<li><a href="extras_derivedcurves.curveInvolute.html">module:extras/derivedcurves.curveInvolute</a></li>
+<li><a href="extras_derivedcurves.curveOrthotomic.html">module:extras/derivedcurves.curveOrthotomic</a></li>
+<li><a href="extras_derivedcurves.curveRadialCurve.html">module:extras/derivedcurves.curveRadialCurve</a></li>
+<li><a href="extras_derivedcurves.ruledSurface.html">module:extras/derivedcurves.ruledSurface</a></li>
 <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
 <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
 <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>

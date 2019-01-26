@@ -10,8 +10,9 @@
 
 <h3>module:extras/derivedcurves()</h3>
 
-<p>The <code>extras/derivedcurves.js</code> module.
-To import all symbols in this module, either of the following can be used:</p>
+<p>Additional curve evaluator and surface evaluator objects.</p>
+
+<p>To import all symbols in this module, either of the following can be used:</p>
 
 <pre>import * from &quot;extras/derivedcurves.js&quot;;
 // -- or --
@@ -21,62 +22,22 @@ import * as CustomModuleName from &quot;extras/derivedcurves.js&quot;;
 <h3>Methods</h3>
 
 <ul>
-<li><a href="#extras_derivedcurves.curveCatacaustic">curveCatacaustic</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curveEvolute">curveEvolute</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curveInverse">curveInverse</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curveInvolute">curveInvolute</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curveOrthotomic">curveOrthotomic</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curvePedalCurve">curvePedalCurve</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.curveRadialCurve">curveRadialCurve</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.polarCurve">polarCurve</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.ruledSurface">ruledSurface</a><br>TODO: Not documented yet.</li>
-<li><a href="#extras_derivedcurves.spiralCurve">spiralCurve</a><br>TODO: Not documented yet.</li>
+<li><a href="#extras_derivedcurves.curveInverse">curveInverse</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
+<li><a href="#extras_derivedcurves.curvePedalCurve">curvePedalCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
+<li><a href="#extras_derivedcurves.polarCurve">polarCurve</a><br>Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point&#39;s radius given its angle.</li>
+<li><a href="#extras_derivedcurves.spiralCurve">spiralCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
 </ul>
-
-<p><a name='extras_derivedcurves.curveCatacaustic'></a></p>
-
-<h3>(static) module:extras/derivedcurves.curveCatacaustic(evaluator, ox, oy)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>evaluator</code> (Type: *)</li>
-<li><code>ox</code> (Type: *)</li>
-<li><code>oy</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
-
-<p><a name='extras_derivedcurves.curveEvolute'></a></p>
-
-<h3>(static) module:extras/derivedcurves.curveEvolute(evaluator)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>evaluator</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
 
 <p><a name='extras_derivedcurves.curveInverse'></a></p>
 
 <h3>(static) module:extras/derivedcurves.curveInverse(evaluator, ox, oy, radius)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates a curve evaluator object for TODO: Not documented yet.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: *)</li>
+<li><code>evaluator</code> (Type: Curve | Object)<br>A curve evaluator object for TODO: Not documented yet.</li>
 <li><code>ox</code> (Type: *)</li>
 <li><code>oy</code> (Type: *)</li>
 <li><code>radius</code> (Type: *)</li>
@@ -84,117 +45,48 @@ import * as CustomModuleName from &quot;extras/derivedcurves.js&quot;;
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
-
-<p><a name='extras_derivedcurves.curveInvolute'></a></p>
-
-<h3>(static) module:extras/derivedcurves.curveInvolute(evaluator)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>evaluator</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
-
-<p><a name='extras_derivedcurves.curveOrthotomic'></a></p>
-
-<h3>(static) module:extras/derivedcurves.curveOrthotomic(evaluator, ox, oy)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>evaluator</code> (Type: *)</li>
-<li><code>ox</code> (Type: *)</li>
-<li><code>oy</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
+<p>The resulting curve evaluator object. (Type: Object)</p>
 
 <p><a name='extras_derivedcurves.curvePedalCurve'></a></p>
 
 <h3>(static) module:extras/derivedcurves.curvePedalCurve(evaluator, ox, oy)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates a curve evaluator object for TODO: Not documented yet.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>evaluator</code> (Type: *)</li>
+<li><code>evaluator</code> (Type: Curve | Object)<br>A curve evaluator object for TODO: Not documented yet.</li>
 <li><code>ox</code> (Type: *)</li>
 <li><code>oy</code> (Type: *)</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
-
-<p><a name='extras_derivedcurves.curveRadialCurve'></a></p>
-
-<h3>(static) module:extras/derivedcurves.curveRadialCurve(evaluator, ox, oy)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>evaluator</code> (Type: *)</li>
-<li><code>ox</code> (Type: *)</li>
-<li><code>oy</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
+<p>The resulting curve evaluator object. (Type: Object)</p>
 
 <p><a name='extras_derivedcurves.polarCurve'></a></p>
 
 <h3>(static) module:extras/derivedcurves.polarCurve(func, phase)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point&#39;s radius given its angle.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: *)</li>
-<li><code>phase</code> (Type: *)</li>
+<li><code>func</code></li>
+<li><code>phase</code> (Type: number)<br>Starting angle of the curve. If null, undefined, or omitted, the default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
-
-<p><a name='extras_derivedcurves.ruledSurface'></a></p>
-
-<h3>(static) module:extras/derivedcurves.ruledSurface(directrix, director)</h3>
-
-<p>TODO: Not documented yet.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>directrix</code> (Type: *)</li>
-<li><code>director</code> (Type: *)</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>Return value. (Type: *)</p>
+<p>The resulting curve evaluator object. (Type: Object)</p>
 
 <p><a name='extras_derivedcurves.spiralCurve'></a></p>
 
 <h3>(static) module:extras/derivedcurves.spiralCurve(radius, phase)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates a curve evaluator object for TODO: Not documented yet.</p>
 
 <h4>Parameters</h4>
 
@@ -205,7 +97,7 @@ import * as CustomModuleName from &quot;extras/derivedcurves.js&quot;;
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>The resulting curve evaluator object. (Type: Object)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -246,7 +138,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
 <li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
 <li><a href="Promise.html">Promise</a></li>
-<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="extras_arrow.html">module:extras/arrow</a></li>
 <li><a href="extras_camera.html">module:extras/camera</a></li>
 <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
@@ -259,6 +150,12 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
 <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
 <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_derivedcurves.curveCatacaustic.html">module:extras/derivedcurves.curveCatacaustic</a></li>
+<li><a href="extras_derivedcurves.curveEvolute.html">module:extras/derivedcurves.curveEvolute</a></li>
+<li><a href="extras_derivedcurves.curveInvolute.html">module:extras/derivedcurves.curveInvolute</a></li>
+<li><a href="extras_derivedcurves.curveOrthotomic.html">module:extras/derivedcurves.curveOrthotomic</a></li>
+<li><a href="extras_derivedcurves.curveRadialCurve.html">module:extras/derivedcurves.curveRadialCurve</a></li>
+<li><a href="extras_derivedcurves.ruledSurface.html">module:extras/derivedcurves.ruledSurface</a></li>
 <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
 <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
 <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
