@@ -179,7 +179,7 @@ function drawCurve(contours) {
     }
   }
   return MeshBuffer.fromPositions(vertices)
-    .setPrimitiveType(MeshBuffer.LINES)
+    .setType(MeshBuffer.LINES)
     .setColor([0, 0, 0]);
 }
 /**
@@ -342,5 +342,5 @@ export function contourLines3D(mesh, planes) {
     }
   }
   return MeshBuffer.fromPositions(positions)
-    .setPrimitiveType(MeshBuffer.LINES);
+    .setType(MeshBuffer.LINES);
 }

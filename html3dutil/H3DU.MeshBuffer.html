@@ -28,7 +28,7 @@ are composed of.</p>
 
 <p><b>Instancing</b></p>
 
-<p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive mode <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.</p>
+<p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.</p>
 
 <h4>Examples</h4>
 
@@ -110,7 +110,7 @@ an additional parameter.</li>
 assigning each value with the attribute semantic <code>COLOR</code>
 to the given color.</li>
 <li><a href="#H3DU.MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
-<li><a href="#H3DU.MeshBuffer_setPrimitiveType">setPrimitiveType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
+<li><a href="#H3DU.MeshBuffer_setType">setType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
 <li><a href="#H3DU.MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
 in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>.</li>
 <li><a href="#H3DU.MeshBuffer.triangleFanIndices">triangleFanIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
@@ -771,9 +771,9 @@ regardless of semantic index, are affected by this method.</p>
 
 <p>This object. (Type: MeshBuffer)</p>
 
-<p><a name='H3DU.MeshBuffer_setPrimitiveType'></a></p>
+<p><a name='H3DU.MeshBuffer_setType'></a></p>
 
-<h3>H3DU.MeshBuffer#setPrimitiveType(primType)</h3>
+<h3>H3DU.MeshBuffer#setType(primType)</h3>
 
 <p>Sets the type of graphics primitives stored in this mesh buffer.</p>
 
@@ -969,11 +969,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
 <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
 <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_derivedcurves.curveCatacaustic.html">module:extras/derivedcurves.curveCatacaustic</a></li>
-<li><a href="extras_derivedcurves.curveEvolute.html">module:extras/derivedcurves.curveEvolute</a></li>
-<li><a href="extras_derivedcurves.curveInvolute.html">module:extras/derivedcurves.curveInvolute</a></li>
-<li><a href="extras_derivedcurves.curveOrthotomic.html">module:extras/derivedcurves.curveOrthotomic</a></li>
-<li><a href="extras_derivedcurves.curveRadialCurve.html">module:extras/derivedcurves.curveRadialCurve</a></li>
 <li><a href="extras_derivedcurves.ruledSurface.html">module:extras/derivedcurves.ruledSurface</a></li>
 <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
 <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
