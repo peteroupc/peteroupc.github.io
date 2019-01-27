@@ -31,6 +31,7 @@ is generated.</li>
 <li><a href="#extras_derivedcurves.curvePedalCurve">curvePedalCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
 <li><a href="#extras_derivedcurves.curveRadialCurve">curveRadialCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
 <li><a href="#extras_derivedcurves.polarCurve">polarCurve</a><br>Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point&#39;s radius given its angle.</li>
+<li><a href="#extras_derivedcurves.ruledSurface">ruledSurface</a><br>Creates a surface evaluator object for TODO: Not documented yet.</li>
 <li><a href="#extras_derivedcurves.spiralCurve">spiralCurve</a><br>Creates a curve evaluator object for TODO: Not documented yet.</li>
 </ul>
 
@@ -160,24 +161,41 @@ is generated.</p>
 
 <p><a name='extras_derivedcurves.polarCurve'></a></p>
 
-<h3>(static) module:extras/derivedcurves.polarCurve(func, phase)</h3>
+<h3>(static) module:extras/derivedcurves.polarCurve(func, [phase])</h3>
 
 <p>Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point&#39;s radius given its angle.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>func</code> (Type: function)<br>Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &amp;pi) or [0, 2&pi;).</li>
-<li><code>phase</code> (Type: number)<br>Starting angle of the curve. If null, undefined, or omitted, the default is 0.</li>
+<li><code>func</code> (Type: function)<br>Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi;) or [0, 2&pi;).</li>
+<li><code>phase</code> (Type: number) (optional)<br>Starting polar angle of the curve. If null, undefined, or omitted, the default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
 
 <p>The resulting curve evaluator object. (Type: Object)</p>
 
+<p><a name='extras_derivedcurves.ruledSurface'></a></p>
+
+<h3>(static) module:extras/derivedcurves.ruledSurface(directrix, director)</h3>
+
+<p>Creates a surface evaluator object for TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>directrix</code> (Type: *)</li>
+<li><code>director</code> (Type: *)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The resulting surface evaluator object. (Type: Object)</p>
+
 <p><a name='extras_derivedcurves.spiralCurve'></a></p>
 
-<h3>(static) module:extras/derivedcurves.spiralCurve(radius, phase)</h3>
+<h3>(static) module:extras/derivedcurves.spiralCurve(radius, [phase])</h3>
 
 <p>Creates a curve evaluator object for TODO: Not documented yet.</p>
 
@@ -185,7 +203,7 @@ is generated.</p>
 
 <ul>
 <li><code>radius</code> (Type: *)</li>
-<li><code>phase</code> (Type: *)</li>
+<li><code>phase</code> (Type: number) (optional)<br>TODO If null, undefined, or omitted, the default is 0.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -243,7 +261,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
 <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
 <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_derivedcurves.ruledSurface.html">module:extras/derivedcurves.ruledSurface</a></li>
 <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
 <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
 <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>

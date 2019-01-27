@@ -56,9 +56,16 @@
 
 <ol>
 <li><a href="https://github.com/peteroupc/html3dutil/releases"><strong>Download the Geometry Utilities Library</strong></a>.</li>
-<li><p>Extract the file <i>&quot;h3du_min.js&quot;</i> or <i>&quot;h3du_module.js&quot;</i>, and write the following code in every HTML page where you will use the library.</p>
+<li>Extract the file <i>&quot;h3du_min.js&quot;</i> or <i>&quot;h3du_module.js&quot;</i>, as appropriate.</li>
+<li><p>If using the script version in an HTML Web page, and write the following code in every HTML page where you will use the library.</p>
 
 <pre>&lt;script type=&quot;text/javascript&quot; src=&quot;h3du_min.js&quot;&gt;&lt;/script&gt;
+</pre></li>
+<li><p>If using the module version in a modern HTML Web page or a modern ECMAScript module, you can import all symbols in this module with either of the following:</p>
+
+<pre>import * from &quot;h3du_module.js&quot;;
+// -- or --
+import * as H3DU from &quot;h3du_module.js&quot;;
 </pre></li>
 </ol>
 
@@ -235,7 +242,6 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
 <li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
 <li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
-<li><a href="extras_derivedcurves.ruledSurface.html">module:extras/derivedcurves.ruledSurface</a></li>
 <li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
 <li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
 <li><a href="extras_evaluators.html">module:extras/evaluators</a></li>

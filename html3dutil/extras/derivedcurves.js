@@ -218,7 +218,6 @@ export function curveInverse(evaluator, ox, oy, radius) {
  * Creates a [surface evaluator object]{@link Surface} for TODO: Not documented yet.
  * @param {*} directrix
  * @param {*} director
- * @constructor
  * @returns {Object} The resulting surface evaluator object.
  */
 export function ruledSurface(directrix, director) {
@@ -236,8 +235,8 @@ export function ruledSurface(directrix, director) {
 }
 /**
  * Creates a curve evaluator object for a <i>polar curve</i>, a curve generated from its polar coordinates using a <i>polar function</i>, a function that determines a point's radius given its angle.
- * @param {Function} func Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi) or [0, 2&pi;).
- * @param {number} phase Starting angle of the curve. If null, undefined, or omitted, the default is 0.
+ * @param {Function} func Function that determines the radius of a point on the curve given its angle. It takes one parameter, <code>angle</code>, giving the angle in radians. <code>angle</code> can be any number and is not limited to the interval [-&pi;, &pi;) or [0, 2&pi;).
+ * @param {number} [phase] Starting polar angle of the curve. If null, undefined, or omitted, the default is 0.
  * @returns {Object} The resulting curve evaluator object.
  */
 export function polarCurve(func, phase) {
@@ -262,11 +261,12 @@ export function polarCurve(func, phase) {
 /**
  * Creates a [curve evaluator object]{@link Curve} for TODO: Not documented yet.
  * @param {*} radius
- * @param {*} phase
+ * @param {number} [phase] TODO If null, undefined, or omitted, the default is 0.
  * @returns {Object} The resulting curve evaluator object.
  */
 export function spiralCurve(radius, phase) {
-  const pphase = phase;
+  const pphase = typeof phase === "undefined" || phase === null ? 0 : phase;
+
   return new Curve({
     "evaluate":function(u) {
       const uphase = u + pphase;
