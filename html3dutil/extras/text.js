@@ -44,7 +44,7 @@
  * other, and the mention of this link is not an endorsement or sponsorship
  * of any particular tool.)<p>
  * NOTE: The constructor should not be called directly by applications.
- * Use the {@link H3DU.TextFont.load} method to get an H3DU.TextFont object. This
+ * Use the {@link TextFont.load} method to get an H3DU.TextFont object. This
  * constructor's parameters are undocumented and are subject to change.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
@@ -106,7 +106,7 @@ H3DU.TextFont._toArray = function(str, minLength) {
  * drawn using this font.
  * @param {string} str The text string to measure. Line breaks
  * ("\n", "\r", "\r\n") are recognized by this method.
- * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
+ * @param {Object} params An object described in {@link TextFont#makeTextMeshes}.
  * @returns {Array<number>} An array of two numbers;
  * the first is the width of the string, and the second is the
  * height of the string (taking into account line feed characters,
@@ -271,7 +271,7 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * than the right and bottom coordinates, respectively).
  * @param {string} str The text to draw.  Line breaks ("\n", "\r", "\r\n") are recognized
  * by this method.
- * @param {Object} params An object described in {@link H3DU.TextFont#makeTextMeshes}.
+ * @param {Object} params An object described in {@link TextFont#makeTextMeshes}.
  * Can also contain the following keys:<ul>
  * <li><code>color</code> - A [color vector or string]{@link toGLColor} giving
  * the color to draw the text with.
@@ -279,8 +279,8 @@ H3DU.TextFont.prototype._findLineBreaks = function(str, scale, maxWidth) {
  * font.
  * <li><code>msdf</code> - Treat the bitmap font as a multichannel signed distance field
  * font.
- * <li><code>texture</code> - An array of textures ({@link H3DU.Texture}) to use with this font,
- * or a single {@link H3DU.Texture} if only one texture page is used.
+ * <li><code>texture</code> - An array of textures ({@link Texture}) to use with this font,
+ * or a single {@link Texture} if only one texture page is used.
  * If null, undefined, or omitted, uses the default filenames for texture pages defined in this font.
  * </ul>
  * @returns {H3DU.ShapeGroup} The generated group of shapes.
@@ -829,8 +829,8 @@ H3DU.TextFont._loadTextFontInner = function(data) {
  * If the promise is resolved, the result will be an object with the
  * following keys:<ul>
  * <li><code>url</code> - The URL of the font data file.
- * <li><code>font</code> - The font data in the form of an {@link H3DU.TextFont} object.
- * <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
+ * <li><code>font</code> - The font data in the form of an {@link TextFont} object.
+ * <li><code>textures</code> - An array of {@link Texture} objects used by the font,
  * in the order in which they are declared in the font data file.
  * </ul>
  */
@@ -858,9 +858,9 @@ H3DU.TextFont.loadWithTextures = function(fontFileName, textureLoader) {
  * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
  * loading the textures.
  * @returns {Promise<H3DU.Texture>} A promise as described in
- * {@link H3DU.getPromiseResultsAll}. If the promise
+ * {@link getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
- * {@link H3DU.Texture} object.
+ * {@link Texture} object.
  */
 H3DU.TextFont.prototype.loadTextures = function(textureLoader) {
   const textures = [];
@@ -994,7 +994,7 @@ H3DU.TextFont._textShader = function(msdf) {
  * texture atlas can specify where those portions are found.<p>
  * This implementation supports the ".atlas" format.<p>
  * NOTE: The constructor should not be called directly by applications.
- * Use the {@link H3DU.TextureAtlas.load} method to get an H3DU.TextureAtlas object.
+ * Use the {@link TextureAtlas.load} method to get an H3DU.TextureAtlas object.
  * <p>This class is considered a supplementary class to the
  * Public Domain HTML 3D Library and is not considered part of that
  * library. <p>
@@ -1275,9 +1275,9 @@ H3DU.TextureAtlas._loadText = function(data) {
  * @param {H3DU.TextureLoader} textureLoader Texture loader object to use when
  * loading the textures.
  * @returns {Promise<Array<H3DU.Texture>>} A promise as described in
- * {@link H3DU.getPromiseResultsAll}. If the promise
+ * {@link getPromiseResultsAll}. If the promise
  * resolves, each item in the resulting array will be a loaded
- * {@link H3DU.Texture} object.
+ * {@link Texture} object.
  */
 H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
   const textures = [];
@@ -1309,8 +1309,8 @@ H3DU.TextureAtlas.prototype.loadTextures = function(textureLoader) {
  * If the promise is resolved, the result will be an object with the
  * following keys:<ul>
  * <li><code>url</code> - The URL of the texture atlas data file.
- * <li><code>atlas</code> - The texture atlas data in the form of an {@link H3DU.TextureAtlas} object.
- * <li><code>textures</code> - An array of {@link H3DU.Texture} objects used by the font,
+ * <li><code>atlas</code> - The texture atlas data in the form of an {@link TextureAtlas} object.
+ * <li><code>textures</code> - An array of {@link Texture} objects used by the font,
  * in the order in which they are declared in the font data file.
  * </ul>
  */

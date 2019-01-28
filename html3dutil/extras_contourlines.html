@@ -47,7 +47,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</li>
 
 <h4>Return Value</h4>
 
-<p>A mesh buffer of line segments for the contour lines. (Type: MeshBuffer)</p>
+<p>A mesh buffer of line segments for the contour lines. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
 
 <h4>Examples</h4>
 
@@ -69,7 +69,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mesh</code> (Type: MeshBuffer)<br>A triangle mesh. It must contain a &quot;POSITION&quot; buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.</li>
+<li><code>mesh</code> (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<br>A triangle mesh. It must contain a &quot;POSITION&quot; buffer attribute with three elements per value. If the number of vertices in the mesh is not divisible by 3, any excess vertices at the end are ignored.</li>
 <li><code>planes</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of 4-element arrays that serve as contour planes. The contour lines will be drawn at the intersection of the contour planes and the surface of the mesh. Each 4-element array describes a plane (A, B, C, D), in that order, whose points satisfy the equation <code>Ax + By + Cz + D = 0</code>, where (x, y, z) is a point lying on the plane.</li>
 </ul>
 
@@ -78,7 +78,7 @@ contour lines along the surface of a 3-dimensional triangle mesh.</p>
 <p>A mesh buffer containing the generated contour lines.
 Returns null if the input mesh&#39;s primitive type isn&#39;t triangles, or if
 the input mesh doesn&#39;t contain a &quot;POSITION&quot; buffer attribute with
-three elements per value. (Type: MeshBuffer)</p>
+three elements per value. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
@@ -99,28 +99,28 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
-<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
-<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
-<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
-<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
-<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
 <li><a href="extras_arrow.html">module:extras/arrow</a></li>
 <li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
 <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
 <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
 <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>

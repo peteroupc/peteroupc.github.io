@@ -55,7 +55,7 @@ BspTree._MiniBuilder = function() {
 /**
  * Generates a mesh buffer containing the polygons
  * stored in this BSP tree.
- * @returns {H3DU.MeshBuffer} Return value.
+ * @returns {MeshBuffer} Return value.
  */
 BspTree.prototype.toMeshBuffer = function() {
   "use strict";
@@ -311,7 +311,7 @@ BspTree.prototype.clip = function(node) {
 };
 /**
  * Generates a BSP tree from a mesh buffer.
- * @param {H3DU.MeshBuffer} mesh A mesh buffer.
+ * @param {MeshBuffer} mesh A mesh buffer.
  * @returns {BspTree} The resulting BSP tree.
  */
 BspTree.fromMeshBuffer = function(mesh) {

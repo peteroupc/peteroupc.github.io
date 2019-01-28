@@ -15,194 +15,6 @@
 <p>This page describes miscellaneous utility methods included in the
 library.</p>
 
-<h3>Methods</h3>
-
-<ul>
-<li><a href="#H3DU.getPromiseResults">getPromiseResults</a><br>Utility function that returns a promise that
-resolves after the given list of promises finishes
-its work.</li>
-<li><a href="#H3DU.getPromiseResultsAll">getPromiseResultsAll</a><br>Utility function that returns a promise that
-resolves or is rejected after the given list of promises finishes
-its work.</li>
-<li><a href="#H3DU.getTimePosition">getTimePosition</a><br>Gets the position of a time value within an interval.</li>
-<li><a href="#H3DU.newFrames">newFrames</a><br>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame&#39;s length is 1/60 of a second.</li>
-<li><a href="#H3DU.toGLColor">toGLColor</a><br>Creates a 4-element array representing a color.</li>
-</ul>
-
-<p><a name='H3DU.getPromiseResults'></a></p>
-
-<h3>(static) H3DU.getPromiseResults(promises, [progressResolve], [progressReject])</h3>
-
-<p>Utility function that returns a promise that
-resolves after the given list of promises finishes
-its work.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>A function called as each individual promise is resolved.</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>A function called as each individual promise is rejected.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that is never rejected and resolves when
-all of the promises are each resolved or rejected. The result
-of the promise will be an object with
-three keys:<ul>
- <li>&quot;successes&quot; - contains a list of results from the
-promises that succeeded, in the order in which those promises were listed.
- <li>&quot;failures&quot; - contains a list of results from the
-promises that failed, in the order in which those promises were listed.
- <li>&quot;results&quot; - contains a list of boolean values for each
-promise, in the order in which the promises were listed.
-True means success, and false means failure.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.getPromiseResultsAll'></a></p>
-
-<h3>(static) H3DU.getPromiseResultsAll(promises, [progressResolve], [progressReject])</h3>
-
-<p>Utility function that returns a promise that
-resolves or is rejected after the given list of promises finishes
-its work.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>promises</code> (Type: Array.&lt;<a href="Promise.html">Promise</a>&gt;)<br>an array containing promise objects</li>
-<li><code>progressResolve</code> (Type: function) (optional)<br>a function called as each individual promise is resolved; optional</li>
-<li><code>progressReject</code> (Type: function) (optional)<br>a function called as each individual promise is rejected; optional</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A promise that is resolved when
-all of the promises are each resolved; the result will
-be an array of results from those promises,
-in the order in which those promises were listed.
-Will be rejected if any of the promises is rejected; the result
-will be an object as specified in getPromiseResults.</ul> (Type: <a href="Promise.html">Promise</a>)</p>
-
-<p><a name='H3DU.getTimePosition'></a></p>
-
-<h3>(static) H3DU.getTimePosition(timer, timeInMs, intervalInMs)</h3>
-
-<p>Gets the position of a time value within an interval.
-This is useful for doing animation cycles lasting a certain number
-of seconds, such as rotating a shape in a 5-second cycle.
-This method may be called any number of times each frame.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>timer</code> (Type: Object)<br>An object that will hold two properties:<ul> <li>&quot;time&quot; - initial time value, in milliseconds. <li>&quot;lastTime&quot; - last known time value, in milliseconds. Will be set to the value given in &quot;timeInMs&quot; before returning. </ul> The object should be initialized using the idiom <code>{}</code> or <code>new Object()</code>.</li>
-<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method.</li>
-<li><code>intervalInMs</code> (Type: number)<br>The length of the interval (animation cycle), in milliseconds.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>A value in the range [0, 1), where closer
-to 0 means &quot;timeInMs&quot; lies
-closer to the start, and closer to 1 means closer
-to the end of the interval. If an initial time wasn&#39;t set, returns 0. (Type: number)</p>
-
-<h4>Examples</h4>
-
-<p>The following code sets an angle of
-rotation, in degrees, such that an object rotated with the
-angle does a 360-degree turn in 5 seconds (5000 milliseconds).
-The variable <code>time</code> is assumed to be a time
-value in milliseconds, such as the parameter of a
-<code>requestAnimationFrame()</code> callback method.</p>
-
-<pre>var angle = 360 * getTimePosition(timer, time, 5000);
-</pre>
-
-<p><a name='H3DU.newFrames'></a></p>
-
-<h3>(static) H3DU.newFrames(timer, timeInMs)</h3>
-
-<p>Returns the number of frame-length intervals that occurred since
-the last known time, where a frame&#39;s length is 1/60 of a second.
-This method should be called only once each frame.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>timer</code> (Type: Object)<br>An object described in getTimePosition.</li>
-<li><code>timeInMs</code> (Type: number)<br>A time value, in milliseconds. This could be the parameter received in a <code>requestAnimationFrame()</code> callback method. </code>.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The number of frame-length intervals relative to
-the last known time held in the parameter &quot;timer&quot;.
-The number can include fractional frames. If an
-initial time or last known time wasn&#39;t set, returns 0. (Type: number)</p>
-
-<p><a name='H3DU.toGLColor'></a></p>
-
-<h3>(static) H3DU.toGLColor(r, [g], [b], [a])</h3>
-
-<p>Creates a 4-element array representing a color. Each element
-can range from 0 to 1 and specifies the red, green, blue or alpha
-component, respectively.
-This method also converts HTML and CSS colors to 4-element RGB
-colors. The following lists the kinds of colors accepted:</p>
-
-<ul>
-<li>HTML colors with the syntax <code>#RRGGBB</code> or <code>#RRGGBBAA</code>, where
-RR is the hexadecimal form of the red component (00-FF), GG
-is the hexadecimal green component, BB is the hexadecimal
-blue component, and AA is the hexadecimal alpha component. Example: #88DFE0.
-<li>HTML colors with the syntax <code>#RGB</code> or <code>#RGBA</code>, where
-R is the hexadecimal form of the red component (0-F), G
-is the hexadecimal green component, B is the hexadecimal
-blue component, and A is the hexadecimal alpha component. Example: #8DE.
-<li>CSS colors with the syntax <code>rgb(red, green, blue)</code> or
-<code>rgba(red, green, blue, alpha)</code> where
-<code>red</code>, <code>green</code>, and <code>blue</code>
-are the red, green, and blue components, respectively, either as a
-number (0-255) or as a percent, and <code>alpha</code> is
-a number from 0-1 specifying the alpha component.
-Examples: <code>rgb(255,0,0)</code>,
-<code>rgb(100%,50%,0%)</code>, <code>rgba(20,255,255,0.5)</code>.
-<li>CSS colors with the syntax <code>hsl(hue, sat, light)</code> or
-<code>hsla(hue, sat, light, alpha)</code> where
-<code>hue</code> is the hue component in degrees (0-360),
-<code>sat</code> and <code>light</code>
-are the saturation and lightness components, respectively, as percents,
-and <code>alpha</code> is
-a number from 0-1 specifying the alpha component.
-Examples: <code>rgb(255,0,0)</code>,
-<code>hsl(200,50%,50%)</code>, <code>hsla(20,80%,90%,0.5)</code>.
-<li>CSS colors such as <code>red</code>, <code>green</code>,
-<code>white</code>, <code>lemonchiffon</code>, <code>chocolate</code>,
-and so on, including the newly added <code>rebeccapurple</code>.
-<li>The value <code>transparent</code>, meaning transparent black.
-</ul>
-
-<p>For more information, see the &quot;<a href="tutorial-colors.html">Color Strings</a>&quot; tutorial.</p>
-
-<h4>Parameters</h4>
-
-<ul>
-<li><code>r</code> (Type: Array.&lt;number&gt; | number | string)<br>One of the following:<ul> <li>A <b>color vector or string</b>, which can be one of these:<ul> <li>An array of three color components, each of which ranges from 0 to 1. The three components are red, green, and blue in that order.</li> <li>An array of four color components, each of which ranges from 0 to 1. The three components are red, green, blue, and alpha in that order.</li> <li>A string specifying an HTML or CSS color, in one of the formats mentioned above in the method description.</li></ul></li> <li>A number specifying the red component. Must range from 0 to 1.</li> </ul> Returns (0,0,0,0) if this value is null.</li>
-<li><code>g</code> (Type: number) (optional)<br>Green color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>b</code> (Type: number) (optional)<br>Blue color component (0-1). May be null or omitted if a string or array is given as the &quot;r&quot; parameter.</li>
-<li><code>a</code> (Type: number) (optional)<br>Alpha color component (0-1). If the &quot;r&quot; parameter is given and this parameter is null, undefined, or omitted, this value is treated as 1.0.</li>
-</ul>
-
-<h4>Return Value</h4>
-
-<p>The color as a 4-element array; if the color is
-invalid, returns [0,0,0,0], or transparent black. Numbers less
-than 0 are clamped to 0, and numbers greater than 1 are
-clamped to 1. (Type: Array.&lt;number&gt;)</p>
-
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
@@ -222,28 +34,28 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <h3>Navigation</h3>
 
 <ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
 <li><a href="H3DU.html">H3DU</a></li>
-<li><a href="H3DU.BSplineCurve.html">H3DU.BSplineCurve</a></li>
-<li><a href="H3DU.BSplineSurface.html">H3DU.BSplineSurface</a></li>
-<li><a href="H3DU.BufferAccessor.html">H3DU.BufferAccessor</a></li>
-<li><a href="H3DU.Curve.html">H3DU.Curve</a></li>
-<li><a href="H3DU.CurveBuilder.html">H3DU.CurveBuilder</a></li>
-<li><a href="H3DU.GraphicsPath.html">H3DU.GraphicsPath</a></li>
-<li><a href="H3DU.MathUtil.html">H3DU.MathUtil</a></li>
-<li><a href="H3DU.MeshBuffer.html">H3DU.MeshBuffer</a></li>
-<li><a href="H3DU.Meshes.html">H3DU.Meshes</a></li>
-<li><a href="H3DU.PiecewiseCurve.html">H3DU.PiecewiseCurve</a></li>
-<li><a href="H3DU.Shape.html">H3DU.Shape</a></li>
-<li><a href="H3DU.ShapeGroup.html">H3DU.ShapeGroup</a></li>
-<li><a href="H3DU.Surface.html">H3DU.Surface</a></li>
-<li><a href="H3DU.SurfaceBuilder.html">H3DU.SurfaceBuilder</a></li>
 <li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
 <li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
-<li><a href="H3DU.Transform.html">H3DU.Transform</a></li>
-<li><a href="H3DU.exports.Camera.html">H3DU.exports.Camera</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
 <li><a href="extras_arrow.html">module:extras/arrow</a></li>
 <li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
 <li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
 <li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
 <li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>

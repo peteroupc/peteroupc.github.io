@@ -433,14 +433,6 @@ InputTracker.prototype.update = function() {
   return this;
 };
 
-/* exported InputTracker */
-/**
- * Alias for the {@link InputTracker} class.
- * @constructor
- * @alias InputTracker
- * @deprecated Use {@link InputTracker} instead.
- */
-
 // ////////////////////////////////////////////////////
 
 /**
@@ -458,7 +450,6 @@ InputTracker.prototype.update = function() {
  * the HTML 3D Library. Example:<pre>
  * &lt;script type="text/javascript" src="extras/camera.js">&lt;/script></pre>
  * @constructor
- * @memberof H3DU
  * @param {number} fov Vertical field of view, in degrees. Should be less
  * than 180 degrees. (The smaller
  * this number, the bigger close objects appear to be.) See {@link MathUtil.mat4perspective}.

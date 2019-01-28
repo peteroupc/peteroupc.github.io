@@ -541,7 +541,7 @@ ImplicitSurface.prototype.findBox = function(xsize, ysize, zsize, xmin, xmax, ym
  * given mesh those points that are on or close to the boundary of this
  * implicit surface
  * within the given area.
- * @param {H3DU.Mesh} mesh Mesh to store the points in.
+ * @param {Mesh} mesh Mesh to store the points in.
  * @param {number} xsize Number of grid points along the X axis. Must be 2 or greater.
  * @param {number} ysize Number of grid points along the Y axis. Must be 2 or greater.
  * @param {number} zsize Number of grid points along the Z axis. Must be 2 or greater.
@@ -582,7 +582,7 @@ ImplicitSurface.prototype.evalSurfacePoints = function(mesh, xsize, ysize, zsize
  * Evaluates the grid points of the given three-dimensional area and adds to the
  * given mesh the triangles and normals that make up the boundary of
  * this implicit surface within the given area.
- * @param {H3DU.Mesh} mesh Mesh to store the points in.
+ * @param {Mesh} mesh Mesh to store the points in.
  * @param {number} xsize Number of grid points along the X axis. Must be 2 or greater.
  * @param {number} ysize Number of grid points along the Y axis. Must be 2 or greater.
  * @param {number} zsize Number of grid points along the Z axis. Must be 2 or greater.
