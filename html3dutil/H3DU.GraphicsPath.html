@@ -109,7 +109,7 @@ at this path&#39;s current position.</li>
 <li><a href="#H3DU.GraphicsPath_roundRect">roundRect</a><br>Adds path segments to this path that form an axis-aligned rounded rectangle.</li>
 <li><a href="#H3DU.GraphicsPath_toCurvePath">toCurvePath</a><br>Creates a path in which arcs are decomposed
 to cubic B&eacute;zier curves (which will approximate those arcs).</li>
-<li><a href="#H3DU.GraphicsPath_toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately.</li>
+<li><a href="#H3DU.GraphicsPath_toExtrudedMeshBuffer">toExtrudedMeshBuffer</a><br>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately, and, optionally, a base and toop.</li>
 <li><a href="#H3DU.GraphicsPath_toLineMeshBuffer">toLineMeshBuffer</a><br>Generates a mesh buffer consisting of the approximate line segments that make up this graphics path.</li>
 <li><a href="#H3DU.GraphicsPath_toLinePath">toLinePath</a><br>Creates a path in which curves and arcs are decomposed
 to line segments.</li>
@@ -903,9 +903,9 @@ segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)</p>
 
 <p><a name='H3DU.GraphicsPath_toExtrudedMeshBuffer'></a></p>
 
-<h3>H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness])</h3>
+<h3>H3DU.GraphicsPath#toExtrudedMeshBuffer(zStart, zEnd, [flatness], [closed])</h3>
 
-<p>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately.</p>
+<p>Generates a mesh buffer consisting of &quot;walls&quot; that follow this graphics path approximately, and, optionally, a base and toop.</p>
 
 <h4>Parameters</h4>
 
@@ -913,6 +913,7 @@ segments, B&eacute;zier curves, and close commands. (Type: GraphicsPath)</p>
 <li><code>zStart</code> (Type: number)<br>Starting Z coordinate of the mesh buffer&#39;s &quot;walls&quot;.</li>
 <li><code>zEnd</code> (Type: number)<br>Ending Z coordinate of the mesh buffer&#39;s &quot;walls&quot;.</li>
 <li><code>flatness</code> (Type: number) (optional)<br>When curves and arcs are decomposed to line segments, the segments will be close to the true path of the curve by this value, given in units. If null, undefined, or omitted, default is 1.</li>
+<li><code>closed</code> (Type: boolean) (optional)<br>If true, the generated mesh buffer will include a base and top. If null, undefined, or omitted, the default is false.</li>
 </ul>
 
 <h4>Return Value</h4>

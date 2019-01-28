@@ -63,8 +63,8 @@ to convert to N-dimensional points.</p>
 
 <p>Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
 N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
-for each control point. To convert such control points to homogeneous coordinates, multiply each
-conventional coordinate by its weight, then append the weight as the control point&#39;s last coordinate.</p>
+for each control point. To convert such a control point to homogeneous coordinates, multiply each of its
+conventional coordinates by its weight, then append the weight as the control point&#39;s last coordinate.</p>
 
 <p><b>NURBS Curves</b></p>
 
@@ -114,7 +114,7 @@ another, see the example.</p>
 
 <ul>
 <li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
-<li><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve contains eight knots, that is, four more knots than the number of control points (four). A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater.</li>
+<li><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene&#39;s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
 <li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of BSplineCurve.DIVIDE_BIT. If null, undefined, or omitted, no bits are set.</li>
 </ul>
 
@@ -200,7 +200,7 @@ the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
 <li><a href="#H3DU.BSplineCurve.clampedKnots">clampedKnots</a><br>Generates a knot vector with uniform knots, to be
-passed to the BSplineCurve or BSplineCurve constructor,
+passed to the BSplineCurve or BSplineSurface constructor,
 except that with the knot vector the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</li>
@@ -215,7 +215,7 @@ in this curve object.</li>
 <li><a href="#H3DU.BSplineCurve_split">split</a><br>Splits this B-spline curve into two at the given point.</li>
 <li><a href="#H3DU.BSplineCurve.uniform">uniform</a><br>Creates a B-spline curve with uniform knots.</li>
 <li><a href="#H3DU.BSplineCurve.uniformKnots">uniformKnots</a><br>Generates a knot vector with uniform knots, to be
-passed to the BSplineCurve or BSplineCurve constructor.</li>
+passed to the BSplineCurve or BSplineSurface constructor.</li>
 <li><a href="#H3DU.BSplineCurve_velocity">velocity</a><br>Finds the velocity (derivative) of
 this curve at the given point.</li>
 </ul>
@@ -262,7 +262,7 @@ knot of the curve will be 0 and the last knot will be 1. (Type: BSplineCurve)</p
 <h3>(static) H3DU.BSplineCurve.clampedKnots(controlPoints, [degree])</h3>
 
 <p>Generates a knot vector with uniform knots, to be
-passed to the BSplineCurve or BSplineCurve constructor,
+passed to the BSplineCurve or BSplineSurface constructor,
 except that with the knot vector the curve will start and end at the first and last control points and will
 be tangent to the line between the first and second control points
 and to the line between the next-to-last and last control points.</p>
@@ -419,7 +419,7 @@ versions.) (Type: BSplineCurve)</p>
 <h3>(static) H3DU.BSplineCurve.uniformKnots(controlPoints, [degree])</h3>
 
 <p>Generates a knot vector with uniform knots, to be
-passed to the BSplineCurve or BSplineCurve constructor.</p>
+passed to the BSplineCurve or BSplineSurface constructor.</p>
 
 <h4>Parameters</h4>
 
