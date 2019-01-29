@@ -1,0 +1,1019 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>MeshBuffer</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>MeshBuffer</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='MeshBuffer'></a></p>
+
+<h3>new MeshBuffer()</h3>
+
+<p>A geometric mesh in the form of buffer objects.
+A mesh buffer is made up of one or more <a href="BufferAccessor.html">vertex attribute objects</a>,
+and an optional array of vertex indices. Each vertex attribute object contains
+the values of one attribute of the mesh, such as positions,
+vertex normals, and texture coordinates. A mesh buffer
+can store vertices that make up triangles, line segments, or points.</p>
+
+<p>This constructor creates an empty mesh buffer and sets the array
+of vertex indices to null.</p>
+
+<p>The <code>MeshBuffer</code> class contains four methods (<code>fromPositions</code>,
+<code>fromPositionsNormals</code>, <code>fromPositionsUV</code>, and <code>fromPositionsNormalsUV</code>) that let you define a mesh buffer from a predefined array of vertex data. See the documentation for those methods for more information.</p>
+
+<p>The <a href="Meshes.html"><code>Meshes</code></a> class includes several handy methods for creating built-in shapes; those methods return a <code>H3DU.MeshBuffer</code> object that describes the triangles they
+are composed of.</p>
+
+<p><b>Instancing</b></p>
+
+<p>Some 3D rendering pipelines support <i>instancing</i>, which is a technique for rendering multiple versions of a mesh buffer with a single draw call. Instancing involves the use of a second mesh buffer (an <i>instance buffer</i>); rather than holding vertex data, the instance buffer holds <i>instance data</i>, that is, data to be used when rendering each instance of the first mesh buffer. Besides this, however, instance buffers are largely similar to vertex buffers as far as the <code>MeshBuffer</code> class is concerned; any reference to vertices in the documentation applies analogously to instances in instance buffers. However, instance buffers should use the primitive type <code>MeshBuffer.POINTS</code>; it makes little sense to have instance buffers describe triangles or line segments.</p>
+
+<h4>Examples</h4>
+
+<p>The following example converts a MeshBuffer object to three.js buffer geometries (and thus serves as a bridge between this library and three.js). Pass the return value to the <code>THREE.Mesh</code>, <code>THREE.LineSegments</code>, or <code>THREE.Points</code> constructor to generate the appropriate kind of shape object depending on the MeshBuffer&#39;s primitive type. This example requires the three.js library.</p>
+
+<pre>function toBufferGeometry(mesh) {
+var p=mesh.getAttribute(&quot;POSITION&quot;)
+var n=mesh.getAttribute(&quot;NORMAL&quot;)
+var t=mesh.getAttribute(&quot;TEXCOORD_0&quot;)
+var c=mesh.getAttribute(&quot;COLOR&quot;)
+var ind=mesh.getIndices()
+var geom=new THREE.BufferGeometry()
+var attributes=[p,n,t,c]
+var attributeNames=[&quot;position&quot;,&quot;normal&quot;,&quot;uv&quot;,&quot;color&quot;]
+for(var i=0;i&lt;attributes.length;i++) {
+if(attributes[i]) {
+var a=attributes[i]
+//console.log(a)
+var attr=new THREE.InterleavedBufferAttribute(
+new THREE.InterleavedBuffer(a.buffer,a.stride),
+a.countPerValue,a.offset)
+geom.addAttribute(attributeNames[i],attr)
+}
+}
+if(ind)geom.index=new THREE.BufferAttribute(
+ind,1)
+return geom
+}
+</pre>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#MeshBuffer.LINES">LINES</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer.POINTS">POINTS</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer.TRIANGLES">TRIANGLES</a><br>TODO: Not documented yet.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#MeshBuffer.fromPositions">fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.</li>
+<li><a href="#MeshBuffer.fromPositionsNormals">fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
+and vertex normals.</li>
+<li><a href="#MeshBuffer.fromPositionsNormalsUV">fromPositionsNormalsUV</a><br>Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and texture coordinates.</li>
+<li><a href="#MeshBuffer.fromPositionsUV">fromPositionsUV</a><br>Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.</li>
+<li><a href="#MeshBuffer_getAttribute">getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.</li>
+<li><a href="#MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
+bounding box that holds all vertices in the mesh buffer.</li>
+<li><a href="#MeshBuffer_getIndex">getIndex</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer_getIndices">getIndices</a><br>Gets the array of vertex indices used by this mesh buffer.</li>
+<li><a href="#MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive.</li>
+<li><a href="#MeshBuffer.lineLoopIndices">lineLoopIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</li>
+<li><a href="#MeshBuffer.lineStripIndices">lineStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</li>
+<li><a href="#MeshBuffer_merge">merge</a><br>Merges the vertices from another mesh into this one.</li>
+<li><a href="#MeshBuffer_normalizeNormals">normalizeNormals</a><br>Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.html">unit vectors</a>
+(&quot;normalized&quot; vectors with a length of 1).</li>
+<li><a href="#MeshBuffer_primitiveCount">primitiveCount</a><br>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.</li>
+<li><a href="#MeshBuffer_primitiveType">primitiveType</a><br>Gets the type of primitive stored in this mesh buffer.</li>
+<li><a href="#MeshBuffer.quadStripIndices">quadStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals.</li>
+<li><a href="#MeshBuffer.quadsIndices">quadsIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</li>
+<li><a href="#MeshBuffer_recalcNormals">recalcNormals</a><br>Recalculates the normal vectors (directions that generally point up and away from the mesh buffer&#39;s surface) for triangles
+in this mesh buffer, in order to give the shape described by this buffer a flat or smooth appearance or to shade the shape from the inside or the outside upon rendering.</li>
+<li><a href="#MeshBuffer_reverseNormals">reverseNormals</a><br>Modifies this mesh buffer by reversing the sign of normals it defines.</li>
+<li><a href="#MeshBuffer_reverseWinding">reverseWinding</a><br>Reverses the winding order of the triangles in this mesh buffer
+by swapping the second and third vertex indices of each one.</li>
+<li><a href="#MeshBuffer_setAttribute">setAttribute</a><br>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information).</li>
+<li><a href="#MeshBuffer_setAttributeEx">setAttributeEx</a><br>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information), taking a semantic index as
+an additional parameter.</li>
+<li><a href="#MeshBuffer_setColor">setColor</a><br>Sets all the vertices in this mesh to the given color, by
+assigning each value with the attribute semantic <code>COLOR</code>
+to the given color.</li>
+<li><a href="#MeshBuffer_setIndices">setIndices</a><br>Sets the vertex indices used by this mesh buffer.</li>
+<li><a href="#MeshBuffer_setType">setType</a><br>Sets the type of graphics primitives stored in this mesh buffer.</li>
+<li><a href="#MeshBuffer_transform">transform</a><br>Transforms the positions and normals of all the vertices currently
+in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>.</li>
+<li><a href="#MeshBuffer.triangleFanIndices">triangleFanIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon.</li>
+<li><a href="#MeshBuffer.triangleStripIndices">triangleStripIndices</a><br>Creates an array of vertex indices corresponding to triangles that make up a triangle strip.</li>
+<li><a href="#MeshBuffer_vertexCount">vertexCount</a><br>Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates), or if there is no index buffer, the lowest maximum
+number of items that a buffer attribute can hold.</li>
+<li><a href="#MeshBuffer_vertexIndices">vertexIndices</a><br>Gets the vertex indices of a given primitive (triangle, line,
+or point) in this mesh buffer.</li>
+<li><a href="#MeshBuffer_wireFrame">wireFrame</a><br>Converts the triangles in this mesh to line segments.</li>
+</ul>
+
+<p><a name='MeshBuffer.LINES'></a></p>
+
+<h3>MeshBuffer.LINES (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p><a name='MeshBuffer.POINTS'></a></p>
+
+<h3>MeshBuffer.POINTS (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p><a name='MeshBuffer.TRIANGLES'></a></p>
+
+<h3>MeshBuffer.TRIANGLES (constant)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<p><a name='MeshBuffer.fromPositions'></a></p>
+
+<h3>(static) MeshBuffer.fromPositions(vertices, [indices])</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex positions. This array&#39;s length must be divisible by 3; every 3 elements are the X, Y, and Z coordinates, in that order, of one vertex.</li>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example shows how to define a mesh
+buffer from a predefined array of vertex positions.</p>
+
+<pre>// First, create an array of numbers giving the X, Y, and
+// Z coordinate for each vertex position. Here, three vertices
+// are defined.
+var vertices = [x1, y1, z1, x2, y2, z2, x3, y3, z3 ];
+// Second -- and this is optional -- create a second array of numbers
+// giving the indices to vertices defined in the previous step.
+// Each index refers to the (n+1)th vertex; since 3 vertices
+// were defined, the highest index is 2.
+var indices = [0, 1, 2];
+// Finally, create the mesh buffer. (If there are no indices,
+// leave out the &quot;indices&quot; argument.)
+var meshBuffer=MeshBuffer.fromPositions(vertices, indices);
+</pre>
+
+<p><a name='MeshBuffer.fromPositionsNormals'></a></p>
+
+<h3>(static) MeshBuffer.fromPositionsNormals(vertices, [indices])</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions
+and vertex normals.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex data. This array&#39;s length must be divisible by 6; every 6 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal.</ol></li>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example shows how to define a mesh
+buffer from a predefined array of vertex positions and normals.</p>
+
+<pre>// First, create an array of numbers giving the X, Y, and
+// Z coordinate for each vertex position and normal. Here, three vertices
+// are defined. For each vertex, the position is given, followed by
+// the normal.
+var vertices = [
+x1, y1, z1, nx1, ny1, nz1,
+x2, y2, z2, nx2, ny2, nz2,
+x3, y3, z3, nx3, ny3, nz3 ];
+// Second -- and this is optional -- create a second array of numbers
+// giving the indices to vertices defined in the previous step.
+// Each index refers to the (n+1)th vertex; since 3 vertices
+// were defined, the highest index is 2.
+var indices = [0, 1, 2];
+// Finally, create the mesh buffer. (If there are no indices,
+// leave out the &quot;indices&quot; argument.)
+var meshBuffer=MeshBuffer.fromPositionsNormals(vertices, indices);
+</pre>
+
+<p><a name='MeshBuffer.fromPositionsNormalsUV'></a></p>
+
+<h3>(static) MeshBuffer.fromPositionsNormalsUV(vertices, [indices])</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions,
+vertex normals, and texture coordinates.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex data. This array&#39;s length must be divisible by 8; every 8 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>X, Y, and Z components, in that order, of the vertex normal. <li>U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.</ol></li>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example shows how to define a mesh
+buffer from a predefined array of vertex positions, normals,
+and texture cordinates.</p>
+
+<pre>// First, create an array of numbers giving the X, Y, and
+// Z coordinate for each vertex position, normal, and associated
+// texture coordinates. Here, three vertices
+// are defined. For each vertex, the position is given, followed by
+// the normal, followed by the texture coordinates.
+var vertices = [
+x1, y1, z1, nx1, ny1, nz1, u1, v1,
+x2, y2, z2, nx2, ny2, nz2, u2, v2,
+x3, y3, z3, nx3, ny3, nz3, u3, v3 ];
+// Second -- and this is optional -- create a second array of numbers
+// giving the indices to vertices defined in the previous step.
+// Each index refers to the (n+1)th vertex; since 3 vertices
+// were defined, the highest index is 2.
+var indices = [0, 1, 2];
+// Finally, create the mesh buffer. (If there are no indices,
+// leave out the &quot;indices&quot; argument.)
+var meshBuffer=MeshBuffer.fromPositionsNormalsUV(vertices, indices);
+</pre>
+
+<p><a name='MeshBuffer.fromPositionsUV'></a></p>
+
+<h3>(static) MeshBuffer.fromPositionsUV(vertices, [indices])</h3>
+
+<p>Creates a new mesh buffer with the given array of vertex positions
+and texture coordinates.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertices</code> (Type: Array.&lt;number&gt; | Float32Array)<br>An array of vertex data. This array&#39;s length must be divisible by 5; every 5 elements describe one vertex and are in the following order:<ol> <li>X, Y, and Z coordinates, in that order, of the vertex position. <li>U and V <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> in that order, of the vertex.</ol></li>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null | undefined) (optional)<br>Array of vertex indices that the mesh buffer will use. Each index (n) is a number referring to the (n+1)th vertex. If you are defining a set of triangles, there should be 3 indices for each triangle; for line segments, 2 indices for each segment; and for points, 1 index for each point. Can be null, undefined, or omitted, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A new mesh buffer. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example shows how to define a mesh
+buffer from a predefined array of vertex positions, normals,
+and texture cordinates.</p>
+
+<pre>// First, create an array of numbers giving the X, Y, and
+// Z coordinate for each vertex position and associated
+// texture coordinates. Here, three vertices
+// are defined. For each vertex, the position is given, followed by
+// the texture coordinates.
+var vertices = [
+x1, y1, z1, u1, v1,
+x2, y2, z2, u2, v2,
+x3, y3, z3, u3, v3 ];
+// Second -- and this is optional -- create a second array of numbers
+// giving the indices to vertices defined in the previous step.
+// Each index refers to the (n+1)th vertex; since 3 vertices
+// were defined, the highest index is 2.
+var indices = [0, 1, 2];
+// Finally, create the mesh buffer. (If there are no indices,
+// leave out the &quot;indices&quot; argument.)
+var meshBuffer=MeshBuffer.fromPositionsUV(vertices, indices);
+</pre>
+
+<p><a name='MeshBuffer_getAttribute'></a></p>
+
+<h3>MeshBuffer#getAttribute(name, [semanticIndex])</h3>
+
+<p>Gets a vertex attribute included in this mesh buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.html#Semantic.POSITION">Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>semanticIndex</code> (Type: number) (optional)<br>The set index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string. Otherwise, if null or omitted, the default value is 0.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A vertex buffer accessor, or null
+if the attribute doesn&#39;t exist. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following function gets the positions,
+normals, <a href="Semantic.html#Semantic.TEXCOORD">texture coordinates</a> and colors of each primitive
+(line, text, or point) in the mesh buffer. A point will have one
+vertex per primitive, a line two vertices and a triangle three.
+The attributes, if present, will be stored in the &quot;position&quot;,
+&quot;normal&quot;, &quot;uv&quot;, and &quot;color&quot; properties of each vertex.</p>
+
+<pre>function getPrimitives(mesh) {
+var p=mesh.getAttribute(&quot;POSITION&quot;)
+var n=mesh.getAttribute(&quot;NORMAL&quot;)
+var t=mesh.getAttribute(&quot;TEXCOORD_0&quot;)
+var c=mesh.getAttribute(&quot;COLOR&quot;)
+var count=mesh.vertexCount()
+var primSize = 3;
+if(mesh.primitiveType() === MeshBuffer.LINES)
+primSize = 2;
+if(mesh.primitiveType() === MeshBuffer.POINTS)
+primSize = 1;
+var ret=[]
+for(var i=0;i&lt;ind.length;i+=primSize) {
+var prim=[]
+var index=mesh.getIndex(i)
+for(var j=0;j&lt;primSize;j++) {
+var info={}
+if(p)info.position=p.getVec(index,[])
+if(n)info.normal=n.getVec(index,[])
+if(t)info.uv=t.getVec(index,[])
+if(c)info.color=c.getVec(index,[])
+}
+ret.push(prim)
+}
+return ret
+}
+</pre>
+
+<p><a name='MeshBuffer_getBounds'></a></p>
+
+<h3>MeshBuffer#getBounds()</h3>
+
+<p>Finds the tightest
+bounding box that holds all vertices in the mesh buffer.
+Only positions with attribute semantic <code>POSITION</code> are
+used in the bounding box calculation.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of six numbers describing the tightest
+axis-aligned bounding box
+that fits all vertices in the mesh. The first three numbers
+are the smallest-valued X, Y, and Z coordinates, and the
+last three are the largest-valued X, Y, and Z coordinates.
+This calculation uses the attribute with the semantic POSITION
+and set index 0. If there is no such attribute,
+or no vertices are defined in this buffer, returns the array
+[Inf, Inf, Inf, -Inf, -Inf, -Inf]. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='MeshBuffer_getIndex'></a></p>
+
+<h3>MeshBuffer#getIndex(indicesIndex)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>indicesIndex</code> (Type: *)<br>TODO: Not documented yet.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>TODO: Not documented yet. (Type: *)</p>
+
+<p><a name='MeshBuffer_getIndices'></a></p>
+
+<h3>MeshBuffer#getIndices()</h3>
+
+<p>Gets the array of vertex indices used by this mesh buffer.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Uint16Array | Uint32Array | Uint8Array)</p>
+
+<p><a name='MeshBuffer_getPositions'></a></p>
+
+<h3>MeshBuffer#getPositions()</h3>
+
+<p>Gets an array of vertex positions held by this mesh buffer,
+arranged by primitive.
+Only values with the attribute semantic <code>POSITION_0</code> are returned.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of primitives,
+each of which holds the vertices that make up that primitive.
+If this mesh holds triangles, each primitive will contain three
+vertices; if lines, two; and if points, one. Each vertex is an array containing that vertex&#39;s coordinates (for example, if the attribute holds 3 elements per value, the coordinates are X, Y, and Z coordinates, in that order). (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='MeshBuffer.lineLoopIndices'></a></p>
+
+<h3>(static) MeshBuffer.lineLoopIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a line loop, a series of vertices that make up a connected line segment path, with the last point also connected to the first.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the line loop.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to line segments that make up the line loop. Every two indices in the array is a separate line segment. Returns an empty array if &#39;vertexCount&#39; is less than 2. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line loop vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.lineLoopIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer.lineStripIndices'></a></p>
+
+<h3>(static) MeshBuffer.lineStripIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a line strip, a series of vertices that make up a connected line segment path.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the line loop.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to line segments that make up the line strip. Every two indices in the array is a separate line segment. Returns an empty array if &#39;vertexCount&#39; is less than 2. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in line strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.lineStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer_merge'></a></p>
+
+<h3>MeshBuffer#merge(other)</h3>
+
+<p>Merges the vertices from another mesh into this one.
+The vertices from the other mesh will be copied into this one,
+and the other mesh&#39;s indices copied or adapted.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>other</code> (Type: <a href="MeshBuffer.html">MeshBuffer</a>)<br>A mesh to merge into this one. The mesh given in this parameter will remain unchanged. Throws an error if this mesh&#39;s primitive type is not the same as the other mesh&#39;s primitive type.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>var copiedMesh = new MeshBuffer().merge(meshToCopy);
+</pre>
+
+<p><a name='MeshBuffer_normalizeNormals'></a></p>
+
+<h3>MeshBuffer#normalizeNormals()</h3>
+
+<p>Modifies this mesh buffer by converting the normals it defines to <a href="tutorial-glmath.html">unit vectors</a>
+(&quot;normalized&quot; vectors with a length of 1).
+Has no effect if this mesh buffer doesn&#39;t define any normals.
+All attributes with the semantic <code>NORMAL</code>,
+regardless of semantic index, are affected.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_primitiveCount'></a></p>
+
+<h3>MeshBuffer#primitiveCount()</h3>
+
+<p>Gets the number of primitives (triangles, lines,
+and points) composed by all shapes in this mesh.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: number)</p>
+
+<p><a name='MeshBuffer_primitiveType'></a></p>
+
+<h3>MeshBuffer#primitiveType()</h3>
+
+<p>Gets the type of primitive stored in this mesh buffer.</p>
+
+<h4>Return Value</h4>
+
+<p>Either <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>,
+<a href="MeshBuffer.html#MeshBuffer.LINES">MeshBuffer.LINES</a>, or <a href="MeshBuffer.html#MeshBuffer.POINTS">MeshBuffer.POINTS</a>. (Type: number)</p>
+
+<p><a name='MeshBuffer.quadStripIndices'></a></p>
+
+<h3>(static) MeshBuffer.quadStripIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a strip of quadrilaterals. For a quadrilateral strip, the first 4 vertices make up the first quadrilateral, and each additional
+quadrilateral is made up of the last 2 vertices of the previous quadrilateral and
+2 new vertices.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the quadrilateral strip.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to triangles that make up the quadrilateral strip. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 4. If &#39;vertexCount&#39; is not divisible by 2, the excess vertex is ignored. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.quadStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer.quadsIndices'></a></p>
+
+<h3>(static) MeshBuffer.quadsIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a series of quadrilaterals, where every 4 vertices is a separate quadrilateral.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the quadrilaterals.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to triangles that make up the quadrilaterals. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 4. If &#39;vertexCount&#39; is not divisible by 4, any excess vertices are ignored. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in quadrilateral vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.quadsIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer_recalcNormals'></a></p>
+
+<h3>MeshBuffer#recalcNormals([flat], [inward])</h3>
+
+<p>Recalculates the normal vectors (directions that generally point up and away from the mesh buffer&#39;s surface) for triangles
+in this mesh buffer, in order to give the shape described by this buffer a flat or smooth appearance or to shade the shape from the inside or the outside upon rendering.</p>
+
+<p>Each normal calculated will
+be normalized to have a length of 1 (unless the normal is (0,0,0)),
+and will be stored in an attribute with semantic <code>NORMAL_0</code>.</p>
+
+<p>This method will have an effect only if the buffer includes an attribute with
+semantic <code>POSITION_0</code> and each of that attribute&#39;s values is at least 3 elements
+long. If the buffer already includes an attribute with semantic <code>NORMAL_0</code>,
+ensures its values are each at least 3 elements long.</p>
+
+<p>For normal calculation to properly affect shading:<ul>
+<li>Each triangle&#39;s vertices in the mesh buffer (as they appear when the triangle&#39;s front side is seen) must be ordered in the same winding (counterclockwise or clockwise) throughout. If the vertices have the wrong order, use the <a href="MeshBuffer.html#MeshBuffer_reverseWinding"><code>reverseWinding()</code></a>
+method to change their order.
+<li>If the mesh describes a closed convex surface (such as a sphere or cube) and is being rendered in a right-handed coordinate system (e.g., X-right, Y-up, Z-backward), each of its triangles must have counterclockwise winding for the shape to be shaded from the outside.</ul></p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>flat</code> (Type: boolean) (optional)<br>If true, each triangle in the mesh will have the same normal, which usually leads to a flat appearance. If false, each unique vertex in the mesh will have its own normal, which usually leads to a smooth appearance. If null, undefined, or omitted, the default is false.</li>
+<li><code>inward</code> (Type: boolean) (optional)<br>If true, the generated normals will point inward, so that the shape is shaded from the inside upon rendering; otherwise, the normals will point outward. If null, undefined, or omitted, the default is false.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>// Use flat shading, and shape is shaded from the outside
+meshBuffer.recalcNormals(true, false);
+// Both parameters can be omitted, setting both to false
+meshBuffer.recalcNormals();
+</pre>
+
+<p><a name='MeshBuffer_reverseNormals'></a></p>
+
+<h3>MeshBuffer#reverseNormals()</h3>
+
+<p>Modifies this mesh buffer by reversing the sign of normals it defines.
+Has no effect if this mesh buffer doesn&#39;t define any normals.
+All attributes with the semantic <code>NORMAL</code>,
+regardless of semantic index, are affected.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following code generates a two-sided mesh, where
+the normals on each side face in the opposite direction.
+This is only useful when drawing open geometric shapes, such as open
+cylinders and two-dimensional planar shapes.
+Due to the z-fighting effect, drawing a two-sided mesh is
+recommended only if face culling is enabled.</p>
+
+<pre>var twoSidedMesh = originalMesh.merge(
+new MeshBuffer().merge(originalMesh)
+.reverseWinding().reverseNormals()
+);
+</pre>
+
+<p><a name='MeshBuffer_reverseWinding'></a></p>
+
+<h3>MeshBuffer#reverseWinding()</h3>
+
+<p>Reverses the winding order of the triangles in this mesh buffer
+by swapping the second and third vertex indices of each one.
+Has an effect only if this mesh buffer consists of triangles.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following code generates a mesh that survives face culling,
+since the same triangles occur on each side of the mesh, but
+with different winding orders.
+This is only useful when drawing open geometric shapes, such as open
+cylinders and two-dimensional planar shapes.
+Due to the z-fighting effect, drawing this kind of mesh is
+recommended only if face culling is enabled.</p>
+
+<pre>var frontBackMesh = originalMesh.merge(
+new MeshBuffer().merge(originalMesh).reverseWinding()
+);
+</pre>
+
+<p><a name='MeshBuffer_setAttribute'></a></p>
+
+<h3>MeshBuffer#setAttribute(name, buffer, countPerValue, [offset], [stride])</h3>
+
+<p>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information). An attribute
+gives information about the per-vertex data used and
+stored in a vertex buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.html#Semantic.POSITION">Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid. If this isn&#39;t a string, the set index of the attribute will be 0 (see <a href="MeshBuffer.html#MeshBuffer_setAttributeEx">MeshBuffer#setAttributeEx</a>).</li>
+<li><code>buffer</code> (Type: Float32Array | Array)<br>The buffer where the per-vertex data is stored. See <a href="MeshBuffer.html#MeshBuffer_setAttributeEx">MeshBuffer#setAttributeEx</a>.</li>
+<li><code>countPerValue</code> (Type: number)<br>The number of elements in each per-vertex item. See <a href="MeshBuffer.html#MeshBuffer_setAttributeEx">MeshBuffer#setAttributeEx</a>.</li>
+<li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts.See <a href="MeshBuffer.html#MeshBuffer_setAttributeEx">MeshBuffer#setAttributeEx</a>.</li>
+<li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. See <a href="MeshBuffer.html#MeshBuffer_setAttributeEx">MeshBuffer#setAttributeEx</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. Throws an error if the given
+semantic is unsupported. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_setAttributeEx'></a></p>
+
+<h3>MeshBuffer#setAttributeEx(name, index, buffer, [countPerValue], [offset], [stride])</h3>
+
+<p>Adds information about a buffer attribute to this
+mesh buffer (or sets an
+existing attribute&#39;s information), taking a semantic index as
+an additional parameter. An attribute
+gives information about the per-vertex data used and
+stored in a vertex buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>name</code> (Type: number | string)<br>An attribute semantic, such as <a href="Semantic.html#Semantic.POSITION">Semantic.POSITION</a>, &quot;POSITION&quot;, or &quot;TEXCOORD_0&quot;. Throws an error if this value is a string and the string is invalid.</li>
+<li><code>index</code> (Type: number)<br>The semantic index of the attribute for the given semantic. 0 is the first index of the attribute, 1 is the second, and so on. This is ignored if &quot;name&quot; is a string.</li>
+<li><code>buffer</code> (Type: Float32Array | Array | <a href="BufferAccessor.html">BufferAccessor</a>)<br>The buffer where the per-vertex data is stored. If this parameter is an (untyped) Array, converts that parameter to a Float32Array.</li>
+<li><code>countPerValue</code> (Type: number) (optional)<br>The number of elements in each per-vertex item. For example, if each vertex is a 3-element vector, this value is 3. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="BufferAccessor.html">BufferAccessor</a>, the value of &quot;countPerValue&quot; is taken from that accessor and this parameter is ignored; this parameter is currently required otherwise.</li>
+<li><code>offset</code> (Type: number) (optional)<br>The index into the array (starting from 0) where the first per-vertex item starts. If null, undefined, or omitted, the default is 0. Throws an error if less than 0. If &quot;buffer&quot; is a <a href="BufferAccessor.html">BufferAccessor</a>, the value of &quot;offset&quot; is taken from that accessor and this parameter is ignored.</li>
+<li><code>stride</code> (Type: number) (optional)<br>The number of elements from the start of one per-vertex item to the start of the next. If null, undefined, or omitted, this value is the same as &quot;countPerValue&quot;. Throws an error if this value is 0 or less. If &quot;buffer&quot; is a <a href="BufferAccessor.html">BufferAccessor</a>, the value of &quot;stride&quot; is taken from that accessor and this parameter is ignored.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object.Throws an error if the given
+semantic is unsupported. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_setColor'></a></p>
+
+<h3>MeshBuffer#setColor(color)</h3>
+
+<p>Sets all the vertices in this mesh to the given color, by
+assigning each value with the attribute semantic <code>COLOR</code>
+to the given color. (If the attribute&#39;s <a href="BufferAccessor.html#BufferAccessor_countPerValue">count per value</a>
+is less than 4, each such value will be set to as many elements of the converted 4-element
+color as possible.) If an attribute with the semantic <code>COLOR</code>
+doesn&#39;t exist, an attribute with the semantic <code>COLOR_0</code> and a count per
+value of 3 is created.</p>
+
+<p>All attributes with the semantic <code>COLOR</code>,
+regardless of semantic index, are affected by this method.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>color</code> (Type: Array.&lt;number&gt; | number | string)<br>A <a href="toGLColor.html">color vector or string</a> identifying the color to set.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_setIndices'></a></p>
+
+<h3>MeshBuffer#setIndices([indices])</h3>
+
+<p>Sets the vertex indices used by this mesh buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>indices</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint32Array | Uint8Array | null) (optional)<br>Array of vertex indices that the mesh buffer will use. Can be null, in which case no index array is used and primitives in the mesh buffer are marked by consecutive vertices.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_setType'></a></p>
+
+<h3>MeshBuffer#setType(primType)</h3>
+
+<p>Sets the type of graphics primitives stored in this mesh buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>primType</code> (Type: number)<br>The primitive type, either <a href="MeshBuffer.html#MeshBuffer.TRIANGLES">MeshBuffer.TRIANGLES</a>, <a href="MeshBuffer.html#MeshBuffer.LINES">MeshBuffer.LINES</a>, or <a href="MeshBuffer.html#MeshBuffer.POINTS">MeshBuffer.POINTS</a>. For TRIANGLES, every three vertices or vertex indices identify a single triangle. For LINES, every two vertices or vertex indices identify a single line segment. For POINTS, every vertex or vertex index identifies a single point.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a name='MeshBuffer_transform'></a></p>
+
+<h3>MeshBuffer#transform(matrix)</h3>
+
+<p>Transforms the positions and normals of all the vertices currently
+in this mesh, with the help of a <a href="tutorial-glmath.html">4x4 matrix</a>. Only values with the attribute semantic <code>POSITION_0</code>
+or <code>NORMAL_0</code> will be affected by this method; values of
+other attributes will be unaffected.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>matrix</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix described in the <a href="MathUtil.html#MathUtil.mat4projectVec3">MathUtil.mat4projectVec3</a> method. The normals will be transformed using the 3x3 inverse transpose of this matrix (see <a href="MathUtil.html#MathUtil.mat4inverseTranspose3">MathUtil.mat4inverseTranspose3</a>). (Normals need to be transformed specially because they describe directions, not points.)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example transforms positions
+and normals to move the mesh 2 units to the right.</p>
+
+<pre>mesh.transform(MathUtil.mat4translated(2, 0, 0));
+</pre>
+
+<p>The following example transforms positions
+and normals to double the mesh&#39;s size.</p>
+
+<pre>mesh.transform(MathUtil.mat4scaled(2, 2, 2));
+</pre>
+
+<p><a name='MeshBuffer.triangleFanIndices'></a></p>
+
+<h3>(static) MeshBuffer.triangleFanIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a triangle fan or convex polygon. For triangle fans and convex polygons, the first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last vertex, the first vertex of
+the first trangle, and 1 new vertex.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the triangle fan or convex polygon.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to triangles that make up the triangle fan or convex polygon. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 3. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle fan vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.triangleFanIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer.triangleStripIndices'></a></p>
+
+<h3>(static) MeshBuffer.triangleStripIndices(vertexCount)</h3>
+
+<p>Creates an array of vertex indices corresponding to triangles that make up a triangle strip. For a triangle strip, the first 3
+vertices make up the first triangle, and each additional
+triangle is made up of the last 2 vertices and 1
+new vertex.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>vertexCount</code> (Type: number)<br>Number of vertices that make up the triangle strip.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Array of vertex indices corresponding to triangles that make up the triangle strip. Every three indices in the array is a separate triangle. Returns an empty array if &#39;vertexCount&#39; is less than 3. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example sets appropriate indices for a mesh buffer with vertices ordered in triangle strip vertex order.</p>
+
+<pre>mesh.setIndices(
+MeshBuffer.triangleStripIndices(mesh.vertexCount())
+.map(x=&gt;mesh.getIndex(x)));
+</pre>
+
+<p><a name='MeshBuffer_vertexCount'></a></p>
+
+<h3>MeshBuffer#vertexCount()</h3>
+
+<p>Gets the number of vertices in this mesh buffer, that
+is, the number of vertex indices in its index buffer (some of which
+may be duplicates), or if there is no index buffer, the lowest maximum
+number of items that a buffer attribute can hold.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: number)</p>
+
+<p><a name='MeshBuffer_vertexIndices'></a></p>
+
+<h3>MeshBuffer#vertexIndices(primitiveIndex, ret)</h3>
+
+<p>Gets the vertex indices of a given primitive (triangle, line,
+or point) in this mesh buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>primitiveIndex</code> (Type: number)<br>The index (counting from 0) of the primitive whose indices will be retrieved.</li>
+<li><code>ret</code> (Type: Array.&lt;number&gt;)<br>An array where the vertex indices for the given primitive will be stored. If this mesh buffer stores triangles, three indices will be stored; if lines, two; and if points, one.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The parameter &quot;ret&quot;. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='MeshBuffer_wireFrame'></a></p>
+
+<h3>MeshBuffer#wireFrame()</h3>
+
+<p>Converts the triangles in this mesh to line segments.
+Has no effect if this mesh doesn&#39;t use triangles as primitives.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="MeshBuffer.html">MeshBuffer</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

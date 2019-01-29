@@ -1,0 +1,583 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PiecewiseCurve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>PiecewiseCurve</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='PiecewiseCurve'></a></p>
+
+<h3>new PiecewiseCurve(curves)</h3>
+
+<p><strong>Augments:</strong> <a href="Curve.html">Curve</a></p>
+
+<p>A <a href="Curve.html">curve evaluator object</a> for a curve
+made up of one or more individual curves.</p>
+
+<p>The combined curve&#39;s U coordinates range from 0 to N,
+where N is the number of curves. In this way, the integer
+part of a U coordinate indicates the curve the coordinate
+refers to. For example, if there are four curves, coordinates
+from 0, but less than 1, belong to the first curve, and coordinates
+from 1, but less than 2, belong to the second curve. The U
+coordinate equal to N refers to the end of the last curve in
+the piecewise curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>curves</code> (Type: Array.&lt;Object&gt;)<br>An array of curve evaluator objects, such as an instance of <a href="Curve.html">Curve</a> or one of its subclasses. The combined curve should be continuous in that the curves that make it up should connect at their end points (except the curve need not be closed).</li>
+</ul>
+
+<h4>Examples</h4>
+
+<pre>// Generates a piecewise polygon curve from an array of
+// vectors (arrays with the same number of elements) that
+// specify the points that make up the polygon.
+function polygonCurve(points) {
+var curves=[]
+for(var i=0;&lt;points.length;i++) {
+var cp=points[i]
+var np=(i==points.length-1) ? points[0] : points[i+1]
+curves.push(BSplineCurve.fromBezierCurve([cp,np]))
+}
+return new PiecewiseCurve(curves)
+}
+</pre>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#PiecewiseCurve_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#PiecewiseCurve_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
+<li><a href="#PiecewiseCurve_changeEnds">changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.</li>
+<li><a href="#PiecewiseCurve_endPoints">endPoints</a><br>Returns the starting and ending U coordinates of this curve.</li>
+<li><a href="#PiecewiseCurve_evaluate">evaluate</a><br>Finds the position of this curve at the given U coordinate.</li>
+<li><a href="#PiecewiseCurve_fitRange">fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.</li>
+<li><a href="#PiecewiseCurve.fromCatmullRomSpline">fromCatmullRomSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic Catmull&ndash;Rom spline.</li>
+<li><a href="#PiecewiseCurve.fromEllipseArc">fromEllipseArc</a><br>TODO: Not documented yet.</li>
+<li><a href="#PiecewiseCurve.fromHermiteSpline">fromHermiteSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
+Hermite spline.</li>
+<li><a href="#PiecewiseCurve.fromTCBSpline">fromTCBSpline</a><br>Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).</li>
+<li><a href="#PiecewiseCurve_getCurves">getCurves</a><br>Gets a reference to the curves that make up this piecewise curve.</li>
+<li><a href="#PiecewiseCurve_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
+<li><a href="#PiecewiseCurve_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
+<li><a href="#PiecewiseCurve_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
+<li><a href="#PiecewiseCurve_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
+<li><a href="#PiecewiseCurve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+<li><a href="#PiecewiseCurve_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
+<li><a href="#PiecewiseCurve_toArcLengthParam">toArcLengthParam</a><br>Gets a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>.</li>
+<li><a href="#PiecewiseCurve_velocity">velocity</a><br>Finds an approximate velocity vector at the given U coordinate of this curve.</li>
+</ul>
+
+<p><a name='PiecewiseCurve_accel'></a></p>
+
+<h3>PiecewiseCurve#accel(u)</h3>
+
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
+
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='PiecewiseCurve_arcLength'></a></p>
+
+<h3>PiecewiseCurve#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
+
+<p><a name='PiecewiseCurve_changeEnds'></a></p>
+
+<h3>PiecewiseCurve#changeEnds(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
+For example, this method can be used to shrink the path of a curve
+from [0, &pi;] to [0, &pi;/8].</p>
+
+<p>Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve&#39;s path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that&#39;s exactly half as
+long as the original curve.</p>
+
+<p>For some curves, this method can
+also be used to grow the path of the curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<p><a name='PiecewiseCurve_endPoints'></a></p>
+
+<h3>PiecewiseCurve#endPoints()</h3>
+
+<p>Returns the starting and ending U coordinates of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array. The first element is the starting coordinate of
+the curve, and the second is its ending coordinate.
+Returns <code>[0, n]</code>, where <code>n</code> is the number
+of curves that make up this piecewise curve.</p>
+
+<p><a name='PiecewiseCurve_evaluate'></a></p>
+
+<h3>PiecewiseCurve#evaluate(u)</h3>
+
+<p>Finds the position of this curve at the given U coordinate.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a position. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='PiecewiseCurve_fitRange'></a></p>
+
+<h3>PiecewiseCurve#fitRange(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of U coordinates
+from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New value to use as the start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New value to use as the end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<p><a name='PiecewiseCurve.fromCatmullRomSpline'></a></p>
+
+<h3>(static) PiecewiseCurve.fromCatmullRomSpline(spline, [param], [closed])</h3>
+
+<p>Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic Catmull&ndash;Rom spline. A Catmull&ndash;Rom spline is defined by
+a collection of control points that the spline
+will go through, and the shape of each curve segment is also determined by the positions
+of neighboring points on the spline.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
+<li><code>param</code> (Type: number) (optional)<br>A value that describes the curve&#39;s parameterization. Ranges from 0 to 1. A value of 0 indicates a uniform parameterization, 0.5 indicates a centripetal parameterization, and 1 indicates a chordal parameterization. Default is 0.5.</li>
+<li><code>closed</code> (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A piecewise curve made up of cubic B-spline curves describing the same path as the Catmull&ndash;Rom spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
+
+<p><a name='PiecewiseCurve.fromEllipseArc'></a></p>
+
+<h3>(static) PiecewiseCurve.fromEllipseArc(x, y, radiusX, radiusY, start, sweep)</h3>
+
+<p>TODO: Not documented yet.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: number)</li>
+<li><code>y</code> (Type: number)</li>
+<li><code>radiusX</code> (Type: number)</li>
+<li><code>radiusY</code> (Type: number)</li>
+<li><code>start</code> (Type: number)</li>
+<li><code>sweep</code> (Type: number)</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
+
+<p><a name='PiecewiseCurve.fromHermiteSpline'></a></p>
+
+<h3>(static) PiecewiseCurve.fromHermiteSpline(spline)</h3>
+
+<p>Creates a piecewise curve made up of B-spline curves from the control points of a
+Hermite spline. A Hermite spline is a collection of points that the curve will go through,
+together with the velocity vectors (derivatives or instantaneous rates of change) at
+those points.</p>
+
+<p>Hermite splines are useful for representing an approximate polynomial form
+of a function or curve whose derivative is known; however, Hermite splines are not
+guaranteed to preserve the increasing or decreasing nature of the function or curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that describe a Hermite spline. Each pair of control points takes up two elements of the array and consists of the coordinates of that point followed by the velocity vector (derivative) at that point. The array must have an even number of control points and at least four control points.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A piecewise curve made up of cubic B-spline curves describing the
+same path as the Hermite spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
+
+<p><a name='PiecewiseCurve.fromTCBSpline'></a></p>
+
+<h3>(static) PiecewiseCurve.fromTCBSpline(spline, [tension], [continuity], [bias], [closed], [rigidEnds])</h3>
+
+<p>Creates a piecewise curve made up of B-spline curves from the control points of a
+cubic TCB spline (tension/continuity/bias spline, also known as Kochanek&ndash;Bartels spline).
+(If tension, continuity, and bias are all 0, the result is a cubic Catmull&ndash;Rom spline
+in uniform parameterization.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>spline</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points, each with the same number of values, that the curve will pass through. Throws an error if there are fewer than two control points.</li>
+<li><code>tension</code> (Type: number) (optional)<br>A parameter that adjusts the length of the starting and ending tangents of each curve segment. Ranges from -1 for double-length tangents to 1 for zero-length tangents. A value of 1 results in straight line segments. Default is 0.</li>
+<li><code>continuity</code> (Type: number) (optional)<br>A parameter that adjusts the direction of the starting and ending tangents of each curve segment. Ranges from -1 to 1, where values closer to -1 or closer to 1 result in tangents that are closer to perpendicular. A value of -1 results in straight line segments. Default is 0.</li>
+<li><code>bias</code> (Type: number) (optional)<br>A parameter that adjusts the influence of the starting and ending tangents of each curve segment. The greater this number, the greater the ending tangents influence the direction of the next curve segment in comparison to the starting tangents. Ranges from -1 to 1. Default is 0.</li>
+<li><code>closed</code> (Type: number) (optional)<br>If true, connects the last control point of the curve with the first. Default is false.</li>
+<li><code>rigidEnds</code> (Type: number) (optional)<br>If true, the start and end of the piecewise curve will, by default, more rigidly follow the direction to the next or previous control point, respectively. This makes the curve compatible with GDI+ cardinal splines with 0 continuity, 0 bias, and tension equal to <code>-((T*2)-1)</code>, where T is the GDI+ cardinal spline tension parameter. Default is false.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A piecewise curve made up of cubic B-spline curves describing the
+same path as the TCB spline. (Type: <a href="PiecewiseCurve.html">PiecewiseCurve</a>)</p>
+
+<p><a name='PiecewiseCurve_getCurves'></a></p>
+
+<h3>PiecewiseCurve#getCurves()</h3>
+
+<p>Gets a reference to the curves that make up this piecewise curve.</p>
+
+<h4>Return Value</h4>
+
+<p>The curves that make up this piecewise curve. (Type: Array.&lt;<a href="Curve.html">Curve</a>&gt;)</p>
+
+<p><a name='PiecewiseCurve_getLength'></a></p>
+
+<h3>PiecewiseCurve#getLength()</h3>
+
+<p>Convenience method for getting the total length of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>The distance from the start of the curve to its end. (Type: number)</p>
+
+<p><a name='PiecewiseCurve_getPoints'></a></p>
+
+<h3>PiecewiseCurve#getPoints(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<p><a name='PiecewiseCurve_getPointsAsObjects'></a></p>
+
+<h3>PiecewiseCurve#getPointsAsObjects(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</p>
+
+<pre>var points=curve.getPointsAsObjects(50)
+var buffer=new THREE.BufferGeometry()
+.setFromPoints(points);
+</pre>
+
+<p><a name='PiecewiseCurve_jerk'></a></p>
+
+<h3>PiecewiseCurve#jerk(u)</h3>
+
+<p>Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.</p>
+
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='PiecewiseCurve_normal'></a></p>
+
+<h3>PiecewiseCurve#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='PiecewiseCurve_tangent'></a></p>
+
+<h3>PiecewiseCurve#tangent(u)</h3>
+
+<p>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+The <b>tangent vector</b> is the same as the velocity vector, but &quot;normalized&quot; to a unit vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='PiecewiseCurve_toArcLengthParam'></a></p>
+
+<h3>PiecewiseCurve#toArcLengthParam()</h3>
+
+<p>Gets a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve&#39;s path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.</p>
+
+<p>The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+method) will be (0, N), where N is the distance to the end of the curve from its
+start.</p>
+
+<p>When converting to an arc length parameterization, the curve
+should be continuous and have a speed greater than 0 at every
+point on the curve. The arc length parameterization used in
+this method is approximate.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. Returns this object if this curve already uses an arc length parameterization. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example uses the arc-length
+parameterization to generate, uniformly at random, a point that lies anywhere
+on a curve.</p>
+
+<pre>var arclen = curve.toArcLengthParam();
+var point = arclen.evaluate(Math.random()*arclen.getLength())
+</pre>
+
+<p><a name='PiecewiseCurve_velocity'></a></p>
+
+<h3>PiecewiseCurve#velocity(u)</h3>
+
+<p>Finds an approximate velocity vector at the given U coordinate of this curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a velocity vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

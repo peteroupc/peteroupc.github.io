@@ -1,0 +1,350 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>BufferAccessor</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>BufferAccessor</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='BufferAccessor'></a></p>
+
+<h3>new BufferAccessor(buffer, countPerValue, [offset], [stride])</h3>
+
+<p>A <b>vertex attribute object</b>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>buffer</code> (Type: Float32Array)<br>A buffer to store vertex attribute data; see <a href="BufferAccessor.html#BufferAccessor_buffer">BufferAccessor#buffer</a>.</li>
+<li><code>countPerValue</code> (Type: number)<br>Number of elements per value; see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>. Throws an error if 0 or less.</li>
+<li><code>offset</code> (Type: number) (optional)<br>Offset to the first value; see <a href="BufferAccessor.html#BufferAccessor_offset">BufferAccessor#offset</a>. If null, undefined, or omitted, the default is 0. Throws an error if less than 0.</li>
+<li><code>stride</code> (Type: number) (optional)<br>Number of elements from the start of one value to the start of the next; see <a href="BufferAccessor.html#BufferAccessor_stride">BufferAccessor#stride</a>. If null, undefined, or omitted, has the same value as &quot;countPerValue&quot;. Throws an error if 0 or less.</li>
+</ul>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#BufferAccessor_buffer">buffer</a><br>A <i>buffer</i> of arbitrary size.</li>
+<li><a href="#BufferAccessor_countPerValue">countPerValue</a><br>A count of the number of elements each value has.</li>
+<li><a href="#BufferAccessor_offset">offset</a><br>An offset, which identifies the index, starting from 0, of the first value
+of the attribute within the buffer.</li>
+<li><a href="#BufferAccessor_stride">stride</a><br>A stride, which gives the number of elements from the start of one
+value to the start of the next.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#BufferAccessor_copy">copy</a><br>Copies the values of this accessor into a new vertex attribute object.</li>
+<li><a href="#BufferAccessor_count">count</a><br>Gets the number of <a href="BufferAccessor.html#BufferAccessor_buffer">values</a> defined for this accessor.</li>
+<li><a href="#BufferAccessor_get">get</a><br>Gets the first element of the attribute value with the given vertex index.</li>
+<li><a href="#BufferAccessor_getVec">getVec</a><br>Gets the elements of a vertex attribute value.</li>
+<li><a href="#BufferAccessor.makeBlank">makeBlank</a><br>Generates a vertex attribute buffer, with each value set to all zeros.</li>
+<li><a href="#BufferAccessor.makeIndices">makeIndices</a><br>Generates an array of increasing vertex indices.</li>
+<li><a href="#BufferAccessor.merge">merge</a><br>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</li>
+<li><a href="#BufferAccessor_set">set</a><br>Sets the first element of the attribute value with the given vertex index.</li>
+<li><a href="#BufferAccessor_setVec">setVec</a><br>Sets the elements of a vertex attribute value.</li>
+</ul>
+
+<p><a name='BufferAccessor_buffer'></a></p>
+
+<h3>BufferAccessor#buffer</h3>
+
+<p>A <i>buffer</i> of arbitrary size. This buffer
+is made up of <i>values</i>, one for each vertex, and each value
+takes up one or more <i>elements</i> in the buffer, which are numbers such
+as X coordinates or red components, depending on the attribute&#39;s semantic.
+Each value has the same number of elements. An example of a <i>value</i>
+is (10, 20, 5), which can take up three consecutive <i>elements</i>
+in a <code>Float32Array</code> buffer such as the one given in this
+property.</p>
+
+<p>Type: Float32Array</p>
+
+<p><a name='BufferAccessor_countPerValue'></a></p>
+
+<h3>BufferAccessor#countPerValue</h3>
+
+<p>A count of the number of elements each value has. For example, 3-dimensional
+positions will have 3 elements, one for each coordinate.</p>
+
+<p>Type: number</p>
+
+<p><a name='BufferAccessor_offset'></a></p>
+
+<h3>BufferAccessor#offset</h3>
+
+<p>An offset, which identifies the index, starting from 0, of the first value
+of the attribute within the buffer. The offset counts the number of
+elements in the buffer to the first value. For example, if this property is 6,
+then the first element of the first value in the buffer is found at
+<code>acc.buffer[acc.offset]</code> (assuming the buffer is
+more than 6 elements long).</p>
+
+<p>Type: number</p>
+
+<p><a name='BufferAccessor_stride'></a></p>
+
+<h3>BufferAccessor#stride</h3>
+
+<p>A stride, which gives the number of elements from the start of one
+value to the start of the next. A &quot;packed&quot; buffer will have a stride
+equal to the <a href="BufferAccessor.html#BufferAccessor_countPerValue">count per value</a>.</p>
+
+<p>Type: number</p>
+
+<p><a name='BufferAccessor_copy'></a></p>
+
+<h3>BufferAccessor#copy()</h3>
+
+<p>Copies the values of this accessor into a new vertex attribute object.</p>
+
+<h4>Return Value</h4>
+
+<p>A copy of the vertex attribute object. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<p><a name='BufferAccessor_count'></a></p>
+
+<h3>BufferAccessor#count()</h3>
+
+<p>Gets the number of <a href="BufferAccessor.html#BufferAccessor_buffer">values</a> defined for this accessor.</p>
+
+<h4>Return Value</h4>
+
+<p>The number of values defined in this accessor&#39;s buffer. (Type: number)</p>
+
+<p><a name='BufferAccessor_get'></a></p>
+
+<h3>BufferAccessor#get(index)</h3>
+
+<p>Gets the first element of the attribute value with the given vertex index.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when accessing the attribute&#39;s buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The first element of the given attribute value. (Type: number)</p>
+
+<p><a name='BufferAccessor_getVec'></a></p>
+
+<h3>BufferAccessor#getVec(index, vec)</h3>
+
+<p>Gets the elements of a vertex attribute value.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when accessing the attribute&#39;s buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array whose elements will be set to those of the value at the given index. The number of elements copied to this array is the attribute&#39;s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>).</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The parameter &quot;vec&quot;. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BufferAccessor.makeBlank'></a></p>
+
+<h3>(static) BufferAccessor.makeBlank(count, countPerValue)</h3>
+
+<p>Generates a vertex attribute buffer, with each value set to all zeros.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>The number of <a href="BufferAccessor.html#BufferAccessor_buffer">values</a> the buffer will hold. For example, (10, 20, 5) is a 3-element value.</li>
+<li><code>countPerValue</code> (Type: number)<br>The number of elements each value will take in the buffer.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A blank vertex attribute buffer. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<p><a name='BufferAccessor.makeIndices'></a></p>
+
+<h3>(static) BufferAccessor.makeIndices(numIndices)</h3>
+
+<p>Generates an array of increasing vertex indices.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>numIndices</code> (Type: number)<br>The number of vertex indices to generate. The array will range from 0 to the number of vertex indices minus 1.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of vertex indices. (Type: Uint16Array | Uint32Array)</p>
+
+<p><a name='BufferAccessor.merge'></a></p>
+
+<h3>(static) BufferAccessor.merge(attr1, indices1, attr2, indices2)</h3>
+
+<p>Merges two vertex attributes, whose vertices can be indexed differently, into one
+combined vertex attribute.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>attr1</code> (Type: <a href="BufferAccessor.html">BufferAccessor</a>)<br>A vertex buffer accessor for the first vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices1&quot; and all the values are zeros.</li>
+<li><code>indices1</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the first vertex attribute.</li>
+<li><code>attr2</code> (Type: <a href="BufferAccessor.html">BufferAccessor</a>)<br>A vertex buffer accessor for the second vertex attribute. Can be null, in which case it is assumed that the attribute contains as many values as the length of &quot;indices2&quot; and all the values are zeros.</li>
+<li><code>indices2</code> (Type: Array.&lt;number&gt; | Uint16Array | Uint8Array | Uint32Array)<br>An array of vertex indices associated with the second vertex attribute.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The merged attribute, where the vertices from the first vertex
+attribute come before those from the second. The merged attribute will have as many
+values as the sum of the lengths of &quot;indices1&quot; and &quot;indices2&quot;. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<p><a name='BufferAccessor_set'></a></p>
+
+<h3>BufferAccessor#set(index, value)</h3>
+
+<p>Sets the first element of the attribute value with the given vertex index.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute&#39;s buffer.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+<li><code>value</code> (Type: number)<br>The number to set the first element to.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<p><a name='BufferAccessor_setVec'></a></p>
+
+<h3>BufferAccessor#setVec(index, vec)</h3>
+
+<p>Sets the elements of a vertex attribute value.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute&#39;s buffer, except
+where noted otherwise.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+<li><code>vec</code> (Type: Array.&lt;number&gt;)<br>An array containing the elements to copy to the value at the given index. The number of elements copied is this array&#39;s length or the attribute&#39;s count per value (see <a href="BufferAccessor.html#BufferAccessor_countPerValue">BufferAccessor#countPerValue</a>), whichever is less.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

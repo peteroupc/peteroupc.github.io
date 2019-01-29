@@ -1,0 +1,829 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>BSplineCurve</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>BSplineCurve</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='BSplineCurve'></a></p>
+
+<h3>new BSplineCurve(controlPoints, knots, [bits])</h3>
+
+<p><strong>Augments:</strong> <a href="Curve.html">Curve</a></p>
+
+<p>A <a href="Curve.html">curve evaluator object</a> for a B-spline (basis spline) curve.
+A B-spline curve is a parametric curve based on polynomial functions.
+Each polynomial is generated using one or more
+<i>control points</i>, which more or less follow the path of the curve,
+and a <i>knot vector</i>, which determines, more or less, where each control
+point is spaced along the curve. Together with rational B-spline curves (see
+below), this makes B-spline curves very powerful,
+since they can describe nearly all curves commonly used in computer
+graphics, including line segments, circles, ellipses, parabolas, and
+irregular smooth curves. With the B-spline curves supported here, a perspective transformation (including a rotation, translation, or scaling) of the curve&#39;s control points leads to the same transformation of the resulting curve.</p>
+
+<p><b>B&eacute;zier Curves</b></p>
+
+<p>A B&eacute;zier curve is defined by a series of control points, where
+the first and last control points are the curve&#39;s end points, and
+the remaining control points define the curve&#39;s shape, though they don&#39;t
+necessarily cross the curve. An important property of these curves is
+that the bounding box of the curve is contained within the bounding box
+of the control points. Another important property is that the starting direction
+is the same as the direction from the
+first to the second control point, and the ending direction is the same as the
+direction from the next-to-last to last control point.</p>
+
+<p>B&eacute;zier curves are a subset of B-spline curves
+(see <a href="BSplineCurve.html#BSplineCurve.fromBezierCurve">BSplineCurve.fromBezierCurve</a>).</p>
+
+<p>Line segments are degree-1 B&eacute;zier curves with two control points.</p>
+
+<p>A B&eacute;zier curve&#39;s knot vector consists of as many zeros as the number
+of control points, followed by that many ones. For example, a degree-3 (cubic)
+B&eacute;zier curve contains four control points and the following knot vector:
+<code>[0, 0, 0, 0, 1, 1, 1, 1]</code>.</p>
+
+<p><b>Non-Uniform Curves</b></p>
+
+<p>A non-uniform B-spline curve is one whose knot vector is not evenly spaced,
+that is, the difference between one knot and the next isn&#39;t the same.</p>
+
+<p><b>Rational Curves</b></p>
+
+<p>A rational B-spline curve is an N-dimensional curve with N plus one coordinates
+per control point (<i>homogeneous coordinates</i>). B-spline algorithms
+work the same way with homogeneous coordinates as with conventional
+coordinates, but if N-dimensional points are wanted, use the <a href="BSplineCurve.html#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>
+flag to divide each coordinate by the last (and omit the last coordinate)
+to convert to N-dimensional points.</p>
+
+<p>Rational B-spline curves can describe circles and ellipses, which non-rational B-spline curves can&#39;t.</p>
+
+<p>Note that some B-spline packages define rational B-spline curves as using control points and weights, that is,
+N-dimensional control points in conventional coordinates, along with a separate number, or <i>weight</i>,
+for each control point. To convert such a control point to homogeneous coordinates, multiply each of its
+conventional coordinates by its weight, then append the weight as the control point&#39;s last coordinate.</p>
+
+<p><b>NURBS Curves</b></p>
+
+<p><i>NURBS</i> is an acronym for non-uniform rational B-spline curves.</p>
+
+<p><b>Polynomial Basis</b></p>
+
+<p>Any kind of polynomial curve can be converted to a different kind
+of polynomial curve, having the same degree and describing the same path,
+by transforming its control points. For example, a Hermite curve (another
+kind of polynomial curve) can be converted to the equivalent
+B-spline curve this way, or vice versa.</p>
+
+<p>Each kind of polynomial curve (such as B-spline or B&eacute;zier) is
+associated with a <i>basis matrix</i>, which defines the polynomial
+coefficients for each control point in the curve. For a degree (N-1) curve,
+the matrix will be N&times;N.</p>
+
+<p>Each &quot;column&quot; of a basis matrix is a polynomial
+containing the coefficients for each control point, and the columns are
+arranged from left to right. Each polynomial consists of coefficients, ranging from the
+highest order to the lowest, with respect to the parameter
+<code>t</code> and the corresponding control point. For example, the
+column <code>(3, 4, 2, 10)</code> describes the polynomial
+3xt<sup>3</sup> + 4xt<sup>2</sup> + 2xt + 10x, where <code>x</code>
+is the input control point. The polynomials
+are added together to get the final coordinate of the curve at the
+given <code>t</code> value.</p>
+
+<p>The following JavaScript code shows an example of a basis matrix -- the
+cubic B&eacute;zier basis matrix.<br></p>
+
+<pre>var bezierBasisMatrix = [
+// For the purposes of the Math matrix functions,
+// the polynomials are arranged &quot;column-wise&quot;, like this:
+// P1, P2, P3, P4
+-1,3,-3,1,
+3,-6,3,0,
+-3,3,0,0,
+1,0,0,0]
+</pre>
+
+<p>For code that converts a curve from one kind to
+another, see the example.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that the first control point&#39;s length represents the size of all the control points.</li>
+<li><code>knots</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the curve. Its size must be at least 2 plus the number of control points and not more than twice the number of control points.<br> The length of this parameter minus 1, minus the number of control points, represents the <i>degree</i> of the B-spline curve. For example, a degree-3 (cubic) B-spline curve with four control points must contain eight knots, which is four (1 plus degree 3) more knots than the number of control points. A degree of 1 results in straight line segments.<br> The knot vector must be a monotonically nondecreasing sequence, the first knot must not equal the last, and the same knot may not be repeated more than N+1 times at the beginning and end of the vector, or more than N times elsewhere, where N is the curve&#39;s degree. If the difference between one knot and the next isn&#39;t the same, the curve is considered a <i>non-uniform</i> B-spline curve. Usually the first knot will be 0 or less and the last knot will be 1 or greater. (Note that this class uses the definition of knot vectors given by <a href="https://pages.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/B-spline/bspline-curve.html">C.-K. Shene</a>. There are computer-aided design programs that use knot vectors in which the first and last knot are omitted; they can be converted to Shene&#39;s definition by repeating the first knot at the beginning and repeating the last knot at the end.)</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="BSplineCurve.html#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.</li>
+</ul>
+
+<h4>Examples</h4>
+
+<p>The following function can be used
+to convert an array of control points, each consisting of conventional
+coordinates and a weight, to homogeneous coordinates.
+For example, the single-control point
+&#39;[[2, 3, 4, 0.1]]&#39; becomes &#39;[[0.2, 0.3, 0.4, 0.1]]&#39;; the
+return value can then be used in the BSplineCurve constructor
+to create a rational B-Spline curve.</p>
+
+<pre>function convertToHomogen(cp) {
+var ret = [];
+var cplen = cp[0].length;
+for(var i = 0; i &lt; cp.length; i++) {
+var outp = [];
+var w = cp[i][cplen - 1];
+for(var j = 0; j &lt; cplen - 1; j++) {
+outp[j] = cp[i][j] * w;
+}
+outp[cplen - 1] = w;
+ret.push(outp);
+}
+return ret;
+};
+</pre>
+
+<p>The following code converts a cubic (degree-3)
+curve from one kind to another. The converted curve will generally
+have the same path as the original curve.</p>
+
+<pre>// &quot;srcBasis&quot; is a 4x4 basis matrix for the source curve type;
+// the control points will initially be of this type of curve.
+// var srcBasis = [ .... ]; // To be supplied or filled in.
+// &quot;dstBasis&quot; is a 4x4 basis matrix for the destination curve type.
+// It&#39;s defined here as the B&amp;eacute;zier basis matrix for this example
+var dstBasis =[-1,3,-3,1, 3,-6,3,0, -3,3,0,0, 1,0,0,0];
+// Step 1: Invert the destination basis matrix
+var invertedDest=MathUtil.mat4invert(destBasis)
+// Step 2: Multiply the inverted destination matrix by the source
+// matrix
+var resultMatrix=MathUtil.mat4multiply(invertedDest,srcBasis)
+// Step 3: Convert the control points one dimension
+// at a time
+var newControlPoints=[[],[],[],[]]
+for(var i=0;i &lt; controlPoints[0].length;i++) {
+var cp=[controlPoints[0][i],controlPoints[1][i],controlPoints[2][i],
+controlPoints[3][i]]
+// Transform the control points using the result matrix
+cp=MathUtil.vec4transform(resultMatrix,cp)
+// Set the new coordinates
+newControlPoints[0][i]=cp[0]
+newControlPoints[1][i]=cp[1]
+newControlPoints[2][i]=cp[2]
+newControlPoints[3][i]=cp[3]
+}
+// Finally, generate a B&amp;eacute;zier curve (which is a special case
+// of a B-spline curve)
+var curve=new BSplineCurve(
+newControlPoints,
+[0,0,0,0,1,1,1,1] // cubic B&amp;eacute;zier knot vector
+);
+// Alternatively, the curve could be generated with the
+// fromBezierCurve method:
+// var curve=BSplineCurve.fromBezierCurve(newControlPoints);
+</pre>
+
+<h3>Members</h3>
+
+<ul>
+<li><a href="#BSplineCurve.DIVIDE_BIT">DIVIDE_BIT</a><br>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#BSplineCurve_accel">accel</a><br>Finds an approximate acceleration vector at the given U coordinate of this curve.</li>
+<li><a href="#BSplineCurve_arcLength">arcLength</a><br>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.</li>
+<li><a href="#BSplineCurve_changeEnds">changeEnds</a><br>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.</li>
+<li><a href="#BSplineCurve.clamped">clamped</a><br>Creates a B-spline curve with uniform knots, except that
+the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</li>
+<li><a href="#BSplineCurve.clampedKnots">clampedKnots</a><br>Generates a knot vector with uniform knots, to be
+passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor,
+except that with the knot vector the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</li>
+<li><a href="#BSplineCurve_endPoints">endPoints</a><br>Returns the starting and coordinates of this curve.</li>
+<li><a href="#BSplineCurve_evaluate">evaluate</a><br>Evaluates the curve function based on a point
+in a B-spline curve.</li>
+<li><a href="#BSplineCurve_fitRange">fitRange</a><br>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.</li>
+<li><a href="#BSplineCurve.fromBezierCurve">fromBezierCurve</a><br>Creates a B-spline curve from the control points of a B&eacute;zier curve.</li>
+<li><a href="#BSplineCurve_getControlPoints">getControlPoints</a><br>Gets a reference to the array of control points used
+in this curve object.</li>
+<li><a href="#BSplineCurve_getKnots">getKnots</a><br>Gets a reference to the array of knots used
+in this curve object.</li>
+<li><a href="#BSplineCurve_getLength">getLength</a><br>Convenience method for getting the total length of this curve.</li>
+<li><a href="#BSplineCurve_getPoints">getPoints</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
+<li><a href="#BSplineCurve_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of positions on the curve at fixed intervals
+of U coordinates.</li>
+<li><a href="#BSplineCurve_jerk">jerk</a><br>Finds an approximate jerk vector at the given U coordinate of this curve.</li>
+<li><a href="#BSplineCurve_normal">normal</a><br>Finds an approximate principal normal vector at the given U coordinate of this curve.</li>
+<li><a href="#BSplineCurve_split">split</a><br>Splits this B-spline curve into two at the given point.</li>
+<li><a href="#BSplineCurve_tangent">tangent</a><br>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.</li>
+<li><a href="#BSplineCurve_toArcLengthParam">toArcLengthParam</a><br>Gets a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>.</li>
+<li><a href="#BSplineCurve.uniform">uniform</a><br>Creates a B-spline curve with uniform knots.</li>
+<li><a href="#BSplineCurve.uniformKnots">uniformKnots</a><br>Generates a knot vector with uniform knots, to be
+passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+<li><a href="#BSplineCurve_velocity">velocity</a><br>Finds the velocity (derivative) of
+this curve at the given point.</li>
+</ul>
+
+<p><a name='BSplineCurve.DIVIDE_BIT'></a></p>
+
+<h3>BSplineCurve.DIVIDE_BIT (constant)</h3>
+
+<p>Indicates to divide each other coordinate of the returned point
+by the last coordinate of the point and omit the last
+coordinate. This is used to convert
+homogeneous coordinates to conventional coordinates.
+If this bit is set, the length of each control point must be at least 2.</p>
+
+<p>A B-spline curve that has control points whose last coordinate is other than
+1 is a <i>rational</i> B-spline curve.</p>
+
+<p>Default Value: <code>2</code></p>
+
+<p><a name='BSplineCurve_accel'></a></p>
+
+<h3>BSplineCurve#accel(u)</h3>
+
+<p>Finds an approximate acceleration vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>accel</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the velocity vector.</p>
+
+<p>The <b>acceleration</b> of a curve is a vector which is the second-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing an acceleration vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_arcLength'></a></p>
+
+<h3>BSplineCurve#arcLength(u)</h3>
+
+<p>Finds an approximate arc length (distance) between the start of this
+curve and the point at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>arcLength</code>
+method if it implements it; otherwise, calculates a numerical integral using the velocity vector.</p>
+
+<p>The <b>arc length</b> function returns a number; if the curve is &quot;smooth&quot;, this is the integral, from the starting point to <code>u</code>, of the length of the velocity vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>The approximate arc length of this curve at the given U coordinate. (Type: number)</p>
+
+<p><a name='BSplineCurve_changeEnds'></a></p>
+
+<h3>BSplineCurve#changeEnds(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that is generated using
+the same formula as this one (and uses the same U coordinates),
+but has a different set of end points.
+For example, this method can be used to shrink the path of a curve
+from [0, &pi;] to [0, &pi;/8].</p>
+
+<p>Note, however, that in general, shrinking
+the range of a curve will not shrink the length of a curve
+in the same proportion, unless the curve&#39;s path runs at
+constant speed with respect to time. For example, shrinking the range of a curve
+from [0, 1] to [0, 0.5] will not generally result in a curve that&#39;s exactly half as
+long as the original curve.</p>
+
+<p>For some curves, this method can
+also be used to grow the path of the curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<p><a name='BSplineCurve.clamped'></a></p>
+
+<h3>(static) BSplineCurve.clamped(controlPoints, [degree], [bits])</h3>
+
+<p>Creates a B-spline curve with uniform knots, except that
+the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>Array of control points as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSplineCurve.html">BSplineCurve</a>)</p>
+
+<p><a name='BSplineCurve.clampedKnots'></a></p>
+
+<h3>(static) BSplineCurve.clampedKnots(controlPoints, [degree])</h3>
+
+<p>Generates a knot vector with uniform knots, to be
+passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor,
+except that with the knot vector the curve will start and end at the first and last control points and will
+be tangent to the line between the first and second control points
+and to the line between the next-to-last and last control points.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A clamped uniform knot vector.
+The first knot will be 0 and the last knot will be 1. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_endPoints'></a></p>
+
+<h3>BSplineCurve#endPoints()</h3>
+
+<p>Returns the starting and coordinates of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>A two-element array containing
+the starting and ending U coordinates, respectively, of the curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_evaluate'></a></p>
+
+<h3>BSplineCurve#evaluate(u)</h3>
+
+<p>Evaluates the curve function based on a point
+in a B-spline curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate. This parameter is not scaled according to the curve&#39;s knot vector. To get the curve&#39;s extents, call this object&#39;s <code>endPoints</code> method.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of the result of
+the evaluation. Its length will be equal to the
+length of a control point (minus 1 if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<pre>// Generate 11 points forming the curve.
+var points=[];
+for(var i=0;i&lt;=10;i++) {
+points.push(curve.evaluate(i/10.0));
+}
+</pre>
+
+<p><a name='BSplineCurve_fitRange'></a></p>
+
+<h3>BSplineCurve#fitRange(ep1, ep2)</h3>
+
+<p>Creates a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to fit the given range.
+For example, this method can be used to shrink the range of U coordinates
+from [-&pi;, &pi;] to [0, 1] without shortening the path of the curve.
+Here, -&pi; now maps to 0, and &pi; now maps to 1.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ep1</code> (Type: number)<br>New value to use as the start point of the curve.</li>
+<li><code>ep2</code> (Type: number)<br>New value to use as the end point of the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<p><a name='BSplineCurve.fromBezierCurve'></a></p>
+
+<h3>(static) BSplineCurve.fromBezierCurve(controlPoints, [bits])</h3>
+
+<p>Creates a B-spline curve from the control points of a B&eacute;zier curve.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>An array of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier curve. For example, a degree-3 (cubic) curve contains 4 control points. A degree of 1 (two control points) results in a straight line segment. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="BSplineCurve.html">BSplineCurve</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following function generates a polygon curve using linear B&eacute;zier
+curves.</p>
+
+<pre>function polygonCurve(points) {
+var curves=[]
+for(var i=0;i &lt; points.length;i++) {
+var cp=points[i]
+var np=(i==points.length-1) ? points[0] : points[i+1]
+curves.push(BSplineCurve.fromBezierCurve([cp,np]))
+}
+return new PiecewiseCurve(curves)
+}
+</pre>
+
+<p><a name='BSplineCurve_getControlPoints'></a></p>
+
+<h3>BSplineCurve#getControlPoints()</h3>
+
+<p>Gets a reference to the array of control points used
+in this curve object.</p>
+
+<h4>Return Value</h4>
+
+<p>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='BSplineCurve_getKnots'></a></p>
+
+<h3>BSplineCurve#getKnots()</h3>
+
+<p>Gets a reference to the array of knots used
+in this curve object.</p>
+
+<h4>Return Value</h4>
+
+<p>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='BSplineCurve_getLength'></a></p>
+
+<h3>BSplineCurve#getLength()</h3>
+
+<p>Convenience method for getting the total length of this curve.</p>
+
+<h4>Return Value</h4>
+
+<p>The distance from the start of the curve to its end. (Type: number)</p>
+
+<p><a name='BSplineCurve_getPoints'></a></p>
+
+<h3>BSplineCurve#getPoints(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<p><a name='BSplineCurve_getPointsAsObjects'></a></p>
+
+<h3>BSplineCurve#getPointsAsObjects(count)</h3>
+
+<p>Gets an array of positions on the curve at fixed intervals
+of U coordinates. Note that these positions will not generally be
+evenly spaced along the curve unless the curve uses
+an arc-length parameterization. The positions will be in the form of objects with
+up to four properties: x, y, z, and w retrieve the first, second, third,
+and fourth coordinate of each position, respectively.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>count</code> (Type: number)<br>Number of positions to generate. Throws an error if this number is 0. If this value is 1, returns an array containing the starting point of this curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of curve positions. The first
+element will be the start of the curve. If &quot;count&quot; is 2 or greater, the last element
+will be the end of the curve. (Type: Array.&lt;Array.&lt;number&gt;&gt; | Array.&lt;Object&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example initializes a three.js BufferGeometry with the points retrieved by this method. This example requires the three.js library.</p>
+
+<pre>var points=curve.getPointsAsObjects(50)
+var buffer=new THREE.BufferGeometry()
+.setFromPoints(points);
+</pre>
+
+<p><a name='BSplineCurve_jerk'></a></p>
+
+<h3>BSplineCurve#jerk(u)</h3>
+
+<p>Finds an approximate jerk vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>jerk</code>
+method if it implements it; otherwise, does a numerical differentiation using
+the acceleration vector.</p>
+
+<p>The <b>jerk</b> of a curve is a vector which is the third-order derivative of the curve&#39;s position at the given coordinate. The vector returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a jerk vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_normal'></a></p>
+
+<h3>BSplineCurve#normal(u)</h3>
+
+<p>Finds an approximate principal normal vector at the given U coordinate of this curve.
+The implementation in <a href="Curve.html">Curve</a> calls the evaluator&#39;s <code>normal</code>
+method if it implements it; otherwise, does a numerical differentiation using the velocity vector.</p>
+
+<p>The <b>principal normal</b> of a curve is the derivative of the &quot;normalized&quot; velocity
+vector divided by that derivative&#39;s length. The normal returned by this method
+<i>should</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>. (Compare with <a href="Surface.html#Surface_gradient">Surface#gradient</a>.)</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_split'></a></p>
+
+<h3>BSplineCurve#split(u)</h3>
+
+<p>Splits this B-spline curve into two at the given point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>Point on the curve where this curve will be split.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array containing two B-spline curves: the
+first is the part of the curve before the given point, and the second
+is the part of the curve after the given point. The first element
+will be null if <code>u</code> is at or before the start of the curve.
+The second element
+will be null if <code>u</code> is at or after the end of the curve. (Type: Array.&lt;<a href="BSplineCurve.html">BSplineCurve</a>&gt;)</p>
+
+<p><a name='BSplineCurve_tangent'></a></p>
+
+<h3>BSplineCurve#tangent(u)</h3>
+
+<p>Convenience method for finding an approximate tangent vector of this curve at the given U coordinate.
+The <b>tangent vector</b> is the same as the velocity vector, but &quot;normalized&quot; to a unit vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the curve.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying curve. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_toArcLengthParam'></a></p>
+
+<h3>BSplineCurve#toArcLengthParam()</h3>
+
+<p>Gets a curve evaluator object for a curve that follows the same
+path as this one but has its U coordinates remapped to
+an <i>arc length parameterization</i>. Arc length
+parameterization allows for moving along a curve&#39;s path at a uniform
+speed and for generating points which are spaced evenly along that
+path -- both features are more difficult with most other kinds
+of curve parameterization.</p>
+
+<p>The <i>end points</i> of the curve (obtained by calling the <code>endPoints</code>
+method) will be (0, N), where N is the distance to the end of the curve from its
+start.</p>
+
+<p>When converting to an arc length parameterization, the curve
+should be continuous and have a speed greater than 0 at every
+point on the curve. The arc length parameterization used in
+this method is approximate.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. Returns this object if this curve already uses an arc length parameterization. (Type: <a href="Curve.html">Curve</a>)</p>
+
+<h4>Examples</h4>
+
+<p>The following example uses the arc-length
+parameterization to generate, uniformly at random, a point that lies anywhere
+on a curve.</p>
+
+<pre>var arclen = curve.toArcLengthParam();
+var point = arclen.evaluate(Math.random()*arclen.getLength())
+</pre>
+
+<p><a name='BSplineCurve.uniform'></a></p>
+
+<h3>(static) BSplineCurve.uniform(controlPoints, [degree], [bits])</h3>
+
+<p>Creates a B-spline curve with uniform knots.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;number&gt;&gt;)<br>Array of control points as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineCurve.html">BSplineCurve</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: <a href="BSplineCurve.html">BSplineCurve</a>)</p>
+
+<p><a name='BSplineCurve.uniformKnots'></a></p>
+
+<h3>(static) BSplineCurve.uniformKnots(controlPoints, [degree])</h3>
+
+<p>Generates a knot vector with uniform knots, to be
+passed to the <a href="BSplineCurve.html">BSplineCurve</a> or <a href="BSplineSurface.html">BSplineSurface</a> constructor.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: number | Object)<br>Number of control points the curve will have, or an array of control points.</li>
+<li><code>degree</code> (Type: number) (optional)<br>Degree of the B-spline curve. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>A uniform knot vector. The first
+knot will be 0 and the last knot will be 1. (This is a change from previous
+versions.) (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineCurve_velocity'></a></p>
+
+<h3>BSplineCurve#velocity(u)</h3>
+
+<p>Finds the velocity (derivative) of
+this curve at the given point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>Point on the curve to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array giving the velocity vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

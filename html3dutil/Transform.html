@@ -1,0 +1,433 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Transform</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>Transform</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='Transform'></a></p>
+
+<h3>new Transform()</h3>
+
+<p>A class offering a convenient way to set a transformation
+from one coordinate system to another.</p>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#Transform_copy">copy</a><br>Makes a copy of this transform.</li>
+<li><a href="#Transform_getMatrix">getMatrix</a><br>Gets the transformation matrix used by an object.</li>
+<li><a href="#Transform_getPosition">getPosition</a><br>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.</li>
+<li><a href="#Transform_getQuaternion">getQuaternion</a><br>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.</li>
+<li><a href="#Transform_getScale">getScale</a><br>Returns a copy of a three-element array giving the scaling for an object&#39;s width,
+height, and depth, respectively.</li>
+<li><a href="#Transform_isIdentity">isIdentity</a><br>Returns whether this transform is the identity transform.</li>
+<li><a href="#Transform_movePosition">movePosition</a><br>Moves the relative position of an object from its original
+position.</li>
+<li><a href="#Transform_multQuaternion">multQuaternion</a><br>Combines an object&#39;s current rotation with another rotation
+described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations).</li>
+<li><a href="#Transform_multRotation">multRotation</a><br>Combines an object&#39;s current rotation with another rotation
+in the form of an angle and an axis of
+rotation.</li>
+<li><a href="#Transform_reset">reset</a><br>Resets this transform to the untransformed state.</li>
+<li><a href="#Transform_setMatrix">setMatrix</a><br>Sets this transform&#39;s transformation matrix.</li>
+<li><a href="#Transform_setPosition">setPosition</a><br>Sets the relative position of an object from its original
+position.</li>
+<li><a href="#Transform_setQuaternion">setQuaternion</a><br>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations).</li>
+<li><a href="#Transform_setRotation">setRotation</a><br>Sets this transform&#39;s rotation in the form of an angle and an axis of
+rotation.</li>
+<li><a href="#Transform_setScale">setScale</a><br>Sets the scale of an object relative to its original
+size.</li>
+</ul>
+
+<p><a name='Transform_copy'></a></p>
+
+<h3>Transform#copy()</h3>
+
+<p>Makes a copy of this transform. The copied object
+will have its own version of the rotation, scale,
+position, and matrix data.</p>
+
+<h4>Return Value</h4>
+
+<p>A copy of this transform. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_getMatrix'></a></p>
+
+<h3>Transform#getMatrix()</h3>
+
+<p>Gets the transformation matrix used by an object. Depending
+on the state of this transform, will return either:<ul>
+<li>The 4x4 matrix passed to <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>, if the
+matrix was defined with that method
+and the transform wasn&#39;t reset yet with Transform#resetTransform.
+<li>The matrix resulting from the position, rotation, and scale properties,
+multiplied in that order, otherwise.
+</ul></p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Transform_getPosition'></a></p>
+
+<h3>Transform#getPosition()</h3>
+
+<p>Returns a copy of a three-element array giving the X, Y, and Z coordinates of the position
+of an object relative to its original position.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Transform_getQuaternion'></a></p>
+
+<h3>Transform#getQuaternion()</h3>
+
+<p>Returns a copy of the rotation of an object in the form of a <a href="tutorial-glmath.html">quaternion</a>.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Transform_getScale'></a></p>
+
+<h3>Transform#getScale()</h3>
+
+<p>Returns a copy of a three-element array giving the scaling for an object&#39;s width,
+height, and depth, respectively.
+For each component, 1 means no scaling.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='Transform_isIdentity'></a></p>
+
+<h3>Transform#isIdentity()</h3>
+
+<p>Returns whether this transform is the identity transform.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: boolean)</p>
+
+<p><a name='Transform_movePosition'></a></p>
+
+<h3>Transform#movePosition(x, y, z)</h3>
+
+<p>Moves the relative position of an object from its original
+position. Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>Number to add to the X coordinate, If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the numbers to add to the X, Y, and Z coordinates, or a single number to add to all three coordinates.</li>
+<li><code>y</code> (Type: number)<br>Number to add to the Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number)<br>Number to add to the Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_multQuaternion'></a></p>
+
+<h3>Transform#multQuaternion(quat)</h3>
+
+<p>Combines an object&#39;s current rotation with another rotation
+described by a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations). The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> or <a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>// Combine an object&#39;s rotation with a rotation 20 degrees about the X axis
+transform.multQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
+// Combine an object&#39;s rotation with identity
+transform.multQuaternion(MathUtil.quatIdentity());
+// Combine an object&#39;s rotation with 30 degree pitch multiplied
+// by 40 degree roll
+transform.multQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
+</pre>
+
+<p><a name='Transform_multRotation'></a></p>
+
+<h3>Transform#multRotation(angle, v, vy, vz)</h3>
+
+<p>Combines an object&#39;s current rotation with another rotation
+in the form of an angle and an axis of
+rotation. The combined rotation will have the
+same effect as the new rotation followed by the existing rotation.
+Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. See <a href="Transform.html#Transform_setRotation">Transform#setRotation</a>.</li>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
+<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
+<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_reset'></a></p>
+
+<h3>Transform#reset()</h3>
+
+<p>Resets this transform to the untransformed state.</p>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_setMatrix'></a></p>
+
+<h3>Transform#setMatrix(value)</h3>
+
+<p>Sets this transform&#39;s transformation matrix. This method
+will set the position, rotation, and scale properties
+accordingly to the matrix given.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>value</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix. This method will copy the value of this parameter.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_setPosition'></a></p>
+
+<h3>Transform#setPosition(x, [y], [z])</h3>
+
+<p>Sets the relative position of an object from its original
+position. Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: Array.&lt;number&gt; | number)<br>The X coordinate. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the X, Y, and Z coordinates, or a single number giving the coordinate for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>The Y coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+<li><code>z</code> (Type: number) (optional)<br>The Z coordinate. If &quot;x&quot; is an array, this parameter may be omitted.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>// Set the relative position to 2 units along X axis, 4 units along Y axis,
+// and 5 units along Z axis
+transform.setPosition(2,4,5);
+// same, but passing an array
+transform.setPosition([2,4,5]);
+</pre>
+
+<p><a name='Transform_setQuaternion'></a></p>
+
+<h3>Transform#setQuaternion(quat)</h3>
+
+<p>Sets this transform&#39;s rotation in the form of a <a href="tutorial-glmath.html">quaternion</a> (a 4-element array
+for describing 3D rotations). Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>quat</code> (Type: Array.&lt;number&gt;)<br>A four-element array describing the rotation. A quaternion is returned from the methods <a href="MathUtil.html#MathUtil.quatFromAxisAngle">MathUtil.quatFromAxisAngle</a> and <a href="MathUtil.html#MathUtil.quatFromTaitBryan">MathUtil.quatFromTaitBryan</a>, among others.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>// Set an object&#39;s rotation to 30 degrees about the X axis
+transform.setQuaternion(MathUtil.quatFromAxisAngle(20,1,0,0));
+// Set an object&#39;s rotation to identity (the object isn&#39;t transformed)
+transform.setQuaternion(MathUtil.quatIdentity());
+// Set an object&#39;s rotation to 30 degree pitch multiplied
+// by 40 degree roll
+transform.setQuaternion(MathUtil.quatFromTaitBryan(30,0,40));
+// Set an object&#39;s rotation to 40 units about X axis, 20 units about Y axis,
+// and 50 units about Z axis
+transform.setQuaternion(H3DU.MathUtil.quatFromTaitBryan(40,20,50));
+// Set an object&#39;s rotation to 20 units about Y axis
+transform.setQuaternion(H3DU.MathUtil.quatFromAxisAngle(20,0,1,0));
+</pre>
+
+<p><a name='Transform_setRotation'></a></p>
+
+<h3>Transform#setRotation(angle, v, vy, vz)</h3>
+
+<p>Sets this transform&#39;s rotation in the form of an angle and an axis of
+rotation. Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angle</code> (Type: Array.&lt;number&gt; | number)<br>The desired angle to rotate in degrees. If &quot;v&quot;, &quot;vy&quot;, and &quot;vz&quot; are omitted, this can instead be a 4-element array giving the axis of rotation as the first three elements, followed by the angle in degrees as the fourth element. If the axis of rotation points toward the viewer, a positive value means the angle runs in a counterclockwise direction for right-handed coordinate systems and in a clockwise direction for left-handed systems.</li>
+<li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X-component of the point lying on the axis of rotation. If &quot;vy&quot; and &quot;vz&quot; are omitted, this can instead be a 3-element array giving the axis of rotation in x, y, and z, respectively.</li>
+<li><code>vy</code> (Type: number)<br>Y-component of the point lying on the axis of rotation.</li>
+<li><code>vz</code> (Type: number)<br>Z-component of the point lying on the axis of rotation.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<p><a name='Transform_setScale'></a></p>
+
+<h3>Transform#setScale(x, [y], [z])</h3>
+
+<p>Sets the scale of an object relative to its original
+size. Has no effect if a matrix was defined with <a href="Transform.html#Transform_setMatrix">Transform#setMatrix</a>
+and the transform wasn&#39;t reset yet with Transform#resetTransform.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>x</code> (Type: number | Array.&lt;number&gt;)<br>X axis scaling factor for this transform. If &quot;y&quot; and &quot;z&quot; are null, undefined, or omitted, this is instead a 3-element array giving the scaling factors for X, Y, and Z dimensions, respectively, or a single number giving the scaling factor for all three dimensions.</li>
+<li><code>y</code> (Type: number) (optional)<br>Y axis scaling factor for this transform.</li>
+<li><code>z</code> (Type: number) (optional)<br>Z axis scaling factor for this transform.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: <a href="Transform.html">Transform</a>)</p>
+
+<h4>Examples</h4>
+
+<pre>// scale coordinates by 2x in all axes
+transform.setScale(2,2,2);
+// same, but passing an array
+transform.setScale([2,2,2]);
+</pre>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

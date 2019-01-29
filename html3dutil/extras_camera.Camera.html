@@ -1,0 +1,383 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>module:extras/camera.Camera</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>module:extras/camera.Camera</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='extras_camera.Camera'></a></p>
+
+<h3>new module:extras/camera.Camera(fov, nearZ, farZ)</h3>
+
+<p>A class for controlling the projection and
+view of a 3D scene, in the nature of an abstract &quot;camera&quot;.
+This class uses the concept of a &quot;camera&#39;s position&quot;, or where
+the camera is located in world space, as well
+as a &quot;reference point&quot;, or the point in world space that the camera
+is looking at.</p>
+
+<p>This class is considered a supplementary class to the
+Public Domain HTML 3D Library and is not considered part of that
+library.</p>
+
+<p>To use this class, you must include the script &quot;extras/camera.js&quot;; the
+class is not included in the &quot;h3du_min.js&quot; file which makes up
+the HTML 3D Library. Example:</p>
+
+<pre>&lt;script type=&quot;text/javascript&quot; src=&quot;extras/camera.js&quot;&gt;&lt;/script&gt;
+</pre>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>fov</code> (Type: number)<br>Vertical field of view, in degrees. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be.) See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.</li>
+<li><code>nearZ</code> (Type: number)<br>The distance from the camera to the near clipping plane. Objects closer than this distance won&#39;t be seen. See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>. This should be slightly greater than 0.</li>
+<li><code>farZ</code> (Type: number)<br>The distance from the camera to the far clipping plane. Objects beyond this distance will be too far to be seen. See <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>.</li>
+</ul>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#extras_camera_Camera_getDistance">getDistance</a><br>Finds the distance from the camera&#39;s position to the reference point.</li>
+<li><a href="#extras_camera_Camera_getPosition">getPosition</a><br>Gets the position of the camera.</li>
+<li><a href="#extras_camera_Camera_getVectorFromCenter">getVectorFromCenter</a><br>Gets the 3-element vector that points from the reference
+point to the camera&#39;s position.</li>
+<li><a href="#extras_camera_Camera_moveAngleHorizontal">moveAngleHorizontal</a><br>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</li>
+<li><a href="#extras_camera_Camera_moveAngleVertical">moveAngleVertical</a><br>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</li>
+<li><a href="#extras_camera_Camera_moveClose">moveClose</a><br>Moves the camera the given distance, but not too close
+to the reference point.</li>
+<li><a href="#extras_camera_Camera_moveForward">moveForward</a><br>Moves the camera forward the given distance.</li>
+<li><a href="#extras_camera_Camera_moveHorizontal">moveHorizontal</a><br>Moves the camera horizontally relative to the camera&#39;s up vector.</li>
+<li><a href="#extras_camera_Camera_moveVertical">moveVertical</a><br>Moves the camera toward or away from the camera&#39;s up vector.</li>
+<li><a href="#extras_camera_Camera_setDistance">setDistance</a><br>Moves the camera a given distance from the reference
+point without changing its orientation.</li>
+<li><a href="#extras_camera_Camera_setPosition">setPosition</a><br>Sets the position of the camera.</li>
+<li><a href="#extras_camera_Camera_turnAngleHorizontal">turnAngleHorizontal</a><br>Turns the camera to the left or right so that it faces
+the same distance from a reference point.</li>
+<li><a href="#extras_camera_Camera_turnAngleVertical">turnAngleVertical</a><br>Turns the camera upward or downward so that it faces
+the same distance from a reference point.</li>
+<li><a href="#extras_camera_Camera_update">update</a><br>Updates information about this camera based
+on the state of an input tracker.</li>
+</ul>
+
+<p><a name='extras_camera_Camera_getDistance'></a></p>
+
+<h3>module:extras/camera~Camera#getDistance()</h3>
+
+<p>Finds the distance from the camera&#39;s position to the reference point.</p>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: number)</p>
+
+<p><a name='extras_camera_Camera_getPosition'></a></p>
+
+<h3>module:extras/camera~Camera#getPosition()</h3>
+
+<p>Gets the position of the camera.</p>
+
+<h4>Return Value</h4>
+
+<p>An array of three numbers giving
+the X, Y, and Z coordinates of the camera&#39;s position, respectively. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='extras_camera_Camera_getVectorFromCenter'></a></p>
+
+<h3>module:extras/camera~Camera#getVectorFromCenter()</h3>
+
+<p>Gets the 3-element vector that points from the reference
+point to the camera&#39;s position.</p>
+
+<h4>Return Value</h4>
+
+<p>The return value as a unit
+vector (a <a href="MathUtil.html#MathUtil.vec3normalize">&quot;normalized&quot; vector</a> with a length of 1).
+Returns (0,0,0) if the reference point is the same as the camera&#39;s position. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='extras_camera_Camera_moveAngleHorizontal'></a></p>
+
+<h3>module:extras/camera~Camera#moveAngleHorizontal(angleDegrees)</h3>
+
+<p>Moves the camera to the left or right so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera leftward, and negative values rightward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_moveAngleVertical'></a></p>
+
+<h3>module:extras/camera~Camera#moveAngleVertical(angleDegrees)</h3>
+
+<p>Moves the camera upward or downward so that it faces
+the same reference point at the same distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_moveClose'></a></p>
+
+<h3>module:extras/camera~Camera#moveClose(dist)</h3>
+
+<p>Moves the camera the given distance, but not too close
+to the reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: number)<br>The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_moveForward'></a></p>
+
+<h3>module:extras/camera~Camera#moveForward(dist)</h3>
+
+<p>Moves the camera forward the given distance.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: number)<br>The distance to move. Positive values mean forward, and negative distances mean back.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_moveHorizontal'></a></p>
+
+<h3>module:extras/camera~Camera#moveHorizontal(dist)</h3>
+
+<p>Moves the camera horizontally relative to the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_moveVertical'></a></p>
+
+<h3>module:extras/camera~Camera#moveVertical(dist)</h3>
+
+<p>Moves the camera toward or away from the camera&#39;s up vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: number)<br>Distance to move the camera.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_setDistance'></a></p>
+
+<h3>module:extras/camera~Camera#setDistance(dist)</h3>
+
+<p>Moves the camera a given distance from the reference
+point without changing its orientation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>dist</code> (Type: number)<br>Positive number giving the distance. If this is less than the near plane distance, the distance will be equal to the near plane distance. Does nothing if the distance is 0 or less.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_setPosition'></a></p>
+
+<h3>module:extras/camera~Camera#setPosition(cx, [cy], [cz])</h3>
+
+<p>Sets the position of the camera.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>cx</code> (Type: number)<br>The camera&#39;s new X coordinate, or a 3-element vector containing the X, Y, and Z coordinates. In the latter case, &quot;cy&quot; and &quot;cz&quot; can be omitted.</li>
+<li><code>cy</code> (Type: number) (optional)<br>The camera&#39;s new Y coordinate.</li>
+<li><code>cz</code> (Type: number) (optional)<br>The camera&#39;s new Z coordinate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_turnAngleHorizontal'></a></p>
+
+<h3>module:extras/camera~Camera#turnAngleHorizontal(angleDegrees)</h3>
+
+<p>Turns the camera to the left or right so that it faces
+the same distance from a reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera rightward, and negative values leftward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_turnAngleVertical'></a></p>
+
+<h3>module:extras/camera~Camera#turnAngleVertical(angleDegrees)</h3>
+
+<p>Turns the camera upward or downward so that it faces
+the same distance from a reference point.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>angleDegrees</code> (Type: number)<br>The angle to rotate the camera, in degrees. If the coordinate-system is right-handed, positive values rotate the camera upward, and negative values downward. If the coordinate-system is left-handed, vice versa.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>This object. (Type: Camera)</p>
+
+<p><a name='extras_camera_Camera_update'></a></p>
+
+<h3>module:extras/camera~Camera#update([input])</h3>
+
+<p>Updates information about this camera based
+on the state of an input tracker.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>input</code> (Type: InputTracker) (optional)<br>An input tracker. This method should be called right after the tracker&#39;s &#39;update&#39; method was called. <i>Note that future versions may require this parameter.</i></li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: Object)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>

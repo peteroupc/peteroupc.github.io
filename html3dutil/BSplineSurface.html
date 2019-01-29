@@ -1,0 +1,405 @@
+<!DOCTYPE html><html><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>BSplineSurface</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a> -
+<a href="http://peteroupc.github.io/">Donate to Me</a></p></div>
+<div class="mainarea" id="top">
+<h1>BSplineSurface</h1>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+
+<p><a name='BSplineSurface'></a></p>
+
+<h3>new BSplineSurface(controlPoints, knotsU, knotsV, [bits])</h3>
+
+<p><strong>Augments:</strong> <a href="Surface.html">Surface</a></p>
+
+<p>A <a href="Surface.html">surface evaluator object</a> for a B-spline (basis spline) surface,
+whose edges are made up of B-spline curves. For more on B-spline curves, see the constructor
+for <a href="BSplineCurve.html">BSplineCurve</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;number&gt;&gt;&gt;)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter is the number of control points in each row of the V axis. <li>The length of the first control point array is the number of control points in each column of the U axis. <li>The first control point&#39;s length represents the size of all the control points. </ul></li>
+<li><code>knotsU</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the surface, along the U axis. For more information, see <a href="BSplineCurve.html">BSplineCurve</a>.</li>
+<li><code>knotsV</code> (Type: Array.&lt;number&gt;)<br>Knot vector of the surface, along the V axis.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits for defining input and controlling output. Zero or more of <a href="BSplineCurve.html#BSplineCurve.DIVIDE_BIT">BSplineCurve.DIVIDE_BIT</a>. If null, undefined, or omitted, no bits are set.</li>
+</ul>
+
+<h4>Examples</h4>
+
+<p>Together with &#39;convertToHomogen&#39; given in the <a href="BSplineCurve.html">BSplineCurve</a> documentation, the following function can be used
+to convert an array of arrays of control points, each consisting of conventional
+coordinates and a weight, to homogeneous coordinates.
+For example, the single-control point array
+&#39;[[[2, 3, 4, 0.1]]]&#39; becomes &#39;[[[0.2, 0.3, 0.4, 0.1]]]&#39;; the
+return value can then be used in the BSplineSurface constructor
+to create a rational B-Spline surface.</p>
+
+<pre>function convertSurfaceToHomogen(cp) {
+var ret = [];
+for(var i = 0; i &lt; cp.length; i++) {
+ret.push(convertToHomogen(cp[i]));
+}
+return ret;
+};
+</pre>
+
+<h3>Methods</h3>
+
+<ul>
+<li><a href="#BSplineSurface_bitangent">bitangent</a><br>Finds the <a href="Surface.html">bitangent vector</a> at the
+given point on the surface.</li>
+<li><a href="#BSplineSurface.clamped">clamped</a><br>Creates a B-spline surface with uniform knots, except that
+the surface&#39;s edges lie on the edges of the control point array.</li>
+<li><a href="#BSplineSurface_endPoints">endPoints</a><br>Returns the starting and ending U and V coordinates of this surface.</li>
+<li><a href="#BSplineSurface_evaluate">evaluate</a><br>Evaluates the surface function based on a point
+in a B-spline surface.</li>
+<li><a href="#BSplineSurface.fromBezierSurface">fromBezierSurface</a><br>Creates a B-spline surface from the control points of a B&eacute;zier surface.</li>
+<li><a href="#BSplineSurface_getControlPoints">getControlPoints</a><br>Gets a reference to the array of control point arrays used
+in this surface object.</li>
+<li><a href="#BSplineSurface_getKnots">getKnots</a><br>Gets a reference to the array of knot vectors used
+in this curve object.</li>
+<li><a href="#BSplineSurface_gradient">gradient</a><br>Finds an approximate gradient vector of this surface at the given U and V coordinates.</li>
+<li><a href="#BSplineSurface_normal">normal</a><br>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.</li>
+<li><a href="#BSplineSurface_tangent">tangent</a><br>Finds the <a href="Surface.html">tangent vector</a> at the
+given point on the surface.</li>
+<li><a href="#BSplineSurface.uniform">uniform</a><br>Creates a B-spline surface with uniform knots.</li>
+</ul>
+
+<p><a name='BSplineSurface_bitangent'></a></p>
+
+<h3>BSplineSurface#bitangent(u, v)</h3>
+
+<p>Finds the <a href="Surface.html">bitangent vector</a> at the
+given point on the surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array giving the bitangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineSurface.clamped'></a></p>
+
+<h3>(static) BSplineSurface.clamped(controlPoints, [degreeU], [degreeV], [bits])</h3>
+
+<p>Creates a B-spline surface with uniform knots, except that
+the surface&#39;s edges lie on the edges of the control point array.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;number&gt;&gt;&gt;)<br>Array of control point arrays as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+<li><code>degreeU</code> (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+<li><code>degreeV</code> (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSplineSurface.html">BSplineSurface</a>)</p>
+
+<p><a name='BSplineSurface_endPoints'></a></p>
+
+<h3>BSplineSurface#endPoints()</h3>
+
+<p>Returns the starting and ending U and V coordinates of this surface.
+This method calls the evaluator&#39;s <code>endPoints</code>
+method if it implements it; otherwise, returns <code>[0, 1, 0, 1]</code></p>
+
+<h4>Return Value</h4>
+
+<p>A four-element array. The first and second
+elements are the starting and ending U coordinates, respectively, of the surface, and the third
+and fourth elements are its starting and ending V coordinates.
+Returns <code>[0, 1, 0, 1]</code> if the evaluator doesn&#39;t implement an <code>endPoints</code>
+method.</p>
+
+<p><a name='BSplineSurface_evaluate'></a></p>
+
+<h3>BSplineSurface#evaluate(u, v)</h3>
+
+<p>Evaluates the surface function based on a point
+in a B-spline surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array of the result of
+the evaluation. It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineSurface.fromBezierSurface'></a></p>
+
+<h3>(static) BSplineSurface.fromBezierSurface(controlPoints, [bits])</h3>
+
+<p>Creates a B-spline surface from the control points of a B&eacute;zier surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;number&gt;&gt;&gt;)<br>An array of control point arrays, which in turn contain a number of control points. Each control point is an array with the same length as the other control points. It is assumed that:<ul> <li>The length of this parameter minus 1 represents the degree of the B&eacute;zier surface along the V axis. For example, a degree-3 (cubic) surface along the V axis contains 4 control points, one in each control point array. A degree of 1 on both the U and V axes results in a flat surface. <li>The length of the first control point array minus 1 represents the degree of the B&eacute;zier surface along the U axis. <li>The number of elements in the first control point represents the number of elements in all the control points. </ul></li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. (Type: <a href="BSplineSurface.html">BSplineSurface</a>)</p>
+
+<p><a name='BSplineSurface_getControlPoints'></a></p>
+
+<h3>BSplineSurface#getControlPoints()</h3>
+
+<p>Gets a reference to the array of control point arrays used
+in this surface object.</p>
+
+<h4>Return Value</h4>
+
+<p>An object described in the constructor to <a href="BSplineCurve.html">BSplineCurve</a>. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='BSplineSurface_getKnots'></a></p>
+
+<h3>BSplineSurface#getKnots()</h3>
+
+<p>Gets a reference to the array of knot vectors used
+in this curve object.</p>
+
+<h4>Return Value</h4>
+
+<p>An object described in the constructor to <a href="BSplineSurface.html">BSplineSurface</a>. (Type: Array.&lt;Array.&lt;number&gt;&gt;)</p>
+
+<p><a name='BSplineSurface_gradient'></a></p>
+
+<h3>BSplineSurface#gradient(u, v)</h3>
+
+<p>Finds an approximate gradient vector of this surface at the given U and V coordinates.</p>
+
+<p>The implementation in <a href="Surface.html">Surface</a> calls the evaluator&#39;s <code>gradient</code>
+method if it implements it; otherwise uses the surface&#39;s tangent and bitangent vectors to implement the gradient
+(however, this approach is generally only meaningful for a surface in three-dimensional space).</p>
+
+<p>The <b>gradient</b> is a vector pointing up and away from the surface.
+If the evaluator describes a regular three-dimensional surface (usually
+a continuous, unbroken surface such as a sphere, an open
+cylinder, or a disk rotated in three dimensions), this can be the cross product
+of the <a href="Surface.html#Surface_tangent">tangent vector</a>
+and <a href="Surface.html#Surface_bitangent">bitangent vector</a>,
+in that order. The gradient returned by this method <i>should not</i> be &quot;normalized&quot; to a <a href="tutorial-glmath.html">unit vector</a>.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a gradient vector. It should have at least as many
+elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number&gt;)</p>
+
+<h4>Examples</h4>
+
+<p>The following example is a surface evaluator
+object for a parametric surface with a gradient method. To illustrate how the gradient method is derived
+from the vector calculation method, that method is also given below. To
+derive the normal calculation, first look at the vector function:</p>
+
+<p><b>F</b>(u, v) = (cos(u), sin(u), sin(u)*cos(v))</p>
+
+<p>Then, find the partial derivatives with respect to <i>u</i> and to <i>v</i>:</p>
+
+<p>&#x2202;<b>F</b>/&#x2202;<i>u</i> = (-sin(u), cos(u), cos(u)*cos(v))<br>
+&#x2202;<b>F</b>/&#x2202;<i>v</i> = (0, 0, -sin(v)*sin(u))</p>
+
+<p>Next, take their cross product:</p>
+
+<p><b>&Del;F</b>(u, v) = (-sin(v)*cos(u)*sin(u), -sin(v)*sin(u)*sin(u), 0)<br></p>
+
+<p>The result is the gradient, which will point up and away from the surface.</p>
+
+<pre>var surface=new Surface({&quot;evaluate&quot;:function(u,v) {
+&quot;use strict&quot;;
+return [Math.cos(u),Math.sin(u),Math.sin(u)*Math.cos(v)];
+},
+&quot;gradient&quot;:function(u,v) {
+&quot;use strict&quot;;
+return [
+Math.cos(u)*-Math.sin(v)*Math.sin(u),
+Math.sin(u)*-Math.sin(v)*Math.sin(u),
+0];
+}})
+</pre>
+
+<p><a name='BSplineSurface_normal'></a></p>
+
+<h3>BSplineSurface#normal(u, v)</h3>
+
+<p>Convenience method for finding an approximate normal vector of this surface at the given U and V coordinates.
+The <b>normal vector</b> is the same as the gradient vector, but &quot;normalized&quot; to a unit vector.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of a point on the surface.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of a point on the surface.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array describing a normal vector. It should have at least as many
+elements as the number of dimensions of the underlying surface. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineSurface_tangent'></a></p>
+
+<h3>BSplineSurface#tangent(u, v)</h3>
+
+<p>Finds the <a href="Surface.html">tangent vector</a> at the
+given point on the surface.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>u</code> (Type: number)<br>U coordinate of the surface to evaluate.</li>
+<li><code>v</code> (Type: number)<br>V coordinate of the surface to evaluate.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>An array giving the tangent vector.
+It will have as many elements as a control point (or one fewer
+if DIVIDE_BIT is set), as specified in the constructor. (Type: Array.&lt;number&gt;)</p>
+
+<p><a name='BSplineSurface.uniform'></a></p>
+
+<h3>(static) BSplineSurface.uniform(controlPoints, [degreeU], [degreeV], [bits])</h3>
+
+<p>Creates a B-spline surface with uniform knots.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>controlPoints</code> (Type: Array.&lt;Array.&lt;Array.&lt;number&gt;&gt;&gt;)<br>Array of control point arrays as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+<li><code>degreeU</code> (Type: number) (optional)<br>Degree of the B-spline surface along the U axis. For example, 3 means a degree-3 (cubic) curve. If null, undefined, or omitted, the default is 3.</li>
+<li><code>degreeV</code> (Type: number) (optional)<br>Degree of the B-spline surface along the V axis If null, undefined, or omitted, the default is 3.</li>
+<li><code>bits</code> (Type: number) (optional)<br>Bits as specified in the <a href="BSplineSurface.html">BSplineSurface</a> constructor.</li>
+</ul>
+
+<h4>Return Value</h4>
+
+<p>Return value. The first
+knot of the curve will be 0 and the last knot will be 1. (Type: <a href="BSplineSurface.html">BSplineSurface</a>)</p>
+
+<p><a href="index.html">Back to documentation index.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+<h3>Navigation</h3>
+
+<ul>
+<li><a href="BSplineCurve.html">BSplineCurve</a></li>
+<li><a href="BSplineSurface.html">BSplineSurface</a></li>
+<li><a href="BufferAccessor.html">BufferAccessor</a></li>
+<li><a href="Curve.html">Curve</a></li>
+<li><a href="CurveBuilder.html">CurveBuilder</a></li>
+<li><a href="GraphicsPath.html">GraphicsPath</a></li>
+<li><a href="H3DU.html">H3DU</a></li>
+<li><a href="H3DU.TextFont.html">H3DU.TextFont</a></li>
+<li><a href="H3DU.TextureAtlas.html">H3DU.TextureAtlas</a></li>
+<li><a href="MathUtil.html">MathUtil</a></li>
+<li><a href="MeshBuffer.html">MeshBuffer</a></li>
+<li><a href="Meshes.html">Meshes</a></li>
+<li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
+<li><a href="Promise.html">Promise</a></li>
+<li><a href="Shape.html">Shape</a></li>
+<li><a href="ShapeGroup.html">ShapeGroup</a></li>
+<li><a href="Surface.html">Surface</a></li>
+<li><a href="SurfaceBuilder.html">SurfaceBuilder</a></li>
+<li><a href="Transform.html">Transform</a></li>
+<li><a href="extras_arrow.html">module:extras/arrow</a></li>
+<li><a href="extras_camera.html">module:extras/camera</a></li>
+<li><a href="extras_camera.Camera.html">module:extras/camera.Camera</a></li>
+<li><a href="extras_camera.InputTracker.html">module:extras/camera.InputTracker</a></li>
+<li><a href="extras_checkerboardshader.html">module:extras/checkerboardshader</a></li>
+<li><a href="extras_colormatrixshader.html">module:extras/colormatrixshader</a></li>
+<li><a href="extras_contourlines.html">module:extras/contourlines</a></li>
+<li><a href="extras_convex.html">module:extras/convex</a></li>
+<li><a href="extras_createfloor.html">module:extras/createfloor</a></li>
+<li><a href="extras_createwasher.html">module:extras/createwasher</a></li>
+<li><a href="extras_curvetube.html">module:extras/curvetube</a></li>
+<li><a href="extras_curvetube.CurveTube.html">module:extras/curvetube.CurveTube</a></li>
+<li><a href="extras_derivedcurves.html">module:extras/derivedcurves</a></li>
+<li><a href="extras_drawingtoy.html">module:extras/drawingtoy</a></li>
+<li><a href="extras_drawingtoy.DrawingToy.html">module:extras/drawingtoy.DrawingToy</a></li>
+<li><a href="extras_evaluators.html">module:extras/evaluators</a></li>
+<li><a href="extras_evaluators.Roulette.html">module:extras/evaluators.Roulette</a></li>
+<li><a href="extras_evaluators.SurfaceOfRevolution.html">module:extras/evaluators.SurfaceOfRevolution</a></li>
+<li><a href="extras_fourierknot.html">module:extras/fourierknot</a></li>
+<li><a href="extras_fragmentshaderlib.html">module:extras/fragmentshaderlib</a></li>
+<li><a href="extras_gearmesh.html">module:extras/gearmesh</a></li>
+<li><a href="extras_gradients.html">module:extras/gradients</a></li>
+<li><a href="extras_horgradshader.html">module:extras/horgradshader</a></li>
+<li><a href="extras_kernelmatrixshader.html">module:extras/kernelmatrixshader</a></li>
+<li><a href="extras_marbleshader.html">module:extras/marbleshader</a></li>
+<li><a href="extras_marbleshader2.html">module:extras/marbleshader2</a></li>
+<li><a href="extras_matrixstack.html">module:extras/matrixstack</a></li>
+<li><a href="extras_matrixstack.MatrixStack.html">module:extras/matrixstack.MatrixStack</a></li>
+<li><a href="extras_mirrorshader.html">module:extras/mirrorshader</a></li>
+<li><a href="extras_moresurfaces.html">module:extras/moresurfaces</a></li>
+<li><a href="extras_moresurfaces.KleinBottle.html">module:extras/moresurfaces.KleinBottle</a></li>
+<li><a href="extras_moresurfaces.MoebiusStrip.html">module:extras/moresurfaces.MoebiusStrip</a></li>
+<li><a href="extras_pixelateshader.html">module:extras/pixelateshader</a></li>
+<li><a href="extras_polyhedra.html">module:extras/polyhedra</a></li>
+<li><a href="extras_polyhedra.Polyhedra.html">module:extras/polyhedra.Polyhedra</a></li>
+<li><a href="extras_radgradshader.html">module:extras/radgradshader</a></li>
+<li><a href="extras_randompolygon.html">module:extras/randompolygon</a></li>
+<li><a href="extras_raypick.html">module:extras/raypick</a></li>
+<li><a href="extras_skysphereshader.html">module:extras/skysphereshader</a></li>
+<li><a href="extras_starfield.html">module:extras/starfield</a></li>
+<li><a href="extras_stl.html">module:extras/stl</a></li>
+<li><a href="extras_stripesbackshader.html">module:extras/stripesbackshader</a></li>
+<li><a href="extras_sunburstbackshader.html">module:extras/sunburstbackshader</a></li>
+<li><a href="extras_superellipsoid.html">module:extras/superellipsoid</a></li>
+<li><a href="extras_superellipsoid.Supershape.html">module:extras/superellipsoid.Supershape</a></li>
+<li><a href="extras_superellipsoid.Supertoroid.html">module:extras/superellipsoid.Supertoroid</a></li>
+<li><a href="extras_text.html">module:extras/text</a></li>
+<li><a href="extras_tga.html">module:extras/tga</a></li>
+<li><a href="extras_torusknot.html">module:extras/torusknot</a></li>
+<li><a href="extras_torusknot.TorusKnot.html">module:extras/torusknot.TorusKnot</a></li>
+<li><a href="extras_vignetteshader.html">module:extras/vignetteshader</a></li>
+<li><a href="extras_warpshader.html">module:extras/warpshader</a></li>
+<li><a href="extras_waterpaintshader.html">module:extras/waterpaintshader</a></li>
+<li><a href="extras_waveshader.html">module:extras/waveshader</a></li>
+<li><a href="extras_woodshader.html">module:extras/woodshader</a></li>
+</ul>
+</nav><script>
+document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+</script>
+</body></html>
