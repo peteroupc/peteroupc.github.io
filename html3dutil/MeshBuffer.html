@@ -62,9 +62,12 @@ return geom
 <h3>Members</h3>
 
 <ul>
-<li><a href="#MeshBuffer.LINES">LINES</a><br>TODO: Not documented yet.</li>
-<li><a href="#MeshBuffer.POINTS">POINTS</a><br>TODO: Not documented yet.</li>
-<li><a href="#MeshBuffer.TRIANGLES">TRIANGLES</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer.LINES">LINES</a><br>Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.</li>
+<li><a href="#MeshBuffer.POINTS">POINTS</a><br>Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.</li>
+<li><a href="#MeshBuffer.TRIANGLES">TRIANGLES</a><br>Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.</li>
 </ul>
 
 <h3>Methods</h3>
@@ -128,19 +131,22 @@ or point) in this mesh buffer.</li>
 
 <h3>MeshBuffer.LINES (constant)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Indicates that a mesh buffer contains line segments; the mesh
+buffer stores each line segment using two consecutive vertices.</p>
 
 <p><a name='MeshBuffer.POINTS'></a></p>
 
 <h3>MeshBuffer.POINTS (constant)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Indicates that a mesh buffer contains points; the mesh
+buffer stores each point using one vertex.</p>
 
 <p><a name='MeshBuffer.TRIANGLES'></a></p>
 
 <h3>MeshBuffer.TRIANGLES (constant)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Indicates that a mesh buffer contains triangles; the mesh
+buffer stores each triangle using three consecutive vertices.</p>
 
 <p><a name='MeshBuffer.fromPositions'></a></p>
 
@@ -951,6 +957,7 @@ name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a
 <li><a href="Meshes.html">Meshes</a></li>
 <li><a href="PiecewiseCurve.html">PiecewiseCurve</a></li>
 <li><a href="Promise.html">Promise</a></li>
+<li><a href="Semantic.html">Semantic</a></li>
 <li><a href="Shape.html">Shape</a></li>
 <li><a href="ShapeGroup.html">ShapeGroup</a></li>
 <li><a href="Surface.html">Surface</a></li>

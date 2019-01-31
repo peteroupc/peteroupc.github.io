@@ -30,7 +30,7 @@ Detailed Semantics
 <p>Tag 266 can be applied to a CBOR text string to indicate that it is an internationalized resource identifier (IRI) under RFC 3987 (ref. 2) (which in turn extends RFC 3986 (ref. 3), which defines uniform resource identifiers, URIs.)</p>
 <p>Tag 267 can be applied to a CBOR text string to indicate that it is an internationalized resource identifier reference (IRI reference) under RFC 3987 (ref. 2) (which in turn extends RFC 3986 (ref. 3), which defines uniform resource identifiers, URIs.)</p><p>
 
-A CBOR decoder can treat data items with tag 266 or 267 that are syntactically invalid IRIs as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case.  Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
+A CBOR decoder can treat data items with tag 266 or 267 that are syntactically invalid IRIs or IRI references, respectively, as an error, but this specification doesn't define how a CBOR implementation ought to behave in this case.  Section 3.4 of RFC 7049 (ref. 1) details this kind of error-handling behavior.
 </p>
 
 <h2>Security Considerations</h2>

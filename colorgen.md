@@ -249,7 +249,7 @@ The following are examples of these formats:
 
 There are many ways to store RGB and RGBA colors in these formats as integers or as a sequence of 8-bit bytes.  For example, the RGB color's components can be in "little endian" or "big endian" 8-bit byte order, or the order in which the color's components are packed into an integer can vary.  This document does not seek to survey the RGB binary storage formats available.
 
-The following pseudocode presents methods to convert RGB colors to and from different color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
+The following pseudocode presents methods to convert RGB colors to and from different binary color formats (where RGB color integers are packed red/green/blue, in that order from lowest to highest bits):
 
     // Converts 0-1 format to N/N/N format as an integer.
     METHOD ToNNN(rgb, scale)
@@ -537,7 +537,7 @@ The following pseudocode converts colors between RGB and Y&prime;C<sub>_B_</sub>
 - the Rec. 709 variant (for high-definition video), as the `YCbCrToRgb709` and `RgbToYCbCr709` methods, and
 - the [**JPEG File Interchange Format**](https://www.w3.org/Graphics/JPEG/jfif3.pdf) variant, as the `YCbCrToRgbJpeg` and `RgbToYCbCrJpeg` methods.
 
-The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB color space, but should be done using [**_encoded RGB_ colors**](#RGB_Color_Spaces) rather than _linear RGB_ colors.
+The Y&prime;C<sub>_B_</sub>C<sub>_R_</sub> transformation is independent of RGB color space, but the three variants given above should use [**_encoded RGB_ colors**](#RGB_Color_Spaces) rather than _linear RGB_ colors.
 
     // NOTE: Derived from scaled YPbPr using red/green/blue luminance factors
     // in the NTSC color space
@@ -1022,7 +1022,7 @@ The following techniques generate new colors that are related to existing colors
     - **Two-tone**: 0, Y, where Y is greater than -&pi;/2 and less than &pi;/2. This is the base hue and a close hue.
     - **Off-complementary**: 0, Y, where Y is -&pi;/2 or less but greater than -&pi;, or Y is &pi;/2 or greater but less than &pi;.  B. MacEvoy mentions Y = 2&pi;/3.
     - **Double complementary**: 0, Y, &pi;, &pi; + Y, where Y is -&pi;/2 or greater and &pi;/2 or less.  The base hue and a close hue, as well as their opposite hues.
-    - **Tetradic**: Double complementary with Y = &pi/2.
+    - **Tetradic**: Double complementary with Y = &pi;/2.
     - **N-color**: 0, 2&pi;/N, 4&pi;/N, ..., (N - 1)2&pi;/N.
 - **Monochrome colors**: Colors with the same hue; for example, different [**shades, tints, and/or tones**](#Alpha_Blending) of a given color are monochrome colors.
 - **Achromatic colors**: Colors without hue; that is, black, white, and/or shades of gray.
@@ -1512,7 +1512,7 @@ The `Planckian` method shown below models the spectral power distribution (SPD) 
 
 > **Note:** If `TEMP` is 2856, the `BlackbodySPD` function above is substantially equivalent to the CIE illuminant A.
 
-The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates<sup>[**(20)**](#Note20)</sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) coordinates is more than 0.05.)
+The concept "color temperature" properly applies only to blackbody chromaticities.  For chromaticities close to a blackbody's, the CIE defines [**_correlated color temperature_**](http://eilv.cie.co.at/term/258) (CCT) as the temperature of the blackbody with the closest (_u_, _v_) coordinates<sup>[**(20)**](#Note20)</sup> to those of the given color.  (According to the CIE, however, CCT is not meaningful if the straight-line distance between the two (_u_, _v_) points is more than 0.05.)
 
 The following method (`XYZToCCT`), which computes an approximate CCT from an [**XYZ color**](#CIE_XYZ), is based on McCamy's formula from 1992.
 
