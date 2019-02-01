@@ -83,7 +83,8 @@ and texture coordinates.</li>
 <li><a href="#MeshBuffer_getAttribute">getAttribute</a><br>Gets a vertex attribute included in this mesh buffer.</li>
 <li><a href="#MeshBuffer_getBounds">getBounds</a><br>Finds the tightest
 bounding box that holds all vertices in the mesh buffer.</li>
-<li><a href="#MeshBuffer_getIndex">getIndex</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer_getIndex">getIndex</a><br>Gets the vertex data index for use in referencing
+vertex data in buffer attributes.</li>
 <li><a href="#MeshBuffer_getIndices">getIndices</a><br>Gets the array of vertex indices used by this mesh buffer.</li>
 <li><a href="#MeshBuffer_getPositions">getPositions</a><br>Gets an array of vertex positions held by this mesh buffer,
 arranged by primitive.</li>
@@ -404,17 +405,19 @@ or no vertices are defined in this buffer, returns the array
 
 <h3>MeshBuffer#getIndex(indicesIndex)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Gets the vertex data index for use in referencing
+vertex data in buffer attributes.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>indicesIndex</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>indicesIndex</code> (Type: number)<br>A number 0 or greater, and less than the return value of <a href="MeshBuffer.html#MeshBuffer_vertexCount">MeshBuffer#vertexCount</a>. For example, if this mesh buffer holds triangles, 0 means the first vertex, 1 the second vertex, and 2 the third vertex of the first triangle, regardless of where that vertex&#39;s data is stored in the mesh buffer.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>The vertex data index; this is <code>getIndices()[indicesIndex]</code>
+if this mesh buffer includes an index array, or <code>indicesIndex</code> otherwise. (Type: number)</p>
 
 <p><a name='MeshBuffer_getIndices'></a></p>
 
