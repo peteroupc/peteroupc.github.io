@@ -1,3 +1,4 @@
+/* global Float32Array */
 /** The <code>extras/starfield.js</code> module.
  * To import all symbols in this module, either of the following can be used:
  * <pre>
@@ -14,14 +15,17 @@
  the Public Domain HTML 3D Library) at:
  http://peteroupc.github.io/
 */
-import {Meshes, Shape, ShapeGroup, newFrames} from "../h3du_module.js";
+import {MeshBuffer, Meshes, newFrames} from "../h3du_module.js";
+
+const NUM_OF_STARS = 200;
+
 /**
  * TODO: Not documented yet.
  * @param {*} range
- * @returns {*} Return value.
+ * @constructor
  */
 export function StarField(range) {
-  this._setStarPos = function(star, range) {
+  this._starPos = function(range, vec) {
     let x = 0,
       y = 0,
       z = 0;
@@ -35,33 +39,46 @@ export function StarField(range) {
       y = Math.random() * range - range / 2;
     }
     z = Math.random() * range - range / 2;
-    return star.setPosition(x, y, z);
+    vec[0] = x;
+    vec[1] = y;
+    vec[2] = z;
   };
-  this.group = new ShapeGroup();
+  // use a crude white sphere to represent a star
+  this.star = Meshes.createSphere(range / 1000, 4, 3).setColor("white");
+  this.instances = MeshBuffer.fromPositions(
+    new Float32Array(NUM_OF_STARS * 3));
   this.timer = {};
+  this.range = range;
+  this._initialPos = function() {
+    let i;
+    const vec = [0, 0, 0];
+    const ba = this.instances.getAttribute("POSITION");
+    const count = ba.count();
+    for (i = 0; i < count; i++) {
+      this._setStarPos(this.range, vec);
+      ba.setVec(i, vec);
+    }
+  };
   this._move = function(frames) {
     let i;
-    for (i = 0; i < this.group.shapeCount(); i++) {
-      const pos = this.group.getShape(i).getMatrix();
-      if(pos[14] > this.range / 2) {
+    let vec = [0, 0, 0];
+    const ba = this.instances.getAttribute("POSITION");
+    const count = ba.count();
+    for (i = 0; i < count; i++) {
+      vec = ba.getVec(i, vec);
+      if(vec[2] > this.range / 2) {
         // once the star is too close, move it elsewhere
-        this._setStarPos(this.group.getShape(i), this.range);
-        this.group.getShape(i).getTransform().movePosition(0, 0,
-          -this.range);
+        this._setStarPos(this.range, vec);
+        vec[2] -= this.range;
+        ba.setVec(i, vec);
       } else {
-        this.group.getShape(i).getTransform().movePosition(0, 0,
-          this.range / 250 * frames);
+        vec[2] += this.range / 250 * frames;
+        ba.setVec(i, vec);
       }
     }
   };
   this.update = function(time) {
     this._move(newFrames(this.timer, time));
   };
-  // use a crude white sphere to represent a star
-  const star = new Shape(
-    Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
-  let i;
-  for (i = 0; i < 200; i++) {
-    this.group.addShape(this._setStarPos(star.copy(), range));
-  }
+  this._initialPos();
 }
