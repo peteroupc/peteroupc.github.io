@@ -4,85 +4,144 @@ body { margin: 0px; }
 canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <head><meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1">
-<script type="text/javascript" src="../h3du_min.js"></script>
-<script type="text/javascript" src="../extras/frame.js"></script>
-<script type="text/javascript" src="demoutil.js"></script>
-<script type="text/javascript" src="../extras/meshjson.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
-<script id="demo">
-/* global H3DU */
-// <!--
-/*
- Any copyright to this file is released to the Public Domain.
- http://creativecommons.org/publicdomain/zero/1.0/
- If you like this, you should donate
- to Peter O. (original author of
- the Public Domain HTML 3D Library) at:
- http://peteroupc.github.io/
-*/
+<script type="module">
 
-function setStarPos(star, range) {
-  "use strict";
-  var x = 0,
-    y = 0,
-    z = 0;
-  var centerZone = range / 20;
-   // avoid stars too close to the center
-  while(Math.abs(x) < centerZone) {
-    x = Math.random() * range - range / 2;
-  }
-   // avoid stars too close to the center
-  while(Math.abs(y) < centerZone) {
-    y = Math.random() * range - range / 2;
-  }
-  z = Math.random() * range - range / 2;
-  return star.setPosition(x, y, z);
+import {MathUtil,MeshBuffer,Meshes} from "../h3du_module.js";
+import {StarField} from "../extras/starfield.js";
+
+var vertexShader=[
+"precision mediump float;",
+"attribute vec3 position;",
+"attribute vec3 instancePosition;",
+"attribute vec3 color;",
+"uniform mat4 proj;",
+"varying vec3 colorVar;",
+"void main(){",
+"colorVar=color;gl_Position=(proj)*vec4(position+instancePosition,1.0); }"
+].join("\n")
+
+var fragmentShader=[
+"precision mediump float;",
+"varying vec3 colorVar;",
+"void main(){ gl_FragColor=vec4(colorVar,1.0); }"
+].join("\n")
+
+var context=canvas.getContext("webgl")
+var cdims=[window.innerWidth*(window.devicePixelRatio||1),
+   window.innerHeight*(window.devicePixelRatio||1)]
+var currentdims;
+currentdims=cdims
+context.canvas.width=cdims[0]
+context.canvas.height=cdims[1]
+context.viewport(0, 0,cdims[0],cdims[1])
+context.enable(context.BLEND);
+context.blendFunc(context.SRC_ALPHA, context.ONE_MINUS_SRC_ALPHA);
+context.enable(context.DEPTH_TEST);
+context.depthFunc(context.LEQUAL);
+context.disable(context.CULL_FACE);
+context.clearDepth(1.0);
+context.clearColor(0,0,0,1)
+context.enable(context.CULL_FACE);
+context.cullFace(context.BACK);
+context.frontFace(context.CCW);
+var ext=context.getExtension("ANGLE_instanced_arrays");
+var vs=context.createShader(context.VERTEX_SHADER)
+var fs=context.createShader(context.FRAGMENT_SHADER)
+var sp=context.createProgram()
+context.shaderSource(vs,vertexShader)
+context.shaderSource(fs,fragmentShader)
+context.compileShader(vs)
+var ilog=context.getShaderInfoLog(vs)
+if(ilog && ilog.length!=0)console.log(ilog)
+context.compileShader(fs)
+ilog=context.getShaderInfoLog(fs)
+if(ilog && ilog.length!=0)console.log(ilog)
+context.attachShader(sp,vs)
+context.attachShader(sp,fs)
+context.linkProgram(sp)
+context.detachShader(sp,vs)
+context.detachShader(sp,fs)
+////////////////////////
+var sf=new StarField(100);
+var buffers=[]
+var mbi=context.createBuffer()
+var indices=sf.star.ensureIndices()
+context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
+context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
+context.useProgram(sp)
+var projUniform=context.getUniformLocation(sp,"proj")
+// Prepare mesh buffer
+var attributes=[
+["position","POSITION"],
+["color","COLOR"]]
+var mesh=sf.star
+attributes.forEach(x=>{
+var attrLoc=context.getAttribLocation(sp,x[0])
+var accessor=mesh.getAttribute(x[1])
+if(attrLoc>=0){
+var b=context.createBuffer()
+buffers.push(b)
+context.bindBuffer(context.ARRAY_BUFFER,b)
+context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+context.enableVertexAttribArray(attrLoc)
+context.vertexAttribPointer(attrLoc,
+ accessor.countPerValue,context.FLOAT,false,
+ accessor.stride*4,accessor.offset*4)
 }
-
-function starField(scene, range) {
-  "use strict";
-  var group = new H3DU.ShapeGroup();
-  // use a crude white sphere to represent a star
-  var star = new H3DU.Shape(H3DU.Meshes.createSphere(range / 1000, 4, 3)).setColor("white");
-  for(var i = 0; i < 200; i++) {
-    group.addShape(setStarPos(star.copy(), range));
-  }
-  return group;
+})
+// Prepare instance buffer
+var mbinst=context.createBuffer()
+buffers.push(mbinst)
+var siattr=sf.instances.getAttribute("POSITION")
+attributes=[
+["instancePosition",siattr,mbinst]]
+attributes.forEach(x=>{
+var attrLoc=context.getAttribLocation(sp,x[0])
+if(attrLoc>=0){
+context.bindBuffer(context.ARRAY_BUFFER,x[2])
+context.bufferData(context.ARRAY_BUFFER,x[1].buffer,context.STATIC_DRAW)
+context.enableVertexAttribArray(attrLoc)
+context.vertexAttribPointer(attrLoc,
+ x[1].countPerValue,context.FLOAT,false,
+ x[1].stride*4,x[1].offset*4)
+ext.vertexAttribDivisorANGLE(attrLoc,1)
 }
-
-function moveStarField(group, range, frames) {
-  "use strict";
-  for(var i = 0; i < group.shapeCount(); i++) {
-    var pos = group.getShape(i).getMatrix();
-    if(pos[14] > range / 2) {
-   // once the star is too close, move it elsewhere
-      setStarPos(group.getShape(i), range);
-      group.getShape(i).getTransform().movePosition(0, 0, -range);
-    } else {
-      group.getShape(i).getTransform().movePosition(0, 0, range / 250 * frames);
-    }
-  }
+})
+var matrix=MathUtil.mat4perspective(45,
+ window.innerWidth/Math.max(1,window.innerHeight),
+ 0.01,100)
+matrix=MathUtil.mat4multiply(
+  matrix,MathUtil.mat4lookat([0,0,1],[0,0,0]))
+matrix=new Float32Array(matrix)
+// animation loop
+var raf=(time)=>{
+// resize canvas if needed
+cdims=[window.innerWidth*(window.devicePixelRatio||1),
+   window.innerHeight*(window.devicePixelRatio||1)]
+if(cdims[0]!=currentdims[0] || cdims[1]!=currentdims[1]){
+ currentdims=cdims
+ context.canvas.width=cdims[0]
+ context.canvas.height=cdims[1]
+ context.viewport(0, 0,cdims[0],cdims[1])
 }
-
-  // Create the 3D scene; find the HTML canvas and pass it
-  // to Scene3D.
-var scene = new H3DU.Scene3D(document.getElementById("canvas"))
-   .cullFace(H3DU.Scene3D.BACK);
-var sub = new H3DU.Batch3D();
-sub.getLights().setBasic();
-var fc = new H3DU.FrameCounterDiv();
-var timer = {};
-var group = starField(scene, 1000);
-sub.addShape(group);
-H3DU.renderLoop(function(time) {
-  "use strict";
-  sub.perspectiveAspect(45, 5, 1000).setLookAt([0, 0, 500]);
-  moveStarField(group, 1000, H3DU.newFrames(timer, time));
-  fc.update();
-  scene.render(sub);
-});
-// -->
+// clear canvas
+context.clear(context.COLOR_BUFFER_BIT|
+  context.DEPTH_BUFFER_BIT|
+  context.STENCIL_BUFFER_BIT)
+sf.update(time)
+context.uniformMatrix4fv(projUniform,false,matrix)
+// rebind instance buffer
+context.bindBuffer(context.ARRAY_BUFFER,mbinst)
+context.bufferData(context.ARRAY_BUFFER,siattr.buffer,context.STATIC_DRAW)
+ext.drawArraysInstancedANGLE(
+  context.TRIANGLES,0,
+  sf.star.vertexCount(),
+  sf.instances.vertexCount())
+requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
 </script>
 </body>

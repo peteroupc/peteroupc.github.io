@@ -68,52 +68,6 @@ function Labels(scene, batch) {
     }
   };
 }
-
-  // Create the 3D scene; find the HTML canvas and pass it
-  // to Scene3D.
-var scene = new H3DU.Scene3D(document.getElementById("canvas"))
-   .cullFace(H3DU.Scene3D.BACK)
-   .setClearColor("white");
-var sub = new H3DU.Batch3D()
-   .orthoAspect(-20, 20, -10, 10, -20, 20);
-sub.getLights().setBasic();
-var shapeGroup = new H3DU.ShapeGroup();
-sub.addShape(shapeGroup);
-var labels = new Labels(scene, sub);
-var mesh;
-mesh = H3DU.Polyhedra.hexahedron(4.5, 0);
-var shape = new H3DU.Shape(mesh).setColor("red").setPosition(-15, 5, 0);
-shapeGroup.addShape(shape);
-labels.add("Cube", [-15, 5, 0]);
-mesh = H3DU.Polyhedra.octahedron(4.5, 0);
-shapeGroup.addShape(
-    new H3DU.Shape(mesh).setColor("blue").setPosition(-5, 5, 0));
-labels.add("Octahedron", [-5, 5, 0]);
-mesh = H3DU.Polyhedra.icosahedron(4.5, 0);
-shapeGroup.addShape(
-    new H3DU.Shape(mesh).setColor("lime").setPosition(5, 5, 0));
-labels.add("Icosahedron", [5, 5, 0]);
-mesh = H3DU.Polyhedra.tetrahedron(4.5, 0);
-shapeGroup.addShape(
-    new H3DU.Shape(mesh).setColor("darkorange").setPosition(15, 5, 0));
-labels.add("Tetrahedron", [15, 5, 0]);
-mesh = H3DU.Polyhedra.dodecahedron(4.5, 0);
-shapeGroup.addShape(
-    new H3DU.Shape(mesh).setColor("yellow").setPosition(-15, -5, 0));
-labels.add("Dodecahedron", [-15, -5, 0]);
-var rotation = [0, 0, 0];
-var timer = {};
-H3DU.renderLoop(function(time) {
-  "use strict";
-  for(var i = 0; i < shapeGroup.shapeCount(); i++) {
-    shapeGroup.getShape(i).setQuaternion(
-      H3DU.MathUtil.quatFromTaitBryan(rotation));
-  }
-  rotation[0] = 360 * H3DU.getTimePosition(timer, time, 6000);
-  rotation[1] = 360 * H3DU.getTimePosition(timer, time, 12000);
-  labels.update();
-  scene.render(sub);
-});
 // -->
 </script>
 </body>
