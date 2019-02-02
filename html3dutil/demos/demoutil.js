@@ -44,6 +44,53 @@ function formulaEditorHelp() {
   }
 }
 
+// Class that positions an HTML text element
+function Label(text, pos) {
+  "use strict";
+  this.label = document.createElement("div");
+  this.label.innerHTML = text;
+  this.label.style.width = "150px";
+  this.label.style.textAlign = "center";
+  this.label.style.display = "none";
+  this.label.style.position = "absolute";
+  this.label.style.overflow = "hidden";
+  document.body.appendChild(this.label);
+  this.pos = pos;
+  this.update = function(projViewMatrix, width, height) {
+    const pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, projViewMatrix, [0, 0, width, height]);
+    if(pos[2] < -1 || pos[2] > 1) {
+      // Too close, too far, or behind the camera
+      this.label.style.display = "none";
+    } else {
+      this.label.style.display = "block";
+      this.label.style.left = pos[0] - 75 + "px";
+      this.label.style.top = pos[1] + "px";
+    }
+  };
+}
+
+/* exported Labels */
+let Labels = function(scene, batch) {
+  "use strict";
+  this.labels = [];
+  this.batch = batch;
+  this.scene = scene;
+  this.add = function(text, pos) {
+    this.labels.push(new Label(text, pos));
+  };
+  this.update = function() {
+    if(this.labels.length === 0)return;
+    let proj = this.batch.getProjectionMatrix();
+    const view = this.batch.getViewMatrix();
+    const width = this.scene.getWidth();
+    const height = this.scene.getHeight();
+    proj = H3DU.MathUtil.mat4multiply(proj, view);
+    let i;
+    for (i = 0; i < this.labels.length; i++) {
+      this.labels[i].update(proj, width, height);
+    }
+  };
+};
 /* exported addLink */
 function addLink(name, func) {
   "use strict";
@@ -87,32 +134,6 @@ function addRange(label, min, max, step, defvalue, func) {
   div.appendChild(input);
   div.appendChild(defvaluelbl);
   return div;
-}
-
-// Class that positions an HTML text element
-/* exported Label */
-function Label(text, pos) {
-  "use strict";
-  this.label = document.createElement("div");
-  this.label.innerHTML = text;
-  this.label.style.width = "150px";
-  this.label.style.textAlign = "center";
-  this.label.style.display = "none";
-  this.label.style.position = "absolute";
-  this.label.style.overflow = "hidden";
-  document.body.appendChild(this.label);
-  this.pos = pos;
-  this.update = function(projViewMatrix, width, height) {
-    const pos = H3DU.MathUtil.vec3toWindowPoint(this.pos, projViewMatrix, [0, 0, width, height]);
-    if(pos[2] < -1 || pos[2] > 1) {
-      // Too close, too far, or behind the camera
-      this.label.style.display = "none";
-    } else {
-      this.label.style.display = "block";
-      this.label.style.left = pos[0] - 75 + "px";
-      this.label.style.top = pos[1] + "px";
-    }
-  };
 }
 
 function setRanges(ranges) {

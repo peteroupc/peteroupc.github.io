@@ -85,7 +85,7 @@ the path.</li>
 of the path.</li>
 <li><a href="#GraphicsPath_getPointsAsObjects">getPointsAsObjects</a><br>Gets an array of points evenly spaced across the length
 of the path.</li>
-<li><a href="#GraphicsPath_getSubpaths">getSubpaths</a><br>TODO: Not documented yet.</li>
+<li><a href="#GraphicsPath_getSubpaths">getSubpaths</a><br>Creates an array of the disconnected portions of this path.</li>
 <li><a href="#GraphicsPath_getTriangles">getTriangles</a><br>Converts the subpaths in this path to triangles.</li>
 <li><a href="#GraphicsPath_interpolate">interpolate</a><br>Does a linear interpolation between two graphics paths.</li>
 <li><a href="#GraphicsPath_intersection">intersection</a><br>Computes the intersection, or the area common to both this path&#39;s shape
@@ -583,11 +583,13 @@ var buffer=new THREE.BufferGeometry()
 
 <h3>GraphicsPath#getSubpaths()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Creates an array of the disconnected portions of this path.</p>
 
 <h4>Return Value</h4>
 
-<p>Return value. (Type: *)</p>
+<p>An array containing a GraphicsPath object
+for each disconnected portion of this path. Returns an empty
+array if this path has no subpaths. (Type: Array.&lt;<a href="GraphicsPath.html">GraphicsPath</a>&gt;)</p>
 
 <p><a name='GraphicsPath_getTriangles'></a></p>
 

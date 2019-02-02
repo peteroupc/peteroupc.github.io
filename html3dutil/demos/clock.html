@@ -28,7 +28,7 @@ Color: <input type=color value="#FFFFFF" id=colorsetting>
  http://peteroupc.github.io/
 */
 
-function ClockShape(scene) {
+function ClockShape(scene, color) {
   "use strict";
   var clock = new H3DU.ShapeGroup();
   var border = H3DU.Meshes.createTorus(0.1, 1, 16, 64);
@@ -53,14 +53,20 @@ function ClockShape(scene) {
    .transform(frontTransform);
   var back = H3DU.Meshes.createDisk(0, 1, 64).reverseWinding().reverseNormals()
    .transform(H3DU.MathUtil.mat4translated(0, 0, -0.05));
-  clock.addShape(new H3DU.Shape(border));
-  clock.addShape(new H3DU.Shape(front));
-  clock.addShape(new H3DU.Shape(back));
+  var col=color==null ? "white" : color
+  var colors=this._setColor(col)
+  var clockFace=border.setColor(colors[0])
+   .merge(front.setColor(colors[1]))
+   .merge(back.setColor(colors[2]))
+   .merge(center.setColor(colors[6]))
+   .merge(twelveoclock.setColor(colors[7]))
+  hourhand.setColor(colors[3])
+  minutehand.setColor(colors[4])
+  secondhand.setColor(colors[5])
+  clock.addShape(new H3DU.Shape(clockFace));
   clock.addShape(new H3DU.Shape(hourhand));
   clock.addShape(new H3DU.Shape(minutehand));
   clock.addShape(new H3DU.Shape(secondhand));
-  clock.addShape(new H3DU.Shape(center));
-  clock.addShape(new H3DU.Shape(twelveoclock));
   scene.addShape(clock);
   this.shape = clock;
   this.hour = -1;
@@ -80,36 +86,36 @@ function ClockShape(scene) {
       var hourhand = 360 * hms / (3600 * 12);
       var minutehand = 360 * (hms % 3600) / 3600;
       var secondhand = 360 * (hms % 60) / 60;
-      this.shape.getShape(3).getTransform().setRotation(-hourhand, 0, 0, 1);
-      this.shape.getShape(4).getTransform().setRotation(-minutehand, 0, 0, 1);
-      this.shape.getShape(5).getTransform().setRotation(-secondhand, 0, 0, 1);
+      this.shape.getShape(1).getTransform().setRotation(-hourhand, 0, 0, 1);
+      this.shape.getShape(2).getTransform().setRotation(-minutehand, 0, 0, 1);
+      this.shape.getShape(3).getTransform().setRotation(-secondhand, 0, 0, 1);
     }
   };
-  this.setColor = function(color) {
+  this._setColor = function(color) {
     var rgb = H3DU.toGLColor(color);
+    var colors=[]
     if((rgb[0] + rgb[1] + rgb[2]) / 3 >= 0.5) {
       var halftoneColor = H3DU.MathUtil.vec3lerp(rgb.slice(0, 4), [0, 0, 0], 0.5);
-      this.shape.getShape(3).setColor("black");
-      this.shape.getShape(4).setColor("black");
-      this.shape.getShape(5).setColor(halftoneColor);
-      this.shape.getShape(6).setColor("black");
-      this.shape.getShape(7).setColor(halftoneColor);
+      colors[3]=("black");
+      colors[4]=("black");
+      colors[5]=(halftoneColor);
+      colors[6]=("black");
+      colors[7]=(halftoneColor);
     } else {
       halftoneColor = H3DU.MathUtil.vec3lerp(rgb.slice(0, 4), [1, 1, 1], 0.5);
-      this.shape.getShape(3).setColor("white");
-      this.shape.getShape(4).setColor("white");
-      this.shape.getShape(5).setColor(halftoneColor);
-      this.shape.getShape(6).setColor("white");
-      this.shape.getShape(7).setColor(halftoneColor);
+      colors[3]=("white");
+      colors[4]=("white");
+      colors[5]=(halftoneColor);
+      colors[6]=("white");
+      colors[7]=(halftoneColor);
     }
     var borderColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 0.5);
-    this.shape.getShape(0).setColor(borderColor);
+    colors[0]=(borderColor);
     var frontColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 1.0);
-    this.shape.getShape(1).setColor(frontColor);
+    colors[1]=(frontColor);
     var backColor = H3DU.MathUtil.vec3scaleInPlace(rgb.slice(0, 4), 0.75);
-    this.shape.getShape(2).setColor(backColor);
+    colors[2]=(backColor);
   };
-  this.setColor("#ffffff");
   this.update();
 }
   // Create the 3D scene; find the HTML canvas and pass it

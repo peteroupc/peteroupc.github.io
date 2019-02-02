@@ -12,6 +12,70 @@ canvas { width:100%; height:100%; overflow: hidden; }
 import {MathUtil,MeshBuffer,Meshes} from "../h3du_module.js";
 import {StarField} from "../extras/starfield.js";
 
+///////////////////////
+// Helper methods
+
+function prepareMeshBuffer(context,sp,mesh,attributes,buffers){
+ Object.keys(attributes).forEach(x=>{
+  var attrLoc=context.getAttribLocation(sp,attributes[x])
+  var accessor=mesh.getAttribute(x)
+  if(attrLoc>=0){
+   var b=context.createBuffer()
+   buffers.push(b)
+   context.bindBuffer(context.ARRAY_BUFFER,b)
+   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.enableVertexAttribArray(attrLoc)
+   context.vertexAttribPointer(attrLoc,
+     accessor.countPerValue,context.FLOAT,false,
+     accessor.stride*4,accessor.offset*4)
+  }
+ })
+ var indices=mesh.getIndices()
+ if(indices==null){
+  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,null)
+ } else {
+  var mbi=context.createBuffer()
+  buffers.push(mbi)
+  context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
+  context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
+ }
+}
+
+function prepareInstanceBuffer(context,ext,sp,mesh,attributes,buffers){
+ var bufferObj=[]
+ Object.keys(attributes).forEach(x=>{
+  var attrLoc=context.getAttribLocation(sp,attributes[x])
+  var accessor=mesh.getAttribute(x)
+  if(attrLoc>=0){
+   var b=context.createBuffer()
+   buffers.push(b)
+   bufferObj.push([x,attributes[x],b])
+   context.bindBuffer(context.ARRAY_BUFFER,b)
+   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   context.enableVertexAttribArray(attrLoc)
+   context.vertexAttribPointer(attrLoc,
+     accessor.countPerValue,context.FLOAT,false,
+     accessor.stride*4,accessor.offset*4)
+   if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
+  }
+ })
+ return bufferObj
+}
+
+function refreshInstanceBuffer(context,ext,sp,mesh,bufferObj){
+ bufferObj.forEach(x=>{
+  var attrLoc=context.getAttribLocation(sp,x[1])
+  var accessor=mesh.getAttribute(x[0])
+  if(attrLoc>=0){
+   context.bindBuffer(context.ARRAY_BUFFER,x[2])
+   context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
+   if(ext)ext.vertexAttribDivisorANGLE(attrLoc,1)
+  }
+ })
+}
+
+///////////////////////
+
 var vertexShader=[
 "precision mediump float;",
 "attribute vec3 position;",
@@ -67,55 +131,13 @@ context.detachShader(sp,fs)
 ////////////////////////
 var sf=new StarField(100);
 var buffers=[]
-var mbi=context.createBuffer()
-var indices=sf.star.ensureIndices()
-context.bindBuffer(context.ELEMENT_ARRAY_BUFFER,mbi)
-context.bufferData(context.ELEMENT_ARRAY_BUFFER,indices,context.STATIC_DRAW)
 context.useProgram(sp)
 var projUniform=context.getUniformLocation(sp,"proj")
-// Prepare mesh buffer
-var attributes=[
-["position","POSITION"],
-["color","COLOR"]]
-var mesh=sf.star
-attributes.forEach(x=>{
-var attrLoc=context.getAttribLocation(sp,x[0])
-var accessor=mesh.getAttribute(x[1])
-if(attrLoc>=0){
-var b=context.createBuffer()
-buffers.push(b)
-context.bindBuffer(context.ARRAY_BUFFER,b)
-context.bufferData(context.ARRAY_BUFFER,accessor.buffer,context.STATIC_DRAW)
-context.enableVertexAttribArray(attrLoc)
-context.vertexAttribPointer(attrLoc,
- accessor.countPerValue,context.FLOAT,false,
- accessor.stride*4,accessor.offset*4)
-}
-})
-// Prepare instance buffer
-var mbinst=context.createBuffer()
-buffers.push(mbinst)
-var siattr=sf.instances.getAttribute("POSITION")
-attributes=[
-["instancePosition",siattr,mbinst]]
-attributes.forEach(x=>{
-var attrLoc=context.getAttribLocation(sp,x[0])
-if(attrLoc>=0){
-context.bindBuffer(context.ARRAY_BUFFER,x[2])
-context.bufferData(context.ARRAY_BUFFER,x[1].buffer,context.STATIC_DRAW)
-context.enableVertexAttribArray(attrLoc)
-context.vertexAttribPointer(attrLoc,
- x[1].countPerValue,context.FLOAT,false,
- x[1].stride*4,x[1].offset*4)
-ext.vertexAttribDivisorANGLE(attrLoc,1)
-}
-})
-var matrix=MathUtil.mat4perspective(45,
- window.innerWidth/Math.max(1,window.innerHeight),
- 0.01,100)
-matrix=MathUtil.mat4multiply(
-  matrix,MathUtil.mat4lookat([0,0,1],[0,0,0]))
-matrix=new Float32Array(matrix)
+// Prepare mesh and instance buffer
+prepareMeshBuffer(context,sp,sf.star,
+  {"POSITION":"position","COLOR":"color"},buffers)
+var ibdata=prepareInstanceBuffer(context,ext,sp,sf.instances,
+  {"POSITION":"instancePosition"},buffers)
 // animation loop
 var raf=(time)=>{
 // resize canvas if needed
@@ -132,10 +154,16 @@ context.clear(context.COLOR_BUFFER_BIT|
   context.DEPTH_BUFFER_BIT|
   context.STENCIL_BUFFER_BIT)
 sf.update(time)
+// prepare transformation matrix
+var matrix=MathUtil.mat4perspective(45,
+ window.innerWidth/Math.max(1,window.innerHeight),
+ 0.01,100)
+matrix=MathUtil.mat4multiply(
+  matrix,MathUtil.mat4lookat([0,0,1],[0,0,0]))
+matrix=new Float32Array(matrix)
 context.uniformMatrix4fv(projUniform,false,matrix)
-// rebind instance buffer
-context.bindBuffer(context.ARRAY_BUFFER,mbinst)
-context.bufferData(context.ARRAY_BUFFER,siattr.buffer,context.STATIC_DRAW)
+// refresh instances and draw
+refreshInstanceBuffer(context,ext,sp,sf.instances,ibdata);
 ext.drawArraysInstancedANGLE(
   context.TRIANGLES,0,
   sf.star.vertexCount(),

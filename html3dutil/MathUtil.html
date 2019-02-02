@@ -1167,7 +1167,7 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 <h4>Examples</h4>
 
 <p>The following example generates an orthographic
-projection matrix with a square view rectangle and an aspect ratio
+projection matrix with a square view rectangle, a Z range of 0 to 100, and an aspect ratio
 retrieved from the HTML DOM.</p>
 
 <pre>var matrix=MathUtil.mat4orthoAspect(0,100,0,100,
@@ -1212,7 +1212,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 
 <h4>Examples</h4>
 
-<p>The following example generates an orthographic
+<p>The following example generates a perspective
 projection matrix with a 55 degree field of view and an aspect ratio
 retrieved from the HTML DOM.</p>
 
@@ -1227,7 +1227,7 @@ window.innerWidth/Math.max(1,window.innerHeight),
 
 <p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an X axis field of view.
-When just this matrix is used to transform vertices, the X, Y, and Z ecoordinates within the
+When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
 component of the transformed vertex) and
 increase from left to right and bottom to top. For a matrix in which Z coordinates
@@ -1258,8 +1258,8 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 
 <h4>Examples</h4>
 
-<p>The following example generates an orthographic
-projection matrix with a 120 degree field of view and an aspect ratio
+<p>The following example generates a perspective
+projection matrix with a 120 degree horizontal field of view and an aspect ratio
 retrieved from the HTML DOM.</p>
 
 <pre>var matrix=MathUtil.mat4perspectiveHorizontal(120,
