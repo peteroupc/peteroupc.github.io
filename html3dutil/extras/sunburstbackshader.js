@@ -16,7 +16,11 @@
 */
 
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"blackColor" - TODO: Not documented yet.
+ * <li>"whiteColor" - TODO: Not documented yet.
+ * <li>"time" - TODO: Not documented yet.</ul>
  */
 export const sunburstBackShader = {
   "uniform":{

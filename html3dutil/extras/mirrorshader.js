@@ -16,7 +16,9 @@
 */
 
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"time" - TODO: Not documented yet.</ul>
  */
 export const mirrorShader = {
   "vertexShader":["varying vec2 uvCoord;",

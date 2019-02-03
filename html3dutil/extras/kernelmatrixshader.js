@@ -71,9 +71,11 @@ export const kernelMatrixShader = {
   }
 };
 /**
- * TODO: Not documented yet.
- * @param {*} kind
- * @returns {*} Return value.
+ * Creates a 3x3 (9-element) kernel matrix for using
+ * as the "matrix" uniform of the kernel matrix shader.
+ * @param {string} kind One of the following: "blur" for a 3x3 Gaussian blr
+ * matrix, or "edge-detect" for an edge detection matrix.
+ * @returns {Array<number>} The created matrix.
  * @function
  */
 export const getKernelMatrix = function(kind) {

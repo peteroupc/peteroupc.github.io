@@ -16,7 +16,10 @@
 */
 // Adapted from Themaister's Waterpaint shader
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"sampler" - TODO: Not documented yet.
+ * <li>"textureSize" - TODO: Not documented yet.</ul>
  */
 export const waterpaintShader = {
   "vertexShader":["varying vec2 uvCoord;",

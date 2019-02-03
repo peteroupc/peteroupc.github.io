@@ -16,7 +16,9 @@
 */
 import {fragmentShaderLib} from "./fragmentshaderlib";
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"u_time" - TODO: Not documented yet.</ul>
  */
 export const marbleShader = {
   "uniform":{"u_time":0},

@@ -16,7 +16,9 @@
 */
 
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"texture" - TODO: Not documented yet.</ul>
  */
 export const skySphereShader = {
   "vertexShader":["varying vec4 positionVar;",
@@ -40,7 +42,9 @@ export const skySphereShader = {
   "uniform":{"texture":null}
 };
 /**
- * TODO: Not documented yet.
+ * GLSL shader code for TODO: Not documented yet.
+ * The shader program takes the following uniforms:<ul>
+ * <li>"texture" - TODO: Not documented yet.</ul>
  */
 export const skySphereCubeMapShader = {
   "vertexShader":["varying vec4 positionVar;",
