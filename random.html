@@ -28,7 +28,7 @@
 
 <ul>
 <li>Statistical and cryptographic RNGs, as well as recommendations on their use and properties.</li>
-<li>A discussion on when an application that needs numbers that &quot;seem&quot; random SHOULD specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
+<li>A discussion on when an application that needs numbers that &quot;seem&quot; random ought to specify their own &quot;seed&quot; (the initial state that the numbers are based on).</li>
 <li>Nondeterministic sources, entropy, and seed generation.</li>
 <li>An explanation of how to implement RNGs in programming code, including APIs that help in doing so.</li>
 <li>Issues on shuffling with an RNG.</li>
@@ -265,7 +265,7 @@
 
 <h2>Seeded PRNGs</h2>
 
-<p>Some applications (such as simulations, machine learning, and some games) use pseudorandom number generators (PRNGs) to generate apparently &quot;random&quot; numbers starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs"><strong>statistical</strong></a> RNGs given earlier, the PRNGs involved are automatically seeded before use.)</p>
+<p>Some applications (such as simulations, machine learning, and some games) use pseudorandom number generators (PRNGs) to generate apparently &quot;random&quot; numbers starting from a known initial state, or &quot;seed&quot;. Such applications usually care about repeatable &quot;randomness&quot;. (Note that in the definitions for <a href="#Cryptographic_RNGs_Requirements"><strong>cryptographic</strong></a> and <a href="#Statistical_RNGs_Requirementss"><strong>statistical</strong></a> RNGs given later, the PRNGs involved are automatically seeded before use.)</p>
 
 <p><a id=When_to_Use_a_Seeded_PRNG></a></p>
 
@@ -720,7 +720,9 @@
 
 <p><small><sup id=Note10>(10)</sup> Blackman, D., Vigna, S. &quot;Scrambled Linear Pseudorandom Number Generators&quot;, 2018.</small></p>
 
-<p><small><sup id=Note11>(11)</sup> An algorithm can become nondeterministic in many ways.  <a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>For example</strong></a>, different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.</small></p>
+<p><small><sup id=Note11>(11)</sup> An algorithm can become nondeterministic in many ways.  <a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>For example</strong></a>, different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.</p>
+
+<p>Implementations of floating-point numbers and floating-point math can also differ, especially in the area of transcendental and trigonometric functions; among other reasons for this, specifications don&#39;t always require delivering as-accurate-as-possible results to those functions (the difference between <code>Math</code> and <code>StrictMath</code> in Java is one example).  Whenever possible, applications SHOULD avoid generating &quot;random&quot; floating-point numbers using custom-seeded PRNGs.</small></p>
 
 <p><small><sup id=Note12>(12)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
 
@@ -744,7 +746,7 @@
 
 <p><small><sup id=Note22>(22)</sup> van Staveren, Hans. <a href="https://sater.home.xs4all.nl/doc.html"><strong>&quot;Big Deal: A new program for dealing bridge hands&quot;</strong></a>, Sep. 8, 2000</small></p>
 
-<p><small><sup id=Note23>(23)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.</small></p>
+<p><small><sup id=Note23>(23)</sup> C. Peters, &quot;<a href="http://momentsingraphics.de/?p=127"><strong>Free blue noise textures</strong></a>&quot;, <em>Moments in Graphics</em>, Dec. 22, 2016.  This article discusses the sampling of <em>blue noise</em>, not independent uniformly-distributed random numbers, but a similar approach applies to textures of noise however generated.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> P. L&#39;Ecuyer, D. Munger, et al.  &quot;Random Numbers for Parallel Computers: Requirements and Methods, With Emphasis on GPUs&quot;. April 17, 2015.</small></p>
 
