@@ -1391,7 +1391,7 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 <a id=Generating_a_Random_Color></a>
 ## Generating a Random Color
 
-The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than encoded RGB colors, unless noted otherwise.  In this section, `RNDNUMRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
+The following techniques can be used to generate random RGB colors. Note that for best results, these techniques need to use [**_linear RGB_ colors**](#RGB_Color_Spaces) rather than encoded RGB colors, unless noted otherwise.  In this section, `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 
 - Generating a random string in the [**HTML color format**](#HTML_Format_and_Other_Text_Formats) is equivalent to generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
 - Generating a random color in the **0-1 format** is equivalent to generating `[RNDU01(), RNDU01(), RNDU01()]`.
@@ -1405,9 +1405,9 @@ The following techniques can be used to generate random RGB colors. Note that fo
     - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
 - One way to generate a random **pastel color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until [**`Luminance(color)`**](#Luminance_Factor_Grayscale) is greater than 0.75 and less than 0.9.
 - To generate a **random color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
-- To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDNUMRANGE(0.2, 1.0))`.
-- To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDNUMRANGE(0.0, 0.9))`.
-- To generate a **random tone** of a given color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDNUMRANGE(0.0, 0.9))`.
+- To generate a **random shade** of a given color, generate `Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))`.
+- To generate a **random tint** of a given color, generate `Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))`.
+- To generate a **random tone** of a given color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGE(0.0, 0.9))`.
 - To generate a **random monochrome color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [**hue**](#HSV).
 - **Random color sampling:**
     - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDU01())`.
@@ -1415,7 +1415,7 @@ The following techniques can be used to generate random RGB colors. Note that fo
     - To select several random colors from a color map: See [**"Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
 - **Similar random colors:** Generating a random color that's similar to another is equivalent to generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.
 - **Data hashing:** A technique similar to generating random colors is to generate a color from arbitrary data using a [**_hash function_**](https://peteroupc.github.io/random.html#Hash_Functions).
-- **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDNUMRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
+- **Image noise:** This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in _uniform noise_, each component of a multicomponent color is changed to  `min(1,max(0,c+RNDRANGE(-level, level)))`, where `c` is the value of the previous component and `level` is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other [**probability distribution**](https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions), and _salt-and-pepper noise_ that involves replacing each pixel by black or white at a predetermined probability each.
 
 <a id=Spectral_Color_Functions></a>
 ## Spectral Color Functions

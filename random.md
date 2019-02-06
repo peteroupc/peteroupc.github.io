@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Jan. 19, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 6, 2018.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -460,7 +460,7 @@ A **programming language API** designed for reuse by applications could implemen
 1.  The RNG API can include a method that fills one or more memory units (such as 8-bit bytes) completely with random bits (see example 1).
 2.  If the API implements an automatically-initialized RNG, it SHOULD NOT allow applications to initialize that same RNG with a seed for repeatable "randomness"<sup>[**(27)**](#Note27)</sup> (it MAY provide a separate PRNG to accept such a seed). See example 2.
 3.  If the API provides a PRNG that an application can seed for repeatable "randomness", it SHOULD document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and SHOULD NOT change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
-4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on ten uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those ten methods separately for cryptographic and for statistical RNGs.
+4.  My document on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html) includes details on twelve uniform random number methods. In my opinion, a new programming language's **standard library** ought to include those twelve methods separately for cryptographic and for statistical RNGs.
 
 > **Examples:**
 >

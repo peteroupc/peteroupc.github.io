@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Jan. 20, 2018.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 6, 2018.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -60,16 +60,15 @@
 <ul>
 <li><a href="#RNDINT_Random_Integers_in_0_N"><code>RNDINT</code>: Random Integers in [0, N]</a></li>
 <li><a href="#RNDINTRANGE_Random_Integers_in_N_M"><code>RNDINTRANGE</code>: Random Integers in [N, M]</a></li>
-<li><a href="#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</strong></a>
-
-<ul>
-<li><a href="#Definitions_of_Constants"><strong>Definitions of Constants</strong></a></li>
-<li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
-</ul></li>
 <li><a href="#RNDINTEXC_Random_Integers_in_0_N"><strong><code>RNDINTEXC</code>: Random Integers in [0, N)</strong></a></li>
 <li><a href="#RNDINTEXCRANGE_Random_Integers_in_N_M"><strong><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</strong></a></li>
-<li><a href="#RNDNUMRANGE_Random_Numbers_in_X_Y"><code>RNDNUMRANGE</code>: Random Numbers in [X, Y]</a></li>
-<li><a href="#RNDNUMEXCRANGE_Random_Numbers_in_X_Y"><strong><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</strong></a></li>
+<li><a href="#Uniform_Random_Real_Numbers"><strong>Uniform Random Real Numbers</strong></a>
+
+<ul>
+<li><a href="#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</strong></a></li>
+<li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
+<li><a href="#RNDRANGE_RNDRANGEMinExc_RNDRANGEMaxExc_and_RNDRANGEMinMaxExc_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, and <code>RNDRANGEMinMaxExc</code>: Random Numbers in an Arbitrary Interval</strong></a></li>
+</ul></li>
 <li><a href="#Uniform_Random_Bits"><strong>Uniform Random Bits</strong></a></li>
 <li><a href="#Certain_Programming_Environments"><strong>Certain Programming Environments</strong></a></li>
 </ul></li>
@@ -175,7 +174,7 @@
 <ul>
 <li>Random Integers: <code>RNDINT</code>, <code>RNDINTEXC</code>, <code>RNDINTRANGE</code>, <code>RNDINTEXCRANGE</code>.</li>
 <li>Random Numbers in 0-1 Bounded Interval: <code>RNDU01</code>, <code>RNDU01ZeroExc</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroOneExc</code>.</li>
-<li>Other Random Numbers: <code>RNDNUMRANGE</code>, <code>RNDNUMEXCRANGE</code>.</li>
+<li>Other Random Numbers: <code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, <code>RNDRANGEMinMaxExc</code>.</li>
 </ul>
 
 <p>One method, <code>RNDINT</code>, described next, can serve as the basis for the remaining methods.</p>
@@ -372,11 +371,60 @@ result = NUMBER_TO_DATETIME(num)
 </ol>
 </blockquote>
 
+<p><a id=RNDINTEXC_Random_Integers_in_0_N></a></p>
+
+<h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
+
+<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random integer in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note4"><strong>(4)</strong></a></sup>:</p>
+
+<pre> METHOD RNDINTEXC(maxExclusive)
+    if maxExclusive &lt;= 0: return error
+    return RNDINT(maxExclusive - 1)
+ END METHOD
+</pre>
+
+<blockquote>
+<p><strong>Note:</strong> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
+
+<p><strong>Example:</strong> Generating a random number in the interval [<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code> is equivalent to generating <code>mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))</code>.</p>
+</blockquote>
+
+<p><a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a></p>
+
+<h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
+
+<p><strong><code>RNDINTEXCRANGE</code></strong> returns a <strong>random integer in the interval</strong> <strong>[<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.  It can be implemented using <a href="#RNDINTRANGE_Random_Integers_in_N_M"><strong><code>RNDINTRANGE</code></strong></a>, as the following pseudocode demonstrates.</p>
+
+<pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
+   if minInclusive &gt;= maxExclusive: return error
+   // NOTE: For integer formats that can express negative
+   // or nonnegative integers, replace the following line
+   // with &quot;if minInclusive &gt;=0 or minInclusive + INT_MAX &gt;=
+   // maxExclusive&quot;, where `INT_MAX` has the same meaning
+   // as in the pseudocode for `RNDINTRANGE`.
+   if minInclusive &gt;=0
+     return RNDINTRANGE(minInclusive, maxExclusive - 1)
+   end
+   while true
+     ret = RNDINTRANGE(minInclusive, maxExclusive)
+     if ret &lt; maxExclusive: return ret
+   end
+END METHOD
+</pre>
+
+<p><a id=Uniform_Random_Real_Numbers></a></p>
+
+<h3>Uniform Random Real Numbers</h3>
+
+<p>This section defines methods that generate uniform random real numbers.</p>
+
+<p>Note, however, that since there are infinitely many real numbers between two others, any computer implementation can randomly choose from only a subset of those numbers, since the chosen number has to be stored in a data block with finite memory space.</p>
+
 <p><a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a></p>
 
-<h3><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</h3>
+<h4><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</h4>
 
-<p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  For each method below, the alternatives are ordered from most preferred to least preferred, and <code>X</code> and <code>INVX</code> are defined later.</p>
+<p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and <code>X</code> and <code>INVX</code> are defined later.</p>
 
 <ul>
 <li><strong><code>RNDU01()</code>, interval [0, 1]</strong>:
@@ -418,26 +466,25 @@ result = NUMBER_TO_DATETIME(num)
 </ul></li>
 </ul>
 
-<p><a id=Definitions_of_Constants></a></p>
+<p>In the idioms above:</p>
 
-<h4>Definitions of Constants</h4>
-
-<p><code>X</code> is the highest integer <code>p</code> such that all multiples of <code>1/p</code> in the interval [0, 1] are representable in the number format in question.  For example&mdash;</p>
+<ul>
+<li><code>X</code> is the highest integer <code>p</code> such that all multiples of <code>1/p</code> in the interval [0, 1] are representable in the number format in question.  For example&mdash;
 
 <ul>
 <li>for the 64-bit IEEE 754 binary floating-point format (e.g., Java <code>double</code>), <code>X</code> is 2<sup>53</sup> (9007199254740992),</li>
 <li>for the 32-bit IEEE 754 binary floating-point format (e.g., Java <code>float</code>), <code>X</code> is 2<sup>24</sup> (16777216),</li>
 <li>for the 64-bit IEEE 754 decimal floating-point format, <code>X</code> is 10<sup>16</sup>, and</li>
 <li>for the .NET Framework decimal format (<code>System.Decimal</code>), <code>X</code> is 10<sup>28</sup>.</li>
+</ul></li>
+<li><code>INVX</code> is the constant 1 divided by <code>X</code>.</li>
 </ul>
-
-<p><code>INVX</code> is the constant 1 divided by <code>X</code>.</p>
 
 <p><a id=Alternative_Implementation_for_RNDU01></a></p>
 
 <h4>Alternative Implementation for <code>RNDU01</code></h4>
 
-<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead. See also (Downey 2007)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
+<p>For Java&#39;s <code>double</code> and <code>float</code> (or generally, any fixed-precision binary floating-point format with fixed exponent range), the following pseudocode for <code>RNDU01()</code> can be used instead. See also (Downey 2007)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  In the pseudocode below, <code>SIGBITS</code> is the binary floating-point format&#39;s precision (the number of binary digits the format can represent without loss; e.g., 53 for Java&#39;s <code>double</code>).</p>
 
 <pre>METHOD RNDU01()
     e=-SIGBITS
@@ -455,62 +502,23 @@ result = NUMBER_TO_DATETIME(num)
 END METHOD
 </pre>
 
-<p><a id=RNDINTEXC_Random_Integers_in_0_N></a></p>
+<p><a id=RNDRANGE_RNDRANGEMinExc_RNDRANGEMaxExc_and_RNDRANGEMinMaxExc_Random_Numbers_in_an_Arbitrary_Interval></a></p>
 
-<h3><code>RNDINTEXC</code>: Random Integers in [0, N)</h3>
+<h4><code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, and <code>RNDRANGEMinMaxExc</code>: Random Numbers in an Arbitrary Interval</h4>
 
-<p><code>RNDINTEXC(maxExclusive)</code>, which generates a <strong>random integer in the interval</strong> <strong>[0, <code>maxExclusive</code>)</strong>, can be implemented as follows<sup><a href="#Note5"><strong>(5)</strong></a></sup>:</p>
+<p><strong><code>RNDRANGE</code></strong> generates a <strong>random number in the interval [<code>minInclusive</code>, <code>maxInclusive</code>]</strong>.</p>
 
-<pre> METHOD RNDINTEXC(maxExclusive)
-    if maxExclusive &lt;= 0: return error
-    return RNDINT(maxExclusive - 1)
- END METHOD
-</pre>
+<p>For arbitrary-precision or non-negative number formats, the following pseudocode implements <code>RNDRANGE()</code>.</p>
 
-<blockquote>
-<p><strong>Note:</strong> <code>RNDINTEXC</code> is not given as the core random generation method because it&#39;s harder to fill integers in popular integer formats with random bits with this method.</p>
-
-<p><strong>Example:</strong> Generating a random number in the interval [<code>mn</code>, <code>mx</code>) in increments equal to <code>step</code> is equivalent to generating <code>mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))</code>.</p>
-</blockquote>
-
-<p><a id=RNDINTEXCRANGE_Random_Integers_in_N_M></a></p>
-
-<h3><code>RNDINTEXCRANGE</code>: Random Integers in [N, M)</h3>
-
-<p><strong><code>RNDINTEXCRANGE</code></strong> returns a <strong>random integer in the interval</strong> <strong>[<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.  It can be implemented using <a href="#RNDINTRANGE_Random_Integers_in_N_M"><strong><code>RNDINTRANGE</code></strong></a>, as the following pseudocode demonstrates.</p>
-
-<pre>METHOD RNDINTEXCRANGE(minInclusive, maxExclusive)
-   if minInclusive &gt;= maxExclusive: return error
-   // NOTE: For integer formats that can express negative
-   // or nonnegative integers, replace the following line
-   // with &quot;if minInclusive &gt;=0 or minInclusive + INT_MAX &gt;=
-   // maxExclusive&quot;, where `INT_MAX` has the same meaning
-   // as in the pseudocode for `RNDINTRANGE`.
-   if minInclusive &gt;=0
-     return RNDINTRANGE(minInclusive, maxExclusive - 1)
-   end
-   while true
-     ret = RNDINTRANGE(minInclusive, maxExclusive)
-     if ret &lt; maxExclusive: return ret
-   end
-END METHOD
-</pre>
-
-<p><a id=RNDNUMRANGE_Random_Numbers_in_X_Y></a></p>
-
-<h3><code>RNDNUMRANGE</code>: Random Numbers in [X, Y]</h3>
-
-<p>The na&iuml;ve way of generating a <strong>random number in the interval [<code>minInclusive</code>, <code>maxInclusive</code>]</strong>, is shown in the following pseudocode, which generally works well only if the number format can&#39;t be negative or that format uses arbitrary precision.</p>
-
-<pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
+<pre>METHOD RNDRANGE(minInclusive, maxInclusive)
     if minInclusive &gt; maxInclusive: return error
     return minInclusive + (maxInclusive - minInclusive) * RNDU01()
 END METHOD
 </pre>
 
-<p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDNUMRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
+<p>For other number formats (including Java&#39;s <code>double</code> and <code>float</code>), the pseudocode above can overflow if the difference between <code>maxInclusive</code> and <code>minInclusive</code> exceeds the maximum possible value for the format.  For such formats, the following pseudocode for <code>RNDRANGE()</code> can be used instead.  In the pseudocode below, <code>NUM_MAX</code> is the highest possible finite number for the number format.  The pseudocode assumes that the highest possible value is positive and the lowest possible value is negative.</p>
 
-<pre>METHOD RNDNUMRANGE(minInclusive, maxInclusive)
+<pre>METHOD RNDRANGE(minInclusive, maxInclusive)
    if minInclusive &gt; maxInclusive: return error
    if minInclusive == maxInclusive: return minInclusive
    // usual: Difference does not exceed maxInclusive
@@ -538,25 +546,44 @@ END METHOD
 END METHOD
 </pre>
 
-<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDNUMRANGE</code>.<sup><a href="#Note6"><strong>(6)</strong></a></sup></p>
+<p><strong>REMARK:</strong> Multiplying by <code>RNDU01()</code> in both cases above is not ideal, since doing so merely stretches that number to fit the range if the range is greater than 1.  There may be more sophisticated ways to fill the gaps that result this way in <code>RNDRANGE</code>.<sup><a href="#Note6"><strong>(6)</strong></a></sup></p>
 
-<p><a id=RNDNUMEXCRANGE_Random_Numbers_in_X_Y></a></p>
+<p><strong><code>RNDRANGEMaxExc</code></strong> returns a  <strong>random number in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.</p>
 
-<h3><code>RNDNUMEXCRANGE</code>: Random Numbers in [X, Y)</h3>
-
-<p><strong><code>RNDNUMEXCRANGE</code></strong> returns a  <strong>random number in the interval [<code>minInclusive</code>, <code>maxExclusive</code>)</strong>. It can be implemented using <a href="#Random_Integers_Within_a_Range_Maximum_Inclusive"><strong><code>RNDNUMRANGE</code></strong></a>, as the following pseudocode demonstrates.</p>
-
-<pre>METHOD RNDNUMEXCRANGE(minInclusive, maxExclusive)
+<pre>METHOD RNDRANGEMaxExc(minInclusive, maxExclusive)
    if minInclusive &gt;= maxExclusive: return error
    while true
-     ret = RNDNUMRANGE(minInclusive, maxExclusive)
+     ret = RNDRANGE(minInclusive, maxExclusive)
      if ret &lt; maxExclusive: return ret
    end
 END METHOD
 </pre>
 
+<p><strong><code>RNDRANGEMinExc</code></strong> returns a  <strong>random number in the interval (<code>minInclusive</code>, <code>maxExclusive</code>]</strong>.</p>
+
+<pre>METHOD RNDRANGEMinExc(minInclusive, maxExclusive)
+   if minInclusive &gt;= maxExclusive: return error
+   while true
+     ret = RNDRANGE(minInclusive, maxExclusive)
+     if ret &gt; minExclusive: return ret
+   end
+END METHOD
+</pre>
+
+<p><strong><code>RNDRANGEMinMaxExc</code></strong> returns a  <strong>random number in the interval (<code>minInclusive</code>, <code>maxExclusive</code>)</strong>.</p>
+
+<pre>METHOD RNDRANGEMinMaxExc(minInclusive, maxExclusive)
+   if minInclusive &gt;= maxExclusive: return error
+   while true
+     ret = RNDRANGE(minInclusive, maxExclusive)
+     if ret &gt; minExclusive and
+        ret &lt; maxExclusive: return ret
+   end
+END METHOD
+</pre>
+
 <blockquote>
-<p><strong>Example:</strong> To generate, uniformly at random, a point inside an N-dimensional box, generate <code>RNDNUMEXCRANGE(mn, mx)</code> for each coordinate, where <code>mn</code> and <code>mx</code> are the lower and upper bounds for that coordinate.  For example, to generate, uniformly at random, a point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDNUMEXCRANGE(0,2), RNDNUMEXCRANGE(3,6)]</code>.</p>
+<p><strong>Example:</strong> To generate, uniformly at random, a point inside an N-dimensional box, generate <code>RNDRANGEMaxExc(mn, mx)</code> for each coordinate, where <code>mn</code> and <code>mx</code> are the lower and upper bounds for that coordinate.  For example, to generate, uniformly at random, a point inside a rectangle bounded in [0, 2) along the X axis and [3, 6) along the Y axis, generate <code>[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]</code>.</p>
 </blockquote>
 
 <p><a id=Uniform_Random_Bits></a></p>
@@ -898,7 +925,7 @@ END METHOD
 
 <ol>
 <li>If <code>STATEJUMP()</code> is <code>RNDINT(1) * 2 - 1</code>, the random walk generates numbers that differ by -1 or 1, chosen at random.</li>
-<li>If <code>STATEJUMP()</code> is <code>RNDNUMRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
+<li>If <code>STATEJUMP()</code> is <code>RNDRANGE(-1, 1)</code>, the random state is advanced by a random real number in the interval [-1, 1].</li>
 <li>If <code>STATEJUMP()</code> is <code>Binomial(1, p)</code>, the random walk models a <em>binomial process</em>, where the state is advanced with probability <code>p</code>.</li>
 <li>If <code>STATEJUMP()</code> is <code>Binomial(1, p) * 2 - 1</code>, the random walk generates numbers that each differ from the last by -1 or 1 depending on the probability <code>p</code>.</li>
 </ol>
@@ -986,7 +1013,7 @@ END METHOD
     value = RNDINTEXC(sum)
     // NOTE: If the weights can be fractional numbers,
     // use this instead:
-    // value = RNDNUMEXCRANGE(0, sum)
+    // value = RNDRANGEMaxExc(0, sum)
     // Choose the object according to the given value
     i = 0
     lastItem = size(weights) - 1
@@ -1017,8 +1044,8 @@ END METHOD
  // Get the actual item
  item = list[index]
 </pre></li>
-<li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDNUMEXCRANGE(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
-<li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDNUMEXCRANGE(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
+<li><p>Assume the weights from example 1 are used and the list contains ranges of numbers instead of strings: <code>[[0, 5], [5, 10], [10, 11], [11, 13]]</code>.  If a random range is chosen, a random number can be chosen from that range using code like the following: <code>number = RNDRANGEMaxExc(item[0], item[1])</code>. (See also &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot;.)</p></li>
+<li>Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four ranges, the same as in example 2.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, a random number can be chosen from the corresponding range using code like the following: <code>number = RNDRANGEMaxExc(list[index], list[index + 1])</code>. (This is how the C++ library expresses a <em>piecewise constant distribution</em>.)</li>
 <li>A <a href="https://en.wikipedia.org/wiki/Markov_chain"><strong>Markov chain</strong></a> models one or more <em>states</em> (for example, individual letters or syllables), and stores the probabilities to transition from one state to another (e.g., &quot;b&quot; to &quot;e&quot; with a probability of 0.2, or &quot;b&quot; to &quot;b&quot; with a probability of 0.01).  Thus, each state can be seen as having its own list of <em>weights</em> for each relevant state transition.  For example, a Markov chain for generating <strong>&quot;pronounceable&quot; words</strong>, or words similar to natural-language words, can include &quot;start&quot; and &quot;stop&quot; states for the start and end of the word, respectively.</li>
 </ol>
 </blockquote>
@@ -1176,7 +1203,7 @@ end
        i = i + 1
     end
     // Choose a random number
-    value = RNDNUMEXCRANGE(0, sum)
+    value = RNDRANGEMaxExc(0, sum)
     // Interpolate a number according to the given value
     i=0
     // Get the number corresponding to the random number
@@ -1250,7 +1277,7 @@ number = -ln(RNDU01ZeroOneExc()) / rates[index]
 <li>the chosen range is sampled by generating <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the that range&#39;s minimum and <code>mx</code> is its maximum.</li>
 </ul>
 
-<p>For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the number is sampled by <code>RNDNUMEXCRANGE(mn, mx)</code> instead.</p></li>
+<p>For generating random numbers, that may or may not be integers, from nonoverlapping number ranges, each weight is <code>mx - mn</code> instead and the number is sampled by <code>RNDRANGEMaxExc(mn, mx)</code> instead.</p></li>
 </ol>
 </blockquote>
 
@@ -1292,7 +1319,7 @@ and/or discarding some of them.</p>
 <ol>
 <li>The idiom <code>min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))</code> takes the lowest of two six-sided die results.  Due to this approach, 1 is more likely to occur than 6.</li>
 <li>The idiom <code>RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)</code> takes the result of two six-sided dice (see also &quot;<a href="#Dice"><strong>Dice</strong></a>&quot;).</li>
-<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDNUMRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
+<li>Sampling a <strong>Bates distribution</strong> involves sampling <em>n</em> random numbers by <code>RNDRANGE(minimum, maximum)</code>, then finding the mean of those numbers (see the appendix).</li>
 <li>A <strong>compound Poisson distribution</strong> models the sum of <em>n</em> random numbers each generated the same way, where <em>n</em> follows a <a href="#Poisson_Distribution"><strong>Poisson distribution</strong></a> (e.g., <code>n = Poisson(10)</code> for an average of 10 numbers).</li>
 <li>A <strong>hypoexponential distribution</strong> models the sum of <em>n</em> random numbers following an exponential distribution, each with a separate <code>lamda</code> parameter (see &quot;<a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>&quot;).</li>
 </ol>
@@ -1339,15 +1366,15 @@ and/or discarding some of them.</p>
 <pre>METHOD ArbitraryDist(minValue, maxValue, maxDensity)
      if minValue &gt;= maxValue: return error
      while True
-         x=RNDNUMEXCRANGE(minValue, maxValue)
-         y=RNDNUMEXCRANGE(0, maxDensity)
+         x=RNDRANGEMaxExc(minValue, maxValue)
+         y=RNDRANGEMaxExc(0, maxDensity)
          if y &lt; PDF(x): return x
      end
 END METHOD
 </pre></li>
 </ol>
 
-<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Create <code>list</code> and <code>weights</code> as given in method 1, then divide each item in <code>weights</code> by the sum of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDNUMEXCRANGE(0, sum)</code>).</p>
+<p>If both <strong>a PDF and a uniform random variable in the interval [0, 1) (<code>randomVariable</code>)</strong> are given, then the following technique, among other possible techniques, can be used: Create <code>list</code> and <code>weights</code> as given in method 1, then divide each item in <code>weights</code> by the sum of <code>weights</code>&#39;s items, then generate <a href="#Continuous_Weighted_Choice"><strong><code>ContinuousWeightedChoice(list, weights)</code></strong></a> (except that method is modified to use <code>value = randomVariable</code> rather than <code>value = RNDRANGEMaxExc(0, sum)</code>).</p>
 
 <p>If the distribution&#39;s <strong>CDF is known</strong>, an approach called <a href="https://en.wikipedia.org/wiki/Inverse_transform_sampling"><strong><em>inverse transform sampling</em></strong></a> can be used: Generate <code>ICDF(RNDU01ZeroOneExc())</code>, where <code>ICDF(X)</code> is the distribution&#39;s <em>inverse CDF</em>.  The <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a> includes <code>from_interp</code> and <code>numbers_from_cdf</code> methods that implement this approach numerically.</p>
 
@@ -1457,7 +1484,7 @@ END METHOD
     bmp = sqrt(2.0/exp(1.0)) // about 0.8577638849607068
     while true
         a=RNDU01ZeroExc()
-        b=RNDNUMRANGE(-bmp,bmp)
+        b=RNDRANGE(-bmp,bmp)
         if b*b &lt;= -a * a * 4 * ln(a)
             return (b * sigma / a) + mu
         end
@@ -1713,13 +1740,13 @@ END METHOD
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
     if kappa == 0
-        return RNDNUMEXCRANGE(mean-pi, mean+pi)
+        return RNDRANGEMinMaxExc(mean-pi, mean+pi)
     end
     r = 1.0 + sqrt(4 * kappa * kappa + 1)
     rho = (r - sqrt(2 * r)) / (kappa * 2)
     s = (1 + rho * rho) / (2 * rho)
     while true
-        u = RNDNUMEXCRANGE(-1, 1)
+        u = RNDRANGEMaxExc(-1, 1)
         v = RNDU01ZeroOneExc()
         z = cos(pi * u)
         w = (1 + s*z) / (s + z)
@@ -1756,8 +1783,7 @@ which resembles a curve with a single peak, but with generally &quot;fatter&quot
     if alpha &lt;=0 or alpha &gt; 2: return error
     if beta &lt; -1 or beta &gt; 1: return error
     halfpi = pi * 0.5
-    unif=RNDNUMEXCRANGE(-halfpi, halfpi)
-    while unif==-halfpi: unif=RNDNUMEXCRANGE(-halfpi, halfpi)
+    unif=RNDRANGEMinMaxExc(-halfpi, halfpi)
     // Cauchy special case
     if alpha == 1 and beta == 0: return tan(unif)
     expo=-ln(RNDU01ZeroExc())
@@ -2081,7 +2107,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Beta negative binomial distribution</strong>: <code>NegativeBinomial(successes, BetaDist(a, b))</code>, where <code>a</code> and <code>b</code> are the two parameters of the beta distribution, and <code>successes</code> is a parameter of the negative binomial distribution. If <em>successes</em> is 1, the result is a <em>Waring&ndash;Yule distribution</em>.</li>
 <li><strong>Birnbaum&ndash;Saunders distribution</strong>: <code>pow(sqrt(4+x*x)+x,2)/(4.0*lamda)</code>, where <code>x = Normal(0,gamma)</code>, <code>gamma</code> is a shape parameter, and <code>lamda</code> is a scale parameter.</li>
 <li><strong>Chi distribution</strong>: <code>sqrt(GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.</li>
-<li><strong>Cosine distribution</strong>: <code>min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDNUMRANGE(-1, 1)</code> and <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
+<li><strong>Cosine distribution</strong>: <code>min + (max - min) * atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = RNDRANGE(-1, 1)</code> and <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>Double logarithmic distribution</strong>: <code>min + (max - min) * (0.5 + (RNDINT(1) * 2 - 1) * 0.5 * RNDU01OneExc() * RNDU01OneExc())</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Fr&eacute;chet distribution</strong>: <code>b*pow(-ln(RNDU01ZeroExc()),-1.0/a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale, and <code>loc</code> is the location of the distribution&#39;s curve peak (mode). This expresses a distribution of maximum values.</li>
 <li><strong>Generalized extreme value (Fisher&ndash;Tippett) distribution</strong>: <code>a - (pow(-ln(RNDU01ZeroOneExc()), -c) - 1) * b / c</code> if <code>c != 0</code>, or <code>a - ln(-ln(RNDU01ZeroOneExc())) * b</code> otherwise, where <code>b</code> is the scale, <code>a</code> is the location of the distribution&#39;s curve peak (mode), and <code>c</code> is a shape parameter. This expresses a distribution of maximum values.</li>
@@ -2103,7 +2129,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Pascal distribution</strong>: <code>NegativeBinomial(successes, p) + successes</code>, where <code>successes</code> and <code>p</code> have the same meaning as in the negative binomial distribution, except <code>successes</code> is always an integer.</li>
 <li><strong>Pearson VI distribution</strong>: <code>GammaDist(v, 1) / (GammaDist(w, 1))</code>, where <code>v</code> and <code>w</code> are shape parameters greater than 0 (Saucier 2000, p. 33; there, an additional <code>b</code> parameter is defined, but that parameter is canceled out in the source code).</li>
 <li><strong>Power distribution</strong>: <code>pow(RNDU01ZeroOneExc(), 1.0 / alpha) / b</code>, where <code>alpha</code>  is the shape and <code>b</code> is the domain.  Nominally in the interval (0, 1).</li>
-<li><strong>Power law distribution</strong>: <code>pow(RNDNUMRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))</code>, where <code>n</code>  is the exponent, <code>mn</code> is the minimum, and <code>mx</code> is the maximum.  <a href="http://mathworld.wolfram.com/RandomNumber.html"><strong>Reference</strong></a>.</li>
+<li><strong>Power law distribution</strong>: <code>pow(RNDRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))</code>, where <code>n</code>  is the exponent, <code>mn</code> is the minimum, and <code>mx</code> is the maximum.  <a href="http://mathworld.wolfram.com/RandomNumber.html"><strong>Reference</strong></a>.</li>
 <li><strong>Skellam distribution</strong>: <code>Poisson(mean1) - Poisson(mean2)</code>, where <code>mean1</code> and <code>mean2</code> are the means of the two Poisson variables.</li>
 <li><strong>Skewed normal distribution</strong>: <code>Normal(0, x) + mu + alpha * abs(Normal(0, x))</code>, where <code>x</code> is <code>sigma / sqrt(alpha * alpha + 1.0)</code>, <code>mu</code> and <code>sigma</code> have the same meaning as in the normal distribution, and <code>alpha</code> is a shape parameter.</li>
 <li><strong>Snedecor&#39;s (Fisher&#39;s) <em>F</em>-distribution</strong>: <code>GammaDist(m * 0.5, n) / (GammaDist(n * 0.5 + Poisson(sms * 0.5)) * m, 1)</code>, where <code>m</code> and <code>n</code> are the numbers of degrees of freedom of two random numbers with a chi-squared distribution, and if <code>sms</code> is other than 0, one of those distributions is <em>noncentral</em> with sum of mean squares equal to <code>sms</code>.</li>
@@ -2174,31 +2200,24 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Example:</strong> To generate, uniformly at random, a point on the surface of a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates on the surface of a circle (2-dimensional hypersphere) and a Z coordinate within the desired range (e.g., with <code>RNDNUMRANGE</code>).</p>
+<p><strong>Example:</strong> To generate, uniformly at random, a point on the surface of a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates on the surface of a circle (2-dimensional hypersphere) and a Z coordinate within the desired range (e.g., with <code>RNDRANGE</code>).</p>
 </blockquote>
 
 <p><a id=Random_Points_Inside_a_Ball_or_Shell></a></p>
 
 <h3>Random Points Inside a Ball or Shell</h3>
 
-<p>To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;</p>
-
-<ul>
-<li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code>, or</li>
-<li>generate a vector (list) of N <code>RNDNUMRANGE(-R, R)</code> random numbers<sup><a href="#Note30"><strong>(30)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>),</li>
-</ul>
-
-<p>although the former method &quot;may ... be slower&quot; &quot;in practice&quot;, according to a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for the two methods given here.</p>
+<p>To generate, uniformly at random, an N-dimensional point inside an N-dimensional ball, centered at the origin, of radius R, follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt( S - ln(RNDU01ZeroExc()))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code>.  For discs and spheres (2- or 3-dimensional balls), an alternative is to generate a vector (list) of N <code>RNDRANGE(-R, R)</code> random numbers<sup><a href="#Note30"><strong>(30)</strong></a></sup> until its <em>norm</em> is R or less (see the <a href="#Appendix"><strong>appendix</strong></a>).<sup><a href="#Note32"><strong>(32)</strong></a></sup></p>
 
 <p>To generate, uniformly at random, a point inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;</p>
 
 <ul>
 <li>generate, uniformly at random, a point for a ball of radius B until the norm of that point is A or greater (see the <a href="#Appendix"><strong>appendix</strong></a>), or</li>
-<li>generate, uniformly at random, a point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDNUMRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
+<li>generate, uniformly at random, a point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note31"><strong>(31)</strong></a></sup>.</li>
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> To generate, uniformly at random, a point inside a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates inside a disk (2-dimensional ball) and a Z coordinate within the desired range (e.g., with <code>RNDNUMRANGE</code>).</p>
+<p><strong>Example:</strong> To generate, uniformly at random, a point inside a cylinder running along the Z axis, generate, uniformly at random, X and Y coordinates inside a disk (2-dimensional ball) and a Z coordinate within the desired range (e.g., with <code>RNDRANGE</code>).</p>
 </blockquote>
 
 <p><a id=Random_Latitude_and_Longitude></a></p>
@@ -2208,8 +2227,8 @@ END METHOD
 <p>To generate, uniformly at random, a point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative)&mdash;</p>
 
 <ul>
-<li>generate the longitude <code>RNDNUMEXCRANGE(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
-<li>generate the latitude <code>atan2(sqrt(1 - x * x), x) - pi / 2</code>, where <code>x = RNDNUMRANGE(-1, 1)</code> and the latitude is in the interval [-&pi;/2, &pi;/2] (the interval includes the poles, which have many equivalent forms; if poles are not desired, generate <code>x</code> until neither -1 nor 1 is generated this way).</li>
+<li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
+<li>generate the latitude <code>atan2(sqrt(1 - x * x), x) - pi / 2</code>, where <code>x = RNDRANGE(-1, 1)</code> and the latitude is in the interval [-&pi;/2, &pi;/2] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate <code>x</code> until neither -1 nor 1 is generated this way).</li>
 </ul>
 
 <p>Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</p>
@@ -2248,9 +2267,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p><small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by swapping the bits of a number equal to that number&#39;s absolute value minus 1.</small></p>
 
-<p><small><sup id=Note4>(4)</sup> Downey, A. B. &quot;<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>&quot;, 2007</small></p>
-
-<p><small><sup id=Note5>(5)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(RNDU01OneExc()*maxExclusive)</code>.  However, there are certain issues with this idiom:</p>
+<p><small><sup id=Note4>(4)</sup> A na&iuml;ve <code>RNDINTEXC</code> implementation often seen in certain languages like JavaScript is the idiom <code>floor(RNDU01OneExc()*maxExclusive)</code>.  However, there are certain issues with this idiom:</p>
 
 <ol>
 <li>Depending on how <code>RNDU01OneExc()</code> is implemented, some integers can never occur with this idiom for large <code>maxExclusive</code> values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if <code>RNDU01OneExc()</code> is implemented as <code>RNDINT(255)/256</code>, the resulting number will have no more than 8 bits set to 1, so that not all numbers can &quot;randomly&quot; occur with <code>maxExclusive</code> greater than 256.</li>
@@ -2258,6 +2275,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 </ol>
 
 <p>If an application is concerned about these issues, it can transform the <code>RNDU01OneExc()</code> implementation (e.g., <code>Math.random()</code>) to an RNG that outputs integers 0 or greater, and use that as the underlying RNG for <code>RNDINT</code> and thus <code>RNDINTEXC</code>; see Note (2).</small></p>
+
+<p><small><sup id=Note5>(5)</sup> Downey, A. B. &quot;<a href="http://allendowney.com/research/rand/"><strong>Generating Pseudo-random Floating Point Values</strong></a>&quot;, 2007</small></p>
 
 <p><small><sup id=Note6>(6)</sup> See, for example, the <em>Stack Overflow</em> question &quot;How to generate a number in arbitrary range using random()={0..1} preserving uniformness and density?&quot;, <code>questions/8019589</code>.</small></p>
 
@@ -2323,6 +2342,8 @@ generation (including by extracting uniformly distributed bits from two or more 
 <p><small><sup id=Note30>(30)</sup> The N numbers generated this way will form a point inside an N-dimensional <em>hypercube</em> with length <code>2 * R</code> in each dimension and centered at the origin of space.</small></p>
 
 <p><small><sup id=Note31>(31)</sup> See the <em>Mathematics Stack Exchange</em> question titled &quot;Random multivariate in hyperannulus&quot;, <code>questions/1885630</code>.</small></p>
+
+<p><small><sup id=Note32>(32)</sup> See also a <a href="http://mathworld.wolfram.com/BallPointPicking.html"><strong>MathWorld article</strong></a>, which was the inspiration for these two methods, and the Stack Overflow question &quot;How to generate uniform random points in (arbitrary) N-dimension ball?&quot;, <code>questions/54544971</code>.</small></p>
 
 <p><a id=Appendix></a></p>
 

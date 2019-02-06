@@ -93,7 +93,7 @@ In the pseudocode:
 * The pseudocode shown is not guaranteed to cover all error handling that may be necessary in a particular implementation.   Such errors may include overflow, out-of-bounds memory access, division by zero, and unexpected infinity values.
 * The pseudocode shown is not guaranteed to yield high performance in a particular implementation, either in time or memory.  Implementations are free to deviate from the pseudocode as long as they produce the same results as the pseudocode, except that&mdash;
     - `ln`, `exp`, `pow`, `sin`, `cos`, `tan`, and `atan2` must be at least substantially close to accurate, and
-    - arithmetic operations, `abs`, `sqrt`, `floor`, `round`, and `rem`, if implemented in limited-precision number formats, must be accurate within rounding error.
+    - arithmetic operations, `abs`, `sqrt`, `floor`, `round`, and `rem`, if implemented in fixed-precision number formats, must be accurate within rounding error.
 * If the pseudocode works with non-integer numbers, an implementation can represent such numbers in any non-integer number format it wishes (including a floating-point, fixed-point, decimal, and/or binary number format), unless noted otherwise.
 
 <a id=License></a>
