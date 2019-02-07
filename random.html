@@ -722,7 +722,7 @@
 
 <p><small><sup id=Note11>(11)</sup> An algorithm can become nondeterministic in many ways.  <a href="https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development"><strong>For example</strong></a>, different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.</p>
 
-<p>Implementations of floating-point numbers and floating-point math can also differ, especially in the area of transcendental and trigonometric functions; among other reasons for this, specifications don&#39;t always require delivering as-accurate-as-possible results to those functions (the difference between <code>Math</code> and <code>StrictMath</code> in Java is one example).  Whenever possible, applications SHOULD avoid generating &quot;random&quot; floating-point numbers using custom-seeded PRNGs.</small></p>
+<p>Implementations of floating-point numbers and floating-point math can also differ, especially with math functions for which specifications don&#39;t always require delivering as-accurate-as-possible results (the difference between <code>Math</code> and <code>StrictMath</code> in Java is one example).  Whenever possible, applications SHOULD avoid generating &quot;random&quot; floating-point numbers using custom-seeded PRNGs.</small></p>
 
 <p><small><sup id=Note12>(12)</sup> Noise functions include functions that combine several outputs of a noise function, including by <a href="https://en.wikipedia.org/wiki/Fractional_Brownian_motion"><strong>fractional Brownian motion</strong></a>.  By definition, noise functions are deterministic.</small></p>
 

@@ -66,9 +66,9 @@
 <li><a href="#Uniform_Random_Real_Numbers"><strong>Uniform Random Real Numbers</strong></a>
 
 <ul>
-<li><a href="#RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</strong></a></li>
+<li><a href="#RNDU01_Family_Random_Numbers_Bounded_by_0_and_1"><strong><code>RNDU01</code> Family: Random Numbers Bounded by 0 and 1</strong></a></li>
 <li><a href="#Alternative_Implementation_for_RNDU01"><strong>Alternative Implementation for <code>RNDU01</code></strong></a></li>
-<li><a href="#RNDRANGE_RNDRANGEMinExc_RNDRANGEMaxExc_and_RNDRANGEMinMaxExc_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, and <code>RNDRANGEMinMaxExc</code>: Random Numbers in an Arbitrary Interval</strong></a></li>
+<li><a href="#RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval"><strong><code>RNDRANGE</code> Family: Random Numbers in an Arbitrary Interval</strong></a></li>
 </ul></li>
 <li><a href="#Certain_Programming_Environments"><strong>Certain Programming Environments</strong></a></li>
 </ul></li>
@@ -174,7 +174,7 @@
 <ul>
 <li>Random Integers: <code>RNDINT</code>, <code>RNDINTEXC</code>, <code>RNDINTRANGE</code>, <code>RNDINTEXCRANGE</code>.</li>
 <li>Random Numbers in 0-1 Bounded Interval: <code>RNDU01</code>, <code>RNDU01ZeroExc</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroOneExc</code>.</li>
-<li>Other Random Numbers: <code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, <code>RNDRANGEMinMaxExc</code>.</li>
+<li>Random Numbers in Arbitrary Interval: <code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, <code>RNDRANGEMinMaxExc</code>.</li>
 </ul>
 
 <p>One method, <code>RNDINT</code>, described next, can serve as the basis for the remaining methods.</p>
@@ -428,9 +428,9 @@ END METHOD
 
 <p>Note, however, that since there are infinitely many real numbers between two others, any computer implementation can randomly choose from only a subset of those numbers, since the chosen number has to be stored in a data block with finite memory space.</p>
 
-<p><a id=RNDU01_RNDU01OneExc_RNDU01ZeroExc_and_RNDU01ZeroOneExc_Random_Numbers_Bounded_by_0_and_1></a></p>
+<p><a id=RNDU01_Family_Random_Numbers_Bounded_by_0_and_1></a></p>
 
-<h4><code>RNDU01</code>, <code>RNDU01OneExc</code>, <code>RNDU01ZeroExc</code>, and <code>RNDU01ZeroOneExc</code>: Random Numbers Bounded by 0 and 1</h4>
+<h4><code>RNDU01</code> Family: Random Numbers Bounded by 0 and 1</h4>
 
 <p>This section defines four methods that generate a <strong>random number bounded by 0 and 1</strong>.  There are several ways to implement each of those four methods; for each method, the ways are ordered from most preferred to least preferred, and <code>X</code> and <code>INVX</code> are defined later.</p>
 
@@ -510,9 +510,9 @@ END METHOD
 END METHOD
 </pre>
 
-<p><a id=RNDRANGE_RNDRANGEMinExc_RNDRANGEMaxExc_and_RNDRANGEMinMaxExc_Random_Numbers_in_an_Arbitrary_Interval></a></p>
+<p><a id=RNDRANGE_Family_Random_Numbers_in_an_Arbitrary_Interval></a></p>
 
-<h4><code>RNDRANGE</code>, <code>RNDRANGEMinExc</code>, <code>RNDRANGEMaxExc</code>, and <code>RNDRANGEMinMaxExc</code>: Random Numbers in an Arbitrary Interval</h4>
+<h4><code>RNDRANGE</code> Family: Random Numbers in an Arbitrary Interval</h4>
 
 <p><strong><code>RNDRANGE</code></strong> generates a <strong>random number in the interval [<code>minInclusive</code>, <code>maxInclusive</code>]</strong>.</p>
 
@@ -2261,9 +2261,9 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <p>If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using <em>unbiasing</em>, <em>deskewing</em>, or <em>randomness extraction</em>, which are outside the scope of this document.</small></p>
 
-<p><small><sup id=Note2>(2)</sup> There are other RNGs besides those that generate integers 0 or greater.  For example, Wichmann&ndash;Hill and dSFMT output numbers in the interval [0, 1).  For such RNGs, if the RNG is known to output numbers in the interval [0, 1) evenly spaced by a number <em>p</em>, it can be transformed into an RNG that outputs integers in the interval [0, 1/<em>p</em>) by multiplying its outputs by <em>p</em>.  Otherwise, several of its outputs can be serialized to a sequence of 8-bit bytes, then the byte sequence sent to a <a href="https://peteroupc.github.io/random.html#Hash_Functions"><strong>hash function</strong></a> with an <em>n</em>-bit output (shorter than the byte sequence), thus turning the RNG into an RNG that outputs integers in the interval [0, 2<sup><em>n</em></sup>).</p>
+<p><small><sup id=Note2>(2)</sup> There are other RNGs besides those that generate integers 0 or greater.  (For example, Wichmann&ndash;Hill and dSFMT output numbers in the interval [0, 1).)  For such RNGs, if the RNG is known to output numbers in the interval [0, 1) evenly spaced by a number <em>p</em>, it can be transformed into an RNG that outputs integers in the interval [0, 1/<em>p</em>) by multiplying its outputs by <em>p</em>.  Otherwise, the RNG can be transformed to an RNG that produces <em>n</em> bit integers (in the interval [0, 2<sup><em>n</em></sup>)) by converting its outputs to a stream of 8-bit bytes and using a <em>randomness extraction</em> technique to transform that stream to <em>n</em>-bit integers.  Randomness extraction is outside the scope of this document.</p>
 
-<p>For an exercise solved by this method, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.</small></p>
+<p>For an exercise solved by the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  In addition, M. O&#39;Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>blog post from July 2018</strong></a>.</small></p>
 
 <p><small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java&#39;s <code>short</code>, <code>int</code>, and <code>long</code>, with 16, 32, and 64 bits, respectively. A <em>signed integer</em> is an integer that can be positive, zero, or negative. In <em>two&#39;s-complement form</em>, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by swapping the bits of a number equal to that number&#39;s absolute value minus 1.</small></p>
 
@@ -2271,7 +2271,7 @@ generation (including by extracting uniformly distributed bits from two or more 
 
 <ol>
 <li>Depending on how <code>RNDU01OneExc()</code> is implemented, some integers can never occur with this idiom for large <code>maxExclusive</code> values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if <code>RNDU01OneExc()</code> is implemented as <code>RNDINT(255)/256</code>, the resulting number will have no more than 8 bits set to 1, so that not all numbers can &quot;randomly&quot; occur with <code>maxExclusive</code> greater than 256.</li>
-<li>Depending on the number format, rounding error can result in <code>maxExclusive</code> being returned in rare cases.  A more robust implementation could use a loop to check whether <code>maxExclusive</code> was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>.  Both modifications could still have the issue given in item 1.</li>
+<li>Depending on the number format, rounding error can result in <code>maxExclusive</code> being returned in rare cases.  A more robust implementation could use a loop to check whether <code>maxExclusive</code> was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with <code>min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))</code>.  Neither modification addresses the issue given in item 1.</li>
 </ol>
 
 <p>If an application is concerned about these issues, it can transform the <code>RNDU01OneExc()</code> implementation (e.g., <code>Math.random()</code>) to an RNG that outputs integers 0 or greater, and use that as the underlying RNG for <code>RNDINT</code> and thus <code>RNDINTEXC</code>; see Note (2).</small></p>
