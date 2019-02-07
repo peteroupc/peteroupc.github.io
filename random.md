@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on Mar. 5, 2016; last updated on Feb. 6, 2018.
+Begun on Mar. 5, 2016; last updated on Feb. 7, 2019.
 
 Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.
 
@@ -506,7 +506,7 @@ I acknowledge&mdash;
 
 <small><sup id=Note11>(11)</sup> An algorithm can become nondeterministic in many ways.  [**For example**](https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development), different results can happen because parallel operations can finish in a different order, items can be assigned differently to hash table buckets, or floating-point addition can be carried out in a different order.
 
-Implementations of floating-point numbers and floating-point math can also differ, especially with math functions for which specifications don't always require delivering as-accurate-as-possible results (the difference between `Math` and `StrictMath` in Java is one example).  Whenever possible, applications SHOULD avoid generating "random" floating-point numbers using custom-seeded PRNGs.</small>
+Implementations of floating-point numbers and floating-point math can also differ, especially for math functions for which specifications don't always require delivering as-accurate-as-possible results (the difference between `Math` and `StrictMath` in Java is one example).  Whenever possible, applications SHOULD avoid generating "random" floating-point numbers using custom-seeded PRNGs.</small>
 
 <small><sup id=Note12>(12)</sup> Noise functions include functions that combine several outputs of a noise function, including by [**fractional Brownian motion**](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).  By definition, noise functions are deterministic.</small>
 

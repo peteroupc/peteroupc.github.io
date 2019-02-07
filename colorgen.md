@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This document presents an overview of many common color topics that are of general interest to programmers and that can be implemented in many different programming languages.  [**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
+This document presents an overview of many common color topics that are of general interest         to programmers and that can be implemented in many different programming languages.  [**Sample Python code**](https://peteroupc.github.io/colorutil.zip)  **that implements many of the methods in this document is available.**  [**Supplemental topics**](https://peteroupc.github.io/suppcolor.html) are listed in another open-source page.
 
 **Topics this document covers include:**
 
@@ -1652,7 +1652,7 @@ The following topics would greatly enrich this document:
 <small><sup id=Note27>(27)</sup> J. Cook, [**"Converting color to grayscale"**](https://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/), Aug. 24, 2009.</small>
 
 <small><sup id=Note28>(28)</sup> `Lerp3` is equivalent to `mix` in OpenGL Shading Language (GLSL).  Making `alpha` the output of a function (for example, `Lerp3(color1, color2, FUNC(...))`,
-where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [**in another page**](https://peteroupc.github.io/html3dutil/H3DU.Math.html#H3DU.Math.vec3lerp).</small>
+where `FUNC` is an arbitrary function of one or more variables) can be done to achieve special nonlinear blends.  Such blends (interpolations) are described in further detail [**in another page**](https://peteroupc.github.io/html3dutil/MathUtil.html#MathUtil.vec3lerp).</small>
 
 <small><sup id=Note29>(29)</sup> P. Haeberli and D. Voorhees, "[**Image Processing by Interpolation and Extrapolation**](http://www.graficaobscura.com/interp/index.html)".</small>
 

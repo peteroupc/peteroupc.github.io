@@ -127,7 +127,7 @@ class RandomGen:
       if ret != 0.0:
         return ret
 
-  def rndnumrange(self, minInclusive, maxInclusive):
+  def rndrange(self, minInclusive, maxInclusive):
     if minInclusive > maxInclusive:
       raise ValueError
     if minInclusive >= 0 or minInclusive + _FLOAT_MAX >= maxInclusive:
@@ -142,12 +142,28 @@ class RandomGen:
        if ret>=minInclusive and ret<=maxInclusive:
           return ret
 
-  def rndnumexcrange(self, minInclusive, maxExclusive):
+  def rndrangemaxexc(self, minInclusive, maxExclusive):
     if minInclusive >= maxExclusive:
       raise ValueError
     while True:
-      ret=self.rndnumrange(minInclusive, maxExclusive)
+      ret=self.rndrange(minInclusive, maxExclusive)
       if ret < maxExclusive:
+        return ret
+
+  def rndrangeminexc(self, mn, mx):
+    if mn >= mx:
+      raise ValueError
+    while True:
+      ret=self.rndrange(mn, mx)
+      if ret > mn:
+        return ret
+
+  def rndrangeminmaxexc(self, mn, mx):
+    if mn >= mx:
+      raise ValueError
+    while True:
+      ret=self.rndrange(mn, mx)
+      if ret > mn and ret < mx:
         return ret
 
   def shuffle(self, list):
@@ -201,7 +217,7 @@ class RandomGen:
       raise ValueError
     while True:
       norm=0
-      point=[self.rndnumrange(-1,1) for i in range(dimension)]
+      point=[self.rndrange(-1,1) for i in range(dimension)]
       for coord in point:
         norm+=coord*coord
       norm=math.sqrt(norm)
@@ -243,7 +259,7 @@ class RandomGen:
     while i < len(weights):
       sum+=weights[i]
       i+=1
-    value=self.rndnumexcrange(0, sum)
+    value=self.rndrangemaxexc(0, sum)
     i=0
     lastItem=len(weights)-1
     runningValue=0
@@ -272,7 +288,7 @@ class RandomGen:
         weightArea = -weightArea
       sum+=weightArea
       i+=1
-    value=self.rndnumexcrange(0, sum)
+    value=self.rndrangemaxexc(0, sum)
     i=0
     runningValue=0
     while i < len(list)-1:
@@ -292,7 +308,7 @@ class RandomGen:
     bmp=0.8577638849607068 # sqrt(2/exp(1))
     while True:
       a=self.rndu01zeroexc()
-      b=self.rndnumrange(-bmp,bmp)
+      b=self.rndrange(-bmp,bmp)
       if b*b <= -4 * a * a * math.log(a):
         return (b * sigma / a) + mu
 
@@ -425,8 +441,8 @@ class RandomGen:
         if alpha <=0 or alpha > 2: raise ValueError
         if beta < -1 or beta > 1: raise ValueError
         halfpi = math.pi * 0.5
-        unif=self.rndnumexcrange(-halfpi, halfpi)
-        while unif==-halfpi: unif=self.rndnumexcrange(-halfpi, halfpi)
+        unif=self.rndrangemaxexc(-halfpi, halfpi)
+        while unif==-halfpi: unif=self.rndrangemaxexc(-halfpi, halfpi)
         # Cauchy special case
         if alpha == 1 and beta == 0: return tan(unif)
         expo=-math.log(self.rndu01zeroexc())
@@ -453,13 +469,13 @@ class RandomGen:
          Statistical Distributions for Experimentalists",
          pp. 93-94."""
     while True:
-      y=self.rndnumexcrange(-math.pi/2,math.pi/2)
-      while y==math.pi/2: y=self.rndnumexcrange(-math.pi/2,math.pi/2)
+      y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
+      while y==math.pi/2: y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
       h=
       tany=math.tan(y)
       hy=math.exp(-(tany+math.exp(-tany))*0.5)
       hy=hy/((math.cos(y)**2)*sqrt(2.0*math.pi))
-      if self.rndnumrange(0,0.912)<=hy:
+      if self.rndrange(0,0.912)<=hy:
         return tany*sigma+mu
 
   def geometric(self, p):
@@ -497,12 +513,12 @@ class RandomGen:
     if kappa<0:
       raise ValueError
     if kappa==0:
-      return self.rndnumexcrange(mean-pi,mean+pi)
+      return self.rndrangemaxexc(mean-pi,mean+pi)
     r=1+math.sqrt(4*kappa*kappa+1)
     rho=(r-math.sqrt(2*r))/(kappa*2)
     s=(1+rho*rho)/(2*rho)
     while True:
-      u=self.rndnumexcrange(-1,1)
+      u=self.rndrangemaxexc(-1,1)
       v=self.rndu01zerooneexc()
       z=math.cos(math.pi*u)
       w=(1+s*z)/(s+z)
@@ -793,7 +809,7 @@ of failures of each kind of failure.
            hypercube (square, cube, etc.)
            centered at the origin,
           uniformly at random. """
-      return [self.rndnumrange(-sizeFromCenter,sizeFromCenter) \
+      return [self.rndrange(-sizeFromCenter,sizeFromCenter) \
          for _ in range(dims)]
 
   def _norm(self, vec):
@@ -828,7 +844,7 @@ of failures of each kind of failure.
            spherical shell (donut, hollow sphere, etc.)
            centered at the origin,
            uniformly at random. """
-      r=self.rndnumrange(innerRadius**dims,\
+      r=self.rndrange(innerRadius**dims,\
            outerRadius**dims)**(1.0/dims)
       return self.hypersphere_point(dims, r)
 
@@ -836,10 +852,10 @@ of failures of each kind of failure.
       """ Generates a latitude and longitude, in radians,
           uniformly at random.  West and south coordinates
           are negative. """
-      lon=self.rndnumexcrange(-math.pi,math.pi)
-      latx=self.rndnumrange(-1,1)
+      lon=self.rndrangemaxexc(-math.pi,math.pi)
+      latx=self.rndrange(-1,1)
       while latx==-1 or latx==1:
-        latx=self.rndnumrange(-1,1)
+        latx=self.rndrange(-1,1)
       lat=math.atan2(math.sqrt(1-latx*latx),latx) -\
         math.pi * 0.5
       return [lat,lon]
