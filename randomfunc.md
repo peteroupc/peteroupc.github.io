@@ -132,7 +132,13 @@ One method, `RNDINT`, described next, can serve as the basis for the remaining m
 <a id=RNDINT_Random_Integers_in_0_N></a>
 ### `RNDINT`: Random Integers in [0, N]
 
-In this document, **`RNDINT(maxInclusive)`** is the core method for generating independent uniform random integers from an underlying RNG, which is called **`RNG()`** in this section. The random integer is **in the interval [0, `maxInclusive`]**.  If `RNG()` outputs integers in the interval **\[0, positive `MODULUS`\)** (examples of `MODULUS` include 1,000,000 and 6), then `RNDINT(maxInclusive)` can be implemented as in the pseudocode below.<sup>[**(2)**](#Note2)</sup>
+In this document, **`RNDINT(maxInclusive)`** is the core method for using an underlying RNG to generate independent uniform random integers **in the interval [0, `maxInclusive`]**.<sup>[**(2)**](#Note2)</sup> For the pseudocode given below:
+
+| If the underlying RNG produces... | Then `RNG()` is... | And `MODULUS` is... |
+ --------- | ------ | ------ |
+| Integers in the interval \[0, _n_\) | The underlying RNG. | _n_. |
+| Numbers in the interval \[0, 1\) known to be evenly spaced by a number _p_ (e.g., dSFMT) | The underlying RNG, except with its outputs multiplied by _p_. | 1/_p_. |
+| Numbers not specified above | A new RNG formed by writing the underlying RNG's outputs to a stream of memory units (such as 8-bit bytes) and using a _randomness extraction_ technique (outside the scope of this document) to transform that stream to _n_-bit integers. | 2<sup>_n_</sup>. |
 
     METHOD RndIntHelperNonPowerOfTwo(maxInclusive)
         cx = floor(maxInclusive / MODULUS) + 1
@@ -342,7 +348,7 @@ The na&iuml;ve approach won't work as well, though, for signed integer formats i
 
 The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform random `b`-bit integer** (with maximum 2<sup>`b`</sup> - 1).
 
-In practice, memory is usually divided into _bytes_, or 8-bit nonnegative integers in the interval [0, 255].  In this case, a byte array or a block of memory can be filled with random bits by setting each byte to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
+In practice, memory is usually divided into _bytes_, or 8-bit nonnegative integers in the interval [0, 255].  In this case, a block of memory can be filled with random bits by setting each byte in the block to `RNDINT(255)`. (There may be faster, RNG-specific ways to fill memory with random bytes, such as with RNGs that generate random numbers in parallel.  These ways are not detailed in this document.)
 
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
@@ -1878,18 +1884,16 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
 If the software and/or hardware uses a nonuniform distribution, but otherwise meets this definition, it can be converted to use a uniform distribution, at least in theory, using _randomness extraction_ techniques that are outside the scope of this document.</small>
 
-<small><sup id=Note2>(2)</sup> There are other RNGs besides those that generate integers 0 or greater.  (For example, Wichmann&ndash;Hill and dSFMT output numbers in the interval \[0, 1\).)  For such RNGs, if the RNG is known to output numbers in the interval \[0, 1\) evenly spaced by a number _p_, it can be transformed into an RNG that outputs integers in the interval \[0, 1/_p_) by multiplying its outputs by _p_.  Otherwise, the RNG can be transformed to an RNG that produces _n_ bit integers (in the interval [0, 2<sup>_n_</sup>)) by converting its outputs to a stream of 8-bit bytes and using a _randomness extraction_ technique to transform that stream to _n_-bit integers.  Randomness extraction is outside the scope of this document.
-
-For an exercise solved by the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).</small>
+<small><sup id=Note2>(2)</sup> For an exercise solved by the `RNDINT` pseudocode, see A. Koenig and B. E. Moo, _Accelerated C++_, 2000; see also a [**blog post by Johnny Chan**](http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/).  In addition, M. O'Neill discusses various methods, both biased and unbiased, for generating random integers in a range with an RNG in a [**blog post from July 2018**](http://www.pcg-random.org/posts/bounded-rands.html).</small>
 
 <small><sup id=Note3>(3)</sup> This number format describes B-bit signed integers with minimum value -2<sup>B-1</sup> and maximum value 2<sup>B-1</sup> - 1, where B is a positive even number of bits; examples include Java's `short`, `int`, and `long`, with 16, 32, and 64 bits, respectively. A _signed integer_ is an integer that can be positive, zero, or negative. In _two's-complement form_, nonnegative numbers have the highest (most significant) bit set to zero, and negative numbers have that bit (and all bits beyond) set to one, and a negative number is stored in such form by swapping the bits of a number equal to that number's absolute value minus 1.</small>
 
 <small><sup id=Note4>(4)</sup> A na&iuml;ve `RNDINTEXC` implementation often seen in certain languages like JavaScript is the idiom `floor(RNDU01OneExc()*maxExclusive)`.  However, there are certain issues with this idiom:
 
-1. Depending on how `RNDU01OneExc()` is implemented, some integers can never occur with this idiom for large `maxExclusive` values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, the resulting number will have no more than 8 bits set to 1, so that not all numbers can "randomly" occur with `maxExclusive` greater than 256.
+1. Depending on how `RNDU01OneExc()` is implemented, some integers can never occur with this idiom for large `maxExclusive` values, or this idiom can otherwise have a slight bias toward certain integers.  This bias may or may not be negligible in a given application.  For example, if `RNDU01OneExc()` is implemented as `RNDINT(255)/256`, not all numbers can "randomly" occur with `maxExclusive` greater than 256.
 2. Depending on the number format, rounding error can result in `maxExclusive` being returned in rare cases.  A more robust implementation could use a loop to check whether `maxExclusive` was generated and try again if so.  Where a loop is not possible, such as within an SQL query, the idiom above can be replaced with `min(floor(RNDU01OneExc() * maxExclusive, maxExclusive - 1))`.  Neither modification addresses the issue given in item 1.
 
-If an application is concerned about these issues, it can transform the `RNDU01OneExc()` implementation (e.g., `Math.random()`) to an RNG that outputs integers 0 or greater, and use that as the underlying RNG for `RNDINT` and thus `RNDINTEXC`; see Note (2).</small>
+If an application is concerned about these issues, it should treat the `RNDU01OneExc()` implementation (e.g., `Math.random()`) as the underlying RNG for `RNDINT` and implement `RNDINTEXC` through `RNDINT` instead.</small>
 
 <small><sup id=Note5>(5)</sup> Downey, A. B. "[**Generating Pseudo-random Floating Point Values**](http://allendowney.com/research/rand/)", 2007</small>
 

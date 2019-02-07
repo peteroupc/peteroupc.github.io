@@ -375,12 +375,12 @@ On the other hand, for a list big enough, it's generally **more important to hav
 
 An application that shuffles a list can do the shuffling&mdash;
 
-1. using a cryptographic RNG, preferably one with a security strength of `B` or greater, or
+1. using a cryptographic RNG, preferably one with a security strength of `B` bits or greater, or
 2. if a noncryptographic RNG is otherwise appropriate, using a PRNG that&mdash;
-    - has a state length of `B` or greater, and
+    - has a state length of `B` bits or greater, and
     - qualifies as a statistical RNG except it's initialized with a seed derived from data with at least **`B` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
-Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(22)**](#Note22)</sup>.  For example, `B` is 226 bits for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
+Here, `B` can usually be calculated for different lists using the Python code in the [**appendix**](#Suggested_Entropy_Size); see also (van Staveren 2000, "Lack of randomness")<sup>[**(22)**](#Note22)</sup>.  For example, `B` is 226 (bits) for a 52-item list.  An application MAY limit `B` to 256 or greater, in cases when variety of permutations is not important.
 
 <a id=GPU_Programming_Environments></a>
 ### GPU Programming Environments
@@ -516,7 +516,7 @@ Implementations of floating-point numbers and floating-point math can also diffe
 
 <small><sup id=Note15>(15)</sup> M&uuml;ller, S. "CPU Time Jitter Based Non-Physical True Random Number Generator".</small>
 
-<small><sup id=Note16>(16)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` instances each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
+<small><sup id=Note16>(16)</sup> For example, many questions on _Stack Overflow_ highlight the pitfalls of creating a new instance of .NET's `System.Random` each time a random number is needed, rather than only once in the application.  See also the section "How to Initialize RNGs".</small>
 
 <small><sup id=Note17>(17)</sup> Cliff, Y., Boyd, C., Gonzalez Nieto, J.  "How to Extract and Expand Randomness: A Summary and Explanation of Existing Results", 2009.</small>
 
