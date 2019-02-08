@@ -86,5 +86,39 @@ def prepareMarkdown(data)
    index+=1
    next ret
   }
+  if data.include?("<<Index:") && data.include?("## Index")
+    headingre= /(<a\s+(?:id|name)\s*=\s*([^>]+)>\s*<\/a>\s*\#\#+\s+(.*)\s+?)/
+    headingres= /(?:<a\s+(?:id|name)\s*=\s*(?:[^>]+)>\s*<\/a>\s*\#\#+\s+(?:.*)\s+?)/
+    sections=data.split(headingres)
+    iheadings=[];data.scan(headingre){|m|
+      iheadings.push(m)
+    }
+    links=[]
+    for i in 1...sections.length
+      iheading=iheadings[i-1]
+      sections[i]=sections[i].gsub(/<<\s*Index\:\s*([^>]+)>>/){
+        items=$1
+        items=items.split(/\s*\|\s*/)
+        for item in items
+          links.push("- **#{item}**: See [**#{iheading[2]}**](##{iheading[1]}).")
+        end
+        next ""
+      }
+    end
+    links.sort!
+    for i in 1...sections.length
+      iheading=iheadings[i-1]
+      if iheading[2]=="Index"
+         sections[i]=links.join("\n")+"\n"+sections[i]
+      end
+    end
+    newdata=[sections[0]]
+    for i in 1...sections.length
+      iheading=iheadings[i-1]
+      newdata.push(iheading[0])
+      newdata.push(sections[i])
+    end
+    data=newdata.join("")
+  end
   return data
 end
