@@ -45,8 +45,8 @@ value to the start of the next.</li>
 combined vertex attribute.</li>
 <li><a href="#BufferAccessor_set">set</a><br>Sets the first element of the attribute value with the given vertex index.</li>
 <li><a href="#BufferAccessor_setVec">setVec</a><br>Sets the elements of a vertex attribute value.</li>
-<li><a href="#BufferAccessor_setXy">setXy</a><br>TODO: Not documented yet.</li>
-<li><a href="#BufferAccessor_setXyz">setXyz</a><br>TODO: Not documented yet.</li>
+<li><a href="#BufferAccessor_setXy">setXy</a><br>Sets the first and second elements of a vertex attribute value.</li>
+<li><a href="#BufferAccessor_setXyz">setXyz</a><br>Sets the first, second, and third elements of a vertex attribute value.</li>
 </ul>
 
 <p><a name='BufferAccessor_buffer'></a></p>
@@ -255,38 +255,46 @@ where noted otherwise.</p>
 
 <h3>BufferAccessor#setXy(index, x, y)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Sets the first and second elements of a vertex attribute value.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute&#39;s buffer, except
+where noted otherwise.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: *)<br>TODO: Not documented yet.</li>
-<li><code>x</code> (Type: *)<br>TODO: Not documented yet.</li>
-<li><code>y</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+<li><code>x</code> (Type: number)<br>The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.</li>
+<li><code>y</code> (Type: number)<br>The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>This object. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
 
 <p><a name='BufferAccessor_setXyz'></a></p>
 
 <h3>BufferAccessor#setXyz(index, x, y, z)</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Sets the first, second, and third elements of a vertex attribute value.</p>
+
+<p>Note that currently, this method does no bounds checking beyond the
+checking naturally done when writing to the attribute&#39;s buffer, except
+where noted otherwise.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>index</code> (Type: *)<br>TODO: Not documented yet.</li>
-<li><code>x</code> (Type: *)<br>TODO: Not documented yet.</li>
-<li><code>y</code> (Type: *)<br>TODO: Not documented yet.</li>
-<li><code>z</code> (Type: *)<br>TODO: Not documented yet.</li>
+<li><code>index</code> (Type: number)<br>A numeric index, starting from 0, that identifies a value stored in the attribute&#39;s buffer. For example, 0 identifies the first value, 1 identifies the second, and so on.</li>
+<li><code>x</code> (Type: number)<br>The value to copy to the first element of the value at the given index, if the attribute stores 1-element or bigger values.</li>
+<li><code>y</code> (Type: number)<br>The value to copy to the second element of the value at the given index, if the attribute stores 2-element or bigger values.</li>
+<li><code>z</code> (Type: number)<br>The value to copy to the third element of the value at the given index, if the attribute stores 3-element or bigger values.</li>
 </ul>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>This object. (Type: <a href="BufferAccessor.html">BufferAccessor</a>)</p>
 
 <p><a href="index.html">Back to documentation index.</a></p>
 </div><nav id="navigation"><ul>

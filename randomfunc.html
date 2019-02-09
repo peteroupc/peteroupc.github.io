@@ -1475,7 +1475,7 @@ END METHOD
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or where the peak of the distribution&#39;s &quot;bell curve&quot; is.</li>
 <li><code>sigma</code> (&sigma;), the standard deviation, affects how wide the &quot;bell curve&quot; appears. The
-probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.</li>
+probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance&#39;s square root.)</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1495,9 +1495,9 @@ probability that a normally-distributed random number will be within one standar
 END METHOD
 </pre>
 
-<p>Since <code>Normal2</code> returns two numbers instead of one, but many applications require only one number at a time, a problem arises on how to return one number while storing the other for later retrieval.  Ways to solve this problem are outside the scope of this page, however.  The name <code>Normal</code> will be used in this document to represent a method that returns only one normally-distributed random number rather than two.</p>
+<p>(Ways to adapt <code>Normal2</code> to output only one random number at a time, rather than two, are outside the scope of this document.  The name <code>Normal</code> is used in this document to represent a method that returns only one normally-distributed random number rather than two.)</p>
 
-<p>Alternatively, or in addition, the following method (implementing a ratio-of-uniforms technique) can be used to generate normally distributed random numbers.</p>
+<p>The following method implements a ratio-of-uniforms technique and can be used instead of or in addition to <code>Normal2</code> above.</p>
 
 <pre>METHOD Normal(mu, sigma)
     bmp = sqrt(2.0/exp(1.0)) // about 0.8577638849607068
@@ -1510,15 +1510,6 @@ END METHOD
     end
 END METHOD
 </pre>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>In a <em>standard normal distribution</em>, <code>mu</code> = 0 and <code>sigma</code> = 1.</li>
-<li>If variance is given, rather than standard deviation, the standard deviation (<code>sigma</code>) is the variance&#39;s square root.</li>
-</ul>
-</blockquote>
 
 <p><a id=Binomial_Distribution></a></p>
 
@@ -2123,7 +2114,7 @@ have the same meaning as in the normal distribution.</li>
 <li><strong>Poisson distribution</strong>: See <a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Rayleigh distribution</strong>: <code>a * sqrt(-2 * ln(RNDU01ZeroExc()))</code>, where <code>a</code> is the scale and is greater than 0.  If <code>a</code> follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
-<li><strong>Standard normal distribution</strong>: See <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
+<li><strong>Standard normal distribution</strong>: <code>Normal(0, 1)</code>.  See also <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.</li>
 <li><strong>Triangular distribution</strong>: <code>ContinuousWeightedChoice([startpt, midpt, endpt], [0, 1, 0])</code>. The distribution starts at <code>startpt</code>, peaks at <code>midpt</code>, and ends at <code>endpt</code>.</li>
 <li><strong>Weibull distribution</strong>: <code>b * pow(-ln(RNDU01ZeroExc()),1.0 / a) + loc</code>, where <code>a</code> is the shape, <code>b</code> is the scale <code>loc</code> is the location, and <code>a</code> and <code>b</code> are greater than 0.</li>
@@ -2393,7 +2384,7 @@ from random number generators.</p>
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
 
-<p><small><sup id=Note23>(23)</sup> The method that formerly appeared here is the <em>Box&dash;Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
+<p><small><sup id=Note23>(23)</sup> The method that formerly appeared here is the <em>Box&dash;Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
