@@ -2093,7 +2093,7 @@ END METHOD
 <li><strong>Beta distribution</strong>: See <a href="#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
 <li><strong>Binomial distribution</strong>: See <a href="#Binomial_Distribution"><strong>Binomial Distribution</strong></a>.</li>
 <li><strong>Binormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
-<li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(pi * (RNDU01OneExc()-0.5)) + mu</code>, where <code>scale</code> is the scale and <code>mu</code> is the location of the distribution&#39;s curve peak (mode).  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.</li>
+<li><strong>Cauchy (Lorentz) distribution</strong>: <code>scale * tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5)) + mu</code>, where <code>scale</code> is the scale and <code>mu</code> is the location of the distribution&#39;s curve peak (mode).  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
 <li><strong>Exponential distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>

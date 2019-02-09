@@ -1729,7 +1729,7 @@ Most commonly used:
 - **Beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution**](#Binomial_Distribution).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Cauchy (Lorentz) distribution**: `scale * tan(pi * (RNDU01OneExc()-0.5)) + mu`, where `scale` is the scale and `mu` is the location of the distribution's curve peak (mode).  This distribution is similar to the normal distribution, but with "fatter" tails.
+- **Cauchy (Lorentz) distribution**: `scale * tan(RNDRANGEMinMaxExc(-pi*0.5, pi*0.5)) + mu`, where `scale` is the scale and `mu` is the location of the distribution's curve peak (mode).  This distribution is similar to the normal distribution, but with "fatter" tails.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
 - **Exponential distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
