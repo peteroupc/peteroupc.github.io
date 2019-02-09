@@ -644,7 +644,7 @@ the following idioms in an <code>if</code> condition:</p>
 <li>True with X percent probability: <code>RNDINTEXC(100) &lt; X</code>.</li>
 <li>True with probability X/Y: <code>RNDINTEXC(Y) &lt; X</code>.</li>
 <li>True with odds of X to Y: <code>RNDINTEXC(X + Y) &lt; X</code>.</li>
-<li>True with probability P, where P is in the interval [0, 1] (a <em>Bernoulli trial</em>): Convert P to its closest rational number X/Y, then do <code>RNDINTEXC(Y) &lt; X</code>.</li>
+<li>True with probability P, where P is in the interval [0, 1] (a <em>Bernoulli trial</em>): Convert P to an acceptably close rational number X/Y, then do <code>RNDINTEXC(Y) &lt; X</code>.</li>
 </ul>
 
 <blockquote>
@@ -2117,7 +2117,8 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>Logarithmic distribution</strong>: <code>min + (max - min) * RNDU01OneExc() * RNDU01OneExc()</code>, where <code>min</code> is the minimum value and <code>max</code> is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to <code>min</code> are exponentially more likely than numbers closer to <code>max</code>.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code>
 have the same meaning as in the normal distribution.</li>
-<li><strong>Multinormal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
+<li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
+<li><strong>Multivariate normal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Normal distribution</strong>: See <a href="#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
 <li><strong>Poisson distribution</strong>: See <a href="#Poisson_Distribution"><strong>Poisson Distribution</strong></a>.</li>
 <li><strong>Pareto distribution</strong>: <code>pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
@@ -2181,11 +2182,9 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Min-of-uniform distribution</strong>: See <a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a>.</li>
 <li><strong>Moyal distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multinomial distribution</strong>: See <a href="#Multinomial_Distribution"><strong>Multinomial Distribution</strong></a>.</li>
-<li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate Poisson distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-copula</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Multivariate <em>t</em>-distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li><strong>Multivariate normal distribution</strong>: See <a href="#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Negative binomial distribution</strong>: See <a href="#Negative_Binomial_Distribution"><strong>Negative Binomial Distribution</strong></a>.</li>
 <li><strong>Negative multinomial distribution</strong>: See the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
 <li><strong>Noncentral beta distribution</strong>: See <a href="#Beta_Distribution"><strong>Beta Distribution</strong></a>.</li>
@@ -2324,7 +2323,7 @@ from random number generators.</p>
 
 <ul>
 <li>how hard it is to predict the numbers the item produces,</li>
-<li>how well the item passes statististical randomness tests,</li>
+<li>how well the item passes statistical randomness tests,</li>
 <li>whether the item is initialized automatically or not,</li>
 <li>whether the item uses a deterministic algorithm, or</li>
 <li>whether the item extracts uniformly distributed bits from one or more noise sources.</li>

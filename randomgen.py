@@ -471,7 +471,6 @@ class RandomGen:
     while True:
       y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
       while y==math.pi/2: y=self.rndrangemaxexc(-math.pi/2,math.pi/2)
-      h=
       tany=math.tan(y)
       hy=math.exp(-(tany+math.exp(-tany))*0.5)
       hy=hy/((math.cos(y)**2)*sqrt(2.0*math.pi))

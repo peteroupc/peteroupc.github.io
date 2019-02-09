@@ -5,7 +5,6 @@ canvas { width:100%; height:100%; overflow: hidden; }
 </style>
 <script type="text/javascript" src="../h3du_min.js"></script>
 <script type="text/javascript" src="demoutil.js"></script>
-<script type="text/javascript" src="../extras/meshjson.js"></script>
 </head>
 <body>
 <canvas id=canvas></canvas>
@@ -24,51 +23,56 @@ canvas { width:100%; height:100%; overflow: hidden; }
 function TriangleParticles(scene, count, w, h) {
   "use strict";
   this.tris = [];
-  this.group = new H3DU.ShapeGroup();
   this.width = w;
   this.scene = scene;
   this.timer = {};
   this.height = h;
+  var triVertices=[]
   for(var i = 0; i < count; i++) {
     var tri = TriangleParticles.generateTri(this.width, this.height);
-    this.tris.push(tri);
-    this.group.addShape(
-    TriangleParticles.makeShapeFromTri(tri, scene));
+    this.tris[i] = tri;
+    triVertices.push(
+tri.position[0],tri.position[1],tri.position[2],0,0,1,
+tri.color[0],tri.color[1],tri.color[2],
+tri.position[3],tri.position[4],tri.position[5],0,0,1,
+tri.color[0],tri.color[1],tri.color[2],
+tri.position[6],tri.position[7],tri.position[8],0,0,1,
+tri.color[0],tri.color[1],tri.color[2])
   }
-  this.scene.addShape(this.group);
+  this.group=H3DU.MeshBuffer.fromPositionsColors(triVertices)
 }
 TriangleParticles.prototype.update = function(time) {
   "use strict";
   var frames = H3DU.newFrames(this.timer, time);
+  var attr=this.group.getAttribute("POSITION")
+  var attrcolor=this.group.getAttribute("COLOR")
+  var vec=[]
   for(var i = 0; i < this.tris.length; i++) {
     this.tris[i].life -= frames;
     if(this.tris[i].life <= 0) {
       var tri = TriangleParticles.generateTri(this.width, this.height);
       this.tris[i] = tri;
-      this.group.setShape(i, TriangleParticles.makeShapeFromTri(tri, this.scene));
+      // NOTE: No rotation here
+      attr.setXyz(i*3,tri.position[0],tri.position[1],tri.position[2])
+          .setXyz(i*3+1,tri.position[3],tri.position[4],tri.position[5])
+          .setXyz(i*3+2,tri.position[6],tri.position[7],tri.position[8])
+      attrcolor.setVec(i*3,tri.color)
+          .setVec(i*3+1,tri.color)
+          .setVec(i*3+2,tri.color)
     } else {
-      var trans = this.group.getShape(i).getTransform();
-      trans.movePosition(H3DU.MathUtil.vec3scale(this.tris[i].movement, frames));
-      trans.multRotation(this.tris[i].rotation * frames, 0, 0, 1);
+      var trans = H3DU.MathUtil.mat4translated(
+         H3DU.MathUtil.vec3scale(this.tris[i].movement, frames));
+      trans=H3DU.MathUtil.mat4rotate(trans,
+         this.tris[i].rotation * frames, 0, 0, 1);
+      attr.getVec(i*3,vec)
+      attr.setVec(i*3,H3DU.MathUtil.mat4transformVec3(vec))
+      attr.getVec(i*3+1,vec)
+      attr.setVec(i*3+1,H3DU.MathUtil.mat4transformVec3(vec))
+      attr.getVec(i*3+2,vec)
+      attr.setVec(i*3+2,H3DU.MathUtil.mat4transformVec3(vec))
     }
   }
 };
-TriangleParticles.makeShapeFromTri = function(tri) {
-  "use strict";
-  var verts=[
-    tri.position[0],tri.position[1],tri.position[2],0,0,1,
-    tri.position[3],tri.position[4],tri.position[5],0,0,1,
-    tri.position[6],tri.position[7],tri.position[8],0,0,1,
-  ]
-  var mesh=H3DU.MeshBuffer.fromPositionsNormals(verts,[0,1,2])
-  var sh = new H3DU.Shape(mesh)
-   .setMaterial(H3DU.Material.fromBasic(tri.color));
-  sh.getTransform().setPosition(
-  tri.center[0], tri.center[1], tri.center[2]
- );
-  return sh;
-};
-
 // Calculates the area of a triangle
 TriangleParticles._getArea = function(tri) {
   "use strict";
@@ -113,22 +117,6 @@ TriangleParticles.generateTri = function(width, height) {
     "life":life
   };
 };
-
-  // Create the 3D scene; find the HTML canvas and pass it
-  // to Scene3D.
-var scene = new H3DU.Scene3D(document.getElementById("canvas"))
-   .setClearColor("white");
-var sub = new H3DU.Batch3D();
-sub.getLights().setBasic();
-var tris = new TriangleParticles(sub, 200, scene.getWidth(), scene.getHeight());
-  // Set up the render loop
-H3DU.renderLoop(function(time) {
-  "use strict";
-  sub.ortho2DAspect(0, scene.getWidth(), scene.getHeight(), 0);
-  tris.update(time);
-   // Render the scene
-  scene.render(sub);
-});
 // -->
 </script>
 </body>

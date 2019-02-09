@@ -498,7 +498,7 @@ the following idioms in an `if` condition:
 - True with X percent probability: `RNDINTEXC(100) < X`.
 - True with probability X/Y: `RNDINTEXC(Y) < X`.
 - True with odds of X to Y: `RNDINTEXC(X + Y) < X`.
-- True with probability P, where P is in the interval \[0, 1\] (a _Bernoulli trial_): Convert P to its closest rational number X/Y, then do `RNDINTEXC(Y) < X`.
+- True with probability P, where P is in the interval \[0, 1\] (a _Bernoulli trial_): Convert P to an acceptably close rational number X/Y, then do `RNDINTEXC(Y) < X`.
 
 > **Examples:**
 > - True with probability 3/8: `RNDINTEXC(8) < 3`.
@@ -1748,7 +1748,8 @@ Most commonly used:
 - **Logarithmic distribution**: `min + (max - min) * RNDU01OneExc() * RNDU01OneExc()`, where `min` is the minimum value and `max` is the maximum value (Saucier 2000, p. 26).  In this distribution, numbers closer to `min` are exponentially more likely than numbers closer to `max`.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma`
  have the same meaning as in the normal distribution.
-- **Multinormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
+- **Multinormal distribution**: See multivariate normal distribution.
+- **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Normal distribution**: See [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution).
 - **Poisson distribution**: See [**Poisson Distribution**](#Poisson_Distribution).
 - **Pareto distribution**: `pow(RNDU01ZeroOneExc(), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
@@ -1807,11 +1808,9 @@ Miscellaneous:
 - **Min-of-uniform distribution**: See [**Gamma Distribution**](#Gamma_Distribution).
 - **Moyal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multinomial distribution**: See [**Multinomial Distribution**](#Multinomial_Distribution).
-- **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate Poisson distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-copula**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multivariate _t_-distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
 - **Negative binomial distribution**: See [**Negative Binomial Distribution**](#Negative_Binomial_Distribution).
 - **Negative multinomial distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Noncentral beta distribution**: See [**Beta Distribution**](#Beta_Distribution).
@@ -1929,7 +1928,7 @@ I acknowledge the commenters to the CodeProject version of this page, including 
 
 <small><sup id=Note1>(1)</sup> For the definition of an RNG, it is irrelevant&mdash;
 - how hard it is to predict the numbers the item produces,
-- how well the item passes statististical randomness tests,
+- how well the item passes statistical randomness tests,
 - whether the item is initialized automatically or not,
 - whether the item uses a deterministic algorithm, or
 - whether the item extracts uniformly distributed bits from one or more noise sources.
