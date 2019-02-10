@@ -74,7 +74,10 @@ buffer stores each triangle using three consecutive vertices.</li>
 
 <ul>
 <li><a href="#MeshBuffer_deindex">deindex</a><br>TODO: Not documented yet.</li>
-<li><a href="#MeshBuffer_ensureIndices">ensureIndices</a><br>TODO: Not documented yet.</li>
+<li><a href="#MeshBuffer_ensureIndices">ensureIndices</a><br>Gets the array of vertex indices used by this mesh buffer, or if
+such an array doesn&#39;t exist, builds an array containing one index
+for each vertex in this mesh buffer, in the order in which those
+vertices appear.</li>
 <li><a href="#MeshBuffer.fromPositions">fromPositions</a><br>Creates a new mesh buffer with the given array of vertex positions.</li>
 <li><a href="#MeshBuffer.fromPositionsNormals">fromPositionsNormals</a><br>Creates a new mesh buffer with the given array of vertex positions
 and vertex normals.</li>
@@ -173,11 +176,14 @@ buffer stores each triangle using three consecutive vertices.</p>
 
 <h3>MeshBuffer#ensureIndices()</h3>
 
-<p>TODO: Not documented yet.</p>
+<p>Gets the array of vertex indices used by this mesh buffer, or if
+such an array doesn&#39;t exist, builds an array containing one index
+for each vertex in this mesh buffer, in the order in which those
+vertices appear.</p>
 
 <h4>Return Value</h4>
 
-<p>TODO: Not documented yet. (Type: *)</p>
+<p>The vertex index array. (Type: Uint16Array | Uint32Array | Uint8Array)</p>
 
 <p><a name='MeshBuffer.fromPositions'></a></p>
 

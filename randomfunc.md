@@ -719,13 +719,7 @@ Example criteria include checking&mdash;
 <a id=Generating_Random_Numbers_in_Sorted_Order></a>
 ### Generating Random Numbers in Sorted Order
 
-To generate random numbers in sorted order&mdash;
-
-1. generate them using any method and where the numbers have any distribution and range, then
-2. store them in a list, then
-3. sort the list using a sorting algorithm (details on sorting algorithms are beyond the scope of this document).
-
-(Bentley and Saxe 1980)<sup>[**(10)**](#Note10)</sup> describes a way to generate random numbers in sorted order, but it's not given here because it relies on a method akin to `RNDU01()`, which may not be adequate for large numbers of sorted random numbers depending on how `RNDU01()` is implemented.
+In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document's scope.) (Bentley and Saxe 1980)<sup>[**(10)**](#Note10)</sup> describes a way to generate random numbers in sorted order, but it's not given here because it relies on a method akin to `RNDU01()`, which may not be adequate for large numbers of sorted random numbers depending on how `RNDU01()` is implemented.
 
 <a id=Random_Walks></a>
 ### Random Walks

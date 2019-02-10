@@ -914,15 +914,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 
 <h3>Generating Random Numbers in Sorted Order</h3>
 
-<p>To generate random numbers in sorted order&mdash;</p>
-
-<ol>
-<li>generate them using any method and where the numbers have any distribution and range, then</li>
-<li>store them in a list, then</li>
-<li>sort the list using a sorting algorithm (details on sorting algorithms are beyond the scope of this document).</li>
-</ol>
-
-<p>(Bentley and Saxe 1980)<sup><a href="#Note10"><strong>(10)</strong></a></sup> describes a way to generate random numbers in sorted order, but it&#39;s not given here because it relies on a method akin to <code>RNDU01()</code>, which may not be adequate for large numbers of sorted random numbers depending on how <code>RNDU01()</code> is implemented.</p>
+<p>In general, sorting random numbers is no different from sorting any other data. (Sorting algorithms are outside this document&#39;s scope.) (Bentley and Saxe 1980)<sup><a href="#Note10"><strong>(10)</strong></a></sup> describes a way to generate random numbers in sorted order, but it&#39;s not given here because it relies on a method akin to <code>RNDU01()</code>, which may not be adequate for large numbers of sorted random numbers depending on how <code>RNDU01()</code> is implemented.</p>
 
 <p><a id=Random_Walks></a></p>
 
