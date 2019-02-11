@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on Mar. 5, 2016; last updated on Feb. 7, 2019.</p>
+<p>Begun on Mar. 5, 2016; last updated on Feb. 10, 2019.</p>
 
 <p>Most apps that use random numbers care about either unpredictability, speed/high quality, or repeatability.  This article explains the three kinds of RNGs and gives recommendations on each kind.</p>
 
@@ -22,7 +22,7 @@
 <li><em>seeded PRNGs</em> (pseudorandom number generators), which generate numbers that &quot;seem&quot; random given an initial &quot;seed&quot;.</li>
 </ul>
 
-<p>A distinction between <em>statistical</em> and <em>cryptographic</em> RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as <code>java.security.SecureRandom</code>).  However, for many programming languages, the built-in RNG offers little assurance of quality.</p>
+<p>A distinction between <em>statistical</em> and <em>cryptographic</em> RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C&#39;s <code>rand</code> or Java&#39;s <code>java.util.Random</code>) and sometimes an RNG intended for information security purposes (such as Ruby&#39;s <code>SecureRandom</code>).  However, for many programming languages, the built-in RNG offers little assurance of quality.</p>
 
 <p><strong>This document covers:</strong></p>
 
@@ -171,7 +171,7 @@
 
 <ul>
 <li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
-<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>, although it also includes a much stronger <code>SecureRandom</code> class),</li>
+<li>specify a relatively weak general-purpose RNG (such as Java&#39;s <code>java.math.Random</code>),</li>
 <li>implement RNGs by default that leave something to be desired (such as Mersenne Twister),</li>
 <li>seed RNGs with a timestamp by default (such as the <a href="https://docs.microsoft.com/dotnet/api/system.random"><strong>.NET Framework implementation of <code>System.Random</code></strong></a>), and/or</li>
 <li>use fixed seeds by default in their RNGs (as is the case in <a href="https://www.mathworks.com/help/matlab/examples/controlling-random-number-generation.html"><strong>MATLAB</strong></a> and C; see also the question titled &quot;Matlab rand and c++ rand()&quot; on <em>Stack Overflow</em>),</li>
@@ -505,7 +505,7 @@
 
 <p><small>(E) Ruby&#39;s <code>Random#rand</code> and <code>SecureRandom.rand</code> methods present a beautiful and simple API for random number generation, in my opinion.  Namely, <code>rand()</code> returns a number from 0 to 1 exclusive, and <code>rand(N)</code> returns an integer from 0 to N exclusive.</small></p>
 
-<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</small></p>
+<p><small>(F) Calling the <code>setSeed</code> method of <code>SecureRandom</code> before use is RECOMMENDED. The data passed to the method SHOULD be data described in note (C). (Despite the name, <code>setSeed</code> <em>supplements</em> the existing seed, according to the documentation.)  See also (Klyubin 2013)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  Using the <code>SecureRandom</code> implementation <code>&quot;SHA1PRNG&quot;</code> is NOT RECOMMENDED, because of weaknesses in seeding and RNG quality in implementations as of 2013 (Michaelis et al., 2013)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.</small></p>
 
 <p><small>(G) <a href="http://en.cppreference.com/w/cpp/numeric/random/random_device"><strong><code>std::random_device</code></strong></a>, introduced in C++11, is NOT RECOMMENDED because its specification leaves considerably much to be desired.  For example,  <code>std::random_device</code> can fall back to a pseudorandom number generator of unspecified quality without much warning.  At best, <code>std::random_device</code> SHOULD only be used to supplement other techniques for random number generation.</small></p>
 
@@ -755,6 +755,8 @@
 <p><small><sup id=Note26>(26)</sup> Such arbitrary data can include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP800-90A and the references below.<br/>Everspaugh, A., Zhai, Y., et al.  &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br>Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.</small></p>
 
 <p><small><sup id=Note27>(27)</sup> Allowing applications to do so would hamper forward compatibility &mdash; the API would then be less free to change how the RNG is implemented in the future (e.g., to use a cryptographic or otherwise &quot;better&quot; RNG), or to make improvements or bug fixes in methods that use that RNG (such as shuffling and Gaussian number generation).  (As a notable example, the V8 JavaScript engine recently changed its <code>Math.random()</code> implementation to use a variant of <code>xorshift128+</code>, which is backward compatible because nothing in JavaScript allows  <code>Math.random()</code> to be seeded.)  Nevertheless, APIs can still allow applications to provide additional input (&quot;entropy&quot;) to the RNG in order to increase its randomness rather than to ensure repeatability.</small></p>
+
+<p><small><sup id=Note28>(28)</sup> Michaelis, K., Meyer, C., and Schwenk, J. &quot;Randomly Failed! The State of Randomness in Current Java Implementations&quot;, 2013.</small></p>
 
 <p><a id=Appendix></a></p>
 

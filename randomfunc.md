@@ -1222,6 +1222,8 @@ The following method implements a ratio-of-uniforms technique and can be used in
         end
     END METHOD
 
+A third way to generate normally-distributed numbers is to run the inverse cumulative distribution function on `RNDU01ZeroOneExc()`.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
+
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
 
