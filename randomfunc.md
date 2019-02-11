@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Begun on June 4, 2017; last updated on Feb. 10, 2019.
+Begun on June 4, 2017; last updated on Feb. 11, 2019.
 
 Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.
 
@@ -905,7 +905,7 @@ The technique presented here can solve the problem of sorting a list of items su
 <a id=Weighted_Choice_Without_Replacement_Indefinite_Size_List></a>
 #### Weighted Choice Without Replacement (Indefinite-Size List)
 
-If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(13)**](#Note13)</sup>, and see also (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is an arbitrary function that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
+If the number of items in a list is not known in advance, then the following pseudocode implements a `RandomKItemsFromFileWeighted` that selects up to `k` random items from a file (`file`) of indefinite size (similarly to [**`RandomKItemsFromFile`**](#Pseudocode_for_Random_Sampling)).  See (Efraimidis and Spirakis 2005)<sup>[**(13)**](#Note13)</sup>, and see also (Efraimidis 2015)<sup>[**(14)**](#Note14)</sup>.  In the pseudocode below, `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 
     METHOD RandomKItemsFromFileWeighted(file, k)
       list = NewList()
@@ -1186,19 +1186,19 @@ The following method generates a random result of rolling virtual dice.<sup>[**(
 <a id=Normal_Gaussian_Distribution></a>
 ### Normal (Gaussian) Distribution
 
-The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup>[**(23)**](#Note23)</sup> to generate two normally-distributed random numbers:
+The [**_normal distribution_**](https://en.wikipedia.org/wiki/Normal_distribution) (also called the Gaussian distribution) takes the following two parameters:
 - `mu` (&mu;) is the mean (average), or where the peak of the distribution's "bell curve" is.
 - `sigma` (&sigma;), the standard deviation, affects how wide the "bell curve" appears. The
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times `sigma`), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance's square root.)
 
-&nbsp;
+There are a number of methods for normal random number generation.<sup>[**(23)**](#Note23)</sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  The name `Normal` is used in this document to represent a method that returns only one normally-distributed random number rather than two.)
 
     METHOD Normal2(mu, sigma)
       while true
-        a = RNDU01()
-        b = RNDU01()
-        if a != 0 and RNDINT(1) == 0: a = 0 - a
-        if b != 0 and RNDINT(1) == 0: b = 0 - b
+        a = RNDU01ZeroExc()
+        b = RNDU01ZeroExc()
+        if RNDINT(1) == 0: a = 0 - a
+        if RNDINT(1) == 0: b = 0 - b
         c = a * a + b * b
         if c != 0 and c <= 1
            c = sqrt(-2 * ln(c) / c)
@@ -1207,9 +1207,7 @@ probability that a normally-distributed random number will be within one standar
       end
     END METHOD
 
-(Ways to adapt `Normal2` to output only one random number at a time, rather than two, are outside the scope of this document.  The name `Normal` is used in this document to represent a method that returns only one normally-distributed random number rather than two.)
-
-The following method implements a ratio-of-uniforms technique and can be used instead of or in addition to `Normal2` above.
+The following method implements a ratio-of-uniforms technique and can be used instead of or in addition to the polar method above.
 
     METHOD Normal(mu, sigma)
         bmp = sqrt(2.0/exp(1.0)) // about 0.8577638849607068
@@ -1221,8 +1219,6 @@ The following method implements a ratio-of-uniforms technique and can be used in
             end
         end
     END METHOD
-
-A third way to generate normally-distributed numbers is to run the inverse cumulative distribution function on `RNDU01ZeroOneExc()`.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
 
 <a id=Binomial_Distribution></a>
 ### Binomial Distribution
@@ -1989,7 +1985,13 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 - The [**MathWorld article "Dice"**](http://mathworld.wolfram.com/Dice.html) provided the mean of the dice roll distribution.
 - S. Eger, "Stirling's approximation for central extended binomial coefficients", 2014, helped suggest the variance of the dice roll distribution.</small>
 
-<small><sup id=Note23>(23)</sup> The method that formerly appeared here is the _Box&dash;Muller transformation_: `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.  A method of generating approximate standard normal (`mu`=0, `sigma`=1) random numbers, which consists of summing twelve `RNDU01OneExc()`  numbers and subtracting by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small>
+<small><sup id=Note23>(23)</sup> For example:
+
+1. In the _Box&dash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
+2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
+3. Generating `RNDU01ZeroOneExc()`, then running the inverse cumulative distribution function on that number, results in a standard normal random number.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
+
+In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 
 <small><sup id=Note24>(24)</sup> Smith and Tromble, "[**Sampling Uniformly from the Unit Simplex**](http://www.cs.cmu.edu/~nasmith/papers/smith+tromble.tr04.pdf)", 2004.</small>
 

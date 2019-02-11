@@ -6,7 +6,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>Begun on June 4, 2017; last updated on Feb. 10, 2019.</p>
+<p>Begun on June 4, 2017; last updated on Feb. 11, 2019.</p>
 
 <p>Discusses many ways applications can do random number generation and sampling from an underlying RNG and includes pseudocode for many of them.</p>
 
@@ -1133,7 +1133,7 @@ end
 
 <h4>Weighted Choice Without Replacement (Indefinite-Size List)</h4>
 
-<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is an arbitrary function that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
+<p>If the number of items in a list is not known in advance, then the following pseudocode implements a <code>RandomKItemsFromFileWeighted</code> that selects up to <code>k</code> random items from a file (<code>file</code>) of indefinite size (similarly to <a href="#Pseudocode_for_Random_Sampling"><strong><code>RandomKItemsFromFile</code></strong></a>).  See (Efraimidis and Spirakis 2005)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, and see also (Efraimidis 2015)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  In the pseudocode below, <code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</p>
 
 <pre>METHOD RandomKItemsFromFileWeighted(file, k)
   list = NewList()
@@ -1469,7 +1469,7 @@ END METHOD
 
 <h3>Normal (Gaussian) Distribution</h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><strong><em>normal distribution</em></strong></a> (also called the Gaussian distribution) can be implemented using the pseudocode below, which uses the polar method <sup><a href="#Note23"><strong>(23)</strong></a></sup> to generate two normally-distributed random numbers:</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Normal_distribution"><strong><em>normal distribution</em></strong></a> (also called the Gaussian distribution) takes the following two parameters:</p>
 
 <ul>
 <li><code>mu</code> (&mu;) is the mean (average), or where the peak of the distribution&#39;s &quot;bell curve&quot; is.</li>
@@ -1477,14 +1477,14 @@ END METHOD
 probability that a normally-distributed random number will be within one standard deviation from the mean is about 68.3%; within two standard deviations (2 times <code>sigma</code>), about 95.4%; and within three standard deviations, about 99.7%.  (Some publications give &sigma;<sup>2</sup>, or variance, rather than standard deviation, as the second parameter.  In this case, the standard deviation is the variance&#39;s square root.)</li>
 </ul>
 
-<p>&nbsp;</p>
+<p>There are a number of methods for normal random number generation.<sup><a href="#Note23"><strong>(23)</strong></a></sup> The pseudocode below uses the polar method to generate two normal random numbers. (Ways to adapt the pseudocode to output only one random number at a time, rather than two, are outside the scope of this document.  The name <code>Normal</code> is used in this document to represent a method that returns only one normally-distributed random number rather than two.)</p>
 
 <pre>METHOD Normal2(mu, sigma)
   while true
-    a = RNDU01()
-    b = RNDU01()
-    if a != 0 and RNDINT(1) == 0: a = 0 - a
-    if b != 0 and RNDINT(1) == 0: b = 0 - b
+    a = RNDU01ZeroExc()
+    b = RNDU01ZeroExc()
+    if RNDINT(1) == 0: a = 0 - a
+    if RNDINT(1) == 0: b = 0 - b
     c = a * a + b * b
     if c != 0 and c &lt;= 1
        c = sqrt(-2 * ln(c) / c)
@@ -1494,9 +1494,7 @@ probability that a normally-distributed random number will be within one standar
 END METHOD
 </pre>
 
-<p>(Ways to adapt <code>Normal2</code> to output only one random number at a time, rather than two, are outside the scope of this document.  The name <code>Normal</code> is used in this document to represent a method that returns only one normally-distributed random number rather than two.)</p>
-
-<p>The following method implements a ratio-of-uniforms technique and can be used instead of or in addition to <code>Normal2</code> above.</p>
+<p>The following method implements a ratio-of-uniforms technique and can be used instead of or in addition to the polar method above.</p>
 
 <pre>METHOD Normal(mu, sigma)
     bmp = sqrt(2.0/exp(1.0)) // about 0.8577638849607068
@@ -1509,8 +1507,6 @@ END METHOD
     end
 END METHOD
 </pre>
-
-<p>A third way to generate normally-distributed numbers is to run the inverse cumulative distribution function on <code>RNDU01ZeroOneExc()</code>.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.</p>
 
 <p><a id=Binomial_Distribution></a></p>
 
@@ -2385,7 +2381,15 @@ from random number generators.</p>
 <li>S. Eger, &quot;Stirling&#39;s approximation for central extended binomial coefficients&quot;, 2014, helped suggest the variance of the dice roll distribution.</small></li>
 </ul>
 
-<p><small><sup id=Note23>(23)</sup> The method that formerly appeared here is the <em>Box&dash;Muller transformation</em>: <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.  A method of generating approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, which consists of summing twelve <code>RNDU01OneExc()</code>  numbers and subtracting by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>), results in values not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</small></p>
+<p><small><sup id=Note23>(23)</sup> For example:</p>
+
+<ol>
+<li>In the <em>Box&dash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = 2 * pi * RNDU01OneExc()</code> and <code>radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma</code>, are two independent normally-distributed random numbers.</li>
+<li>Computing the sum of twelve <code>RNDU01OneExc()</code> numbers and subtracting the sum by 6 (see also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>) results in approximate standard normal (<code>mu</code>=0, <code>sigma</code>=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.</li>
+<li>Generating <code>RNDU01ZeroOneExc()</code>, then running the inverse cumulative distribution function on that number, results in a standard normal random number.  An approximation is found in M. Wichura, <em>Applied Statistics</em> 37(3), 1988.</li>
+</ol>
+
+<p>In 2007, Thomas, D., et al. gave a survey of normal random number methods in &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007, article 11.</small></p>
 
 <p><small><sup id=Note24>(24)</sup> Smith and Tromble, &quot;<a href="http://www.cs.cmu.edu/%7Enasmith/papers/smith+tromble.tr04.pdf"><strong>Sampling Uniformly from the Unit Simplex</strong></a>&quot;, 2004.</small></p>
 
