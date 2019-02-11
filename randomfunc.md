@@ -1413,9 +1413,7 @@ A random integer that follows a _negative binomial distribution_ expresses the n
     END METHOD
 
 > **Note:** A **geometric distribution** can be sampled by generating `NegativeBinomial(1, p)`, where `p` has the same meaning
- as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)
->
-> **Example:** If `p` is 0.5 and `successes` is 1, the negative binomial distribution models the task "Flip a coin until you get tails, then count the number of heads."
+ as in the negative binomial distribution.  Here, the sampled number is the number of failures that have happened before a success happens. (Saucier 2000, p. 44, also mentions an alternative definition that includes the success.)  For example, if `p` is 0.5, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."
 
 <a id=von_Mises_Distribution></a>
 ### von Mises Distribution
@@ -1508,17 +1506,17 @@ the number of items labeled `1` or `0` in that set.
                 return error
         end
         if ones == 0: return 0
-       successes = 0
+        successes = 0
         i = 0
         currentCount = count
         currentOnes = ones
         while i < trials and currentOnes > 0
-                if RNDINTEXC(currentCount) < currentOnes
-                        currentOnes = currentOnes - 1
-                        successes = successes + 1
-                end
-                currentCount = currentCount - 1
-                i = i + 1
+          if RNDINTEXC(currentCount) < currentOnes
+            currentOnes = currentOnes - 1
+            successes = successes + 1
+          end
+          currentCount = currentCount - 1
+          i = i + 1
         end
         return successes
     END METHOD
@@ -1987,9 +1985,9 @@ provided the PDF's values are all 0 or greater and the area under the PDF's curv
 
 <small><sup id=Note23>(23)</sup> For example:
 
-1. In the _Box&dash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
+1. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = 2 * pi * RNDU01OneExc()` and `radius = sqrt(-2 * ln(RNDU01ZeroExc())) * sigma`, are two independent normally-distributed random numbers.
 2. Computing the sum of twelve `RNDU01OneExc()` numbers and subtracting the sum by 6 (see also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution)) results in approximate standard normal (`mu`=0, `sigma`=1) random numbers, whose values are not less than -6 or greater than 6; on the other hand, in a standard normal distribution, results less than -6 or greater than 6 will occur only with a generally negligible probability.
-3. Generating `RNDU01ZeroOneExc()`, then running the inverse cumulative distribution function on that number, results in a standard normal random number.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
+3. Generating `RNDU01ZeroOneExc()`, then running the standard normal distribution's inverse cumulative distribution function on that number, results in a random number from that distribution.  An approximation is found in M. Wichura, _Applied Statistics_ 37(3), 1988.
 
 In 2007, Thomas, D., et al. gave a survey of normal random number methods in "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007, article 11.</small>
 

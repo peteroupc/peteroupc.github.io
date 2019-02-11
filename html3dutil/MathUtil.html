@@ -792,9 +792,15 @@ are converted to columns and vice versa.)</p>
 in the form of a view frustum, or the limits in the &quot;camera&quot;&#39;s view.</p>
 
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
-view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
-component of the transformed vertex). For a matrix in which Z coordinates
-range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.</p>
+view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
+component of the transformed vertex) and those Z coordinates
+increase from front to back.</p>
+
+<p>For a matrix in which Z coordinates
+range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
+
+<p>For a matrix in which Y coordinates
+increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -807,7 +813,7 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 <li><code>l</code> (Type: number)<br>X coordinate of the point in eye space where the left clipping plane meets the near clipping plane.</li>
 <li><code>r</code> (Type: number)<br>X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Y coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.</li>
-<li><code>t</code> (Type: number)<br>Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
+<li><code>t</code> (Type: number)<br>Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
 </ul>
 
@@ -1037,9 +1043,14 @@ plane and the top to the bottom.</p>
 objects with the same size won&#39;t appear smaller as they get more distant from the &quot;camera&quot;.</p>
 
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
-view volume (as is the case in WebGL) will range from -1 to 1.
-For a matrix in which Z coordinates range from 0 to 1, divide the 11th and 15th elements
-of the result (zero-based indices 10 and 14) by 2, then add 0.5 to the 15th element.</p>
+view volume (as is the case by default in WebGL and OpenGL) will range from -1 to 1.</p>
+
+<p>For a matrix in which Z coordinates range from 0 to 1 (as is the case by default in DirectX, Metal, and Vulkan), divide the 11th and
+15th elements of the result (zero-based indices 10 and 14) by 2, then add 0.5 to
+the 15th element.</p>
+
+<p>For a matrix in which Y coordinates increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 6th and
+14th elements of the result (zero-based indices 5 and 13) by 2.</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -1051,7 +1062,7 @@ reverse the sign of the 11th element of the result (zero-based index 10).</p>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the orthographic view.</li>
 <li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
-<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
 <li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 </ul>
@@ -1079,7 +1090,7 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the orthographic view.</li>
 <li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
-<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1111,7 +1122,7 @@ of coordinates when using this matrix and on adjusting the matrix for other conv
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
 <li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
-<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
 </ul>
 
@@ -1154,7 +1165,7 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 <li><code>l</code> (Type: number)<br>Leftmost coordinate of the view rectangle.</li>
 <li><code>r</code> (Type: number)<br>Rightmost coordinate of the orthographic view. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
-<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that Y coordinates increase upward, as they do in WebGL when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
+<li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
 <li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
@@ -1182,10 +1193,15 @@ window.innerWidth/Math.max(1,window.innerHeight));
 <p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>.</p>
 
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
-view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
+view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
 component of the transformed vertex) and
-increase from left to right and bottom to top. For a matrix in which Z coordinates
-range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.</p>
+increase from left to right, bottom to top, and front to back.</p>
+
+<p>For a matrix in which Z coordinates
+range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
+
+<p>For a matrix in which Y coordinates
+increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -1228,10 +1244,15 @@ window.innerWidth/Math.max(1,window.innerHeight),
 <p>Returns a 4x4 matrix representing a <a href="tutorial-camera.html">perspective projection</a>,
 given an X axis field of view.
 When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
-view volume (as is the case in WebGL) will range from -W to W (where W is the fourth
+view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
 component of the transformed vertex) and
-increase from left to right and bottom to top. For a matrix in which Z coordinates
-range from 0 to W, divide the 15th element of the result (zero-based index 14) by 2.</p>
+increase from left to right, bottom to top, and front to back.</p>
+
+<p>For a matrix in which Z coordinates
+range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
+
+<p>For a matrix in which Y coordinates
+increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
 
 <p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
 To adjust the result of this method for a left-handed system,
@@ -1283,7 +1304,7 @@ then returning that vector&#39;s new X, Y, and Z.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar Math methods, the X, Y, and Z coordinates within the view volume (as is the case in WebGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods&#39; documentation.</li>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar Math methods, the X, Y, and Z coordinates within the view volume (as is the case by default in WebGL and OpenGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods&#39; documentation.</li>
 <li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of a 3D point to transform. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: number) (optional)<br>Y coordinate.</li>
 <li><code>vz</code> (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 0.</li>

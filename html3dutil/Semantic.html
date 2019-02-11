@@ -136,7 +136,7 @@ In general, vertex positions are 2-dimensional or 3-dimensional.</p>
 
 <p>If a texture (array of bits) will be applied to a mesh buffer&#39;s geometry, then texture coordinates need to be specified for each vertex in that mesh buffer. In general, a texture coordinate is one of two numbers, called U and V, that map to a specific point in the texture. Each texture coordinate ranges from 0 to 1.</p>
 
-<p>By default in most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1), and V coordinates start at the bottom of the texture (0) and increase to the top (1). (An exception is WebGL, where, by default, V coordinates start at the top and increase to the bottom.) Thus, for example, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
+<p>In most 3D graphics pipelines, U coordinates start at the left of the texture (0) and increase to the right (1). In some graphics pipelines, such as OpenGL, V coordinates start by default at the bottom of the texture (0) and increase to the top (1), while in others, such as WebGL, Vulkan, Metal, and DirectX, V coordinates start by default at the top of the texture and increase to the bottom. Thus, for example, in OpenGL by default, texture coordinates (0, 1) indicate the top left corner of the texture, and texture coordinates (0.5, 0.5) indicate the center of the texture.</p>
 
 <p>In general, texture coordinates describe 2-dimensional points.
 However, for such texturing tasks as mapping
