@@ -793,19 +793,15 @@ in the form of a view frustum, or the limits in the &quot;camera&quot;&#39;s vie
 
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
-component of the transformed vertex) and those Z coordinates
-increase from front to back.</p>
+component of the transformed vertex).</p>
 
 <p>For a matrix in which Z coordinates
 range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
 
-<p>For a matrix in which Y coordinates
-increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
-
-<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 9th, 10th, 11th, and 12th
-elements of the result (zero-based indices 8, 9, 10, and 11).</p>
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>. To adjust this method&#39;s result for a left-handed system, reverse the sign of the result&#39;s:<ul>
+<li>1st to 4th elements (zero-based indices 0 to 3), to make X coordinates increase to the right rather than to the left, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to make Y coordinates increase downward rather than upward (as is the case by default in Vulkan), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to make Z coordinates increase from far to near rather than from near to far.</ul></p>
 
 <h4>Parameters</h4>
 
@@ -814,13 +810,8 @@ elements of the result (zero-based indices 8, 9, 10, and 11).</p>
 <li><code>r</code> (Type: number)<br>X coordinate of the point in eye space where the right clipping plane meets the near clipping plane. (&quot;l&quot; is usually less than &quot;r&quot;, so that X coordinates increase from left to right. If &quot;l&quot; is greater than &quot;r&quot;, X coordinates increase in the opposite direction.)</li>
 <li><code>b</code> (Type: number)<br>Y coordinate of the point in eye space where the bottom clipping plane meets the near clipping plane.</li>
 <li><code>t</code> (Type: number)<br>Y coordinate of the point in eye space where the top clipping plane meets the near clipping plane. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
-<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-</ul>
-
-<p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
-
-<ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.<br>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL and most other graphics pipelines by default when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1049,12 +1040,10 @@ view volume (as is the case by default in WebGL and OpenGL) will range from -1 t
 15th elements of the result (zero-based indices 10 and 14) by 2, then add 0.5 to
 the 15th element.</p>
 
-<p>For a matrix in which Y coordinates increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 6th and
-14th elements of the result (zero-based indices 5 and 13) by 2.</p>
-
-<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 11th element of the result (zero-based index 10).</p>
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>. To adjust this method&#39;s result for a left-handed system, reverse the sign of the result&#39;s:<ul>
+<li>1st to 4th elements (zero-based indices 0 to 3), to make X coordinates increase to the right rather than to the left, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to make Y coordinates increase downward rather than upward (as is the case by default in Vulkan), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to make Z coordinates increase from far to near rather than from near to far.</ul></p>
 
 <h4>Parameters</h4>
 
@@ -1064,7 +1053,7 @@ reverse the sign of the 11th element of the result (zero-based index 10).</p>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
+<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL and most other graphics pipelines by default when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1167,7 +1156,7 @@ when using this matrix and on adjusting the matrix for other conventions.</p>
 <li><code>b</code> (Type: number)<br>Bottommost coordinate of the orthographic view.</li>
 <li><code>t</code> (Type: number)<br>Topmost coordinate of the orthographic view. (&quot;b&quot; is usually less than &quot;t&quot;, so that, in WebGL and OpenGL by default, Y coordinates increase upward when just this matrix is used to transform vertices. If &quot;b&quot; is greater than &quot;t&quot;, Y coordinates increase in the opposite direction.)</li>
 <li><code>n</code> (Type: number)<br>Distance from the &quot;camera&quot; to the near clipping plane. A positive value means the plane is in front of the viewer.</li>
-<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
+<li><code>f</code> (Type: number)<br>Distance from the &quot;camera&quot; to the far clipping plane. A positive value means the plane is in front of the viewer. (&quot;n&quot; is usually less than &quot;f&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL and most other graphics pipelines by default when just this matrix is used to transform vertices. If &quot;n&quot; is greater than &quot;f&quot;, Z coordinates increase in the opposite direction.) The absolute difference between n and f should be as small as the application can accept.</li>
 <li><code>aspect</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
 </ul>
 
@@ -1194,32 +1183,23 @@ window.innerWidth/Math.max(1,window.innerHeight));
 
 <p>When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
-component of the transformed vertex) and
-increase from left to right, bottom to top, and front to back.</p>
+component of the transformed vertex).</p>
 
 <p>For a matrix in which Z coordinates
 range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
 
-<p>For a matrix in which Y coordinates
-increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
-
-<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 9th, 10th, 11th, and 12th
-elements of the result (zero-based indices 8, 9, 10, and 11).</p>
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>. To adjust this method&#39;s result for a left-handed system, reverse the sign of the result&#39;s:<ul>
+<li>1st to 4th elements (zero-based indices 0 to 3), to make X coordinates increase to the right rather than to the left, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to make Y coordinates increase downward rather than upward (as is the case by default in Vulkan), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to make Z coordinates increase from far to near rather than from near to far.</ul></p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>fovY</code> (Type: number)<br>Y axis field of view, in degrees, that is, the shortest angle between the top and bottom clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
 <li><code>aspectRatio</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
-<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-</ul>
-
-<p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
-
-<ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.<br>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL and most other graphics pipelines by default when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1245,32 +1225,23 @@ window.innerWidth/Math.max(1,window.innerHeight),
 given an X axis field of view.
 When just this matrix is used to transform vertices, the X, Y, and Z coordinates within the
 view volume (as is the case by default in WebGL and OpenGL) will range from -W to W (where W is the fourth
-component of the transformed vertex) and
-increase from left to right, bottom to top, and front to back.</p>
+component of the transformed vertex).</p>
 
 <p>For a matrix in which Z coordinates
 range from 0 to W (as is the case by default in DirectX, Metal, and Vulkan), divide the 15th element of the result (zero-based index 14) by 2.</p>
 
-<p>For a matrix in which Y coordinates
-increase downward rather than upward (as is the case by default in Vulkan), reverse the sign of the 5th element of the result (zero-based index 4).</p>
-
-<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>.
-To adjust the result of this method for a left-handed system,
-reverse the sign of the 9th, 10th, 11th, and 12th
-elements of the result (zero-based indices 8, 9, 10, and 11).</p>
+<p>This method is designed for enabling a <a href="tutorial-glmath.html">right-handed coordinate system</a>. To adjust this method&#39;s result for a left-handed system, reverse the sign of the result&#39;s:<ul>
+<li>1st to 4th elements (zero-based indices 0 to 3), to make X coordinates increase to the right rather than to the left, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to make Y coordinates increase downward rather than upward (as is the case by default in Vulkan), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to make Z coordinates increase from far to near rather than from near to far.</ul></p>
 
 <h4>Parameters</h4>
 
 <ul>
 <li><code>fovX</code> (Type: number)<br>X axis field of view, in degrees, that is, the shortest angle between the left and right clipping planes. Should be less than 180 degrees. (The smaller this number, the bigger close objects appear to be. As a result, zooming out can be implemented by raising this value, and zooming in by lowering it.)</li>
 <li><code>aspectRatio</code> (Type: number)<br>The ratio of width to height of the viewport, usually the scene&#39;s aspect ratio.</li>
-<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.</li>
-</ul>
-
-<p>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</p>
-
-<ul>
-<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
+<li><code>near</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the near clipping plane. Objects closer than this distance won&#39;t be seen.<br>This value should be greater than 0, and should be set to the highest distance from the &quot;camera&quot; that the application can afford to clip out for being too close, for example, 0.5, 1, or higher.</li>
+<li><code>far</code> (Type: number)<br>The distance, in eye space, from the &quot;camera&quot; to the far clipping plane. Objects farther than this distance won&#39;t be seen.<br>This value should be greater than 0 and should be set so that the absolute ratio of &quot;far&quot; to &quot;near&quot; is as small as the application can accept. (&quot;near&quot; is usually less than &quot;far&quot;, so that Z coordinates increase from near to far in the direction from the back to the front of the &quot;eye&quot;, as they do in WebGL and most other graphics pipelines by default when just this matrix is used to transform vertices. If &quot;near&quot; is greater than &quot;far&quot;, Z coordinates increase in the opposite direction.)<br> In the usual case that &quot;far&quot; is greater than &quot;near&quot;, depth buffer values will be more concentrated around the near plane than around the far plane due to the perspective projection. The greater the ratio of &quot;far&quot; to &quot;near&quot;, the more concentrated the values will be around the near plane, and the more likely two objects close to the far plane will have identical depth values. (Most WebGL implementations support 24-bit depth buffers, meaning they support 16,777,216 possible values per pixel.)</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -1304,7 +1275,7 @@ then returning that vector&#39;s new X, Y, and Z.</p>
 <h4>Parameters</h4>
 
 <ul>
-<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar Math methods, the X, Y, and Z coordinates within the view volume (as is the case by default in WebGL and OpenGL) will range from -1 to 1 and increase from left to right, front to back, and bottom to top, unless otherwise specified in those methods&#39; documentation.</li>
+<li><code>mat</code> (Type: Array.&lt;number&gt;)<br>A 4x4 matrix to use to transform the vector. This will generally be a projection-view matrix (projection matrix multiplied by the view matrix, in that order), if the vector to transform is in <i>world space</i>, or a model-view-projection matrix, that is, (projection-view matrix multiplied by the model [world] matrix, in that order), if the vector is in <i>model (object) space</i>.<br> If the matrix includes a projection transform returned by <a href="MathUtil.html#MathUtil.mat4ortho">MathUtil.mat4ortho</a>, <a href="MathUtil.html#MathUtil.mat4perspective">MathUtil.mat4perspective</a>, or similar <a href="MathUtil.html">MathUtil</a> methods, the X, Y, and Z coordinates within the view volume (as is the case by default in WebGL and OpenGL) will range from -1 to 1 and increase from left to right, bottom to top, and front to back, unless otherwise specified in those methods&#39; documentation.</li>
 <li><code>v</code> (Type: Array.&lt;number&gt; | number)<br>X coordinate of a 3D point to transform. If &quot;vy&quot; and &quot;vz&quot; are omitted, this value can instead be a 3-element array giving the X, Y, and Z coordinates.</li>
 <li><code>vy</code> (Type: number) (optional)<br>Y coordinate.</li>
 <li><code>vz</code> (Type: number) (optional)<br>Z coordinate. To transform a 2D point, set Z to 0.</li>
@@ -1772,7 +1743,7 @@ See &quot;Axis of Rotation&quot; in &quot;<a href="tutorial-glmath.html">H3DU&#3
 <li><code>pitchDegrees</code> (Type: number)<br>Vector rotation about the X axis (upward or downward turn), in degrees. This can instead be a 3-element array giving the rotation about the X axis, Y axis, and Z axis, respectively.</li>
 <li><code>yawDegrees</code> (Type: number)<br>Vector rotation about the Y axis (left or right turn), in degrees. May be null or omitted if &quot;pitchDegrees&quot; is an array.</li>
 <li><code>rollDegrees</code> (Type: number)<br>Vector rotation about the Z axis (swaying side by side), in degrees. May be null or omitted if &quot;pitchDegrees&quot; is an array.</li>
-<li><code>mode</code> (Type: number) (optional)<br>Specifies the order in which the rotations will occur (in terms of their effect). This is one of the Math constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object&#39;s new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.</li>
+<li><code>mode</code> (Type: number) (optional)<br>Specifies the order in which the rotations will occur (in terms of their effect). This is one of the <a href="MathUtil.html">MathUtil</a> constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object&#39;s new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
@@ -2136,7 +2107,7 @@ in the form of pitch, yaw, and roll angles (or <i>Tait&ndash;Bryan angles</i>).<
 
 <ul>
 <li><code>a</code> (Type: Array.&lt;number&gt;)<br>A quaternion. Should be a <a href="tutorial-glmath.html">unit vector</a>.</li>
-<li><code>mode</code> (Type: number) (optional)<br>Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the Math constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object&#39;s new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.</li>
+<li><code>mode</code> (Type: number) (optional)<br>Specifies the order in which the rotations will occur (in terms of their effect, not in terms of how they will be returned by this method). This is one of the <a href="MathUtil.html">MathUtil</a> constants such as <a href="MathUtil.html#MathUtil.LocalPitchYawRoll">MathUtil.LocalPitchYawRoll</a> and <a href="MathUtil.html#MathUtil.GlobalYawRollPitch">MathUtil.GlobalYawRollPitch</a>. If null, undefined, or omitted, the default is <a href="MathUtil.html#MathUtil.GlobalRollPitchYaw">MathUtil.GlobalRollPitchYaw</a>. The constants starting with <code>Global</code> describe a vector rotation in the order given, each about the original axes (these angles are also called <i>extrinsic</i> angles). The constants starting with <code>Local</code> describe a vector rotation in the order given, where the second and third rotations occur around the rotated object&#39;s new axes and not necessarily the original axes (these angles are also called <i>intrinsic</i> angles). The order of <code>Local</code> rotations has the same result as the reversed order of <code>Global</code> rotations and vice versa.</li>
 </ul>
 
 <h4>Return Value</h4>
