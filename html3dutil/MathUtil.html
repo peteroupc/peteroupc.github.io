@@ -794,11 +794,11 @@ in the form of a view frustum, or the limits in the &quot;eye&quot;&#39;s view.<
 <p>When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
 <li>X coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from &quot;l&quot; to &quot;r&quot;.</li>
 <li>Y coordinates range from -W to W and increase from &quot;b&quot; to &quot;t&quot; (or from &quot;t&quot; to &quot;b&quot; by default in Vulkan).</li>
-<li>Z coordinates range from -W to W and increase from &quot;near&quot; to &quot;far&quot;. (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2).</li></ul>
+<li>Z coordinates range from -W to W and increase from &quot;near&quot; to &quot;far&quot;. (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
 The transformed coordinates have the meanings given above assuming that the eye space (untransformed) X, Y, and Z coordinates increase rightward, upward, and from the &quot;eye&quot; backward, respectively (so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>). To adjust this method&#39;s result for the opposite &quot;hand&quot;, reverse the sign of the result&#39;s:<ul>
-<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction X coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction Z coordinates increase.</ul></p>
+<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul></p>
 
 <h4>Parameters</h4>
 
@@ -1033,11 +1033,11 @@ objects with the same size won&#39;t appear smaller as they get more distant fro
 <p>When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
 <li>X coordinates range from -1 to 1 and increase from &quot;l&quot; to &quot;r&quot;.</li>
 <li>Y coordinates range from -1 to 1 and increase from &quot;b&quot; to &quot;t&quot; (or from &quot;t&quot; to &quot;b&quot; by default in Vulkan).</li>
-<li>Z coordinates range from -1 to 1 and increase from &quot;n&quot; to &quot;f&quot;. (For view volume Z coordinates ranging from 0 to 1, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 11th and 15th elements of the result, or zero-based indices 10 and 14, by 2, then add 0.5 to the 15th element.</li></ul>
+<li>Z coordinates range from -1 to 1 and increase from &quot;n&quot; to &quot;f&quot;. (For view volume Z coordinates ranging from 0 to 1, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 11th and 15th elements of the result, or zero-based indices 10 and 14, by 2, then add 0.5 to the 15th element.)</li></ul>
 The transformed coordinates have the meanings given above assuming that the eye space (untransformed) X, Y, and Z coordinates increase rightward, upward, and from the &quot;eye&quot; backward, respectively (so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>). To adjust this method&#39;s result for the opposite &quot;hand&quot;, reverse the sign of the result&#39;s:<ul>
-<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction X coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction Z coordinates increase.</ul></p>
+<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul></p>
 
 <h4>Parameters</h4>
 
@@ -1175,11 +1175,11 @@ window.innerWidth/Math.max(1,window.innerHeight));
 <p>When just this matrix is used to transform vertices, transformed coordinates in the view volume will have the following meanings:<ul>
 <li>X coordinates range from -W to W (where W is the fourth component of the transformed vertex) and increase from left to right.</li>
 <li>Y coordinates range from -W to W and increase upward (or downward by default in Vulkan).</li>
-<li>Z coordinates range from -W to W and increase from &quot;near&quot; to &quot;far&quot;. (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2).</li></ul>
+<li>Z coordinates range from -W to W and increase from &quot;near&quot; to &quot;far&quot;. (For view volume Z coordinates ranging from 0 to W, to accommodate how DirectX, Metal, and Vulkan handle such coordinates by default, divide the 15th element of the result, or zero-based index 14, by 2.)</li></ul>
 The transformed coordinates have the meanings given above assuming that the eye space (untransformed) X, Y, and Z coordinates increase rightward, upward, and from the &quot;eye&quot; backward, respectively (so that the eye space is a <a href="tutorial-glmath.html">right-handed coordinate system</a>). To adjust this method&#39;s result for the opposite &quot;hand&quot;, reverse the sign of the result&#39;s:<ul>
-<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction X coordinates increase, or
-<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
-<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction Z coordinates increase.</ul></p>
+<li>1st to 4th elements (zero-based indices 0 to 3), to reverse the direction in which X coordinates increase, or
+<li>5th to 8th elements (zero-based indices 4 to 7), to reverse the direction in which Y coordinates increase (e.g., to make those coordinates increase upward in Vulkan rather than downward), or
+<li>9th to 12th elements (zero-based indices 8 to 11), to reverse the direction in which Z coordinates increase.</ul></p>
 
 <h4>Parameters</h4>
 
